@@ -2,7 +2,7 @@ from typing import List, Tuple, Dict
 
 class BaseKnowledgeBase(object):
     def __init__(self) -> None:
-        self.data = {}
+        self.data: Dict[str, str] = {}
 
     def update_kb(self, data: Dict[str, str]) -> None:
         self.data.update(data)

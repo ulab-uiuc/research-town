@@ -4,7 +4,7 @@ from typing import List, Tuple, Dict
 class BaseResearchAgent(object):
     def __init__(self, name: str) -> None:
         self.profile = self.get_profile(name)
-        self.memory = []
+        self.memory: Dict[str, str] = {}
 
     def get_profile(self, name: str) -> Dict[str, str]:
         return {'name': 'John Doe', 'age': '25', 'location': 'New York'}
