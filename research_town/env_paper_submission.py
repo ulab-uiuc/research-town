@@ -1,12 +1,13 @@
 from typing import List, Tuple, Dict
+from .agent_base import BaseResearchAgent
+from .env_base import BaseMultiAgentEnv
 
-
-class PaperSubmissionMultiAgentEnvironment(object):
+class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def __init__(self, agent_dict: Dict[str, str]) -> None:
-        self.agent_dict = agent_dict
+        super(PaperSubmissionMultiAgentEnvironment, self).__init__(agent_dict)
 
     def step(self) -> None:
-        for agent_name, agent in self.agent_dict.items():
+        for agent_name, agent in self.agents.items():
             agent.read_paper({}, {})
             agent.find_collaborators({})
             agent.generate_idea({}, {})
@@ -14,5 +15,5 @@ class PaperSubmissionMultiAgentEnvironment(object):
         
         self.submit_paper()
     
-    def submit_paper(self):
+    def submit_paper(self) -> None:
         pass
