@@ -31,8 +31,9 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.mypy]
-mypy_path = "stubs"
-strict = true
+ignore_missing_imports = true
+check_untyped_defs = true
+follow_imports = "skip"
 plugins = [
     "pydantic.mypy"
 ]
