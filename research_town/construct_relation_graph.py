@@ -41,25 +41,24 @@ def fetch_author_info(author):
     papers_info = []
     co_authors = dict()
     print("{} Fetching Author Info: {}".format(show_time(), author))
-    search = arxiv.Search(
-        query="au:{}".format(author),
-        max_results=10
-    )
-    for result in tqdm(client.results(search), desc="Processing Author Papers", unit="Paper"):
-        if author not in ', '.join(author.name for author in result.authors):
+    search = arxiv.Search(query="au:{}".format(author), max_results=10)
+    for result in tqdm(
+        client.results(search), desc="Processing Author Papers", unit="Paper"
+    ):
+        if author not in ", ".join(author.name for author in result.authors):
             continue
         author_list = [author.name for author in result.authors]
         # author_pos = author_position(author, author_list)
         co_authors = co_author_frequency(author, author_list, co_authors)
         paper_info = {
-            'url': result.entry_id,
+            "url": result.entry_id,
             "title": result.title,
             "abstract": result.summary,
-            "authors": ', '.join(author.name for author in result.authors),
+            "authors": ", ".join(author.name for author in result.authors),
             "published": str(result.published).split(" ")[0],
             "updated": str(result.updated).split(" ")[0],
-            'primary_cat': result.primary_category,
-            'cats': result.categories,
+            "primary_cat": result.primary_category,
+            "cats": result.categories,
             # "author_pos": author_pos
         }
         # print(json.dumps(paper_info, indent=4))
@@ -95,6 +94,6 @@ def bfs(author_list, node_limit=20):
     return graph, node_feat, edge_feat
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start_author = ["Jiaxuan You"]
     bfs(author_list=start_author, node_limit=20)

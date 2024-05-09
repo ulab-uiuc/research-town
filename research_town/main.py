@@ -1,6 +1,6 @@
-from  function_class import *
+from function_class import *
 
-single_agent=SingleAgent()
+single_agent = SingleAgent()
 # print(single_agent.get_profile("Jiaxuan You"))
 # print(single_agent.get_recent_paper_info(10,"Machine Learning"))
 # domain="Machine Learning"
@@ -10,5 +10,5 @@ single_agent=SingleAgent()
 # ideas=single_agent.generate_ideas(profile,papers,domain)
 # print(ideas)
 
-multi_agent=MultiAgent()
-print(multi_agent.get_relation_graph("Jiaxuan You",20))
+multi_agent = MultiAgent()
+print(multi_agent.get_relation_graph("Jiaxuan You", 20))
