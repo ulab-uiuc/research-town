@@ -1,7 +1,7 @@
 name: 🧹Codebase Reorg
 description: Reorg, clean, format the codebase
-title: "[WRT]: "
-labels: ["writing"]
+title: "[ORG]: "
+labels: ["reorg"]
 assignees: [""]
 body:
   - type: markdown
