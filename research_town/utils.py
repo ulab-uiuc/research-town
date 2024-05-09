@@ -86,13 +86,13 @@ def neiborhood_search(corpus_data, query_data, num=8):
 def summarize_research_field(profile, keywords, dataset, data_embedding):
     # papers = paperinfo(dataset)
     prompt_qa = (
-        "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgounds and trends in this field (related to my profile if possible)."
+        "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
         "Here is my profile: {profile}"
         "Here are the keywords: {keywords}"
         "Here are the retrieved paper abstracts: {papers}"
     )
     query_format = (
-        "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgounds and trends in this field (related to my profile if possible)."
+        "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
         "Here is my profile: {profile}"
         "Here are the keywords: {keywords}"
     )
