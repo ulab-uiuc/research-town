@@ -16,6 +16,7 @@ mypy = "^1.8.0"
 pydantic = "^1.9.0"
 arxiv = "^2.1.0"
 faiss-cpu = "^1.8.0"
+types-requests = "^2.31.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -50,3 +51,7 @@ ignore-words-list = "dout, te, indicies, astroid"
 [tool.isort]
 use_parentheses = true
 skip_gitignore = true
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+line_length = 88
