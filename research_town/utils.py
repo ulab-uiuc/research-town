@@ -107,6 +107,7 @@ def summarize_research_field(
     dataset: Dict[str, Any],
     data_embedding: Dict[str, Any],
 ) -> Tuple[List[str], List[str]]:
+    openai.api_key = KEY
     query_format = (
         "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
         "Here is my profile: {profile}"
@@ -143,14 +144,14 @@ def summarize_research_field(
 
     try:
         completion = openai.ChatCompletion.create(
-            model="text-davinci-002",
+            model=llm_model,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=512,
         )
     except Exception:
         time.sleep(20)
         completion = openai.ChatCompletion.create(
-            model="text-davinci-002",
+            model=llm_model,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=512,
         )
@@ -166,11 +167,12 @@ def generate_ideas(trend: str) -> List[str]:
         "How do you view this field? Do you have any novel ideas or insights? "
         "Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences."
     )
+    openai.api_key = KEY
     input = {"trend": trend}
     prompt = prompt_qa.format_map(input)
     try:
         completion = openai.ChatCompletion.create(
-            model="text-davinci-002",
+            model=llm_model,
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
             seed=42,
@@ -179,7 +181,7 @@ def generate_ideas(trend: str) -> List[str]:
     except Exception:
         time.sleep(20)
         completion = openai.ChatCompletion.create(
-            model="text-davinci-002",
+            model=llm_model,
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
             seed=42,
@@ -195,24 +197,25 @@ def summarize_research_direction(personal_info: str) -> List[str]:
         "Focus more on more recent personas. Be concise and clear (around 300 words). "
         "Here are the personas from different times: {personalinfo}"
     )
+    openai.api_key = KEY
     input = {"personalinfo": personal_info}
     prompt = prompt_qa.format_map(input)
     try:
         completion = openai.ChatCompletion.create(
-            model="text-davinci-002",
+            model=llm_model,
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
             seed=42,
-            top_p=1,
+            top_p=0,
         )
     except Exception:
         time.sleep(20)
         completion = openai.ChatCompletion.create(
-            model="text-davinci-002",
+            model=llm_model,
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
             seed=42,
-            top_p=1,
+            top_p=0,
         )
     content = completion.choices[0].message["content"]
     return [content]
