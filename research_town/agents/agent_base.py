@@ -4,10 +4,10 @@ from xml.etree import ElementTree
 
 import requests
 
-from .utils import (
-    bfs,
+from ..utils.author_relation import bfs
+from ..utils.paper_collection import get_bert_embedding
+from .agent_prompting import (
     generate_ideas,
-    get_bert_embedding,
     summarize_research_direction,
     summarize_research_field,
 )
