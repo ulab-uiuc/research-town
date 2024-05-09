@@ -1,5 +1,6 @@
-from typing import List, Tuple, Dict
+from typing import Dict
 from utils import *
+
 
 class BaseKnowledgeBase(object):
     def __init__(self) -> None:
@@ -7,11 +8,11 @@ class BaseKnowledgeBase(object):
 
     def update_kb(self, data: Dict[str, str]) -> None:
         self.data.update(data)
-    
+
     def add_data(self, data: Dict[str, str]) -> None:
         self.data.update(data)
-    
-    def get_data(self, num: str,domain:str):
+
+    def get_data(self, num: str, domain: str):
         data_collector = []
         keywords = dict()
         keywords[domain] = domain
@@ -27,4 +28,3 @@ class BaseKnowledgeBase(object):
                 # print(papers.published)
                 data_dict[time.strftime("%m/%d/%Y")] = papers
         return data_dict
-

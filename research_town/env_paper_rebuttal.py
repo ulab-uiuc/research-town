@@ -1,6 +1,6 @@
-from typing import List, Tuple, Dict
-from .agent_base import BaseResearchAgent
+from typing import Dict
 from .env_base import BaseMultiAgentEnv
+
 
 class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
     def __init__(self, agent_dict: Dict[str, str]) -> None:
@@ -11,8 +11,8 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
             paper_summary = agent.read_paper({}, {})
             paper_review = agent.review_paper({}, {})
             review_decision = agent.make_review_decision({}, {})
-        
+
         self.submit_rebuttal()
-    
+
     def submit_rebuttal(self) -> None:
         pass
