@@ -1,4 +1,5 @@
-name: Mypy
+name: isort
+
 on:
   # Trigger the workflow on push or pull request,
   # but only for the main branch
@@ -10,13 +11,11 @@ on:
       - main
 
 jobs:
-  Static-Type-Checking:
+  isort:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 5
       matrix:
         python-version: ["3.9", "3.10"]
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -25,10 +24,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        curl -sSL https://install.python-poetry.org | python3
-        poetry install --all-extras
-    - name: Type-checking package with mypy
+        python -m pip install --upgrade pip
+        pip install isort==5.13.2
+    - name: Run isort
       run: |
-        # Run this mypy instance against our main package.
-        poetry run pip install types-protobuf==4.24.0.4
-        poetry run mypy --config-file pyproject.toml .
+        isort . --check-only

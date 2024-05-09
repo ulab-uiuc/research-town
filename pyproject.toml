@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "research-town"
+name = "python-project-template"
 version = "0.0.1"
-description = "A multi-agent framework for research pipeline."
+description = "A template for python-based research project"
 authors = ["Haofei Yu <yuhaofei44@gmail.com>"]
 license = "Apache 2.0 License"
 readme = "README.md"
@@ -38,11 +38,13 @@ plugins = [
     "pydantic.mypy"
 ]
 
-[[tool.mypy.overrides]]
-module = "transformers.*"
-ignore_missing_imports = true
-
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
+
+[tool.codespell]
+ignore-words-list = "dout, te, indicies, astroid"
+
+[tool.isort]
+use_parentheses = true
+skip_gitignore = true

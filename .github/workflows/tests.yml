@@ -1,18 +1,23 @@
 name: Pytest
-on: [push]
+on:
+  pull_request:
+  push:
+    branches: [main]
 
 jobs:
   Pytest:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5
+      matrix:
+        python-version: ["3.9", "3.10"]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v4
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
       with:
-        python-version: 3.11.2
+        python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
         curl -sSL https://install.python-poetry.org | python3
