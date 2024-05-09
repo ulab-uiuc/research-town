@@ -1,6 +1,7 @@
 from typing import List, Tuple, Dict
 from utils import *
 from construct_relation_graph import *
+
 class BaseResearchAgent(object):
     def __init__(self, name: str) -> None:
         self.profile = self.get_profile(name)
@@ -129,6 +130,7 @@ class BaseResearchAgent(object):
         idea = generate_ideas(trend)[0]  # idea
 
         return idea
+
     
     def write_paper(self, input: Dict[str, str], external_data: Dict[str, str]) -> str:
         return 'writing paper'

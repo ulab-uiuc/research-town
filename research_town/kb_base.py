@@ -1,5 +1,6 @@
 from typing import List, Tuple, Dict
 from utils import *
+
 class BaseKnowledgeBase(object):
     def __init__(self) -> None:
         self.data: Dict[str, str] = {}
@@ -26,3 +27,4 @@ class BaseKnowledgeBase(object):
                 # print(papers.published)
                 data_dict[time.strftime("%m/%d/%Y")] = papers
         return data_dict
+
