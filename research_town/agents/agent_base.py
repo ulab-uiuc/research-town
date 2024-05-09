@@ -4,10 +4,13 @@ from xml.etree import ElementTree
 
 import requests
 
-from ..utils.paper_collection import get_bert_embedding
-from ..utils.prompting import generate_ideas, summarize_research_field, summarize_research_direction
 from ..utils.author_relation import bfs
-
+from ..utils.paper_collection import get_bert_embedding
+from ..utils.prompting import (
+    generate_ideas,
+    summarize_research_direction,
+    summarize_research_field,
+)
 
 
 class BaseResearchAgent(object):

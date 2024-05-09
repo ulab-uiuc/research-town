@@ -1,8 +1,9 @@
-from transformers import BertModel, BertTokenizer
-import torch
-from typing import List, Tuple, Dict
-import faiss
+from typing import Dict, List, Tuple
+
 import arxiv
+import faiss
+import torch
+from transformers import BertModel, BertTokenizer
 
 
 def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:
