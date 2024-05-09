@@ -229,13 +229,12 @@ def get_authors(authors: List[str], first_author: bool = False) -> str:
 def get_daily_papers(
     topic: str, query: str = "slam", max_results: int = 2
 ) -> Tuple[Dict[str, Dict[str, List[str]]], str]:
-    client = arxiv.Client()
-    search_results = client.search(
+    search_engine = arxiv.Search(
         query=query, max_results=max_results, sort_by=arxiv.SortCriterion.SubmittedDate
     )
     content: Dict[str, Dict[str, List[str]]] = {}
     newest_day = ""
-    for result in search_results:
+    for result in search_engine.results():
         paper_title = result.title
         paper_url = result.entry_id
         paper_abstract = result.summary.replace("\n", " ")
