@@ -1,4 +1,4 @@
-from function_class import *
+from research_town.agent_base import SingleAgent, MultiAgent
 
 single_agent = SingleAgent()
 # print(single_agent.get_profile("Jiaxuan You"))

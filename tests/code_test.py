@@ -1,5 +1,5 @@
-from agent_base import *
-from kb_base import *
+from agent_base import BaseResearchAgent
+from kb_base import BaseKnowledgeBase
 
 base_agent = BaseResearchAgent("Jiaxuan You")
 # print(base_agent.profile)

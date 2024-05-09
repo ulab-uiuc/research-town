@@ -1,6 +1,6 @@
 from typing import List, Dict
-from utils import *
-from construct_relation_graph import *
+from .utils import *
+from .construct_relation_graph import *
 
 
 class BaseResearchAgent(object):
