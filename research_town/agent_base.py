@@ -1,13 +1,15 @@
 import datetime
-import requests
+from typing import Any, Dict, List
 from xml.etree import ElementTree
-from typing import List, Dict, Any
+
+import requests
+
 from .utils import (
-    summarize_research_direction,
-    get_bert_embedding,
-    summarize_research_field,
-    generate_ideas,
     bfs,
+    generate_ideas,
+    get_bert_embedding,
+    summarize_research_direction,
+    summarize_research_field,
 )
 
 

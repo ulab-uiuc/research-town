@@ -1,15 +1,16 @@
-import os
-import json
 import datetime
-import openai
+import json
+import os
 import time
-import faiss
-from transformers import BertTokenizer, BertModel
-import torch
+from typing import Any, Dict, List, Tuple
+
 import arxiv
-from tqdm import tqdm
-from typing import Dict, List, Tuple, Any
+import faiss
+import openai
+import torch
 from arxiv import Client, Search
+from tqdm import tqdm
+from transformers import BertModel, BertTokenizer
 
 KEY = "TOGETHER_API_KEY"
 openai.api_base = "https://api.together.xyz"

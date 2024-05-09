@@ -1,4 +1,5 @@
 from typing import Dict
+
 from .agent_base import BaseResearchAgent
 from .kb_base import BaseKnowledgeBase
 
