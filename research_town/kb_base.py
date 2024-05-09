@@ -1,5 +1,5 @@
-from typing import Dict
-from utils import *
+from typing import Dict, List
+from .utils import get_daily_papers
 
 
 class BaseKnowledgeBase(object):
@@ -12,7 +12,7 @@ class BaseKnowledgeBase(object):
     def add_data(self, data: Dict[str, str]) -> None:
         self.data.update(data)
 
-    def get_data(self, num: str, domain: str) -> Dict[str, str]:
+    def get_data(self, num: int, domain: str) -> Dict[str, Dict[str, List[str]]]:
         data_collector = []
         keywords = dict()
         keywords[domain] = domain
@@ -24,5 +24,5 @@ class BaseKnowledgeBase(object):
         for data in data_collector:
             for time in data.keys():
                 papers = data[time]
-                data_dict[time.strftime("%m/%d/%Y")] = papers
+                data_dict[time] = papers
         return data_dict
