@@ -81,7 +81,9 @@ def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:
     return emb_list
 
 
-def neiborhood_search(corpus_data, query_data, num=8):
+def neiborhood_search(
+    corpus_data: List[torch.Tensor], query_data: List[torch.Tensor], num: int
+) -> torch.Tensor:
     d = 768
     neiborhood_num = num
     xq = torch.cat(query_data, 0).cpu().numpy()
@@ -92,9 +94,9 @@ def neiborhood_search(corpus_data, query_data, num=8):
     faiss.normalize_L2(xq)
     faiss.normalize_L2(xb)
     index.add(xb)  # add vectors to the index
-    D, I = index.search(xq, neiborhood_num)
+    data, index = index.search(xq, neiborhood_num)
 
-    return I
+    return index
 
 
 #######
@@ -144,7 +146,7 @@ def summarize_research_field(
             messages=[{"role": "user", "content": prompt}],
             max_tokens=512,
         )
-    except:
+    except Exception:
         time.sleep(20)
         completion = openai.ChatCompletion.create(
             model="text-davinci-002",
@@ -231,15 +233,9 @@ def get_daily_papers(
     content: Dict[str, Dict[str, List[str]]] = {}
     newest_day = ""
     for result in client.results(search):
-        paper_id = result.get_short_id()
         paper_title = result.title
         paper_url = result.entry_id
         paper_abstract = result.summary.replace("\n", " ")
-        paper_authors = get_authors([author.name for author in result.authors])
-        paper_first_author = get_authors(
-            [author.name for author in result.authors], first_author=True
-        )
-        primary_category = result.primary_category.term
         publish_time = result.published.strftime("%Y-%m-%d")
         newest_day = max(
             newest_day,
