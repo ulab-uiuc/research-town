@@ -1,7 +1,7 @@
 from typing import Dict
 
-from .agent_base import BaseResearchAgent
-from .kb_base import BaseKnowledgeBase
+from ..agents.agent_base import BaseResearchAgent
+from ..kbs.kb_base import BaseKnowledgeBase
 
 
 class BaseMultiAgentEnv(object):
