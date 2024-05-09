@@ -16,5 +16,5 @@ def test_read_paper():
     external_data = {"2021-01-01": {"abstract": ["This is a paper"]}}
     domain = "machine learning"
     research_agent = BaseResearchAgent("Jiaxuan You")
-    trend = research_agent.read_paper(external_data, domain)
+    research_agent.read_paper(external_data, domain)
     pass
