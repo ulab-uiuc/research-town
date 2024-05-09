@@ -11,10 +11,9 @@ def test_get_profile():
 def test_communicate():
     pass
 
-
 def test_read_paper():
     external_data = {"2021-01-01": {"abstract": ["This is a paper"]}}
     domain = "machine learning"
     research_agent = BaseResearchAgent("Jiaxuan You")
-    research_agent.read_paper(external_data, domain)
-    pass
+    summary = research_agent.read_paper(external_data, domain)
+    assert isinstance(summary, str)

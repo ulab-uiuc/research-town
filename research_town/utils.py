@@ -65,7 +65,6 @@ def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:
     tokenizer = BertTokenizer.from_pretrained("facebook/contriever")
     model = BertModel.from_pretrained("facebook/contriever").to(torch.device("cpu"))
 
-    # encoded_input_all = [tokenizer(text['instruction']+text['input'], return_tensors='pt').to(torch.device("cuda")) for text in instructions]
 
     encoded_input_all = [
         tokenizer(text, return_tensors="pt", truncation=True, max_length=512).to(
@@ -230,27 +229,24 @@ def get_authors(authors: List[str], first_author: bool = False) -> str:
 def get_daily_papers(
     topic: str, query: str = "slam", max_results: int = 2
 ) -> Tuple[Dict[str, Dict[str, List[str]]], str]:
-    client = Client()
-    search = Search(
+    search_engine = Search(
         query=query, max_results=max_results, sort_by=arxiv.SortCriterion.SubmittedDate
     )
     content: Dict[str, Dict[str, List[str]]] = {}
     newest_day = ""
-    for result in client.results(search):
+    for result in search_engine.results():
         paper_title = result.title
         paper_url = result.entry_id
         paper_abstract = result.summary.replace("\n", " ")
-        publish_time = result.published.strftime("%Y-%m-%d")
-        newest_day = max(
-            newest_day,
-            publish_time,
-            key=lambda d: datetime.datetime.strptime(d, "%Y-%m-%d"),
-        )
-        if publish_time not in content:
-            content[publish_time] = {"abstract": [], "info": []}
-        content[publish_time]["abstract"].append(paper_title + ": " + paper_abstract)
-        content[publish_time]["info"].append(paper_title + ": " + paper_url)
-
+        publish_time = result.published.date()
+        newest_day = publish_time
+        if publish_time in content:
+            content[publish_time]['abstract'].append(paper_title + ": " + paper_abstract)
+            content[publish_time]['info'].append(paper_title + ": " + paper_url)
+        else:
+            content[publish_time] = {}
+            content[publish_time]['abstract'] = [paper_title + ": " + paper_abstract]
+            content[publish_time]['info'] = [paper_title + ": " + paper_url]
     return content, newest_day
 
 
