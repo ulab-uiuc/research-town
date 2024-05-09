@@ -27,7 +27,6 @@ jobs:
       run: |
         curl -sSL https://install.python-poetry.org | python3
         poetry install --all-extras
-        poetry run mypy --install-types
     - name: Type-checking package with mypy
       run: |
         # Run this mypy instance against our main package.
