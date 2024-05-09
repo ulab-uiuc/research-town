@@ -18,6 +18,7 @@ arxiv = "^2.1.0"
 faiss-cpu = "^1.8.0"
 types-requests = "^2.31.0"
 torch = "^2.2.0"
+transformers = "^4.40.0"
 
 
 [tool.poetry.group.dev.dependencies]
