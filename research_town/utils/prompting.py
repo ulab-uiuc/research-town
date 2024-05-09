@@ -1,8 +1,9 @@
-import openai
 import time
 from typing import Any, Dict, List, Tuple
-from .paper_collection import get_bert_embedding, neiborhood_search
 
+import openai
+
+from .paper_collection import get_bert_embedding, neiborhood_search
 
 KEY = "TOGETHER_API_KEY"
 openai.api_base = "https://api.together.xyz"

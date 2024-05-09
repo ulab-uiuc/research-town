@@ -1,6 +1,8 @@
-from typing import List, Dict, Any, Tuple
+from typing import Any, Dict, List, Tuple
+
 from arxiv import Client, Search
 from tqdm import tqdm
+
 
 def get_authors(authors: List[str], first_author: bool = False) -> str:
     if first_author:
