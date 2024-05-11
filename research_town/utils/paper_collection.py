@@ -45,12 +45,14 @@ def neiborhood_search(
 def get_daily_papers(
     topic: str, query: str = "slam", max_results: int = 2
 ) -> Tuple[Dict[str, Dict[str, List[str]]], str]:
-    search_engine = arxiv.Search(
+    client = arxiv.Client()
+    search = arxiv.Search(
         query=query, max_results=max_results, sort_by=arxiv.SortCriterion.SubmittedDate
     )
+    results = client.results(search)
     content: Dict[str, Dict[str, List[str]]] = {}
     newest_day = ""
-    for result in search_engine.results():
+    for result in results:
         paper_title = result.title
         paper_url = result.entry_id
         paper_abstract = result.summary.replace("\n", " ")
