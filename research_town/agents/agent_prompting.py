@@ -160,19 +160,6 @@ def write_paper_abstract(ideas: List[str], external_data: Dict[str, Dict[str, Li
     openai.api_key = KEY
     input = {"ideas_serialize_all": ideas_serialize_all, "papers_serialize_all": papers_serialize_all}
 
-def communicate_with_multiple_researchers(input: Dict[str, str]):
-    """
-    This is a single-round chat method. One that contains a chat history can better enable
-    """
-    single_round_chat_serialize = [f"Message from researcher named {name}: {message}" for name, message in input.items()]
-    single_round_chat_serialize_all = "\n".join(single_round_chat_serialize)
-    prompt_qa = (
-        "Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. "
-        "Here are the messages from other researchers: {single_round_chat_serialize_all}"
-    )
-    openai.api_key = KEY
-    input = {"single_round_chat_serialize_all": single_round_chat_serialize_all}
-
     prompt = prompt_qa.format_map(input)
     try:
         completion = openai.ChatCompletion.create(
