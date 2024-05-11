@@ -131,3 +131,50 @@ def summarize_research_direction(personal_info: str) -> List[str]:
         )
     content = completion.choices[0].message["content"]
     return [content]
+
+def write_paper_abstract(ideas: List[str], external_data: Dict[str, Dict[str, List[str]]]):
+    """
+    Write paper using ideas from list, and external data (published papers)
+    """
+    ideas_serialize = [f"{i}: {idea}" for i, idea in enumerate(ideas)]
+    ideas_serialize_all = "\n".join(ideas_serialize)
+
+    papers_serialize = []
+
+    for i, timestamp in enumerate(external_data.keys()):
+        abstracts = external_data[timestamp]['abstract']
+        formatted_abstracts = '\nAbstract: '.join(abstracts)
+        paper_entry = f"Time: {timestamp}\nAbstract: {formatted_abstracts}\n"
+        papers_serialize.append(paper_entry)
+
+    papers_serialize_all = "\n\n".join(papers_serialize)
+
+    prompt_qa = (
+        "Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract. "
+        "You might use two or more of these ideas if they are related and works well together. "
+        "Here are the ideas: {ideas_serialize_all}"
+        "Here are the external data, which is a list abstracts of related papers: {papers_serialize_all}"
+    )
+
+    openai.api_key = KEY
+    input = {"ideas_serialize_all": ideas_serialize_all, "papers_serialize_all": papers_serialize_all}
+    prompt = prompt_qa.format_map(input)
+    try:
+        completion = openai.ChatCompletion.create(
+            model=llm_model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+            seed=42,
+            top_p=0,
+        )
+    except Exception:
+        time.sleep(20)
+        completion = openai.ChatCompletion.create(
+            model=llm_model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+            seed=42,
+            top_p=0,
+        )
+    content = completion.choices[0].message["content"]
+    return [content]

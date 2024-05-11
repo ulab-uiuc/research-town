@@ -13,7 +13,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             agent.read_paper(external_data=external_data, domain="machine learning")
             agent.find_collaborators({})
             agent.generate_idea(external_data=external_data, domain="machine learning")
-            agent.write_paper({}, {})
+            agent.write_paper([], {})
 
         self.submit_paper()
 
