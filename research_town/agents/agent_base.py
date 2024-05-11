@@ -7,6 +7,7 @@ import requests
 from ..utils.author_relation import bfs
 from ..utils.paper_collection import get_bert_embedding
 from .agent_prompting import (
+    communicate_with_multiple_researchers,
     generate_ideas,
     summarize_research_direction,
     summarize_research_field,
@@ -129,7 +130,7 @@ class BaseResearchAgent(object):
             return {"info": "fail!"}
 
     def communicate(self, message: Dict[str, str]) -> str:
-        return "hello"
+        return communicate_with_multiple_researchers(message)[0]
 
     def read_paper(
         self, external_data: Dict[str, Dict[str, List[str]]], domain: str
