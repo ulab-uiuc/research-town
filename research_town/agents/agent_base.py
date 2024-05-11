@@ -10,6 +10,7 @@ from .agent_prompting import (
     generate_ideas,
     summarize_research_direction,
     summarize_research_field,
+    write_paper_abstract,
 )
 
 
@@ -179,8 +180,9 @@ class BaseResearchAgent(object):
 
         return ideas
 
-    def write_paper(self, input: Dict[str, str], external_data: Dict[str, str]) -> str:
-        return "writing paper"
+    def write_paper(self, input: List[str], external_data: Dict[str, Dict[str, List[str]]]) -> str:
+        paper_abstract = write_paper_abstract(input, external_data)
+        return paper_abstract[0]
 
     def review_paper(self, input: Dict[str, str], external_data: Dict[str, str]) -> str:
         return "review comments"
