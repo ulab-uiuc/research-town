@@ -9,7 +9,10 @@ def test_get_profile():
 
 
 def test_communicate():
-    pass
+    research_agent = BaseResearchAgent("Jiaxuan You")
+    response = research_agent.communicate({"Alice": "I believe in the potential of using automous agents to simulate the current research pipeline."})
+    assert isinstance(response, str)
+    assert response != ""
 
 def test_write_paper_abstract():
     research_agent = BaseResearchAgent("Jiaxuan You")
