@@ -1,5 +1,5 @@
 
-from ..research_town.agents.agent_base import BaseResearchAgent
+from research_town.agents.agent_base import BaseResearchAgent
 
 
 def test_get_profile():
