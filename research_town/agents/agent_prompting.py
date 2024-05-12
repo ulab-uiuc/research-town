@@ -1,5 +1,5 @@
 import time
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 import openai
 
