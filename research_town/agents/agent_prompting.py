@@ -18,7 +18,7 @@ def summarize_research_field(
     keywords: List[str],
     dataset: Dict[str, Any],
     data_embedding: Dict[str, Any],
-) -> Tuple[List[str], List[str]]:
+) -> List[str]:
     openai.api_key = KEY
     query_format = (
         "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
