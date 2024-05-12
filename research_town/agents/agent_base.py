@@ -142,7 +142,7 @@ class BaseResearchAgent(object):
             papers_embedding = get_bert_embedding(papers)
             time_chunks_embed[time] = papers_embedding
 
-        trend, paper_link = summarize_research_field(
+        trend = summarize_research_field(
             profile=self.profile,
             keywords=[domain],
             dataset=dataset,
