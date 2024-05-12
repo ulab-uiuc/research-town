@@ -148,7 +148,8 @@ class BaseResearchAgent(object):
             dataset=dataset,
             data_embedding=time_chunks_embed,
         )  # trend
-        return trend[0]
+        trend=trend[0]
+        return trend
 
     def find_collaborators(self, input: Dict[str, str]) -> List[str]:
         return ["Alice", "Bob", "Charlie"]
