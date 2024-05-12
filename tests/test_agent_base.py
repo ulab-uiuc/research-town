@@ -28,4 +28,3 @@ def test_read_paper():
     research_agent = BaseResearchAgent("Jiaxuan You")
     summary = research_agent.read_paper(external_data, domain)
     assert isinstance(summary, str)
-
