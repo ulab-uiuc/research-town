@@ -1,3 +1,4 @@
+
 from research_town.agents.agent_base import BaseResearchAgent
 
 
@@ -20,11 +21,10 @@ def test_write_paper_abstract():
     assert isinstance(abstract, str)
     assert abstract != ""
 
-'''
+
 def test_read_paper():
     external_data = {"2021-01-01": {"abstract": ["This is a paper"]}}
     domain = "machine learning"
     research_agent = BaseResearchAgent("Jiaxuan You")
     summary = research_agent.read_paper(external_data, domain)
     assert isinstance(summary, str)
-'''
