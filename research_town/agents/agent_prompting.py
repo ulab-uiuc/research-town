@@ -1,5 +1,5 @@
 import time
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 import openai
 
@@ -18,7 +18,7 @@ def summarize_research_field(
     keywords: List[str],
     dataset: Dict[str, Any],
     data_embedding: Dict[str, Any],
-) -> Tuple[List[str], List[str]]:
+) -> List[str]:
     openai.api_key = KEY
     query_format = (
         "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
@@ -32,10 +32,8 @@ def summarize_research_field(
 
     query_embedding = get_bert_embedding([query])
     text_chunk_l = []
-    title_chunk = []
     data_embedding_l = []
     for k in dataset.keys():
-        title_chunk.extend(dataset[k]["info"])
         text_chunk_l.extend(dataset[k]["abstract"])
         data_embedding_l.extend(data_embedding[k])
 
@@ -46,10 +44,8 @@ def summarize_research_field(
     neib_all = neib_all.reshape(-1)
 
     context = []
-    retrieve_paper = []
     for i in neib_all:
         context.append(text_chunk_l[i])
-        retrieve_paper.append(title_chunk[i])
 
     input["papers"] = "; ".join(context)
     prompt = query_format.format_map(input)
@@ -70,7 +66,7 @@ def summarize_research_field(
 
     content = completion.choices[0].message["content"]
     content_l = [content]
-    return content_l, retrieve_paper
+    return content_l
 
 
 def generate_ideas(trend: str) -> List[str]:
