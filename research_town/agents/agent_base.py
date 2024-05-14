@@ -4,8 +4,6 @@ from xml.etree import ElementTree
 
 import requests
 
-from ..utils.author_relation import bfs
-from ..utils.paper_collection import get_bert_embedding
 from ..utils.agent_prompting import (
     communicate_with_multiple_researchers,
     generate_ideas,
@@ -13,6 +11,8 @@ from ..utils.agent_prompting import (
     summarize_research_field,
     write_paper_abstract,
 )
+from ..utils.author_relation import bfs
+from ..utils.paper_collection import get_bert_embedding
 
 
 class BaseResearchAgent(object):
