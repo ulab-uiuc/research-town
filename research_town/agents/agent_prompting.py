@@ -40,7 +40,8 @@ def summarize_research_field(
     chunks_embedding_text_all = data_embedding_l
     num_chunk = 10
 
-    neib_all = neiborhood_search(chunks_embedding_text_all, query_embedding, num_chunk)
+    neib_all = neiborhood_search(
+        chunks_embedding_text_all, query_embedding, num_chunk)
     neib_all = neib_all.reshape(-1)
 
     context = []
@@ -154,7 +155,8 @@ def write_paper_abstract(ideas: List[str], external_data: Dict[str, Dict[str, Li
     )
 
     openai.api_key = KEY
-    input = {"ideas_serialize_all": ideas_serialize_all, "papers_serialize_all": papers_serialize_all}
+    input = {"ideas_serialize_all": ideas_serialize_all,
+             "papers_serialize_all": papers_serialize_all}
 
     prompt = prompt_qa.format_map(input)
     try:
@@ -177,11 +179,63 @@ def write_paper_abstract(ideas: List[str], external_data: Dict[str, Dict[str, Li
     content = completion.choices[0].message["content"]
     return [content]
 
+
+def review_paper_(titles: Dict[str, str], external_data: Dict[str, str]):
+    """
+    Review paper from using list, and external data (published papers)
+    """
+
+    titles_serialize = []
+    for _, timestamp in enumerate(titles.keys()):
+        title_entry = f"Time: {timestamp}\nPaper: {external_data[timestamp]}"
+        titles_serialize.append(title_entry)
+    titles_serialize_all = "\n\n".join(titles_serialize)
+
+    papers_serialize = []
+    for _, timestamp in enumerate(external_data.keys()):
+        paper_entry = f"Time: {timestamp}\nPaper: {external_data[timestamp]}"
+        papers_serialize.append(paper_entry)
+    papers_serialize_all = "\n\n".join(papers_serialize)
+
+    prompt_qa = (
+        "Please give some reviews based on the following inputs and external data."
+        "You might use two or more of these titles if they are related and works well together."
+        "Here are the titles: {titles_serialize_all}"
+        "Here are the external data, which is a list of related papers: {papers_serialize_all}"
+    )
+
+    openai.api_key = KEY
+    input = {"titles_serialize_all": titles_serialize_all,
+             "papers_serialize_all": papers_serialize_all}
+
+    prompt = prompt_qa.format_map(input)
+    try:
+        completion = openai.ChatCompletion.create(
+            model=llm_model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+            seed=42,
+            top_p=0,
+        )
+    except Exception:
+        time.sleep(20)
+        completion = openai.ChatCompletion.create(
+            model=llm_model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+            seed=42,
+            top_p=0,
+        )
+    content = completion.choices[0].message["content"]
+    return [content]
+
+
 def communicate_with_multiple_researchers(input: Dict[str, str]):
     """
     This is a single-round chat method. One that contains a chat history can better enable
     """
-    single_round_chat_serialize = [f"Message from researcher named {name}: {message}" for name, message in input.items()]
+    single_round_chat_serialize = [
+        f"Message from researcher named {name}: {message}" for name, message in input.items()]
     single_round_chat_serialize_all = "\n".join(single_round_chat_serialize)
     prompt_qa = (
         "Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. "

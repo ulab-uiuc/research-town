@@ -12,6 +12,7 @@ from .agent_prompting import (
     summarize_research_direction,
     summarize_research_field,
     write_paper_abstract,
+    review_paper_
 )
 
 
@@ -42,12 +43,15 @@ class BaseResearchAgent(object):
             papers_by_year: Dict[int, List[ElementTree.Element]] = {}
 
             for entry in entries:
-                title = self.find_text(entry, "{http://www.w3.org/2005/Atom}title")
+                title = self.find_text(
+                    entry, "{http://www.w3.org/2005/Atom}title")
                 published = self.find_text(
                     entry, "{http://www.w3.org/2005/Atom}published"
                 )
-                abstract = self.find_text(entry, "{http://www.w3.org/2005/Atom}summary")
-                authors_elements = entry.findall("{http://www.w3.org/2005/Atom}author")
+                abstract = self.find_text(
+                    entry, "{http://www.w3.org/2005/Atom}summary")
+                authors_elements = entry.findall(
+                    "{http://www.w3.org/2005/Atom}author")
                 authors = [
                     self.find_text(author, "{http://www.w3.org/2005/Atom}name")
                     for author in authors_elements
@@ -55,7 +59,8 @@ class BaseResearchAgent(object):
                 link = self.find_text(entry, "{http://www.w3.org/2005/Atom}id")
 
                 if author_name in authors:
-                    coauthors = [author for author in authors if author != author_name]
+                    coauthors = [
+                        author for author in authors if author != author_name]
                     coauthors_str = ", ".join(coauthors)
 
                     papers_list.append(
@@ -148,7 +153,7 @@ class BaseResearchAgent(object):
             dataset=dataset,
             data_embedding=time_chunks_embed,
         )  # trend
-        trend_output=trend[0]
+        trend_output = trend[0]
         return trend_output
 
     def find_collaborators(self, input: Dict[str, str]) -> List[str]:
@@ -156,7 +161,8 @@ class BaseResearchAgent(object):
 
     def get_co_author_relationships(self, name: str, max_node: int):
         start_author = [name]
-        graph, node_feat, edge_feat = bfs(author_list=start_author, node_limit=max_node)
+        graph, node_feat, edge_feat = bfs(
+            author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat
 
     def generate_idea(
@@ -187,7 +193,8 @@ class BaseResearchAgent(object):
         return paper_abstract[0]
 
     def review_paper(self, input: Dict[str, str], external_data: Dict[str, str]) -> str:
-        return "review comments"
+        paper_review = review_paper_(input, external_data)
+        return paper_review
 
     def make_review_decision(
         self, input: Dict[str, str], external_data: Dict[str, str]
