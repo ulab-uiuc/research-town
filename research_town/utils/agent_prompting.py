@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import openai
 
@@ -12,11 +12,17 @@ llm_model = "mistralai/Mixtral-8x7B-Instruct-v0.1"
 
 
 @exponential_backoff(retries=5, base_wait_time=1)
-def openai_prompting(llm_model: str, prompt: str) -> List[str]:
+def openai_prompting(
+    llm_model: str,
+    prompt: str,
+    return_num: Optional[int] = 2,
+    max_token_num: Optional[int] = 512,
+) -> List[str]:
     completion = openai.Completion.create(
         model=llm_model,
         messages=[{"role": "user", "content": prompt}],
-        max_tokens=512,
+        max_tokens=max_token_num,
+        num=return_num,
     )
     content = completion.choices[0].message["content"]
     content_l = [content]
