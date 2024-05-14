@@ -6,7 +6,7 @@ import requests
 
 from ..utils.author_relation import bfs
 from ..utils.paper_collection import get_bert_embedding
-from .agent_prompting import (
+from ..utils.agent_prompting import (
     communicate_with_multiple_researchers,
     generate_ideas,
     summarize_research_direction,

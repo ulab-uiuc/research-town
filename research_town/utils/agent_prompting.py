@@ -2,8 +2,8 @@ from typing import Any, Dict, List
 
 import openai
 
-from ..utils.decorator import exponential_backoff
-from ..utils.paper_collection import (
+from .decorator import exponential_backoff
+from .paper_collection import (
     get_bert_embedding,
     neiborhood_search,
 )
@@ -49,7 +49,7 @@ def summarize_research_field(
         "Here is my profile: {profile}"
         "Here are the keywords: {keywords}"
     )
-    
+
     template_input = {"profile": profile, "keywords": keywords}
     query = query_template.format_map(template_input)
 
