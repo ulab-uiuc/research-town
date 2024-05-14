@@ -10,12 +10,12 @@ def get_authors(authors: List[str], first_author: bool = False) -> str:
     return ", ".join(authors)
 
 
-def author_position(author, author_list):
+def author_position(author: str, author_list: List[str]) -> int:
     for ind, i in enumerate(author_list):
         if author.lower() == i.lower():
             return ind + 1
 
-    return "NULL"
+    return -1
 
 
 def co_author_frequency(
@@ -65,7 +65,7 @@ def fetch_author_info(author: str) -> Tuple[List[Dict[str, Any]], List[str]]:
 
 def bfs(
     author_list: List[str], node_limit: int = 20
-) -> Tuple[List[Tuple[str, str]], Dict[str, List[Dict[str, Any]]], Dict]:
+) -> Tuple[List[Tuple[str, str]], Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
     graph = []
     node_feat: Dict[str, List[Dict[str, Any]]] = dict()
     edge_feat: Dict[str, List[Dict[str, Any]]] = dict()
