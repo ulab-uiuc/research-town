@@ -3,10 +3,7 @@ from typing import Any, Dict, List
 import openai
 
 from .decorator import exponential_backoff
-from .paper_collection import (
-    get_bert_embedding,
-    neiborhood_search,
-)
+from .paper_collection import get_bert_embedding, neiborhood_search
 
 KEY = "TOGETHER_API_KEY"
 openai.api_base = "https://api.together.xyz"
