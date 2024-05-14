@@ -1,22 +1,22 @@
 import math
 import time
 from functools import wraps
-from typing import Any, Callable
+from typing import Any, Callable, List
 
 INF = float(math.inf)
 
 def exponential_backoff(
     retries: int = 5, base_wait_time: int = 1
-) -> Callable[[Callable[..., str]], Callable[..., str]]:
+) -> Callable[[Callable[..., List[str]]], Callable[..., List[str]]]:
     """
     Decorator for applying exponential backoff to a function.
     :param retries: Maximum number of retries.
     :param base_wait_time: Base wait time in seconds for the exponential backoff.
     """
 
-    def decorator(func: Callable[..., str]) -> Callable[..., str]:
+    def decorator(func: Callable[..., List[str]]) -> Callable[..., List[str]]:
         @wraps(func)
-        def wrapper(*args: Any, **kwargs: Any) -> str:
+        def wrapper(*args: Any, **kwargs: Any) -> List[str]:
             attempts = 0
             while attempts < retries:
                 try:
@@ -30,7 +30,7 @@ def exponential_backoff(
             print(
                 f"Failed to execute '{func.__name__}' after {retries} retries."
             )
-            return "FAILED"
+            return ['Failed']
 
         return wrapper
 
