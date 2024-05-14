@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 from xml.etree import ElementTree
 
 import requests
@@ -154,7 +154,7 @@ class BaseResearchAgent(object):
     def find_collaborators(self, input: Dict[str, str]) -> List[str]:
         return ["Alice", "Bob", "Charlie"]
 
-    def get_co_author_relationships(self, name: str, max_node: int):
+    def get_co_author_relationships(self, name: str, max_node: int) -> Tuple[List[Tuple[str, str]], Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
         start_author = [name]
         graph, node_feat, edge_feat = bfs(author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat

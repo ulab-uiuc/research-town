@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Optional
-
+import os
 import openai
+import torch
 
 from .decorator import exponential_backoff
 from .paper_collection import get_bert_embedding, neiborhood_search
 
-KEY = "TOGETHER_API_KEY"
+
 openai.api_base = "https://api.together.xyz"
-openai.api_key = KEY
-llm_model = "mistralai/Mixtral-8x7B-Instruct-v0.1"
+openai.api_key = os.environ["TOGETHER_AI_API_KEY"]
 
 
 @exponential_backoff(retries=5, base_wait_time=1)
@@ -33,9 +33,11 @@ def get_query_embedding(query: str) -> Any:
     return get_bert_embedding([query])
 
 
-def find_nearest_neighbors(data_embeddings: List[Any], query_embedding: Any, num_neighbors: int) -> List[int]:
+def find_nearest_neighbors(data_embeddings: List[Any], query_embedding: Any, num_neighbors: int) -> Any:
     neighbors = neiborhood_search(data_embeddings, query_embedding, num_neighbors)
-    return neighbors.reshape(-1).tolist()
+    neighbors = neighbors.reshape(-1) 
+    
+    return neighbors.tolist()
 
 
 def summarize_research_field(
@@ -43,6 +45,7 @@ def summarize_research_field(
     keywords: List[str],
     dataset: Dict[str, Any],
     data_embedding: Dict[str, Any],
+    llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     Summarize research field based on profile, keywords, written papers
@@ -70,7 +73,10 @@ def summarize_research_field(
     return openai_prompting(llm_model, prompt)
 
 
-def generate_ideas(trend: str) -> List[str]:
+def generate_ideas(
+    trend: str,
+    llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
+) -> List[str]:
     """
     Generate research ideas based on the trending of one research field
     """
@@ -84,7 +90,10 @@ def generate_ideas(trend: str) -> List[str]:
     return openai_prompting(llm_model, prompt)
 
 
-def summarize_research_direction(personal_info: str) -> List[str]:
+def summarize_research_direction(
+    personal_info: str,
+    llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
+) -> List[str]:
     """
     Summarize research direction based on personal research history
     """
@@ -98,7 +107,11 @@ def summarize_research_direction(personal_info: str) -> List[str]:
     return openai_prompting(llm_model, prompt)
 
 
-def write_paper_abstract(ideas: List[str], external_data: Dict[str, Dict[str, List[str]]]):
+def write_paper_abstract(
+    ideas: List[str], 
+    external_data: Dict[str, Dict[str, List[str]]],
+    llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
+) -> List[str]:
     """
     Write paper using ideas from list, and external data (published papers)
     """
@@ -127,7 +140,10 @@ def write_paper_abstract(ideas: List[str], external_data: Dict[str, Dict[str, Li
     return openai_prompting(llm_model, prompt)
 
 
-def communicate_with_multiple_researchers(input: Dict[str, str]):
+def communicate_with_multiple_researchers(
+    input: Dict[str, str],
+    llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
+) -> List[str]:
     """
     This is a single-round chat method. One that contains a chat history can better enable
     """
