@@ -10,10 +10,12 @@ from ..utils.paper_collection import (
 
 KEY = "TOGETHER_API_KEY"
 openai.api_base = "https://api.together.xyz"
+openai.api_key = KEY
 llm_model = "mistralai/Mixtral-8x7B-Instruct-v0.1"
 
+
 @exponential_backoff(retries=5, base_wait_time=1)
-def openai_prompting(llm_model: str, prompt: str) -> str:
+def openai_prompting(llm_model: str, prompt: str) -> List[str]:
     completion = openai.Completion.create(
         model=llm_model,
         messages=[{"role": "user", "content": prompt}],
@@ -24,66 +26,72 @@ def openai_prompting(llm_model: str, prompt: str) -> str:
     return content_l
 
 
+def get_query_embedding(query: str) -> Any:
+    return get_bert_embedding([query])
+
+
+def find_nearest_neighbors(data_embeddings: List[Any], query_embedding: Any, num_neighbors: int) -> List[int]:
+    neighbors = neiborhood_search(data_embeddings, query_embedding, num_neighbors)
+    return neighbors.reshape(-1).tolist()
+
+
 def summarize_research_field(
     profile: Dict[str, str],
     keywords: List[str],
     dataset: Dict[str, Any],
     data_embedding: Dict[str, Any],
 ) -> List[str]:
-    openai.api_key = KEY
-    query_format = (
+    """
+    Summarize research field based on profile, keywords, written papers
+    """
+    query_template = (
         "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
         "Here is my profile: {profile}"
         "Here are the keywords: {keywords}"
     )
+    
+    template_input = {"profile": profile, "keywords": keywords}
+    query = query_template.format_map(template_input)
 
-    input = {"profile": profile, "keywords": keywords}
+    query_embedding = get_query_embedding(query)
 
-    query = query_format.format_map(input)
+    text_chunks = [abstract for papers in dataset.values() for abstract in papers["abstract"]]
+    data_embeddings = [embedding for embeddings in data_embedding.values() for embedding in embeddings]
 
-    query_embedding = get_bert_embedding([query])
-    text_chunk_l = []
-    data_embedding_l = []
-    for k in dataset.keys():
-        text_chunk_l.extend(dataset[k]["abstract"])
-        data_embedding_l.extend(data_embedding[k])
+    nearest_indices = find_nearest_neighbors(data_embeddings, query_embedding, num_neighbors=10)
+    context = [text_chunks[i] for i in nearest_indices]
 
-    chunks_embedding_text_all = data_embedding_l
-    num_chunk = 10
+    template_input["papers"] = "; ".join(context)
+    prompt = query_template.format_map(template_input)
 
-    neib_all = neiborhood_search(chunks_embedding_text_all, query_embedding, num_chunk)
-    neib_all = neib_all.reshape(-1)
-
-    context = []
-    for i in neib_all:
-        context.append(text_chunk_l[i])
-
-    input["papers"] = "; ".join(context)
-    prompt = query_format.format_map(input)
     return openai_prompting(llm_model, prompt)
 
 
 def generate_ideas(trend: str) -> List[str]:
-    prompt_qa = (
+    """
+    Generate research ideas based on the trending of one research field
+    """
+    prompt_template = (
         "Here is a high-level summarized trend of a research field {trend}. "
         "How do you view this field? Do you have any novel ideas or insights? "
         "Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences."
     )
-    openai.api_key = KEY
-    input = {"trend": trend}
-    prompt = prompt_qa.format_map(input)
+    template_input = {"trend": trend}
+    prompt = prompt_template.format_map(template_input)
     return openai_prompting(llm_model, prompt)
 
 
 def summarize_research_direction(personal_info: str) -> List[str]:
-    prompt_qa = (
+    """
+    Summarize research direction based on personal research history
+    """
+    prompt_template = (
         "Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. "
         "Focus more on more recent personas. Be concise and clear (around 300 words). "
         "Here are the personas from different times: {personalinfo}"
     )
-    openai.api_key = KEY
-    input = {"personalinfo": personal_info}
-    prompt = prompt_qa.format_map(input)
+    template_input = {"personalinfo": personal_info}
+    prompt = prompt_template.format_map(template_input)
     return openai_prompting(llm_model, prompt)
 
 
@@ -104,17 +112,15 @@ def write_paper_abstract(ideas: List[str], external_data: Dict[str, Dict[str, Li
 
     papers_serialize_all = "\n\n".join(papers_serialize)
 
-    prompt_qa = (
+    prompt_template = (
         "Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract. "
         "You might use two or more of these ideas if they are related and works well together. "
         "Here are the ideas: {ideas_serialize_all}"
         "Here are the external data, which is a list abstracts of related papers: {papers_serialize_all}"
     )
 
-    openai.api_key = KEY
-    input = {"ideas_serialize_all": ideas_serialize_all, "papers_serialize_all": papers_serialize_all}
-
-    prompt = prompt_qa.format_map(input)
+    template_input = {"ideas_serialize_all": ideas_serialize_all, "papers_serialize_all": papers_serialize_all}
+    prompt = prompt_template.format_map(template_input)
     return openai_prompting(llm_model, prompt)
 
 
@@ -124,12 +130,10 @@ def communicate_with_multiple_researchers(input: Dict[str, str]):
     """
     single_round_chat_serialize = [f"Message from researcher named {name}: {message}" for name, message in input.items()]
     single_round_chat_serialize_all = "\n".join(single_round_chat_serialize)
-    prompt_qa = (
+    prompt_template = (
         "Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. "
         "Here are the messages from other researchers: {single_round_chat_serialize_all}"
     )
-    openai.api_key = KEY
-    input = {"single_round_chat_serialize_all": single_round_chat_serialize_all}
-    prompt = prompt_qa.format_map(input)
-
+    template_input = {"single_round_chat_serialize_all": single_round_chat_serialize_all}
+    prompt = prompt_template.format_map(template_input)
     return openai_prompting(llm_model, prompt)
