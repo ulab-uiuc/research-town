@@ -39,6 +39,7 @@ build-backend = "poetry.core.masonry.api"
 ignore_missing_imports = true
 check_untyped_defs = true
 follow_imports = "skip"
+strict = true
 plugins = [
     "pydantic.mypy"
 ]
