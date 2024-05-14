@@ -55,7 +55,7 @@ class BaseResearchAgent(object):
             print("Failed to fetch data from arXiv.")
             return {"info": "fail!"}
 
-    def _get_papers(self, entries: List[ElementTree.Element], author_name: str) -> Tuple[int, Dict[int, List[ElementTree.Element]]]:
+    def _get_papers(self, entries: List[ElementTree.Element], author_name: str) -> Tuple[List[Dict[str, Any]], Dict[int, List[ElementTree.Element]]]:
         papers_list: List[Dict[str, Any]] = []
         papers_by_year: Dict[int, List[ElementTree.Element]] = {}
 
