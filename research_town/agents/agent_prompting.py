@@ -1,8 +1,8 @@
-import time
 from typing import Any, Dict, List
 
 import openai
 
+from ..utils.decorator import exponential_backoff
 from ..utils.paper_collection import (
     get_bert_embedding,
     neiborhood_search,
@@ -11,6 +11,17 @@ from ..utils.paper_collection import (
 KEY = "TOGETHER_API_KEY"
 openai.api_base = "https://api.together.xyz"
 llm_model = "mistralai/Mixtral-8x7B-Instruct-v0.1"
+
+@exponential_backoff(retries=5, base_wait_time=1)
+def openai_prompting(llm_model: str, prompt: str) -> str:
+    completion = openai.Completion.create(
+        model=llm_model,
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=512,
+    )
+    content = completion.choices[0].message["content"]
+    content_l = [content]
+    return content_l
 
 
 def summarize_research_field(
@@ -49,24 +60,7 @@ def summarize_research_field(
 
     input["papers"] = "; ".join(context)
     prompt = query_format.format_map(input)
-
-    try:
-        completion = openai.ChatCompletion.create(
-            model=llm_model,
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=512,
-        )
-    except Exception:
-        time.sleep(20)
-        completion = openai.ChatCompletion.create(
-            model=llm_model,
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=512,
-        )
-
-    content = completion.choices[0].message["content"]
-    content_l = [content]
-    return content_l
+    return openai_prompting(llm_model, prompt)
 
 
 def generate_ideas(trend: str) -> List[str]:
@@ -78,25 +72,7 @@ def generate_ideas(trend: str) -> List[str]:
     openai.api_key = KEY
     input = {"trend": trend}
     prompt = prompt_qa.format_map(input)
-    try:
-        completion = openai.ChatCompletion.create(
-            model=llm_model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            seed=42,
-            top_p=1,
-        )
-    except Exception:
-        time.sleep(20)
-        completion = openai.ChatCompletion.create(
-            model=llm_model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            seed=42,
-            top_p=1,
-        )
-    content = completion.choices[0].message["content"]
-    return [content]
+    return openai_prompting(llm_model, prompt)
 
 
 def summarize_research_direction(personal_info: str) -> List[str]:
@@ -108,25 +84,7 @@ def summarize_research_direction(personal_info: str) -> List[str]:
     openai.api_key = KEY
     input = {"personalinfo": personal_info}
     prompt = prompt_qa.format_map(input)
-    try:
-        completion = openai.ChatCompletion.create(
-            model=llm_model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            seed=42,
-            top_p=0,
-        )
-    except Exception:
-        time.sleep(20)
-        completion = openai.ChatCompletion.create(
-            model=llm_model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            seed=42,
-            top_p=0,
-        )
-    content = completion.choices[0].message["content"]
-    return [content]
+    return openai_prompting(llm_model, prompt)
 
 
 def write_paper_abstract(ideas: List[str], external_data: Dict[str, Dict[str, List[str]]]):
@@ -157,25 +115,8 @@ def write_paper_abstract(ideas: List[str], external_data: Dict[str, Dict[str, Li
     input = {"ideas_serialize_all": ideas_serialize_all, "papers_serialize_all": papers_serialize_all}
 
     prompt = prompt_qa.format_map(input)
-    try:
-        completion = openai.ChatCompletion.create(
-            model=llm_model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            seed=42,
-            top_p=0,
-        )
-    except Exception:
-        time.sleep(20)
-        completion = openai.ChatCompletion.create(
-            model=llm_model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            seed=42,
-            top_p=0,
-        )
-    content = completion.choices[0].message["content"]
-    return [content]
+    return openai_prompting(llm_model, prompt)
+
 
 def communicate_with_multiple_researchers(input: Dict[str, str]):
     """
@@ -190,22 +131,5 @@ def communicate_with_multiple_researchers(input: Dict[str, str]):
     openai.api_key = KEY
     input = {"single_round_chat_serialize_all": single_round_chat_serialize_all}
     prompt = prompt_qa.format_map(input)
-    try:
-        completion = openai.ChatCompletion.create(
-            model=llm_model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            seed=42,
-            top_p=0,
-        )
-    except Exception:
-        time.sleep(20)
-        completion = openai.ChatCompletion.create(
-            model=llm_model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            seed=42,
-            top_p=0,
-        )
-    content = completion.choices[0].message["content"]
-    return [content]
+
+    return openai_prompting(llm_model, prompt)
