@@ -7,7 +7,7 @@ from .decorator import exponential_backoff
 from .paper_collection import get_bert_embedding, neiborhood_search
 
 openai.api_base = "https://api.together.xyz"
-openai.api_key = os.environ["TOGETHER_AI_API_KEY"]
+openai.api_key = os.environ["TOGETHER_API_KEY"]
 
 
 @exponential_backoff(retries=5, base_wait_time=1)

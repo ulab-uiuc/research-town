@@ -26,5 +26,6 @@ jobs:
       env: # Or as an environment variable
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        TOGETHER_API_KEY: ${{ secrets.TOGETHER_API_KEY }}
       run: |
         poetry run pytest
