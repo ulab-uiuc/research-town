@@ -1,11 +1,10 @@
-from typing import Any, Dict, List, Optional
 import os
+from typing import Any, Dict, List, Optional
+
 import openai
-import torch
 
 from .decorator import exponential_backoff
 from .paper_collection import get_bert_embedding, neiborhood_search
-
 
 openai.api_base = "https://api.together.xyz"
 openai.api_key = os.environ["TOGETHER_AI_API_KEY"]
@@ -35,8 +34,8 @@ def get_query_embedding(query: str) -> Any:
 
 def find_nearest_neighbors(data_embeddings: List[Any], query_embedding: Any, num_neighbors: int) -> Any:
     neighbors = neiborhood_search(data_embeddings, query_embedding, num_neighbors)
-    neighbors = neighbors.reshape(-1) 
-    
+    neighbors = neighbors.reshape(-1)
+
     return neighbors.tolist()
 
 
@@ -108,7 +107,7 @@ def summarize_research_direction(
 
 
 def write_paper_abstract(
-    ideas: List[str], 
+    ideas: List[str],
     external_data: Dict[str, Dict[str, List[str]]],
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
