@@ -44,10 +44,7 @@ def test_write_paper_abstract(mock_openai_prompting: MagicMock) -> None:
 
 @patch("research_town.utils.agent_prompting.openai_prompting")
 def test_read_paper(mock_openai_prompting: MagicMock) -> None:
-    mock_response = MagicMock()
-    mock_response.return_value = ["This is a paper."]
-
-    mock_openai_prompting.return_value = mock_response
+    mock_openai_prompting.return_value = ["This is a paper"]
 
     external_data = {"2021-01-01": {"abstract": ["This is a paper"]}}
     domain = "machine learning"
