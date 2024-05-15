@@ -71,7 +71,7 @@ def summarize_research_field(
 
     return openai_prompting(llm_model, prompt)
 
-def find_collaborators_(input: Dict[str, str], self_profile, collaborator_profiles, parameter=0.5, max_number=3,  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
+def find_collaborators_(input: Dict[str, str], self_profile: Dict[str, str], collaborator_profiles: Dict[str, str], parameter: float =0.5, max_number: int =3,  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
     self_serialize = [
         f"Name: {name}\nProfile: {self_profile[name]}" for _, name in enumerate(self_profile.keys())]
     self_serialize_all = "\n\n".join(self_serialize)
@@ -162,7 +162,7 @@ def write_paper_abstract(
     prompt = prompt_template.format_map(template_input)
     return openai_prompting(llm_model, prompt)
 
-def review_paper_(titles: Dict[str, str], external_data: Dict[str, str],  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1"):
+def review_paper_(titles: Dict[str, str], external_data: Dict[str, str],  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
     """
     Review paper from using list, and external data (published papers)
     """

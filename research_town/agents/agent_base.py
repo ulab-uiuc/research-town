@@ -4,17 +4,17 @@ from xml.etree import ElementTree
 
 import requests
 
-from ..utils.author_relation import bfs
-from ..utils.paper_collection import get_bert_embedding
 from ..utils.agent_prompting import (
     communicate_with_multiple_researchers,
+    find_collaborators_,
     generate_ideas,
+    review_paper_,
     summarize_research_direction,
     summarize_research_field,
     write_paper_abstract,
-    review_paper_,
-    find_collaborators_
 )
+from ..utils.author_relation import bfs
+from ..utils.paper_collection import get_bert_embedding
 
 
 class BaseResearchAgent(object):
@@ -157,7 +157,7 @@ class BaseResearchAgent(object):
         trend_output = trend[0]
         return trend_output
 
-    def find_collaborators(self, input: Dict[str, str], parameter=0.5, max_number=3) -> List[str]:
+    def find_collaborators(self, input: Dict[str, str], parameter: float =0.5, max_number: int =3) -> List[str]:
         start_author = [self.name]
         graph, _, _ = bfs(
             author_list=start_author, node_limit=max_number)
@@ -171,13 +171,6 @@ class BaseResearchAgent(object):
         collaborators_list = [
             collaborator for collaborator in collaborators if collaborator in result]
         return collaborators_list
-
-    def get_co_author_relationships(self, name: str, max_node: int):
-        start_author = [name]
-        graph, node_feat, edge_feat = bfs(
-            author_list=start_author, node_limit=max_node)
-        trend_output = trend[0]
-        return trend_output
 
     def get_co_author_relationships(self, name: str, max_node: int) -> Tuple[List[Tuple[str, str]], Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
         start_author = [name]

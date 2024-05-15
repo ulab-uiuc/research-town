@@ -1,5 +1,4 @@
 from typing import List
-
 from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
