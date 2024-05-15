@@ -194,7 +194,7 @@ class BaseResearchAgent(object):
 
     def review_paper(self, input: Dict[str, str], external_data: Dict[str, str]) -> str:
         paper_review = review_paper_(input, external_data)
-        return paper_review
+        return paper_review[0]
 
     def make_review_decision(
         self, input: Dict[str, str], external_data: Dict[str, str]

@@ -8,7 +8,7 @@ from ..utils.paper_collection import (
     neiborhood_search,
 )
 
-KEY = "7a1821d4e4a3e41e3d523e97e0fd8950dedac2824aef99cb19d550500cb21a42"
+KEY = "8296dfb726872f46701fdd87468fc1d8af83965efb49963ee876194e316b041a"
 openai.api_base = "https://api.together.xyz"
 llm_model = "mistralai/Mixtral-8x7B-Instruct-v0.1"
 
