@@ -91,7 +91,7 @@ def find_collaborators_(input: Dict[str, str], self_profile: Dict[str, str], col
         "Here are a full list of the names and profiles of potential collaborators: {collaborators_serialize_all}"
         "Generate the collaborator in a list separated by '-' for each collaborator"
     )
-    input = {"max_number": max_number, "self_serialize_all": self_serialize_all,
+    input = {"max_number": str(max_number), "self_serialize_all": self_serialize_all,
              "task_serialize_all": task_serialize_all, "collaborators_serialize_all": collaborator_serialize_all}
     prompt = prompt_qa.format_map(input)
     return openai_prompting(llm_model, prompt)
