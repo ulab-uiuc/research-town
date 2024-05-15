@@ -1,4 +1,4 @@
-
+from typing import List
 from research_town.agents.agent_base import BaseResearchAgent
 
 
@@ -37,3 +37,10 @@ def test_read_paper():
     research_agent = BaseResearchAgent("Jiaxuan You")
     summary = research_agent.read_paper(external_data, domain)
     assert isinstance(summary, str)
+
+
+def test_find_collaborators():
+    research_agent = BaseResearchAgent("Jiaxuan You")
+    collaborators = research_agent.find_collaborators(
+        input={"11 May 2024": "I want to organize a workshop on how far are we from AGI (artificial general intelligence) at ICLR 2024. This workshop aims to become a melting pot for ideas, discussions, and debates regarding our proximity to AGI."}, parameter=0.5, max_number=3)
+    assert isinstance(collaborators, List)

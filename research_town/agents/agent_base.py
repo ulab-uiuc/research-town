@@ -12,7 +12,8 @@ from .agent_prompting import (
     summarize_research_direction,
     summarize_research_field,
     write_paper_abstract,
-    review_paper_
+    review_paper_,
+    find_collaborators_
 )
 
 
@@ -156,8 +157,20 @@ class BaseResearchAgent(object):
         trend_output = trend[0]
         return trend_output
 
-    def find_collaborators(self, input: Dict[str, str]) -> List[str]:
-        return ["Alice", "Bob", "Charlie"]
+    def find_collaborators(self, input: Dict[str, str], parameter=0.5, max_number=3) -> List[str]:
+        start_author = [self.name]
+        graph, _, _ = bfs(
+            author_list=start_author, node_limit=max_number)
+        collaborators = list(
+            {name for pair in graph for name in pair if name != self.name})
+        self_profile = {self.name: self.profile}
+        collaborator_profiles = {author: self.get_profile(
+            author) for author in collaborators}
+        result = find_collaborators_(
+            input, self_profile, collaborator_profiles, parameter, max_number)
+        collaborators_list = [
+            collaborator for collaborator in collaborators if collaborator in result]
+        return collaborators_list
 
     def get_co_author_relationships(self, name: str, max_node: int):
         start_author = [name]

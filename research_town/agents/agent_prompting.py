@@ -70,6 +70,50 @@ def summarize_research_field(
     return content_l
 
 
+def find_collaborators_(input: Dict[str, str], self_profile, collaborator_profiles, parameter=0.5, max_number=3) -> List[str]:
+    self_serialize = [
+        f"Name: {name}\nProfile: {self_profile[name]}" for _, name in enumerate(self_profile.keys())]
+    self_serialize_all = "\n\n".join(self_serialize)
+
+    task_serialize = [f"Time: {timestamp}\nAbstract: {input[timestamp]}\n" for _,
+                      timestamp in enumerate(input.keys())]
+    task_serialize_all = "\n\n".join(task_serialize)
+
+    collaborator_serialize = [
+        f"Name: {name}\nProfile: {collaborator_profiles[name]}" for _, name in enumerate(collaborator_profiles.keys())]
+    collaborator_serialize_all = "\n\n".join(collaborator_serialize)
+
+    prompt_qa = (
+        "Given the name and profile of me, could you find {max_number} collaborators for the following collaboration task?"
+        "Here is my profile: {self_serialize_all}"
+        "The collaboration task include: {task_serialize_all}"
+        "Here are a full list of the names and profiles of potential collaborators: {collaborators_serialize_all}"
+        "Generate the collaborator in a list separated by '-' for each collaborator"
+    )
+    input = {"max_number": max_number, "self_serialize_all": self_serialize_all,
+             "task_serialize_all": task_serialize_all, "collaborators_serialize_all": collaborator_serialize_all}
+    prompt = prompt_qa.format_map(input)
+    try:
+        completion = openai.ChatCompletion.create(
+            model=llm_model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+            seed=42,
+            top_p=0,
+        )
+    except Exception:
+        time.sleep(20)
+        completion = openai.ChatCompletion.create(
+            model=llm_model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+            seed=42,
+            top_p=0,
+        )
+    content = completion.choices[0].message["content"]
+    return content
+
+
 def generate_ideas(trend: str) -> List[str]:
     prompt_qa = (
         "Here is a high-level summarized trend of a research field {trend}. "
