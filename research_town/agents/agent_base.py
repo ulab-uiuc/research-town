@@ -163,9 +163,9 @@ class BaseResearchAgent(object):
             author_list=start_author, node_limit=max_number)
         collaborators = list(
             {name for pair in graph for name in pair if name != self.name})
-        self_profile: Dict[str, str] = {self.name: self.profile}
-        collaborator_profiles: Dict[str, str] = {author: self.get_profile(
-            author) for author in collaborators}
+        self_profile = {self.name: self.profile["profile"]}
+        collaborator_profiles = {author: self.get_profile(
+            author)["profile"] for author in collaborators}
         result = find_collaborators_(
             input, self_profile, collaborator_profiles, parameter, max_number)
         collaborators_list = [
