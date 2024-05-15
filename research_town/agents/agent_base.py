@@ -1,12 +1,12 @@
 import datetime
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 from xml.etree import ElementTree
 
 import requests
 
 from ..utils.author_relation import bfs
 from ..utils.paper_collection import get_bert_embedding
-from .agent_prompting import (
+from ..utils.agent_prompting import (
     communicate_with_multiple_researchers,
     generate_ideas,
     summarize_research_direction,
@@ -173,6 +173,13 @@ class BaseResearchAgent(object):
         return collaborators_list
 
     def get_co_author_relationships(self, name: str, max_node: int):
+        start_author = [name]
+        graph, node_feat, edge_feat = bfs(
+            author_list=start_author, node_limit=max_node)
+        trend_output = trend[0]
+        return trend_output
+
+    def get_co_author_relationships(self, name: str, max_node: int) -> Tuple[List[Tuple[str, str]], Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
         start_author = [name]
         graph, node_feat, edge_feat = bfs(
             author_list=start_author, node_limit=max_node)
