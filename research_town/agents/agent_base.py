@@ -5,13 +5,13 @@ from xml.etree import ElementTree
 import requests
 
 from ..utils.agent_prompting import (
-    communicate_with_multiple_researchers,
-    find_collaborators_,
-    generate_ideas,
-    review_paper_,
-    summarize_research_direction,
-    summarize_research_field,
-    write_paper_abstract,
+    communicate_with_multiple_researchers_prompting,
+    find_collaborators_prompting,
+    generate_ideas_prompting,
+    review_paper_prompting,
+    summarize_research_direction_prompting,
+    summarize_research_field_prompting,
+    write_paper_abstract_prompting,
 )
 from ..utils.author_relation import bfs
 from ..utils.paper_collection import get_bert_embedding
@@ -128,7 +128,7 @@ class BaseResearchAgent(object):
             personal_info = "; ".join(
                 [f"{details['Title & Abstract']}" for details in papers_list]
             )
-            info = summarize_research_direction(personal_info)
+            info = summarize_research_direction_prompting(personal_info)
             return {"name": author_name, "profile": info[0]}
 
         else:
@@ -136,7 +136,7 @@ class BaseResearchAgent(object):
             return {"info": "fail!"}
 
     def communicate(self, message: Dict[str, str]) -> str:
-        return communicate_with_multiple_researchers(message)[0]
+        return communicate_with_multiple_researchers_prompting(message)[0]
 
     def read_paper(
         self, external_data: Dict[str, Dict[str, List[str]]], domain: str
@@ -148,7 +148,7 @@ class BaseResearchAgent(object):
             papers_embedding = get_bert_embedding(papers)
             time_chunks_embed[time] = papers_embedding
 
-        trend = summarize_research_field(
+        trend = summarize_research_field_prompting(
             profile=self.profile,
             keywords=[domain],
             dataset=dataset,
@@ -166,7 +166,7 @@ class BaseResearchAgent(object):
         self_profile = {self.name: self.profile["profile"]}
         collaborator_profiles = {author: self.get_profile(
             author)["profile"] for author in collaborators}
-        result = find_collaborators_(
+        result = find_collaborators_prompting(
             input, self_profile, collaborator_profiles, parameter, max_number)
         collaborators_list = [
             collaborator for collaborator in collaborators if collaborator in result]
@@ -188,7 +188,7 @@ class BaseResearchAgent(object):
             papers_embedding = get_bert_embedding(papers)
             time_chunks_embed[time] = papers_embedding
 
-        trends, paper_links = summarize_research_field(
+        trends, paper_links = summarize_research_field_prompting(
             profile=self.profile,
             keywords=[domain],
             dataset=dataset,
@@ -196,17 +196,17 @@ class BaseResearchAgent(object):
         )  # trend
         ideas: List[str] = []
         for trend in trends:
-            idea = generate_ideas(trend)[0]
+            idea = generate_ideas_prompting(trend)[0]
             ideas.append(idea)
 
         return ideas
 
     def write_paper(self, input: List[str], external_data: Dict[str, Dict[str, List[str]]]) -> str:
-        paper_abstract = write_paper_abstract(input, external_data)
+        paper_abstract = write_paper_abstract_prompting(input, external_data)
         return paper_abstract[0]
 
     def review_paper(self, input: Dict[str, str], external_data: Dict[str, str]) -> str:
-        paper_review = review_paper_(input, external_data)
+        paper_review = review_paper_prompting(input, external_data)
         return paper_review[0]
 
     def make_review_decision(

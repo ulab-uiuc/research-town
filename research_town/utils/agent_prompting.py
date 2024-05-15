@@ -39,7 +39,7 @@ def find_nearest_neighbors(data_embeddings: List[Any], query_embedding: Any, num
     return neighbors.tolist()
 
 
-def summarize_research_field(
+def summarize_research_field_prompting(
     profile: Dict[str, str],
     keywords: List[str],
     dataset: Dict[str, Any],
@@ -71,7 +71,7 @@ def summarize_research_field(
 
     return openai_prompting(llm_model, prompt)
 
-def find_collaborators_(input: Dict[str, str], self_profile: Dict[str, str], collaborator_profiles: Dict[str, str], parameter: float =0.5, max_number: int =3,  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
+def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, str], collaborator_profiles: Dict[str, str], parameter: float =0.5, max_number: int =3,  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
     self_serialize = [
         f"Name: {name}\nProfile: {self_profile[name]}" for _, name in enumerate(self_profile.keys())]
     self_serialize_all = "\n\n".join(self_serialize)
@@ -96,7 +96,7 @@ def find_collaborators_(input: Dict[str, str], self_profile: Dict[str, str], col
     prompt = prompt_qa.format_map(input)
     return openai_prompting(llm_model, prompt)
 
-def generate_ideas(
+def generate_ideas_prompting(
     trend: str,
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
@@ -113,7 +113,7 @@ def generate_ideas(
     return openai_prompting(llm_model, prompt)
 
 
-def summarize_research_direction(
+def summarize_research_direction_prompting(
     personal_info: str,
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
@@ -130,7 +130,7 @@ def summarize_research_direction(
     return openai_prompting(llm_model, prompt)
 
 
-def write_paper_abstract(
+def write_paper_abstract_prompting(
     ideas: List[str],
     external_data: Dict[str, Dict[str, List[str]]],
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
@@ -162,7 +162,7 @@ def write_paper_abstract(
     prompt = prompt_template.format_map(template_input)
     return openai_prompting(llm_model, prompt)
 
-def review_paper_(titles: Dict[str, str], external_data: Dict[str, str],  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+def review_paper_prompting(titles: Dict[str, str], external_data: Dict[str, str],  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
     """
     Review paper from using list, and external data (published papers)
     """
@@ -192,7 +192,7 @@ def review_paper_(titles: Dict[str, str], external_data: Dict[str, str],  llm_mo
     prompt = prompt_qa.format_map(input)
     return openai_prompting(llm_model, prompt)
 
-def communicate_with_multiple_researchers(
+def communicate_with_multiple_researchers_prompting(
     input: Dict[str, str],
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
