@@ -179,21 +179,8 @@ class BaseResearchAgent(object):
         return graph, node_feat, edge_feat
 
     def generate_idea(
-        self, external_data: Dict[str, Dict[str, List[str]]], domain: str
+        self, trends: List[str], domain: str
     ) -> List[str]:
-        time_chunks_embed = {}
-        dataset = external_data
-        for time in dataset.keys():
-            papers = dataset[time]["abstract"]
-            papers_embedding = get_bert_embedding(papers)
-            time_chunks_embed[time] = papers_embedding
-
-        trends, paper_links = summarize_research_field_prompting(
-            profile=self.profile,
-            keywords=[domain],
-            dataset=dataset,
-            data_embedding=time_chunks_embed,
-        )  # trend
         ideas: List[str] = []
         for trend in trends:
             idea = generate_ideas_prompting(trend)[0]

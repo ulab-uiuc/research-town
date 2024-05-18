@@ -9,13 +9,15 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
 
     def step(self) -> None:
         external_data = self.kb.get_data(10, "machine learning")
+        abstracts = {}
         for agent_name, agent in self.agents.items():
-            agent.read_paper(external_data=external_data, domain="machine learning")
+            trend = agent.read_paper(external_data=external_data, domain="machine learning")
+            trends = [trend]
             agent.find_collaborators({})
-            agent.generate_idea(external_data=external_data, domain="machine learning")
-            agent.write_paper([], {})
+            ideas = agent.generate_idea(trends=trends, domain="machine learning")
+            abstract = agent.write_paper(ideas, external_data)
+            abstracts[agent_name] = abstract
+        return self.submit_paper(abstracts)
 
-        self.submit_paper()
-
-    def submit_paper(self) -> None:
-        pass
+    def submit_paper(self, abstracts: Dict[str, str]) -> Dict[str, str]:
+        return abstracts
