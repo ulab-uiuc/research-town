@@ -47,8 +47,8 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         review_dict: Dict[str, str] = {}
         for name, role in self.roles.items():
             if role == "reviewer":
-                review_dict[name] = self.agents[name].review_paper(input={},
-                                                                   external_data=self.submission)
+                review_dict[name] = self.agents[name].review_paper(
+                    external_data=self.submission)
         self.submit_review(review_dict)
         # print("Paper Reviewing", self.review)
 
