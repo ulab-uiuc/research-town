@@ -5,7 +5,7 @@ from ..agents.agent_base import BaseResearchAgent
 
 
 class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
-    def __init__(self, agent_dict: Dict[str, BaseResearchAgent]) -> None:
+    def __init__(self, agent_dict: Dict[str, str]) -> None:
         super().__init__(agent_dict)
         self.turn_number = 0
         self.turn_max = 1
@@ -57,7 +57,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         for name, role in self.roles.items():
             if role == "reviewer":
                 decision_dict[name] = self.agents[name].make_review_decision(
-                    input=self.submission, external_data=self.review)
+                    input=self.submission, external_data=review_dict)
         self.submit_decision(decision_dict)
         # print("Decision Making", self.decision)
 
@@ -67,8 +67,8 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
             if role == "author":
                 rebuttal_dict[name] = self.agents[name].rebut_review(
                     submission=self.submission,
-                    review=self.review,
-                    decision=self.decision)
+                    review=review_dict,
+                    decision=decision_dict)
         # print("Paper Rebuttal", self.rebuttal)
 
         self.turn_number += 1

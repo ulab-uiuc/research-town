@@ -214,5 +214,5 @@ class BaseResearchAgent(object):
     ) -> str:
         return "accept"
 
-    def rebut_review(self, submission: str, review: str, decision: str) -> str:
+    def rebut_review(self, submission: Dict[str, str], review: Dict[str, str], decision: Dict[str, str]) -> str:
         return "It should be accepted."
