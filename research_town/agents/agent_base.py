@@ -205,8 +205,8 @@ class BaseResearchAgent(object):
         paper_abstract = write_paper_abstract_prompting(input, external_data)
         return paper_abstract[0]
 
-    def review_paper(self, input: Dict[str, str], external_data: Dict[str, str]) -> str:
-        paper_review = review_paper_prompting(input, external_data)
+    def review_paper(self, external_data: Dict[str, str]) -> str:
+        paper_review = review_paper_prompting(external_data)
         return paper_review[0]
 
     def make_review_decision(
