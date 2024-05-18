@@ -157,7 +157,7 @@ class BaseResearchAgent(object):
         trend_output = trend[0]
         return trend_output
 
-    def find_collaborators(self, input: Dict[str, str], parameter: float =0.5, max_number: int =3) -> List[str]:
+    def find_collaborators(self, input: Dict[str, str], parameter: float = 0.5, max_number: int = 3) -> List[str]:
         start_author = [self.name]
         graph, _, _ = bfs(
             author_list=start_author, node_limit=max_number)
@@ -213,3 +213,6 @@ class BaseResearchAgent(object):
         self, input: Dict[str, str], external_data: Dict[str, str]
     ) -> str:
         return "accept"
+
+    def rebut_review(self, submission: str, review: str, decision: str) -> str:
+        return "It should be accepted."
