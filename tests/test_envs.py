@@ -1,5 +1,8 @@
-from research_town.envs.env_paper_rebuttal import PaperRebuttalMultiAgentEnv
 from unittest.mock import MagicMock, patch
+
+from research_town.envs.env_paper_rebuttal import (
+    PaperRebuttalMultiAgentEnv,
+)
 
 
 @patch("research_town.utils.agent_prompting.openai_prompting")
