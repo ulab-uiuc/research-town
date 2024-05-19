@@ -193,6 +193,66 @@ def review_paper_prompting(external_data: Dict[str, str],  llm_model: Optional[s
     return openai_prompting(llm_model, prompt)
 
 
+def make_review_decision_prompting(submission: Dict[str, str], review: Dict[str, str], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+    submission_serialize = []
+    for _, title in enumerate(submission.keys()):
+        abstract = submission[title]
+        submission_entry = f"Title: {title}\nAbstract:{abstract}\n"
+        submission_serialize.append(submission_entry)
+    submission_serialize_all = "\n\n".join(submission_serialize)
+
+    review_serialize = []
+    for _, name in enumerate(review.keys()):
+        content = review[name]
+        review_entry = f"Name: {name}\nContent: {content}\n"
+        review_serialize.append(review_entry)
+    review_serialize_all = "\n\n".join(review_serialize)
+
+    prompt_template = (
+        "Please make an review decision to decide whether the following submission should be accepted or rejected by an academic conference. Here are several reviews from reviewers for this submission. Please indicate your review decision as accept or reject."
+        "Here is the submission: {submission_serialize_all}"
+        "Here are the reviews: {review_serialize_all}"
+    )
+    template_input = {"submission_serialize_all": submission_serialize_all,
+                      "review_serialize_all": review_serialize_all}
+    prompt = prompt_template.format_map(template_input)
+    return openai_prompting(llm_model, prompt)
+
+
+def rebut_review_prompting(submission: Dict[str, str], review: Dict[str, str], decision: Dict[str, str], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+    submission_serialize = []
+    for _, title in enumerate(submission.keys()):
+        abstract = submission[title]
+        submission_entry = f"Title: {title}\nAbstract:{abstract}\n"
+        submission_serialize.append(submission_entry)
+    submission_serialize_all = "\n\n".join(submission_serialize)
+
+    review_serialize = []
+    for _, name in enumerate(review.keys()):
+        content = review[name]
+        review_entry = f"Name: {name}\nContent: {content}\n"
+        review_serialize.append(review_entry)
+    review_serialize_all = "\n\n".join(review_serialize)
+
+    decision_serialize = []
+    for _, name in enumerate(decision.keys()):
+        content = decision[name]
+        decision_entry = f"Name: {name}\nDecision: {content}\n"
+        decision_serialize.append(decision_entry)
+    decision_serialize_all = "\n\n".join(decision_serialize)
+
+    prompt_template = (
+        "Please write a rebuttal for the following submission you have made to an academic conference. Here are the reviews and decisions from the reviewers. Your rebuttal should rebut the reviews to convince the reviewers to accept your submission."
+        "Here is the submission: {submission_serialize_all}"
+        "Here are the reviews: {review_serialize_all}"
+        "Here are the decisions: {decision_serialize_all}"
+    )
+    template_input = {"submission_serialize_all": submission_serialize_all,
+                      "review_serialize_all": review_serialize_all, "decision_serialize_all": decision_serialize_all}
+    prompt = prompt_template.format_map(template_input)
+    return openai_prompting(llm_model, prompt)
+
+
 def communicate_with_multiple_researchers_prompting(
     input: Dict[str, str],
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",

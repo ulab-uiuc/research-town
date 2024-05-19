@@ -49,16 +49,14 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                 review_dict[name] = self.agents[name].review_paper(
                     external_data=self.submission)
         self.submit_review(review_dict)
-        # print("Paper Reviewing", self.review)
 
         # Decision Making
         decision_dict: Dict[str, str] = {}
         for name, role in self.roles.items():
             if role == "reviewer":
                 decision_dict[name] = self.agents[name].make_review_decision(
-                    input=self.submission, external_data=review_dict)
+                    submission=self.submission, review=review_dict)
         self.submit_decision(decision_dict)
-        # print("Decision Making", self.decision)
 
         # Rebuttal Submitting
         rebuttal_dict: Dict[str, str] = {}
@@ -68,7 +66,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                     submission=self.submission,
                     review=review_dict,
                     decision=decision_dict)
-        # print("Paper Rebuttal", self.rebuttal)
+        self.submit_rebuttal(rebuttal_dict)
 
         self.turn_number += 1
         if self.decision == "accept":

@@ -8,6 +8,8 @@ from ..utils.agent_prompting import (
     communicate_with_multiple_researchers_prompting,
     find_collaborators_prompting,
     generate_ideas_prompting,
+    make_review_decision_prompting,
+    rebut_review_prompting,
     review_paper_prompting,
     summarize_research_direction_prompting,
     summarize_research_field_prompting,
@@ -210,9 +212,11 @@ class BaseResearchAgent(object):
         return paper_review[0]
 
     def make_review_decision(
-        self, input: Dict[str, str], external_data: Dict[str, str]
+        self, submission: Dict[str, str], review: Dict[str, str]
     ) -> str:
-        return "accept"
+        review_decision = make_review_decision_prompting(submission, review)
+        return "accept" if "accept" in review_decision[0] else "reject"
 
     def rebut_review(self, submission: Dict[str, str], review: Dict[str, str], decision: Dict[str, str]) -> str:
-        return "It should be accepted."
+        rebut_review = rebut_review_prompting(submission, review, decision)
+        return rebut_review[0]
