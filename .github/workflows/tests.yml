@@ -1,8 +1,9 @@
 name: Pytest
 on:
   pull_request:
-  push:
-    branches: [main]
+    types: [ready_for_review, synchronize, opened, reopened]
+    branches:
+      - main
 
 jobs:
   Pytest:
