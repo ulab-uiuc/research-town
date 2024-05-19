@@ -167,7 +167,12 @@ class BaseResearchAgent(object):
         collaborator_profiles = {author: self.get_profile(
             author)["profile"] for author in collaborators}
         result = find_collaborators_prompting(
-            input, self_profile, collaborator_profiles, parameter, max_number)
+            input,
+            self_profile,
+            collaborator_profiles,
+            parameter,
+            max_number
+        )
         collaborators_list = [
             collaborator for collaborator in collaborators if collaborator in result]
         return collaborators_list

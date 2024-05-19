@@ -71,6 +71,7 @@ def summarize_research_field_prompting(
 
     return openai_prompting(llm_model, prompt)
 
+
 def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, str], collaborator_profiles: Dict[str, str], parameter: float =0.5, max_number: int =3,  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
     self_serialize = [
         f"Name: {name}\nProfile: {self_profile[name]}" for _, name in enumerate(self_profile.keys())]
@@ -95,6 +96,7 @@ def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, 
              "task_serialize_all": task_serialize_all, "collaborators_serialize_all": collaborator_serialize_all}
     prompt = prompt_qa.format_map(input)
     return openai_prompting(llm_model, prompt)
+
 
 def generate_ideas_prompting(
     trend: str,
