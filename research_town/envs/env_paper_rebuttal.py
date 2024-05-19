@@ -1,6 +1,5 @@
 from typing import Dict
 
-from ..agents.agent_base import BaseResearchAgent
 from .env_base import BaseMultiAgentEnv
 
 
