@@ -83,7 +83,7 @@ def test_find_collaborators(mock_openai_prompting: MagicMock) -> None:
 
 
 @patch("research_town.utils.agent_prompting.openai_prompting")
-def test_make_review_decision(mock_openai_prompting: MagicMock):
+def test_make_review_decision(mock_openai_prompting: MagicMock) -> None:
     mock_openai_prompting.return_value = [
         "Accept"]
 
@@ -96,7 +96,7 @@ def test_make_review_decision(mock_openai_prompting: MagicMock):
 
 
 @patch("research_town.utils.agent_prompting.openai_prompting")
-def test_rebut_review(mock_openai_prompting: MagicMock):
+def test_rebut_review(mock_openai_prompting: MagicMock) -> None:
     mock_openai_prompting.return_value = [
         "This is a paper rebuttal"]
 
