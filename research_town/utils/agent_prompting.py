@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 import openai
 
@@ -33,7 +33,8 @@ def get_query_embedding(query: str) -> Any:
 
 
 def find_nearest_neighbors(data_embeddings: List[Any], query_embedding: Any, num_neighbors: int) -> Any:
-    neighbors = neiborhood_search(data_embeddings, query_embedding, num_neighbors)
+    neighbors = neiborhood_search(
+        data_embeddings, query_embedding, num_neighbors)
     neighbors = neighbors.reshape(-1)
 
     return neighbors.tolist()
@@ -60,10 +61,13 @@ def summarize_research_field_prompting(
 
     query_embedding = get_query_embedding(query)
 
-    text_chunks = [abstract for papers in dataset.values() for abstract in papers["abstract"]]
-    data_embeddings = [embedding for embeddings in data_embedding.values() for embedding in embeddings]
+    text_chunks = [abstract for papers in dataset.values()
+                   for abstract in papers["abstract"]]
+    data_embeddings = [embedding for embeddings in data_embedding.values()
+                       for embedding in embeddings]
 
-    nearest_indices = find_nearest_neighbors(data_embeddings, query_embedding, num_neighbors=10)
+    nearest_indices = find_nearest_neighbors(
+        data_embeddings, query_embedding, num_neighbors=10)
     context = [text_chunks[i] for i in nearest_indices]
 
     template_input["papers"] = "; ".join(context)
@@ -71,7 +75,8 @@ def summarize_research_field_prompting(
 
     return openai_prompting(llm_model, prompt)
 
-def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, str], collaborator_profiles: Dict[str, str], parameter: float =0.5, max_number: int =3,  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
+
+def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, str], collaborator_profiles: Dict[str, str], parameter: float = 0.5, max_number: int = 3,  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
     self_serialize = [
         f"Name: {name}\nProfile: {self_profile[name]}" for _, name in enumerate(self_profile.keys())]
     self_serialize_all = "\n\n".join(self_serialize)
@@ -95,6 +100,7 @@ def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, 
              "task_serialize_all": task_serialize_all, "collaborators_serialize_all": collaborator_serialize_all}
     prompt = prompt_qa.format_map(input)
     return openai_prompting(llm_model, prompt)
+
 
 def generate_ideas_prompting(
     trend: str,
@@ -158,39 +164,106 @@ def write_paper_abstract_prompting(
         "Here are the external data, which is a list abstracts of related papers: {papers_serialize_all}"
     )
 
-    template_input = {"ideas_serialize_all": ideas_serialize_all, "papers_serialize_all": papers_serialize_all}
+    template_input = {"ideas_serialize_all": ideas_serialize_all,
+                      "papers_serialize_all": papers_serialize_all}
     prompt = prompt_template.format_map(template_input)
     return openai_prompting(llm_model, prompt)
 
-def review_paper_prompting(titles: Dict[str, str], external_data: Dict[str, str],  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+def review_score_prompting(paper_review: str, llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> int:
+    prompt_qa = (
+        "Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only returns one number score."
+        "Here are the reviews: {paper_review}"
+    )
+    input = {"paper_review": paper_review}
+    prompt = prompt_qa.format_map(input)
+    score_str = openai_prompting(llm_model, prompt)
+    if score_str[0].isdigit():
+        return int(score_str[0])
+    else:
+        return 0
+
+def review_paper_prompting(external_data: Dict[str, str],  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
     """
     Review paper from using list, and external data (published papers)
     """
 
-    titles_serialize = []
-    for _, timestamp in enumerate(titles.keys()):
-        title_entry = f"Time: {timestamp}\nPaper: {external_data[timestamp]}"
-        titles_serialize.append(title_entry)
-    titles_serialize_all = "\n\n".join(titles_serialize)
-
     papers_serialize = []
     for _, timestamp in enumerate(external_data.keys()):
-        paper_entry = f"Time: {timestamp}\nPaper: {external_data[timestamp]}"
+        paper_entry = f"Title: {timestamp}\nPaper: {external_data[timestamp]}"
         papers_serialize.append(paper_entry)
     papers_serialize_all = "\n\n".join(papers_serialize)
 
     prompt_qa = (
         "Please give some reviews based on the following inputs and external data."
         "You might use two or more of these titles if they are related and works well together."
-        "Here are the titles: {titles_serialize_all}"
         "Here are the external data, which is a list of related papers: {papers_serialize_all}"
     )
 
-    input = {"titles_serialize_all": titles_serialize_all,
-             "papers_serialize_all": papers_serialize_all}
+    input = {"papers_serialize_all": papers_serialize_all}
 
     prompt = prompt_qa.format_map(input)
     return openai_prompting(llm_model, prompt)
+
+
+def make_review_decision_prompting(submission: Dict[str, str], review: Dict[str, Tuple[int,str]], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+    submission_serialize = []
+    for _, title in enumerate(submission.keys()):
+        abstract = submission[title]
+        submission_entry = f"Title: {title}\nAbstract:{abstract}\n"
+        submission_serialize.append(submission_entry)
+    submission_serialize_all = "\n\n".join(submission_serialize)
+
+    review_serialize = []
+    for _, name in enumerate(review.keys()):
+        content = review[name]
+        review_entry = f"Name: {name}\nContent: {content}\n"
+        review_serialize.append(review_entry)
+    review_serialize_all = "\n\n".join(review_serialize)
+
+    prompt_template = (
+        "Please make an review decision to decide whether the following submission should be accepted or rejected by an academic conference. Here are several reviews from reviewers for this submission. Please indicate your review decision as accept or reject."
+        "Here is the submission: {submission_serialize_all}"
+        "Here are the reviews: {review_serialize_all}"
+    )
+    template_input = {"submission_serialize_all": submission_serialize_all,
+                      "review_serialize_all": review_serialize_all}
+    prompt = prompt_template.format_map(template_input)
+    return openai_prompting(llm_model, prompt)
+
+
+def rebut_review_prompting(submission: Dict[str, str], review: Dict[str, Tuple[int, str]], decision: Dict[str, Tuple[bool, str]], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+    submission_serialize = []
+    for _, title in enumerate(submission.keys()):
+        abstract = submission[title]
+        submission_entry = f"Title: {title}\nAbstract:{abstract}\n"
+        submission_serialize.append(submission_entry)
+    submission_serialize_all = "\n\n".join(submission_serialize)
+
+    review_serialize = []
+    for _, name in enumerate(review.keys()):
+        content = review[name]
+        review_entry = f"Name: {name}\nContent: {content}\n"
+        review_serialize.append(review_entry)
+    review_serialize_all = "\n\n".join(review_serialize)
+
+    decision_serialize = []
+    for _, name in enumerate(decision.keys()):
+        content = decision[name]
+        decision_entry = f"Name: {name}\nDecision: {content}\n"
+        decision_serialize.append(decision_entry)
+    decision_serialize_all = "\n\n".join(decision_serialize)
+
+    prompt_template = (
+        "Please write a rebuttal for the following submission you have made to an academic conference. Here are the reviews and decisions from the reviewers. Your rebuttal should rebut the reviews to convince the reviewers to accept your submission."
+        "Here is the submission: {submission_serialize_all}"
+        "Here are the reviews: {review_serialize_all}"
+        "Here are the decisions: {decision_serialize_all}"
+    )
+    template_input = {"submission_serialize_all": submission_serialize_all,
+                      "review_serialize_all": review_serialize_all, "decision_serialize_all": decision_serialize_all}
+    prompt = prompt_template.format_map(template_input)
+    return openai_prompting(llm_model, prompt)
+
 
 def communicate_with_multiple_researchers_prompting(
     input: Dict[str, str],
@@ -199,12 +272,14 @@ def communicate_with_multiple_researchers_prompting(
     """
     This is a single-round chat method. One that contains a chat history can better enable
     """
-    single_round_chat_serialize = [f"Message from researcher named {name}: {message}" for name, message in input.items()]
+    single_round_chat_serialize = [
+        f"Message from researcher named {name}: {message}" for name, message in input.items()]
     single_round_chat_serialize_all = "\n".join(single_round_chat_serialize)
     prompt_template = (
         "Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. "
         "Here are the messages from other researchers: {single_round_chat_serialize_all}"
     )
-    template_input = {"single_round_chat_serialize_all": single_round_chat_serialize_all}
+    template_input = {
+        "single_round_chat_serialize_all": single_round_chat_serialize_all}
     prompt = prompt_template.format_map(template_input)
     return openai_prompting(llm_model, prompt)
