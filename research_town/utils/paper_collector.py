@@ -1,10 +1,14 @@
-from typing import Dict, List, Tuple
+import datetime
+from typing import Any, Dict, List, Tuple
+from xml.etree import ElementTree
 
 import arxiv
 import faiss
+import requests
 import torch
 from transformers import BertModel, BertTokenizer
 
+ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"
 
 def get_related_papers(
     corpus: List[str], query: str, num: int
@@ -51,6 +55,13 @@ def neiborhood_search(
     return index
 
 
+def find_text(element: ElementTree.Element, path: str) -> str:
+    found_element = element.find(path)
+    if found_element is not None and found_element.text is not None:
+        return found_element.text.strip()
+    return ""
+
+
 def get_daily_papers(
     topic: str, query: str = "slam", max_results: int = 2
 ) -> Tuple[Dict[str, Dict[str, List[str]]], str]:
@@ -75,3 +86,104 @@ def get_daily_papers(
             content[publish_time]['abstract'] = [paper_title + ": " + paper_abstract]
             content[publish_time]['info'] = [paper_title + ": " + paper_url]
     return content, newest_day
+
+def get_papers(entries: List[ElementTree.Element], author_name: str) -> Tuple[List[Dict[str, Any]], Dict[int, List[ElementTree.Element]]]:
+    papers_list: List[Dict[str, Any]] = []
+    papers_by_year: Dict[int, List[ElementTree.Element]] = {}
+
+    for entry in entries:
+        title = find_text(entry, f"{ATOM_NAMESPACE}title")
+        published = find_text(entry, f"{ATOM_NAMESPACE}published")
+        abstract = find_text(entry, f"{ATOM_NAMESPACE}summary")
+        authors_elements = entry.findall(f"{ATOM_NAMESPACE}author")
+        authors = [
+            find_text(author, f"{ATOM_NAMESPACE}name")
+            for author in authors_elements
+        ]
+        link = find_text(entry, f"{ATOM_NAMESPACE}id")
+
+        if author_name in authors:
+            coauthors = [author for author in authors if author != author_name]
+            coauthors_str = ", ".join(coauthors)
+
+            papers_list.append(
+                {
+                    "date": published,
+                    "Title & Abstract": f"{title}; {abstract}",
+                    "coauthors": coauthors_str,
+                    "link": link,
+                }
+            )
+
+            published_date = published
+            date_obj = datetime.datetime.strptime(
+                published_date, "%Y-%m-%dT%H:%M:%SZ"
+            )
+            year = date_obj.year
+            if year not in papers_by_year:
+                papers_by_year[year] = []
+            papers_by_year[year].append(entry)
+
+    return papers_list, papers_by_year
+
+def select_papers(papers_by_year: Dict[int, List[ElementTree.Element]], author_name: str) -> List[Dict[str, Any]]:
+    papers_list: List[Dict[str, Any]] = []
+
+    for cycle_start in range(min(papers_by_year), max(papers_by_year) + 1, 5):
+        cycle_end = cycle_start + 4
+        for year in range(cycle_start, cycle_end + 1):
+            if year in papers_by_year:
+                selected_papers = papers_by_year[year][:2]
+                for paper in selected_papers:
+                    title = find_text(
+                        paper, f"{ATOM_NAMESPACE}title"
+                    )
+                    abstract = find_text(
+                        paper, f"{ATOM_NAMESPACE}summary"
+                    )
+                    authors_elements = paper.findall(
+                        f"{ATOM_NAMESPACE}author"
+                    )
+                    co_authors = [
+                        find_text(
+                            author, f"{ATOM_NAMESPACE}name"
+                        )
+                        for author in authors_elements
+                        if find_text(
+                            author, f"{ATOM_NAMESPACE}name"
+                        )
+                        != author_name
+                    ]
+
+                    papers_list.append(
+                        {
+                            "Author": author_name,
+                            "Title & Abstract": f"{title}; {abstract}",
+                            "Date Period": f"{year}",
+                            "Cycle": f"{cycle_start}-{cycle_end}",
+                            "Co_author": ", ".join(co_authors),
+                        }
+                    )
+    return papers_list
+
+
+def get_paper_list(author_name: str) -> List[Dict[str, Any]]:
+    author_query = author_name.replace(" ", "+")
+    url = f"http://export.arxiv.org/api/query?search_query=au:{author_query}&start=0&max_results=300"
+
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        root = ElementTree.fromstring(response.content)
+        entries = root.findall(f"{ATOM_NAMESPACE}entry")
+
+        papers_list, papers_by_year = get_papers(entries, author_name)
+        if len(papers_list) > 40:
+            papers_list = select_papers(papers_by_year, author_name)
+
+        # Trim the list to the 10 most recent papers
+        papers_list = papers_list[:10]
+        return papers_list
+    else:
+        print("Failed to fetch data from arXiv.")
+        return []
