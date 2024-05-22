@@ -5,11 +5,13 @@ from xml.etree import ElementTree
 import requests
 
 from ..utils.agent_prompting import (
-    communicate_with_multiple_researchers,
-    generate_ideas,
-    summarize_research_direction,
-    summarize_research_field,
-    write_paper_abstract,
+    communicate_with_multiple_researchers_prompting,
+    find_collaborators_prompting,
+    generate_ideas_prompting,
+    review_paper_prompting,
+    summarize_research_direction_prompting,
+    summarize_research_field_prompting,
+    write_paper_abstract_prompting,
 )
 from ..utils.author_relation import bfs
 from ..utils.paper_collection import get_bert_embedding
@@ -135,7 +137,7 @@ class BaseResearchAgent(object):
         return papers_list
 
     def communicate(self, message: Dict[str, str]) -> str:
-        return communicate_with_multiple_researchers(message)[0]
+        return communicate_with_multiple_researchers_prompting(message)[0]
 
     def read_paper(
         self, external_data: Dict[str, Dict[str, List[str]]], domain: str
@@ -147,21 +149,34 @@ class BaseResearchAgent(object):
             papers_embedding = get_bert_embedding(papers)
             time_chunks_embed[time] = papers_embedding
 
-        trend = summarize_research_field(
+        trend = summarize_research_field_prompting(
             profile=self.profile,
             keywords=[domain],
             dataset=dataset,
             data_embedding=time_chunks_embed,
         )  # trend
-        trend_output=trend[0]
+        trend_output = trend[0]
         return trend_output
 
-    def find_collaborators(self, input: Dict[str, str]) -> List[str]:
-        return ["Alice", "Bob", "Charlie"]
+    def find_collaborators(self, input: Dict[str, str], parameter: float =0.5, max_number: int =3) -> List[str]:
+        start_author = [self.name]
+        graph, _, _ = bfs(
+            author_list=start_author, node_limit=max_number)
+        collaborators = list(
+            {name for pair in graph for name in pair if name != self.name})
+        self_profile = {self.name: self.profile["profile"]}
+        collaborator_profiles = {author: self.get_profile(
+            author)["profile"] for author in collaborators}
+        result = find_collaborators_prompting(
+            input, self_profile, collaborator_profiles, parameter, max_number)
+        collaborators_list = [
+            collaborator for collaborator in collaborators if collaborator in result]
+        return collaborators_list
 
     def get_co_author_relationships(self, name: str, max_node: int) -> Tuple[List[Tuple[str, str]], Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
         start_author = [name]
-        graph, node_feat, edge_feat = bfs(author_list=start_author, node_limit=max_node)
+        graph, node_feat, edge_feat = bfs(
+            author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat
 
     def generate_idea(
@@ -174,7 +189,7 @@ class BaseResearchAgent(object):
             papers_embedding = get_bert_embedding(papers)
             time_chunks_embed[time] = papers_embedding
 
-        trends, paper_links = summarize_research_field(
+        trends = summarize_research_field_prompting(
             profile=self.profile,
             keywords=[domain],
             dataset=dataset,
@@ -182,17 +197,18 @@ class BaseResearchAgent(object):
         )  # trend
         ideas: List[str] = []
         for trend in trends:
-            idea = generate_ideas(trend)[0]
+            idea = generate_ideas_prompting(trend)[0]
             ideas.append(idea)
 
         return ideas
 
     def write_paper(self, input: List[str], external_data: Dict[str, Dict[str, List[str]]]) -> str:
-        paper_abstract = write_paper_abstract(input, external_data)
+        paper_abstract = write_paper_abstract_prompting(input, external_data)
         return paper_abstract[0]
 
     def review_paper(self, input: Dict[str, str], external_data: Dict[str, str]) -> str:
-        return "review comments"
+        paper_review = review_paper_prompting(input, external_data)
+        return paper_review[0]
 
     def make_review_decision(
         self, input: Dict[str, str], external_data: Dict[str, str]
