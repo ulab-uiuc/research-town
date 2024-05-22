@@ -3,6 +3,9 @@ from unittest.mock import MagicMock, patch
 from research_town.envs.env_paper_rebuttal import (
     PaperRebuttalMultiAgentEnv,
 )
+from research_town.envs.env_paper_submission import (
+    PaperSubmissionMultiAgentEnvironment,
+)
 
 
 @patch("research_town.utils.agent_prompting.openai_prompting")
@@ -19,3 +22,12 @@ def test_paper_rebuttal_env(mock_openai_prompting: MagicMock) -> None:
     assert isinstance(env.review, str)
     assert isinstance(env.decision, str)
     assert isinstance(env.rebuttal, str)
+
+@patch("research_town.utils.agent_prompting.openai_prompting")
+def test_paper_submission_env(mock_openai_prompting: MagicMock) -> None:
+    mock_openai_prompting.return_value = ["This is a placebo."]
+
+    env = PaperSubmissionMultiAgentEnvironment({"Agent0": "Christopher Manning"})
+    papers = env.step()
+    assert isinstance(papers, dict)
+    assert len(papers) > 0
