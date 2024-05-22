@@ -1,7 +1,4 @@
 from typing import Any, Dict, List, Tuple
-from xml.etree import ElementTree
-
-import requests
 
 from ..utils.agent_prompter import (
     communicate_with_multiple_researchers_prompting,
@@ -16,7 +13,7 @@ from ..utils.agent_prompter import (
     write_paper_abstract_prompting,
 )
 from ..utils.author_collector import bfs
-from ..utils.paper_collector import get_papers, select_papers, get_paper_list
+from ..utils.paper_collector import get_paper_list
 
 ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"
 

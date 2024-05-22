@@ -4,9 +4,9 @@ from xml.etree import ElementTree
 
 import arxiv
 import faiss
+import requests
 import torch
 from transformers import BertModel, BertTokenizer
-import requests
 
 ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"
 
