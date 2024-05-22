@@ -91,9 +91,7 @@ class BaseResearchAgent(object):
 
     def review_paper(self, paper: Dict[str, str]) -> Tuple[int, str]:
         paper_review = review_paper_prompting(paper)[0]
-        print(paper_review)
         review_score = review_score_prompting(paper_review)
-        print(review_score, paper_review)
         return review_score, paper_review
 
     def make_review_decision(
