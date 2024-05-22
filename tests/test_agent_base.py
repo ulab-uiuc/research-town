@@ -29,7 +29,6 @@ def test_make_review_decision(mock_openai_prompting: MagicMock) -> None:
     assert review_decision is True
     assert meta_review == "Accept. This is a good paper."
 
-'''
 @patch("research_town.utils.agent_prompting.openai_prompting")
 def test_review_paper(mock_openai_prompting: MagicMock) -> None:
     def mock_response(*args, **kwargs):
@@ -117,4 +116,3 @@ def test_rebut_review(mock_openai_prompting: MagicMock) -> None:
     rebut_review = research_agent.rebut_review(submission=submission, review={
         "Jiaxuan You": review}, decision={"Jiaxuan You": review_decision})
     assert isinstance(rebut_review, str)
-'''
