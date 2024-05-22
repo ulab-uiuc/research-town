@@ -1,6 +1,6 @@
 from typing import Dict, List
 
-from ..utils.paper_collection import get_daily_papers
+from ..utils.paper_collector import get_daily_papers
 
 
 class BaseKnowledgeBase(object):
