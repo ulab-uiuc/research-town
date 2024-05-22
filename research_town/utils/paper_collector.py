@@ -8,11 +8,10 @@ from transformers import BertModel, BertTokenizer
 def get_related_papers(
     corpus: List[str], query: str, num: int
 ) -> List[str]:
-    import pdb; pdb.set_trace()
     corpus_embedding = get_bert_embedding(corpus)
     query_embedding = get_bert_embedding([query])
     indices = neiborhood_search(corpus_embedding, query_embedding, num)
-    related_papers = [corpus[idx] for idx in indices]
+    related_papers = [corpus[idx] for idx in indices[0].tolist()]
     return related_papers
 
 def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:

@@ -49,15 +49,18 @@ def test_review_paper(mock_openai_prompting: MagicMock) -> None:
     assert review == "This is a paper review for MambaOut."
 
 
+# =========================================================
+# !IMPORTANT! 
+# patch should not add path that it comes from
+# patch should add path that the function is used
+# =========================================================
 @patch("research_town.utils.agent_prompter.openai_prompting")
-@patch("research_town.utils.paper_collector.get_related_papers")
+@patch("research_town.utils.agent_prompter.get_related_papers")
 def test_generate_idea(
     mock_get_related_papers: MagicMock,
     mock_openai_prompting: MagicMock,
 ) -> None:
-    # Define the mock behavior for get_related_papers
     def mock_papers(corpus: List[str], query: str, num: int) -> List[str]:
-        print("mock_papers called with corpus:", corpus, "query:", query, "num:", num)
         if "Could you summarize the keywords of high level research backgrounds and trends" in query:
             return ["Mock abstract 1", "Mock abstract 2"]
         return ["Default abstract"]
