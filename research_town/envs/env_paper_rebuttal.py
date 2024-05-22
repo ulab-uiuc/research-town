@@ -50,7 +50,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         for name, role in self.roles.items():
             if role == "reviewer":
                 review_dict[name] = self.agents[name].review_paper(
-                    external_data=self.submission)
+                    paper=self.submission)
         self.submit_review(review_dict)
 
         # Decision Making

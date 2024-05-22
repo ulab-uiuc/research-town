@@ -5,6 +5,7 @@ import faiss
 import torch
 from transformers import BertModel, BertTokenizer
 
+
 def get_related_papers(
     corpus: List[str], query: str, num: int
 ) -> List[str]:
