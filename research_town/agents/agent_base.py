@@ -4,7 +4,7 @@ from xml.etree import ElementTree
 
 import requests
 
-from ..utils.agent_prompting import (
+from ..utils.agent_prompter import (
     communicate_with_multiple_researchers_prompting,
     find_collaborators_prompting,
     generate_ideas_prompting,
@@ -16,8 +16,7 @@ from ..utils.agent_prompting import (
     summarize_research_field_prompting,
     write_paper_abstract_prompting,
 )
-from ..utils.author_relation import bfs
-from ..utils.paper_collection import get_bert_embedding
+from ..utils.author_collector import bfs
 
 ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"
 
@@ -144,21 +143,13 @@ class BaseResearchAgent(object):
         return communicate_with_multiple_researchers_prompting(message)[0]
 
     def read_paper(
-        self, external_data: Dict[str, Dict[str, List[str]]], domain: str
+        self, papers: Dict[str, Dict[str, List[str]]], domain: str
     ) -> str:
-        time_chunks_embed = {}
-        dataset = external_data
-        for time in dataset.keys():
-            papers = dataset[time]["abstract"]
-            papers_embedding = get_bert_embedding(papers)
-            time_chunks_embed[time] = papers_embedding
-
         trend = summarize_research_field_prompting(
             profile=self.profile,
             keywords=[domain],
-            dataset=dataset,
-            data_embedding=time_chunks_embed,
-        )  # trend
+            papers=papers,
+        )
         trend_output = trend[0]
         return trend_output
 
@@ -184,21 +175,14 @@ class BaseResearchAgent(object):
         return graph, node_feat, edge_feat
 
     def generate_idea(
-        self, external_data: Dict[str, Dict[str, List[str]]], domain: str
+        self, papers: Dict[str, Dict[str, List[str]]], domain: str
     ) -> List[str]:
-        time_chunks_embed = {}
-        dataset = external_data
-        for time in dataset.keys():
-            papers = dataset[time]["abstract"]
-            papers_embedding = get_bert_embedding(papers)
-            time_chunks_embed[time] = papers_embedding
 
         trends = summarize_research_field_prompting(
             profile=self.profile,
             keywords=[domain],
-            dataset=dataset,
-            data_embedding=time_chunks_embed,
-        )  # trend
+            papers=papers,
+        )
         ideas: List[str] = []
         for trend in trends:
             idea = generate_ideas_prompting(trend)[0]
@@ -206,12 +190,12 @@ class BaseResearchAgent(object):
 
         return ideas
 
-    def write_paper(self, input: List[str], external_data: Dict[str, Dict[str, List[str]]]) -> str:
-        paper_abstract = write_paper_abstract_prompting(input, external_data)
+    def write_paper(self, input: List[str], papers: Dict[str, Dict[str, List[str]]]) -> str:
+        paper_abstract = write_paper_abstract_prompting(input, papers)
         return paper_abstract[0]
 
-    def review_paper(self, external_data: Dict[str, str]) -> Tuple[int, str]:
-        paper_review = review_paper_prompting(external_data)[0]
+    def review_paper(self, paper: Dict[str, str]) -> Tuple[int, str]:
+        paper_review = review_paper_prompting(paper)[0]
         print(paper_review)
         review_score = review_score_prompting(paper_review)
         print(review_score, paper_review)

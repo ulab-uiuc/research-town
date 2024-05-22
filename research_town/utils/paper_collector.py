@@ -6,6 +6,15 @@ import torch
 from transformers import BertModel, BertTokenizer
 
 
+def get_related_papers(
+    corpus: List[str], query: str, num: int
+) -> List[str]:
+    corpus_embedding = get_bert_embedding(corpus)
+    query_embedding = get_bert_embedding([query])
+    indices = neiborhood_search(corpus_embedding, query_embedding, num)
+    related_papers = [corpus[idx] for idx in indices[0].tolist()]
+    return related_papers
+
 def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:
     tokenizer = BertTokenizer.from_pretrained("facebook/contriever")
     model = BertModel.from_pretrained("facebook/contriever").to(torch.device("cpu"))
@@ -39,8 +48,8 @@ def neiborhood_search(
     faiss.normalize_L2(xb)
     index.add(xb)  # add vectors to the index
     data, index = index.search(xq, neiborhood_num)
-
     return index
+
 
 def get_daily_papers(
     topic: str, query: str = "slam", max_results: int = 2

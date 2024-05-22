@@ -5,7 +5,7 @@ from research_town.envs.env_paper_rebuttal import (
 )
 
 
-@patch("research_town.utils.agent_prompting.openai_prompting")
+@patch("research_town.utils.agent_prompter.openai_prompting")
 def test_paper_rebuttal_env(mock_openai_prompting: MagicMock) -> None:
     mock_openai_prompting.return_value = [
         "Paper Rebuttal Environment."]
