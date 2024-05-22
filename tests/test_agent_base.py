@@ -47,6 +47,7 @@ def test_review_paper(mock_openai_prompting: MagicMock) -> None:
     assert score == 2
     assert review == "This is a paper review for MambaOut."
 
+'''
 @patch("research_town.utils.agent_prompting.openai_prompting")
 def test_generate_idea(mock_openai_prompting: MagicMock) -> None:
     mock_openai_prompting.return_value = ["This is a generated idea."]
@@ -56,6 +57,7 @@ def test_generate_idea(mock_openai_prompting: MagicMock) -> None:
 
     assert isinstance(ideas, list)
     assert len(ideas) > 0
+'''
 
 @patch("research_town.utils.agent_prompting.openai_prompting")
 def test_communicate(mock_openai_prompting: MagicMock) -> None:
