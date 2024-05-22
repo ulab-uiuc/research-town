@@ -47,7 +47,6 @@ def test_review_paper(mock_openai_prompting: MagicMock) -> None:
     assert score == 2
     assert review == "This is a paper review for MambaOut."
 
-'''
 @patch("research_town.utils.agent_prompting.openai_prompting")
 def test_generate_idea(mock_openai_prompting: MagicMock) -> None:
     mock_openai_prompting.return_value = ["This is a generated idea."]
@@ -57,7 +56,6 @@ def test_generate_idea(mock_openai_prompting: MagicMock) -> None:
 
     assert isinstance(ideas, list)
     assert len(ideas) > 0
-'''
 
 @patch("research_town.utils.agent_prompting.openai_prompting")
 def test_communicate(mock_openai_prompting: MagicMock) -> None:
@@ -102,7 +100,7 @@ def test_find_collaborators(mock_openai_prompting: MagicMock) -> None:
     research_agent = BaseResearchAgent("Jiaxuan You")
     collaborators = research_agent.find_collaborators(
         input={"11 May 2024": "Organize a workshop on how far are we from AGI (artificial general intelligence) at ICLR 2024. This workshop aims to become a melting pot for ideas, discussions, and debates regarding our proximity to AGI."}, parameter=0.5, max_number=3)
-    assert isinstance(collaborators, List)
+    assert isinstance(collaborators, list)
 
 
 @patch("research_town.utils.agent_prompting.openai_prompting")
