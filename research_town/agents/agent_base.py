@@ -8,7 +8,10 @@ from ..utils.agent_prompting import (
     communicate_with_multiple_researchers_prompting,
     find_collaborators_prompting,
     generate_ideas_prompting,
+    make_review_decision_prompting,
+    rebut_review_prompting,
     review_paper_prompting,
+    review_score_prompting,
     summarize_research_direction_prompting,
     summarize_research_field_prompting,
     write_paper_abstract_prompting,
@@ -44,7 +47,7 @@ class BaseResearchAgent(object):
             papers_list, papers_by_year = self._get_papers(entries, author_name)
             if len(papers_list) > 40:
                 papers_list = self._select_papers(papers_by_year, author_name)
-            
+
             # Trim the list to the 10 most recent papers
             papers_list = papers_list[:10]
 
@@ -159,7 +162,7 @@ class BaseResearchAgent(object):
         trend_output = trend[0]
         return trend_output
 
-    def find_collaborators(self, input: Dict[str, str], parameter: float =0.5, max_number: int =3) -> List[str]:
+    def find_collaborators(self, input: Dict[str, str], parameter: float = 0.5, max_number: int = 3) -> List[str]:
         start_author = [self.name]
         graph, _, _ = bfs(
             author_list=start_author, node_limit=max_number)
@@ -194,11 +197,23 @@ class BaseResearchAgent(object):
         paper_abstract = write_paper_abstract_prompting(input, external_data)
         return paper_abstract[0]
 
-    def review_paper(self, input: Dict[str, str], external_data: Dict[str, str]) -> str:
-        paper_review = review_paper_prompting(input, external_data)
-        return paper_review[0]
+    def review_paper(self, external_data: Dict[str, str]) -> Tuple[int, str]:
+        paper_review = review_paper_prompting(external_data)[0]
+        print(paper_review)
+        review_score = review_score_prompting(paper_review)
+        print(review_score, paper_review)
+        return review_score, paper_review
 
     def make_review_decision(
-        self, input: Dict[str, str], external_data: Dict[str, str]
-    ) -> str:
-        return "accept"
+        self, submission: Dict[str, str], review: Dict[str, Tuple[int, str]]
+    ) -> Tuple[bool, str]:
+        meta_review = make_review_decision_prompting(submission, review)
+        if "accept" in meta_review[0].lower():
+            review_decision = True
+        else:
+            review_decision = False
+        return review_decision, meta_review[0]
+
+    def rebut_review(self, submission: Dict[str, str], review: Dict[str, Tuple[int, str]], decision: Dict[str, Tuple[bool, str]]) -> str:
+        rebut_review = rebut_review_prompting(submission, review, decision)
+        return rebut_review[0]
