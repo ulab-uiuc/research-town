@@ -16,6 +16,7 @@ from ..utils.agent_prompting import (
 from ..utils.author_relation import bfs
 from ..utils.paper_collection import get_bert_embedding
 
+ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"
 
 class BaseResearchAgent(object):
     def __init__(self, name: str) -> None:
@@ -38,7 +39,7 @@ class BaseResearchAgent(object):
 
         if response.status_code == 200:
             root = ElementTree.fromstring(response.content)
-            entries = root.findall("{http://www.w3.org/2005/Atom}entry")
+            entries = root.findall(f"{ATOM_NAMESPACE}entry")
 
             papers_list, papers_by_year = self._get_papers(entries, author_name)
             if len(papers_list) > 40:
@@ -50,7 +51,7 @@ class BaseResearchAgent(object):
             personal_info = "; ".join(
                 [f"{details['Title & Abstract']}" for details in papers_list]
             )
-            profile_info = summarize_research_direction(personal_info)
+            profile_info = summarize_research_direction_prompting(personal_info)
             return {"name": author_name, "profile": profile_info[0]}
 
         else:
@@ -62,15 +63,15 @@ class BaseResearchAgent(object):
         papers_by_year: Dict[int, List[ElementTree.Element]] = {}
 
         for entry in entries:
-            title = self.find_text(entry, "{http://www.w3.org/2005/Atom}title")
-            published = self.find_text(entry, "{http://www.w3.org/2005/Atom}published")
-            abstract = self.find_text(entry, "{http://www.w3.org/2005/Atom}summary")
-            authors_elements = entry.findall("{http://www.w3.org/2005/Atom}author")
+            title = self.find_text(entry, f"{ATOM_NAMESPACE}title")
+            published = self.find_text(entry, f"{ATOM_NAMESPACE}published")
+            abstract = self.find_text(entry, f"{ATOM_NAMESPACE}summary")
+            authors_elements = entry.findall(f"{ATOM_NAMESPACE}author")
             authors = [
-                self.find_text(author, "{http://www.w3.org/2005/Atom}name")
+                self.find_text(author, f"{ATOM_NAMESPACE}name")
                 for author in authors_elements
             ]
-            link = self.find_text(entry, "{http://www.w3.org/2005/Atom}id")
+            link = self.find_text(entry, f"{ATOM_NAMESPACE}id")
 
             if author_name in authors:
                 coauthors = [author for author in authors if author != author_name]
@@ -106,21 +107,21 @@ class BaseResearchAgent(object):
                     selected_papers = papers_by_year[year][:2]
                     for paper in selected_papers:
                         title = self.find_text(
-                            paper, "{http://www.w3.org/2005/Atom}title"
+                            paper, f"{ATOM_NAMESPACE}title"
                         )
                         abstract = self.find_text(
-                            paper, "{http://www.w3.org/2005/Atom}summary"
+                            paper, f"{ATOM_NAMESPACE}summary"
                         )
                         authors_elements = paper.findall(
-                            "{http://www.w3.org/2005/Atom}author"
+                            f"{ATOM_NAMESPACE}author"
                         )
                         co_authors = [
                             self.find_text(
-                                author, "{http://www.w3.org/2005/Atom}name"
+                                author, f"{ATOM_NAMESPACE}name"
                             )
                             for author in authors_elements
                             if self.find_text(
-                                author, "{http://www.w3.org/2005/Atom}name"
+                                author, f"{ATOM_NAMESPACE}name"
                             )
                             != author_name
                         ]
