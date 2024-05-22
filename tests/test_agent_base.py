@@ -1,4 +1,5 @@
 from unittest.mock import MagicMock, patch
+from typing import Any, List
 
 from research_town.agents.agent_base import BaseResearchAgent
 
@@ -31,7 +32,7 @@ def test_make_review_decision(mock_openai_prompting: MagicMock) -> None:
 
 @patch("research_town.utils.agent_prompting.openai_prompting")
 def test_review_paper(mock_openai_prompting: MagicMock) -> None:
-    def mock_response(*args, **kwargs):
+    def mock_response(*args: Any, **kwargs: Any) -> List[str]:
         prompt = args[1]
         if "Please give some reviews based on the following inputs and external data." in prompt:
             return ["This is a paper review for MambaOut."]
