@@ -16,7 +16,7 @@ from ..utils.agent_prompter import (
     write_paper_abstract_prompting,
 )
 from ..utils.author_collector import bfs
-from ..utils.paper_collector import get_papers, select_papers
+from ..utils.paper_collector import get_papers, select_papers, get_paper_list
 
 ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"
 
@@ -27,31 +27,14 @@ class BaseResearchAgent(object):
         self.memory: Dict[str, str] = {}
 
     def get_profile(self, author_name: str) -> Dict[str, Any]:
-        author_query = author_name.replace(" ", "+")
-        url = f"http://export.arxiv.org/api/query?search_query=au:{author_query}&start=0&max_results=300"
-
-        response = requests.get(url)
-        papers_list: List[Dict[str, Any]] = []
-
-        if response.status_code == 200:
-            root = ElementTree.fromstring(response.content)
-            entries = root.findall(f"{ATOM_NAMESPACE}entry")
-
-            papers_list, papers_by_year = get_papers(entries, author_name)
-            if len(papers_list) > 40:
-                papers_list = select_papers(papers_by_year, author_name)
-
-            # Trim the list to the 10 most recent papers
-            papers_list = papers_list[:10]
-
+        papers_list = get_paper_list(author_name)
+        if papers_list:
             personal_info = "; ".join(
                 [f"{details['Title & Abstract']}" for details in papers_list]
             )
             profile_info = summarize_research_direction_prompting(personal_info)
             return {"name": author_name, "profile": profile_info[0]}
-
         else:
-            print("Failed to fetch data from arXiv.")
             return {"info": "fail!"}
 
     def communicate(self, message: Dict[str, str]) -> str:

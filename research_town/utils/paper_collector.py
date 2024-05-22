@@ -6,6 +6,7 @@ import arxiv
 import faiss
 import torch
 from transformers import BertModel, BertTokenizer
+import requests
 
 ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"
 
@@ -164,3 +165,25 @@ def select_papers(papers_by_year: Dict[int, List[ElementTree.Element]], author_n
                         }
                     )
     return papers_list
+
+
+def get_paper_list(author_name: str) -> List[Dict[str, Any]]:
+    author_query = author_name.replace(" ", "+")
+    url = f"http://export.arxiv.org/api/query?search_query=au:{author_query}&start=0&max_results=300"
+
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        root = ElementTree.fromstring(response.content)
+        entries = root.findall(f"{ATOM_NAMESPACE}entry")
+
+        papers_list, papers_by_year = get_papers(entries, author_name)
+        if len(papers_list) > 40:
+            papers_list = select_papers(papers_by_year, author_name)
+
+        # Trim the list to the 10 most recent papers
+        papers_list = papers_list[:10]
+        return papers_list
+    else:
+        print("Failed to fetch data from arXiv.")
+        return []
