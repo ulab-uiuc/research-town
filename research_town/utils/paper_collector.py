@@ -1,11 +1,11 @@
-from typing import Dict, List, Tuple, Any
+import datetime
+from typing import Any, Dict, List, Tuple
+from xml.etree import ElementTree
 
 import arxiv
 import faiss
 import torch
 from transformers import BertModel, BertTokenizer
-from xml.etree import ElementTree
-import datetime
 
 ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"
 
