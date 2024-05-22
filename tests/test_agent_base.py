@@ -26,7 +26,7 @@ def test_make_review_decision(mock_openai_prompting: MagicMock) -> None:
     review = research_agent.review_paper(external_data=submission)
     review_decision, meta_review = research_agent.make_review_decision(
         submission=submission, review={"Jiaxuan You": review})
-    assert review_decision == True
+    assert review_decision is True
     assert meta_review == "Accept. This is a good paper."
 
 '''
