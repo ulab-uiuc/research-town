@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Tuple
 
 from .env_base import BaseMultiAgentEnv
 
@@ -21,20 +21,23 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
     def initialize_submission(self, external_data: Dict[str, str]) -> None:
         self.submission = external_data
 
-    def submit_review(self, review_dict: Dict[str, str]) -> None:
+    def submit_review(self, review_dict: Dict[str, Tuple[int, str]]) -> None:
         review_serialize = [
-            f"Reviewer: {name}\nReview: {review}" for name, review in review_dict.items()]
+            f"Reviewer: {name}\nScore: {review[0]}\nReview: {review[1]}" for name, review in review_dict.items()]
         self.review = "\n\n".join(review_serialize)
 
-    def submit_decision(self, decision_dict: Dict[str, str]) -> None:
+    def submit_decision(self, decision_dict: Dict[str, Tuple[bool, str]]) -> None:
         decision_count = {"accept": 0, "reject": 0}
         for _, decision in decision_dict.items():
-            decision_count[decision] += 1
+            if decision[0]:
+                decision_count["accept"] += 1
+            else:
+                decision_count["reject"] += 1
         count_max = 0
-        for decision, count in decision_count.items():
+        for d, count in decision_count.items():
             if count > count_max:
                 count_max = count
-                self.decision = decision
+                self.decision = d
 
     def submit_rebuttal(self, rebuttal_dict: Dict[str, str]) -> None:
         rebuttal_serialize = [
@@ -43,7 +46,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
 
     def step(self) -> None:
         # Paper Reviewing
-        review_dict: Dict[str, str] = {}
+        review_dict: Dict[str, Tuple[int, str]] = {}
         for name, role in self.roles.items():
             if role == "reviewer":
                 review_dict[name] = self.agents[name].review_paper(
@@ -51,7 +54,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.submit_review(review_dict)
 
         # Decision Making
-        decision_dict: Dict[str, str] = {}
+        decision_dict: Dict[str, Tuple[bool, str]] = {}
         for name, role in self.roles.items():
             if role == "reviewer":
                 decision_dict[name] = self.agents[name].make_review_decision(
