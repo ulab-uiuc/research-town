@@ -25,9 +25,8 @@ def test_paper_rebuttal_env(mock_openai_prompting: MagicMock) -> None:
 
 @patch("research_town.utils.agent_prompting.openai_prompting")
 def test_paper_submission_env(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = ["This is a placebo."]
+    mock_openai_prompting.return_value = ["This is a paper."]
 
     env = PaperSubmissionMultiAgentEnvironment({"Agent0": "Christopher Manning"})
-    papers = env.step()
-    assert isinstance(papers, dict)
-    assert len(papers) > 0
+    env.step()
+    assert isinstance(env.paper, str)
