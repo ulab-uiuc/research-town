@@ -174,7 +174,8 @@ def get_paper_list(author_name: str) -> List[Dict[str, Any]]:
     response = requests.get(url)
 
     if response.status_code == 200:
-        root = ElementTree.fromstring(response.content)
+        xml_content = response.content.decode('utf-8', errors='ignore')
+        root = ElementTree.fromstring(xml_content)
         entries = root.findall(f"{ATOM_NAMESPACE}entry")
 
         papers_list, papers_by_year = get_papers(entries, author_name)

@@ -59,7 +59,7 @@ class BaseResearchAgent(object):
         result = find_collaborators_prompting(
             input, self_profile, collaborator_profiles, parameter, max_number)
         collaborators_list = [
-            collaborator for collaborator in collaborators if collaborator in result]
+            collaborator for collaborator in collaborators if collaborator in result[0]]
         return collaborators_list
 
     def get_co_author_relationships(self, name: str, max_node: int) -> Tuple[List[Tuple[str, str]], Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
