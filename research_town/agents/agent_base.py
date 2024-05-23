@@ -74,8 +74,9 @@ class BaseResearchAgent(object):
         self_profile = {self.name: self.profile["profile"]}
         collaborator_profiles = {author: self.get_profile(
             author)["profile"] for author in collaborators}
+        paper_serialize = {paper.title: paper.abstract}
         result = find_collaborators_prompting(
-            input, self_profile, collaborator_profiles, parameter, max_number)
+            paper_serialize, self_profile, collaborator_profiles, parameter, max_number)
         collaborators_list = [
             collaborator for collaborator in collaborators if collaborator in result]
         return collaborators_list
@@ -146,11 +147,7 @@ class BaseResearchAgent(object):
                 agent_review_log.review_score, agent_review_log.review_content)
 
         meta_review = make_review_decision_prompting(paper_dict, review_dict)
-
-        if "accept" in meta_review[0].lower():
-            review_decision = True
-        else:
-            review_decision = False
+        review_decision = "accept" in meta_review[0].lower()
 
         meta_review_log = AgentPaperMetaReviewLog()
         meta_review_log.timestep = (int)(datetime.now().timestamp())

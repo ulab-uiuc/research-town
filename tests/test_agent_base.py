@@ -1,6 +1,11 @@
+import uuid
+
 from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
+from research_town.kbs.envlog import AgentAgentDiscussionLog, AgentPaperMetaReviewLog, AgentPaperRebuttalLog, AgentPaperReviewLog
+from research_town.kbs.profile import PaperProfile, AgentProfile
+
 from tests.utils import mock_papers, mock_prompting
 
 
@@ -17,30 +22,6 @@ def test_get_profile(mock_openai_prompting: MagicMock) -> None:
     assert profile["name"] == "Jiaxuan You"
     assert "profile" in profile.keys()
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_make_review_decision(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = [
-        "Accept. This is a good paper."]
-
-    research_agent = BaseResearchAgent("Jiaxuan You")
-    submission = {"MambaOut: Do We Really Need Mamba for Vision?": "Mamba, an architecture with RNN-like token mixer of state space model (SSM), was recently introduced to address the quadratic complexity of the attention mechanism and subsequently applied to vision tasks. Nevertheless, the performance of Mamba for vision is often underwhelming when compared with convolutional and attention-based models. In this paper, we delve into the essence of Mamba, and conceptually conclude that Mamba is ideally suited for tasks with long-sequence and autoregressive characteristics. For vision tasks, as image classification does not align with either characteristic, we hypothesize that Mamba is not necessary for this task; Detection and segmentation tasks are also not autoregressive, yet they adhere to the long-sequence characteristic, so we believe it is still worthwhile to explore Mamba's potential for these tasks. To empirically verify our hypotheses, we construct a series of models named \\emph{MambaOut} through stacking Mamba blocks while removing their core token mixer, SSM. Experimental results strongly support our hypotheses. Specifically, our MambaOut model surpasses all visual Mamba models on ImageNet image classification, indicating that Mamba is indeed unnecessary for this task. As for detection and segmentation, MambaOut cannot match the performance of state-of-the-art visual Mamba models, demonstrating the potential of Mamba for long-sequence visual tasks."}
-    review = research_agent.review_paper(submission)
-    review_decision, meta_review = research_agent.make_review_decision(
-        submission=submission, review={"Jiaxuan You": review})
-    assert review_decision is True
-    assert meta_review == "Accept. This is a good paper."
-
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_review_paper(mock_openai_prompting: MagicMock) -> None:
-
-    mock_openai_prompting.side_effect = mock_prompting
-
-    research_agent = BaseResearchAgent("Jiaxuan You")
-    score, review = research_agent.review_paper(paper={"MambaOut: Do We Really Need Mamba for Vision?": "Mamba, an architecture with RNN-like token mixer of state space model (SSM), was recently introduced to address the quadratic complexity of the attention mechanism and subsequently applied to vision tasks. Nevertheless, the performance of Mamba for vision is often underwhelming when compared with convolutional and attention-based models. In this paper, we delve into the essence of Mamba, and conceptually conclude that Mamba is ideally suited for tasks with long-sequence and autoregressive characteristics. For vision tasks, as image classification does not align with either characteristic, we hypothesize that Mamba is not necessary for this task; Detection and segmentation tasks are also not autoregressive, yet they adhere to the long-sequence characteristic, so we believe it is still worthwhile to explore Mamba's potential for these tasks. To empirically verify our hypotheses, we construct a series of models named \\emph{MambaOut} through stacking Mamba blocks while removing their core token mixer, SSM. Experimental results strongly support our hypotheses. Specifically, our MambaOut model surpasses all visual Mamba models on ImageNet image classification, indicating that Mamba is indeed unnecessary for this task. As for detection and segmentation, MambaOut cannot match the performance of state-of-the-art visual Mamba models, demonstrating the potential of Mamba for long-sequence visual tasks."})
-    print(score, review)
-    assert score == 2
-    assert review == "This is a paper review for MambaOut."
-
 
 # =========================================================
 # !IMPORTANT!
@@ -54,7 +35,6 @@ def test_generate_idea(
     mock_openai_prompting: MagicMock,
 ) -> None:
 
-
     # Configure the mocks
     mock_get_related_papers.side_effect = mock_papers
     mock_openai_prompting.side_effect = mock_prompting
@@ -64,6 +44,7 @@ def test_generate_idea(
 
     assert isinstance(ideas, list)
     assert len(ideas) > 0
+
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
 def test_communicate(mock_openai_prompting: MagicMock) -> None:
@@ -91,6 +72,8 @@ def test_write_paper_abstract(mock_openai_prompting: MagicMock) -> None:
 # patch should not add path that it comes from
 # patch should add path that the function is used
 # =========================================================
+
+
 @patch("research_town.utils.agent_prompter.openai_prompting")
 @patch("research_town.utils.agent_prompter.get_related_papers")
 def test_read_paper(
@@ -113,21 +96,63 @@ def test_find_collaborators(mock_openai_prompting: MagicMock) -> None:
         "These are collaborators including Jure Leskovec, Rex Ying, Saining Xie, Kaiming He."]
 
     research_agent = BaseResearchAgent("Jiaxuan You")
+    paper = PaperProfile()
+    paper.paper_id = str(uuid.uuid4())
+    paper.title = "Design Space for Graph Neural Networks"
+    paper.abstract = "The rapid evolution of Graph Neural Networks (GNNs) has led to a growing number of new architectures as well as novel applications. However, current research focuses on proposing and evaluating specific architectural designs of GNNs, such as GCN, GIN, or GAT, as opposed to studying the more general design space of GNNs that consists of a Cartesian product of different design dimensions, such as the number of layers or the type of the aggregation function. Additionally, GNN designs are often specialized to a single task, yet few efforts have been made to understand how to quickly find the best GNN design for a novel task or a novel dataset. Here we define and systematically study the architectural design space for GNNs which consists of 315,000 different designs over 32 different predictive tasks."
     collaborators = research_agent.find_collaborators(
-        input={"11 May 2024": "Organize a workshop on how far are we from AGI (artificial general intelligence) at ICLR 2024. This workshop aims to become a melting pot for ideas, discussions, and debates regarding our proximity to AGI."}, parameter=0.5, max_number=3)
+        paper=paper, parameter=0.5, max_number=3)
     assert isinstance(collaborators, list)
+    assert len(collaborators) <= 3
+
+
+@patch("research_town.utils.agent_prompter.openai_prompting")
+def test_make_review_decision(mock_openai_prompting: MagicMock) -> None:
+    mock_openai_prompting.return_value = [
+        "Accept. This is a good paper."]
+
+    research_agent = BaseResearchAgent("Jiaxuan You")
+    paper = PaperProfile()
+    paper.paper_id = str(uuid.uuid4())
+    paper.title = "MambaOut: Do We Really Need Mamba for Vision?"
+    paper.abstract = "Mamba, an architecture with RNN-like token mixer of state space model (SSM), was recently introduced to address the quadratic complexity of the attention mechanism and subsequently applied to vision tasks. Nevertheless, the performance of Mamba for vision is often underwhelming when compared with convolutional and attention-based models. In this paper, we delve into the essence of Mamba, and conceptually conclude that Mamba is ideally suited for tasks with long-sequence and autoregressive characteristics. For vision tasks, as image classification does not align with either characteristic, we hypothesize that Mamba is not necessary for this task; Detection and segmentation tasks are also not autoregressive, yet they adhere to the long-sequence characteristic, so we believe it is still worthwhile to explore Mamba's potential for these tasks. To empirically verify our hypotheses, we construct a series of models named \\emph{MambaOut} through stacking Mamba blocks while removing their core token mixer, SSM. Experimental results strongly support our hypotheses. Specifically, our MambaOut model surpasses all visual Mamba models on ImageNet image classification, indicating that Mamba is indeed unnecessary for this task. As for detection and segmentation, MambaOut cannot match the performance of state-of-the-art visual Mamba models, demonstrating the potential of Mamba for long-sequence visual tasks."
+    review = research_agent.review_paper(paper=paper)
+    decision = research_agent.make_review_decision(
+        paper=paper, review=[review])
+    assert len(decision.decision) > 0
+    assert decision.meta_review == "Accept. This is a good paper."
+
+
+@patch("research_town.utils.agent_prompter.openai_prompting")
+def test_review_paper(mock_openai_prompting: MagicMock) -> None:
+
+    mock_openai_prompting.side_effect = mock_prompting
+
+    research_agent = BaseResearchAgent("Jiaxuan You")
+    paper = PaperProfile()
+    paper.paper_id = str(uuid.uuid4())
+    paper.title = "MambaOut: Do We Really Need Mamba for Vision?"
+    paper.abstract = "Mamba, an architecture with RNN-like token mixer of state space model (SSM), was recently introduced to address the quadratic complexity of the attention mechanism and subsequently applied to vision tasks. Nevertheless, the performance of Mamba for vision is often underwhelming when compared with convolutional and attention-based models. In this paper, we delve into the essence of Mamba, and conceptually conclude that Mamba is ideally suited for tasks with long-sequence and autoregressive characteristics. For vision tasks, as image classification does not align with either characteristic, we hypothesize that Mamba is not necessary for this task; Detection and segmentation tasks are also not autoregressive, yet they adhere to the long-sequence characteristic, so we believe it is still worthwhile to explore Mamba's potential for these tasks. To empirically verify our hypotheses, we construct a series of models named \\emph{MambaOut} through stacking Mamba blocks while removing their core token mixer, SSM. Experimental results strongly support our hypotheses. Specifically, our MambaOut model surpasses all visual Mamba models on ImageNet image classification, indicating that Mamba is indeed unnecessary for this task. As for detection and segmentation, MambaOut cannot match the performance of state-of-the-art visual Mamba models, demonstrating the potential of Mamba for long-sequence visual tasks."
+    review = research_agent.review_paper(paper=paper)
+    assert review.review_score == 2
+    assert review.review_content == "This is a paper review for MambaOut."
 
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
 def test_rebut_review(mock_openai_prompting: MagicMock) -> None:
     mock_openai_prompting.return_value = [
-        "This is a paper rebuttal"]
+        "This is a paper rebuttal."]
 
     research_agent = BaseResearchAgent("Jiaxuan You")
-    submission = {"MambaOut: Do We Really Need Mamba for Vision?": "Mamba, an architecture with RNN-like token mixer of state space model (SSM), was recently introduced to address the quadratic complexity of the attention mechanism and subsequently applied to vision tasks. Nevertheless, the performance of Mamba for vision is often underwhelming when compared with convolutional and attention-based models. In this paper, we delve into the essence of Mamba, and conceptually conclude that Mamba is ideally suited for tasks with long-sequence and autoregressive characteristics. For vision tasks, as image classification does not align with either characteristic, we hypothesize that Mamba is not necessary for this task; Detection and segmentation tasks are also not autoregressive, yet they adhere to the long-sequence characteristic, so we believe it is still worthwhile to explore Mamba's potential for these tasks. To empirically verify our hypotheses, we construct a series of models named \\emph{MambaOut} through stacking Mamba blocks while removing their core token mixer, SSM. Experimental results strongly support our hypotheses. Specifically, our MambaOut model surpasses all visual Mamba models on ImageNet image classification, indicating that Mamba is indeed unnecessary for this task. As for detection and segmentation, MambaOut cannot match the performance of state-of-the-art visual Mamba models, demonstrating the potential of Mamba for long-sequence visual tasks."}
-    review = research_agent.review_paper(paper=submission)
-    review_decision = research_agent.make_review_decision(
-        submission=submission, review={"Jiaxuan You": review})
-    rebut_review = research_agent.rebut_review(submission=submission, review={
-        "Jiaxuan You": review}, decision={"Jiaxuan You": review_decision})
-    assert isinstance(rebut_review, str)
+    paper = PaperProfile()
+    paper.paper_id = str(uuid.uuid4())
+    paper.title = "Design Space for Graph Neural Networks"
+    paper.abstract = "The rapid evolution of Graph Neural Networks (GNNs) has led to a growing number of new architectures as well as novel applications. However, current research focuses on proposing and evaluating specific architectural designs of GNNs, such as GCN, GIN, or GAT, as opposed to studying the more general design space of GNNs that consists of a Cartesian product of different design dimensions, such as the number of layers or the type of the aggregation function. Additionally, GNN designs are often specialized to a single task, yet few efforts have been made to understand how to quickly find the best GNN design for a novel task or a novel dataset. Here we define and systematically study the architectural design space for GNNs which consists of 315,000 different designs over 32 different predictive tasks."
+    review = research_agent.review_paper(paper=paper)
+    decision = research_agent.make_review_decision(
+        paper=paper, review=[review])
+    rebuttal = research_agent.rebut_review(
+        paper=paper, review=[review], decision=[decision])
+    assert isinstance(rebuttal, AgentPaperRebuttalLog)
+    assert len(rebuttal.rebuttal_content) > 0
+    assert rebuttal.rebuttal_content == "This is a paper rebuttal."
