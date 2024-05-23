@@ -161,14 +161,14 @@ def review_score_prompting(paper_review: str, llm_model: Optional[str] = "mistra
     else:
         return 0
 
-def review_paper_prompting(external_data: Dict[str, str],  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+def review_paper_prompting(paper: Dict[str, str],  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
     """
     Review paper from using list, and external data (published papers)
     """
 
     papers_serialize = []
-    for _, timestamp in enumerate(external_data.keys()):
-        paper_entry = f"Title: {timestamp}\nPaper: {external_data[timestamp]}"
+    for _, title in enumerate(paper.keys()):
+        paper_entry = f"Title: {title}\nPaper: {paper[title]}"
         papers_serialize.append(paper_entry)
     papers_serialize_all = "\n\n".join(papers_serialize)
 
@@ -184,13 +184,13 @@ def review_paper_prompting(external_data: Dict[str, str],  llm_model: Optional[s
     return openai_prompting(llm_model, prompt)
 
 
-def make_review_decision_prompting(submission: Dict[str, str], review: Dict[str, Tuple[int,str]], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
-    submission_serialize = []
-    for _, title in enumerate(submission.keys()):
-        abstract = submission[title]
-        submission_entry = f"Title: {title}\nAbstract:{abstract}\n"
-        submission_serialize.append(submission_entry)
-    submission_serialize_all = "\n\n".join(submission_serialize)
+def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int,str]], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+    paper_serialize = []
+    for _, title in enumerate(paper.keys()):
+        abstract = paper[title]
+        paper_entry = f"Title: {title}\nAbstract:{abstract}\n"
+        paper_serialize.append(paper_entry)
+    paper_serialize_all = "\n\n".join(paper_serialize)
 
     review_serialize = []
     for _, name in enumerate(review.keys()):
@@ -201,10 +201,10 @@ def make_review_decision_prompting(submission: Dict[str, str], review: Dict[str,
 
     prompt_template = (
         "Please make an review decision to decide whether the following submission should be accepted or rejected by an academic conference. Here are several reviews from reviewers for this submission. Please indicate your review decision as accept or reject."
-        "Here is the submission: {submission_serialize_all}"
+        "Here is the submission: {paper_serialize_all}"
         "Here are the reviews: {review_serialize_all}"
     )
-    template_input = {"submission_serialize_all": submission_serialize_all,
+    template_input = {"paper_serialize_all": paper_serialize_all,
                       "review_serialize_all": review_serialize_all}
     prompt = prompt_template.format_map(template_input)
     return openai_prompting(llm_model, prompt)
