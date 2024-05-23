@@ -53,7 +53,7 @@ def summarize_research_field_prompting(
     related_papers = get_related_papers(corpus, query, num=10)
 
     template_input = {
-        "profile": profile, 
+        "profile": profile,
         "keywords": keywords,
         "papers": "; ".join(related_papers)
     }
