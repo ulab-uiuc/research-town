@@ -41,7 +41,10 @@ def summarize_research_field_prompting(
         "Here is my profile: {profile}"
         "Here are the keywords: {keywords}"
     )
-    template_input = {"profile": profile, "keywords": keywords}
+    template_input = {
+        "profile": profile,
+        "keywords": "; ".join(keywords)
+    }
     query = query_template.format_map(template_input)
 
     corpus = [abstract for papers in papers.values()
@@ -49,8 +52,18 @@ def summarize_research_field_prompting(
 
     related_papers = get_related_papers(corpus, query, num=10)
 
-    template_input["papers"] = "; ".join(related_papers)
-    prompt = query_template.format_map(template_input)
+    template_input = {
+        "profile": profile,
+        "keywords": keywords,
+        "papers": "; ".join(related_papers)
+    }
+    prompt_template = (
+        "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
+        "Here is my profile: {profile}"
+        "Here are the keywords: {keywords}"
+        "Here are some recent paper titles and abstracts: {papers}"
+    )
+    prompt = prompt_template.format_map(template_input)
 
     return openai_prompting(llm_model, prompt)
 
