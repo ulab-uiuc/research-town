@@ -12,7 +12,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         external_data = self.kb.get_data(10, "machine learning")
         abstracts = {}
         for agent_name, agent in self.agents.items():
-            trend = agent.read_paper(external_data=external_data, domain="machine learning")
+            trend = agent.read_paper(papers=external_data, domain="machine learning")
             trends = [trend]
             agent.find_collaborators({})
             ideas = agent.generate_idea(trends=trends, domain="machine learning")

@@ -1,14 +1,13 @@
 import os
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import openai
 
 from .decorator import exponential_backoff
-from .paper_collection import get_bert_embedding, neiborhood_search
+from .paper_collector import get_related_papers
 
 openai.api_base = "https://api.together.xyz"
 openai.api_key = os.environ["TOGETHER_API_KEY"]
-
 
 @exponential_backoff(retries=5, base_wait_time=1)
 def openai_prompting(
@@ -28,23 +27,10 @@ def openai_prompting(
     return content_l
 
 
-def get_query_embedding(query: str) -> Any:
-    return get_bert_embedding([query])
-
-
-def find_nearest_neighbors(data_embeddings: List[Any], query_embedding: Any, num_neighbors: int) -> Any:
-    neighbors = neiborhood_search(
-        data_embeddings, query_embedding, num_neighbors)
-    neighbors = neighbors.reshape(-1)
-
-    return neighbors.tolist()
-
-
 def summarize_research_field_prompting(
     profile: Dict[str, str],
     keywords: List[str],
-    dataset: Dict[str, Any],
-    data_embedding: Dict[str, Any],
+    papers: Dict[str, Dict[str, List[str]]],
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
@@ -55,23 +41,29 @@ def summarize_research_field_prompting(
         "Here is my profile: {profile}"
         "Here are the keywords: {keywords}"
     )
-
-    template_input = {"profile": profile, "keywords": keywords}
+    template_input = {
+        "profile": profile,
+        "keywords": "; ".join(keywords)
+    }
     query = query_template.format_map(template_input)
 
-    query_embedding = get_query_embedding(query)
+    corpus = [abstract for papers in papers.values()
+                for abstract in papers["abstract"]]
 
-    text_chunks = [abstract for papers in dataset.values()
-                   for abstract in papers["abstract"]]
-    data_embeddings = [embedding for embeddings in data_embedding.values()
-                       for embedding in embeddings]
+    related_papers = get_related_papers(corpus, query, num=10)
 
-    nearest_indices = find_nearest_neighbors(
-        data_embeddings, query_embedding, num_neighbors=10)
-    context = [text_chunks[i] for i in nearest_indices]
-
-    template_input["papers"] = "; ".join(context)
-    prompt = query_template.format_map(template_input)
+    template_input = {
+        "profile": profile,
+        "keywords": keywords,
+        "papers": "; ".join(related_papers)
+    }
+    prompt_template = (
+        "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
+        "Here is my profile: {profile}"
+        "Here are the keywords: {keywords}"
+        "Here are some recent paper titles and abstracts: {papers}"
+    )
+    prompt = prompt_template.format_map(template_input)
 
     return openai_prompting(llm_model, prompt)
 

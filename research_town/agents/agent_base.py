@@ -1,10 +1,6 @@
-import datetime
 from typing import Any, Dict, List, Tuple
-from xml.etree import ElementTree
 
-import requests
-
-from ..utils.agent_prompting import (
+from ..utils.agent_prompter import (
     communicate_with_multiple_researchers_prompting,
     find_collaborators_prompting,
     generate_ideas_prompting,
@@ -16,10 +12,9 @@ from ..utils.agent_prompting import (
     summarize_research_field_prompting,
     write_paper_abstract_prompting,
 )
-from ..utils.author_relation import bfs
-from ..utils.paper_collection import get_bert_embedding
+from ..utils.author_collector import bfs
+from ..utils.paper_collector import get_paper_list
 
-ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"
 
 class BaseResearchAgent(object):
     def __init__(self, name: str) -> None:
@@ -27,138 +22,28 @@ class BaseResearchAgent(object):
         self.name = name
         self.memory: Dict[str, str] = {}
 
-    def find_text(self, element: ElementTree.Element, path: str) -> str:
-        found_element = element.find(path)
-        if found_element is not None and found_element.text is not None:
-            return found_element.text.strip()
-        return ""
-
     def get_profile(self, author_name: str) -> Dict[str, Any]:
-        author_query = author_name.replace(" ", "+")
-        url = f"http://export.arxiv.org/api/query?search_query=au:{author_query}&start=0&max_results=300"
-
-        response = requests.get(url)
-        papers_list: List[Dict[str, Any]] = []
-
-        if response.status_code == 200:
-            root = ElementTree.fromstring(response.content)
-            entries = root.findall(f"{ATOM_NAMESPACE}entry")
-
-            papers_list, papers_by_year = self._get_papers(entries, author_name)
-            if len(papers_list) > 40:
-                papers_list = self._select_papers(papers_by_year, author_name)
-
-            # Trim the list to the 10 most recent papers
-            papers_list = papers_list[:10]
-
+        papers_list = get_paper_list(author_name)
+        if papers_list:
             personal_info = "; ".join(
                 [f"{details['Title & Abstract']}" for details in papers_list]
             )
             profile_info = summarize_research_direction_prompting(personal_info)
             return {"name": author_name, "profile": profile_info[0]}
-
         else:
-            print("Failed to fetch data from arXiv.")
             return {"info": "fail!"}
-
-    def _get_papers(self, entries: List[ElementTree.Element], author_name: str) -> Tuple[List[Dict[str, Any]], Dict[int, List[ElementTree.Element]]]:
-        papers_list: List[Dict[str, Any]] = []
-        papers_by_year: Dict[int, List[ElementTree.Element]] = {}
-
-        for entry in entries:
-            title = self.find_text(entry, f"{ATOM_NAMESPACE}title")
-            published = self.find_text(entry, f"{ATOM_NAMESPACE}published")
-            abstract = self.find_text(entry, f"{ATOM_NAMESPACE}summary")
-            authors_elements = entry.findall(f"{ATOM_NAMESPACE}author")
-            authors = [
-                self.find_text(author, f"{ATOM_NAMESPACE}name")
-                for author in authors_elements
-            ]
-            link = self.find_text(entry, f"{ATOM_NAMESPACE}id")
-
-            if author_name in authors:
-                coauthors = [author for author in authors if author != author_name]
-                coauthors_str = ", ".join(coauthors)
-
-                papers_list.append(
-                    {
-                        "date": published,
-                        "Title & Abstract": f"{title}; {abstract}",
-                        "coauthors": coauthors_str,
-                        "link": link,
-                    }
-                )
-
-                published_date = published
-                date_obj = datetime.datetime.strptime(
-                    published_date, "%Y-%m-%dT%H:%M:%SZ"
-                )
-                year = date_obj.year
-                if year not in papers_by_year:
-                    papers_by_year[year] = []
-                papers_by_year[year].append(entry)
-
-        return papers_list, papers_by_year
-
-    def _select_papers(self, papers_by_year: Dict[int, List[ElementTree.Element]], author_name: str) -> List[Dict[str, Any]]:
-        papers_list: List[Dict[str, Any]] = []
-
-        for cycle_start in range(min(papers_by_year), max(papers_by_year) + 1, 5):
-            cycle_end = cycle_start + 4
-            for year in range(cycle_start, cycle_end + 1):
-                if year in papers_by_year:
-                    selected_papers = papers_by_year[year][:2]
-                    for paper in selected_papers:
-                        title = self.find_text(
-                            paper, f"{ATOM_NAMESPACE}title"
-                        )
-                        abstract = self.find_text(
-                            paper, f"{ATOM_NAMESPACE}summary"
-                        )
-                        authors_elements = paper.findall(
-                            f"{ATOM_NAMESPACE}author"
-                        )
-                        co_authors = [
-                            self.find_text(
-                                author, f"{ATOM_NAMESPACE}name"
-                            )
-                            for author in authors_elements
-                            if self.find_text(
-                                author, f"{ATOM_NAMESPACE}name"
-                            )
-                            != author_name
-                        ]
-
-                        papers_list.append(
-                            {
-                                "Author": author_name,
-                                "Title & Abstract": f"{title}; {abstract}",
-                                "Date Period": f"{year}",
-                                "Cycle": f"{cycle_start}-{cycle_end}",
-                                "Co_author": ", ".join(co_authors),
-                            }
-                        )
-        return papers_list
 
     def communicate(self, message: Dict[str, str]) -> str:
         return communicate_with_multiple_researchers_prompting(message)[0]
 
     def read_paper(
-        self, external_data: Dict[str, Dict[str, List[str]]], domain: str
+        self, papers: Dict[str, Dict[str, List[str]]], domain: str
     ) -> str:
-        time_chunks_embed = {}
-        dataset = external_data
-        for time in dataset.keys():
-            papers = dataset[time]["abstract"]
-            papers_embedding = get_bert_embedding(papers)
-            time_chunks_embed[time] = papers_embedding
-
         trend = summarize_research_field_prompting(
             profile=self.profile,
             keywords=[domain],
-            dataset=dataset,
-            data_embedding=time_chunks_embed,
-        )  # trend
+            papers=papers,
+        )
         trend_output = trend[0]
         return trend_output
 
@@ -193,15 +78,13 @@ class BaseResearchAgent(object):
 
         return ideas
 
-    def write_paper(self, input: List[str], external_data: Dict[str, Dict[str, List[str]]]) -> str:
-        paper_abstract = write_paper_abstract_prompting(input, external_data)
+    def write_paper(self, input: List[str], papers: Dict[str, Dict[str, List[str]]]) -> str:
+        paper_abstract = write_paper_abstract_prompting(input, papers)
         return paper_abstract[0]
 
-    def review_paper(self, external_data: Dict[str, str]) -> Tuple[int, str]:
-        paper_review = review_paper_prompting(external_data)[0]
-        print(paper_review)
+    def review_paper(self, paper: Dict[str, str]) -> Tuple[int, str]:
+        paper_review = review_paper_prompting(paper)[0]
         review_score = review_score_prompting(paper_review)
-        print(review_score, paper_review)
         return review_score, paper_review
 
     def make_review_decision(
