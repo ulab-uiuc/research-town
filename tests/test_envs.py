@@ -28,7 +28,7 @@ def test_paper_submission_env(mock_openai_prompting: MagicMock) -> None:
 
     env = PaperSubmissionMultiAgentEnvironment(
         agent_dict={
-            "Jiaxuan You": "Jiaxuan You",
+            "Jiaxuan You": "Jiaxuan You"
         },
         task={
             "11 May 2024": "Organize a workshop on how far are we from AGI (artificial general intelligence) at ICLR 2024. This workshop aims to become a melting pot for ideas, discussions, and debates regarding our proximity to AGI."

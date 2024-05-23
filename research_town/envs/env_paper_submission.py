@@ -1,9 +1,7 @@
 from typing import Dict
 
-from research_town.agents.agent_base import BaseResearchAgent
-
 from .env_base import BaseMultiAgentEnv
-
+from research_town.agents.agent_base import BaseResearchAgent
 
 class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def __init__(self, agent_dict: Dict[str, str], task: Dict[str, str]) -> None:
