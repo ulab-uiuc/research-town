@@ -83,7 +83,7 @@ def openai_prompting(
 def summarize_research_field_prompting(
     agent_profile: AgentProfile,
     research_keywords: List[str],
-    papers: Dict[str, PaperProfile],
+    papers: List[PaperProfile],
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
@@ -114,7 +114,7 @@ def summarize_research_field_prompting(
 def find_collaborators_prompting(
     paper: PaperProfile,
     agent_self_profile: AgentProfile,
-    agent_collaborator_profiles: Dict[str, AgentProfile],
+    agent_collaborator_profiles: List[AgentProfile],
     param: float = 0.5, 
     max_number: int = 3,  
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
@@ -155,7 +155,7 @@ def find_collaborators_prompting(
 
 def write_paper_abstract_prompting(
     research_ideas: List[str],
-    papers: Dict[str, PaperProfile],
+    papers: List[PaperProfile],
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
@@ -217,7 +217,7 @@ def review_paper_prompting(
 
 def make_review_decision_prompting(
     paper: PaperProfile,
-    paper_review: Dict[str, AgentPaperReviewLog],
+    paper_review: List[AgentPaperReviewLog],
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1"
 ) -> List[str]:
     
@@ -250,8 +250,8 @@ def make_review_decision_prompting(
 
 def rebut_review_prompting(
     paper: PaperProfile, 
-    paper_review: Dict[str, AgentPaperReviewLog], 
-    paper_decision: Dict[str, AgentPaperMetaReviewLog], 
+    paper_review: List[AgentPaperReviewLog], 
+    paper_decision: List[AgentPaperMetaReviewLog], 
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1"
 ) -> List[str]:
     submission_serialize = []
@@ -290,7 +290,7 @@ def rebut_review_prompting(
 
 
 def communicate_with_multiple_researchers_prompting(
-    messages: Dict[str, AgentAgentDiscussionLog],
+    messages: List[AgentAgentDiscussionLog],
     llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """

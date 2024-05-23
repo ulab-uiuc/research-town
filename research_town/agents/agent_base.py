@@ -41,7 +41,7 @@ class BaseResearchAgent(object):
 
     def read_paper(
         self, 
-        papers: Dict[str, PaperProfile], 
+        papers: List[PaperProfile], 
         domain: str
     ) -> str:
         trend = summarize_research_field_prompting(
@@ -57,7 +57,7 @@ class BaseResearchAgent(object):
         paper: PaperProfile, 
         parameter: float = 0.5, 
         max_number: int = 3
-    ) -> Dict[str, AgentProfile]:
+    ) -> List[AgentProfile]:
         start_author = [self.name]
         graph, _, _ = bfs(
             author_list=start_author, node_limit=max_number)
@@ -84,7 +84,7 @@ class BaseResearchAgent(object):
 
     def generate_idea(
         self, 
-        papers: Dict[str, PaperProfile], 
+        papers: List[PaperProfile], 
         domain: str
     ) -> List[str]:
 
@@ -103,7 +103,7 @@ class BaseResearchAgent(object):
     def write_paper(
         self, 
         research_ideas: List[str], 
-        papers: Dict[str, PaperProfile]
+        papers: List[PaperProfile]
     ) -> PaperProfile:
         paper_abstract = write_paper_abstract_prompting(input, papers)
         return paper_abstract[0]
@@ -119,7 +119,7 @@ class BaseResearchAgent(object):
     def make_review_decision(
         self,
         paper: PaperProfile, 
-        review: Dict[str, AgentPaperReviewLog]
+        review: List[AgentPaperReviewLog]
     ) -> AgentPaperMetaReviewLog:
         meta_review = make_review_decision_prompting(paper, review)
         if "accept" in meta_review[0].lower():
@@ -131,8 +131,8 @@ class BaseResearchAgent(object):
     def rebut_review(
         self, 
         paper: PaperProfile, 
-        review: Dict[str, AgentPaperReviewLog], 
-        decision: Dict[str, AgentPaperMetaReviewLog]
+        review: List[AgentPaperReviewLog], 
+        decision: List[AgentPaperMetaReviewLog]
     ) -> AgentPaperRebuttalLog:
         rebut_review = rebut_review_prompting(paper, review, decision)
         return rebut_review[0]
