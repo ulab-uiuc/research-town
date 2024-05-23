@@ -15,8 +15,6 @@ from ..utils.agent_prompter import (
 from ..utils.author_collector import bfs
 from ..utils.paper_collector import get_paper_list
 
-ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"
-
 class BaseResearchAgent(object):
     def __init__(self, name: str) -> None:
         self.profile = self.get_profile(name)
