@@ -1,9 +1,10 @@
+from typing import Optional
 class PaperProfile(object):
     paper_id: str
-    title: str
-    abstract: str
+    title: Optional[str] = None
+    abstract: Optional[str] = None
 
 class AgentProfile(object):
     agent_id: str
-    name: str
-    profile: str
+    name: Optional[str] = None
+    profile: Optional[str] = None
