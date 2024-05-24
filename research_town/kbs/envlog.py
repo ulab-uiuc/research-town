@@ -6,12 +6,14 @@ class AgentPaperReviewLog(object):
     review_score: int
     review_content: str
 
+
 class AgentPaperRebuttalLog(object):
     timestep: int
     rebuttal_id: str
     paper_id: str
     agent_id: str
     rebuttal_content: str
+
 
 class AgentPaperMetaReviewLog(object):
     timestep: int
@@ -20,6 +22,7 @@ class AgentPaperMetaReviewLog(object):
     agent_id: str
     decision: str
     meta_review: str
+
 
 class AgentAgentDiscussionLog(object):
     timestep: int
