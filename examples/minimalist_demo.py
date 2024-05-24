@@ -1,10 +1,12 @@
 from typing import Dict
 
-from research_town.envs.env_paper_submission import PaperSubmissionMultiAgentEnvironment
-from research_town.envs.env_paper_rebuttal import PaperRebuttalMultiAgentEnv
+from research_town.envs import (
+    PaperRebuttalMultiAgentEnv,
+    PaperSubmissionMultiAgentEnvironment,
+)
 
 
-def run_sync_experiment(agent_dict: Dict[str, str], task: Dict[str, str]):
+def run_sync_experiment(agent_dict: Dict[str, str], task: Dict[str, str]) -> None:
     # Create Environment and Agents
     paper_submission_env = PaperSubmissionMultiAgentEnvironment(
         agent_dict=agent_dict, task=task)
@@ -16,8 +18,8 @@ def run_sync_experiment(agent_dict: Dict[str, str], task: Dict[str, str]):
     while not submission_done:
         paper_submission_env.step()
         submission_done = paper_submission_env.terminated
-    paper = paper_submission_env.paper
-
+    # TODO: rebuild data type
+    paper = {"title": paper_submission_env.paper}
     # Paper Review
     paper_rebuttal_env.initialize_submission(paper)
     paper_rebuttal_env.assign_roles(
@@ -28,7 +30,7 @@ def run_sync_experiment(agent_dict: Dict[str, str], task: Dict[str, str]):
         rebuttal_done = paper_rebuttal_env.terminated
 
 
-def main():
+def main() -> None:
     run_sync_experiment(
         agent_dict={"Jiaxuan You": "Jiaxuan You",
                     "Christos Faloutsos": "Christos Faloutsos"},
