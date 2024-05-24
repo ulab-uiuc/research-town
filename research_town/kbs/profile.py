@@ -1,4 +1,6 @@
 from typing import Optional
+
+
 class PaperProfile(object):
     paper_id: str
     title: Optional[str] = None

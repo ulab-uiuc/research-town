@@ -9,7 +9,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
 
     def step(self) -> None:
         papers = self.kb.get_data(10, "machine learning")
-        for agent_name, agent in self.agents.items():
+        for agent in self.agents:
             agent.read_paper(papers=papers, domain="machine learning")
             agent.find_collaborators({})
             agent.generate_idea(papers=papers, domain="machine learning")

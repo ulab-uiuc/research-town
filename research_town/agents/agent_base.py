@@ -26,20 +26,34 @@ from ..utils.paper_collector import get_paper_list
 
 
 class BaseResearchAgent(object):
-    def __init__(self, name: str) -> None:
-        self.profile = self.get_profile(name)
+    def __init__(self,
+                 agent_name: str | None = None,
+                 uuid_str: str | None = None,
+                 agent_profile: AgentProfile | None = None) -> None:
+        if agent_profile is not None:
+            self.name = agent_profile.name
+            self.profile = agent_profile
+        elif agent_name is not None:
+            self.name = agent_name
+            self.profile = self.get_profile(agent_name)
+        else:
+            assert (
+                uuid_str is not None
+            ), "Either name or uuid_str must be provided"  # TODO: retrieve agent profile from database
         self.memory: Dict[str, str] = {}
 
     def get_profile(self, author_name: str) -> AgentProfile:
         papers = get_paper_list(author_name)
-        if papers:
-            personal_info = "; ".join(
-                [f"{details['Title & Abstract']}" for details in papers]
-            )
-            profile_info = generate_profile(personal_info)
-            return {"name": author_name, "profile": profile_info[0]}
-        else:
-            return {"info": "fail!"}
+        assert (len(papers) > 0), "Authored paper not found"
+        personal_info = "; ".join(
+            [f"{details['Title & Abstract']}" for details in papers]
+        )
+        profile_info = generate_profile(personal_info)
+        agent_profile = AgentProfile()
+        agent_profile.agent_id = str(uuid.uuid4())
+        agent_profile.name = author_name
+        agent_profile.profile = profile_info
+        return agent_profile
 
     def communicate(
         self,
@@ -71,9 +85,9 @@ class BaseResearchAgent(object):
             author_list=start_author, node_limit=max_number)
         collaborators = list(
             {name for pair in graph for name in pair if name != self.name})
-        self_profile = {self.name: self.profile["profile"]}
+        self_profile = {self.name: self.profile.profile}
         collaborator_profiles = {author: self.get_profile(
-            author)["profile"] for author in collaborators}
+            author).profile for author in collaborators}
         paper_serialize = {paper.title: paper.abstract}
         result = find_collaborators_prompting(
             paper_serialize, self_profile, collaborator_profiles, parameter, max_number)

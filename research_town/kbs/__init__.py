@@ -1,11 +1,11 @@
 from .envlog import (
-    AgentAgentDiscussionLog, 
-    AgentPaperMetaReviewLog, 
-    AgentPaperRebuttalLog, 
-    AgentPaperReviewLog
+    AgentAgentDiscussionLog,
+    AgentPaperMetaReviewLog,
+    AgentPaperRebuttalLog,
+    AgentPaperReviewLog,
 )
-from .profile import PaperProfile, AgentProfile
 from .output import ResearchOutput
+from .profile import AgentProfile, PaperProfile
 
 __all__ = [
     "AgentAgentDiscussionLog",

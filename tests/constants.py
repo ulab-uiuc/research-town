@@ -1,13 +1,14 @@
+import uuid
+
 from research_town.kbs import (
     AgentAgentDiscussionLog,
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
-    PaperProfile,   
     AgentProfile,
+    PaperProfile,
     ResearchOutput,
 )
-import uuid
 
 paper_profile = PaperProfile(
     paper_id=str(uuid.uuid4()),

@@ -1,11 +1,14 @@
 import uuid
-
 from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
-from research_town.kbs.envlog import AgentAgentDiscussionLog, AgentPaperMetaReviewLog, AgentPaperRebuttalLog, AgentPaperReviewLog
-from research_town.kbs.profile import PaperProfile, AgentProfile
-
+from research_town.kbs.envlog import (
+    AgentAgentDiscussionLog,
+    AgentPaperMetaReviewLog,
+    AgentPaperRebuttalLog,
+    AgentPaperReviewLog,
+)
+from research_town.kbs.profile import AgentProfile, PaperProfile
 from tests.utils import mock_papers, mock_prompting
 
 
