@@ -1,7 +1,9 @@
 from typing import Dict
 
-from ..research_town.envs.env_paper_submission import PaperSubmissionMultiAgentEnvironment
-from ..research_town.envs.env_paper_rebuttal import PaperRebuttalMultiAgentEnv
+from research_town.envs import (
+    PaperSubmissionMultiAgentEnvironment,
+    PaperRebuttalMultiAgentEnv
+)
 
 
 def run_sync_experiment(agent_dict: Dict[str, str]):
