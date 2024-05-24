@@ -20,6 +20,7 @@ def run_sync_experiment(agent_dict: Dict[str, str], task: Dict[str, str]) -> Non
         submission_done = paper_submission_env.terminated
     # TODO: rebuild data type
     paper = {"title": paper_submission_env.paper}
+
     # Paper Review
     paper_rebuttal_env.initialize_submission(paper)
     paper_rebuttal_env.assign_roles(
