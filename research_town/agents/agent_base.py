@@ -14,11 +14,11 @@ from ..utils.agent_prompter import (
     communicate_with_multiple_researchers_prompting,
     find_collaborators_prompting,
     generate_ideas_prompting,
-    generate_profile,
     make_review_decision_prompting,
     rebut_review_prompting,
     review_paper_prompting,
     review_score_prompting,
+    summarize_research_direction_prompting,
     summarize_research_field_prompting,
     write_paper_abstract_prompting,
 )
@@ -48,11 +48,11 @@ class BaseResearchAgent(object):
         personal_info = "; ".join(
             [f"{details['Title & Abstract']}" for details in papers]
         )
-        profile_info = generate_profile(personal_info)
+        profile_info = summarize_research_direction_prompting(personal_info)
         agent_profile = AgentProfile()
         agent_profile.agent_id = str(uuid.uuid4())
         agent_profile.name = author_name
-        agent_profile.profile = profile_info
+        agent_profile.profile = profile_info[0]
         return agent_profile
 
     def communicate(

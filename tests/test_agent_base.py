@@ -13,17 +13,13 @@ from tests.utils import mock_papers, mock_prompting
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
 def test_get_profile(mock_openai_prompting: MagicMock) -> None:
-    mock_prompting = MagicMock()
-    mock_prompting.return_value = [
+    mock_openai_prompting.return_value = [
         "I am a research agent who is interested in machine learning."]
-
-    mock_openai_prompting.return_value = mock_prompting
 
     research_agent = BaseResearchAgent(agent_name="Jiaxuan You")
     profile = research_agent.profile
     assert profile.name == "Jiaxuan You"
-    assert profile.profile is not None
-    assert len(profile.profile) > 0
+    assert profile.profile == "I am a research agent who is interested in machine learning."
 
 
 # =========================================================
@@ -86,7 +82,6 @@ def test_read_paper(
 ) -> None:
     mock_get_related_papers.side_effect = mock_papers
     mock_openai_prompting.side_effect = mock_prompting
-
     domain = "machine learning"
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
     summary = research_agent.read_paper([paper_profile], domain)

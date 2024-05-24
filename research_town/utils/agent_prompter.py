@@ -9,6 +9,7 @@ from .paper_collector import get_related_papers
 openai.api_base = "https://api.together.xyz"
 openai.api_key = os.environ["TOGETHER_API_KEY"]
 
+
 @exponential_backoff(retries=5, base_wait_time=1)
 def openai_prompting(
     llm_model: str,
@@ -45,7 +46,7 @@ def summarize_research_field_prompting(
     query = query_template.format_map(template_input)
 
     corpus = [abstract for papers in papers.values()
-                for abstract in papers["abstract"]]
+              for abstract in papers["abstract"]]
 
     related_papers = get_related_papers(corpus, query, num=10)
 
@@ -148,6 +149,7 @@ def write_paper_abstract_prompting(
     prompt = prompt_template.format_map(template_input)
     return openai_prompting(llm_model, prompt)
 
+
 def review_score_prompting(paper_review: str, llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> int:
     prompt_qa = (
         "Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only returns one number score."
@@ -160,6 +162,7 @@ def review_score_prompting(paper_review: str, llm_model: Optional[str] = "mistra
         return int(score_str[0])
     else:
         return 0
+
 
 def review_paper_prompting(paper: Dict[str, str],  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
     """
@@ -184,7 +187,7 @@ def review_paper_prompting(paper: Dict[str, str],  llm_model: Optional[str] = "m
     return openai_prompting(llm_model, prompt)
 
 
-def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int,str]], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, str]], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
     paper_serialize = []
     for _, title in enumerate(paper.keys()):
         abstract = paper[title]
