@@ -1,21 +1,21 @@
-import os
 from typing import Dict, List, Optional, Tuple
 
-import openai
-# use litellm as our model router. Supported Provider List: https://docs.litellm.ai/docs/providers .
-# Example of litellm usage:
-# # set env variables
-# os.environ["OPENAI_API_KEY"] = "your-openai-key"
-
-# ## SET MAX TOKENS - via completion() 
+# ## SET MAX TOKENS - via completion()
 # response = litellm.completion(
 #             model="gpt-3.5-turbo",
 #             messages=[{ "content": "Hello, how are you?","role": "user"}],
 #             max_tokens=10
 #         )
-import litellm 
+import litellm
+
 from .decorator import exponential_backoff
 from .paper_collector import get_related_papers
+
+# use litellm as our model router. Supported Provider List: https://docs.litellm.ai/docs/providers .
+# Example of litellm usage:
+# # set env variables
+# os.environ["OPENAI_API_KEY"] = "your-openai-key"
+
 
 
 
@@ -29,11 +29,11 @@ def model_prompting(
 ) -> List[str]:
     """
     Select model via router in LiteLLM.
-    """    
+    """
     completion = litellm.completion(
     model=llm_model,
     messages=[{"role": "user", "content": prompt}],
-    max_tokens=max_token_num, 
+    max_tokens=max_token_num,
     n=return_num, # for some models, 'n'(The number of chat completion choices ) is not supported.
 )
     content = completion.choices[0].message.content
