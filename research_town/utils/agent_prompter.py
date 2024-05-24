@@ -22,7 +22,7 @@ def openai_prompting(
         max_tokens=max_token_num,
         num=return_num,
     )
-    content = completion.choices[0].message["content"]
+    content = completion.choices[0]["text"]
     content_l = [content]
     return content_l
 
