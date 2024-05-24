@@ -58,3 +58,11 @@ agent_paper_meta_review_log = AgentPaperMetaReviewLog(
     decision="accept",
     meta_review="This paper is well-written.",
 )
+
+agent_paper_rebuttal_log = AgentPaperRebuttalLog(
+    timestep=0,
+    rebuttal_id=str(uuid.uuid4()),
+    paper_id=paper_profile.paper_id,
+    agent_id=agent_profile_A.agent_id,
+    rebuttal_content="I have revised the paper.",
+)
