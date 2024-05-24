@@ -59,17 +59,33 @@ class BaseResearchAgent(object):
         self,
         message: AgentAgentDiscussionLog
     ) -> AgentAgentDiscussionLog:
-        return communicate_with_multiple_researchers_prompting(message)[0]
+        # TODO: find a meaningful key
+        message_dict = {message.agent_from_id: message.message}
+        discussion_log = AgentAgentDiscussionLog()
+        discussion_log.timestep = (int)(datetime.now().timestamp())
+        discussion_log.discussion_id = str(uuid.uuid4())
+        discussion_log.agent_from_id = message.agent_to_id
+        discussion_log.agent_to_id = message.agent_from_id
+        discussion_log.message = communicate_with_multiple_researchers_prompting(message_dict)[
+            0]
+        return discussion_log
 
     def read_paper(
         self,
         papers: List[PaperProfile],
         domain: str
     ) -> str:
+        papers_dict = {}
+        for paper_profile in papers:
+            papers_dict[paper_profile.paper_id] = {
+                "abstract": [paper_profile.abstract],
+                "title": [paper_profile.title]
+            }
         trend = summarize_research_field_prompting(
-            profile=self.profile,
+            profile={"name": self.profile.name,
+                     "profile": self.profile.profile},
             keywords=[domain],
-            papers=papers,
+            papers=papers_dict
         )
         trend_output = trend[0]
         return trend_output
@@ -91,8 +107,10 @@ class BaseResearchAgent(object):
         paper_serialize = {paper.title: paper.abstract}
         result = find_collaborators_prompting(
             paper_serialize, self_profile, collaborator_profiles, parameter, max_number)
-        collaborators_list = [
-            collaborator for collaborator in collaborators if collaborator in result]
+        collaborators_list = []
+        for collaborator in collaborators:
+            if collaborator in result:
+                collaborators_list.append(self.get_profile(collaborator))
         return collaborators_list
 
     def get_co_author_relationships(
@@ -110,11 +128,17 @@ class BaseResearchAgent(object):
         papers: List[PaperProfile],
         domain: str
     ) -> List[str]:
-
+        papers_dict = {}
+        for paper_profile in papers:
+            papers_dict[paper_profile.paper_id] = {
+                "abstract": [paper_profile.abstract],
+                "title": [paper_profile.title]
+            }
         trends = summarize_research_field_prompting(
-            profile=self.profile,
+            profile={"name": self.profile.name,
+                     "profile": self.profile.profile},
             keywords=[domain],
-            papers=papers,
+            papers=papers_dict
         )
         ideas: List[str] = []
         for trend in trends:
@@ -128,8 +152,18 @@ class BaseResearchAgent(object):
         research_ideas: List[str],
         papers: List[PaperProfile]
     ) -> PaperProfile:
-        paper_abstract = write_paper_abstract_prompting(input, papers)
-        return paper_abstract[0]
+        papers_dict = {}
+        for paper_profile in papers:
+            papers_dict[paper_profile.paper_id] = {
+                "abstract": [paper_profile.abstract],
+                "title": [paper_profile.title]
+            }
+        paper_abstract = write_paper_abstract_prompting(
+            research_ideas, papers_dict)
+        paper_profile = PaperProfile()
+        paper_profile.paper_id = str(uuid.uuid4())
+        paper_profile.abstract = paper_abstract[0]
+        return paper_profile
 
     def review_paper(
         self,

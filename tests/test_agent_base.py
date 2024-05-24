@@ -11,6 +11,8 @@ from research_town.kbs.envlog import (
 from research_town.kbs.profile import AgentProfile, PaperProfile
 from tests.utils import mock_papers, mock_prompting
 
+from tests.constants import *
+
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
 def test_get_profile(mock_openai_prompting: MagicMock) -> None:
@@ -22,8 +24,8 @@ def test_get_profile(mock_openai_prompting: MagicMock) -> None:
 
     research_agent = BaseResearchAgent("Jiaxuan You")
     profile = research_agent.profile
-    assert profile["name"] == "Jiaxuan You"
-    assert "profile" in profile.keys()
+    assert profile.name == "Jiaxuan You"
+    assert len(profile.profile) > 0
 
 
 # =========================================================
