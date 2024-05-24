@@ -2,30 +2,61 @@ import os
 from typing import Dict, List, Optional, Tuple
 
 import openai
+# use litellm as our model router. Supported Provider List: https://docs.litellm.ai/docs/providers .
+# Example of litellm usage:
+# # set env variables
+# os.environ["OPENAI_API_KEY"] = "your-openai-key"
 
+# ## SET MAX TOKENS - via completion() 
+# response = litellm.completion(
+#             model="gpt-3.5-turbo",
+#             messages=[{ "content": "Hello, how are you?","role": "user"}],
+#             max_tokens=10
+#         )
+import litellm 
 from .decorator import exponential_backoff
 from .paper_collector import get_related_papers
 
-openai.api_base = "https://api.together.xyz"
-openai.api_key = os.environ["TOGETHER_API_KEY"]
+#(Deprecated)   
+# openai.api_base = "https://api.together.xyz"
+# openai.api_key = os.environ["TOGETHER_API_KEY"]
+# @exponential_backoff(retries=5, base_wait_time=1)
+# def openai_prompting(
+#     llm_model: str,
+#     prompt: str,
+#     return_num: Optional[int] = 2,
+#     max_token_num: Optional[int] = 512,
+# ) -> List[str]:
+#     completion = openai.Completion.create(
+#         model=llm_model,
+#         messages=[{"role": "user", "content": prompt}],
+#         max_tokens=max_token_num,
+#         num=return_num,
+#     )
+#     content = completion.choices[0]["text"]
+#     content_l = [content]
+#     return content_l
 
+# Todo(jinwei): we could add more selections of input params. CHECK the input params supported here: https://docs.litellm.ai/docs/completion/input
 @exponential_backoff(retries=5, base_wait_time=1)
-def openai_prompting(
+def model_prompting(
     llm_model: str,
     prompt: str,
     return_num: Optional[int] = 2,
     max_token_num: Optional[int] = 512,
 ) -> List[str]:
-    completion = openai.Completion.create(
-        model=llm_model,
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=max_token_num,
-        num=return_num,
-    )
-    content = completion.choices[0]["text"]
+    """
+    Select model via router in LiteLLM.
+    """    
+    completion = litellm.completion(
+    model=llm_model,
+    messages=[{"role": "user", "content": prompt}],
+    max_tokens=max_token_num, 
+    n=return_num, # for some models, 'n'(The number of chat completion choices ) is not supported.
+)
+    content = completion.choices[0].message.content
     content_l = [content]
     return content_l
-
 
 def summarize_research_field_prompting(
     profile: Dict[str, str],
