@@ -17,25 +17,7 @@ import litellm
 from .decorator import exponential_backoff
 from .paper_collector import get_related_papers
 
-#(Deprecated) 
-# openai.api_base = "https://api.together.xyz"
-# openai.api_key = os.environ["TOGETHER_API_KEY"]  
-# @exponential_backoff(retries=5, base_wait_time=1)
-# def openai_prompting(
-#     llm_model: str,
-#     prompt: str,
-#     return_num: Optional[int] = 2,
-#     max_token_num: Optional[int] = 512,
-# ) -> List[str]:
-#     completion = openai.Completion.create(
-#         model=llm_model,
-#         messages=[{"role": "user", "content": prompt}],
-#         max_tokens=max_token_num,
-#         num=return_num,
-#     )
-#     content = completion.choices[0]["text"]
-#     content_l = [content]
-#     return content_l
+
 
 # Todo(jinwei): we could add more selections of input params. CHECK the input params supported here: https://docs.litellm.ai/docs/completion/input
 @exponential_backoff(retries=5, base_wait_time=1)

@@ -8,9 +8,9 @@ from research_town.envs.env_paper_submission import (
 )
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_paper_rebuttal_env(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = [
+@patch("research_town.utils.agent_prompter.model_prompting")
+def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.return_value = [
         "Paper Rebuttal Environment."]
     env = PaperRebuttalMultiAgentEnv(agent_dict={"Jiaxuan You": "Jiaxuan You", "Rex Ying": "Rex Ying", "Jure Leskovec": "Jure Leskovec", "Christos Faloutsos": "Christos Faloutsos"})
     env.assign_roles({"Jiaxuan You": "author", "Rex Ying": "author",
@@ -22,9 +22,9 @@ def test_paper_rebuttal_env(mock_openai_prompting: MagicMock) -> None:
     assert isinstance(env.decision, str)
     assert isinstance(env.rebuttal, str)
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_paper_submission_env(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = ["This is a paper."]
+@patch("research_town.utils.agent_prompter.model_prompting")
+def test_paper_submission_env(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.return_value = ["This is a paper."]
 
     env = PaperSubmissionMultiAgentEnvironment(
         agent_dict={
