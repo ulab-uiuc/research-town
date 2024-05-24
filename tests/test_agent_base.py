@@ -2,16 +2,9 @@ import uuid
 from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
-from research_town.kbs.envlog import (
-    AgentAgentDiscussionLog,
-    AgentPaperMetaReviewLog,
-    AgentPaperRebuttalLog,
-    AgentPaperReviewLog,
-)
-from research_town.kbs.profile import AgentProfile, PaperProfile
+from research_town.kbs.envlog import AgentPaperRebuttalLog
+from research_town.kbs.profile import PaperProfile
 from tests.utils import mock_papers, mock_prompting
-
-from tests.constants import *
 
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
