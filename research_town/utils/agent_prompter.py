@@ -17,25 +17,7 @@ import litellm
 from .decorator import exponential_backoff
 from .paper_collector import get_related_papers
 
-#(Deprecated)   
-# openai.api_base = "https://api.together.xyz"
-# openai.api_key = os.environ["TOGETHER_API_KEY"]
-# @exponential_backoff(retries=5, base_wait_time=1)
-# def openai_prompting(
-#     llm_model: str,
-#     prompt: str,
-#     return_num: Optional[int] = 2,
-#     max_token_num: Optional[int] = 512,
-# ) -> List[str]:
-#     completion = openai.Completion.create(
-#         model=llm_model,
-#         messages=[{"role": "user", "content": prompt}],
-#         max_tokens=max_token_num,
-#         num=return_num,
-#     )
-#     content = completion.choices[0]["text"]
-#     content_l = [content]
-#     return content_l
+
 
 # Todo(jinwei): we could add more selections of input params. CHECK the input params supported here: https://docs.litellm.ai/docs/completion/input
 @exponential_backoff(retries=5, base_wait_time=1)
@@ -96,7 +78,7 @@ def summarize_research_field_prompting(
     )
     prompt = prompt_template.format_map(template_input)
 
-    return openai_prompting(llm_model, prompt)
+    return model_prompting(llm_model, prompt)
 
 
 def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, str], collaborator_profiles: Dict[str, str], parameter: float = 0.5, max_number: int = 3,  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
@@ -122,7 +104,7 @@ def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, 
     input = {"max_number": str(max_number), "self_serialize_all": self_serialize_all,
              "task_serialize_all": task_serialize_all, "collaborators_serialize_all": collaborator_serialize_all}
     prompt = prompt_qa.format_map(input)
-    return openai_prompting(llm_model, prompt)
+    return model_prompting(llm_model, prompt)
 
 
 def generate_ideas_prompting(
@@ -139,7 +121,7 @@ def generate_ideas_prompting(
     )
     template_input = {"trend": trend}
     prompt = prompt_template.format_map(template_input)
-    return openai_prompting(llm_model, prompt)
+    return model_prompting(llm_model, prompt)
 
 
 def summarize_research_direction_prompting(
@@ -156,7 +138,7 @@ def summarize_research_direction_prompting(
     )
     template_input = {"personalinfo": personal_info}
     prompt = prompt_template.format_map(template_input)
-    return openai_prompting(llm_model, prompt)
+    return model_prompting(llm_model, prompt)
 
 
 def write_paper_abstract_prompting(
@@ -190,7 +172,7 @@ def write_paper_abstract_prompting(
     template_input = {"ideas_serialize_all": ideas_serialize_all,
                       "papers_serialize_all": papers_serialize_all}
     prompt = prompt_template.format_map(template_input)
-    return openai_prompting(llm_model, prompt)
+    return model_prompting(llm_model, prompt)
 
 def review_score_prompting(paper_review: str, llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> int:
     prompt_qa = (
@@ -199,7 +181,7 @@ def review_score_prompting(paper_review: str, llm_model: Optional[str] = "mistra
     )
     input = {"paper_review": paper_review}
     prompt = prompt_qa.format_map(input)
-    score_str = openai_prompting(llm_model, prompt)
+    score_str = model_prompting(llm_model, prompt)
     if score_str[0].isdigit():
         return int(score_str[0])
     else:
@@ -225,7 +207,7 @@ def review_paper_prompting(external_data: Dict[str, str],  llm_model: Optional[s
     input = {"papers_serialize_all": papers_serialize_all}
 
     prompt = prompt_qa.format_map(input)
-    return openai_prompting(llm_model, prompt)
+    return model_prompting(llm_model, prompt)
 
 
 def make_review_decision_prompting(submission: Dict[str, str], review: Dict[str, Tuple[int,str]], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
@@ -251,7 +233,7 @@ def make_review_decision_prompting(submission: Dict[str, str], review: Dict[str,
     template_input = {"submission_serialize_all": submission_serialize_all,
                       "review_serialize_all": review_serialize_all}
     prompt = prompt_template.format_map(template_input)
-    return openai_prompting(llm_model, prompt)
+    return model_prompting(llm_model, prompt)
 
 
 def rebut_review_prompting(submission: Dict[str, str], review: Dict[str, Tuple[int, str]], decision: Dict[str, Tuple[bool, str]], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
@@ -285,7 +267,7 @@ def rebut_review_prompting(submission: Dict[str, str], review: Dict[str, Tuple[i
     template_input = {"submission_serialize_all": submission_serialize_all,
                       "review_serialize_all": review_serialize_all, "decision_serialize_all": decision_serialize_all}
     prompt = prompt_template.format_map(template_input)
-    return openai_prompting(llm_model, prompt)
+    return model_prompting(llm_model, prompt)
 
 
 def communicate_with_multiple_researchers_prompting(
@@ -305,4 +287,4 @@ def communicate_with_multiple_researchers_prompting(
     template_input = {
         "single_round_chat_serialize_all": single_round_chat_serialize_all}
     prompt = prompt_template.format_map(template_input)
-    return openai_prompting(llm_model, prompt)
+    return model_prompting(llm_model, prompt)
