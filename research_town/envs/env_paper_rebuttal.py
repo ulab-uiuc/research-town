@@ -1,11 +1,11 @@
 from typing import Dict, List, Tuple
 
-from ..kbs.envlog import (
+from ..dbs.envlog import (
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
 )
-from ..kbs.profile import PaperProfile
+from ..dbs.profile import PaperProfile
 from .env_base import BaseMultiAgentEnv
 
 

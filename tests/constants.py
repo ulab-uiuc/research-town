@@ -1,6 +1,6 @@
 import uuid
 
-from research_town.kbs import (
+from research_town.dbs import (
     AgentAgentDiscussionLog,
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,

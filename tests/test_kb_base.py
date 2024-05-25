@@ -1,4 +1,4 @@
-from research_town.kbs.kb_base import BaseKnowledgeBase
+from research_town.dbs.kb_base import BaseKnowledgeBase
 
 
 def test_get_data() -> None:
