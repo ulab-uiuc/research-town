@@ -1,6 +1,4 @@
-from typing import List
 
-from ..dbs import AgentProfile, PaperProfile
 from .env_base import BaseMultiAgentEnv
 
 

@@ -111,7 +111,7 @@ def test_review_paper(mock_openai_prompting: MagicMock) -> None:
     assert review.review_score == 2
     assert review.review_content == "This is a paper review for MambaOut."
 
-    
+
 @patch("research_town.utils.agent_prompter.openai_prompting")
 def test_rebut_review(mock_openai_prompting: MagicMock) -> None:
     mock_openai_prompting.return_value = [

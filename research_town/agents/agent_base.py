@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Tuple, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from ..dbs import (
     AgentAgentDiscussionLog,
@@ -179,7 +179,7 @@ class BaseResearchAgent(object):
             if paper_profile.title is not None:
                 papers_dict[paper_profile.pk]["title"] = [paper_profile.title]
         paper_abstract = write_paper_abstract_prompting(
-            ideas=research_ideas, 
+            ideas=research_ideas,
             papers=papers_dict,
             model_name=self.model_name
         )[0]
@@ -223,7 +223,7 @@ class BaseResearchAgent(object):
                     agent_review_log.review_score, agent_review_log.review_content)
 
         meta_review = make_review_decision_prompting(
-            paper=paper_dict, 
+            paper=paper_dict,
             review=review_dict,
             model_name=self.model_name
         )
@@ -258,8 +258,8 @@ class BaseResearchAgent(object):
                     agent_meta_review_log.decision, agent_meta_review_log.meta_review)
 
         rebut_review = rebut_review_prompting(
-            paper=paper_dict, 
-            review=review_dict, 
+            paper=paper_dict,
+            review=review_dict,
             decision=decision_dict,
             model_name=self.model_name
         )[0]
