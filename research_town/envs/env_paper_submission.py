@@ -1,7 +1,6 @@
-from typing import Dict
+from typing import List
 
-from research_town.agents.agent_base import BaseResearchAgent
-
+from ..dbs import AgentProfile, PaperProfile
 from .env_base import BaseMultiAgentEnv
 
 
