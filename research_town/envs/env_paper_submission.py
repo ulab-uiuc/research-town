@@ -1,5 +1,6 @@
 
 from .env_base import BaseMultiAgentEnv
+from typing import Dict
 
 
 class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
