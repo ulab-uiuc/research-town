@@ -1,29 +1,6 @@
 from typing import Dict, List, Optional, Tuple
-import litellm
-
-from .decorator import exponential_backoff
 from .paper_collector import get_related_papers
-
-
-@exponential_backoff(retries=5, base_wait_time=1)
-def model_prompting(
-    llm_model: str,
-    prompt: str,
-    return_num: Optional[int] = 2,
-    max_token_num: Optional[int] = 512,
-) -> List[str]:
-    """
-    Select model via router in LiteLLM.
-    """
-    completion = litellm.completion(
-    model=llm_model,
-    messages=[{"role": "user", "content": prompt}],
-    max_tokens=max_token_num,
-    n=return_num, # for some models, 'n'(The number of chat completion choices ) is not supported.
-)
-    content = completion.choices[0].message.content
-    content_l = [content]
-    return content_l
+from .model_prompting import model_prompting
 
 def summarize_research_field_prompting(
     profile: Dict[str, str],
