@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Optional
 
 from ..dbs import (
     AgentAgentDiscussionLog,
@@ -24,7 +24,9 @@ from ..utils.agent_prompter import (
 
 
 class BaseResearchAgent(object):
-    def __init__(self, agent_profile: AgentProfile | None = None) -> None:
+    def __init__(self, 
+        agent_profile: AgentProfile,
+    ) -> None:
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
 

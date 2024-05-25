@@ -7,8 +7,8 @@ from pydantic import BaseModel, Field
 T = TypeVar('T', bound=BaseModel)
 
 class EnvLogDB:
-    def __init__(self):
-        self.data = {
+    def __init__(self) -> None:
+        self.data: Dict[str, List[Any]] = {
             "AgentPaperReviewLog": [],
             "AgentPaperRebuttalLog": [],
             "AgentPaperMetaReviewLog": [],
@@ -22,7 +22,7 @@ class EnvLogDB:
         else:
             raise ValueError(f"Unsupported log type: {class_name}")
 
-    def get(self, cls: Type[T], **conditions) -> List[T]:
+    def get(self, cls: Type[T], **conditions: Dict[str, Any]) -> List[T]:
         class_name = cls.__name__
         if class_name not in self.data:
             raise ValueError(f"Unsupported log type: {class_name}")

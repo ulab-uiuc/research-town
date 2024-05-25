@@ -13,7 +13,7 @@ class PaperProfile(BaseModel):
     abstract: Optional[str] = Field(default=None)
 
 class PaperProfileDB:
-    def __init__(self):
+    def __init__(self) -> None:
         self.data: Dict[str, PaperProfile] = {}
 
     def add_paper(self, paper: PaperProfile) -> None:
@@ -60,4 +60,4 @@ class PaperProfileDB:
 
     def fetch_and_add_papers(self, num: int, domain: str) -> None:
         data, _ = get_daily_papers(domain, query=domain, max_results=num)
-        self.update_kb(data)
+        self.update_db(data)
