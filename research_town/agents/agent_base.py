@@ -27,10 +27,7 @@ from ..utils.paper_collector import get_paper_list
 
 
 class BaseResearchAgent(object):
-    def __init__(self,
-                 agent_name: str | None = None,
-                 uuid_str: str | None = None,
-                 agent_profile: AgentProfile | None = None) -> None:
+    def __init__(self, agent_profile: AgentProfile | None = None) -> None:
         if agent_profile is not None:
             self.name = agent_profile.name
             self.profile = agent_profile
@@ -41,6 +38,8 @@ class BaseResearchAgent(object):
             assert (
                 uuid_str is not None
             ), "Either name or uuid_str must be provided"  # TODO: retrieve agent profile from database
+        
+        self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
 
     def get_profile(self, author_name: str) -> AgentProfile:

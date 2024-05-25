@@ -1,6 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import TypeVar, Type, List, Dict, Any, Optional
 import json
+import uuid
 
 T = TypeVar('T', bound=BaseModel)
 
@@ -64,10 +65,10 @@ class ResearchProgressDB:
             self.data = json.load(f)
 
 class ResearchIdea(BaseModel):
-    idea_id: str
-    content: Optional[str]
+    idea_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    content: Optional[str] = Field(default=None)
 
 class ResearchPaperDraft(BaseModel):
-    paper_id: str
-    title: Optional[str]
-    abstract: Optional[str]
+    paper_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: Optional[str] = Field(default=None)
+    abstract: Optional[str] = Field(default=None)

@@ -1,8 +1,9 @@
 from typing import Dict, List, Optional, Any
 from pydantic import BaseModel, Field
+import uuid
 
 class AgentProfile(BaseModel):
-    agent_id: str
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: Optional[str] = Field(default=None)
     profile: Optional[str] = Field(default=None)
 

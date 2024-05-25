@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 import json
+import uuid
 from typing import TypeVar, Type, List, Dict, Any
 
 T = TypeVar('T', bound=BaseModel)
@@ -68,33 +69,33 @@ class EnvLogDB:
 
 
 class AgentPaperReviewLog(BaseModel):
-    timestep: int
-    review_id: str
-    paper_id: str
-    agent_id: str
-    review_score: int
-    review_content: str
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    timestep: int = Field(default=0)
+    paper_id: str = Field(index=True)
+    agent_id: str = Field(index=True)
+    review_score: Optional[int] = Field(default=0)
+    review_content: Optional[str] = Field(default=None)
 
 class AgentPaperRebuttalLog(BaseModel):
-    timestep: int
-    rebuttal_id: str
-    paper_id: str
-    agent_id: str
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    timestep: int = Field(index=True)
+    paper_id: str = Field(index=True)
+    agent_id: str = Field(index=True)
     rebuttal_content: Optional[str] = Field(default=None)
 
 class AgentPaperMetaReviewLog(BaseModel):
-    timestep: int
-    decision_id: str
-    paper_id: str
-    agent_id: str
-    decision: str
+    id = str = Field(default_factory=lambda: str(uuid.uuid4()))
+    timestep: int = Field(default=0)
+    paper_id: str = Field(index=True)
+    agent_id: str = Field(index=True)
+    decision: bool = Field(default=False)
     meta_review: Optional[str] = Field(default=None)
 
 class AgentAgentDiscussionLog(BaseModel):
-    timestep: int
-    discussion_id: str
-    agent_from_id: str
-    agent_to_id: str
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    timestep: int = Field(index=True)
+    agent_from_id: str = Field(index=True)
+    agent_to_id: str = Field(index=True)
     message: Optional[str] = Field(default=None)
 
 
