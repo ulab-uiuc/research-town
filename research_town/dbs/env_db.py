@@ -73,7 +73,7 @@ class EnvLogDB:
 class AgentPaperReviewLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
-    paper_pk: str 
+    paper_pk: str
     agent_pk: str
     review_score: Optional[int] = Field(default=0)
     review_content: Optional[str] = Field(default=None)
@@ -102,4 +102,3 @@ class AgentAgentDiscussionLog(BaseModel):
     agent_from_pk: str
     agent_to_pk: str
     message: Optional[str] = Field(default=None)
-
