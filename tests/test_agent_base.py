@@ -61,18 +61,18 @@ def test_write_paper(mock_openai_prompting: MagicMock) -> None:
     assert paper.pk is not None
 
 
-# @patch("research_town.utils.agent_prompter.openai_prompting")
-# @patch("research_town.utils.agent_prompter.get_related_papers")
-# def test_read_paper(
-#     mock_get_related_papers: MagicMock,
-#     mock_openai_prompting: MagicMock,
-# ) -> None:
-#     mock_get_related_papers.side_effect = mock_papers
-#     mock_openai_prompting.side_effect = mock_prompting
-#     domain = "machine learning"
-#     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
-#     summary = research_agent.read_paper([paper_profile_A], domain)
-#     assert summary == "Graph Neural Network"
+@patch("research_town.utils.agent_prompter.openai_prompting")
+@patch("research_town.utils.agent_prompter.get_related_papers")
+def test_read_paper(
+    mock_get_related_papers: MagicMock,
+    mock_openai_prompting: MagicMock,
+) -> None:
+    mock_get_related_papers.side_effect = mock_papers
+    mock_openai_prompting.side_effect = mock_prompting
+    domain = "machine learning"
+    research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
+    summary = research_agent.read_paper([paper_profile_A], domain)
+    assert summary == "Graph Neural Network"
 
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
