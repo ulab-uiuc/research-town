@@ -2,13 +2,14 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, List, Tuple
 
-from ..dbs.envlog import (
+from ..dbs import (
     AgentAgentDiscussionLog,
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
+    PaperProfile,
+    AgentProfile
 )
-from ..dbs.profile import AgentProfile, PaperProfile
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
     communicate_with_multiple_researchers_prompting,

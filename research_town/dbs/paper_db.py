@@ -48,7 +48,7 @@ class PaperProfileDB:
             data = json.load(f)
             self.data = {pid: PaperProfile(**paper_data) for pid, paper_data in data.items()}
 
-    def update_kb(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
+    def update_db(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
         for date, papers in data.items():
             for paper_data in papers:
                 paper = PaperProfile(**paper_data)

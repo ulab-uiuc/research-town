@@ -7,7 +7,7 @@ from research_town.dbs import (
     AgentPaperReviewLog,
     AgentProfile,
     PaperProfile,
-    ResearchOutput,
+    ResearchIdea,
 )
 
 paper_profile = PaperProfile(
@@ -28,10 +28,9 @@ agent_profile_B = AgentProfile(
     profile="A researcher in the field of GNN.",
 )
 
-research_output = ResearchOutput(
-    output_id=str(uuid.uuid4()),
-    paper_id=paper_profile.paper_id,
-    idea="A new idea",
+research_idea = ResearchIdea(
+    idea_id=str(uuid.uuid4()),
+    content="A new idea",
 )
 
 agent_agent_discussion_log = AgentAgentDiscussionLog(

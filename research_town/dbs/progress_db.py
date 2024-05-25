@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import TypeVar, Type, List, Dict, Any
+from typing import TypeVar, Type, List, Dict, Any, Optional
 import json
 
 T = TypeVar('T', bound=BaseModel)
@@ -65,9 +65,9 @@ class ResearchProgressDB:
 
 class ResearchIdea(BaseModel):
     idea_id: str
-    content: str
+    content: Optional[str]
 
 class ResearchPaperDraft(BaseModel):
     paper_id: str
-    title: str
-    abstract: str
+    title: Optional[str]
+    abstract: Optional[str]

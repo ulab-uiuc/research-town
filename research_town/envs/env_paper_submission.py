@@ -8,7 +8,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         super(PaperSubmissionMultiAgentEnvironment, self).__init__(agent_dict)
 
     def step(self) -> None:
-        papers = self.kb.get_data(10, "machine learning")
+        papers = self.db.get_data(10, "machine learning")
         for agent in self.agents:
             agent.read_paper(papers=papers, domain="machine learning")
             agent.find_collaborators({})

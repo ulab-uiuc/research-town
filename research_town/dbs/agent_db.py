@@ -46,7 +46,7 @@ class AgentProfileDB:
             data = json.load(f)
             self.data = {aid: AgentProfile(**agent_data) for aid, agent_data in data.items()}
 
-    def update_kb(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
+    def update_db(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
         for date, agents in data.items():
             for agent_data in agents:
                 agent = AgentProfile(**agent_data)
