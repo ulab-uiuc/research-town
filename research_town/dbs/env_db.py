@@ -101,4 +101,4 @@ class AgentAgentDiscussionLog(BaseModel):
     timestep: int = Field(default=0)
     agent_from_pk: str
     agent_to_pk: str
-    message: str = Field(default=None)
+    message: Optional[str] = Field(default=None)
