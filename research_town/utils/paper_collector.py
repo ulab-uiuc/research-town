@@ -40,7 +40,7 @@ def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:
 
 def neiborhood_search(
     corpus_data: List[torch.Tensor], query_data: List[torch.Tensor], num: int
-) -> torch.Tensor:
+) -> Any:
     d = 768
     neiborhood_num = num
     xq = torch.cat(query_data, 0).cpu().numpy()
