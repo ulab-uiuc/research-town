@@ -31,6 +31,7 @@ class BaseResearchAgent(object):
         self.memory: Dict[str, str] = {}
 
     def get_profile(self, author_name: str) -> AgentProfile:
+        # TODO: db get based on name
         agent_profile = AgentProfile(
             name='Geoffrey Hinton',
             bio="A researcher in the field of neural network.",
