@@ -18,7 +18,7 @@ def test_get_profile() -> None:
     assert research_agent.profile.bio == "A researcher in the field of machine learning."
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
+@patch("research_town.utils.agent_prompter.model_prompting")
 @patch("research_town.utils.agent_prompter.get_related_papers")
 def test_generate_idea(
     mock_get_related_papers: MagicMock,
@@ -35,9 +35,9 @@ def test_generate_idea(
     assert ideas == ["This is a research idea."]
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_communicate(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = [
+@patch("research_town.utils.agent_prompter.model_prompting")
+def test_communicate(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.return_value = [
         "I believe in the potential of using automous agents to simulate the current research pipeline."
     ]
 
@@ -50,9 +50,9 @@ def test_communicate(mock_openai_prompting: MagicMock) -> None:
     assert response.pk is not None
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_write_paper(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = ["This is a paper abstract."]
+@patch("research_town.utils.agent_prompter.model_prompting")
+def test_write_paper(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.return_value = ["This is a paper abstract."]
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_B)
     paper = research_agent.write_paper(
@@ -61,7 +61,7 @@ def test_write_paper(mock_openai_prompting: MagicMock) -> None:
     assert paper.pk is not None
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
+@patch("research_town.utils.agent_prompter.model_prompting")
 @patch("research_town.utils.agent_prompter.get_related_papers")
 def test_read_paper(
     mock_get_related_papers: MagicMock,
@@ -87,9 +87,9 @@ def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
     assert len(collaborators) <= 3
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_make_review_decision(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = [
+@patch("research_town.utils.agent_prompter.model_prompting")
+def test_make_review_decision(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.return_value = [
         "Accept. This is a good paper."]
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
@@ -102,9 +102,9 @@ def test_make_review_decision(mock_openai_prompting: MagicMock) -> None:
     assert decision.pk is not None
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_review_paper(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.side_effect = mock_prompting
+@patch("research_town.utils.agent_prompter.model_prompting")
+def test_review_paper(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.side_effect = mock_prompting
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
     review = research_agent.review_paper(paper=paper_profile_A)
@@ -112,9 +112,9 @@ def test_review_paper(mock_openai_prompting: MagicMock) -> None:
     assert review.review_content == "This is a paper review for MambaOut."
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_rebut_review(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = [
+@patch("research_town.utils.agent_prompter.model_prompting")
+def test_rebut_review(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.return_value = [
         "This is a paper rebuttal."]
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
