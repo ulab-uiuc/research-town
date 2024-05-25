@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Optional
 
 from ..dbs import (
     AgentAgentDiscussionLog,
@@ -25,10 +25,12 @@ from ..utils.agent_prompter import (
 
 class BaseResearchAgent(object):
     def __init__(self,
-                 agent_profile: AgentProfile,
-                 ) -> None:
+        agent_profile: AgentProfile,
+        model_name: Optional[str] = 'gpt-3.5-turbo'
+    ) -> None:
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
+        self.model_name: str = model_name
 
     def get_profile(self, author_name: str) -> AgentProfile:
         # TODO: db get based on name
@@ -47,7 +49,8 @@ class BaseResearchAgent(object):
         if message.message is not None:
             message_dict[message.agent_from_pk] = message.message
         message_content = communicate_with_multiple_researchers_prompting(
-            message_dict
+            messages=message_dict,
+            model_name=self.model_name
         )[0]
         discussion_log = AgentAgentDiscussionLog(
             timestep=(int)(datetime.now().timestamp()),
@@ -77,7 +80,8 @@ class BaseResearchAgent(object):
         trend = summarize_research_field_prompting(
             profile=profile,
             keywords=[domain],
-            papers=papers_dict
+            papers=papers_dict,
+            model_name=self.model_name
         )
         trend_output = trend[0]
         return trend_output
@@ -148,11 +152,15 @@ class BaseResearchAgent(object):
         trends = summarize_research_field_prompting(
             profile=profile,
             keywords=[domain],
-            papers=papers_dict
+            papers=papers_dict,
+            model_name=self.model_name
         )
         ideas: List[str] = []
         for trend in trends:
-            idea = generate_ideas_prompting(trend)[0]
+            idea = generate_ideas_prompting(
+                trend=trend,
+                model_name=self.model_name
+            )[0]
             ideas.append(idea)
 
         return ideas
@@ -171,7 +179,10 @@ class BaseResearchAgent(object):
             if paper_profile.title is not None:
                 papers_dict[paper_profile.pk]["title"] = [paper_profile.title]
         paper_abstract = write_paper_abstract_prompting(
-            research_ideas, papers_dict)[0]
+            ideas=research_ideas, 
+            papers=papers_dict,
+            model_name=self.model_name
+        )[0]
         paper_profile = PaperProfile(abstract=paper_abstract)
         return paper_profile
 
@@ -181,8 +192,14 @@ class BaseResearchAgent(object):
     ) -> AgentPaperReviewLog:
         paper_dict:  Dict[str, str] = {
             paper.title: paper.abstract} if paper.title is not None and paper.abstract is not None else {}
-        paper_review = review_paper_prompting(paper_dict)[0]
-        review_score = review_score_prompting(paper_review)
+        paper_review = review_paper_prompting(
+            paper=paper_dict,
+            model_name=self.model_name
+        )[0]
+        review_score = review_score_prompting(
+            paper_review=paper_review,
+            model_name=self.model_name
+        )
 
         return AgentPaperReviewLog(
             timestep=(int)(datetime.now().timestamp()),
@@ -205,7 +222,11 @@ class BaseResearchAgent(object):
                 review_dict[agent_review_log.pk] = (
                     agent_review_log.review_score, agent_review_log.review_content)
 
-        meta_review = make_review_decision_prompting(paper_dict, review_dict)
+        meta_review = make_review_decision_prompting(
+            paper=paper_dict, 
+            review=review_dict,
+            model_name=self.model_name
+        )
         review_decision = "accept" in meta_review[0].lower()
 
         return AgentPaperMetaReviewLog(
@@ -237,7 +258,11 @@ class BaseResearchAgent(object):
                     agent_meta_review_log.decision, agent_meta_review_log.meta_review)
 
         rebut_review = rebut_review_prompting(
-            paper_dict, review_dict, decision_dict)[0]
+            paper=paper_dict, 
+            review=review_dict, 
+            decision=decision_dict,
+            model_name=self.model_name
+        )[0]
 
         return AgentPaperRebuttalLog(
             timestep=(int)(datetime.now().timestamp()),

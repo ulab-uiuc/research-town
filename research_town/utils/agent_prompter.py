@@ -7,7 +7,7 @@ from .paper_collector import get_related_papers
 
 @exponential_backoff(retries=5, base_wait_time=1)
 def model_prompting(
-    llm_model: str,
+    model_name: str,
     prompt: str,
     return_num: Optional[int] = 2,
     max_token_num: Optional[int] = 512,
@@ -16,7 +16,7 @@ def model_prompting(
     Select model via router in LiteLLM.
     """
     completion = litellm.completion(
-    model=llm_model,
+    model=model_name,
     messages=[{"role": "user", "content": prompt}],
     max_tokens=max_token_num,
     n=return_num, # for some models, 'n'(The number of chat completion choices ) is not supported.
@@ -29,7 +29,7 @@ def summarize_research_field_prompting(
     profile: Dict[str, str],
     keywords: List[str],
     papers: Dict[str, Dict[str, List[str]]],
-    llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
+    model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     Summarize research field based on profile, keywords, written papers
@@ -63,10 +63,10 @@ def summarize_research_field_prompting(
     )
     prompt = prompt_template.format_map(template_input)
 
-    return model_prompting(llm_model, prompt)
+    return model_prompting(model_name, prompt)
 
 
-def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, str], collaborator_profiles: Dict[str, str], parameter: float = 0.5, max_number: int = 3,  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
+def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, str], collaborator_profiles: Dict[str, str], parameter: float = 0.5, max_number: int = 3,  model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
     self_serialize = [
         f"Name: {name}\nProfile: {self_profile[name]}" for _, name in enumerate(self_profile.keys())]
     self_serialize_all = "\n\n".join(self_serialize)
@@ -89,12 +89,12 @@ def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, 
     input = {"max_number": str(max_number), "self_serialize_all": self_serialize_all,
              "task_serialize_all": task_serialize_all, "collaborators_serialize_all": collaborator_serialize_all}
     prompt = prompt_qa.format_map(input)
-    return model_prompting(llm_model, prompt)
+    return model_prompting(model_name, prompt)
 
 
 def generate_ideas_prompting(
     trend: str,
-    llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
+    model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     Generate research ideas based on the trending of one research field
@@ -106,12 +106,12 @@ def generate_ideas_prompting(
     )
     template_input = {"trend": trend}
     prompt = prompt_template.format_map(template_input)
-    return model_prompting(llm_model, prompt)
+    return model_prompting(model_name, prompt)
 
 
 def summarize_research_direction_prompting(
     personal_info: str,
-    llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
+    model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     Summarize research direction based on personal research history
@@ -123,13 +123,13 @@ def summarize_research_direction_prompting(
     )
     template_input = {"personalinfo": personal_info}
     prompt = prompt_template.format_map(template_input)
-    return model_prompting(llm_model, prompt)
+    return model_prompting(model_name, prompt)
 
 
 def write_paper_abstract_prompting(
     ideas: List[str],
-    external_data: Dict[str, Dict[str, List[str]]],
-    llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
+    papers: Dict[str, Dict[str, List[str]]],
+    model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     Write paper using ideas from list, and external data (published papers)
@@ -139,8 +139,8 @@ def write_paper_abstract_prompting(
 
     papers_serialize = []
 
-    for i, timestamp in enumerate(external_data.keys()):
-        abstracts = external_data[timestamp]['abstract']
+    for i, timestamp in enumerate(papers.keys()):
+        abstracts = papers[timestamp]['abstract']
         formatted_abstracts = '\nAbstract: '.join(abstracts)
         paper_entry = f"Time: {timestamp}\nAbstract: {formatted_abstracts}\n"
         papers_serialize.append(paper_entry)
@@ -157,24 +157,24 @@ def write_paper_abstract_prompting(
     template_input = {"ideas_serialize_all": ideas_serialize_all,
                       "papers_serialize_all": papers_serialize_all}
     prompt = prompt_template.format_map(template_input)
-    return model_prompting(llm_model, prompt)
+    return model_prompting(model_name, prompt)
 
 
-def review_score_prompting(paper_review: str, llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> int:
+def review_score_prompting(paper_review: str, model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> int:
     prompt_qa = (
         "Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only returns one number score."
         "Here are the reviews: {paper_review}"
     )
     input = {"paper_review": paper_review}
     prompt = prompt_qa.format_map(input)
-    score_str = model_prompting(llm_model, prompt)
+    score_str = model_prompting(model_name, prompt)
     if score_str[0].isdigit():
         return int(score_str[0])
     else:
         return 0
 
 
-def review_paper_prompting(paper: Dict[str, str],  llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+def review_paper_prompting(paper: Dict[str, str],  model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
     """
     Review paper from using list, and external data (published papers)
     """
@@ -194,10 +194,10 @@ def review_paper_prompting(paper: Dict[str, str],  llm_model: Optional[str] = "m
     input = {"papers_serialize_all": papers_serialize_all}
 
     prompt = prompt_qa.format_map(input)
-    return model_prompting(llm_model, prompt)
+    return model_prompting(model_name, prompt)
 
 
-def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, str]], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, str]], model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
     paper_serialize = []
     for _, title in enumerate(paper.keys()):
         abstract = paper[title]
@@ -220,13 +220,13 @@ def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tupl
     template_input = {"paper_serialize_all": paper_serialize_all,
                       "review_serialize_all": review_serialize_all}
     prompt = prompt_template.format_map(template_input)
-    return model_prompting(llm_model, prompt)
+    return model_prompting(model_name, prompt)
 
 
-def rebut_review_prompting(submission: Dict[str, str], review: Dict[str, Tuple[int, str]], decision: Dict[str, Tuple[bool, str]], llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+def rebut_review_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, str]], decision: Dict[str, Tuple[bool, str]], model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
     submission_serialize = []
-    for _, title in enumerate(submission.keys()):
-        abstract = submission[title]
+    for _, title in enumerate(paper.keys()):
+        abstract = paper[title]
         submission_entry = f"Title: {title}\nAbstract:{abstract}\n"
         submission_serialize.append(submission_entry)
     submission_serialize_all = "\n\n".join(submission_serialize)
@@ -254,12 +254,12 @@ def rebut_review_prompting(submission: Dict[str, str], review: Dict[str, Tuple[i
     template_input = {"submission_serialize_all": submission_serialize_all,
                       "review_serialize_all": review_serialize_all, "decision_serialize_all": decision_serialize_all}
     prompt = prompt_template.format_map(template_input)
-    return model_prompting(llm_model, prompt)
+    return model_prompting(model_name, prompt)
 
 
 def communicate_with_multiple_researchers_prompting(
-    input: Dict[str, str],
-    llm_model: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
+    messages: Dict[str, str],
+    model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     This is a single-round chat method. One that contains a chat history can better enable
@@ -274,4 +274,4 @@ def communicate_with_multiple_researchers_prompting(
     template_input = {
         "single_round_chat_serialize_all": single_round_chat_serialize_all}
     prompt = prompt_template.format_map(template_input)
-    return model_prompting(llm_model, prompt)
+    return model_prompting(model_name, prompt)
