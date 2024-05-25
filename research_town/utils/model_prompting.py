@@ -5,7 +5,7 @@ from typing import  List, Optional
 def model_prompting(
     llm_model: str,
     prompt: str,
-    return_num: Optional[int] = 2,
+    return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = None,
     top_p: Optional[float] = None,
