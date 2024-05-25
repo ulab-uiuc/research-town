@@ -26,7 +26,7 @@ from ..utils.agent_prompter import (
 class BaseResearchAgent(object):
     def __init__(self,
         agent_profile: AgentProfile,
-        model_name: Optional[str] = 'gpt-3.5-turbo'
+        model_name: str = 'gpt-3.5-turbo'
     ) -> None:
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}

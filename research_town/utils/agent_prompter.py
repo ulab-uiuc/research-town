@@ -266,7 +266,7 @@ def communicate_with_multiple_researchers_prompting(
     This is a single-round chat method. One that contains a chat history can better enable
     """
     single_round_chat_serialize = [
-        f"Message from researcher named {name}: {message}" for name, message in input.items()]
+        f"Message from researcher named {name}: {message}" for name, message in messages.items()]
     single_round_chat_serialize_all = "\n".join(single_round_chat_serialize)
     prompt_template = (
         "Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. "
