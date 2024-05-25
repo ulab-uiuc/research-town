@@ -1,6 +1,8 @@
 from typing import Dict, List, Optional, Tuple
-from .paper_collector import get_related_papers
+
 from .model_prompting import model_prompting
+from .paper_collector import get_related_papers
+
 
 def summarize_research_field_prompting(
     profile: Dict[str, str],

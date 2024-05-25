@@ -1,6 +1,10 @@
+from typing import List, Optional
+
 import litellm
+
 from .decorator import exponential_backoff
-from typing import  List, Optional
+
+
 @exponential_backoff(retries=5, base_wait_time=1)
 def model_prompting(
     llm_model: str,
