@@ -80,7 +80,7 @@ class AgentPaperRebuttalLog(BaseModel):
     rebuttal_id: str
     paper_id: str
     agent_id: str
-    rebuttal_content: str
+    rebuttal_content: Optional[str] = Field(default=None)
 
 class AgentPaperMetaReviewLog(BaseModel):
     timestep: int
@@ -88,13 +88,13 @@ class AgentPaperMetaReviewLog(BaseModel):
     paper_id: str
     agent_id: str
     decision: str
-    meta_review: str
+    meta_review: Optional[str] = Field(default=None)
 
 class AgentAgentDiscussionLog(BaseModel):
     timestep: int
     discussion_id: str
     agent_from_id: str
     agent_to_id: str
-    message: str
+    message: Optional[str] = Field(default=None)
 
 
