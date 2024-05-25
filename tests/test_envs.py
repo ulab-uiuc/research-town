@@ -10,9 +10,9 @@ from tests.constants import (
 )
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_paper_rebuttal_env(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = [
+@patch("research_town.utils.agent_prompter.model_prompting")
+def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.return_value = [
         "Paper Rebuttal Environment."]
     env = PaperRebuttalMultiAgentEnv(
         agent_profiles=[agent_profile_A, agent_profile_B]
@@ -32,3 +32,19 @@ def test_paper_rebuttal_env(mock_openai_prompting: MagicMock) -> None:
     assert env.decision in ["accept", "reject", "boarderline"]
     assert isinstance(env.rebuttal, list)
     assert len(env.rebuttal) > 0
+
+
+@patch("research_town.utils.agent_prompter.model_prompting")
+def test_paper_submission_env(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.return_value = ["This is a paper."]
+
+    env = PaperSubmissionMultiAgentEnvironment(
+        agent_dict={
+            "Jiaxuan You": "Jiaxuan You"
+        },
+        task={
+            "11 May 2024": "Organize a workshop on how far are we from AGI (artificial general intelligence) at ICLR 2024. This workshop aims to become a melting pot for ideas, discussions, and debates regarding our proximity to AGI."
+        }
+    )
+    env.step()
+    assert isinstance(env.paper, str)

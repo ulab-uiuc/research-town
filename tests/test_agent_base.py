@@ -22,10 +22,10 @@ def test_get_profile() -> None:
 @patch("research_town.utils.agent_prompter.get_related_papers")
 def test_generate_idea(
     mock_get_related_papers: MagicMock,
-    mock_openai_prompting: MagicMock,
+    mock_model_prompting: MagicMock,
 ) -> None:
     mock_get_related_papers.side_effect = mock_papers
-    mock_openai_prompting.side_effect = mock_prompting
+    mock_model_prompting.side_effect = mock_prompting
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
     ideas = research_agent.generate_idea(
@@ -65,7 +65,7 @@ def test_write_paper(mock_openai_prompting: MagicMock) -> None:
 @patch("research_town.utils.agent_prompter.get_related_papers")
 def test_read_paper(
     mock_get_related_papers: MagicMock,
-    mock_openai_prompting: MagicMock,
+    mock_model_prompting: MagicMock,
 ) -> None:
     mock_get_related_papers.side_effect = mock_papers
     mock_openai_prompting.side_effect = mock_prompting
@@ -75,9 +75,9 @@ def test_read_paper(
     assert summary == "Graph Neural Network"
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_find_collaborators(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = [
+@patch("research_town.utils.agent_prompter.model_prompting")
+def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.return_value = [
         "These are collaborators including Jure Leskovec, Rex Ying, Saining Xie, Kaiming He."]
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
@@ -111,7 +111,7 @@ def test_review_paper(mock_openai_prompting: MagicMock) -> None:
     assert review.review_score == 2
     assert review.review_content == "This is a paper review for MambaOut."
 
-
+    
 @patch("research_town.utils.agent_prompter.openai_prompting")
 def test_rebut_review(mock_openai_prompting: MagicMock) -> None:
     mock_openai_prompting.return_value = [
