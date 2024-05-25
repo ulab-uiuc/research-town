@@ -68,7 +68,7 @@ def test_read_paper(
     mock_model_prompting: MagicMock,
 ) -> None:
     mock_get_related_papers.side_effect = mock_papers
-    mock_openai_prompting.side_effect = mock_prompting
+    mock_model_prompting.side_effect = mock_prompting
     domain = "machine learning"
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
     summary = research_agent.read_paper([paper_profile_A], domain)
@@ -111,7 +111,7 @@ def test_review_paper(mock_openai_prompting: MagicMock) -> None:
     assert review.review_score == 2
     assert review.review_content == "This is a paper review for MambaOut."
 
-    
+
 @patch("research_town.utils.agent_prompter.openai_prompting")
 def test_rebut_review(mock_openai_prompting: MagicMock) -> None:
     mock_openai_prompting.return_value = [

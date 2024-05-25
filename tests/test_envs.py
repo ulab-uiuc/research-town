@@ -1,8 +1,10 @@
 from unittest.mock import MagicMock, patch
 
-from research_town.envs.env_paper_rebuttal import (
+from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
+    PaperSubmissionMultiAgentEnvironment,
 )
+
 from tests.constants import (
     agent_profile_A,
     agent_profile_B,
