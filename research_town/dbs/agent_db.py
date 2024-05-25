@@ -12,7 +12,7 @@ class AgentProfile(BaseModel):
 
 
 class AgentProfileDB(object):
-    def __init__(self):
+    def __init__(self) -> None:
         self.data: Dict[str, AgentProfile] = {}
 
     def add(self, agent: AgentProfile) -> None:
@@ -32,7 +32,7 @@ class AgentProfileDB(object):
             return True
         return False
 
-    def get(self, **conditions) -> List[AgentProfile]:
+    def get(self, **conditions: Dict[str, Any]) -> List[AgentProfile]:
         result = []
         for agent in self.data.values():
             if all(getattr(agent, key) == value for key, value in conditions.items()):
@@ -41,15 +41,17 @@ class AgentProfileDB(object):
 
     def save_to_file(self, file_name: str) -> None:
         with open(file_name, "w") as f:
-            json.dump({aid: agent.dict() for aid, agent in self.data.items()}, f, indent=2)
+            json.dump({aid: agent.dict()
+                      for aid, agent in self.data.items()}, f, indent=2)
 
     def load_from_file(self, file_name: str) -> None:
         with open(file_name, "r") as f:
             data = json.load(f)
-            self.data = {aid: AgentProfile(**agent_data) for aid, agent_data in data.items()}
+            self.data = {aid: AgentProfile(**agent_data)
+                         for aid, agent_data in data.items()}
 
     def update_db(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
         for date, agents in data.items():
             for agent_data in agents:
                 agent = AgentProfile(**agent_data)
-                self.add_agent(agent)
+                self.add(agent)

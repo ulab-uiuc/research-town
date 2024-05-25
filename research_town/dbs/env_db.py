@@ -6,9 +6,11 @@ from pydantic import BaseModel, Field
 
 T = TypeVar('T', bound=BaseModel)
 
+
 class EnvLogDB:
     def __init__(self) -> None:
         self.data: Dict[str, List[Any]] = {
+            "PaperProfile": [],
             "AgentPaperReviewLog": [],
             "AgentPaperRebuttalLog": [],
             "AgentPaperMetaReviewLog": [],
@@ -48,7 +50,7 @@ class EnvLogDB:
                 updated_count += 1
         return updated_count
 
-    def delete(self, cls: Type[T], **conditions) -> int:
+    def delete(self, cls: Type[T], **conditions: Dict[str, Any]) -> int:
         class_name = cls.__name__
         if class_name not in self.data:
             raise ValueError(f"Unsupported log type: {class_name}")
@@ -76,12 +78,14 @@ class AgentPaperReviewLog(BaseModel):
     review_score: Optional[int] = Field(default=0)
     review_content: Optional[str] = Field(default=None)
 
+
 class AgentPaperRebuttalLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(index=True)
     paper_pk: str = Field(index=True)
     agent_pk: str = Field(index=True)
     rebuttal_content: Optional[str] = Field(default=None)
+
 
 class AgentPaperMetaReviewLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -90,6 +94,7 @@ class AgentPaperMetaReviewLog(BaseModel):
     agent_pk: str = Field(index=True)
     decision: Optional[bool] = Field(default=False)
     meta_review: Optional[str] = Field(default=None)
+
 
 class AgentAgentDiscussionLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))

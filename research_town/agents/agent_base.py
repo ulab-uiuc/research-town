@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Tuple, Optional
+from typing import Any, Dict, List, Tuple
 
 from ..dbs import (
     AgentAgentDiscussionLog,
@@ -24,9 +24,9 @@ from ..utils.agent_prompter import (
 
 
 class BaseResearchAgent(object):
-    def __init__(self, 
-        agent_profile: AgentProfile,
-    ) -> None:
+    def __init__(self,
+                 agent_profile: AgentProfile,
+                 ) -> None:
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
 
@@ -43,7 +43,9 @@ class BaseResearchAgent(object):
         message: AgentAgentDiscussionLog
     ) -> AgentAgentDiscussionLog:
         # TODO: find a meaningful key
-        message_dict = {message.agent_from_pk: message.message}
+        message_dict: Dict[str, str] = {}
+        if message.message is not None:
+            message_dict[message.agent_from_pk] = message.message
         message_content = communicate_with_multiple_researchers_prompting(
             message_dict
         )[0]
@@ -60,17 +62,19 @@ class BaseResearchAgent(object):
         papers: List[PaperProfile],
         domain: str
     ) -> str:
-        papers_dict = {}
+        papers_dict: Dict[str, Dict[str, List[str]]] = {}
         for paper in papers:
-            papers_dict[paper.pk] = {
-                "abstract": [paper.abstract],
-                "title": [paper.title]
-            }
+            if paper.abstract is not None:
+                papers_dict[paper.pk]["abstract"] = [paper.abstract]
+            if paper.title is not None:
+                papers_dict[paper.pk]["title"] = [paper.title]
+        profile: Dict[str, str] = {}
+        if self.profile.name is not None:
+            profile["name"] = self.profile.name
+        if self.profile.bio is not None:
+            profile["profile"] = self.profile.bio
         trend = summarize_research_field_prompting(
-            profile={
-                "name": self.profile.name,
-                "profile": self.profile.bio
-            },
+            profile=profile,
             keywords=[domain],
             papers=papers_dict
         )
@@ -83,15 +87,21 @@ class BaseResearchAgent(object):
         parameter: float = 0.5,
         max_number: int = 3
     ) -> List[AgentProfile]:
-        start_author = [self.profile.name]
+        start_author: List[str] = [
+            self.profile.name] if self.profile.name is not None else []
         graph, _, _ = bfs(
             author_list=start_author, node_limit=max_number)
         collaborators = list(
             {name for pair in graph for name in pair if name != self.profile.name})
-        self_profile = {self.profile.name: self.profile.bio}
-        collaborator_profiles = {author: self.get_profile(
-            author).bio for author in collaborators}
-        paper_serialize = {paper.title: paper.abstract}
+        self_profile: Dict[str, str] = {
+            self.profile.name: self.profile.bio} if self.profile.name is not None and self.profile.bio is not None else {}
+        collaborator_profiles: Dict[str, str] = {}
+        for author in collaborators:
+            author_bio = self.get_profile(author).bio
+            if author_bio is not None:
+                collaborator_profiles[author] = author_bio
+        paper_serialize: Dict[str, str] = {
+            paper.title: paper.abstract} if paper.title is not None and paper.abstract is not None else {}
         result = find_collaborators_prompting(
             paper_serialize,
             self_profile,
@@ -110,7 +120,8 @@ class BaseResearchAgent(object):
         agent_profile: AgentProfile,
         max_node: int
     ) -> Tuple[List[Tuple[str, str]], Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
-        start_author = [self.name]
+        start_author: List[str] = [
+            self.profile.name] if self.profile.name is not None else []
         graph, node_feat, edge_feat = bfs(
             author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat
@@ -120,17 +131,20 @@ class BaseResearchAgent(object):
         papers: List[PaperProfile],
         domain: str
     ) -> List[str]:
-        papers_dict = {}
+        papers_dict: Dict[str, Dict[str, List[str]]] = {}
         for paper_profile in papers:
-            papers_dict[paper_profile.pk] = {
-                "abstract": [paper_profile.abstract],
-                "title": [paper_profile.title]
-            }
+            if paper_profile.abstract is not None:
+                papers_dict[paper_profile.pk]["abstract"] = [
+                    paper_profile.abstract]
+            if paper_profile.title is not None:
+                papers_dict[paper_profile.pk]["title"] = [paper_profile.title]
+        profile: Dict[str, str] = {}
+        if self.profile.name is not None:
+            profile["name"] = self.profile.name
+        if self.profile.bio is not None:
+            profile["profile"] = self.profile.bio
         trends = summarize_research_field_prompting(
-            profile={
-                "name": self.profile.name,
-                "profile": self.profile.bio
-            },
+            profile=profile,
             keywords=[domain],
             papers=papers_dict
         )
@@ -146,12 +160,13 @@ class BaseResearchAgent(object):
         research_ideas: List[str],
         papers: List[PaperProfile]
     ) -> PaperProfile:
-        papers_dict = {}
+        papers_dict: Dict[str, Dict[str, List[str]]] = {}
         for paper_profile in papers:
-            papers_dict[paper_profile.pk] = {
-                "abstract": [paper_profile.abstract],
-                "title": [paper_profile.title]
-            }
+            if paper_profile.abstract is not None:
+                papers_dict[paper_profile.pk]["abstract"] = [
+                    paper_profile.abstract]
+            if paper_profile.title is not None:
+                papers_dict[paper_profile.pk]["title"] = [paper_profile.title]
         paper_abstract = write_paper_abstract_prompting(
             research_ideas, papers_dict)[0]
         paper_profile = PaperProfile(abstract=paper_abstract)
@@ -161,7 +176,8 @@ class BaseResearchAgent(object):
         self,
         paper: PaperProfile
     ) -> AgentPaperReviewLog:
-        paper_dict = {paper.title: paper.abstract}
+        paper_dict:  Dict[str, str] = {
+            paper.title: paper.abstract} if paper.title is not None and paper.abstract is not None else {}
         paper_review = review_paper_prompting(paper_dict)[0]
         review_score = review_score_prompting(paper_review)
 
@@ -178,11 +194,13 @@ class BaseResearchAgent(object):
         paper: PaperProfile,
         review: List[AgentPaperReviewLog]
     ) -> AgentPaperMetaReviewLog:
-        paper_dict = {paper.title: paper.abstract}
-        review_dict = {}
+        paper_dict: Dict[str, str] = {
+            paper.title: paper.abstract} if paper.title is not None and paper.abstract is not None else {}
+        review_dict: Dict[str, Tuple[int, str]] = {}
         for agent_review_log in review:
-            review_dict[agent_review_log.pk] = (
-                agent_review_log.review_score, agent_review_log.review_content)
+            if agent_review_log.review_score is not None and agent_review_log.review_content is not None:
+                review_dict[agent_review_log.pk] = (
+                    agent_review_log.review_score, agent_review_log.review_content)
 
         meta_review = make_review_decision_prompting(paper_dict, review_dict)
         review_decision = "accept" in meta_review[0].lower()
@@ -201,16 +219,19 @@ class BaseResearchAgent(object):
         review: List[AgentPaperReviewLog],
         decision: List[AgentPaperMetaReviewLog]
     ) -> AgentPaperRebuttalLog:
-        paper_dict = {paper.title: paper.abstract}
-        review_dict = {}
+        paper_dict: Dict[str, str] = {
+            paper.title: paper.abstract} if paper.title is not None and paper.abstract is not None else {}
+        review_dict: Dict[str, Tuple[int, str]] = {}
         for agent_review_log in review:
-            review_dict[agent_review_log.pk] = (
-                agent_review_log.review_score, agent_review_log.review_content)
+            if agent_review_log.review_score is not None and agent_review_log.review_content is not None:
+                review_dict[agent_review_log.pk] = (
+                    agent_review_log.review_score, agent_review_log.review_content)
 
-        decision_dict = {}
+        decision_dict: Dict[str, Tuple[bool, str]] = {}
         for agent_meta_review_log in decision:
-            decision_dict[agent_meta_review_log.pk] = (
-                agent_meta_review_log.decision == "accept", agent_meta_review_log.meta_review)
+            if agent_meta_review_log.decision is not None and agent_meta_review_log.meta_review is not None:
+                decision_dict[agent_meta_review_log.pk] = (
+                    agent_meta_review_log.decision, agent_meta_review_log.meta_review)
 
         rebut_review = rebut_review_prompting(
             paper_dict, review_dict, decision_dict)[0]

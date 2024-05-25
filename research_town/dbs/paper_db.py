@@ -12,6 +12,7 @@ class PaperProfile(BaseModel):
     title: Optional[str] = Field(default=None)
     abstract: Optional[str] = Field(default=None)
 
+
 class PaperProfileDB:
     def __init__(self) -> None:
         self.data: Dict[str, PaperProfile] = {}
@@ -36,7 +37,7 @@ class PaperProfileDB:
             return True
         return False
 
-    def query_papers(self, **conditions) -> List[PaperProfile]:
+    def query_papers(self, **conditions: Dict[str, Any]) -> List[PaperProfile]:
         result = []
         for paper in self.data.values():
             if all(getattr(paper, key) == value for key, value in conditions.items()):
@@ -45,12 +46,14 @@ class PaperProfileDB:
 
     def save_to_file(self, file_name: str) -> None:
         with open(file_name, "w") as f:
-            json.dump({pk: paper.dict() for pk, paper in self.data.items()}, f, indent=2)
+            json.dump({pk: paper.dict()
+                      for pk, paper in self.data.items()}, f, indent=2)
 
     def load_from_file(self, file_name: str) -> None:
         with open(file_name, "r") as f:
             data = json.load(f)
-            self.data = {pk: PaperProfile(**paper_data) for pk, paper_data in data.items()}
+            self.data = {pk: PaperProfile(**paper_data)
+                         for pk, paper_data in data.items()}
 
     def update_db(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
         for date, papers in data.items():
@@ -60,4 +63,10 @@ class PaperProfileDB:
 
     def fetch_and_add_papers(self, num: int, domain: str) -> None:
         data, _ = get_daily_papers(domain, query=domain, max_results=num)
-        self.update_db(data)
+        transformed_data = {}
+        for date, value in data.items():
+            papers = []
+            papers.append({"abstract": value["abstract"]})
+            papers.append({"info": value["info"]})
+            transformed_data[date] = papers
+        self.update_db(transformed_data)

@@ -124,5 +124,6 @@ def test_rebut_review(mock_openai_prompting: MagicMock) -> None:
     rebuttal = research_agent.rebut_review(
         paper=paper_profile_A, review=[review], decision=[decision])
     assert isinstance(rebuttal, AgentPaperRebuttalLog)
-    assert len(rebuttal.rebuttal_content) > 0
+    if rebuttal.rebuttal_content is not None:
+        assert len(rebuttal.rebuttal_content) > 0
     assert rebuttal.rebuttal_content == "This is a paper rebuttal."
