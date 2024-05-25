@@ -6,12 +6,20 @@ from ..dbs import (
     AgentPaperReviewLog,
     AgentProfile,
     PaperProfile,
+    AgentProfileDB,
+    EnvLogDB,
+    PaperProfileDB,
 )
 from .env_base import BaseMultiAgentEnv
 
 
 class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
-    def __init__(self, agent_profiles: List[AgentProfile]) -> None:
+    def __init__(self, 
+        agent_profiles: List[AgentProfile],
+        agent_db: AgentProfileDB,
+        paper_db: PaperProfileDB,
+        env_db: EnvLogDB
+    ) -> None:
         super().__init__(agent_profiles)
         self.turn_number = 0
         self.turn_max = 1
@@ -22,6 +30,9 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.review: List[AgentPaperReviewLog] = []
         self.rebuttal: List[AgentPaperRebuttalLog] = []
         self.meta_review: List[AgentPaperMetaReviewLog] = []
+        self.agent_db = agent_db
+        self.paper_db = paper_db
+        self.env_db = env_db
 
     def assign_roles(self, role_dict: Dict[str, str]) -> None:
         for index, agent_profile in enumerate(self.agent_profiles):
