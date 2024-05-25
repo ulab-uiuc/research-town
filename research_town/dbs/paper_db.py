@@ -4,7 +4,7 @@ import json
 from ..utils.paper_collector import get_daily_papers
 
 class PaperProfile(BaseModel):
-    paper_id: str = Field(index=True)
+    pk: str = Field(index=True)
     title: Optional[str] = Field(default=None)
     abstract: Optional[str] = Field(default=None)
 
@@ -13,22 +13,22 @@ class PaperProfileDB:
         self.data: Dict[str, PaperProfile] = {}
 
     def add_paper(self, paper: PaperProfile) -> None:
-        self.data[paper.paper_id] = paper
+        self.data[paper.paper_pk] = paper
 
-    def update_paper(self, paper_id: str, updates: Dict[str, Optional[str]]) -> bool:
-        if paper_id in self.data:
+    def update_paper(self, paper_pk: str, updates: Dict[str, Optional[str]]) -> bool:
+        if paper_pk in self.data:
             for key, value in updates.items():
                 if value is not None:
-                    setattr(self.data[paper_id], key, value)
+                    setattr(self.data[paper_pk], key, value)
             return True
         return False
 
-    def get_paper(self, paper_id: str) -> Optional[PaperProfile]:
-        return self.data.get(paper_id)
+    def get_paper(self, paper_pk: str) -> Optional[PaperProfile]:
+        return self.data.get(paper_pk)
 
-    def delete_paper(self, paper_id: str) -> bool:
-        if paper_id in self.data:
-            del self.data[paper_id]
+    def delete_paper(self, paper_pk: str) -> bool:
+        if paper_pk in self.data:
+            del self.data[paper_pk]
             return True
         return False
 
@@ -41,12 +41,12 @@ class PaperProfileDB:
 
     def save_to_file(self, file_name: str) -> None:
         with open(file_name, "w") as f:
-            json.dump({pid: paper.dict() for pid, paper in self.data.items()}, f, indent=2)
+            json.dump({ppk: paper.dict() for pid, paper in self.data.items()}, f, indent=2)
 
     def load_from_file(self, file_name: str) -> None:
         with open(file_name, "r") as f:
             data = json.load(f)
-            self.data = {pid: PaperProfile(**paper_data) for pid, paper_data in data.items()}
+            self.data = {ppk: PaperProfile(**paper_data) for pid, paper_data in data.items()}
 
     def update_db(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
         for date, papers in data.items():

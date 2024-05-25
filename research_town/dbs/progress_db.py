@@ -65,10 +65,10 @@ class ResearchProgressDB:
             self.data = json.load(f)
 
 class ResearchIdea(BaseModel):
-    idea_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content: Optional[str] = Field(default=None)
 
 class ResearchPaperDraft(BaseModel):
-    paper_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: Optional[str] = Field(default=None)
     abstract: Optional[str] = Field(default=None)

@@ -69,33 +69,33 @@ class EnvLogDB:
 
 
 class AgentPaperReviewLog(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
-    paper_id: str = Field(index=True)
-    agent_id: str = Field(index=True)
+    paper_pk: str = Field(index=True)
+    agent_pk: str = Field(index=True)
     review_score: Optional[int] = Field(default=0)
     review_content: Optional[str] = Field(default=None)
 
 class AgentPaperRebuttalLog(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(index=True)
-    paper_id: str = Field(index=True)
-    agent_id: str = Field(index=True)
+    paper_pk: str = Field(index=True)
+    agent_pk: str = Field(index=True)
     rebuttal_content: Optional[str] = Field(default=None)
 
 class AgentPaperMetaReviewLog(BaseModel):
     id = str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
-    paper_id: str = Field(index=True)
-    agent_id: str = Field(index=True)
+    paper_pk: str = Field(index=True)
+    agent_pk: str = Field(index=True)
     decision: bool = Field(default=False)
     meta_review: Optional[str] = Field(default=None)
 
 class AgentAgentDiscussionLog(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(index=True)
-    agent_from_id: str = Field(index=True)
-    agent_to_id: str = Field(index=True)
+    agent_from_pk: str = Field(index=True)
+    agent_to_pk: str = Field(index=True)
     message: Optional[str] = Field(default=None)
 
 

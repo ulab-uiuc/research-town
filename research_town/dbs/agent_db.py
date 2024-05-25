@@ -1,9 +1,10 @@
 from typing import Dict, List, Optional, Any
 from pydantic import BaseModel, Field
 import uuid
+import json
 
 class AgentProfile(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: Optional[str] = Field(default=None)
     profile: Optional[str] = Field(default=None)
 
@@ -14,20 +15,20 @@ class AgentProfileDB:
     def add_agent(self, agent: AgentProfile) -> None:
         self.data[agent.agent_id] = agent
 
-    def update_agent(self, agent_id: str, updates: Dict[str, Optional[str]]) -> bool:
-        if agent_id in self.data:
+    def update_agent(self, agent_pk: str, updates: Dict[str, Optional[str]]) -> bool:
+        if agent_pk in self.data:
             for key, value in updates.items():
                 if value is not None:
-                    setattr(self.data[agent_id], key, value)
+                    setattr(self.data[agent_pk], key, value)
             return True
         return False
 
-    def get_agent(self, agent_id: str) -> Optional[AgentProfile]:
-        return self.data.get(agent_id)
+    def get_agent(self, agent_pk: str) -> Optional[AgentProfile]:
+        return self.data.get(agent_pk)
 
-    def delete_agent(self, agent_id: str) -> bool:
-        if agent_id in self.data:
-            del self.data[agent_id]
+    def delete_agent(self, agent_pk: str) -> bool:
+        if agent_pk in self.data:
+            del self.data[agent_pk]
             return True
         return False
 
