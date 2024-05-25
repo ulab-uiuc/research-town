@@ -45,12 +45,12 @@ class PaperProfileDB:
 
     def save_to_file(self, file_name: str) -> None:
         with open(file_name, "w") as f:
-            json.dump({ppk: paper.dict() for pid, paper in self.data.items()}, f, indent=2)
+            json.dump({pk: paper.dict() for pk, paper in self.data.items()}, f, indent=2)
 
     def load_from_file(self, file_name: str) -> None:
         with open(file_name, "r") as f:
             data = json.load(f)
-            self.data = {ppk: PaperProfile(**paper_data) for pid, paper_data in data.items()}
+            self.data = {pk: PaperProfile(**paper_data) for pk, paper_data in data.items()}
 
     def update_db(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
         for date, papers in data.items():

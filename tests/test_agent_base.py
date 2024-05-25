@@ -96,7 +96,7 @@ def test_make_review_decision(mock_openai_prompting: MagicMock) -> None:
     review = research_agent.review_paper(paper=paper_profile_A)
     decision = research_agent.make_review_decision(
         paper=paper_profile_A, review=[review])
-    assert decision.decision == True
+    assert decision.decision is True
     assert decision.meta_review == "Accept. This is a good paper."
     assert decision.timestep >= 0
     assert decision.pk is not None

@@ -18,5 +18,4 @@ def mock_prompting(
         return ["This is a research idea."]
     elif "summarize the keywords" in prompt:
         return ["Graph Neural Network"]
-    import pdb; pdb.set_trace()
     return ["Default response"]
