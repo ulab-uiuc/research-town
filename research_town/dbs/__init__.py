@@ -1,3 +1,4 @@
+from .agent_db import AgentProfile, AgentProfileDB
 from .env_db import (
     AgentAgentDiscussionLog,
     AgentPaperMetaReviewLog,
@@ -5,20 +6,11 @@ from .env_db import (
     AgentPaperReviewLog,
     EnvLogDB,
 )
-from .paper_db import (
-    PaperProfile,
-    PaperProfileDB
-)
-
-from .agent_db import (
-    AgentProfile,
-    AgentProfileDB
-)
-
+from .paper_db import PaperProfile, PaperProfileDB
 from .progress_db import (
     ResearchIdea,
     ResearchPaperDraft,
-    ResearchProgressDB
+    ResearchProgressDB,
 )
 
 __all__ = [

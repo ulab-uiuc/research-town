@@ -1,21 +1,24 @@
-from typing import Dict, List, Optional, Any
-from pydantic import BaseModel, Field
-import uuid
 import json
+import uuid
+from typing import Any, Dict, List, Optional
+
+from pydantic import BaseModel, Field
+
 
 class AgentProfile(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: Optional[str] = Field(default=None)
-    profile: Optional[str] = Field(default=None)
+    bio: Optional[str] = Field(default=None)
 
-class AgentProfileDB:
+
+class AgentProfileDB(object):
     def __init__(self):
         self.data: Dict[str, AgentProfile] = {}
 
-    def add_agent(self, agent: AgentProfile) -> None:
-        self.data[agent.agent_id] = agent
+    def add(self, agent: AgentProfile) -> None:
+        self.data[agent.pk] = agent
 
-    def update_agent(self, agent_pk: str, updates: Dict[str, Optional[str]]) -> bool:
+    def update(self, agent_pk: str, updates: Dict[str, Optional[str]]) -> bool:
         if agent_pk in self.data:
             for key, value in updates.items():
                 if value is not None:
@@ -23,16 +26,13 @@ class AgentProfileDB:
             return True
         return False
 
-    def get_agent(self, agent_pk: str) -> Optional[AgentProfile]:
-        return self.data.get(agent_pk)
-
-    def delete_agent(self, agent_pk: str) -> bool:
+    def delete(self, agent_pk: str) -> bool:
         if agent_pk in self.data:
             del self.data[agent_pk]
             return True
         return False
 
-    def query_agents(self, **conditions) -> List[AgentProfile]:
+    def get(self, **conditions) -> List[AgentProfile]:
         result = []
         for agent in self.data.values():
             if all(getattr(agent, key) == value for key, value in conditions.items()):

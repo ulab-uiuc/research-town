@@ -6,72 +6,59 @@ from tests.constants import (
     agent_agent_discussion_log,
     agent_profile_A,
     agent_profile_B,
-    paper_profile,
+    paper_profile_A,
+    paper_profile_B,
 )
 from tests.utils import mock_papers, mock_prompting
 
 
-@patch("research_town.utils.agent_prompter.openai_prompting")
-def test_get_profile(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = [
-        "I am a research agent who is interested in machine learning."]
-
-    research_agent = BaseResearchAgent(agent_name="Jiaxuan You")
-    profile = research_agent.profile
-    assert profile.name == "Jiaxuan You"
-    assert profile.profile == "I am a research agent who is interested in machine learning."
+def test_get_profile() -> None:
+    research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
+    assert research_agent.profile.name == "Jiaxuan You"
+    assert research_agent.profile.bio == "A researcher in the field of machine learning."
 
 
-# =========================================================
-# !IMPORTANT!
-# patch should not add path that it comes from
-# patch should add path that the function is used
-# =========================================================
 @patch("research_town.utils.agent_prompter.openai_prompting")
 @patch("research_town.utils.agent_prompter.get_related_papers")
 def test_generate_idea(
     mock_get_related_papers: MagicMock,
     mock_openai_prompting: MagicMock,
 ) -> None:
-
-    # Configure the mocks
     mock_get_related_papers.side_effect = mock_papers
     mock_openai_prompting.side_effect = mock_prompting
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
     ideas = research_agent.generate_idea(
-        papers=[paper_profile], domain="machine learning")
-
-    assert isinstance(ideas, list)
-    assert len(ideas) > 0
+        papers=[paper_profile_A, paper_profile_B],
+        domain="machine learning"
+    )
+    assert ideas == ["This is a research idea."]
 
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
 def test_communicate(mock_openai_prompting: MagicMock) -> None:
     mock_openai_prompting.return_value = [
-        "I believe in the potential of using automous agents to simulate the current research pipeline."]
+        "I believe in the potential of using automous agents to simulate the current research pipeline."
+    ]
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
     response = research_agent.communicate(agent_agent_discussion_log)
-    assert isinstance(response.message, str)
-    assert len(response.message) > 0
+    assert response.message == "I believe in the potential of using automous agents to simulate the current research pipeline."
+    assert response.agent_to_pk is not None
+    assert response.agent_from_pk is not None
+    assert response.timestep >= 0
+    assert response.pk is not None
 
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
-def test_write_paper_abstract(mock_openai_prompting: MagicMock) -> None:
-    mock_openai_prompting.return_value = ["Believable proxies of human behavior can empower interactive applications ranging from immersive environments to rehearsal spaces for interpersonal communication to prototyping tools. In this paper, we introduce generative agents--computational software agents that simulate believable human behavior. Generative agents wake up, cook breakfast, and head to work; artists paint, while authors write; they form opinions, notice each other, and initiate conversations; they remember and reflect on days past as they plan the next day. To enable generative agents, we describe an architecture that extends a large language model to store a complete record of the agent's experiences using natural language, synthesize those memories over time into higher-level reflections, and retrieve them dynamically to plan behavior. We instantiate generative agents to populate an interactive sandbox environment inspired by The Sims, where end users can interact with a small town of twenty five agents using natural language. In an evaluation, these generative agents produce believable individual and emergent social behaviors: for example, starting with only a single user-specified notion that one agent wants to throw a Valentine's Day party, the agents autonomously spread invitations to the party over the next two days, make new acquaintances, ask each other out on dates to the party, and coordinate to show up for the party together at the right time. We demonstrate through ablation that the components of our agent architecture--observation, planning, and reflection--each contribute critically to the believability of agent behavior. By fusing large language models with computational, interactive agents, this work introduces architectural and interaction patterns for enabling believable simulations of human behavior. "]
+def test_write_paper(mock_openai_prompting: MagicMock) -> None:
+    mock_openai_prompting.return_value = ["This is a paper abstract."]
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_B)
-    abstract = research_agent.write_paper(
-        ["We can simulate the scientific research pipeline with agents."], [paper_profile])
-    assert isinstance(abstract.abstract, str)
-    assert abstract.abstract != ""
-
-# =========================================================
-# !IMPORTANT!
-# patch should not add path that it comes from
-# patch should add path that the function is used
-# =========================================================
+    paper = research_agent.write_paper(
+        ["We can simulate the scientific research pipeline with agents."], [paper_profile_A])
+    assert paper.abstract == "This is a paper abstract."
+    assert paper.pk is not None
 
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
@@ -84,8 +71,8 @@ def test_read_paper(
     mock_openai_prompting.side_effect = mock_prompting
     domain = "machine learning"
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
-    summary = research_agent.read_paper([paper_profile], domain)
-    assert isinstance(summary, str)
+    summary = research_agent.read_paper([paper_profile_A], domain)
+    assert summary == "Graph Neural Network"
 
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
@@ -95,7 +82,7 @@ def test_find_collaborators(mock_openai_prompting: MagicMock) -> None:
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
     collaborators = research_agent.find_collaborators(
-        paper=paper_profile, parameter=0.5, max_number=3)
+        paper=paper_profile_A, parameter=0.5, max_number=3)
     assert isinstance(collaborators, list)
     assert len(collaborators) <= 3
 
@@ -106,20 +93,21 @@ def test_make_review_decision(mock_openai_prompting: MagicMock) -> None:
         "Accept. This is a good paper."]
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
-    review = research_agent.review_paper(paper=paper_profile)
+    review = research_agent.review_paper(paper=paper_profile_A)
     decision = research_agent.make_review_decision(
-        paper=paper_profile, review=[review])
-    assert len(decision.decision) > 0
+        paper=paper_profile_A, review=[review])
+    assert decision.decision == True
     assert decision.meta_review == "Accept. This is a good paper."
+    assert decision.timestep >= 0
+    assert decision.pk is not None
 
 
 @patch("research_town.utils.agent_prompter.openai_prompting")
 def test_review_paper(mock_openai_prompting: MagicMock) -> None:
-
     mock_openai_prompting.side_effect = mock_prompting
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
-    review = research_agent.review_paper(paper=paper_profile)
+    review = research_agent.review_paper(paper=paper_profile_A)
     assert review.review_score == 2
     assert review.review_content == "This is a paper review for MambaOut."
 
@@ -130,11 +118,11 @@ def test_rebut_review(mock_openai_prompting: MagicMock) -> None:
         "This is a paper rebuttal."]
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
-    review = research_agent.review_paper(paper=paper_profile)
+    review = research_agent.review_paper(paper=paper_profile_A)
     decision = research_agent.make_review_decision(
-        paper=paper_profile, review=[review])
+        paper=paper_profile_A, review=[review])
     rebuttal = research_agent.rebut_review(
-        paper=paper_profile, review=[review], decision=[decision])
+        paper=paper_profile_A, review=[review], decision=[decision])
     assert isinstance(rebuttal, AgentPaperRebuttalLog)
     assert len(rebuttal.rebuttal_content) > 0
     assert rebuttal.rebuttal_content == "This is a paper rebuttal."

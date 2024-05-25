@@ -1,15 +1,16 @@
-from typing import Dict, List
+from typing import List
 
 from ..agents.agent_base import BaseResearchAgent
-from ..dbs import EnvLogDB
+from ..dbs import AgentProfile, EnvLogDB
 
 
 class BaseMultiAgentEnv(object):
-    def __init__(self, agent_dict: Dict[str, str]) -> None:
-        self.agents: List[BaseResearchAgent] = []
+    def __init__(self, agent_profiles: List[AgentProfile]) -> None:
+        self.agent_profiles: List[AgentProfile] = agent_profiles
         self.db = EnvLogDB()
-        for _, agent_name in agent_dict.items():
-            self.agents.append(BaseResearchAgent(agent_name))
+        self.agents: List[BaseResearchAgent] = []
+        for agent_profile in agent_profiles:
+            self.agents.append(BaseResearchAgent(agent_profile))
 
     def step(self) -> None:
         raise NotImplementedError

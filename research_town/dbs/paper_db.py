@@ -1,10 +1,14 @@
-from typing import Optional, List, Dict, Any
-from pydantic import BaseModel, Field
 import json
+import uuid
+from typing import Any, Dict, List, Optional
+
+from pydantic import BaseModel, Field
+
 from ..utils.paper_collector import get_daily_papers
 
+
 class PaperProfile(BaseModel):
-    pk: str = Field(index=True)
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: Optional[str] = Field(default=None)
     abstract: Optional[str] = Field(default=None)
 

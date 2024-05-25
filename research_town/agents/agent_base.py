@@ -1,4 +1,3 @@
-import uuid
 from datetime import datetime
 from typing import Any, Dict, List, Tuple
 
@@ -7,8 +6,8 @@ from ..dbs import (
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
+    AgentProfile,
     PaperProfile,
-    AgentProfile
 )
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
@@ -19,40 +18,21 @@ from ..utils.agent_prompter import (
     rebut_review_prompting,
     review_paper_prompting,
     review_score_prompting,
-    summarize_research_direction_prompting,
     summarize_research_field_prompting,
     write_paper_abstract_prompting,
 )
-from ..utils.paper_collector import get_paper_list
 
 
 class BaseResearchAgent(object):
     def __init__(self, agent_profile: AgentProfile | None = None) -> None:
-        if agent_profile is not None:
-            self.name = agent_profile.name
-            self.profile = agent_profile
-        elif agent_name is not None:
-            self.name = agent_name
-            self.profile = self.get_profile(agent_name)
-        else:
-            assert (
-                uuid_str is not None
-            ), "Either name or uuid_str must be provided"  # TODO: retrieve agent profile from database
-        
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
 
     def get_profile(self, author_name: str) -> AgentProfile:
-        papers = get_paper_list(author_name)
-        assert (len(papers) > 0), "Authored paper not found"
-        personal_info = "; ".join(
-            [f"{details['Title & Abstract']}" for details in papers]
+        agent_profile = AgentProfile(
+            name='Geoffrey Hinton',
+            bio="A researcher in the field of neural network.",
         )
-        profile_info = summarize_research_direction_prompting(personal_info)
-        agent_profile = AgentProfile()
-        agent_profile.agent_id = str(uuid.uuid4())
-        agent_profile.name = author_name
-        agent_profile.profile = profile_info[0]
         return agent_profile
 
     def communicate(
@@ -60,14 +40,16 @@ class BaseResearchAgent(object):
         message: AgentAgentDiscussionLog
     ) -> AgentAgentDiscussionLog:
         # TODO: find a meaningful key
-        message_dict = {message.agent_from_id: message.message}
-        discussion_log = AgentAgentDiscussionLog()
-        discussion_log.timestep = (int)(datetime.now().timestamp())
-        discussion_log.discussion_id = str(uuid.uuid4())
-        discussion_log.agent_from_id = message.agent_to_id
-        discussion_log.agent_to_id = message.agent_from_id
-        discussion_log.message = communicate_with_multiple_researchers_prompting(message_dict)[
-            0]
+        message_dict = {message.agent_from_pk: message.message}
+        message_content = communicate_with_multiple_researchers_prompting(
+            message_dict
+        )[0]
+        discussion_log = AgentAgentDiscussionLog(
+            timestep=(int)(datetime.now().timestamp()),
+            agent_from_pk=message.agent_from_pk,
+            agent_to_pk=message.agent_to_pk,
+            message=message_content
+        )
         return discussion_log
 
     def read_paper(
@@ -76,14 +58,16 @@ class BaseResearchAgent(object):
         domain: str
     ) -> str:
         papers_dict = {}
-        for paper_profile in papers:
-            papers_dict[paper_profile.paper_id] = {
-                "abstract": [paper_profile.abstract],
-                "title": [paper_profile.title]
+        for paper in papers:
+            papers_dict[paper.pk] = {
+                "abstract": [paper.abstract],
+                "title": [paper.title]
             }
         trend = summarize_research_field_prompting(
-            profile={"name": self.profile.name,
-                     "profile": self.profile.profile},
+            profile={
+                "name": self.profile.name,
+                "profile": self.profile.bio
+            },
             keywords=[domain],
             papers=papers_dict
         )
@@ -96,17 +80,22 @@ class BaseResearchAgent(object):
         parameter: float = 0.5,
         max_number: int = 3
     ) -> List[AgentProfile]:
-        start_author = [self.name]
+        start_author = [self.profile.name]
         graph, _, _ = bfs(
             author_list=start_author, node_limit=max_number)
         collaborators = list(
-            {name for pair in graph for name in pair if name != self.name})
-        self_profile = {self.name: self.profile.profile}
+            {name for pair in graph for name in pair if name != self.profile.name})
+        self_profile = {self.profile.name: self.profile.bio}
         collaborator_profiles = {author: self.get_profile(
-            author).profile for author in collaborators}
+            author).bio for author in collaborators}
         paper_serialize = {paper.title: paper.abstract}
         result = find_collaborators_prompting(
-            paper_serialize, self_profile, collaborator_profiles, parameter, max_number)
+            paper_serialize,
+            self_profile,
+            collaborator_profiles,
+            parameter,
+            max_number
+        )
         collaborators_list = []
         for collaborator in collaborators:
             if collaborator in result:
@@ -130,13 +119,15 @@ class BaseResearchAgent(object):
     ) -> List[str]:
         papers_dict = {}
         for paper_profile in papers:
-            papers_dict[paper_profile.paper_id] = {
+            papers_dict[paper_profile.pk] = {
                 "abstract": [paper_profile.abstract],
                 "title": [paper_profile.title]
             }
         trends = summarize_research_field_prompting(
-            profile={"name": self.profile.name,
-                     "profile": self.profile.profile},
+            profile={
+                "name": self.profile.name,
+                "profile": self.profile.bio
+            },
             keywords=[domain],
             papers=papers_dict
         )
@@ -154,15 +145,13 @@ class BaseResearchAgent(object):
     ) -> PaperProfile:
         papers_dict = {}
         for paper_profile in papers:
-            papers_dict[paper_profile.paper_id] = {
+            papers_dict[paper_profile.pk] = {
                 "abstract": [paper_profile.abstract],
                 "title": [paper_profile.title]
             }
         paper_abstract = write_paper_abstract_prompting(
-            research_ideas, papers_dict)
-        paper_profile = PaperProfile()
-        paper_profile.paper_id = str(uuid.uuid4())
-        paper_profile.abstract = paper_abstract[0]
+            research_ideas, papers_dict)[0]
+        paper_profile = PaperProfile(abstract=paper_abstract)
         return paper_profile
 
     def review_paper(
@@ -173,15 +162,13 @@ class BaseResearchAgent(object):
         paper_review = review_paper_prompting(paper_dict)[0]
         review_score = review_score_prompting(paper_review)
 
-        review_log = AgentPaperReviewLog()
-        review_log.timestep = (int)(datetime.now().timestamp())
-        review_log.review_id = str(uuid.uuid4())
-        review_log.paper_id = paper.paper_id
-        review_log.agent_id = self.profile.agent_id
-        review_log.review_content = paper_review
-        review_log.review_score = review_score
-
-        return review_log
+        return AgentPaperReviewLog(
+            timestep=(int)(datetime.now().timestamp()),
+            paper_pk=paper.pk,
+            agent_pk=self.profile.pk,
+            review_content=paper_review,
+            review_score=review_score
+        )
 
     def make_review_decision(
         self,
@@ -191,20 +178,19 @@ class BaseResearchAgent(object):
         paper_dict = {paper.title: paper.abstract}
         review_dict = {}
         for agent_review_log in review:
-            review_dict[agent_review_log.review_id] = (
+            review_dict[agent_review_log.pk] = (
                 agent_review_log.review_score, agent_review_log.review_content)
 
         meta_review = make_review_decision_prompting(paper_dict, review_dict)
         review_decision = "accept" in meta_review[0].lower()
 
-        meta_review_log = AgentPaperMetaReviewLog()
-        meta_review_log.timestep = (int)(datetime.now().timestamp())
-        meta_review_log.decision_id = str(uuid.uuid4())
-        meta_review_log.paper_id = paper.paper_id
-        meta_review_log.decision = "accept" if review_decision else "reject"
-        meta_review_log.meta_review = meta_review[0]
-        meta_review_log.agent_id = self.profile.agent_id
-        return meta_review_log
+        return AgentPaperMetaReviewLog(
+            timestep=(int)(datetime.now().timestamp()),
+            paper_pk=paper.pk,
+            agent_pk=self.profile.pk,
+            decision=review_decision,
+            meta_review=meta_review[0],
+        )
 
     def rebut_review(
         self,
@@ -215,21 +201,20 @@ class BaseResearchAgent(object):
         paper_dict = {paper.title: paper.abstract}
         review_dict = {}
         for agent_review_log in review:
-            review_dict[agent_review_log.review_id] = (
+            review_dict[agent_review_log.pk] = (
                 agent_review_log.review_score, agent_review_log.review_content)
 
         decision_dict = {}
         for agent_meta_review_log in decision:
-            decision_dict[agent_meta_review_log.decision_id] = (
+            decision_dict[agent_meta_review_log.pk] = (
                 agent_meta_review_log.decision == "accept", agent_meta_review_log.meta_review)
 
         rebut_review = rebut_review_prompting(
-            paper_dict, review_dict, decision_dict)
+            paper_dict, review_dict, decision_dict)[0]
 
-        rebuttal_log = AgentPaperRebuttalLog()
-        rebuttal_log.timestep = (int)(datetime.now().timestamp())
-        rebuttal_log.rebuttal_id = str(uuid.uuid4())
-        rebuttal_log.paper_id = paper.paper_id
-        rebuttal_log.agent_id = self.profile.agent_id
-        rebuttal_log.rebuttal_content = rebut_review[0]
-        return rebuttal_log
+        return AgentPaperRebuttalLog(
+            timestep=(int)(datetime.now().timestamp()),
+            paper_pk=paper.pk,
+            agent_pk=self.profile.pk,
+            rebuttal_content=rebut_review
+        )

@@ -1,7 +1,8 @@
-from pydantic import BaseModel, Field
-from typing import TypeVar, Type, List, Dict, Any, Optional
 import json
 import uuid
+from typing import Any, Dict, List, Optional, Type, TypeVar
+
+from pydantic import BaseModel, Field
 
 T = TypeVar('T', bound=BaseModel)
 

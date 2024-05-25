@@ -4,28 +4,28 @@ from ..dbs import (
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
+    AgentProfile,
     PaperProfile,
 )
 from .env_base import BaseMultiAgentEnv
 
 
 class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
-    def __init__(self, agent_dict: Dict[str, str]) -> None:
-        super().__init__(agent_dict)
+    def __init__(self, agent_profiles: List[AgentProfile]) -> None:
+        super().__init__(agent_profiles)
         self.turn_number = 0
         self.turn_max = 1
         self.terminated = False
         self.decision = "reject"
         self.submission = PaperProfile()
-        self.reviewer_mask = [False] * len(agent_dict)
+        self.reviewer_mask = [False] * len(agent_profiles)
         self.review: List[AgentPaperReviewLog] = []
         self.rebuttal: List[AgentPaperRebuttalLog] = []
         self.meta_review: List[AgentPaperMetaReviewLog] = []
 
     def assign_roles(self, role_dict: Dict[str, str]) -> None:
-        for index, agent in enumerate(self.agents):
-            name = agent.profile.name
-            if role_dict[name] == "reviewer":
+        for index, agent_profile in enumerate(self.agent_profiles):
+            if role_dict[agent_profile.pk] == "reviewer":
                 self.reviewer_mask[index] = True
 
     def initialize_submission(self, paper_profile: PaperProfile) -> None:

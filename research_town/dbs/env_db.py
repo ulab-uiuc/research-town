@@ -1,8 +1,8 @@
-from pydantic import BaseModel, Field
-from typing import Optional
 import json
 import uuid
-from typing import TypeVar, Type, List, Dict, Any
+from typing import Any, Dict, List, Optional, Type, TypeVar
+
+from pydantic import BaseModel, Field
 
 T = TypeVar('T', bound=BaseModel)
 
@@ -84,11 +84,11 @@ class AgentPaperRebuttalLog(BaseModel):
     rebuttal_content: Optional[str] = Field(default=None)
 
 class AgentPaperMetaReviewLog(BaseModel):
-    id = str = Field(default_factory=lambda: str(uuid.uuid4()))
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
     paper_pk: str = Field(index=True)
     agent_pk: str = Field(index=True)
-    decision: bool = Field(default=False)
+    decision: Optional[bool] = Field(default=False)
     meta_review: Optional[str] = Field(default=None)
 
 class AgentAgentDiscussionLog(BaseModel):
@@ -97,5 +97,3 @@ class AgentAgentDiscussionLog(BaseModel):
     agent_from_pk: str = Field(index=True)
     agent_to_pk: str = Field(index=True)
     message: Optional[str] = Field(default=None)
-
-
