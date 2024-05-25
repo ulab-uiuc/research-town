@@ -32,7 +32,8 @@ def co_author_frequency(
 
 
 def co_author_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
-    co_author_list = sorted(co_authors.items(), key=lambda p: p[1], reverse=True)
+    co_author_list = sorted(
+        co_authors.items(), key=lambda p: p[1], reverse=True)
     return [name for name, _ in co_author_list[:limit]]
 
 

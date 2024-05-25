@@ -64,6 +64,7 @@ class BaseResearchAgent(object):
     ) -> str:
         papers_dict: Dict[str, Dict[str, List[str]]] = {}
         for paper in papers:
+            papers_dict[paper.pk] = {}
             if paper.abstract is not None:
                 papers_dict[paper.pk]["abstract"] = [paper.abstract]
             if paper.title is not None:
@@ -133,6 +134,7 @@ class BaseResearchAgent(object):
     ) -> List[str]:
         papers_dict: Dict[str, Dict[str, List[str]]] = {}
         for paper_profile in papers:
+            papers_dict[paper_profile.pk] = {}
             if paper_profile.abstract is not None:
                 papers_dict[paper_profile.pk]["abstract"] = [
                     paper_profile.abstract]
@@ -162,6 +164,7 @@ class BaseResearchAgent(object):
     ) -> PaperProfile:
         papers_dict: Dict[str, Dict[str, List[str]]] = {}
         for paper_profile in papers:
+            papers_dict[paper_profile.pk] = {}
             if paper_profile.abstract is not None:
                 papers_dict[paper_profile.pk]["abstract"] = [
                     paper_profile.abstract]

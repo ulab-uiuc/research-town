@@ -18,7 +18,7 @@ class PaperProfileDB:
         self.data: Dict[str, PaperProfile] = {}
 
     def add_paper(self, paper: PaperProfile) -> None:
-        self.data[paper.paper_pk] = paper
+        self.data[paper.pk] = paper
 
     def update_paper(self, paper_pk: str, updates: Dict[str, Optional[str]]) -> bool:
         if paper_pk in self.data:
