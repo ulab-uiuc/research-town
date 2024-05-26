@@ -1,26 +1,27 @@
-from eval_base import BaseEvaluator
-from typing import Optional, Tuple
-class PromptBasedGeneralQualityEval(BaseEvaluator):
-    def __init__(self, model_name: str,progress_dic: dict, max_turns: Optional[int]=1) -> None:
-        super().__init__(model_name,progress_dic)
-        self.turn_number = 0
-        self.turn_max = max_turns
-        self.terminated = False
-    def step(self) -> None:
-        # evaluate idea
-        self.eval_idea()
-        # evaluate paper
-        self.eval_paper()
-        # evaluate review
-        self.eval_review()
-        # evaluate discussion
-        self.eval_disc()
-        
-        self.turn_number += 1
-        if self.turn_number >= self.turn_max:
-            self.terminated = True
+
+from typing import Optional, Tuple, Any
+import eval_output
+class PromptBasedGeneralQualityEval:
+    def __init__(self, model_name: str, progress_dic: dict, *args: Any, **kwargs: Any )-> None:
+        self.model_name = model_name
+        self.prompt = ""
+        # progress with info in a dict to evaluate
+        # keys: 1) idea; 2) paper; 3) review; 4) discussion. 
+        required_keys = ['idea', 'paper', 'review', 'discussion']
+        for key in required_keys:
+            if key not in progress_dic:
+                raise ValueError(f"Missing required key in progress dic: {key}")
+        self.progress2eval = {key: progress_dic[key] for key in required_keys}
+        self.eval_res = None # to store the result of evaluation
+
     
     def eval_idea(self)-> None:
+        # generate the prompt template and prompting (prompter in eval_prompter.py)
+
+        # parse the prompting output(parser in eval_out.py)
+
+        # store it to self.eval_res
+
         pass
 
     def eval_paper(self)-> None:
