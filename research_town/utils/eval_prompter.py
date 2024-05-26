@@ -7,10 +7,8 @@ from .model_prompting import model_prompting
 def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
 
     prompt_idea = (
-    "Please evaluate the idea based on the following dimensions, considering the current research trend within the ML community. For each dimension, provide a rating (1-10) and detailed comments. Finally, give an overall score (0-100) and 10 dimension scores as the evaluation for the idea.\n"
-    "Here is the idea to evaluate: {idea}.\n"
-    "Here is the research trend: {trend}.\n"
-    "The details of rating are as follow:\n"
+    "<Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the ML community. If the research trend field is left blank, please use your common knowledge to assess the trend. For each dimension, provide a rating (1-10) and detailed comments. Finally, give an overall score (0-100) and 10 dimension scores as the evaluation for the idea. The output format should follow these rules: Overall Score of an idea (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]'.<Instruction>\n"
+    "<Approach> The details of rating are as follow:\n"
     "1. Novelty\n"
     "Rating (1-10):\n"
     "Comments:\n"
@@ -35,11 +33,13 @@ def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], model_name: Optiona
     "Assess the feasibility of implementing the idea.\n"
     "Is it practically applicable in real-world scenarios?\n"
     "Does it consider efficiency and scalability, in line with the practical application focus of the trend?\n"
-    "5. Experimental Validation\n"
+    "5. Theoretical Foundation and Conceptual Soundness\n"
     "Rating (1-10):\n"
     "Comments:\n"
-    "Evaluate the robustness, comprehensiveness, and reproducibility of the proposed experimental validation.\n"
-    "Are the evaluation metrics and benchmarks used consistent with the standards of recent works in the trend?\n"
+    "Evaluate the theoretical foundation and conceptual soundness of the idea.\n"
+    "Are the underlying principles well-defined and logically consistent?\n"
+    "Does the idea demonstrate a deep understanding of relevant theories and concepts?\n"
+    "How does it contribute to advancing theoretical understanding within the field?\n"
     "6. Clarity and Presentation\n"
     "Rating (1-10):\n"
     "Comments:\n"
@@ -64,14 +64,13 @@ def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], model_name: Optiona
     "Rating (1-10):\n"
     "Comments:\n"
     "Evaluate the potential for the idea to connect with and contribute to other disciplines beyond ML.\n"
-    "Does it align with the trend of interdisciplinary research and collaboration, integrating with fields such as data science, neuroscience, or social sciences?\n"
-    "\n"
-    "Instruction: Provide a comprehensive summary of your evaluation.\n"
-    "Justify the overall score based on the ratings and comments provided for each dimension.\n"
-    "Highlight any particularly strong or weak aspects of the idea in relation to the current trend.\n"
-    "Please ensure your comments are detailed and provide constructive feedback to support the ratings and overall score. Your insights are crucial for determining the merit and potential of the idea in the context of the research trend.\n"
-    "The output format should follow these rules: Overall Score of an idea (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]'."
+    "Does it align with the trend of interdisciplinary research and collaboration, integrating with fields such as data science, neuroscience, or social sciences?</Approach>\n"
+
+    "Here is the idea to evaluate: {idea}.\n"
+    "Here is the research trend: {trend}.\n"
+    
     )
+
     # Todo(jinwei): add the research trend.
     input = {"ideas": str(ideas)}
     prompt = prompt_idea.format_map(input)
