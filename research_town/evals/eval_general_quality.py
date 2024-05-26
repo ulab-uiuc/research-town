@@ -1,5 +1,6 @@
 
 from typing import Optional, Tuple, Any
+from ..utils.eval_prompter import GeneralQuality_idea_EvalPrompting
 import eval_output
 class PromptBasedGeneralQualityEval:
     def __init__(self, model_name: str, progress_dic: dict, *args: Any, **kwargs: Any )-> None:
@@ -17,7 +18,7 @@ class PromptBasedGeneralQualityEval:
     
     def eval_idea(self)-> None:
         # generate the prompt template and prompting (prompter in eval_prompter.py)
-
+        model_output = GeneralQuality_idea_EvalPrompting(ideas=self.progress2eval['idea'],model_name=self.model_name)
         # parse the prompting output(parser in eval_out.py)
 
         # store it to self.eval_res
