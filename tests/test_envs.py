@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock, patch
 
+from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB
 from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
     PaperSubmissionMultiAgentEnvironment,
@@ -16,8 +17,14 @@ from tests.utils import mock_papers
 def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.return_value = [
         "Paper Rebuttal Environment."]
+    agent_db = AgentProfileDB()
+    paper_db = PaperProfileDB()
+    env_db = EnvLogDB()
     env = PaperRebuttalMultiAgentEnv(
-        agent_profiles=[agent_profile_A, agent_profile_B]
+        agent_profiles=[agent_profile_A, agent_profile_B],
+        agent_db=agent_db,
+        paper_db=paper_db,
+        env_db=env_db
     )
 
     submission = paper_profile_A
@@ -44,12 +51,17 @@ def test_paper_submission_env(mock_get_related_papers: MagicMock,
                               mock_model_prompting: MagicMock,) -> None:
     mock_get_related_papers.side_effect = mock_papers
     mock_model_prompting.return_value = ["This is a paper."]
-
+    agent_db = AgentProfileDB()
+    paper_db = PaperProfileDB()
+    env_db = EnvLogDB()
     env = PaperSubmissionMultiAgentEnvironment(
         agent_profiles=[agent_profile_A],
         task={
             "Survey on Machine Learning": "This paper surveys the field of machine learning."
-        }
+        },
+        agent_db=agent_db,
+        paper_db=paper_db,
+        env_db=env_db
     )
     env.step()
     assert env.paper.abstract is not None

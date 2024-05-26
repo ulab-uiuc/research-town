@@ -5,16 +5,16 @@ from ..dbs import (
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
     AgentProfile,
-    PaperProfile,
     AgentProfileDB,
     EnvLogDB,
+    PaperProfile,
     PaperProfileDB,
 )
 from .env_base import BaseMultiAgentEnv
 
 
 class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
-    def __init__(self, 
+    def __init__(self,
         agent_profiles: List[AgentProfile],
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,

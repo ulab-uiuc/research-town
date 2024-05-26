@@ -1,9 +1,14 @@
 from typing import Dict, List
 
 from ..agents.agent_base import BaseResearchAgent
-from ..dbs import AgentProfile, PaperProfile
+from ..dbs import (
+    AgentProfile,
+    AgentProfileDB,
+    EnvLogDB,
+    PaperProfile,
+    PaperProfileDB,
+)
 from .env_base import BaseMultiAgentEnv
-from ..dbs import AgentProfile, EnvLogDB, PaperProfile, PaperProfileDB, AgentProfileDB
 
 
 class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
