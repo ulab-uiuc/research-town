@@ -19,16 +19,17 @@ class PromptBasedGeneralQualityEval:
     
     def eval_idea(self)-> None:
         # generate the prompt template and prompting (prompter in eval_prompter.py)
+        # Todo(jinwei): include trends of ideas as prompt input.
         model_output = GeneralQuality_idea_EvalPrompting(ideas=self.progress2eval['idea'],model_name=self.model_name)
-        # parse the prompting output(parser in eval_out.py). Extract a score and text in List[Tuple(float, str)].
+        # parse the prompting output(parser in eval_out.py). Extract a score and text in List[Tuple(float, str)]. Tuple(overall score, soundness, insightful, novelty, practial..)
         parsed_idea_eval = self.eval_res.parser_GeneralQuality_idea(idea_output=model_output)
         
-        
-
+    
     def eval_paper(self)-> None:
         pass
     
     def eval_review(self)-> None:
+        # component/stage evaluation: compare with open review by ranking consistency
         pass
 
     def eval_disc(self)-> None:
