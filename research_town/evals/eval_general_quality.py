@@ -21,9 +21,8 @@ class PromptBasedGeneralQualityEval:
         # generate the prompt template and prompting (prompter in eval_prompter.py)
         model_output = GeneralQuality_idea_EvalPrompting(ideas=self.progress2eval['idea'],model_name=self.model_name)
         # parse the prompting output(parser in eval_out.py). Extract a score and text in List[Tuple(float, str)].
-        parsed_idea_eval = parser_GeneralQuality_idea(idea_output=model_output)
-        # store it to self.eval_res
-        self.eval_res.idea = parsed_idea_eval
+        parsed_idea_eval = self.eval_res.parser_GeneralQuality_idea(idea_output=model_output)
+        
         
 
     def eval_paper(self)-> None:

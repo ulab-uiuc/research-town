@@ -11,5 +11,6 @@ class EvalOutput_GeneralQuality:
         self.paper = None
         self.reviw = None
         self.disc = None
-def parser_GeneralQuality_idea(idea_output:List[str])->List[Tuple(float,str)]:
-    pass
+    def parser_GeneralQuality_idea(self,idea_output:List[str])->List[Tuple(float,str)]:
+        self.idea = [(1.0,"a")]
+        return self.idea
