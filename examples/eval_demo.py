@@ -1,9 +1,9 @@
 from typing import Dict
 
+from research_town.evaluators.output_parser import EvalOutputParser
 from research_town.evaluators.quality_evaluator import (
     QualityEvaluator,
 )
-from research_town.evaluators.output_parser import EvalOutputParser
 
 
 def main() -> None:
@@ -21,8 +21,8 @@ def main() -> None:
     papers = {'0': (paper_title,paper_abstract)}
 
     model_evals = QualityEvaluator(
-        ideas=ideas, 
-        trends=trends, 
+        ideas=ideas,
+        trends=trends,
         model_name="gpt-4o"
     )
     eval_res = EvalOutputParser()

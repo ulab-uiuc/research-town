@@ -1,5 +1,5 @@
 
-from typing import Any, List, Dict, Tuple, Union
+from typing import Any, Dict, List, Tuple, Union
 
 from ..utils.eval_prompter import (
     idea_quality_eval_prompting,
@@ -9,11 +9,11 @@ from .output_parser import EvalOutputParser
 
 
 class QualityEvaluator(object):
-    def __init__(self, 
-        model_name: str, 
-        progress_dict: Dict[str, Union[Dict[str, str], Dict[str, Tuple[str, str]]]], 
-        *args: Any, 
-        **kwargs: Any 
+    def __init__(self,
+        model_name: str,
+        progress_dict: Dict[str, Union[Dict[str, str], Dict[str, Tuple[str, str]]]],
+        *args: Any,
+        **kwargs: Any
     )-> None:
         self.model_name = model_name
         self.prompt = ""
@@ -31,7 +31,7 @@ class QualityEvaluator(object):
         # generate the prompt template and prompting (prompter in eval_prompter.py)
         model_output = idea_quality_eval_prompting(
             ideas=self.progress2eval['idea'],
-            trends=self.progress2eval['trend'], 
+            trends=self.progress2eval['trend'],
             model_name=self.model_name
         )
         # parse the prompting output(parser in eval_out.py). Extract a score in List[int]. Tuple(overall score, soundness, insightful, novelty, practial..)

@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from research_town.evaluators.output_parser import EvalOutputParser 
+from research_town.evaluators.output_parser import EvalOutputParser
 from research_town.utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
