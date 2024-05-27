@@ -3,16 +3,16 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from research_town.evals.eval_output import EvalOutput_GeneralQuality
+from research_town.evaluators.output_parser import EvalOutputParser 
 from research_town.utils.eval_prompter import (
-    GeneralQuality_idea_EvalPrompting,
-    GeneralQuality_paper_EvalPrompting,
+    idea_quality_eval_prompting,
+    paper_quality_eval_prompting,
 )
 
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
 @pytest.mark.parametrize("use_mock", [True])
-def test_eval_GeneralQuality_idea(use_mock:bool):
+def test_eval_Quality_idea(use_mock:bool) -> None:
 
     idea2eval = "The idea behind Mamba is to improve upon existing foundation models in deep learning, which typically rely on the Transformer architecture and its attention mechanism. While subquadratic-time architectures like linear attention, gated convolution, recurrent models, and structured state space models (SSMs) have been developed to address the inefficiency of Transformers on long sequences, they have not matched the performance of attention-based models in key areas such as language processing. Mamba addresses the shortcomings of these models by enabling content-based reasoning and making several key improvements: Adaptive SSM Parameters: By allowing SSM parameters to be functions of the input, Mamba effectively handles discrete modalities. This enables the model to selectively propagate or forget information along the sequence based on the current token.Parallel Recurrent Algorithm: Despite the changes preventing the use of efficient convolutions, Mamba employs a hardware-aware parallel algorithm in recurrent mode to maintain efficiency.Simplified Architecture: Mamba integrates these selective SSMs into a streamlined neural network architecture that does not rely on attention or MLP blocks."
 
@@ -25,11 +25,11 @@ def test_eval_GeneralQuality_idea(use_mock:bool):
         with patch("research_town.utils.model_prompting.model_prompting", MagicMock(return_value=[
             "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
-            model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas, trends=trends, model_name="gpt-4o")
+            model_evals = idea_quality_eval_prompting(ideas=ideas, trends=trends, model_name="gpt-4o")
     else:
-        model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas, trends=trends, model_name="gpt-4o")
-    eval_res = EvalOutput_GeneralQuality()
-    idea_evals = eval_res.parser_GeneralQuality_idea(model_evals)
+        model_evals = idea_quality_eval_prompting(ideas=ideas, trends=trends, model_name="gpt-4o")
+    eval_res = EvalOutputParser()
+    idea_evals = eval_res.parse_idea_score(model_evals)
     # Use assert statements to perform the test
     assert isinstance(idea_evals, list), f"idea_evals is not a list: {idea_evals}"
     assert all(isinstance(x, int) for x in idea_evals), f"not all elements in idea_evals are integers:{idea_evals}"
@@ -38,7 +38,7 @@ def test_eval_GeneralQuality_idea(use_mock:bool):
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
 @pytest.mark.parametrize("use_mock", [True])
-def test_eval_GeneralQuality_paper(use_mock:bool):
+def test_eval_Quality_paper(use_mock:bool) -> None:
 
     idea = "The idea behind Mamba is to improve upon existing foundation models in deep learning, which typically rely on the Transformer architecture and its attention mechanism. While subquadratic-time architectures like linear attention, gated convolution, recurrent models, and structured state space models (SSMs) have been developed to address the inefficiency of Transformers on long sequences, they have not matched the performance of attention-based models in key areas such as language processing. Mamba addresses the shortcomings of these models by enabling content-based reasoning and making several key improvements: Adaptive SSM Parameters: By allowing SSM parameters to be functions of the input, Mamba effectively handles discrete modalities. This enables the model to selectively propagate or forget information along the sequence based on the current token.Parallel Recurrent Algorithm: Despite the changes preventing the use of efficient convolutions, Mamba employs a hardware-aware parallel algorithm in recurrent mode to maintain efficiency.Simplified Architecture: Mamba integrates these selective SSMs into a streamlined neural network architecture that does not rely on attention or MLP blocks."
 
@@ -52,12 +52,12 @@ def test_eval_GeneralQuality_paper(use_mock:bool):
         with patch("research_town.utils.model_prompting.model_prompting", MagicMock(return_value=[
             "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
-            model_evals = GeneralQuality_paper_EvalPrompting(ideas=ideas,papers=papers,model_name="gpt-4o")
+            model_evals = paper_quality_eval_prompting(ideas=ideas,papers=papers,model_name="gpt-4o")
     else:
-        model_evals = GeneralQuality_paper_EvalPrompting(ideas=ideas,papers=papers,model_name="gpt-4o")
-    eval_res = EvalOutput_GeneralQuality()
-    paper_evals = eval_res.parser_GeneralQuality_paper(model_evals)
-     # Use assert statements to perform the test
+        model_evals = paper_quality_eval_prompting(ideas=ideas,papers=papers,model_name="gpt-4o")
+    eval_res = EvalOutputParser()
+    paper_evals = eval_res.parse_paper_score(model_evals)
+    # Use assert statements to perform the test
     assert isinstance(paper_evals, list), f"paper_evals is not a list: {paper_evals}"
     assert all(isinstance(x, int) for x in paper_evals), f"not all elements in paper_evals are integers: {paper_evals}"
     assert all(0 <= x <= 100 for x in paper_evals), f"not all elements in paper_evals are between 0 and 100:{paper_evals}"

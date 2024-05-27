@@ -5,13 +5,13 @@ from typing import List
 
 # Output format. Refer to: https://github.com/sotopia-lab/sotopia/blob/2227503f5091961041ddb1da5b7c7836febfa650/sotopia/envs/evaluators.py#L20 .
 
-class EvalOutput_GeneralQuality:
+class EvalOutputParser(object):
     def __init__(self) -> None:
-        self.idea: List[int] = []
-        self.paper: List[int] = []
-        self.reviw: List[int] = []
+        self.idea_score: List[int] = []
+        self.paper_score: List[int] = []
+        self.reviw_score: List[int] = []
 
-    def parser_GeneralQuality_idea(self,idea_output:List[str])->List[int]:
+    def parse_idea_score(self,idea_output:List[str])->List[int]:
         # idea_output format: a list of string like "Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]"
         default_score = int(-1)
         overall_scores = []
@@ -22,11 +22,11 @@ class EvalOutput_GeneralQuality:
                 overall_scores.append(score)
             else:
                 overall_scores.append(default_score)
-        self.idea = overall_scores
-        return self.idea
+        self.idea_score = overall_scores
+        return self.idea_score
 
-    def parser_GeneralQuality_paper(self,paper_output:List[str])->List[int]:
-            # paper_output format: a list of string like "Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]"
+    def parse_paper_score(self,paper_output:List[str])->List[int]:
+        # paper_output format: a list of string like "Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]"
         default_score = int(-1)
         overall_scores = []
         for output in paper_output:
@@ -36,5 +36,5 @@ class EvalOutput_GeneralQuality:
                 overall_scores.append(score)
             else:
                 overall_scores.append(default_score)
-        self.paper = overall_scores
-        return self.paper
+        self.paper_score = overall_scores
+        return self.paper_score

@@ -1,10 +1,9 @@
 from typing import Dict
 
-from research_town.evals.eval_general_quality import (
-    GeneralQuality_idea_EvalPrompting,
-    GeneralQuality_paper_EvalPrompting,
+from research_town.evaluators.quality_evaluator import (
+    QualityEvaluator,
 )
-from research_town.evals.eval_output import EvalOutput_GeneralQuality
+from research_town.evaluators.output_parser import EvalOutputParser
 
 
 def main() -> None:
@@ -21,15 +20,23 @@ def main() -> None:
     trends: Dict[str,str] = {'0': research_trend}
     papers = {'0': (paper_title,paper_abstract)}
 
-    model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas, trends=trends, model_name="gpt-4o")
-    eval_res = EvalOutput_GeneralQuality()
-    idea_evals = eval_res.parser_GeneralQuality_idea(model_evals)
+    model_evals = QualityEvaluator(
+        ideas=ideas, 
+        trends=trends, 
+        model_name="gpt-4o"
+    )
+    eval_res = EvalOutputParser()
+    idea_evals = eval_res.parse_idea_score(model_evals)
     print(f"idea_evals: {idea_evals}")
 
     # eavluate papers
-    model_evals = GeneralQuality_paper_EvalPrompting(ideas=ideas,papers=papers,model_name="gpt-4o")
-    eval_res = EvalOutput_GeneralQuality()
-    paper_evals = eval_res.parser_GeneralQuality_paper(model_evals)
+    model_evals = QualityEvaluator(
+        ideas=ideas,
+        papers=papers,
+        model_name="gpt-4o"
+    )
+    eval_res = EvalOutputParser()
+    paper_evals = eval_res.parse_paper_score(model_evals)
     print(f"paper_evals: {paper_evals}")
 
 if __name__ == "__main__":
