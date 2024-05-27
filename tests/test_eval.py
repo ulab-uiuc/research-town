@@ -25,9 +25,9 @@ def test_eval_GeneralQuality_idea(use_mock:bool):
     eval_res = EvalOutput_GeneralQuality() 
     idea_evals = eval_res.parser_GeneralQuality_idea(model_evals)
     # Use assert statements to perform the test
-    assert isinstance(idea_evals, list), "idea_evals is not a list: {idea_evals}"
-    assert all(isinstance(x, int) for x in idea_evals), "not all elements in idea_evals are integers:{idea_evals}"
-    assert all(0 <= x <= 100 for x in idea_evals), "not all elements in idea_evals are between 0 and 100:  {idea_evals}"
+    assert isinstance(idea_evals, list), f"idea_evals is not a list: {idea_evals}"
+    assert all(isinstance(x, int) for x in idea_evals), f"not all elements in idea_evals are integers:{idea_evals}"
+    assert all(0 <= x <= 100 for x in idea_evals), f"not all elements in idea_evals are between 0 and 100:  {idea_evals}"
 
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
@@ -52,6 +52,6 @@ def test_eval_GeneralQuality_paper(use_mock:bool):
     eval_res = EvalOutput_GeneralQuality()
     paper_evals = eval_res.parser_GeneralQuality_paper(model_evals)
      # Use assert statements to perform the test
-    assert isinstance(paper_evals, list), "paper_evals is not a list: {paper_evals}"
+    assert isinstance(paper_evals, list), f"paper_evals is not a list: {paper_evals}"
     assert all(isinstance(x, int) for x in paper_evals), f"not all elements in paper_evals are integers: {paper_evals}"
-    assert all(0 <= x <= 100 for x in paper_evals), "not all elements in paper_evals are between 0 and 100:{paper_evals}"
+    assert all(0 <= x <= 100 for x in paper_evals), f"not all elements in paper_evals are between 0 and 100:{paper_evals}"
