@@ -6,13 +6,8 @@ import pytest
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
 @pytest.mark.parametrize("use_mock", [True, False])
-def test_eval_GeneralQuality_idea(use_mock:bool, mocker: MagicMock):
-    if use_mock:
-        mock_model_prompting = mocker.patch("research_town.utils.eval_prompter.model_prompting")
-        mock_model_prompting.return_value = [
-            "**Overall Score: 86**\n\n**Dimension Scores: [9, 8, 9, 9, 8, 8, 8, 9, 8, 8]**\n"
-        ]
-     
+def test_eval_GeneralQuality_idea(use_mock:bool):
+
     idea2eval = "The idea behind Mamba is to improve upon existing foundation models in deep learning, which typically rely on the Transformer architecture and its attention mechanism. While subquadratic-time architectures like linear attention, gated convolution, recurrent models, and structured state space models (SSMs) have been developed to address the inefficiency of Transformers on long sequences, they have not matched the performance of attention-based models in key areas such as language processing. Mamba addresses the shortcomings of these models by enabling content-based reasoning and making several key improvements: Adaptive SSM Parameters: By allowing SSM parameters to be functions of the input, Mamba effectively handles discrete modalities. This enables the model to selectively propagate or forget information along the sequence based on the current token.Parallel Recurrent Algorithm: Despite the changes preventing the use of efficient convolutions, Mamba employs a hardware-aware parallel algorithm in recurrent mode to maintain efficiency.Simplified Architecture: Mamba integrates these selective SSMs into a streamlined neural network architecture that does not rely on attention or MLP blocks."
     
     research_trend = "The current research trend in foundation models (FMs) involves developing large models that are pretrained on extensive datasets and then adapted for various downstream tasks. These FMs are primarily based on sequence models, which process sequences of inputs across different domains such as language, images, speech, audio, time series, and genomics. The predominant architecture for these models is the Transformer, which utilizes self-attention mechanisms. The strength of self-attention lies in its ability to handle complex data by routing information densely within a context window. However, this comes with significant limitations: difficulty in modeling outside of a finite context window and quadratic scaling with respect to window length.\n Efforts to create more efficient variants of attention have been extensive but often compromise the effectiveness that self-attention provides. As a result, no alternative has yet matched the empirical success of Transformers across various domains.Recently, structured state space models (SSMs) have emerged as a promising alternative. These models combine elements of recurrent neural networks (RNNs) and convolutional neural networks (CNNs), drawing from classical state space models. SSMs can be computed efficiently, either as recurrences or convolutions, and they scale linearly or near-linearly with sequence length. They also have mechanisms for modeling long-range dependencies, particularly excelling in benchmarks like the Long Range Arena.\nDifferent variants of SSMs have been successful in continuous signal data domains such as audio and vision. However, they have not been as effective in handling discrete and information-dense data, such as text, highlighting an area for further research and development."
@@ -20,7 +15,13 @@ def test_eval_GeneralQuality_idea(use_mock:bool, mocker: MagicMock):
     # an example of evaluation in https://chatgpt.com/share/b7435175-287f-464d-b3a7-1f553c51ec9e 
     ideas: Dict[str,str] = {'0': idea2eval}
     trends: Dict[str,str] = {'0': research_trend}
-    model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas,trends=trends,model_name="gpt-4o")
+    if use_mock:
+        with patch("research_town.utils.eval_prompter.model_prompting", MagicMock(return_value=[
+            "Overall Score: 86. Dimension Scores: [9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
+        ])):
+            model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas, trends=trends, model_name="mock_model")
+    else:
+        model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas, trends=trends, model_name="gpt-4o")
     eval_res = EvalOutput_GeneralQuality() 
     idea_evals = eval_res.parser_GeneralQuality_idea(model_evals)
     # Use assert statements to perform the test
@@ -32,11 +33,7 @@ def test_eval_GeneralQuality_idea(use_mock:bool, mocker: MagicMock):
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
 @pytest.mark.parametrize("use_mock", [True, False])
 def test_eval_GeneralQuality_paper(use_mock:bool, mocker: MagicMock):
-    if use_mock:
-        mock_model_prompting = mocker.patch("research_town.utils.eval_prompter.model_prompting")
-        mock_model_prompting.return_value = [
-            "**Overall Score: 86**\n\n**Dimension Scores: [9, 8, 9, 9, 8, 8, 8, 9, 8, 8]**\n"
-        ]
+   
     idea = "The idea behind Mamba is to improve upon existing foundation models in deep learning, which typically rely on the Transformer architecture and its attention mechanism. While subquadratic-time architectures like linear attention, gated convolution, recurrent models, and structured state space models (SSMs) have been developed to address the inefficiency of Transformers on long sequences, they have not matched the performance of attention-based models in key areas such as language processing. Mamba addresses the shortcomings of these models by enabling content-based reasoning and making several key improvements: Adaptive SSM Parameters: By allowing SSM parameters to be functions of the input, Mamba effectively handles discrete modalities. This enables the model to selectively propagate or forget information along the sequence based on the current token.Parallel Recurrent Algorithm: Despite the changes preventing the use of efficient convolutions, Mamba employs a hardware-aware parallel algorithm in recurrent mode to maintain efficiency.Simplified Architecture: Mamba integrates these selective SSMs into a streamlined neural network architecture that does not rely on attention or MLP blocks."
 
     paper_title = "Mamba: Linear-Time Sequence Modeling with Selective State Spaces"
@@ -45,7 +42,13 @@ def test_eval_GeneralQuality_paper(use_mock:bool, mocker: MagicMock):
 
     ideas = {'0': idea}
     papers = {'0': (paper_title,paper_abstract)}
-    model_evals = GeneralQuality_paper_EvalPrompting(ideas=ideas,papers=papers,model_name="gpt-4o")
+    if use_mock:
+        with patch("research_town.utils.eval_prompter.model_prompting", MagicMock(return_value=[
+            "Overall Score: 86. Dimension Scores: [9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
+        ])):
+            model_evals = GeneralQuality_paper_EvalPrompting(ideas=ideas,papers=papers,model_name="gpt-4o")
+    else:
+        model_evals = GeneralQuality_paper_EvalPrompting(ideas=ideas,papers=papers,model_name="gpt-4o")
     eval_res = EvalOutput_GeneralQuality()
     paper_evals = eval_res.parser_GeneralQuality_paper(model_evals)
      # Use assert statements to perform the test
