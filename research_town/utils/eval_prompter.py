@@ -7,7 +7,7 @@ from .model_prompting import model_prompting
 def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], trends: Dict[str, str], model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
 
     prompt_idea = (
-    "<Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the ML community. If the research trend field is left blank, please use your common knowledge to assess the trend. For each dimension, provide a rating (1-10) and detailed comments. Finally, give an overall score (0-100) and 10 dimension scores as the evaluation for the idea. The output format should follow these rules: Overall Score of an idea (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]'.<Instruction>\n"
+    "<Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the ML community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea. The output format should follow these rules: Overall Score of an idea (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]'.<Instruction>\n"
     "<Approach> The details of rating are as follow:\n"
     "1. Novelty\n"
     "Rating (1-10):\n"
@@ -89,7 +89,7 @@ def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], trends: Dict[str, s
 
 def GeneralQuality_paper_EvalPrompting(ideas: Dict[str, str], papers: Dict[str, Tuple[str,str]], model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
     paper_prompt = """
-    <Instruction> Please evaluate the paper draft based on the following dimensions. For each dimension, provide a rating (1-10) and detailed comments. Finally, give an overall score (0-100) and 10 dimension scores as the evaluation for the draft. The output format should follow these rules: Overall Score of a paper draft (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=85. Dimension Scores=[7,8,9,7,8,9,8,8,8,9]'. <Instruction>
+    <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft. The output format should follow these rules: Overall Score of a paper draft (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=85. Dimension Scores=[7,8,9,7,8,9,8,8,8,9]'. <Instruction>
 
     <Approach> The details of rating are as follows:
 
