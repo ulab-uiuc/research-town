@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, validator
-
+import re
 from typing import Optional, Tuple, List
 # define output format and output parser
 
@@ -11,6 +11,16 @@ class EvalOutput_GeneralQuality:
         self.paper = None
         self.reviw = None
         self.disc = None
-    def parser_GeneralQuality_idea(self,idea_output:List[str])->List[Tuple(float,str)]:
-        self.idea = [(1.0,"a")]
+    def parser_GeneralQuality_idea(self,idea_output:List[str])->List[int]:
+        # idea_output format: a list of string like "Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]"
+        overall_scores = []
+        for output in idea_output:
+            match = re.search(r"Overall Score=(\d+)", output)
+            if match:
+                score = int(match.group(1))
+                overall_scores.append(score)
+            else:
+                overall_scores.append(None)  
+        self.idea = overall_scores
         return self.idea
+        

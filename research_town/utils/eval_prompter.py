@@ -4,7 +4,7 @@ from typing import Dict, List, Optional, Tuple
 from .model_prompting import model_prompting
 
 
-def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
+def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], trends: Dict[str, str], model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
 
     prompt_idea = (
     "<Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the ML community. If the research trend field is left blank, please use your common knowledge to assess the trend. For each dimension, provide a rating (1-10) and detailed comments. Finally, give an overall score (0-100) and 10 dimension scores as the evaluation for the idea. The output format should follow these rules: Overall Score of an idea (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]'.<Instruction>\n"
@@ -45,11 +45,12 @@ def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], model_name: Optiona
     "Comments:\n"
     "Assess the clarity, organization, and presentation quality of the idea.\n"
     "Is the idea communicated effectively, adhering to high presentation standards seen in top-tier ML conferences?\n"
-    "7. Relevance to Conference Scope\n"
-    "Rating (1-10):\n"
-    "Comments:\n"
-    "Evaluate the relevance of the idea to the conference's scope and themes.\n"
-    "Does it align with the topics of interest and focus areas as indicated by the conference call for papers and the trend?\n"
+    "7. Potential for Real-world Applications\n" 
+    "Rating (1-10):\n" 
+    "Comments:\n" 
+    "Evaluate the potential of the idea to be applied in real-world scenarios.\n" 
+    "How applicable is it in practical settings and industry contexts?\n" 
+    "Does it address real-world problems or challenges identified in the trend?\n" 
     "8. Innovation Potential\n"
     "Rating (1-10):\n"
     "Comments:\n"
@@ -71,7 +72,15 @@ def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], model_name: Optiona
     
     )
 
-    # Todo(jinwei): add the research trend.
-    input = {"ideas": str(ideas)}
-    prompt = prompt_idea.format_map(input)
-    return model_prompting(model_name, prompt)
+    results = []
+    for idea_id, idea_content in ideas.items():
+        trend_content = trends.get(idea_id, "")
+        input_data = {
+            "idea": idea_content,
+            "trend": trend_content
+        }
+        prompt = prompt_idea.format_map(input_data)
+        evaluation_result = model_prompting(model_name, prompt)
+        results.append(evaluation_result)
+
+    return results
