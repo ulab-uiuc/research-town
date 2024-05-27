@@ -7,9 +7,9 @@ from typing import Optional, Tuple, List
 
 class EvalOutput_GeneralQuality:
     def __init__(self) -> None:
-        self.idea = None
-        self.paper = None
-        self.reviw = None
+        self.idea: List[int] = []
+        self.paper: List[int] = []
+        self.reviw: List[int] = []
         
     def parser_GeneralQuality_idea(self,idea_output:List[str])->List[int]:
         # idea_output format: a list of string like "Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]"
