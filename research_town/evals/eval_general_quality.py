@@ -32,6 +32,5 @@ class PromptBasedGeneralQualityEval:
         # component/stage evaluation: compare with open review by ranking consistency
         pass
 
-    def eval_disc(self)-> None:
-        pass
+    
         

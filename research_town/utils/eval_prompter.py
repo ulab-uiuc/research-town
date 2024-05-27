@@ -84,3 +84,101 @@ def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], trends: Dict[str, s
         results.append(evaluation_result)
 
     return results
+
+
+def GeneralQuality_paper_EvalPrompting(ideas: Dict[str, str], papers: Dict[str, Tuple(str,str)], model_name: Optional[str] = "mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
+    paper_prompt = """
+    <Instruction> Please evaluate the paper draft based on the following dimensions. For each dimension, provide a rating (1-10) and detailed comments. Finally, give an overall score (0-100) and 10 dimension scores as the evaluation for the draft. The output format should follow these rules: Overall Score of a paper draft (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=85. Dimension Scores=[7,8,9,7,8,9,8,8,8,9]'. <Instruction>
+
+    <Approach> The details of rating are as follows:
+
+    1. Title Appeal
+    Rating (1-10):
+    Comments:
+    Does the title grab attention and generate interest?
+    Is it informative and reflective of the paper's content?
+
+    2. Abstract Quality
+    Rating (1-10):
+    Comments:
+    How well does the abstract summarize the paper?
+    Is it clear, concise, and informative?
+    Does it effectively convey the significance and main contributions of the paper?
+
+    3. Title and Abstract Consistency
+    Rating (1-10):
+    Comments:
+    How well do the title and abstract align with each other?
+    Do they accurately represent the core idea and content of the paper?
+
+    4. Literature Review and Background
+    Rating (1-10):
+    Comments:
+    Assess the thoroughness of the literature review and background provided.
+    Is the context and relevance of the research well-established?
+    Does it cover key works and current trends in the field?
+
+    5. Methodology
+    Rating (1-10):
+    Comments:
+    Evaluate the soundness and appropriateness of the methodology used.
+    Are the research design and methods clearly described and justified?
+    Is the methodology robust and suitable for addressing the research questions?
+
+    6. Results and Analysis
+    Rating (1-10):
+    Comments:
+    Assess the quality and clarity of the results presented.
+    Are the results well-analyzed and interpreted?
+    Do the findings support the claims made in the paper?
+
+    7. Clarity and Presentation
+    Rating (1-10):
+    Comments:
+    Evaluate the clarity, organization, and presentation quality of the paper.
+    Is the content well-structured and easy to follow?
+    Are figures, tables, and references used effectively?
+
+    8. Contribution to the Field
+    Rating (1-10):
+    Comments:
+    Evaluate the significance of the paper's contributions to the field.
+    Does it advance knowledge or offer new insights?
+    How does it compare to existing works in terms of impact?
+
+    9. Ethical Considerations
+    Rating (1-10):
+    Comments:
+    Consider the ethical implications and societal impact of the work.
+    Does it adhere to ethical guidelines and responsible research practices?
+    Are potential negative consequences or biases addressed?
+
+    10. Interdisciplinary Connections
+    Rating (1-10):
+    Comments:
+    Evaluate the potential for the work to connect with and contribute to other disciplines.
+    Does it integrate knowledge from other fields or offer insights relevant to them?
+    How well does it align with the trend of interdisciplinary research and collaboration?
+
+    Here is the paper draft to evaluate:
+
+    Title: {title}
+    Abstract: {abstract}
+    Idea: {idea}
+    <Approach>
+    """
+
+    results = []
+    for idea_id, idea_content in ideas.items():
+        paper_content = papers.get(idea_id, "")
+        input_data = {
+            "idea": idea_content,
+            "title": paper_content[0],
+            "abstract": paper_content[1]
+        }
+        prompt = paper_prompt.format_map(input_data)
+        evaluation_result = model_prompting(model_name, prompt)
+        results.append(evaluation_result)
+
+    return results
+
