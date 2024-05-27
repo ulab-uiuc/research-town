@@ -15,7 +15,7 @@ class EvalOutput_GeneralQuality:
         # idea_output format: a list of string like "Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]"
         overall_scores = []
         for output in idea_output:
-            match = re.search(r"Overall\s*Score\s*:\s*(\d+)\W*", output, re.IGNORECASE)
+            match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", output, re.IGNORECASE)
             if match:
                 score = int(match.group(1))
                 overall_scores.append(score)
@@ -28,7 +28,7 @@ class EvalOutput_GeneralQuality:
             # paper_output format: a list of string like "Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]"
         overall_scores = []
         for output in paper_output:
-            match = re.search(r"Overall\s*Score\s*:\s*(\d+)\W*", output, re.IGNORECASE)
+            match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", output, re.IGNORECASE)
             if match:
                 score = int(match.group(1))
                 overall_scores.append(score)
