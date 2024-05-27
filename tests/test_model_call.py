@@ -1,4 +1,4 @@
-from research_town.utils.agent_prompter import model_prompting
+from research_town.utils.model_prompting import model_prompting
 
 
 def test_model_call() -> None:
