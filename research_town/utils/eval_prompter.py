@@ -81,7 +81,8 @@ def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], trends: Dict[str, s
         }
         prompt = prompt_idea.format_map(input_data)
         evaluation_result = model_prompting(model_name, prompt)
-        results.append(evaluation_result)
+        combined_result = "\n".join(evaluation_result)
+        results.append(combined_result)
 
     return results
 
@@ -178,7 +179,8 @@ def GeneralQuality_paper_EvalPrompting(ideas: Dict[str, str], papers: Dict[str, 
         }
         prompt = paper_prompt.format_map(input_data)
         evaluation_result = model_prompting(model_name, prompt)
-        results.append(evaluation_result)
+        combined_result = "\n".join(evaluation_result)
+        results.append(combined_result)
 
     return results
 
