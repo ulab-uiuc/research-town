@@ -19,7 +19,7 @@ def test_eval_GeneralQuality_idea(use_mock:bool):
         with patch("research_town.utils.eval_prompter.GeneralQuality_idea_EvalPrompting", MagicMock(return_value=[
             "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
-            model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas, trends=trends, model_name="mock_model")
+            model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas, trends=trends, model_name="gpt-4o")
     else:
         model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas, trends=trends, model_name="gpt-4o")
     eval_res = EvalOutput_GeneralQuality() 
