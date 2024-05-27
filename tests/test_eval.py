@@ -10,7 +10,7 @@ def test_eval_GeneralQuality_idea():
     # an example of evaluation in https://chatgpt.com/share/b7435175-287f-464d-b3a7-1f553c51ec9e 
     ideas: Dict[str,str] = {'0': idea2eval}
     trends: Dict[str,str] = {'0': research_trend}
-    model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas,trends=trends)
+    model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas,trends=trends,model_name="gpt-4o")
     eval_res = EvalOutput_GeneralQuality() 
     idea_evals = eval_res.parser_GeneralQuality_idea(model_evals)
     # Use assert statements to perform the test
@@ -27,7 +27,7 @@ def test_eval_GeneralQuality_paper():
 
     ideas = {'0': idea}
     papers = {'0': (paper_title,paper_abstract)}
-    model_evals = GeneralQuality_paper_EvalPrompting(ideas=ideas,papers=papers)
+    model_evals = GeneralQuality_paper_EvalPrompting(ideas=ideas,papers=papers,model_name="gpt-4o")
     eval_res = EvalOutput_GeneralQuality()
     paper_evals = eval_res.parser_GeneralQuality_paper(model_evals)
      # Use assert statements to perform the test
