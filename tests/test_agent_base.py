@@ -115,7 +115,8 @@ def test_review_paper(mock_model_prompting: MagicMock) -> None:
 @patch("research_town.utils.agent_prompter.model_prompting")
 def test_rebut_review(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.return_value = [
-        "This is a paper rebuttal."]
+        "This is a paper rebuttal."
+    ]
 
     research_agent = BaseResearchAgent(agent_profile=agent_profile_A)
     review = research_agent.review_paper(paper=paper_profile_A)
