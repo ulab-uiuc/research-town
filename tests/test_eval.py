@@ -17,7 +17,7 @@ def test_eval_GeneralQuality_idea(use_mock:bool):
     trends: Dict[str,str] = {'0': research_trend}
     if use_mock:
         with patch("research_town.utils.eval_prompter.GeneralQuality_idea_EvalPrompting", MagicMock(return_value=[
-            "Overall Score: 86. Dimension Scores: [9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
+            "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
             model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas, trends=trends, model_name="mock_model")
     else:
@@ -44,7 +44,7 @@ def test_eval_GeneralQuality_paper(use_mock:bool):
     papers = {'0': (paper_title,paper_abstract)}
     if use_mock:
         with patch("research_town.utils.eval_prompter.GeneralQuality_paper_EvalPrompting", MagicMock(return_value=[
-            "Overall Score: 86. Dimension Scores: [9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
+            "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
             model_evals = GeneralQuality_paper_EvalPrompting(ideas=ideas,papers=papers,model_name="gpt-4o")
     else:
