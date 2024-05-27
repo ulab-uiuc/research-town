@@ -1,7 +1,7 @@
 
 from typing import Optional, Tuple, Any, List
-from ..utils.eval_prompter import GeneralQuality_idea_EvalPrompting
-from eval_output import parser_GeneralQuality_idea, EvalOutput_GeneralQuality
+from ..utils.eval_prompter import GeneralQuality_idea_EvalPrompting,GeneralQuality_paper_EvalPrompting
+from eval_output import  EvalOutput_GeneralQuality
 
 class PromptBasedGeneralQualityEval:
     def __init__(self, model_name: str, progress_dic: dict, *args: Any, **kwargs: Any )-> None:
@@ -19,14 +19,16 @@ class PromptBasedGeneralQualityEval:
     
     def eval_idea(self)-> List[int]:
         # generate the prompt template and prompting (prompter in eval_prompter.py)
-        # Todo(jinwei): include trends of ideas as prompt input.
         model_output = GeneralQuality_idea_EvalPrompting(ideas=self.progress2eval['idea'],model_name=self.model_name)
-        # parse the prompting output(parser in eval_out.py). Extract a score and text in List[Tuple(float, str)]. Tuple(overall score, soundness, insightful, novelty, practial..)
+        # parse the prompting output(parser in eval_out.py). Extract a score in List[int]. Tuple(overall score, soundness, insightful, novelty, practial..)
         parsed_idea_eval = self.eval_res.parser_GeneralQuality_idea(idea_output=model_output)
         return parsed_idea_eval
     
-    def eval_paper(self)-> None:
-        pass
+    def eval_paper(self)-> List[int]:
+        model_output = GeneralQuality_paper_EvalPrompting(ideas=self.progress2eval['idea'],papers=self.progress2eval['paper'],model_name=self.model_name)
+        # parse the prompting output(parser in eval_out.py). Extract a score in List[int]. Tuple(overall score, soundness, insightful, novelty, practial..)
+        parsed_paper_eval = self.eval_res.parser_GeneralQuality_paper(paper_output=model_output)
+        return parsed_paper_eval
 
     def eval_review(self)-> None:
         # component/stage evaluation: compare with open review by ranking consistency
