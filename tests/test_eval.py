@@ -1,5 +1,5 @@
 from research_town.utils.eval_prompter import GeneralQuality_idea_EvalPrompting, GeneralQuality_paper_EvalPrompting
-from research_town.evals.eval_output import parser_GeneralQuality_idea, EvalOutput_GeneralQuality
+from research_town.evals.eval_output import EvalOutput_GeneralQuality
 from typing import Dict
 
 def test_eval_GeneralQuality_idea():
