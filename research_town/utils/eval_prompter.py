@@ -1,4 +1,3 @@
-from dis import Instruction
 from typing import Dict, List, Optional, Tuple
 
 from .model_prompting import model_prompting
@@ -45,12 +44,12 @@ def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], trends: Dict[str, s
     "Comments:\n"
     "Assess the clarity, organization, and presentation quality of the idea.\n"
     "Is the idea communicated effectively, adhering to high presentation standards seen in top-tier ML conferences?\n"
-    "7. Potential for Real-world Applications\n" 
-    "Rating (1-10):\n" 
-    "Comments:\n" 
-    "Evaluate the potential of the idea to be applied in real-world scenarios.\n" 
-    "How applicable is it in practical settings and industry contexts?\n" 
-    "Does it address real-world problems or challenges identified in the trend?\n" 
+    "7. Potential for Real-world Applications\n"
+    "Rating (1-10):\n"
+    "Comments:\n"
+    "Evaluate the potential of the idea to be applied in real-world scenarios.\n"
+    "How applicable is it in practical settings and industry contexts?\n"
+    "Does it address real-world problems or challenges identified in the trend?\n"
     "8. Innovation Potential\n"
     "Rating (1-10):\n"
     "Comments:\n"
@@ -69,7 +68,7 @@ def GeneralQuality_idea_EvalPrompting(ideas: Dict[str, str], trends: Dict[str, s
 
     "Here is the idea to evaluate: {idea}.\n"
     "Here is the research trend: {trend}.\n"
-    
+
     )
 
     results = []
@@ -183,4 +182,3 @@ def GeneralQuality_paper_EvalPrompting(ideas: Dict[str, str], papers: Dict[str, 
         results.append(combined_result)
 
     return results
-

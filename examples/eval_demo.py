@@ -1,15 +1,12 @@
-from research_town.evals.eval_output import (
-    EvalOutput_GeneralQuality,
-    
-)
+from typing import Dict
 
 from research_town.evals.eval_general_quality import (
-    GeneralQuality_paper_EvalPrompting,
     GeneralQuality_idea_EvalPrompting,
-    
+    GeneralQuality_paper_EvalPrompting,
 )
+from research_town.evals.eval_output import EvalOutput_GeneralQuality
 
-from typing import Dict
+
 def main() -> None:
     idea = "The idea behind Mamba is to improve upon existing foundation models in deep learning, which typically rely on the Transformer architecture and its attention mechanism. While subquadratic-time architectures like linear attention, gated convolution, recurrent models, and structured state space models (SSMs) have been developed to address the inefficiency of Transformers on long sequences, they have not matched the performance of attention-based models in key areas such as language processing. Mamba addresses the shortcomings of these models by enabling content-based reasoning and making several key improvements: Adaptive SSM Parameters: By allowing SSM parameters to be functions of the input, Mamba effectively handles discrete modalities. This enables the model to selectively propagate or forget information along the sequence based on the current token.Parallel Recurrent Algorithm: Despite the changes preventing the use of efficient convolutions, Mamba employs a hardware-aware parallel algorithm in recurrent mode to maintain efficiency.Simplified Architecture: Mamba integrates these selective SSMs into a streamlined neural network architecture that does not rely on attention or MLP blocks."
 
@@ -25,7 +22,7 @@ def main() -> None:
     papers = {'0': (paper_title,paper_abstract)}
 
     model_evals = GeneralQuality_idea_EvalPrompting(ideas=ideas, trends=trends, model_name="gpt-4o")
-    eval_res = EvalOutput_GeneralQuality() 
+    eval_res = EvalOutput_GeneralQuality()
     idea_evals = eval_res.parser_GeneralQuality_idea(model_evals)
     print(f"idea_evals: {idea_evals}")
 
