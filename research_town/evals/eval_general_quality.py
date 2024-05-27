@@ -1,7 +1,7 @@
 
 from typing import Optional, Tuple, Any, List
 from ..utils.eval_prompter import GeneralQuality_idea_EvalPrompting,GeneralQuality_paper_EvalPrompting
-from eval_output import  EvalOutput_GeneralQuality
+from .eval_output import  EvalOutput_GeneralQuality
 
 class PromptBasedGeneralQualityEval:
     def __init__(self, model_name: str, progress_dic: dict, *args: Any, **kwargs: Any )-> None:
@@ -19,7 +19,7 @@ class PromptBasedGeneralQualityEval:
     
     def eval_idea(self)-> List[int]:
         # generate the prompt template and prompting (prompter in eval_prompter.py)
-        model_output = GeneralQuality_idea_EvalPrompting(ideas=self.progress2eval['idea'],model_name=self.model_name)
+        model_output = GeneralQuality_idea_EvalPrompting(ideas=self.progress2eval['idea'],trends=self.progress2eval['trend'], model_name=self.model_name)
         # parse the prompting output(parser in eval_out.py). Extract a score in List[int]. Tuple(overall score, soundness, insightful, novelty, practial..)
         parsed_idea_eval = self.eval_res.parser_GeneralQuality_idea(idea_output=model_output)
         return parsed_idea_eval

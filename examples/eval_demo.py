@@ -1,11 +1,11 @@
-from research_town.utils import (
+from research_town.evals.eval_output import (
     EvalOutput_GeneralQuality,
     
 )
 
-from research_town.evals import (
+from research_town.evals.eval_general_quality import (
     GeneralQuality_paper_EvalPrompting,
-    GeneralQuality_idea_EvalPrompting
+    GeneralQuality_idea_EvalPrompting,
     
 )
 

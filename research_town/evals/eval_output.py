@@ -20,7 +20,7 @@ class EvalOutput_GeneralQuality:
                 score = int(match.group(1))
                 overall_scores.append(score)
             else:
-                overall_scores.append(None)  
+                overall_scores.append(-1)  
         self.idea = overall_scores
         return self.idea
     
@@ -33,7 +33,7 @@ class EvalOutput_GeneralQuality:
                 score = int(match.group(1))
                 overall_scores.append(score)
             else:
-                overall_scores.append(None)  
+                overall_scores.append(-1)  
         self.paper = overall_scores
         return self.paper
         
