@@ -1,5 +1,4 @@
 from typing import List, Optional
-
 import litellm
 
 from .decorator import exponential_backoff
@@ -19,14 +18,15 @@ def model_prompting(
     Select model via router in LiteLLM.
     """
     completion = litellm.completion(
-    model=llm_model,
-    messages=[{"role": "user", "content": prompt}],
-    max_tokens=max_token_num,
-    n=return_num, # for some models, 'n'(The number of chat completion choices ) is not supported.
-    top_p=top_p,
-    temperature=temperature,
-    stream=stream,
-)
+        model=llm_model,
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=max_token_num,
+        # for some models, 'n'(The number of chat completion choices ) is not supported.
+        n=return_num,
+        top_p=top_p,
+        temperature=temperature,
+        stream=stream,
+    )
     content = completion.choices[0].message.content
     content_l = [content]
     return content_l
