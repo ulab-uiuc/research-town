@@ -13,6 +13,7 @@ class EvalOutput_GeneralQuality:
         
     def parser_GeneralQuality_idea(self,idea_output:List[str])->List[int]:
         # idea_output format: a list of string like "Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]"
+        default_score = int(-1)
         overall_scores = []
         for output in idea_output:
             match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", output, re.IGNORECASE)
@@ -20,12 +21,13 @@ class EvalOutput_GeneralQuality:
                 score = int(match.group(1))
                 overall_scores.append(score)
             else:
-                overall_scores.append(-1)  
+                overall_scores.append(default_score)  
         self.idea = overall_scores
         return self.idea
     
     def parser_GeneralQuality_paper(self,paper_output:List[str])->List[int]:
             # paper_output format: a list of string like "Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]"
+        default_score = int(-1)
         overall_scores = []
         for output in paper_output:
             match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", output, re.IGNORECASE)
@@ -33,7 +35,7 @@ class EvalOutput_GeneralQuality:
                 score = int(match.group(1))
                 overall_scores.append(score)
             else:
-                overall_scores.append(-1)  
+                overall_scores.append(default_score)  
         self.paper = overall_scores
         return self.paper
         
