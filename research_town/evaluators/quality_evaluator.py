@@ -6,7 +6,7 @@ from ..utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
 )
-from ..utils.decorator import exponential_backoff
+from ..utils.decorator import retry_eval
 from .output_format import IdeaEvalOutput, PaperEvalOutput, OutputFormatError
 
 
@@ -19,7 +19,7 @@ class IdeaQualityEvaluator(object):
         self.model_name = model_name
         self.parsed_output = IdeaEvalOutput()
 
-    @exponential_backoff(retries=5, base_wait_time=1)
+    @retry_eval(retries=5, base_wait_time=1)
     def eval(
         self,
         idea: str,
@@ -60,7 +60,7 @@ class PaperQualityEvaluator(object):
         self.model_name = model_name
         self.parsed_output = PaperEvalOutput()
 
-    @exponential_backoff(retries=5, base_wait_time=1)
+    @retry_eval(retries=5, base_wait_time=1)
     def eval(
         self,
         idea: str,
