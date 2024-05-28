@@ -51,7 +51,7 @@ def find_collaborators_prompting(
     collaborator_profiles: Dict[str, str],
     parameter: float = 0.5,
     max_number: int = 3,
-    model_name: str,
+    model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     self_serialize = [
         f"Name: {name}\nProfile: {self_profile[name]}" for _, name in enumerate(self_profile.keys())]
