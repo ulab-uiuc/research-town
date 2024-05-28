@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 from .model_prompting import model_prompting
 from .paper_collector import get_related_papers
@@ -8,7 +8,7 @@ def summarize_research_field_prompting(
     profile: Dict[str, str],
     keywords: List[str],
     papers: Dict[str, Dict[str, List[str]]],
-    model_name: Optional[str] = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
+    model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     Summarize research field based on profile, keywords, written papers
@@ -45,7 +45,14 @@ def summarize_research_field_prompting(
     return model_prompting(model_name, prompt)
 
 
-def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, str], collaborator_profiles: Dict[str, str], parameter: float = 0.5, max_number: int = 3,  model_name: Optional[str] = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
+def find_collaborators_prompting(
+    input: Dict[str, str],
+    self_profile: Dict[str, str],
+    collaborator_profiles: Dict[str, str],
+    parameter: float = 0.5,
+    max_number: int = 3,
+    model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
+) -> List[str]:
     self_serialize = [
         f"Name: {name}\nProfile: {self_profile[name]}" for _, name in enumerate(self_profile.keys())]
     self_serialize_all = "\n\n".join(self_serialize)
@@ -73,7 +80,7 @@ def find_collaborators_prompting(input: Dict[str, str], self_profile: Dict[str, 
 
 def generate_ideas_prompting(
     trend: str,
-    model_name: Optional[str] = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
+    model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     Generate research ideas based on the trending of one research field
@@ -90,7 +97,7 @@ def generate_ideas_prompting(
 
 def summarize_research_direction_prompting(
     personal_info: str,
-    model_name: Optional[str] = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
+    model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     Summarize research direction based on personal research history
@@ -108,7 +115,7 @@ def summarize_research_direction_prompting(
 def write_paper_abstract_prompting(
     ideas: List[str],
     papers: Dict[str, Dict[str, List[str]]],
-    model_name: Optional[str] = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
+    model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     Write paper using ideas from list, and external data (published papers)
@@ -139,7 +146,7 @@ def write_paper_abstract_prompting(
     return model_prompting(model_name, prompt)
 
 
-def review_score_prompting(paper_review: str, model_name: Optional[str] = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1") -> int:
+def review_score_prompting(paper_review: str, model_name: str) -> int:
     prompt_qa = (
         "Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only returns one number score."
         "Here are the reviews: {paper_review}"
@@ -153,7 +160,7 @@ def review_score_prompting(paper_review: str, model_name: Optional[str] = "toget
         return 0
 
 
-def review_paper_prompting(paper: Dict[str, str],  model_name: Optional[str] = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+def review_paper_prompting(paper: Dict[str, str],  model_name: str) -> List[str]:
     """
     Review paper from using list, and external data (published papers)
     """
@@ -176,7 +183,7 @@ def review_paper_prompting(paper: Dict[str, str],  model_name: Optional[str] = "
     return model_prompting(model_name, prompt)
 
 
-def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, str]], model_name: Optional[str] = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, str]], model_name: str) -> List[str]:
     paper_serialize = []
     for _, title in enumerate(paper.keys()):
         abstract = paper[title]
@@ -202,7 +209,7 @@ def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tupl
     return model_prompting(model_name, prompt)
 
 
-def rebut_review_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, str]], decision: Dict[str, Tuple[bool, str]], model_name: Optional[str] = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1") -> List[str]:
+def rebut_review_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, str]], decision: Dict[str, Tuple[bool, str]], model_name: str) -> List[str]:
     submission_serialize = []
     for _, title in enumerate(paper.keys()):
         abstract = paper[title]
@@ -238,7 +245,7 @@ def rebut_review_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, s
 
 def communicate_with_multiple_researchers_prompting(
     messages: Dict[str, str],
-    model_name: Optional[str] = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
+    model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     """
     This is a single-round chat method. One that contains a chat history can better enable
