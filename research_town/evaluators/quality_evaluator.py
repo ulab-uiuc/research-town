@@ -6,7 +6,8 @@ from ..utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
 )
-from .output_format import IdeaEvalOutput, PaperEvalOutput
+from ..utils.decorator import exponential_backoff
+from .output_format import IdeaEvalOutput, PaperEvalOutput, OutputFormatError
 
 
 class IdeaQualityEvaluator(object):
@@ -18,7 +19,7 @@ class IdeaQualityEvaluator(object):
         self.model_name = model_name
         self.parsed_output = IdeaEvalOutput()
 
-
+    @exponential_backoff(retries=5, base_wait_time=1)
     def eval(
         self,
         idea: str,
@@ -32,6 +33,9 @@ class IdeaQualityEvaluator(object):
             model_name=self.model_name
         )
         self.parsed_output = self.parse(raw_output)
+        # check parsed_output
+        if not (0 <= self.parsed_output.overall_score <= 100):
+            raise OutputFormatError(f"overall score of idea should be an Int between 0 and 100, but it's {self.parsed_output.overall_score}")
         # get pk
         # self.parsed_output.pk = kwargs.get("pk")
         # Store the input kwargs in parsed_output
@@ -56,7 +60,7 @@ class PaperQualityEvaluator(object):
         self.model_name = model_name
         self.parsed_output = PaperEvalOutput()
 
-
+    @exponential_backoff(retries=5, base_wait_time=1)
     def eval(
         self,
         idea: str,
@@ -70,6 +74,9 @@ class PaperQualityEvaluator(object):
             model_name=self.model_name
         )
         self.parsed_output = self.parse(raw_output)
+        # check parsed_output
+        if not (0 <= self.parsed_output.overall_score <= 100):
+            raise OutputFormatError(f"overall score of idea should be an Int between 0 and 100, but it's {self.parsed_output.overall_score}")
         # Store the input kwargs in parsed_output
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)

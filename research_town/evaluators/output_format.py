@@ -13,3 +13,7 @@ class PaperEvalOutput(BaseModel):
     pk: str = Field(default='0')
     class Config:
         extra = Extra.allow  # Allows extra fields to be stored
+
+# add OutputFormat Error for the capture of retry decorator "exponential_backoff"
+class OutputFormatError(Exception):
+    pass
