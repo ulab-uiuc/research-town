@@ -20,10 +20,12 @@ def  test_evaluator_eval_idea(use_mock:bool) -> None:
         with patch("research_town.utils.eval_prompter.model_prompting", MagicMock(return_value=[
             "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
-            evals_output = evaluator.eval(**input_dict)
+            # evals_output = evaluator.eval(**input_dict)
+            evals_output = evaluator.eval(idea=input_dict['idea'], trend=input_dict['trend'], pk=input_dict['pk'])
             assert evals_output.overall_score == 86,f"overall score of idea (mock) shoud be 86, but it's  {evals_output.overall_score}"
     else:
-        evals_output = evaluator.eval(**input_dict)
+        # evals_output = evaluator.eval(**input_dict)
+        evals_output = evaluator.eval(idea=input_dict['idea'], trend=input_dict['trend'], pk=input_dict['pk'])
         assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of idea shoud be an Int between 0 and 100, but it's  {evals_output.overall_score}"
 
 
@@ -46,9 +48,11 @@ def  test_evaluator_eval_paper(use_mock:bool) -> None:
         with patch("research_town.utils.eval_prompter.model_prompting", MagicMock(return_value=[
             "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
-            evals_output = evaluator.eval(**input_dict)
+            # evals_output = evaluator.eval(**input_dict)
+            evals_output = evaluator.eval(idea=input_dict['idea'], paper=input_dict['paper'], pk=input_dict['pk'])
             assert evals_output.overall_score == 86,f"overall score of paper (mock) shoud be 86, but it's  {evals_output.overall_score}"
     else:
-        evals_output = evaluator.eval(**input_dict)
+        # evals_output = evaluator.eval(**input_dict)
+        evals_output = evaluator.eval(idea=input_dict['idea'], paper=input_dict['paper'], pk=input_dict['pk'])
         assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of paper shoud be an Int between 0 and 100, but it's  {evals_output.overall_score}"
     

@@ -74,7 +74,7 @@ class PaperQualityEvaluator(object):
             setattr(self.parsed_output, key, value)
         return self.parsed_output
 
-    def parse(self, raw_output:str) -> IdeaEvalOutput:
+    def parse(self, raw_output:str) -> PaperEvalOutput:
         match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", raw_output, re.IGNORECASE)
         if match:
             return PaperEvalOutput(overall_score=int(match.group(1)))
