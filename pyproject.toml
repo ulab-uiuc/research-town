@@ -57,3 +57,15 @@ multi_line_output = 3
 include_trailing_comma = true
 force_grid_wrap = 0
 line_length = 70
+
+[tool.mypy-arxiv]
+ignore_missing_imports = true
+
+[tool.mypy-faiss]
+ignore_missing_imports = true
+
+[tool.mypy-transformers]
+ignore_missing_imports = true
+
+[tool.mypy-litellm]
+ignore_missing_imports = true

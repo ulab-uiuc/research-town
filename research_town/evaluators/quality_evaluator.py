@@ -23,8 +23,8 @@ class IdeaQualityEvaluator(object):
         self,
         idea: str,
         trend: str,
-        *args,
-        **kwargs
+        *args: Any,
+        **kwargs: Any,
     )-> IdeaEvalOutput:
         raw_output = idea_quality_eval_prompting(
             idea=idea,
@@ -61,8 +61,8 @@ class PaperQualityEvaluator(object):
         self,
         idea: str,
         paper: Dict[str,str],
-        *args,
-        **kwargs
+        *args: Any,
+        **kwargs: Any,
     )-> PaperEvalOutput:
         raw_output = paper_quality_eval_prompting(
             idea=idea,

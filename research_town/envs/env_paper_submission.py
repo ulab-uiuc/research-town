@@ -48,7 +48,10 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             for researcher_profile in collaborators:
                 if researcher_profile.name:
                     if researcher_profile.name not in agent_names_to_objs:
-                        new_agent_obj = BaseResearchAgent(researcher_profile)
+                        new_agent_obj = BaseResearchAgent(
+                            agent_profile=researcher_profile,
+                            model_name="together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"
+                        )
                         collaborator_agents.append(new_agent_obj)
                         agent_names_to_objs[researcher_profile.name] = new_agent_obj
                     else:
