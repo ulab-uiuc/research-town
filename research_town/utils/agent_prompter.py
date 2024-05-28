@@ -146,7 +146,7 @@ def write_paper_abstract_prompting(
     return model_prompting(model_name, prompt)
 
 
-def review_score_prompting(paper_review: str, model_name: str) -> int:
+def review_score_prompting(paper_review: str, model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1") -> int:
     prompt_qa = (
         "Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only returns one number score."
         "Here are the reviews: {paper_review}"
@@ -160,7 +160,7 @@ def review_score_prompting(paper_review: str, model_name: str) -> int:
         return 0
 
 
-def review_paper_prompting(paper: Dict[str, str],  model_name: str) -> List[str]:
+def review_paper_prompting(paper: Dict[str, str],  model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",) -> List[str]:
     """
     Review paper from using list, and external data (published papers)
     """
@@ -183,7 +183,11 @@ def review_paper_prompting(paper: Dict[str, str],  model_name: str) -> List[str]
     return model_prompting(model_name, prompt)
 
 
-def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, str]], model_name: str) -> List[str]:
+def make_review_decision_prompting(
+    paper: Dict[str, str], 
+    review: Dict[str, Tuple[int, str]], 
+    model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
+) -> List[str]:
     paper_serialize = []
     for _, title in enumerate(paper.keys()):
         abstract = paper[title]
@@ -209,7 +213,12 @@ def make_review_decision_prompting(paper: Dict[str, str], review: Dict[str, Tupl
     return model_prompting(model_name, prompt)
 
 
-def rebut_review_prompting(paper: Dict[str, str], review: Dict[str, Tuple[int, str]], decision: Dict[str, Tuple[bool, str]], model_name: str) -> List[str]:
+def rebut_review_prompting(
+    paper: Dict[str, str], 
+    review: Dict[str, Tuple[int, str]], 
+    decision: Dict[str, Tuple[bool, str]], 
+    model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
+) -> List[str]:
     submission_serialize = []
     for _, title in enumerate(paper.keys()):
         abstract = paper[title]
