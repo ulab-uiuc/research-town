@@ -16,4 +16,6 @@ class PaperEvalOutput(BaseModel):
 
 # add OutputFormat Error for the capture of retry decorator "exponential_backoff"
 class OutputFormatError(Exception):
-    pass
+    def __init__(self, message="Output format error"):
+        self.message = message
+        super().__init__(self.message)
