@@ -24,7 +24,7 @@ class IdeaQualityEvaluator(object):
         trend: str, 
         *args, 
         **kwargs
-    )-> List[int]:
+    )-> IdeaEvalOutput:
         raw_output = idea_quality_eval_prompting(
             ideas=idea,
             trends=trend,
@@ -62,7 +62,7 @@ class PaperQualityEvaluator(object):
         paper: Dict[str,str], 
         *args, 
         **kwargs
-    )-> List[int]:
+    )-> PaperEvalOutput:
         raw_output = paper_quality_eval_prompting(
             ideas=idea,
             trends=paper,

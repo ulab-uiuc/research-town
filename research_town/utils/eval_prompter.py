@@ -78,6 +78,7 @@ def idea_quality_eval_prompting(idea: str, trend:  str, model_name: Optional[str
     }
     prompt = prompt_idea.format_map(input_data)
     evaluation_result = model_prompting(model_name, prompt)
+    # merge results from List[Str] to Str
     combined_result = "\n".join(evaluation_result)
         
     return combined_result
@@ -174,6 +175,7 @@ def paper_quality_eval_prompting(idea: str, paper: Dict[str,str], model_name: Op
     }
     prompt = paper_prompt.format_map(input_data)
     evaluation_result = model_prompting(model_name, prompt)
+    # merge results from List[Str] to Str
     combined_result = "\n".join(evaluation_result)
 
     return combined_result
