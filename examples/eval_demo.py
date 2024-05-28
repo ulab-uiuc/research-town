@@ -1,6 +1,6 @@
 from typing import Dict
 
-from research_town.evaluators.output_parser import EvalOutputParser
+from research_town.evaluators.output_format import EvalOutputParser
 from research_town.evaluators.quality_evaluator import (
     QualityEvaluator,
 )

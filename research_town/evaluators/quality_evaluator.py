@@ -5,7 +5,7 @@ from ..utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
 )
-from .output_parser import EvalOutputParser
+from .output_format import EvalOutputParser
 
 
 class QualityEvaluator(object):
@@ -18,7 +18,10 @@ class QualityEvaluator(object):
         self.model_name = model_name
         self.parser = parser
 
-    def eval_idea(
+    def __call__():
+        return
+
+    def eval(
         self, 
         idea: Dict[str], 
         trend: Dict[str], 
@@ -33,18 +36,10 @@ class QualityEvaluator(object):
         parsed_output = self.parser.parse_idea_score(raw_output)
         return parsed_output
 
-    def eval_paper(
-        self, 
-        idea: Dict[str], 
-        paper: Dict[str, str]
-    )-> List[int]:
-        raw_output = paper_quality_eval_prompting(
-            ideas=idea,
-            papers=paper,
-            model_name=self.model_name
-        )
-        parsed_output = self.parser.parse_paper_score(raw_output)
-        return parsed_output
+    def parse(self, raw_output:str) -> IdeaEvalOutput:
+        match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", raw_output, re.IGNORECASE)
+        if match:
+            return PaperEvalOutput(overall_score=int(match.group(1)))
+        else:
+            return PaperEvalOutput()
 
-    def eval_review(self)-> None:
-        pass

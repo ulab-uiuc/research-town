@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from research_town.evaluators.output_parser import EvalOutputParser
+from research_town.evaluators.output_format import EvalOutputParser
 from research_town.utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
@@ -12,7 +12,7 @@ from research_town.utils.eval_prompter import (
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
 @pytest.mark.parametrize("use_mock", [True])
-def test_eval_Quality_idea(use_mock:bool) -> None:
+def test_eval_quality_idea(use_mock:bool) -> None:
 
     idea2eval = "The idea behind Mamba is to improve upon existing foundation models in deep learning, which typically rely on the Transformer architecture and its attention mechanism. While subquadratic-time architectures like linear attention, gated convolution, recurrent models, and structured state space models (SSMs) have been developed to address the inefficiency of Transformers on long sequences, they have not matched the performance of attention-based models in key areas such as language processing. Mamba addresses the shortcomings of these models by enabling content-based reasoning and making several key improvements: Adaptive SSM Parameters: By allowing SSM parameters to be functions of the input, Mamba effectively handles discrete modalities. This enables the model to selectively propagate or forget information along the sequence based on the current token.Parallel Recurrent Algorithm: Despite the changes preventing the use of efficient convolutions, Mamba employs a hardware-aware parallel algorithm in recurrent mode to maintain efficiency.Simplified Architecture: Mamba integrates these selective SSMs into a streamlined neural network architecture that does not rely on attention or MLP blocks."
 
@@ -61,3 +61,48 @@ def test_eval_Quality_paper(use_mock:bool) -> None:
     assert isinstance(paper_evals, list), f"paper_evals is not a list: {paper_evals}"
     assert all(isinstance(x, int) for x in paper_evals), f"not all elements in paper_evals are integers: {paper_evals}"
     assert all(0 <= x <= 100 for x in paper_evals), f"not all elements in paper_evals are between 0 and 100:{paper_evals}"
+
+
+@pytest.mark.parametrize("use_mock", [True])
+def test_evaluator_eval_idea(use_mock: bool) -> None:
+    idea = 'this is my idea'
+    output = IdeaQualityEvaluator(
+        idea=idea
+    )
+
+    if use_mock:
+        assert output.score == 86
+    else:
+        assert output.score > 0 and output.score <= 100
+
+    idea = 'this is my idea'
+    output = evaluator.eval(
+        idea=idea,
+    )    
+    if use_mock:
+        assert output.score == 86
+    else:
+        assert output.score > 0 and output.score <= 100
+
+
+@pytest.mark.parametrize("use_mock", [True])
+def test_evaluator_eval_paper(use_mock: bool) -> None:
+    paper = {
+        'title': 'this is the title',
+        'abstract': 'this is the abstract',
+        'section_contents': {'intro': 'this is the intro', 'conclusion': 'this is the conclusion'}
+    }
+    evaluator = PaperQualityEvaluator(**paper)
+    trend = 'this is the trend'
+    output = evaluator.eval(**paper)
+    if use_mock:
+        assert output.score == 86
+    else:
+        assert output.score > 0 and output.score <= 100
+
+    idea = 'this is my idea'
+    output = PpaerQualtiyEvaluator(**paper)
+    if use_mock:
+        assert output.score == 86
+    else:
+        assert output.score > 0 and output.score <= 100
