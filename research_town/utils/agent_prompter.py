@@ -184,8 +184,8 @@ def review_paper_prompting(paper: Dict[str, str],  model_name: str = "together_a
 
 
 def make_review_decision_prompting(
-    paper: Dict[str, str], 
-    review: Dict[str, Tuple[int, str]], 
+    paper: Dict[str, str],
+    review: Dict[str, Tuple[int, str]],
     model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     paper_serialize = []
@@ -214,9 +214,9 @@ def make_review_decision_prompting(
 
 
 def rebut_review_prompting(
-    paper: Dict[str, str], 
-    review: Dict[str, Tuple[int, str]], 
-    decision: Dict[str, Tuple[bool, str]], 
+    paper: Dict[str, str],
+    review: Dict[str, Tuple[int, str]],
+    decision: Dict[str, Tuple[bool, str]],
     model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     submission_serialize = []

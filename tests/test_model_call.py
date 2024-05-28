@@ -1,3 +1,4 @@
+from research_town.utils.model_prompting import model_prompting
 
 
 def test_openai_call() -> None:
