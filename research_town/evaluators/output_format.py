@@ -1,6 +1,5 @@
 
-from typing import List
-from pydantic import BaseModel, Field, Extra
+from pydantic import BaseModel, Extra, Field
 
 
 class IdeaEvalOutput(BaseModel):

@@ -1,12 +1,13 @@
 
-from typing import Any, Dict, List, Optional
+import re
+from typing import Any, Dict
 
 from ..utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
 )
 from .output_format import IdeaEvalOutput, PaperEvalOutput
-import re
+
 
 class IdeaQualityEvaluator(object):
     def __init__(self,
@@ -19,10 +20,10 @@ class IdeaQualityEvaluator(object):
 
 
     def eval(
-        self, 
-        idea: str, 
-        trend: str, 
-        *args, 
+        self,
+        idea: str,
+        trend: str,
+        *args,
         **kwargs
     )-> IdeaEvalOutput:
         raw_output = idea_quality_eval_prompting(
@@ -32,7 +33,7 @@ class IdeaQualityEvaluator(object):
         )
         self.parsed_output = self.parse(raw_output)
         # get pk
-        # self.parsed_output.pk = kwargs.get("pk") 
+        # self.parsed_output.pk = kwargs.get("pk")
         # Store the input kwargs in parsed_output
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
@@ -57,10 +58,10 @@ class PaperQualityEvaluator(object):
 
 
     def eval(
-        self, 
-        idea: str, 
-        paper: Dict[str,str], 
-        *args, 
+        self,
+        idea: str,
+        paper: Dict[str,str],
+        *args,
         **kwargs
     )-> PaperEvalOutput:
         raw_output = paper_quality_eval_prompting(

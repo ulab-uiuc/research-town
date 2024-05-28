@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Optional
 
 from .model_prompting import model_prompting
 
@@ -70,8 +70,8 @@ def idea_quality_eval_prompting(idea: str, trend:  str, model_name: Optional[str
 
     )
 
-    
-    
+
+
     input_data = {
         "idea": idea,
         "trend": trend
@@ -80,7 +80,7 @@ def idea_quality_eval_prompting(idea: str, trend:  str, model_name: Optional[str
     evaluation_result = model_prompting(model_name, prompt)
     # merge results from List[Str] to Str
     combined_result = "\n".join(evaluation_result)
-        
+
     return combined_result
 
 
