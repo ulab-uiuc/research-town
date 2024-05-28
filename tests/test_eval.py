@@ -15,6 +15,9 @@ def  test_evaluator_eval_idea(use_mock:bool) -> None:
 
     # an example of evaluation in https://chatgpt.com/share/b7435175-287f-464d-b3a7-1f553c51ec9e
     evaluator = IdeaQualityEvaluator(model_name="gpt-4o")
+    # Check and ensure the types
+    assert isinstance(idea2eval, str), f"idea2eval should be a string, but got {type(idea2eval)}"
+    assert isinstance(research_trend, str), f"research_trend should be a string, but got {type(research_trend)}"
     input_dict = {'idea': idea2eval, 'trend': research_trend,'pk':0}
     if use_mock:
         with patch("research_town.utils.eval_prompter.model_prompting", MagicMock(return_value=[
