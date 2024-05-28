@@ -44,8 +44,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             # TODO: update find collaborator functions with initial task
             collaborators = agent.find_collaborators(PaperProfile(title="A Survey on Machine Learning",
                                                                   abstract="This paper surveys the field of machine learning."))
-            collaborators = [AgentProfile(
-                name="Rex Ying", bio="Machine Learing Researcher.")]
             collaborator_agents: List[BaseResearchAgent] = []
             for researcher_profile in collaborators:
                 if researcher_profile.name:

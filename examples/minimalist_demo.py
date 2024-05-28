@@ -40,8 +40,8 @@ def run_sync_experiment(agent_list: List[str], role_list: List[str], task: Dict[
     # Paper Review
     paper_rebuttal_env.initialize_submission(paper)
     role_dict = {}
-    for name, role in zip(agent_list, role_list):
-        role_dict[name] = role
+    for agent_profile, role in zip(agent_profiles, role_list):
+        role_dict[agent_profile.pk] = role
     paper_rebuttal_env.assign_roles(role_dict=role_dict)
     rebuttal_done = False
     while not rebuttal_done:
