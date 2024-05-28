@@ -26,8 +26,8 @@ class IdeaQualityEvaluator(object):
         **kwargs
     )-> IdeaEvalOutput:
         raw_output = idea_quality_eval_prompting(
-            ideas=idea,
-            trends=trend,
+            idea=idea,
+            trend=trend,
             model_name=self.model_name
         )
         self.parsed_output = self.parse(raw_output)
@@ -64,8 +64,8 @@ class PaperQualityEvaluator(object):
         **kwargs
     )-> PaperEvalOutput:
         raw_output = paper_quality_eval_prompting(
-            ideas=idea,
-            trends=paper,
+            idea=idea,
+            paper=paper,
             model_name=self.model_name
         )
         self.parsed_output = self.parse(raw_output)
