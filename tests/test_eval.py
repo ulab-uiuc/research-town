@@ -8,7 +8,7 @@ from research_town.utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
 )
-
+from research_town.evaluators.quality_evaluator import IdeaQualityEvaluator, PaperQualityEvaluator
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
 @pytest.mark.parametrize("use_mock", [True])
@@ -101,7 +101,7 @@ def test_evaluator_eval_paper(use_mock: bool) -> None:
         assert output.score > 0 and output.score <= 100
 
     idea = 'this is my idea'
-    output = PpaerQualtiyEvaluator(**paper)
+    output = PaperQualtiyEvaluator(**paper)
     if use_mock:
         assert output.score == 86
     else:

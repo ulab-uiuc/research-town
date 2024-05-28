@@ -5,26 +5,23 @@ from ..utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
 )
-from .output_format import EvalOutputParser
+from .output_format import IdeaEvalOutput, PaperEvalOutput
+import re
 
-
-class QualityEvaluator(object):
+class IdeaQualityEvaluator(object):
     def __init__(self,
         model_name: str,
-        parser: Optional[EvalOutputParser] = EvalOutputParser(),
         *args: Any,
         **kwargs: Any
     )-> None:
         self.model_name = model_name
-        self.parser = parser
+        self.parsed_output = IdeaEvalOutput(overall_score=-1)
 
-    def __call__():
-        return
 
     def eval(
         self, 
-        idea: Dict[str], 
-        trend: Dict[str], 
+        idea: str, 
+        trend: str, 
         *args, 
         **kwargs
     )-> List[int]:
@@ -33,8 +30,49 @@ class QualityEvaluator(object):
             trends=trend,
             model_name=self.model_name
         )
-        parsed_output = self.parser.parse_idea_score(raw_output)
-        return parsed_output
+        self.parsed_output = self.parse(raw_output)
+        # get pk
+        # self.parsed_output.pk = kwargs.get("pk") 
+        # Store the input kwargs in parsed_output
+        for key, value in kwargs.items():
+            setattr(self.parsed_output, key, value)
+        return self.parsed_output
+
+    def parse(self, raw_output:str) -> IdeaEvalOutput:
+        match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", raw_output, re.IGNORECASE)
+        if match:
+            return IdeaEvalOutput(overall_score=int(match.group(1)))
+        else:
+            return IdeaEvalOutput()
+
+
+class PaperQualityEvaluator(object):
+    def __init__(self,
+        model_name: str,
+        *args: Any,
+        **kwargs: Any
+    )-> None:
+        self.model_name = model_name
+        self.parsed_output = PaperEvalOutput(overall_score=-1)
+
+
+    def eval(
+        self, 
+        idea: str, 
+        paper: Dict[str,str], 
+        *args, 
+        **kwargs
+    )-> List[int]:
+        raw_output = paper_quality_eval_prompting(
+            ideas=idea,
+            trends=paper,
+            model_name=self.model_name
+        )
+        self.parsed_output = self.parse(raw_output)
+        # Store the input kwargs in parsed_output
+        for key, value in kwargs.items():
+            setattr(self.parsed_output, key, value)
+        return self.parsed_output
 
     def parse(self, raw_output:str) -> IdeaEvalOutput:
         match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", raw_output, re.IGNORECASE)
@@ -42,4 +80,3 @@ class QualityEvaluator(object):
             return PaperEvalOutput(overall_score=int(match.group(1)))
         else:
             return PaperEvalOutput()
-
