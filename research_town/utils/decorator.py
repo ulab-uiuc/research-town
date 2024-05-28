@@ -1,7 +1,7 @@
 import math
 import time
 from functools import wraps
-from typing import Any, Callable, List, Optional, TypeVar, Union
+from typing import Type, Any, Callable, List, Optional, TypeVar, Union
 from pydantic import BaseModel
 
 INF = float(math.inf)
@@ -40,7 +40,7 @@ def exponential_backoff(
     return decorator
 
 
-def retry_eval(retries: int = 5, base_wait_time: int = 1) -> Callable[..., BaseModel]:
+def retry_eval(output_format: Type[BaseModel], retries: int = 5, base_wait_time: int = 1) -> Callable[..., BaseModel]:
     """
     Decorator to apply retry mechanism to a function with expected output format BaseModel.
     """
@@ -51,7 +51,7 @@ def retry_eval(retries: int = 5, base_wait_time: int = 1) -> Callable[..., BaseM
             while attempts < retries:
                 try:
                     result = func(*args, **kwargs)
-                    assert isinstance(result, BaseModel), f"Output format error: {result}"
+                    assert isinstance(result, output_format), f"Output format error: {result}"
                     return result
                 except Exception as e:
                     wait_time = base_wait_time * (2 ** attempts)
@@ -60,7 +60,7 @@ def retry_eval(retries: int = 5, base_wait_time: int = 1) -> Callable[..., BaseM
                     time.sleep(wait_time)
                     attempts += 1
             print(f"Failed to execute '{func.__name__}' after {retries} retries.")
-            return BaseModel()
+            return output_format()
 
         return wrapper
 

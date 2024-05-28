@@ -19,7 +19,7 @@ class IdeaQualityEvaluator(object):
         self.model_name = model_name
         self.parsed_output = IdeaEvalOutput()
 
-    @retry_eval(retries=5, base_wait_time=1)
+    @retry_eval(output_format=IdeaEvalOutput,retries=5, base_wait_time=1)
     def eval(
         self,
         idea: str,
@@ -60,7 +60,7 @@ class PaperQualityEvaluator(object):
         self.model_name = model_name
         self.parsed_output = PaperEvalOutput()
 
-    @retry_eval(retries=5, base_wait_time=1)
+    @retry_eval(output_format=PaperEvalOutput,retries=5, base_wait_time=1)
     def eval(
         self,
         idea: str,
