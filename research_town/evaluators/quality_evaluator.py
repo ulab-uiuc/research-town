@@ -15,7 +15,7 @@ class IdeaQualityEvaluator(object):
         **kwargs: Any
     )-> None:
         self.model_name = model_name
-        self.parsed_output = IdeaEvalOutput(overall_score=-1)
+        self.parsed_output = IdeaEvalOutput()
 
 
     def eval(
@@ -53,7 +53,7 @@ class PaperQualityEvaluator(object):
         **kwargs: Any
     )-> None:
         self.model_name = model_name
-        self.parsed_output = PaperEvalOutput(overall_score=-1)
+        self.parsed_output = PaperEvalOutput()
 
 
     def eval(

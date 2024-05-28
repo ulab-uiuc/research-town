@@ -17,7 +17,7 @@ def  test_evaluator_eval_idea(use_mock:bool) -> None:
     evaluator = IdeaQualityEvaluator(model_name="gpt-4o")
     input_dict = {'idea': idea2eval, 'trend': research_trend,'pk':0}
     if use_mock:
-        with patch("research_town.utils.model_prompting.model_prompting", MagicMock(return_value=[
+        with patch("research_town.utils.eval_prompter.model_prompting", MagicMock(return_value=[
             "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
             evals_output = evaluator.eval(**input_dict)
@@ -43,7 +43,7 @@ def  test_evaluator_eval_paper(use_mock:bool) -> None:
     input_dict = {'idea': idea, 'paper': paper,'pk':0}
     evaluator = PaperQualityEvaluator(model_name="gpt-4o")
     if use_mock:
-        with patch("research_town.utils.model_prompting.model_prompting", MagicMock(return_value=[
+        with patch("research_town.utils.eval_prompter.model_prompting", MagicMock(return_value=[
             "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
             evals_output = evaluator.eval(**input_dict)
