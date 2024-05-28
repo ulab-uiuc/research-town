@@ -18,9 +18,10 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         agent_profiles: List[AgentProfile],
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
-        env_db: EnvLogDB
+        env_db: EnvLogDB,
+        callback=None
     ) -> None:
-        super().__init__(agent_profiles)
+        super().__init__(agent_profiles, callback=callback)
         # self.turn_number = 0
         # self.turn_max = 1
         self.terminated = False
@@ -56,7 +57,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                 count_max = count
                 self.decision = d
 
-    def step(self) -> None:
+    def _step(self) -> None:
         if self.state == 0:
             self.perform_review()
         elif self.state == 1:

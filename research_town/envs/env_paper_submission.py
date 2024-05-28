@@ -18,9 +18,10 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
-        task: Dict[str, str]
+        task: Dict[str, str],
+        callback=None
     ) -> None:
-        super().__init__(agent_profiles)
+        super().__init__(agent_profiles, callback=callback)
         # self.turn_number = 0
         # self.turn_max = 1
         self.terminated = False
@@ -34,7 +35,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         self.agent_names_to_objs: Dict[str, BaseResearchAgent] = {}
         self.abstracts: Dict[str, PaperProfile] = {}
 
-    def step(self) -> None:
+    def _step(self) -> None:
         if self.state == 0:
             self.fetch_external_data()
         elif self.state == 1:
