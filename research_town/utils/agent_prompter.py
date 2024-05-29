@@ -1,9 +1,12 @@
 from typing import Dict, List, Tuple
 
+from beartype import beartype
+
 from .model_prompting import model_prompting
 from .paper_collector import get_related_papers
 
 
+@beartype
 def summarize_research_field_prompting(
     profile: Dict[str, str],
     keywords: List[str],
@@ -45,6 +48,7 @@ def summarize_research_field_prompting(
     return model_prompting(model_name, prompt)
 
 
+@beartype
 def find_collaborators_prompting(
     input: Dict[str, str],
     self_profile: Dict[str, str],
@@ -77,7 +81,7 @@ def find_collaborators_prompting(
     prompt = prompt_qa.format_map(input)
     return model_prompting(model_name, prompt)
 
-
+@beartype
 def generate_ideas_prompting(
     trend: str,
     model_name: str,
@@ -94,7 +98,7 @@ def generate_ideas_prompting(
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
 
-
+@beartype
 def summarize_research_direction_prompting(
     personal_info: str,
     model_name: str,
@@ -111,7 +115,7 @@ def summarize_research_direction_prompting(
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
 
-
+@beartype
 def write_paper_abstract_prompting(
     ideas: List[str],
     papers: Dict[str, Dict[str, List[str]]],
@@ -145,7 +149,7 @@ def write_paper_abstract_prompting(
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
 
-
+@beartype
 def review_score_prompting(paper_review: str, model_name: str) -> int:
     prompt_qa = (
         "Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only returns one number score."
@@ -159,7 +163,7 @@ def review_score_prompting(paper_review: str, model_name: str) -> int:
     else:
         return 0
 
-
+@beartype
 def review_paper_prompting(paper: Dict[str, str],  model_name: str,) -> List[str]:
     """
     Review paper from using list, and external data (published papers)
@@ -182,7 +186,7 @@ def review_paper_prompting(paper: Dict[str, str],  model_name: str,) -> List[str
     prompt = prompt_qa.format_map(input)
     return model_prompting(model_name, prompt)
 
-
+@beartype
 def make_review_decision_prompting(
     paper: Dict[str, str],
     review: Dict[str, Tuple[int, str]],
@@ -212,7 +216,7 @@ def make_review_decision_prompting(
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
 
-
+@beartype
 def rebut_review_prompting(
     paper: Dict[str, str],
     review: Dict[str, Tuple[int, str]],
@@ -251,7 +255,7 @@ def rebut_review_prompting(
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
 
-
+@beartype
 def communicate_with_multiple_researchers_prompting(
     messages: Dict[str, str],
     model_name: str,

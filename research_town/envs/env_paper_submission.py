@@ -1,5 +1,7 @@
 from typing import Dict, List
+
 from beartype import beartype
+
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import (
     AgentProfile,

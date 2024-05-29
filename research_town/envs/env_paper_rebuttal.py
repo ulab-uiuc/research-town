@@ -1,5 +1,7 @@
 from typing import Dict, List, Tuple
+
 from beartype import beartype
+
 from ..dbs import (
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
