@@ -1,12 +1,17 @@
 
 import re
-from typing import Any, Dict
+from typing import Any
 
+from ..utils.decorator import parsing_error_exponential_backoff
 from ..utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
 )
-from .output_format import IdeaEvalOutput, PaperEvalOutput
+from .output_format import (
+    IdeaEvalOutput,
+    OutputFormatError,
+    PaperEvalOutput,
+)
 
 
 class IdeaQualityEvaluator(object):
@@ -18,23 +23,19 @@ class IdeaQualityEvaluator(object):
         self.model_name = model_name
         self.parsed_output = IdeaEvalOutput()
 
-
+    @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(
         self,
-        idea: str,
-        trend: str,
         *args: Any,
         **kwargs: Any,
     )-> IdeaEvalOutput:
         raw_output = idea_quality_eval_prompting(
-            idea=idea,
-            trend=trend,
+            idea=kwargs['idea'],
+            trend=kwargs['trend'],
             model_name=self.model_name
         )
         self.parsed_output = self.parse(raw_output)
-        # get pk
-        # self.parsed_output.pk = kwargs.get("pk")
-        # Store the input kwargs in parsed_output
+
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
         return self.parsed_output
@@ -42,10 +43,12 @@ class IdeaQualityEvaluator(object):
     def parse(self, raw_output:str) -> IdeaEvalOutput:
         match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", raw_output, re.IGNORECASE)
         if match:
-            return IdeaEvalOutput(overall_score=int(match.group(1)))
+            try:
+                return IdeaEvalOutput(overall_score=int(match.group(1)))
+            except ValueError as e:
+                raise OutputFormatError(f"Invalid overall score: {e}")
         else:
-            return IdeaEvalOutput()
-
+            raise OutputFormatError("Output format error: 'Overall Score' not found")
 
 class PaperQualityEvaluator(object):
     def __init__(self,
@@ -56,28 +59,29 @@ class PaperQualityEvaluator(object):
         self.model_name = model_name
         self.parsed_output = PaperEvalOutput()
 
-
+    @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(
         self,
-        idea: str,
-        paper: Dict[str,str],
         *args: Any,
         **kwargs: Any,
     )-> PaperEvalOutput:
         raw_output = paper_quality_eval_prompting(
-            idea=idea,
-            paper=paper,
+            idea=kwargs['idea'],
+            paper=kwargs['paper'],
             model_name=self.model_name
         )
         self.parsed_output = self.parse(raw_output)
-        # Store the input kwargs in parsed_output
+
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
         return self.parsed_output
 
-    def parse(self, raw_output:str) -> PaperEvalOutput:
+    def parse(self, raw_output: str) -> PaperEvalOutput:
         match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", raw_output, re.IGNORECASE)
         if match:
-            return PaperEvalOutput(overall_score=int(match.group(1)))
+            try:
+                return PaperEvalOutput(overall_score=int(match.group(1)))
+            except ValueError as e:
+                raise OutputFormatError(f"Invalid overall score: {e}")
         else:
-            return PaperEvalOutput()
+            raise OutputFormatError("Output format error: 'Overall Score' not found")
