@@ -69,7 +69,12 @@ class ResearchIdea(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content: Optional[str] = Field(default=None)
 
-class ResearchPaperDraft(BaseModel):
+class ResearchPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: Optional[str] = Field(default=None)
     abstract: Optional[str] = Field(default=None)
+    conference: Optional[str] = Field(default=None)
+
+class ResearchTrend(BaseModel):
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    content: Optional[str] = Field(default=None)
