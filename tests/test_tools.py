@@ -1,5 +1,5 @@
-from research_town.utils.tools import Serializer, logging_callback
 from research_town.agents.agent_base import BaseResearchAgent
+from research_town.utils.tools import Serializer, logging_callback
 from tests.constants import agent_profile_A
 
 
