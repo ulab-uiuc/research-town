@@ -53,7 +53,7 @@ def clean_title(title: str) -> str:
 
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-def logging_callback(messages: List[Dict[str, str]]) -> None:
+def logging_callback(messages: Union[List[Dict[str, str]], None] = None) -> None:
     """
     Logs messages using the logging module.
 
@@ -80,7 +80,7 @@ def logging_callback(messages: List[Dict[str, str]]) -> None:
 
 class Serializer:
     @classmethod
-    def serialize(cls, obj: Union[str, int, float, bool, None, Dict[str, Any], List[Any], Tuple[Any, ...], Set[Any]]) -> Any:
+    def serialize(cls, obj: Any) -> Any:
         if isinstance(obj, (str, int, float, bool, type(None))):
             return obj
         elif isinstance(obj, dict):
