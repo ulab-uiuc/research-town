@@ -13,3 +13,9 @@ class PaperEvalOutput(BaseModel):
     pk: str = Field(default='0')
     class Config:
         extra = Extra.allow  # Allows extra fields to be stored
+
+class ReviewEvalOutput(BaseModel):
+    overall_score: int = Field(default=-1)
+    pk: str = Field(default='0')
+    class Config:
+        extra = Extra.allow  # Allows extra fields to be stored

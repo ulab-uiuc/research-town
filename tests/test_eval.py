@@ -58,3 +58,9 @@ def  test_evaluator_eval_paper(use_mock:bool) -> None:
         # evals_output = evaluator.eval(**input_dict)
         evals_output = evaluator.eval(idea=idea, paper=paper, pk=input_dict['pk'])
         assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of paper shoud be an Int between 0 and 100, but it's  {evals_output.overall_score}"
+
+
+# Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
+@pytest.mark.parametrize("use_mock", [True])
+def  test_evaluator_eval_review(use_mock:bool) -> None:
+    pass

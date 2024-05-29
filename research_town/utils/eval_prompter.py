@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 
 from .model_prompting import model_prompting
 
@@ -187,3 +187,13 @@ def paper_quality_eval_prompting(
     combined_result = "\n".join(evaluation_result)
 
     return combined_result
+
+
+
+def review_quality_eval_prompting(
+    idea: str,
+    paper: Dict[str,str],
+    review: List[str],
+    model_name: str
+) -> str:
+    pass

@@ -1,12 +1,13 @@
 
 import re
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from ..utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
+    review_quality_eval_prompting
 )
-from .output_format import IdeaEvalOutput, PaperEvalOutput
+from .output_format import IdeaEvalOutput, PaperEvalOutput, ReviewEvalOutput
 
 
 class IdeaQualityEvaluator(object):
@@ -81,3 +82,40 @@ class PaperQualityEvaluator(object):
             return PaperEvalOutput(overall_score=int(match.group(1)))
         else:
             return PaperEvalOutput()
+
+class ReviewQualityEvaluator(object):
+    def __init__(self,
+        model_name: str,
+        *args: Any,
+        **kwargs: Any
+    )-> None:
+        self.model_name = model_name
+        self.parsed_output = ReviewEvalOutput()
+
+
+    def eval(
+        self,
+        idea: str,
+        paper: Dict[str,str],
+        review: List[str],
+        *args: Any,
+        **kwargs: Any,
+    )-> ReviewEvalOutput:
+        raw_output = review_quality_eval_prompting(
+            idea=idea,
+            paper=paper,
+            review=review,
+            model_name=self.model_name
+        )
+        self.parsed_output = self.parse(raw_output)
+        # Store the input kwargs in parsed_output
+        for key, value in kwargs.items():
+            setattr(self.parsed_output, key, value)
+        return self.parsed_output
+
+    def parse(self, raw_output:str) -> ReviewEvalOutput:
+        match = re.search(r"Overall\s*Score\s*\W*(\d+)\W*", raw_output, re.IGNORECASE)
+        if match:
+            return ReviewEvalOutput(overall_score=int(match.group(1)))
+        else:
+            return ReviewEvalOutput()
