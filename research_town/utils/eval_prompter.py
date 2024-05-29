@@ -1,8 +1,11 @@
 from typing import Dict, List
 
+from beartype import beartype
+
 from .model_prompting import model_prompting
 
 
+@beartype
 def idea_quality_eval_prompting(
     idea: str,
     trend:  str,
@@ -87,7 +90,7 @@ def idea_quality_eval_prompting(
 
     return combined_result
 
-
+@beartype
 def paper_quality_eval_prompting(
     idea: str,
     paper: Dict[str,str],
