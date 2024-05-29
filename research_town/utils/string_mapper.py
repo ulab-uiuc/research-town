@@ -1,4 +1,5 @@
-from typing import List, Dict, Tuple, Union
+from typing import Dict, List, Union
+
 
 def map_idea_list_to_str(ideas: List[Dict[str, str]]) -> str:
     result = ''

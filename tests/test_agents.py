@@ -12,8 +12,6 @@ from tests.constants import (
     research_idea_B,
     research_trend_A,
     research_trend_B,
-    research_paper_submission_A,
-    research_paper_submission_B,
 )
 from tests.utils import mock_papers, mock_prompting
 
@@ -94,7 +92,7 @@ def test_write_paper(mock_model_prompting: MagicMock) -> None:
         model_name="together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"
     )
     paper = research_agent.write_paper(
-        ideas=[research_idea_A, research_idea_B], 
+        ideas=[research_idea_A, research_idea_B],
         papers=[paper_profile_A, paper_profile_B],
     )
     assert paper.abstract == "This is a paper abstract."
@@ -124,7 +122,7 @@ def test_write_paper_meta_review(mock_model_prompting: MagicMock) -> None:
     )
     reviews = research_agent.write_paper_review(paper=paper_profile_A)
     meta_review= research_agent.write_paper_meta_review(
-        paper=paper_profile_A, 
+        paper=paper_profile_A,
         reviews=[reviews]
     )
     assert meta_review.decision is True
@@ -145,8 +143,8 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     )
     review = research_agent.write_paper_review(paper=paper_profile_A)
     rebuttal = research_agent.write_rebuttal(
-        paper=paper_profile_A, 
-        review=review, 
+        paper=paper_profile_A,
+        review=review,
     )
     assert isinstance(rebuttal, AgentPaperRebuttalLog)
     if rebuttal.rebuttal_content is not None:
