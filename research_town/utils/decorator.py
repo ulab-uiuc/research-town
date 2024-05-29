@@ -35,7 +35,7 @@ def exponential_backoff(
             )
             return None
 
-        return wrapper  # type: ignore
+        return wrapper
 
     return decorator
 

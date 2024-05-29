@@ -19,17 +19,15 @@ class IdeaQualityEvaluator(object):
         self.model_name = model_name
         self.parsed_output = IdeaEvalOutput()
 
-    @retry_eval(output_format=IdeaEvalOutput,retries=5, base_wait_time=1)
+    @retry_eval(output_format=IdeaEvalOutput, retries=5, base_wait_time=1)
     def eval(
         self,
-        idea: str,
-        trend: str,
         *args: Any,
         **kwargs: Any,
     )-> IdeaEvalOutput:
         raw_output = idea_quality_eval_prompting(
-            idea=idea,
-            trend=trend,
+            idea=kwargs['idea'],
+            trend=kwargs['trend'],
             model_name=self.model_name
         )
         self.parsed_output = self.parse(raw_output)
@@ -60,24 +58,22 @@ class PaperQualityEvaluator(object):
         self.model_name = model_name
         self.parsed_output = PaperEvalOutput()
 
-    @retry_eval(output_format=PaperEvalOutput,retries=5, base_wait_time=1)
+    @retry_eval(output_format=PaperEvalOutput, retries=5, base_wait_time=1)
     def eval(
         self,
-        idea: str,
-        paper: Dict[str,str],
         *args: Any,
         **kwargs: Any,
     )-> PaperEvalOutput:
         raw_output = paper_quality_eval_prompting(
-            idea=idea,
-            paper=paper,
+            idea=kwargs['idea'],
+            paper=kwargs['paper'],
             model_name=self.model_name
         )
         self.parsed_output = self.parse(raw_output)
-        # check parsed_output
+
         if not (0 <= self.parsed_output.overall_score <= 100):
             raise OutputFormatError(f"overall score of idea should be an Int between 0 and 100, but it's {self.parsed_output.overall_score}")
-        # Store the input kwargs in parsed_output
+
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
         return self.parsed_output
