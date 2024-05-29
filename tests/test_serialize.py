@@ -1,5 +1,5 @@
 from research_town.agents.agent_base import BaseResearchAgent
-from research_town.utils.tools import Serializer, logging_callback
+from research_town.utils.serializer import Serializer
 from tests.constants import agent_profile_A
 
 
@@ -13,8 +13,3 @@ def test_serializer() -> None:
     research_agent_serialized_2 = Serializer.serialize(research_agent_deserialized)
 
     assert research_agent_serialized == research_agent_serialized_2
-
-def test_logging_callback() -> None:
-    logging_callback()
-    logging_callback([])
-    logging_callback([{'text': 'text', 'level': 'INFO'}])
