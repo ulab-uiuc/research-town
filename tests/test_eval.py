@@ -1,3 +1,4 @@
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -7,8 +8,9 @@ from research_town.evaluators.quality_evaluator import (
     PaperQualityEvaluator,
 )
 
+
 @pytest.fixture(params=["gpt-4o", "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"])
-def model_name(request: pytest.FixtureRequest) -> str:
+def model_name(request: pytest.FixtureRequest) -> Any:
     return request.param
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
@@ -24,9 +26,11 @@ def  test_evaluator_eval_idea(use_mock:bool, model_name: str) -> None:
             "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
             evals_output = evaluator.eval(**input_dict)
+            assert evals_output is not None
             assert evals_output.overall_score == 86,f"overall score of idea (mock) shoud be 86, but it's  {evals_output.overall_score}"
     else:
         evals_output = evaluator.eval(**input_dict)
+        assert evals_output is not None
         assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of idea shoud be an Int between 0 and 100, but it's  {evals_output.overall_score}"
 
 
@@ -45,7 +49,9 @@ def  test_evaluator_eval_paper(use_mock:bool,model_name: str) -> None:
             "Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8]."
         ])):
             evals_output = evaluator.eval(**input_dict)
+            assert evals_output is not None
             assert evals_output.overall_score == 86,f"overall score of paper (mock) shoud be 86, but it's  {evals_output.overall_score}"
     else:
         evals_output = evaluator.eval(**input_dict)
+        assert evals_output is not None
         assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of paper shoud be an Int between 0 and 100, but it's  {evals_output.overall_score}"
