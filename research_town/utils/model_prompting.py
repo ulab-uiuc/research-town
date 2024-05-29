@@ -1,10 +1,12 @@
 from typing import List, Optional
 
 import litellm
+from beartype import beartype
 
 from .decorator import exponential_backoff
 
 
+@beartype
 @exponential_backoff(retries=5, base_wait_time=1)
 def model_prompting(
     llm_model: str,
