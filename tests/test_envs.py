@@ -37,18 +37,20 @@ def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
     while not env.terminated:
         env.step()
 
-    assert isinstance(env.review, list)
-    assert len(env.review) > 0
+    assert isinstance(env.reviews, list)
+    assert len(env.reviews) > 0
     assert isinstance(env.decision, str)
     assert env.decision in ["accept", "reject", "boarderline"]
-    assert isinstance(env.rebuttal, list)
-    assert len(env.rebuttal) > 0
+    assert isinstance(env.rebuttals, list)
+    assert len(env.rebuttals) > 0
 
 
 @patch("research_town.utils.agent_prompter.model_prompting")
 @patch("research_town.utils.agent_prompter.get_related_papers")
-def test_paper_submission_env(mock_get_related_papers: MagicMock,
-                              mock_model_prompting: MagicMock,) -> None:
+def test_paper_submission_env(
+    mock_get_related_papers: MagicMock,
+    mock_model_prompting: MagicMock,
+) -> None:
     mock_get_related_papers.side_effect = mock_papers
     mock_model_prompting.return_value = ["This is a paper."]
     agent_db = AgentProfileDB()

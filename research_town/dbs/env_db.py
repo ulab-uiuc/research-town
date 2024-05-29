@@ -100,5 +100,7 @@ class AgentAgentDiscussionLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
     agent_from_pk: str
+    agent_from_name: str
     agent_to_pk: str
+    agent_to_name: str
     message: Optional[str] = Field(default=None)

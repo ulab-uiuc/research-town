@@ -7,6 +7,8 @@ from research_town.dbs import (
     AgentProfile,
     PaperProfile,
     ResearchIdea,
+    ResearchPaperSubmission,
+    ResearchTrend,
 )
 
 paper_profile_A = PaperProfile(
@@ -30,16 +32,32 @@ agent_profile_B = AgentProfile(
     bio="A researcher in the field of GNN.",
 )
 
-research_idea = ResearchIdea(
+research_idea_A = ResearchIdea(
     content="A new idea",
 )
 
-agent_agent_discussion_log = AgentAgentDiscussionLog(
-    timestep=0,
-    agent_from_pk=agent_profile_A.pk,
-    agent_to_pk=agent_profile_B.pk,
-    message="good morning",
+research_idea_B = ResearchIdea(
+    content="Another idea",
 )
+
+research_trend_A = ResearchTrend(
+    content="A new trend",
+)
+
+research_trend_B = ResearchTrend(
+    content="Another trend",
+)
+
+research_paper_submission_A = ResearchPaperSubmission(
+    title="A Survey on Machine Learning",
+    abstract="This paper surveys the field of machine learning.",
+)
+
+research_paper_submission_B = ResearchPaperSubmission(
+    title="A Survey on Graph Neural Networks",
+    abstract="This paper surveys the field of graph neural networks.",
+)
+
 
 agent_paper_review_log = AgentPaperReviewLog(
     timestep=0,
@@ -67,6 +85,8 @@ agent_paper_rebuttal_log = AgentPaperRebuttalLog(
 agent_agent_discussion_log = AgentAgentDiscussionLog(
     timestep=0,
     agent_from_pk=agent_profile_A.pk,
+    agent_from_name=agent_profile_A.name,
     agent_to_pk=agent_profile_B.pk,
+    agent_to_name=agent_profile_B.name,
     message="How about the idea of building a research town with language agents?"
 )

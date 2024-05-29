@@ -11,21 +11,22 @@ from ..dbs import (
     AgentProfile,
     PaperProfile,
     ResearchIdea,
+    ResearchPaperSubmission,
     ResearchTrend,
-    ResearchPaperSubmission
 )
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
-    communicate_with_multiple_researchers_prompting,
+    discuss_prompting,
     find_collaborators_prompting,
-    generate_ideas_prompting,
-    make_review_decision_prompting,
-    rebut_review_prompting,
+    read_paper_prompting,
     review_paper_prompting,
     review_score_prompting,
-    summarize_research_field_prompting,
-    write_paper_abstract_prompting,
+    think_idea_prompting,
+    write_meta_review_prompting,
+    write_paper_prompting,
+    write_rebuttal_prompting,
 )
+from ..utils.serializer import Serializer
 
 
 class BaseResearchAgent(object):
@@ -36,6 +37,7 @@ class BaseResearchAgent(object):
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
         self.model_name: str = model_name
+        self.serializer = Serializer()
 
     @beartype
     def get_profile(self, author_name: str) -> AgentProfile:
@@ -97,6 +99,7 @@ class BaseResearchAgent(object):
             author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat
 
+# =======================================
 
     @beartype
     def read_paper(
@@ -104,11 +107,11 @@ class BaseResearchAgent(object):
         papers: List[PaperProfile],
         domains: List[str]
     ) -> List[ResearchTrend]:
-        papers = self.serializer.serialize(papers)
-        profiles = self.serializer.serialize([self.profile])
-        trend_contents = summarize_research_trend_prompting(
-            profiles=profiles,
-            papers=papers,
+        serialized_papers = self.serializer.serialize(papers)
+        serialized_profile = self.serializer.serialize(self.profile)
+        trend_contents = read_paper_prompting(
+            profile=serialized_profile,
+            papers=serialized_papers,
             domains=domains,
             model_name=self.model_name
         )
@@ -116,17 +119,17 @@ class BaseResearchAgent(object):
         for content in trend_contents:
             trends.append(ResearchTrend(content=content))
         return trends
-    
+
 
     @beartype
     def think_idea(
         self,
         trends: List[ResearchTrend],
     ) -> List[ResearchIdea]:
-        trends = self.serializer.serialize(trends)
+        serialized_trends = self.serializer.serialize(trends)
         idea_contents: List[str] = []
-        for trend in trends:
-            idea_contents.append(generate_idea_prompting(
+        for trend in serialized_trends:
+            idea_contents.append(think_idea_prompting(
                 trend=trend,
                 model_name=self.model_name
             )[0])
@@ -139,25 +142,26 @@ class BaseResearchAgent(object):
     @beartype
     def write_paper(
         self,
-        ideas: List[str],
+        ideas: List[ResearchIdea],
         papers: List[PaperProfile]
     ) -> ResearchPaperSubmission:
-        papers = self.serializer.serialize(papers)
+        serialized_ideas = self.serializer.serialize(ideas)
+        serialized_papers = self.serializer.serialize(papers)
         paper_abstract = write_paper_prompting(
-            ideas=ideas,
-            papers=papers_dict,
+            ideas=serialized_ideas,
+            papers=serialized_papers,
             model_name=self.model_name
         )[0]
         return ResearchPaperSubmission(abstract=paper_abstract)
 
     @beartype
-    def review_paper(
+    def write_paper_review(
         self,
         paper: PaperProfile
     ) -> AgentPaperReviewLog:
-        papers_dict = self.serializer.serialize([paper])
+        serialized_paper = self.serializer.serialize(paper)
         paper_review = review_paper_prompting(
-            paper=papers_dict,
+            paper=serialized_paper,
             model_name=self.model_name
         )[0]
         review_score = review_score_prompting(
@@ -173,17 +177,17 @@ class BaseResearchAgent(object):
         )
 
     @beartype
-    def write_meta_review(
+    def write_paper_meta_review(
         self,
         paper: PaperProfile,
-        review_logs: List[AgentPaperReviewLog]
+        reviews: List[AgentPaperReviewLog]
     ) -> AgentPaperMetaReviewLog:
-        papers_dict = self.serializer.serialize([paper])
-        reviews_dict = self.serializer.serialize(review_logs)
+        serialized_paper = self.serializer.serialize(paper)
+        serialized_reviews = self.serializer.serialize(reviews)
 
-        meta_review = make_review_decision_prompting(
-            paper=papers_dict,
-            review=reviews_dict,
+        meta_review = write_meta_review_prompting(
+            paper=serialized_paper,
+            reviews=serialized_reviews,
             model_name=self.model_name
         )
         review_decision = "accept" in meta_review[0].lower()
@@ -200,14 +204,14 @@ class BaseResearchAgent(object):
     def write_rebuttal(
         self,
         paper: PaperProfile,
-        reviews: List[AgentPaperReviewLog],
+        review: AgentPaperReviewLog,
     ) -> AgentPaperRebuttalLog:
-        papers = self.serializer.serialize([paper])
-        reviews = self.serializer.serialize(reviews)
+        serialized_paper = self.serializer.serialize(paper)
+        serialized_review = self.serializer.serialize(review)
 
-        rebuttal_content = rebut_review_prompting(
-            paper=papers,
-            review=reviews,
+        rebuttal_content = write_rebuttal_prompting(
+            paper=serialized_paper,
+            review=serialized_review,
             model_name=self.model_name
         )[0]
 
@@ -223,14 +227,16 @@ class BaseResearchAgent(object):
         self,
         message: AgentAgentDiscussionLog
     ) -> AgentAgentDiscussionLog:
-        message = self.serializer.serialize([message])
-        message_content = communicate_with_multiple_researchers_prompting(
-            message=message,
+        serialized_message = self.serializer.serialize(message)
+        message_content = discuss_prompting(
+            message=serialized_message,
             model_name=self.model_name
         )[0]
         return AgentAgentDiscussionLog(
             timestep=(int)(datetime.now().timestamp()),
             agent_from_pk=message.agent_from_pk,
+            agent_from_name=message.agent_from_name,
             agent_to_pk=message.agent_to_pk,
+            agent_to_name=message.agent_to_name,
             message=message_content
         )

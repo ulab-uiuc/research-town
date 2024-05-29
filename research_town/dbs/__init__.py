@@ -8,10 +8,10 @@ from .env_db import (
 )
 from .paper_db import PaperProfile, PaperProfileDB
 from .progress_db import (
-    ResearchTrend,
     ResearchIdea,
     ResearchPaperSubmission,
     ResearchProgressDB,
+    ResearchTrend,
 )
 
 __all__ = [

@@ -1,6 +1,9 @@
 
+from typing import Type, TypeVar
+
 from pydantic import BaseModel, Extra, Field, validator
 
+T = TypeVar('T', bound=BaseModel)
 
 class IdeaEvalOutput(BaseModel):
     overall_score: int = Field(default=-1)
@@ -9,7 +12,7 @@ class IdeaEvalOutput(BaseModel):
         extra = Extra.allow  # Allows extra fields to be stored
 
     @validator('overall_score')
-    def validate_overall_score(cls, v):
+    def validate_overall_score(cls: Type[T], v: int) -> int:
         if v is None:
             raise ValueError("Overall score cannot be None")
         if not (0 <= v <= 100):
@@ -24,7 +27,7 @@ class PaperEvalOutput(BaseModel):
         extra = Extra.allow  # Allows extra fields to be stored
 
     @validator('overall_score')
-    def validate_overall_score(cls, v):
+    def validate_overall_score(cls: Type[T], v: int) -> int:
         if v is None:
             raise ValueError("Overall score cannot be None")
         if not (0 <= v <= 100):
