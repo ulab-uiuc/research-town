@@ -32,7 +32,6 @@ def prepare_research_trend_prompt_input(
         "papers": papers_dict
     }
 
-
 @beartype
 def summarize_research_field_prompting(
     profile: Dict[str, str],
