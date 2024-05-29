@@ -2,9 +2,35 @@ from typing import Dict, List, Tuple
 
 from .model_prompting import model_prompting
 from .paper_collector import get_related_papers
+from ..dbs import PaperProfile, AgentProfile
 
 
-def summarize_research_field_prompting(
+def prepare_research_trend_prompt_input(
+    papers: List[PaperProfile],
+    profile: AgentProfile,
+    domain: str
+) -> Dict[str, str]:
+    papers_dict: Dict[str, Dict[str, List[str]]] = {}
+    for paper in papers:
+        papers_dict[paper.pk] = {}
+        if paper.abstract is not None:
+            papers_dict[paper.pk]["abstract"] = [paper.abstract]
+        if paper.title is not None:
+            papers_dict[paper.pk]["title"] = [paper.title]
+    
+    profile_dict: Dict[str, str] = {}
+    if profile.name is not None:
+        profile_dict["name"] = profile.name
+    if profile.bio is not None:
+        profile_dict["profile"] = profile.bio
+
+    return {
+        "profile": profile_dict,
+        "keywords": [domain],
+        "papers": papers_dict
+    }
+
+def research_trend_prompting(
     profile: Dict[str, str],
     keywords: List[str],
     papers: Dict[str, Dict[str, List[str]]],

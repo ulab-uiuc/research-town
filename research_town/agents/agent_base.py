@@ -18,7 +18,8 @@ from ..utils.agent_prompter import (
     rebut_review_prompting,
     review_paper_prompting,
     review_score_prompting,
-    summarize_research_field_prompting,
+    research_trend_prompting,
+    prepare_research_trend_prompt_input,
     write_paper_abstract_prompting,
 )
 
@@ -65,25 +66,13 @@ class BaseResearchAgent(object):
         papers: List[PaperProfile],
         domain: str
     ) -> str:
-        papers_dict: Dict[str, Dict[str, List[str]]] = {}
-        for paper in papers:
-            papers_dict[paper.pk] = {}
-            if paper.abstract is not None:
-                papers_dict[paper.pk]["abstract"] = [paper.abstract]
-            if paper.title is not None:
-                papers_dict[paper.pk]["title"] = [paper.title]
-        profile: Dict[str, str] = {}
-        if self.profile.name is not None:
-            profile["name"] = self.profile.name
-        if self.profile.bio is not None:
-            profile["profile"] = self.profile.bio
-        trend = summarize_research_field_prompting(
-            profile=profile,
-            keywords=[domain],
-            papers=papers_dict,
+        prompt_input = prepare_research_trend_prompt_input(papers, self.profile, domain)
+        trend_output = research_trend_prompting(
+            profile=prompt_input["profile"],
+            keywords=prompt_input["keywords"],
+            papers=prompt_input["papers"],
             model_name=self.model_name
         )
-        trend_output = trend[0]
         return trend_output
 
     def find_collaborators(
