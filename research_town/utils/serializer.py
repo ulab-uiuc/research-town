@@ -1,10 +1,59 @@
 import importlib
 from typing import Any, Dict, List, Set, Tuple, Union
+from ..dbs import AgentProfile, PaperProfile, AgentPaperReviewLog, AgentPaperMetaReviewLog
 
 from pydantic import BaseModel
 
+def serialize_paper_profiles(papers: List[PaperProfile]) -> Dict[str, str]:
+    paper_dict = {}
+    for paper in papers:
+        if paper.title is not None and paper.abstract is not None:
+            paper_dict[paper.pk] = {
+                'abstract': paper.abstract,
+                'title': paper.title
+            }
+    return paper_dict
 
-class Serializer:
+def serialize_agent_profiles(profiles: List[AgentProfile]) -> Dict[str, str]:
+    profile_dict = {}
+    for profile in profiles:
+        if profile.name is not None and profile.bio is not None:
+            profile_dict[profile.id] = {
+                'name': profile.name,
+                'bio': profile.bio
+            }
+    return profile_dict
+
+def serialize_agent_paper_reviewlogs(review_logs: List[AgentPaperReviewLog]) -> Dict[str, Dict[str, Union[str, int]]]:
+    review_dict = {}
+    for review_log in review_logs:
+        if review_log.review_content is not None and review_log.review_score is not None:
+            review_dict[review_log.pk] = {
+                'review_content': review_log.review_content,
+                'review_score': review_log.review_score
+            }
+    return review_dict
+
+def serialize_agent_paper_metareviewlogs(meta_review_logs: List[AgentPaperMetaReviewLog]) -> Dict[str, Dict[str, Union[str, bool]]]:
+    meta_review_dict = {}
+    for meta_review_log in meta_review_logs:
+        if meta_review_log.meta_review is not None and meta_review_log.decision is not None:
+            meta_review_dict[meta_review_log.pk] = {
+                'meta_review': meta_review_log.meta_review,
+                'decision': meta_review_log.decision
+            }
+    return meta_review_dict
+
+def serialize_agent_agent_discussionlogs(discussion_logs: List[AgentAgentDiscussionLog]) -> Dict[str, Dict[str, Union[str, int]]]:
+    discussion_dict = {}
+    for discussion_log in discussion_logs:
+        if discussion_log.message is not None:
+            discussion_dict[discussion_log.pk] = {
+                'message': discussion_log.message
+            }
+    return discussion_dict
+
+class Serializer(object):
     @classmethod
     def serialize(cls, obj: Any) -> Any:
         if isinstance(obj, (str, int, float, bool, type(None))):

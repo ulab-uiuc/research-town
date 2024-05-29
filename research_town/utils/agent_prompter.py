@@ -7,9 +7,9 @@ from .paper_collector import get_related_papers
 from ..dbs import PaperProfile, AgentProfile
 
 
-def prepare_research_trend_prompt_input(
-    papers: List[PaperProfile],
+def prepare_research_trend_prompting_input(
     profile: AgentProfile,
+    papers: List[PaperProfile],
     domain: str
 ) -> Dict[str, str]:
     papers_dict: Dict[str, Dict[str, List[str]]] = {}
@@ -33,15 +33,12 @@ def prepare_research_trend_prompt_input(
     }
 
 @beartype
-def summarize_research_field_prompting(
+def summarize_research_trend_prompting(
     profile: Dict[str, str],
     keywords: List[str],
     papers: Dict[str, Dict[str, List[str]]],
     model_name: str,
 ) -> List[str]:
-    """
-    Summarize research field based on profile, keywords, written papers
-    """
     query_template = (
         "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
         "Here is my profile: {profile}"
@@ -75,13 +72,63 @@ def summarize_research_field_prompting(
 
 
 @beartype
-def find_collaborators_prompting(
-    input: Dict[str, str],
+def summarize_research_direction_prompting(
+    personal_info: str,
+    model_name: str,
+) -> List[str]:
+    """
+    Summarize research direction based on personal research history
+    """
+    prompt_template = (
+        "Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. "
+        "Focus more on more recent personas. Be concise and clear (around 300 words). "
+        "Here are the personas from different times: {personalinfo}"
+    )
+    template_input = {"personalinfo": personal_info}
+    prompt = prompt_template.format_map(template_input)
+    return model_prompting(model_name, prompt)
+
+
+
+def find_all_collaborators(
+    profile: AgentProfile,
+    max_collaborator_number: int,
+) -> List[AgentProfile]:
+    # TODO: this is a fake function
+    start_author: List[str] = [profile.name] if profile.name is not None else []
+    graph, _, _ = bfs(
+        author_list=start_author, 
+        node_limit=max_collaborator_number,
+    )
+    collaborators = list(
+        {name for pair in graph for name in pair if name != profile.name})
+    return [profile]
+
+
+
+def prepare_find_collaborator_prompt_input(
+    profile: AgentProfile,
+    collaborator_profiles: List[AgentProfile],
+    papers: List[PaperProfile],
+) -> Dict[str, str]:
+    self_profile = convert_agent_profile_to_dict([profile])
+    collaborator_profiles = convert_agent_profile_to_dict(collaborator_profiles)
+    paper = convert_paper_profiles_to_dict(papers)
+    return {
+        "paper": paper,
+        "self_profile": self_profile,
+        "collaborator_profiles": collaborator_profiles
+    }
+
+
+@beartype
+def find_collaborator_prompting(
+    paper: Dict[str, str],
     self_profile: Dict[str, str],
     collaborator_profiles: Dict[str, str],
+    model_name: str,
     parameter: float = 0.5,
     max_number: int = 3,
-    model_name: str = "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1",
 ) -> List[str]:
     self_serialize = [
         f"Name: {name}\nProfile: {self_profile[name]}" for _, name in enumerate(self_profile.keys())]
@@ -108,7 +155,7 @@ def find_collaborators_prompting(
     return model_prompting(model_name, prompt)
 
 @beartype
-def generate_ideas_prompting(
+def generate_research_idea_prompting(
     trend: str,
     model_name: str,
 ) -> List[str]:
@@ -124,25 +171,10 @@ def generate_ideas_prompting(
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
 
-@beartype
-def summarize_research_direction_prompting(
-    personal_info: str,
-    model_name: str,
-) -> List[str]:
-    """
-    Summarize research direction based on personal research history
-    """
-    prompt_template = (
-        "Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. "
-        "Focus more on more recent personas. Be concise and clear (around 300 words). "
-        "Here are the personas from different times: {personalinfo}"
-    )
-    template_input = {"personalinfo": personal_info}
-    prompt = prompt_template.format_map(template_input)
-    return model_prompting(model_name, prompt)
+
 
 @beartype
-def write_paper_abstract_prompting(
+def write_paper_prompting(
     ideas: List[str],
     papers: Dict[str, Dict[str, List[str]]],
     model_name: str,
@@ -191,10 +223,6 @@ def review_score_prompting(paper_review: str, model_name: str) -> int:
 
 @beartype
 def review_paper_prompting(paper: Dict[str, str],  model_name: str,) -> List[str]:
-    """
-    Review paper from using list, and external data (published papers)
-    """
-
     papers_serialize = []
     for _, title in enumerate(paper.keys()):
         paper_entry = f"Title: {title}\nPaper: {paper[title]}"
@@ -243,7 +271,7 @@ def make_review_decision_prompting(
     return model_prompting(model_name, prompt)
 
 @beartype
-def rebut_review_prompting(
+def write_rebuttal_prompting(
     paper: Dict[str, str],
     review: Dict[str, Tuple[int, str]],
     decision: Dict[str, Tuple[bool, str]],
@@ -282,7 +310,7 @@ def rebut_review_prompting(
     return model_prompting(model_name, prompt)
 
 @beartype
-def communicate_with_multiple_researchers_prompting(
+def communicate_prompting(
     messages: Dict[str, str],
     model_name: str,
 ) -> List[str]:
