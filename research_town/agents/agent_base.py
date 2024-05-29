@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import Any, Dict, List, Tuple
 
+from beartype import beartype
+
 from ..dbs import (
     AgentAgentDiscussionLog,
     AgentPaperMetaReviewLog,
@@ -33,6 +35,7 @@ class BaseResearchAgent(object):
         self.memory: Dict[str, str] = {}
         self.model_name: str = model_name
 
+    @beartype
     def get_profile(self, author_name: str) -> AgentProfile:
         # TODO: db get based on name
         agent_profile = AgentProfile(
@@ -41,6 +44,7 @@ class BaseResearchAgent(object):
         )
         return agent_profile
 
+    @beartype
     def communicate(
         self,
         message: AgentAgentDiscussionLog
@@ -61,6 +65,7 @@ class BaseResearchAgent(object):
         )
         return discussion_log
 
+    @beartype
     def read_paper(
         self,
         papers: List[PaperProfile],
@@ -75,6 +80,7 @@ class BaseResearchAgent(object):
         )
         return trend_output
 
+    @beartype
     def find_collaborators(
         self,
         paper: PaperProfile,
@@ -109,6 +115,7 @@ class BaseResearchAgent(object):
                 collaborators_list.append(self.get_profile(collaborator))
         return collaborators_list
 
+    @beartype
     def get_co_author_relationships(
         self,
         agent_profile: AgentProfile,
@@ -154,6 +161,7 @@ class BaseResearchAgent(object):
 
         return ideas
 
+    @beartype
     def write_paper(
         self,
         research_ideas: List[str],
@@ -175,6 +183,7 @@ class BaseResearchAgent(object):
         paper_profile = PaperProfile(abstract=paper_abstract)
         return paper_profile
 
+    @beartype
     def review_paper(
         self,
         paper: PaperProfile
@@ -198,6 +207,7 @@ class BaseResearchAgent(object):
             review_score=review_score
         )
 
+    @beartype
     def make_review_decision(
         self,
         paper: PaperProfile,
@@ -226,6 +236,7 @@ class BaseResearchAgent(object):
             meta_review=meta_review[0],
         )
 
+    @beartype
     def rebut_review(
         self,
         paper: PaperProfile,

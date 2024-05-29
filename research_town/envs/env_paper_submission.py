@@ -1,5 +1,7 @@
 from typing import Dict, List
 
+from beartype import beartype
+
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import (
     AgentProfile,
@@ -70,6 +72,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         self.submit_paper(abstracts)
         self.terminated = True
 
+    @beartype
     def submit_paper(self, paper_dict: Dict[str, PaperProfile]) -> None:
         # TODO: clarify paper submission
         for _, paper in paper_dict.items():

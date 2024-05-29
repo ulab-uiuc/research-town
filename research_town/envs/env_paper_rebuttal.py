@@ -1,5 +1,7 @@
 from typing import Dict, List, Tuple
 
+from beartype import beartype
+
 from ..dbs import (
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
@@ -34,14 +36,17 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.paper_db = paper_db
         self.env_db = env_db
 
+    @beartype
     def assign_roles(self, role_dict: Dict[str, str]) -> None:
         for index, agent_profile in enumerate(self.agent_profiles):
             if role_dict[agent_profile.pk] == "reviewer":
                 self.reviewer_mask[index] = True
 
+    @beartype
     def initialize_submission(self, paper_profile: PaperProfile) -> None:
         self.submission = paper_profile
 
+    @beartype
     def submit_decision(self, decision_dict: Dict[str, Tuple[bool, str]]) -> None:
         decision_count = {"accept": 0, "reject": 0}
         for _, decision in decision_dict.items():
