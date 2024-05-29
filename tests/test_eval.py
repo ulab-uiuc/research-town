@@ -8,7 +8,7 @@ from research_town.evaluators.quality_evaluator import (
 )
 
 @pytest.fixture(params=["gpt-4o", "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"])
-def model_name(request)-> str:
+def model_name(request: pytest.FixtureRequest) -> str:
     return request.param
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
