@@ -63,7 +63,6 @@ line_length = 88
 line-length = 88
 target-version = ['py37', 'py38', 'py39', 'py310']
 
-
 [tool.ruff]
 line-length = 88
 fix = true
