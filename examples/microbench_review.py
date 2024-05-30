@@ -113,7 +113,8 @@ def main(data_path: str, domain:str) -> None:
     # generate envs of agents with reviewers
     # 1. how to select reviewers? Retrive the reviewers from the database.
     agent_db = AgentProfileDB()
-    agent_db.load_from_file(data_path+"agent_"+ domain + ".json")
+    agent_file = os.path.join(data_path, f"agent_{domain}.json")
+    agent_db.load_from_file(agent_file)
     # 2. how to assign reviewers to papers?
     # (jinwei) Hardcode-- select top 3 reviewers in the agent_db to agent_profiles
     agent_profiles: List[AgentProfile] = []
