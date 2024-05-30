@@ -98,7 +98,7 @@ class RealPaperWithReviewDB:
 
 
 def main() -> None:
-    data_path = "../data/"
+    data_path = "../data/microbench/"
     domain = "machine_learning_system"
     # collect papers from openreview
     real_paper_db = RealPaperWithReviewDB()
