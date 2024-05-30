@@ -299,7 +299,7 @@ def review_quality_eval_prompting(
         "trend": trend,
         "title": paper["title"],
         "abstract": paper["abstract"],
-        "reviews": organized_reviews,
+        "review": organized_reviews,
         "final_decision": decision,
     }
     prompt = review_prompt.format_map(input_data)

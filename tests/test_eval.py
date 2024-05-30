@@ -205,8 +205,8 @@ def  test_evaluator_eval_paper(use_mock:bool,model_name: str) -> None:
 @pytest.mark.parametrize("use_mock", [True,False])
 def  test_evaluator_eval_review(use_mock:bool) -> None:
     paper = {'title': paper_title, 'abstract':paper_abstract}
-    review = [review1, review2, review3, review4]
-    input_dict = {'idea': idea, 'trend': trend, 'paper': paper,'pk':0,'reviews':review,'decision':'Reject'}
+    reviews = [review1, review2, review3, review4]
+    input_dict = {'idea': idea, 'trend': trend, 'paper': paper,'pk':0,'review':reviews,'decision':'Reject'}
     evaluator = ReviewQualityEvaluator(model_name=model_name)
     if use_mock:
         with patch("research_town.utils.eval_prompter.model_prompting", MagicMock(return_value=[
