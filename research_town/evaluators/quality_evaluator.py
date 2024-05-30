@@ -112,6 +112,7 @@ class ReviewQualityEvaluator(object):
             decision=kwargs['decision'], # decision: str,
             model_name=self.model_name
         )
+        print(f"raw_output={raw_output}\n")  # debug
         self.parsed_output = self.parse(raw_output)
         # Store the input kwargs in parsed_output
         for key, value in kwargs.items():
