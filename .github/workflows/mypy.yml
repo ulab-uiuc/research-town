@@ -11,6 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+    
   Static-Type-Checking:
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'ready-for-review')
