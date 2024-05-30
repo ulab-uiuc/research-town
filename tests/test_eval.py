@@ -172,11 +172,11 @@ def  test_evaluator_eval_idea(use_mock:bool, model_name: str) -> None:
         ])):
             evals_output = evaluator.eval(**input_dict)
             assert evals_output is not None
-            assert evals_output.overall_score == 86,f"overall score of idea (mock) shoud be 86, but it's  {evals_output.overall_score}"
+            assert evals_output.overall_score == 86,f"overall score of idea (mock) should be 86, but it's  {evals_output.overall_score}"
     else:
         evals_output = evaluator.eval(**input_dict)
         assert evals_output is not None
-        assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of idea shoud be an Int between 0 and 100, but it's  {evals_output.overall_score}"
+        assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of idea should be an Int between 0 and 100, but it's  {evals_output.overall_score}"
 
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
@@ -194,11 +194,11 @@ def  test_evaluator_eval_paper(use_mock:bool,model_name: str) -> None:
         ])):
             evals_output = evaluator.eval(**input_dict)
             assert evals_output is not None
-            assert evals_output.overall_score == 86,f"overall score of paper (mock) shoud be 86, but it's  {evals_output.overall_score}"
+            assert evals_output.overall_score == 86,f"overall score of paper (mock) should be 86, but it's  {evals_output.overall_score}"
     else:
         evals_output = evaluator.eval(**input_dict)
         assert evals_output is not None
-        assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of paper shoud be an Int between 0 and 100, but it's  {evals_output.overall_score}"
+        assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of paper should be an Int between 0 and 100, but it's  {evals_output.overall_score}"
 
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
@@ -218,4 +218,4 @@ def  test_evaluator_eval_review(use_mock:bool) -> None:
     else:
         evals_output = evaluator.eval(**input_dict)
         assert evals_output is not None
-        assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of paper shoud be an Int between 0 and 100, but it's  {evals_output.overall_score}"
+        assert evals_output.overall_score>=0 and  evals_output.overall_score<=100,f"overall score of paper should be an Int between 0 and 100, but it's  {evals_output.overall_score}"
