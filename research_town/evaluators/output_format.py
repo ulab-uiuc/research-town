@@ -47,7 +47,7 @@ class ReviewEvalOutput(BaseModel):
         if not (0 <= v <= 100):
             raise ValueError("Overall score must be between 0 and 100")
         return v
-    
+
 class OutputFormatError(Exception):
     def __init__(self, message:str="Output format error")-> None:
         self.message = message

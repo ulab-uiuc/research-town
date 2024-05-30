@@ -1,19 +1,18 @@
 
 import re
-from typing import Any, Dict, List
+from typing import Any
 
 from ..utils.decorator import parsing_error_exponential_backoff
 from ..utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
-    review_quality_eval_prompting
+    review_quality_eval_prompting,
 )
-
 from .output_format import (
     IdeaEvalOutput,
     OutputFormatError,
     PaperEvalOutput,
-    ReviewEvalOutput
+    ReviewEvalOutput,
 )
 
 

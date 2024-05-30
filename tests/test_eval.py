@@ -1,4 +1,3 @@
-from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -6,7 +5,7 @@ import pytest
 from research_town.evaluators.quality_evaluator import (
     IdeaQualityEvaluator,
     PaperQualityEvaluator,
-    ReviewQualityEvaluator
+    ReviewQualityEvaluator,
 )
 
 idea = "The idea behind Mamba is to improve upon existing foundation models in deep learning, which typically rely on the Transformer architecture and its attention mechanism. While subquadratic-time architectures like linear attention, gated convolution, recurrent models, and structured state space models (SSMs) have been developed to address the inefficiency of Transformers on long sequences, they have not matched the performance of attention-based models in key areas such as language processing. Mamba addresses the shortcomings of these models by enabling content-based reasoning and making several key improvements: Adaptive SSM Parameters: By allowing SSM parameters to be functions of the input, Mamba effectively handles discrete modalities. This enables the model to selectively propagate or forget information along the sequence based on the current token.Parallel Recurrent Algorithm: Despite the changes preventing the use of efficient convolutions, Mamba employs a hardware-aware parallel algorithm in recurrent mode to maintain efficiency.Simplified Architecture: Mamba integrates these selective SSMs into a streamlined neural network architecture that does not rely on attention or MLP blocks."
@@ -162,7 +161,7 @@ def model_name(request: pytest.FixtureRequest) -> str:
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
 @pytest.mark.parametrize("use_mock", [True])
 def  test_evaluator_eval_idea(use_mock:bool, model_name: str) -> None:
-    
+
 
     evaluator = IdeaQualityEvaluator(model_name= model_name)
     input_dict = {'idea': idea, 'trend': trend,'pk':0}
@@ -182,8 +181,8 @@ def  test_evaluator_eval_idea(use_mock:bool, model_name: str) -> None:
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
 @pytest.mark.parametrize("use_mock", [True])
 def  test_evaluator_eval_paper(use_mock:bool,model_name: str) -> None:
-    
-    
+
+
     paper = {'title': paper_title, 'abstract':paper_abstract}
 
     input_dict = {'idea': idea, 'paper': paper,'pk':0}

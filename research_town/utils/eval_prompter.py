@@ -204,11 +204,11 @@ def review_quality_eval_prompting(
     review_prompt = """
     <Instruction>
     Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. The output format should follow these rules: Overall Score of a review (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=92. Dimension Scores=[9,9,9,9,9,9,9,9,9,9]'. <Instruction>
-    Output format: 
+    Output format:
     </Instruction>
     <Approach> The details of rating are as follows:
     {regulations}
-    </Approach> 
+    </Approach>
     Here is the review to evaluate:
     idea: {idea}
     research trend: {trend}
