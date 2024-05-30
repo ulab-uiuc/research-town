@@ -7,6 +7,23 @@ from pydantic import BaseModel, Field
 T = TypeVar('T', bound=BaseModel)
 
 
+class ResearchIdea(BaseModel):
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    content: Optional[str] = Field(default=None)
+
+
+class ResearchPaperSubmission(BaseModel):
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: Optional[str] = Field(default=None)
+    abstract: Optional[str] = Field(default=None)
+    conference: Optional[str] = Field(default=None)
+
+
+class ResearchInsight(BaseModel):
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    content: Optional[str] = Field(default=None)
+
+
 class ResearchProgressDB:
     def __init__(self) -> None:
         self.data: Dict[str, List[Any]] = {'ResearchIdea': [], 'ResearchPaper': []}
@@ -71,20 +88,3 @@ class ResearchProgressDB:
     def load_from_file(self, file_name: str) -> None:
         with open(file_name, 'r') as f:
             self.data = json.load(f)
-
-
-class ResearchIdea(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    content: Optional[str] = Field(default=None)
-
-
-class ResearchPaperSubmission(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    title: Optional[str] = Field(default=None)
-    abstract: Optional[str] = Field(default=None)
-    conference: Optional[str] = Field(default=None)
-
-
-class ResearchInsight(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    content: Optional[str] = Field(default=None)
