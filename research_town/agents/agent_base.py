@@ -48,7 +48,7 @@ class BaseResearchAgent(object):
 
     @beartype
     def find_collaborators(
-        self, paper: PaperProfile, parameter: float = 0.5, max_number: int =cfg.max_collaborators_num
+        self, paper: PaperProfile, parameter: float = 0.5, max_number: int =cfg.parameters.max_collaborators_num
     ) -> List[AgentProfile]:
         # TODO: need rebuild
         start_author: List[str] = (
