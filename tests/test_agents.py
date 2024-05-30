@@ -2,7 +2,7 @@ from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
 from research_town.dbs import AgentPaperRebuttalLog
-from tests.constants import (
+from tests.db_constants import (
     agent_agent_discussion_log,
     agent_profile_A,
     agent_profile_B,
