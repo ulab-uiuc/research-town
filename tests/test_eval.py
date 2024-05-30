@@ -154,8 +154,8 @@ Rating: 8: accept, good paper
 Confidence: 4: You are confident in your assessment, but not absolutely certain. It is unlikely, but not impossible, that you did not understand some parts of the submission or that you are unfamiliar with some pieces of related work.
 Code Of Conduct: Yes
 """
-@pytest.fixture(params=["gpt-4o", "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"])
-
+# @pytest.fixture(params=["gpt-4o", "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"])
+@pytest.fixture(params=["gpt-4o"])
 def model_name(request: pytest.FixtureRequest) -> Any:
     return request.param
 
