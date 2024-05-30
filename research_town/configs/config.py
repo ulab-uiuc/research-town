@@ -10,7 +10,7 @@ cfg = CN()
 cfg.parameters = CN()
 cfg.parameters.related_paper_num=10
 cfg.parameters.base_llm="mistralai/Mixtral-8x7B-Instruct-v0.1"
-cfg.max_collaborators_num=3
+cfg.parameters.max_collaborators_num=3
 
 cfg.prompt_template = CN()
 cfg.prompt_template.read_paper_query= [
