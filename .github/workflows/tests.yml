@@ -4,7 +4,7 @@ on:
   workflow_dispatch
 
 jobs:
-
+  if: github.event_name == 'workflow_dispatch'
   Pytest:
     runs-on: ubuntu-latest
     strategy:
