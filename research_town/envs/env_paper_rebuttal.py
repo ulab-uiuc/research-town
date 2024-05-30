@@ -1,5 +1,7 @@
 from typing import Dict, List, Tuple
 
+from beartype import beartype
+
 from ..dbs import (
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
@@ -27,21 +29,24 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.decision = "reject"
         self.submission = PaperProfile()
         self.reviewer_mask = [False] * len(agent_profiles)
-        self.review: List[AgentPaperReviewLog] = []
-        self.rebuttal: List[AgentPaperRebuttalLog] = []
-        self.meta_review: List[AgentPaperMetaReviewLog] = []
+        self.reviews: List[AgentPaperReviewLog] = []
+        self.rebuttals: List[AgentPaperRebuttalLog] = []
+        self.meta_reviews: List[AgentPaperMetaReviewLog] = []
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
 
+    @beartype
     def assign_roles(self, role_dict: Dict[str, str]) -> None:
         for index, agent_profile in enumerate(self.agent_profiles):
             if role_dict[agent_profile.pk] == "reviewer":
                 self.reviewer_mask[index] = True
 
+    @beartype
     def initialize_submission(self, paper_profile: PaperProfile) -> None:
         self.submission = paper_profile
 
+    @beartype
     def submit_decision(self, decision_dict: Dict[str, Tuple[bool, str]]) -> None:
         decision_count = {"accept": 0, "reject": 0}
         for _, decision in decision_dict.items():
@@ -59,22 +64,23 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         # Paper Reviewing
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
-                self.review.append(agent.review_paper(
+                self.reviews.append(agent.write_paper_review(
                     paper=self.submission))
 
         # Paper Meta Reviewing
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
-                self.meta_review.append(agent.make_review_decision(
-                    paper=self.submission, review=self.review))
+                self.meta_reviews.append(agent.write_paper_meta_review(
+                    paper=self.submission, reviews=self.reviews))
 
         # Rebuttal Submitting
         for index, agent in enumerate(self.agents):
-            if self.reviewer_mask[index]:
-                self.rebuttal.append(agent.rebut_review(
-                    paper=self.submission,
-                    review=self.review,
-                    decision=self.meta_review))
+            for review in self.reviews:
+                if self.reviewer_mask[index]:
+                    self.rebuttals.append(agent.write_rebuttal(
+                        paper=self.submission,
+                        review=review,
+                    ))
 
         self.turn_number += 1
         if self.turn_number >= self.turn_max:
