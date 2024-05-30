@@ -141,8 +141,8 @@ def main(data_path: str, domain:str) -> None:
     reviews: List[AgentPaperReviewLog] = []
     # Outer loop (agents) with tqdm
     for agent in tqdm(agents, desc="Agents Review Progress"):
-        # Inner loop (papers) without tqdm
-        for paper in Papers2eval:
+        # Inner loop (papers) with tqdm
+        for paper in tqdm(Papers2eval, desc="Paper Review Progress"):
             reviews.append(agent.write_paper_review(paper=paper))
     
     
