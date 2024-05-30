@@ -5,12 +5,12 @@ from .model_prompting import model_prompting
 from .paper_collector import get_related_papers
 from .string_mapper import (
     map_idea_to_str,
+    map_insights_to_str,
     map_message_to_str,
     map_paper_list_to_str,
     map_paper_to_str,
     map_review_list_to_str,
     map_review_to_str,
-    map_insights_to_str,
 )
 
 # =======================================

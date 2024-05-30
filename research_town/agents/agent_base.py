@@ -123,8 +123,7 @@ class BaseResearchAgent(object):
     ) -> ResearchIdea:
         serialized_insights = self.serializer.serialize(insights)
         idea_content = think_idea_prompting(
-            insights=serialized_insights, 
-            model_name=self.model_name
+            insights=serialized_insights, model_name=self.model_name
         )[0]
         return ResearchIdea(content=idea_content)
 
