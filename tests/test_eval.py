@@ -242,7 +242,7 @@ def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
             assert evals_output is not None
             assert (
                 evals_output.overall_score == 86
-            ), f"overall score of paper (mock) shoud be 86, but it's  {evals_output.overall_score}"
+            ), f"overall score of paper (mock) should be 86, but it's  {evals_output.overall_score}"
     else:
         evals_output = evaluator.eval(**input_dict)
         assert evals_output is not None
