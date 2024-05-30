@@ -1,34 +1,36 @@
 from beartype.typing import Dict, List
 
-from research_town.dbs import (
-    AgentProfile,
-    AgentProfileDB,
-    EnvLogDB,
-    PaperProfileDB,
-)
+from research_town.dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfileDB
 from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
     PaperSubmissionMultiAgentEnvironment,
 )
 
 
-def run_sync_experiment(agent_list: List[str], role_list: List[str], task: Dict[str, str]) -> None:
+def run_sync_experiment(
+    agent_list: List[str], role_list: List[str], task: Dict[str, str]
+) -> None:
     # Create Environment and Agents
-    agent_profiles = [AgentProfile(
-        name=agent, bio="A researcher in machine learning.") for agent in agent_list]
+    agent_profiles = [
+        AgentProfile(name=agent, bio='A researcher in machine learning.')
+        for agent in agent_list
+    ]
     agent_db = AgentProfileDB()
     paper_db = PaperProfileDB()
     env_db = EnvLogDB()
     paper_submission_env = PaperSubmissionMultiAgentEnvironment(
-        agent_profiles=agent_profiles, task=task,
+        agent_profiles=agent_profiles,
+        task=task,
         agent_db=agent_db,
         paper_db=paper_db,
-        env_db=env_db)
+        env_db=env_db,
+    )
     paper_rebuttal_env = PaperRebuttalMultiAgentEnv(
         agent_profiles=agent_profiles,
         agent_db=agent_db,
         paper_db=paper_db,
-        env_db=env_db)
+        env_db=env_db,
+    )
 
     # Paper Submission
     submission_done = False
@@ -51,10 +53,11 @@ def run_sync_experiment(agent_list: List[str], role_list: List[str], task: Dict[
 
 def main() -> None:
     run_sync_experiment(
-        agent_list=["Jiaxuan You", "Jure Leskovec"],
-        role_list=["author", "reviewer"],
-        task={})
+        agent_list=['Jiaxuan You', 'Jure Leskovec'],
+        role_list=['author', 'reviewer'],
+        task={},
+    )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

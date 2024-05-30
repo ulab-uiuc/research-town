@@ -10,10 +10,12 @@ class BaseMultiAgentEnv(object):
         self.db = EnvLogDB()
         self.agents: List[BaseResearchAgent] = []
         for agent_profile in agent_profiles:
-            self.agents.append(BaseResearchAgent(
-                agent_profile=agent_profile,
-                model_name="together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"
-            ))
+            self.agents.append(
+                BaseResearchAgent(
+                    agent_profile=agent_profile,
+                    model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+                )
+            )
 
     def step(self) -> None:
         raise NotImplementedError

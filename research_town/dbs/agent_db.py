@@ -42,15 +42,17 @@ class AgentProfileDB(object):
         return result
 
     def save_to_file(self, file_name: str) -> None:
-        with open(file_name, "w") as f:
-            json.dump({aid: agent.dict()
-                      for aid, agent in self.data.items()}, f, indent=2)
+        with open(file_name, 'w') as f:
+            json.dump(
+                {aid: agent.dict() for aid, agent in self.data.items()}, f, indent=2
+            )
 
     def load_from_file(self, file_name: str) -> None:
-        with open(file_name, "r") as f:
+        with open(file_name, 'r') as f:
             data = json.load(f)
-            self.data = {aid: AgentProfile(**agent_data)
-                         for aid, agent_data in data.items()}
+            self.data = {
+                aid: AgentProfile(**agent_data) for aid, agent_data in data.items()
+            }
 
     def update_db(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
         for date, agents in data.items():

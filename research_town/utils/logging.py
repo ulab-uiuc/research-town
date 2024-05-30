@@ -2,7 +2,11 @@ import logging
 
 from beartype.typing import Dict, List, Union
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+
 def logging_callback(messages: Union[List[Dict[str, str]], None] = None) -> None:
     """
     Logs messages using the logging module.

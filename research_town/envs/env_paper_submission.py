@@ -2,13 +2,7 @@ from beartype import beartype
 from beartype.typing import Dict, List
 
 from ..agents.agent_base import BaseResearchAgent
-from ..dbs import (
-    AgentProfile,
-    AgentProfileDB,
-    EnvLogDB,
-    PaperProfile,
-    PaperProfileDB,
-)
+from ..dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfile, PaperProfileDB
 from .env_base import BaseMultiAgentEnv
 
 
@@ -19,7 +13,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
-        task: Dict[str, str]
+        task: Dict[str, str],
     ) -> None:
         super().__init__(agent_profiles)
         self.turn_number = 0
@@ -34,8 +28,16 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def step(self) -> None:
         # TODO: support retrieval from database
         # external_data = self.db.get(cls=PaperProfile, conditions={})
-        papers = [PaperProfile(title="A Survey on Machine Learning",
-                                      abstract="This paper surveys the field of machine learning."), PaperProfile(title="A Survey on Natural Language Processing", abstract="This paper surveys the field of natural language processing.")]
+        papers = [
+            PaperProfile(
+                title='A Survey on Machine Learning',
+                abstract='This paper surveys the field of machine learning.',
+            ),
+            PaperProfile(
+                title='A Survey on Natural Language Processing',
+                abstract='This paper surveys the field of natural language processing.',
+            ),
+        ]
         agent_names_to_objs: Dict[str, BaseResearchAgent] = {}
         for iter_agent in self.agents:
             if iter_agent.profile.name is not None:
@@ -43,26 +45,28 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         submissions: Dict[str, PaperProfile] = {}
         for agent in self.agents:
             # TODO: update find collaborator functions with initial task
-            collaborators = agent.find_collaborators(PaperProfile(title="A Survey on Machine Learning",
-                                                                  abstract="This paper surveys the field of machine learning."))
+            collaborators = agent.find_collaborators(
+                PaperProfile(
+                    title='A Survey on Machine Learning',
+                    abstract='This paper surveys the field of machine learning.',
+                )
+            )
             collaborator_agents: List[BaseResearchAgent] = []
             for researcher_profile in collaborators:
                 if researcher_profile.name:
                     if researcher_profile.name not in agent_names_to_objs:
                         new_agent_obj = BaseResearchAgent(
                             agent_profile=researcher_profile,
-                            model_name="together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"
+                            model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
                         )
                         collaborator_agents.append(new_agent_obj)
                         agent_names_to_objs[researcher_profile.name] = new_agent_obj
                     else:
                         collaborator_agents.append(
-                            agent_names_to_objs[researcher_profile.name])
+                            agent_names_to_objs[researcher_profile.name]
+                        )
 
-            insights = agent.read_paper(
-                papers=papers,
-                domains=["machine learning"]
-            )
+            insights = agent.read_paper(papers=papers, domains=['machine learning'])
             ideas = agent.think_idea(insights=insights)
             for collaborator_agent in collaborator_agents:
                 ideas.extend(collaborator_agent.think_idea(insights=insights))

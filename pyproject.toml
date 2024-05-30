@@ -57,7 +57,22 @@ skip_gitignore = true
 multi_line_output = 3
 include_trailing_comma = true
 force_grid_wrap = 0
-line_length = 70
+line_length = 88
+
+[tool.black]
+line-length = 88
+target-version = ['py37', 'py38', 'py39', 'py310']
+
+[tool.ruff]
+line-length = 88
+fix = true
+target-version = "py310"
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+docstring-code-format = true
+docstring-code-line-length = 88
 
 [tool.mypy-arxiv]
 ignore_missing_imports = true

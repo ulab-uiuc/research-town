@@ -7,8 +7,10 @@ def map_idea_list_to_str(ideas: List[Dict[str, str]]) -> str:
         result += map_idea_to_str(idea)
     return result
 
+
 def map_idea_to_str(idea: Dict[str, str]) -> str:
     return f"{idea['content']}"
+
 
 def map_paper_list_to_str(papers: List[Dict[str, str]]) -> str:
     result = ''
@@ -16,19 +18,23 @@ def map_paper_list_to_str(papers: List[Dict[str, str]]) -> str:
         result += map_paper_to_str(paper)
     return result
 
+
 def map_review_list_to_str(reviews: List[Dict[str, Union[int, str]]]) -> str:
     result = ''
     for review in reviews:
         result += map_review_to_str(review)
     return result
 
+
 def map_paper_to_str(paper: Dict[str, str]) -> str:
     return f"Title: {paper['title']}\nAbstract: {paper['abstract']}"
+
 
 def map_review_to_str(review: Dict[str, Union[int, str]]) -> str:
     score = review['review_score']
     content = review['review_content']
-    return f"Score: {score}\nContent: {content}"
+    return f'Score: {score}\nContent: {content}'
+
 
 def map_message_to_str(message: Dict[str, str]) -> str:
     return f"Message from {message['agent_from_name']} to {message['agent_to_name']}\n"

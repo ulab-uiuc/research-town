@@ -1,0 +1,46 @@
+{
+  "43653097-1230-48e5-ba17-6f616bc93380": {
+    "pk": "43653097-1230-48e5-ba17-6f616bc93380",
+    "title": "Updated Sample Paper 1",
+    "abstract": "This is the abstract for paper 1",
+    "authors": [
+      "Author A",
+      "Author B"
+    ],
+    "url": "http://example.com/paper1",
+    "timestamp": 1617181723,
+    "section_contents": null,
+    "table_captions": null,
+    "figure_captions": null,
+    "bibliography": null,
+    "keywords": [
+      "AI",
+      "ML"
+    ],
+    "domain": "Computer Science",
+    "references": null,
+    "citation_count": 15,
+    "award": null
+  },
+  "37e9c697-bd7b-40da-975f-579eddc9508e": {
+    "pk": "37e9c697-bd7b-40da-975f-579eddc9508e",
+    "title": "Sample Paper 3",
+    "abstract": "This is the abstract for paper 3",
+    "authors": [
+      "Author D"
+    ],
+    "url": "http://example.com/paper3",
+    "timestamp": 1617181789,
+    "section_contents": null,
+    "table_captions": null,
+    "figure_captions": null,
+    "bibliography": null,
+    "keywords": [
+      "Blockchain"
+    ],
+    "domain": "Computer Science",
+    "references": null,
+    "citation_count": 2,
+    "award": null
+  }
+}

@@ -2,19 +2,13 @@ import math
 import time
 from functools import wraps
 
-from beartype.typing import (
-    Any,
-    Callable,
-    List,
-    Optional,
-    TypeVar,
-    cast,
-)
+from beartype.typing import Any, Callable, List, Optional, TypeVar, cast
 from pydantic import BaseModel
 
 INF = float(math.inf)
 
 T = TypeVar('T', bound=Callable[..., Optional[List[str]]])
+
 
 def api_calling_error_exponential_backoff(
     retries: int = 5, base_wait_time: int = 1
@@ -34,17 +28,21 @@ def api_calling_error_exponential_backoff(
                 try:
                     return func(*args, **kwargs)
                 except Exception as e:
-                    wait_time = base_wait_time * (2 ** attempts)
-                    print(f"Attempt {attempts + 1} failed: {e}")
-                    print(f"Waiting {wait_time} seconds before retrying...")
+                    wait_time = base_wait_time * (2**attempts)
+                    print(f'Attempt {attempts + 1} failed: {e}')
+                    print(f'Waiting {wait_time} seconds before retrying...')
                     time.sleep(wait_time)
                     attempts += 1
             print(f"Failed to execute '{func.__name__}' after {retries} retries.")
             return None
+
         return cast(T, wrapper)
+
     return cast(Callable[[T], T], decorator)
 
+
 TBaseModel = TypeVar('TBaseModel', bound=Callable[..., BaseModel])
+
 
 def parsing_error_exponential_backoff(
     retries: int = 5, base_wait_time: int = 1
@@ -64,12 +62,16 @@ def parsing_error_exponential_backoff(
                 try:
                     return func(self, *args, **kwargs)
                 except Exception as e:
-                    wait_time = base_wait_time * (2 ** attempts)
-                    print(f"Attempt {attempts + 1} failed: {e}")
-                    print(f"Waiting {wait_time} seconds before retrying...")
+                    wait_time = base_wait_time * (2**attempts)
+                    print(f'Attempt {attempts + 1} failed: {e}')
+                    print(f'Waiting {wait_time} seconds before retrying...')
                     time.sleep(wait_time)
                     attempts += 1
-            print(f"Failed to get valid input from {func.__name__} after {retries} retries.")
+            print(
+                f'Failed to get valid input from {func.__name__} after {retries} retries.'
+            )
             return None
+
         return cast(TBaseModel, wrapper)
+
     return cast(Callable[[TBaseModel], TBaseModel], decorator)

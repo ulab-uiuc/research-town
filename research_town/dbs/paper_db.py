@@ -25,7 +25,6 @@ class PaperProfile(BaseModel):
     award: Optional[str] = Field(default=None)
 
 
-
 class PaperProfileDB:
     def __init__(self) -> None:
         self.data: Dict[str, PaperProfile] = {}
@@ -58,15 +57,17 @@ class PaperProfileDB:
         return result
 
     def save_to_file(self, file_name: str) -> None:
-        with open(file_name, "w") as f:
-            json.dump({pk: paper.dict()
-                      for pk, paper in self.data.items()}, f, indent=2)
+        with open(file_name, 'w') as f:
+            json.dump(
+                {pk: paper.dict() for pk, paper in self.data.items()}, f, indent=2
+            )
 
     def load_from_file(self, file_name: str) -> None:
-        with open(file_name, "r") as f:
+        with open(file_name, 'r') as f:
             data = json.load(f)
-            self.data = {pk: PaperProfile(**paper_data)
-                         for pk, paper_data in data.items()}
+            self.data = {
+                pk: PaperProfile(**paper_data) for pk, paper_data in data.items()
+            }
 
     def update_db(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
         for date, papers in data.items():
@@ -79,7 +80,7 @@ class PaperProfileDB:
         transformed_data = {}
         for date, value in data.items():
             papers = []
-            papers.append({"abstract": value["abstract"]})
-            papers.append({"info": value["info"]})
+            papers.append({'abstract': value['abstract']})
+            papers.append({'info': value['info']})
             transformed_data[date] = papers
         self.update_db(transformed_data)

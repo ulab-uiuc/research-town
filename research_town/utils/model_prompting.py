@@ -21,7 +21,7 @@ def model_prompting(
     """
     completion = litellm.completion(
         model=llm_model,
-        messages=[{"role": "user", "content": prompt}],
+        messages=[{'role': 'user', 'content': prompt}],
         max_tokens=max_token_num,
         # for some models, 'n'(The number of chat completion choices ) is not supported.
         n=return_num,
