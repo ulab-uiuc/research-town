@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from beartype.typing import Dict, List, Union
 
 from beartype import beartype
 

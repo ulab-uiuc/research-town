@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple
+from beartype.typing import Any, Dict, List, Tuple
 
 from arxiv import Client, Search
 from tqdm import tqdm

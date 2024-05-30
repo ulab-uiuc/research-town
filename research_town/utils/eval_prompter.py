@@ -1,4 +1,4 @@
-from typing import Dict
+from beartype.typing import Dict
 
 from beartype import beartype
 

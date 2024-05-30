@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Tuple
+from beartype.typing import Any, Dict, List, Tuple
 from xml.etree import ElementTree
 
 import arxiv

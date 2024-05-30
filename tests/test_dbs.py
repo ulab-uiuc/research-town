@@ -11,14 +11,67 @@ from research_town.dbs.env_db import (
 from research_town.dbs.paper_db import PaperProfile, PaperProfileDB
 from research_town.dbs.progress_db import (
     ResearchIdea,
-    ResearchPaperDraft,
     ResearchProgressDB,
 )
 
-from typing import Optional, Dict, Any
+from beartype.typing import Optional, Dict, Any
+
+def test_envlogdb_basic()->None:
+    db = EnvLogDB()
+    review_log = AgentPaperReviewLog(paper_pk="paper1", agent_pk="agent1", review_score=5, review_content="Good paper")
+    rebuttal_log = AgentPaperRebuttalLog(paper_pk="paper1", agent_pk="agent1", rebuttal_content="I disagree with the review")
+    meta_review_log = AgentPaperMetaReviewLog(paper_pk="paper1", agent_pk="agent1", decision=True, meta_review="Accept")
+    discussion_log = AgentAgentDiscussionLog(
+        agent_from_pk="agent1", 
+        agent_from_name='Rex Ying',
+        agent_to_pk="agent2", 
+        agent_to_name='John Doe',
+        message="Let's discuss this paper"
+    )
+
+    db.add(review_log)
+    db.add(rebuttal_log)
+    db.add(meta_review_log)
+    db.add(discussion_log)
+
+    new_log = AgentPaperReviewLog(paper_pk="paper2", agent_pk="agent2", review_score=4, review_content="Interesting paper")
+    db.add(new_log)
+    assert new_log.dict() in db.data["AgentPaperReviewLog"]
+
+    conditions: Dict[str, Any] = {"paper_pk": "paper1"}
+    results = db.get(AgentPaperReviewLog, **conditions)
+    assert len(results) == 1
+    assert results[0].review_content == "Good paper"
+
+    updates = {"review_score": 3, "review_content": "Decent paper"}
+    updated_count = db.update(AgentPaperReviewLog, {"paper_pk": "paper1"}, updates)
+    assert updated_count == 2
+
+    updated_log = db.get(AgentPaperReviewLog, **conditions)[0]
+
+    assert updated_log.review_score == 3
+    assert updated_log.review_content == "Decent paper"
+
+    deleted_count = db.delete(AgentPaperReviewLog, **conditions)
+    assert deleted_count == 1
+    results = db.get(AgentPaperReviewLog, **conditions)
+    assert len(results) == 0
+
+    file_name = "./data/dbs/test_env_logs_db.json"
+    db.save_to_file(file_name)
+
+    new_db = EnvLogDB()
+    new_db.load_from_file(file_name)
+
+    assert len(new_db.data["AgentPaperReviewLog"]) == 1
+    assert len(new_db.data["AgentPaperRebuttalLog"]) == 1
+    assert len(new_db.data["AgentPaperMetaReviewLog"]) == 1
+    assert len(new_db.data["AgentAgentDiscussionLog"]) == 1
+    assert new_db.data["AgentPaperReviewLog"][0]["review_content"] == "Interesting paper"
 
 
-def test_agent_profile_db()->None:
+
+def test_agentprofiledb_basic()->None:
     db = AgentProfileDB()
     agent1 = AgentProfile(name="John Doe", bio="Researcher in AI", institute="AI Institute")
     agent2 = AgentProfile(name="Jane Smith", bio="Expert in NLP", institute="NLP Lab")
@@ -50,13 +103,12 @@ def test_agent_profile_db()->None:
     
     conditions: Dict[str, Any] = {"name": "Jane Smith"}
 
-    # 使用**操作符解包字典，将其作为关键字参数传入get方法
     results = db.get(**conditions)
     
     assert len(results) == 1
     assert results[0].name == "Jane Smith"
 
-    file_name = "test_agents.json"
+    file_name = "./data/dbs/test_agent_profile_db.json"
     db.save_to_file(file_name)
 
     new_db = AgentProfileDB()
@@ -85,54 +137,8 @@ def test_agent_profile_db()->None:
     assert "new-pk" in db.data
     assert db.data["new-pk"].name == "New Agent"
 
-def test_env_log_db()->None:
-    db = EnvLogDB()
-    review_log = AgentPaperReviewLog(paper_pk="paper1", agent_pk="agent1", review_score=5, review_content="Good paper")
-    rebuttal_log = AgentPaperRebuttalLog(paper_pk="paper1", agent_pk="agent1", rebuttal_content="I disagree with the review")
-    meta_review_log = AgentPaperMetaReviewLog(paper_pk="paper1", agent_pk="agent1", decision=True, meta_review="Accept")
-    discussion_log = AgentAgentDiscussionLog(agent_from_pk="agent1", agent_to_pk="agent2", message="Let's discuss this paper")
 
-    db.add(review_log)
-    db.add(rebuttal_log)
-    db.add(meta_review_log)
-    db.add(discussion_log)
-
-    new_log = AgentPaperReviewLog(paper_pk="paper2", agent_pk="agent2", review_score=4, review_content="Interesting paper")
-    db.add(new_log)
-    assert new_log.dict() in db.data["AgentPaperReviewLog"]
-
-    conditions: Dict[str, Any] = {"paper_pk": "paper1"}
-    results = db.get(AgentPaperReviewLog, **conditions)
-    assert len(results) == 1
-    assert results[0].review_content == "Good paper"
-
-    updates = {"review_score": 3, "review_content": "Decent paper"}
-    updated_count = db.update(AgentPaperReviewLog, {"paper_pk": "paper1"}, updates)
-    assert updated_count == 2
-
-    updated_log = db.get(AgentPaperReviewLog, **conditions)[0]
-
-    assert updated_log.review_score == 3
-    assert updated_log.review_content == "Decent paper"
-
-    deleted_count = db.delete(AgentPaperReviewLog, **conditions)
-    assert deleted_count == 1
-    results = db.get(AgentPaperReviewLog, **conditions)
-    assert len(results) == 0
-
-    file_name = "test_env_logs.json"
-    db.save_to_file(file_name)
-
-    new_db = EnvLogDB()
-    new_db.load_from_file(file_name)
-
-    assert len(new_db.data["AgentPaperReviewLog"]) == 1
-    assert len(new_db.data["AgentPaperRebuttalLog"]) == 1
-    assert len(new_db.data["AgentPaperMetaReviewLog"]) == 1
-    assert len(new_db.data["AgentAgentDiscussionLog"]) == 1
-    assert new_db.data["AgentPaperReviewLog"][0]["review_content"] == "Interesting paper"
-
-def test_paper_profile_db()->None:
+def test_paperprofiledb_basic()->None:
     db = PaperProfileDB()
     paper1 = PaperProfile(
         title="Sample Paper 1",
@@ -193,7 +199,7 @@ def test_paper_profile_db()->None:
     assert results[0].title == "Updated Sample Paper 1"
     assert results[1].title == "Sample Paper 3"
 
-    file_name = "test_paper_db.json"
+    file_name = "./data/dbs/test_paper_profile_db.json"
     db.save_to_file(file_name)
 
     new_db = PaperProfileDB()
@@ -203,7 +209,7 @@ def test_paper_profile_db()->None:
     assert paper1.pk in new_db.data
     assert new_db.data[paper1.pk].title == "Updated Sample Paper 1"
 
-def test_research_progress_db()->None:
+def test_researchprogressdb_basic()->None:
     db = ResearchProgressDB()
     idea1 = ResearchIdea(content="Idea for a new AI algorithm")
     idea2 = ResearchIdea(content="Quantum computing research plan")
@@ -236,7 +242,7 @@ def test_research_progress_db()->None:
     remaining_results = db.get(ResearchIdea, **content3)
     assert len(remaining_results) == 0
 
-    file_name = "test_research_db.json"
+    file_name = "./data/dbs/test_research_progress_db.json"
     db.save_to_file(file_name)
 
     new_db = ResearchProgressDB()

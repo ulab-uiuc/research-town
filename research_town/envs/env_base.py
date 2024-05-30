@@ -1,4 +1,4 @@
-from typing import List
+from beartype.typing import List
 
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import AgentProfile, EnvLogDB

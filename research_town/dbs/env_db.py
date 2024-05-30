@@ -1,6 +1,6 @@
 import json
 import uuid
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from beartype.typing import Any, Dict, List, Optional, Type, TypeVar
 
 from pydantic import BaseModel, Field
 

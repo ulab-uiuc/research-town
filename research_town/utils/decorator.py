@@ -1,7 +1,7 @@
 import math
 import time
 from functools import wraps
-from typing import Any, Callable, List, Optional, TypeVar, cast
+from beartype.typing import Any, Callable, List, Optional, TypeVar, cast
 
 from pydantic import BaseModel
 

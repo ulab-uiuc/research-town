@@ -1,4 +1,4 @@
-from typing import List, Optional
+from beartype.typing import List, Optional
 
 import litellm
 from beartype import beartype

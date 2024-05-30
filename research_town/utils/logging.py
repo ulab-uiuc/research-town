@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, List, Union
+from beartype.typing import Dict, List, Union
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 def logging_callback(messages: Union[List[Dict[str, str]], None] = None) -> None:
