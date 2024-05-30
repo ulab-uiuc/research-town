@@ -64,10 +64,6 @@ line-length = 88
 fix = true
 target-version = "py310"
 
-[tool.ruff.lint]
-select = ["E", "F"]
-ignore = ["E203"]
-
 [tool.ruff.format]
 quote-style = "single"
 indent-style = "tab"
