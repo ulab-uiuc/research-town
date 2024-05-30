@@ -17,6 +17,9 @@ repos:
     - id: ruff
       types_or: [python, pyi, jupyter]
       args: [--fix]
+    -   id: ruff-format
+        types_or: [python, pyi, jupyter]
+        args: [--line-length=88]
 
 - repo: https://github.com/pre-commit/mirrors-isort
   rev: v5.10.1  # Use the latest isort version

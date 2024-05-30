@@ -15,17 +15,17 @@ from .progress_db import (
 )
 
 __all__ = [
-    "AgentAgentDiscussionLog",
-    "AgentPaperMetaReviewLog",
-    "AgentPaperRebuttalLog",
-    "AgentPaperReviewLog",
-    "PaperProfile",
-    "AgentProfile",
-    "ResearchIdea",
-    "ResearchInsight",
-    "ResearchPaperSubmission",
-    "EnvLogDB",
-    "PaperProfileDB",
-    "AgentProfileDB",
-    "ResearchProgressDB"
+	'AgentAgentDiscussionLog',
+	'AgentPaperMetaReviewLog',
+	'AgentPaperRebuttalLog',
+	'AgentPaperReviewLog',
+	'PaperProfile',
+	'AgentProfile',
+	'ResearchIdea',
+	'ResearchInsight',
+	'ResearchPaperSubmission',
+	'EnvLogDB',
+	'PaperProfileDB',
+	'AgentProfileDB',
+	'ResearchProgressDB',
 ]

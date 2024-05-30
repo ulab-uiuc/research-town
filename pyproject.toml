@@ -59,6 +59,31 @@ include_trailing_comma = true
 force_grid_wrap = 0
 line_length = 70
 
+[tool.ruff]
+line-length = 88
+fix = true
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = ["E203"]
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "tab"
+docstring-code-format = true
+docstring-code-line-length = 20
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+exclude = '''
+/(
+  | \.git
+  | \.mypy_cache
+)/
+'''
+
 [tool.mypy-arxiv]
 ignore_missing_imports = true
 
