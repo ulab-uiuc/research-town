@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 import os
 import json
 import argparse
-
+from tqdm import tqdm
 class RealPaperWithReview (BaseModel): # paper review from real reviewers
     paper_pk: Optional[str] = Field(default=None) # primary key to decide after paper profile
     title: Optional[str] = Field(default=None)
@@ -91,7 +91,7 @@ class RealPaperWithReviewDB:
         for i, real_paper in enumerate(real_papers):
             real_paper.sim_rank = i + 1
         
-    def rank_consistency(self) -> float:
+    def calculate_rank_consistency(self) -> float:
         # calculate the rank consistency
         rank_consistency_float = 0
         for real_paper in self.data.values():
@@ -139,14 +139,16 @@ def main(data_path: str, domain:str) -> None:
     # review papers
     # 3. how to get the scores of papers? Store to review log lists.
     reviews: List[AgentPaperReviewLog] = []
-    for agent in agents:
+    # Outer loop (agents) with tqdm
+    for agent in tqdm(agents, desc="Agents Review Progress"):
+        # Inner loop (papers) without tqdm
         for paper in Papers2eval:
             reviews.append(agent.write_paper_review(paper=paper))
     
     
     # get ranking consistency
     real_paper_db.map_agent_reviews_to_real_paper(reviews)
-    rank_consistency = real_paper_db.rank_consistency()
+    rank_consistency = real_paper_db.calculate_rank_consistency
     # print rank consistency
     print(f"rank_consistency = {rank_consistency}\n")
     # save the RealPaperWithReviewDB
