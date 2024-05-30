@@ -1,27 +1,120 @@
 
 from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
-from research_town.dbs.paper_db import PaperProfile
+from research_town.dbs.paper_db import PaperProfile, PaperProfileDB
 from research_town.dbs.env_db import AgentPaperReviewLog
 from research_town.agents.agent_base import BaseResearchAgent
-from typing import List
+from typing import List, Optional, Dict
+from pydantic import BaseModel, Field
+import uuid
+import json
+
+class RealPaperWithReview (BaseModel): # paper review from real reviewers
+    paper_pk: Optional[str] = Field(default=None) # primary key to decide after paper profile
+    title: Optional[str] = Field(default=None)
+    abstract: Optional[str] = Field(default=None)
+    authors: Optional[List[str]] = Field(default=[])
+    keywords: Optional[List[str]] = Field(default=None)
+    # real reviews
+    real_avg_scores: Optional[float] = Field(default=None)
+    real_all_scores: Optional[List[int]] = Field(default=[])
+    real_contents: Optional[List[str]] = Field(default=[])
+    real_rank: Optional[int] = Field(default=0)
+    real_decision: Optional[str] = Field(default=None)
+    # simulated reviews
+    sim_avg_scores: Optional[float] = Field(default=None) # from the simulation
+    sim_all_scores: Optional[List[int]] = Field(default=[])
+    sim_contents: Optional[List[str]] = Field(default=[])
+    sim_rank: Optional[int] = Field(default=0)
+    sim_decision: Optional[str] = Field(default=None)
+
+class RealPaperWithReviewDB:
+    def __init__(self):
+        self.data: Dict[str, RealPaperWithReview] = {}
+        self.rank_consistency:float = 0.0
+    
+    def add(self, real_paper: RealPaperWithReview) -> None:
+        self.data[real_paper.title] = real_paper
+
+    def load_from_file(self, file_name: str) -> None:
+        with open(file_name, 'r') as f:
+            self.data = json.load(f)
+    
+    def save_to_file(self, file_name: str) -> None:
+        with open(file_name, 'w') as f:
+            # save the data
+            json.dump(
+                {title: real_paper.dict() for title, real_paper in self.data.items()}, f, indent=2
+            )
+            # save the rank consistency
+            json.dump(
+                {"rank_consistency": self.rank_consistency}, f, indent=2
+            )
+
+    def profile_paper_from_real_review(self) -> List[PaperProfile]:
+        papers = []
+        for review in self.data.values():
+            paper = PaperProfile(
+                title = review.title,
+                abstract = review.abstract,
+                authors = review.authors,
+                keywords = review.keywords
+            )
+            review.paper_pk = paper.pk # write back the pk to the review
+            papers.append(paper)
+        return papers
+
+    def map_agent_reviews_to_real_paper(self, agent_reviews: List[AgentPaperReviewLog]) -> None:
+        for agent_review in agent_reviews:
+            for real_paper in self.data.values():
+                if agent_review.paper_pk == real_paper.paper_pk:
+                    real_paper.sim_all_scores.append(agent_review.review_score)
+                    real_paper.sim_contents.append(agent_review.review_content)
+        # calculate the average score
+        for real_paper in self.data.values():
+            real_paper.sim_avg_scores = sum(real_paper.sim_all_scores) / len(real_paper.sim_all_scores)
+        # calculate the real review rank
+        real_papers = list(self.data.values())
+        real_papers.sort(key=lambda x: x.real_avg_scores, reverse=True)
+        for i, real_paper in enumerate(real_papers):
+            real_paper.real_rank = i + 1
+        # calculate the simulated review rank
+        real_papers.sort(key=lambda x: x.sim_avg_scores, reverse=True)
+        for i, real_paper in enumerate(real_papers):
+            real_paper.sim_rank = i + 1
+        
+    def rank_consistency(self) -> float:
+        # calculate the rank consistency
+        rank_consistency_float = 0
+        for real_paper in self.data.values():
+            rank_consistency_float += abs(real_paper.real_rank - real_paper.sim_rank)
+        rank_consistency_float = rank_consistency_float / len(self.data)
+        # store the rank consistency
+        self.rank_consistency = rank_consistency_float
+        return rank_consistency_float
+ 
 
 
-def rank_consistency(reviews: List[AgentPaperReviewLog]) -> float:
-     pass
+
+
 
 def main() -> None:
+    data_path = "../data/"
+    domain = "machine_learning_system"
     # collect papers from openreview
-    PaperProfile()
-    Papers2eval:List[PaperProfile] = []
+    real_paper_db = RealPaperWithReviewDB()
+    real_paper_db.load_from_file(data_path+"paper_"+ domain + ".json")
+    Papers2eval = real_paper_db.profile_paper_from_real_review()
     # generate envs of agents with reviewers
     # 1. how to select reviewers? Retrive the reviewers from the database.
     agent_db = AgentProfileDB()
-    domain = "machine_learning_system"
-    agent_db.load_from_file(domain + ".json")
-    # 2. how to assign reviewers to papers?(jinwei) Hardcode--Select random x=1 reviewers first.
-    agent_pk = '101'
-    Chris = agent_db.data[agent_pk]
-    agent_profiles = [Chris]
+    agent_db.load_from_file(data_path+"agent_"+ domain + ".json")
+    # 2. how to assign reviewers to papers?
+    # (jinwei) Hardcode-- select top 3 reviewers in the agent_db to agent_profiles
+    agent_profiles: List[AgentProfile] = []
+    all_reviewers = agent_db.data.values()
+    for i in range(3):
+        agent_profiles.append(all_reviewers[i])
+    # create agents
     agents: List[BaseResearchAgent] = []
     for agent_profile in agent_profiles:
             agents.append(
@@ -40,8 +133,13 @@ def main() -> None:
         )
     
     # get ranking consistency
+    real_paper_db.map_agent_reviews_to_real_paper(reviews)
+    rank_consistency = real_paper_db.rank_consistency()
+    # print rank consistency
+    print(f"rank_consistency = {rank_consistency}\n")
+    # save the RealPaperWithReviewDB
+    real_paper_db.save_to_file(data_path+"output_microbench_review"+ domain + ".json")
     
-    pass
 
 
 if __name__ == '__main__':
