@@ -1,11 +1,11 @@
 name: Mypy
+
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
+  push:
+    branches: [main]
   pull_request:
-    types: [ready_for_review, synchronize, opened, reopened]
-    branches:
-      - main
+    branches: [main]
+    types: [ready_for_review]
 
 jobs:
   Static-Type-Checking:
@@ -30,3 +30,19 @@ jobs:
         # Run this mypy instance against our main package.
         poetry run pip install types-protobuf==4.24.0.4
         poetry run mypy --config-file pyproject.toml .
+
+  Label-Ready-For-Review:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'ready_for_review'
+    steps:
+      - name: Apply `ready-for-review` Label
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['ready-for-review']
+            })
