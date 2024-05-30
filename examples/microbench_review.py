@@ -5,8 +5,9 @@ from research_town.dbs.env_db import AgentPaperReviewLog
 from research_town.agents.agent_base import BaseResearchAgent
 from typing import List, Optional, Dict
 from pydantic import BaseModel, Field
-import uuid
+import os
 import json
+import argparse
 
 class RealPaperWithReview (BaseModel): # paper review from real reviewers
     paper_pk: Optional[str] = Field(default=None) # primary key to decide after paper profile
@@ -97,9 +98,9 @@ class RealPaperWithReviewDB:
 
 
 
-def main() -> None:
-    data_path = "../data/microbench/"
-    domain = "machine_learning_system"
+def main(data_path: str, domain:str) -> None:
+    print(f"Data path is: {data_path}")
+    print(f"Domain is: {domain}")
     # collect papers from openreview
     real_paper_db = RealPaperWithReviewDB()
     real_paper_db.load_from_file(data_path+"paper_"+ domain + ".json")
@@ -143,4 +144,26 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    main()
+    # Get the directory of the current script
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Construct the path to data/microbench
+    default_data_path = os.path.join(current_dir, '..', 'data', 'microbench')
+
+    parser = argparse.ArgumentParser(description="Process folder path of microbench.")
+    parser.add_argument(
+        "--data_path", 
+        type=str, 
+        default=default_data_path, 
+        help="Path to the data directory for microbenchmark."
+    )
+    # Add argument for domain
+    parser.add_argument(
+        "--domain", 
+        type=str, 
+        default="machine_learning_system", 
+        help="Domain of papers to be reviewed."
+    )
+    
+    args = parser.parse_args()
+    main(args.data_path, args.domain)
