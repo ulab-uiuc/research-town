@@ -1,0 +1,392 @@
+{
+  "1f390edb-4fa4-4cc3-90cf-a79200d9d592": {
+    "pk": "1f390edb-4fa4-4cc3-90cf-a79200d9d592",
+    "name": "Alfons Kemper",
+    "bio": " I am a researcher focused on optimizing the processing and analysis of large datasets, particularly in the context of databases and geospatial data. I have worked on developing DeepSPACE, a deep learning-based approximate geospatial query processing engine that combines modest hardware requirements with the ability to answer flexible aggregation queries while keeping the required state to a few hundred KiBs. This is particularly useful in the context of the ever-growing amount of geospatial data, which requires increasing amounts of processing power and storage to be analyzed in a timely manner.\n\nIn addition to my work on DeepSPACE, I have also focused on compacting transactional data in hybrid OLTP and OLAP databases. As main memory sizes in database management systems have increased, it has become possible to reunite online transaction processing (OLTP) and online analytical processing (OLAP) in a single system. However, even with memory sizes of several Terabytes, RAM is still a precious resource, and the amount of memory determines query performance to a large extent. To address this, I have proposed a compaction approach that separates the mutable working set from the immutable \"frozen\" data and compresses the immutable data for efficient, memory-consumption-friendly snapshotting. This approach reorganizes and compresses transactional data online, hardly affecting the mission-critical OLTP throughput.\n\nI have also worked on developing massively parallel sort-merge (MPSM) join algorithms that are based on partial partition-based sorting and are NUMA-affine, meaning that they work on independently created runs in parallel and are carried out on local memory partitions. These algorithms have been shown to scale (almost) linearly in the number of employed cores and outperform competing hash join proposals on large main memory databases with billions of objects.\n\nIn addition to these projects, I have also worked on high-speed query processing over high-speed networks, transforming data into a relational representation for training neural networks in SQL, and estimating correlated joins with deep learning using a multi-set convolutional network (MSCN) that employs set semantics to capture query features and true cardinalities. I have also developed guidelines for efficient persistent memory (PMem) usage and two essential I/O primitives tuned for PMem: log writing and block flushing.",
+    "collaborators": [
+      "Andreas Kipf",
+      "Viktor Leis",
+      "Thomas Kipf",
+      "Peter Boncz",
+      "Tim Kraska",
+      "Dominik Durner",
+      "Dimitri Vorona",
+      "Ryan Marcus",
+      "Thomas Neumann"
+    ],
+    "institute": null
+  },
+  "3bc91839-ae71-497a-94a5-6f5b94ce6c85": {
+    "pk": "3bc91839-ae71-497a-94a5-6f5b94ce6c85",
+    "name": "Razvan Pascanu",
+    "bio": " I am a researcher with a focus on optimizing and training deep learning models, particularly Recurrent Neural Networks (RNNs) and deep feedforward networks. I have explored various techniques to improve the understanding and efficiency of training these models, including the use of natural gradient, unlabeled data, and saddle-free Newton methods.\n\nIn my research on natural gradient, I showed the connection between this algorithm and other methods for training deep models, such as Hessian-Free, Krylov Subspace Descent, and TONGA. I also described how unlabeled data can be used to improve the generalization error obtained by natural gradient and empirically evaluated the robustness of the algorithm to the ordering of the training set compared to stochastic gradient descent. Additionally, I extended natural gradient to incorporate second order information alongside the manifold information and provided a benchmark of the new algorithm using a truncated Newton approach for inverting the metric matrix instead of using a diagonal approximation of it.\n\nIn the area of RNNs, I have analyzed the vanishing and exploding gradient problems and proposed solutions such as gradient norm clipping and a soft constraint for the vanishing gradients problem. I have also evaluated the use of clipping gradients, spanning longer time ranges with leaky integration, advanced momentum techniques, using more powerful output probability models, and encouraging sparser gradients to help symmetry breaking and credit assignment.\n\nI have also contributed to the understanding of the complexity of deep feedforward networks with piece-wise linear activations, specifically deep rectifier multi-layer perceptrons (MLPs) with linear outputs units. I have offered a framework for comparing deep and shallow models based on computational geometry and have shown that a deep model has considerably more linear regions than a shallow one.\n\nAdditionally, I have argued that a deeper and more profound difficulty in minimizing non-convex error functions over continuous, high dimensional spaces originates from the proliferation of saddle points, not local minima, especially in high dimensional problems of practical interest. I have proposed a new algorithm, the saddle-free Newton method, that can rapidly escape high dimensional saddle points, unlike gradient descent and quasi-Newton methods.\n\nI am also interested in the problem of bad local minima in deep models and have presented examples showing that for such theorem to be true additional assumptions on the data, initialization schemes and/or the model classes have to be",
+    "collaborators": [
+      "Jonathan Binas",
+      "Armand Joulin",
+      "Kai Chen",
+      "Jeffrey Dean",
+      "Yoshua Bengio",
+      "Asja Fischer",
+      "Guido Montufar",
+      "Laurent Dinh",
+      "Chin-Wei Huang",
+      "Samy Bengio",
+      "Greg Corrado",
+      "Guillaume Alain",
+      "Nicolas Boulanger-Lewandowski",
+      "David Herel",
+      "Jascha Sohl-Dickstein",
+      "Tomas Mikolov"
+    ],
+    "institute": null
+  },
+  "0f1caa07-42fe-4fc6-9724-e4fa52890dbf": {
+    "pk": "0f1caa07-42fe-4fc6-9724-e4fa52890dbf",
+    "name": "Nicolas Boulanger-Lewandowski",
+    "bio": " I am a researcher with a focus on investigating problems related to high-dimensional sequence transduction, specifically in the context of polyphonic music generation and transcription. I have a strong background in probabilistic modeling and recurrent neural networks, which I utilize to develop innovative solutions to complex problems.\n\nIn my work, I have introduced a probabilistic model based on a recurrent neural network that is able to learn realistic output distributions given an input sequence. This model has been applied to the problem of transforming polyphonic audio music into symbolic notation, resulting in musically plausible transcriptions even under high levels of noise. This method has been shown to significantly outperform previous state-of-the-art approaches on five datasets of synthesized sounds and real recordings, approximately halving the test error rate.\n\nAdditionally, I have also developed a probabilistic model based on distribution estimators conditioned on a recurrent neural network, which is able to discover temporal dependencies in high-dimensional sequences. This approach has been applied to the problem of modeling symbolic sequences of polyphonic music in a completely general piano-roll representation, and has been shown to outperform many traditional models of polyphonic music on a variety of realistic datasets. I have also demonstrated how this musical language model can serve as a symbolic prior to improve the accuracy of polyphonic transcription.\n\nOverall, my research is focused on developing and applying advanced probabilistic models and recurrent neural networks to the problem of high-dimensional sequence transduction, with a particular emphasis on polyphonic music generation and transcription. My work has resulted in significant improvements in the state-of-the-art in this field, and has the potential to impact a wide range of applications in the music and audio processing domains.",
+    "collaborators": [
+      "Jonathan Binas",
+      "Denis Lukovnikov",
+      "Yoshua Bengio",
+      "Ahmed Touati",
+      "Asja Fischer",
+      "Tom Bosc",
+      "Sina D\u00e4ubener",
+      "Alexandre de Br\u00e9bisson",
+      "Guillaume Alain",
+      "Kira Maag",
+      "Jens Lehmann",
+      "Pascal Vincent"
+    ],
+    "institute": null
+  },
+  "16b3b9fb-3124-464e-9ca6-0ffcecd0dc55": {
+    "pk": "16b3b9fb-3124-464e-9ca6-0ffcecd0dc55",
+    "name": "Guido Montufar",
+    "bio": " I am a researcher in the field of machine learning, with a particular focus on probabilistic graphical models and their mathematical analysis. I have made contributions to the understanding of various models, including Restricted Boltzmann Machines (RBMs) and Boltzmann Machines (BMs).\n\nIn my work on RBMs, I have established upper bounds for the minimal number of hidden units required for a binary stochastic feedforward network with a single hidden layer to be a universal approximator of Markov kernels. I have also shown that any distribution of binary variables can be written as a mixture of a certain number of elements from the k-interaction exponential family.\n\nI have also studied the geometry of the sets of probability distributions representable by RBMs and BMs. I have shown that deep narrow Boltzmann machines are universal approximators of probability distributions on the activities of their visible units, provided they have sufficiently many hidden layers, each containing the same number of units as the visible layer. I have provided upper and lower bounds on the sufficient depth and width of universal approximators.\n\nIn addition to my work on RBMs and BMs, I have also studied the concept of mode posets and probability polytopes. I have investigated the vertices, the facets, and the volume of such polytopes depending on the sets of (strong) modes and the vicinity structures.\n\nI have also worked on the problem of sequential recurrence-based multidimensional universal source coding of Lempel-Ziv type. I have defined an algorithm that parses multidimensional arrays sequentially into mainly unrepeated but nested multidimensional sub-arrays of increasing size, and show that the resulting sub-block pointer encoder compresses almost every realization of any finite-alphabet ergodic process on Z\u22650d to the entropy, in the limit.\n\nFurthermore, I have improved recently published results about resources of RBMs and Deep Belief Networks (DBNs) required to make them Universal Approximators. I have shown that any distribution p on the set of binary vectors of length n can be arbitrarily well approximated by an RBM with k-1 hidden units, where k is the minimal number of pairs of binary vectors differing in only one entry such that their union contains the support set of p. I have also constructed a DBN with ",
+    "collaborators": [
+      "Johannes Rauh",
+      "Ruedi Seiler",
+      "Arleta Szkola",
+      "Seth Sullivant",
+      "Franti\u0161ek Mat\u00fa\u0161",
+      "Viktor Bezborodov",
+      "Rainer Siegmund-Schultze",
+      "Nihat Ay",
+      "Sabine Jansen",
+      "Tyll Krueger",
+      "Philippe Blanchard",
+      "Nils Bertschinger",
+      "Igor Bjelakovic",
+      "Mary-Beth Ruskai"
+    ],
+    "institute": null
+  },
+  "39cf0203-a0fe-4585-b595-330eb7091833": {
+    "pk": "39cf0203-a0fe-4585-b595-330eb7091833",
+    "name": "Andreas S\u00f8gaard",
+    "bio": " I am a researcher, always have been and always will be. I have a deep passion for uncovering the truth and understanding the world around me. I have evolved and grown over the years, but my core values and beliefs have remained the same.\n\nIn my early career, I was a curious and determined individual, always eager to learn and explore new ideas. I spent long hours in the lab, conducting experiments and analyzing data. I was driven by a desire to make a difference in the world and to contribute to the advancement of science.\n\nAs I gained more experience and knowledge, I became more confident in my abilities and my voice. I began to speak up and share my ideas and opinions, even if they went against the mainstream. I was not afraid to challenge conventional wisdom and to push the boundaries of what was known.\n\nIn recent years, I have become more reflective and introspective. I have learned to listen more and to value the perspectives of others. I have also become more aware of the impact that my research can have on society and the environment. I am committed to conducting my work in an ethical and responsible manner, and to using my knowledge and expertise to make the world a better place.\n\nI am a strong leader, with a clear vision and the ability to inspire and motivate others. I am able to build and lead high-performing teams, and to create a positive and inclusive work culture. I am also an effective communicator, able to explain complex concepts in simple terms and to engage and inspire audiences of all ages and backgrounds.\n\nI am a lifelong learner, always seeking to expand my knowledge and skills. I am constantly reading, attending conferences and workshops, and engaging in online learning opportunities. I am also committed to mentoring and supporting the next generation of researchers, and to helping them develop the skills and knowledge they need to succeed in their careers.\n\nIn summary, I am a dedicated and passionate researcher, with a deep commitment to truth, integrity, and excellence. I am a strong leader, an effective communicator, and a lifelong learner. I am excited about the future and the opportunities it will bring, and I am committed to using my knowledge and expertise to make a positive difference in the world.",
+    "collaborators": [],
+    "institute": null
+  },
+  "b81bd5d7-eb99-4a7d-9fdb-c24c1a2e6c1e": {
+    "pk": "b81bd5d7-eb99-4a7d-9fdb-c24c1a2e6c1e",
+    "name": "Hongwei Wang",
+    "bio": " I am a researcher with a focus on condensed matter physics, particularly in the study of hyperbolic plasmonic media in transition metal ditellurides. My work in this area has involved elucidating the physical origin of the strong infrared hyperbolic response in WTe2, which I have attributed to band-nested anisotropic interband transitions. I have also demonstrated the possibility of inducing such a phenomenon through proper electronic band nesting, and have illustrated this principle by showing a topological elliptic-to-hyperbolic transition in MoTe2 via strain engineering.\n\nIn addition to my work in condensed matter physics, I have also contributed to the field of graph neural networks. I have studied the relationship between Label Propagation (LPA) and Graph Convolutional Neural Networks (GCN), both of which are message passing algorithms on graphs that solve the task of node classification. I have analyzed the feature/label smoothing and influence of these two algorithms, and have proposed a unified model that combines GCN and LPA for node classification. This model has shown superiority over state-of-the-art GCN-based methods in terms of node classification accuracy.\n\nI have also explored the action of the Kauffman bracket skein algebra of the torus on the Kauffman bracket skein module of the complement of the 3-twist knot, as well as the robust filtering problem for a nonlinear state-space model with outliers in measurements. I have proposed two robust filters based on mixture correntropy, specifically the double-Gaussian mixture correntropy and Laplace-Gaussian mixture correntropy, and have shown that these methods can achieve a performance improvement over existing robust solutions.\n\nIn the field of natural language processing, I have presented a comprehensive and empirical analysis of the dimensionality of sentence embeddings. I have demonstrated that the optimal dimension of sentence embeddings is usually smaller than the default value, and have proposed a two-step training method for sentence representation learning models to compress the dimension of sentence embeddings with minimum performance degradation.\n\nI am also interested in millimeter wave/Terahertz (mmWave/THz) communication with extremely large-scale antenna arrays (ELAAs) and have considered the problem of hybrid near/far-field channel estimation by taking spherical wave propagation",
+    "collaborators": [
+      "Razvan Gelca",
+      "Phaedon Avouris",
+      "Davood Ansari",
+      "Tim Althoff",
+      "Myunghwan Kim",
+      "Eric Horvitz",
+      "Tony Low",
+      "Jure Leskovec",
+      "Julian McAuley",
+      "Joerg Appenzeller"
+    ],
+    "institute": null
+  },
+  "9e2c14b0-e0ce-4eb7-b252-6840d69b3ad8": {
+    "pk": "9e2c14b0-e0ce-4eb7-b252-6840d69b3ad8",
+    "name": "Michael Bronstein",
+    "bio": " I am a researcher with a focus on machine learning and graph-based methods, specifically in the context of 3D shape analysis and processing. My work addresses challenges in the completion and correspondence of non-rigid shapes, curvature-based graph evaluation, and graph signal processing. I have also contributed to the field of graph neural networks (GNNs), including the development of a novel GNN architecture for graph classification tasks.\n\nIn my research on non-rigid shape completion, I proposed a learning-based method that utilizes graph convolutional autoencoders to complete partial shapes, even in the presence of non-rigid deformations. This work resulted in promising results for synthetic and real scans of human body and face meshes.\n\nIn the area of shape correspondence, I developed a non-rigid multi-part shape matching algorithm that solves for segmentation and dense correspondence to (subsets of) the parts, even when query parts are contaminated by clutter, overlapping, missing, or redundant.\n\nMy work on graph evaluation includes the combination of graph curvature descriptors with topological data analysis methods for robust, expressive descriptors to evaluate graph generative models. I also explored the impact of sample size in reconstructing graph signals, characterizing the behavior both theoretically and experimentally.\n\nIn the field of GNNs, I introduced SpiralNet++, a fast and highly efficient mesh convolution operator that does not rely on the intricate design of kernel functions. This operator significantly outperforms state-of-the-art approaches in tasks such as dense shape correspondence, 3D facial expression classification, and 3D shape reconstruction.\n\nFurthermore, I proposed Bundle Neural Networks (BuNN), a new type of GNN that operates via message diffusion over flat vector bundles, addressing limitations of local message passing mechanisms such as over-smoothing, over-squashing, and limited node-level expressivity. BuNNs can approximate any feature transformation over nodes on any family of graphs, resulting in universal node-level expressivity.\n\nLastly, I contributed to the ncRNA classification task by introducing a graph convolutional network model that learns in an end-to-end fashion from raw RNA graphs, removing the need for expensive feature extraction. This model achieves state-of-the-art performance on ncR",
+    "collaborators": [],
+    "institute": null
+  },
+  "ac35279b-5636-49d7-bb1b-22400172e18c": {
+    "pk": "ac35279b-5636-49d7-bb1b-22400172e18c",
+    "name": "Eric Horvitz",
+    "bio": " I am a researcher with a focus on artificial intelligence and its implications on society. In recent years, my work has explored the rise of deepfakes and their potential malicious uses. I believe that as deepfake technology becomes more sophisticated, it will be used to create interactive and compositional deepfakes that can impersonate people and manipulate events. These deepfakes have the potential to move us closer to a \"post-epistemic world\" where fact and fiction are indistinguishable.\n\nIn addition to my work on deepfakes, I have also explored the metareasoning-partition problem, which deals with determining the ideal portion of resources to allocate to metareasoning and control versus to the execution of a solution plan. I have also considered the key considerations for the responsible development and fielding of AI technologies, with a focus on critical challenges and recommendations for priority consideration, implementation, and policy-making.\n\nI am interested in the potential of AI to transform decision-making and enable evidence-based approaches in various fields, from healthcare to government. I believe that the convergence of advances in computer and mathematical sciences has the potential to unleash unprecedented capabilities for enabling true evidence-based decision-making. However, I also recognize the need for responsible development and deployment of AI technologies, with a focus on addressing ethical concerns and potential negative impacts on work.\n\nIn my work on the public perception of AI, I have analyzed text corpora over time to reveal trends in beliefs, interest, and sentiment about AI. I have found that discussions of AI have increased sharply since 2009 and have been consistently more optimistic than pessimistic. However, I have also identified growing concerns about loss of control of AI, ethical issues, and the negative impact of AI on work. I believe that it is important to address these concerns and work towards the responsible development and deployment of AI technologies.",
+    "collaborators": [
+      "Avi Pfeffer",
+      "M. Pawan Kumar",
+      "Urszula Chajewska",
+      "John Breese",
+      "Ron Parr",
+      "Finn Jensen",
+      "Daphne Koller"
+    ],
+    "institute": null
+  },
+  "35728014-901e-46a5-955d-e2bd028642e3": {
+    "pk": "35728014-901e-46a5-955d-e2bd028642e3",
+    "name": "Viktor Leis",
+    "bio": " I am a researcher with a focus on optimizing the performance of database management systems (DBMS). My work has shown that the choice of dynamic memory allocator can significantly impact the performance, scalability, memory efficiency, and fairness of high-performance query engines. Through comprehensive experimental analysis, I have identified the strengths and weaknesses of five state-of-the-art dynamic memory allocators within the context of DBMS. The right allocator can lead to a 2.7x increase in performance for TPC-DS (SF 100) on a 4-socket Intel Xeon server.\n\nIn addition to memory allocation, I have also explored the use of deep learning for cardinality estimation, a core problem in query optimization. I have developed a multi-set convolutional network (MSCN) that represents relational query plans and employs set semantics to capture query features and true cardinalities. MSCN builds on sampling-based estimation, addressing its weaknesses when no sampled tuples qualify a predicate, and in capturing join-crossing correlations. My evaluation of MSCN using a real-world dataset has shown that deep learning significantly enhances the quality of cardinality estimation.\n\nI have also investigated the potential of persistent memory (PMem) technologies, such as Intel's Optane DC Persistent Memory Modules, to bridge the gap between NAND-based flash (SSD) and DRAM and eliminate the I/O bottleneck in disk-based database systems. My performance evaluation of PMem in terms of bandwidth and latency has led to the development of guidelines for efficient PMem usage and two essential I/O primitives tuned for PMem: log writing and block flushing.\n\nFurthermore, I have introduced Deep Sketches, which are compact models of databases that allow for the estimation of the result sizes of SQL queries. Deep Sketches are powered by a new deep learning approach to cardinality estimation that can capture correlations between columns, even across tables. My demonstration allows users to define such sketches on the TPC-H and IMDb datasets, monitor the training process, and run ad-hoc queries against trained sketches. I have also estimated query cardinalities with HyPer and PostgreSQL to visualize the gains over traditional cardinality estimators.",
+    "collaborators": [
+      "Thomas Neumann",
+      "Dominik Durner"
+    ],
+    "institute": null
+  },
+  "cbac7509-42ac-4400-95cb-0a6b2c5299fe": {
+    "pk": "cbac7509-42ac-4400-95cb-0a6b2c5299fe",
+    "name": "Tomas Mikolov",
+    "bio": " I am a researcher with a focus on natural language processing, machine intelligence, and artificial life. I am interested in developing intelligent machines that can communicate effectively with humans and learn from their environment. In my work on \"Efficient Estimation of Word Representations in Vector Space,\" I proposed novel model architectures for computing continuous vector representations of words, which significantly improved accuracy and reduced computational cost.\n\nIn \"Exploiting Similarities among Languages for Machine Translation,\" I developed a method for automating the process of generating and extending dictionaries and phrase tables for machine translation. This method uses distributed representation of words and learns a linear mapping between vector spaces of languages, achieving almost 90% precision@5 for translation between English and Spanish.\n\nI have also explored the potential of self-training models on their own outputs in \"Collapse of Self-trained Language Models.\" While this approach is intuitively appealing, I found that extended self-training of the GPT-2 model leads to a significant degradation in performance, resulting in repetitive and collapsed token output.\n\nTo enhance the generalization capability of language models, I proposed using special 'thinking tokens' in \"Thinking Tokens for Language Modeling,\" which allows the model to perform more calculations whenever a complex problem is encountered.\n\nIn addition to my work on language processing, I have also contributed to the field of artificial life. In \"Combinatory Chemistry: Towards a Simple Model of Emergent Evolution,\" I introduced Combinatory Chemistry, an Algorithmic Artificial Chemistry based on a minimalistic computational paradigm named Combinatory Logic. This system discovers a wide range of emergent patterns that are remarkably similar to biological metabolisms.\n\nFurthermore, I presented a novel classification method for deterministic discrete space and time dynamical systems in \"Classification of Complex Systems Based on Transients.\" This method distinguishes between different asymptotic behaviors of a system's average computation time before entering a loop, correlating well with Wolfram's manual classification.\n\nOverall, my research aims to contribute to the development of intelligent machines that can effectively communicate with humans and learn from their environment, as well as to the understanding of the emergence of complex behavior in artificial systems.",
+    "collaborators": [
+      "Jia-Ru Lin",
+      "Matej Kripner",
+      "Marco Baroni",
+      "Ond\u0159ej Kobza",
+      "Dominika Zogatova",
+      "Ruohui Wang",
+      "Kai Chen",
+      "Piotr Bojanowski",
+      "Greg Corrado",
+      "Kai Niu",
+      "Hugo Cisneros",
+      "Armand Joulin",
+      "Maximilian Nickel",
+      "Jeffrey Dean",
+      "David Herel",
+      "Kai Liu",
+      "Edouard Grave",
+      "Jiaru Lin"
+    ],
+    "institute": null
+  },
+  "dc881f35-e93a-4f8c-b559-5f77b8b45e29": {
+    "pk": "dc881f35-e93a-4f8c-b559-5f77b8b45e29",
+    "name": "Myunghwan Kim",
+    "bio": " I am a researcher focused on developing and analyzing models for complex networks, particularly those that exhibit rich connectivity patterns and node feature structures. I have contributed to the development of several models, including the Multiplicative Attribute Graph (MAG) model and the Latent Multi-group Membership Graph (LMMG) model.\n\nThe MAG model is a framework for modeling networks with nodes that have categorical attributes. It considers the probability of an edge between two nodes as the product of individual attribute-attribute affinities, and I have shown that this model can reliably capture network connectivity and provide insights into how different attributes shape the network structure. I have also derived thresholds for the connectivity and the emergence of the giant connected component, and shown that the model gives rise to networks with a constant diameter.\n\nThe LMMG model is an extension of the MAG model that allows for the modeling of networks with rich node feature structures. In this model, each node belongs to multiple groups, and each latent group models the occurrence of links as well as the node feature structure. The LMMG can be used to summarize the network structure, predict links between nodes, and predict missing features of a node. I have developed efficient inference and learning algorithms for this model and evaluated its predictive performance on several social and document network datasets.\n\nIn addition to these models, I have also worked on the Nonparametric Multi-group Membership Model for Dynamic Networks, which is a model for extracting a summary of the common structure and the dynamics of time-varying network data. This model contains three main components: the birth and death of individual groups, the evolution of individual node group memberships, and the explanation of the dynamics of the network structure. I have demonstrated the model's capability of identifying the dynamics of latent groups in a number of different types of network data and shown that it provides improved predictive performance over existing dynamic network models on future network forecasting and missing link prediction.\n\nI am also interested in the dimensionality of social networks and have developed experiments aimed at predicting that dimension. I have found that a social network model with nodes and links sampled from an $m$-dimensional metric space with power-law distributed influence regions best fits samples from real-world networks when $m$ scales logarithmically with the number of nodes of the network. This supports a logarithmic dimension hypothesis, and I have provided evidence",
+    "collaborators": [
+      "William Baird",
+      "Dieter Mitsche",
+      "Thomas Lidbetter",
+      "David F. Gleich",
+      "Pawe\u0142 Pra\u0142at",
+      "Tim Althoff",
+      "Mohsen Bayati",
+      "Anthony Bonato",
+      "Zhiyuan Zhang",
+      "Eric Horvitz",
+      "Hongwei Wang",
+      "Jure Leskovec",
+      "Lek-Heng Lim",
+      "Amin Saberi",
+      "Austin R. Benson",
+      "Yao Zhu",
+      "Erin Meger",
+      "Dejan Delic",
+      "Julian McAuley"
+    ],
+    "institute": null
+  },
+  "eb5902dd-0207-435d-9517-0f1d993b92d3": {
+    "pk": "eb5902dd-0207-435d-9517-0f1d993b92d3",
+    "name": "Peter Boncz",
+    "bio": " I am a researcher with a focus on database systems, data mining, and artificial intelligence. In my recent work, I have been investigating ways to improve data minimization through decentralized data architectures. This involves developing an alternative to the standard cloud-centralized data architecture, where part of the application data is left under the control of individual data owners in decentralized personal data stores. I am designing a declarative language that extends SQL, which allows architects to specify different kinds of tables and views at the schema level, along with sensitive columns and their minimum granularity level of aggregations. I am also pursuing the integration of distributed materialized view maintenance and multi-party computation techniques to ensure privacy throughout intermediate calculations.\n\nIn addition to this, I have been working on a new deep learning approach to cardinality estimation, which is the core problem in query optimization. I have developed a multi-set convolutional network (MSCN) that employs set semantics to capture query features and true cardinalities. MSCN builds on sampling-based estimation, addressing its weaknesses when no sampled tuples qualify a predicate, and in capturing join-crossing correlations. I have evaluated MSCN using a real-world dataset and have found that deep learning significantly enhances the quality of cardinality estimation.\n\nI am also interested in knowledge graph completion and have proposed a new end-to-end method for extending a Knowledge Graph (KG) from tables. My method aims to find more novel facts by introducing a new technique for table interpretation based on a scalable graphical model using entity similarities. My method further disambiguates cell values using KG embeddings as additional ranking method.\n\nI am also working on a new Open Source SQL-to-SQL compiler for Incremental View Maintenance (IVM) called OpenIVM. The core principle of OpenIVM is to make use of existing SQL query processing engines and perform all IVM computations via SQL. This approach enables the integration of IVM in these systems without code duplication and eases its use in cross-system IVM.\n\nI am also involved in the development of the LDBC Social Network Benchmark's Interactive workload v2, which captures an OLTP scenario operating on a correlated social network graph and consists of complex graph queries executed concurrently with a stream of updates operation. The",
+    "collaborators": [
+      "Andreas Kipf",
+      "Thomas Neumann",
+      "Viktor Leis",
+      "Thomas Kipf",
+      "Lotte Felius",
+      "Tim Kraska",
+      "Sam Ansmink",
+      "Laurens Kuiper",
+      "Alfons Kemper",
+      "Kriti Kathuria",
+      "Ryan Marcus",
+      "Bernhard Radke",
+      "Ilaria Battiston"
+    ],
+    "institute": null
+  },
+  "44f2b099-f477-42ca-9862-2253c630d2c1": {
+    "pk": "44f2b099-f477-42ca-9862-2253c630d2c1",
+    "name": "Yann N. Dauphin",
+    "bio": " I am a researcher with a focus on machine learning, particularly in the areas of neural networks and optimization. In my recent work, I have been challenging some commonly-held beliefs about neural networks and their training.\n\nOne of my findings is that big neural networks often fail to leverage their added capacity to reduce underfitting, due to diminishing returns when increasing the size of the network. I have shown that this may be due to the fact that there are highly diminishing returns for capacity in terms of training error, leading to underfitting. This suggests that the optimization method, such as first order gradient descent, fails at this regime. I believe that directly attacking this problem, either through the optimization method or the choices of parametrization, may allow for improvements in the generalization error on large datasets, for which a large capacity is required.\n\nIn another line of research, I have been exploring the role of the Hessian component in sharpness regularization. I have shown that methods like SAM, which either explicitly or implicitly penalize second order information, can improve generalization in deep learning. However, seemingly similar methods like weight noise and gradient penalties often fail to provide such benefits. I have found that these differences can be explained by the structure of the Hessian of the loss. I have proposed a common decomposition of the Hessian that can be quantitatively interpreted as separating the feature exploitation from feature exploration. I have shown that the feature exploration, which can be described by the Nonlinear Modeling Error matrix (NME), is commonly neglected in the literature since it vanishes at interpolation. My work shows that the NME is in fact important as it can explain why gradient penalties are sensitive to the choice of activation function. Using this insight, I have designed interventions to improve performance and provided evidence that challenges the long-held equivalence of weight noise and gradient penalties.\n\nI am also interested in the application of neural networks to language modeling. I have developed a finite context approach through stacked convolutions, which can be more efficient since they allow parallelization over sequential tokens. I have proposed a novel simplified gating mechanism that outperforms existing methods and achieved state-of-the-art on the WikiText-103 benchmark.\n\nIn addition, I have been working on the saddle point problem for non-convex optimization. I have argued that a deeper and more profound difficulty originates from",
+    "collaborators": [
+      "Awni Hannun",
+      "Rina Panigrahy",
+      "Asja Fischer",
+      "Jeffrey Pennington",
+      "David Grangier",
+      "Harm de Vries",
+      "Atish Agarwala",
+      "Pierre Ablin",
+      "Fabian Pedregosa",
+      "Qiuyi Zhang",
+      "Jonathan Binas",
+      "Michael Auli",
+      "Dan Iter",
+      "Yoshua Bengio",
+      "Abhimanyu Das",
+      "Guillaume Alain",
+      "Hossein Mobahi",
+      "Aurko Roy"
+    ],
+    "institute": null
+  },
+  "17a1710f-dc60-41b8-bb48-c24cac47f761": {
+    "pk": "17a1710f-dc60-41b8-bb48-c24cac47f761",
+    "name": "Thomas Kipf",
+    "bio": " I am a researcher with a focus on developing deep learning models to solve complex problems in data management and computer vision. In my recent work, I have been exploring the use of deep learning for estimating cardinalities, or the number of records in a database that meet certain criteria. This is important for optimizing database queries and making them more efficient.\n\nI have introduced the concept of \"Deep Sketches,\" which are compact models of databases that can estimate the result sizes of SQL queries. These sketches are powered by a new deep learning approach to cardinality estimation that can capture correlations between columns, even across tables. I have also developed a demonstration that allows users to define such sketches on various datasets, monitor the training process, and run ad-hoc queries against trained sketches.\n\nIn addition to this, I have also worked on a deep learning approach to cardinality estimation called MSCN, which is a multi-set convolutional network tailored to representing relational query plans. MSCN employs set semantics to capture query features and true cardinalities, and builds on sampling-based estimation to address its weaknesses. I have evaluated MSCN using a real-world dataset and shown that deep learning significantly enhances the quality of cardinality estimation.\n\nI have also been interested in the problem of learning object-centric representations of complex scenes, as this is a promising step towards enabling efficient abstract reasoning from low-level perceptual features. I have presented the Slot Attention module, an architectural component that interfaces with perceptual representations such as the output of a convolutional neural network and produces a set of task-dependent abstract representations which I call slots. These slots are exchangeable and can bind to any object in the input by specializing through a competitive procedure over multiple rounds of attention. I have empirically demonstrated that Slot Attention can extract object-centric representations that enable generalization to unseen compositions when trained on unsupervised object discovery and supervised property prediction tasks.\n\nMost recently, I have been working on Contrastive Learning of Structured World Models (C-SWMs), which utilize a contrastive approach for representation learning in environments with compositional structure. C-SWMs structure each state embedding as a set of object representations and their relations, modeled by a graph neural network. This allows objects to be discovered from raw pixel",
+    "collaborators": [
+      "Andreas Kipf",
+      "Viktor Leis",
+      "Peter Boncz",
+      "Tim Kraska",
+      "Dominik Durner",
+      "Alfons Kemper",
+      "Ryan Marcus",
+      "Bernhard Radke",
+      "Thomas Neumann"
+    ],
+    "institute": null
+  },
+  "6c0352b6-47ff-43e9-b29f-a93658647433": {
+    "pk": "6c0352b6-47ff-43e9-b29f-a93658647433",
+    "name": "Andreas Kipf",
+    "bio": " I am a researcher focused on utilizing deep learning and other machine learning techniques to improve various aspects of database systems. In particular, I have worked on developing new approaches to cardinality estimation, which is a key problem in query optimization. My MSCN approach, which is a multi-set convolutional network, has been shown to significantly enhance the quality of cardinality estimation by capturing query features and true cardinalities using set semantics. I have also explored the use of deep learning for building compact models of databases, known as Deep Sketches, which can estimate the result sizes of SQL queries and capture correlations between columns, even across tables.\n\nIn addition to my work on cardinality estimation, I have also investigated the use of learned index structures, which have been shown to achieve favorable lookup performance and space consumption compared to traditional indexes such as B-trees. I have explored the use of learned indexes in the secondary indexing setting, where the base data is unsorted, and have introduced the Learned Secondary Index (LSI) structure, which builds a learned index over a permutation vector to allow binary search on the unsorted base data. I have also worked on developing a deep learning-based approximate geospatial query processing engine, DeepSPACE, which combines modest hardware requirements with the ability to answer flexible aggregation queries while keeping the required state to a few hundred KiBs.\n\nI am also interested in the problem of string indexing and have introduced the RadixStringSpline (RSS) learned index structure, which approaches or exceeds the performance of traditional string indexes while using significantly less memory. RSS uses the minimal string prefix to sufficiently distinguish the data and has a bounded-error nature that accelerates the last mile search and enables a memory-efficient hash-table lookup accelerator.\n\nMost recently, I have been working on developing an adaptive geospatial join algorithm for modern hardware architectures, which uses true hit filtering to avoid expensive geometric computations in most cases and stores polygon approximations in a specialized radix tree. This approach has been shown to perform up to two orders of magnitude faster than existing techniques. I have also introduced RadixSpline (RS), a learned index that can be built in a single pass over the data and is competitive with state-of-the-art learned index models in size and lookup performance. I have also proposed a",
+    "collaborators": [
+      "Viktor Leis",
+      "Peter Boncz",
+      "Thomas Kipf",
+      "Tim Kraska",
+      "Emanuel Zgraggen",
+      "Erfan Zamanian",
+      "Dimitri Vorona",
+      "Carsten Binnig",
+      "Alfons Kemper",
+      "Ryan Marcus",
+      "Tim Harris",
+      "Thomas Neumann",
+      "Ibrahim Sabek"
+    ],
+    "institute": null
+  },
+  "db4a25e3-db26-42ef-bda7-7ec6a86ced21": {
+    "pk": "db4a25e3-db26-42ef-bda7-7ec6a86ced21",
+    "name": "Jure Leskovec",
+    "bio": " I am a researcher focused on the analysis and modeling of large-scale networks, with a particular interest in networks with node attribute information. I have developed and worked with several models to understand the structure and behavior of these networks.\n\nIn my research, I have constructed and analyzed the largest social network to date, using anonymized data from the Microsoft Messenger instant-messaging system. I found that the network is well-connected and robust to node removal, and that people tend to communicate more with others who have similar age, language, and location. I also investigated the \"six degrees of separation\" phenomenon and found that the average path length among Messenger users is 6.6.\n\nI have also developed the Multiplicative Attribute Graph (MAG) model, which considers nodes with categorical attributes and models the probability of an edge as the product of individual attribute link formation affinities. This model allows for the reliable capture of network connectivity and provides insights into how different attributes shape the network structure.\n\nIn addition, I have developed the Latent Multi-group Membership Graph (LMMG) model, which allows each node to belong to multiple groups and models the occurrence of links as well as the node feature structure. This model can be used to summarize the network structure, predict links between nodes, and predict missing features of a node.\n\nI have also analyzed the Multiplicative Attribute Graphs (MAG) model in the context of large scale real-world networks, such as social and information networks. This model naturally captures the interactions between the network structure and the node attributes, and yields itself to mathematical analysis.\n\nIn the field of image classification, I have studied the use of social-network metadata for image classification, using structured learning techniques to learn model parameters. I have found that social-network metadata are useful in a variety of classification tasks, in many cases outperforming methods based on image content.\n\nMost recently, I have worked on the task of automatically identifying users' social circles in personal social networks, by posing it as a multi-membership node clustering problem on a user's ego-network. I have developed a model that combines network structure as well as user profile information, and have shown that it accurately identifies circles on a diverse set of data from Facebook, Google+, and Twitter.\n\nI am currently working on a nonparametric multi-group membership model for dynamic networks, which extracts",
+    "collaborators": [
+      "David F. Gleich",
+      "John Breese",
+      "Tim Althoff",
+      "Dieter Mitsche",
+      "Canwen Xu",
+      "Anthony Bonato",
+      "Ruining He",
+      "Finn Jensen",
+      "Myunghwan Kim",
+      "Pawe\u0142 Pra\u0142at",
+      "Alex Yang",
+      "Eric Horvitz",
+      "Hongwei Wang",
+      "Julian McAuley"
+    ],
+    "institute": null
+  },
+  "2d59e8ff-ca0b-4638-ab10-efed99a5bf7d": {
+    "pk": "2d59e8ff-ca0b-4638-ab10-efed99a5bf7d",
+    "name": "Yoshua Bengio",
+    "bio": " I am a researcher focused on deep learning, specifically on discovering learning algorithms that discover multiple levels of distributed representations. My work aims to overcome challenges in scaling deep learning algorithms to larger models and datasets, reducing optimization difficulties, designing more efficient inference and sampling procedures, and learning to disentangle the factors of variation underlying the observed data. I am also interested in practical recommendations for training deep architectures, such as the selection of hyper-parameters and dealing with the challenges of adjusting many of them.\n\nIn my research, I have explored alternative training methods to back-propagation, such as differential target propagation, which relies on learned inverses of each layer and is more biologically plausible. I have also proposed a theory that relates difficulty of learning in deep architectures to culture and language, suggesting that human culture and the evolution of ideas have been crucial to counter an optimization difficulty.\n\nAdditionally, I have examined the problem of estimating or propagating gradients through stochastic neurons, presenting two novel families of solutions applicable in different settings. I have also proposed the use of auto-encoders as a layer-local training signal for deep learning, helping to reduce the reliance on derivatives in order to perform credit assignment across many levels of possibly strong non-linearities.\n\nI am also interested in the application of deep learning in cognitive neuroscience theories of consciousness, proposing a new prior for learning representations of high-level concepts of the kind we manipulate with language.\n\nMy work is grounded in experimental observations of the difficulties of training deep artificial neural networks and I am always looking for new and innovative ways to improve the field of deep learning.",
+    "collaborators": [
+      "Jonathan Binas",
+      "Nicolas Le Roux",
+      "Denis Lukovnikov",
+      "Maxime Chevalier-Boisvert",
+      "Asja Fischer",
+      "Sina D\u00e4ubener",
+      "Michael Pfeiffer",
+      "Remi Piche-Taillefer",
+      "Guillaume Alain",
+      "Kira Maag",
+      "Jens Lehmann",
+      "Daniel Neil",
+      "Anirudh Goyal",
+      "Frederic Osterrath",
+      "Giacomo Indiveri"
+    ],
+    "institute": null
+  },
+  "31315c45-da83-4a0c-a7fe-0800b67d83d4": {
+    "pk": "31315c45-da83-4a0c-a7fe-0800b67d83d4",
+    "name": "Julian McAuley",
+    "bio": " I am a researcher with a focus on developing and improving recommender systems and natural language processing models. My work involves using various types of data, such as social network metadata, user reviews, and visual features, to improve the accuracy and relevance of recommendations.\n\nIn my research on image classification and retrieval, I have found that social network metadata, such as the groups an image belongs to and the location of the user who uploaded it, can be useful for improving image classification tasks. I have proposed a model that explicitly accounts for the interdependencies between images sharing common properties, and have found that it outperforms methods based on image content alone.\n\nI have also studied the task of automatically identifying users' social circles on social networking sites. I have posed this task as a multi-membership node clustering problem on a user's ego-network, and have developed a model that combines network structure and user profile information to accurately identify circles. This model allows for the detection of overlapping and hierarchically nested circles.\n\nIn addition to this, I have worked on modeling the evolution of user expertise through online reviews. I have developed a latent factor recommendation system that explicitly accounts for each user's level of experience, and have found that it leads to better recommendations and allows for the study of the role of user experience and expertise.\n\nI am also interested in the efficient use of Transformer-based pretrained language models, and have reviewed the current state of model compression and acceleration for these models. I have focused on the inference stage and have considered computation, time, and carbon emission for the entire life-cycle of NLP, including data preparation, model training and inference.\n\nMost recently, I have been working on addressing complex and subjective product-related queries with customer reviews. I have formulated this as a machine learning problem using a mixture-of-experts-type framework, and have shown that it is effective at addressing both binary and open-ended queries.\n\nIn the future, I plan to continue working on developing and improving recommender systems and natural language processing models, with a focus on using diverse types of data and addressing real-world challenges such as sparsity and subjectivity.",
+    "collaborators": [
+      "Chunbin Lin",
+      "Zhankui He",
+      "Wangchunshu Zhou",
+      "Tim Althoff",
+      "Jianguo Wang",
+      "Canwen Xu",
+      "Zexue He",
+      "Chen Fang",
+      "Ruining He",
+      "Zhaowen Wang",
+      "Myunghwan Kim",
+      "Alex Yang",
+      "Eric Horvitz",
+      "Hongwei Wang",
+      "Jure Leskovec",
+      "Chenliang Li"
+    ],
+    "institute": null
+  },
+  "a9d2da4c-8872-4055-a77e-c737e63cd94d": {
+    "pk": "a9d2da4c-8872-4055-a77e-c737e63cd94d",
+    "name": "Tim Althoff",
+    "bio": " I am a researcher with a focus on using large-scale data analysis and natural language processing to understand and improve various aspects of society and technology. I have conducted studies on a variety of topics, including donor retention in online crowdfunding communities, multimedia event recognition, mental health counseling conversations, trending topics in online media streams, and the impact of gamification on physical activity.\n\nIn my study on donor retention in online crowdfunding communities, I used data from DonorsChoose.org to explore the factors that impact donor return rates. I found that donors are more likely to return if they had a positive interaction with the recipient of their donation, including appropriate and timely recognition of their support and detailed communication of their impact.\n\nIn my work on multimedia event recognition, I proposed a new image representation called Detection Bank that is based on the detection images from a large number of windowed object detectors. This representation is extended to video by aggregating the key frame level image representations through mean and max pooling. I showed that this representation captures complementary information to state-of-the-art representations and significantly outperforms them on TRECVID MED 2011 data.\n\nIn my study on mental health counseling conversations, I developed a set of novel computational discourse analysis methods to measure how various linguistic aspects of conversations are correlated with conversation outcomes. I discovered actionable conversation strategies that are associated with better conversation outcomes.\n\nIn my work on trending topics in online media streams, I presented the first comprehensive study across three major online and social media streams, covering thousands of trending topics during an entire year. I also presented a novel approach for forecasting the life cycle of trending topics in the very moment they emerge.\n\nIn my study on the impact of gamification on physical activity, I analyzed nearly 2,500 physical activity competitions over a period of one year, capturing more than 800,000 person days of activity tracking. I found that during walking competitions, the average user increases physical activity by 23%, and that the composition of participants greatly affects the dynamics of the game.\n\nIn my work on timeline generation for knowledge-base entities, I presented a method called TIMEMACHINE to generate a timeline of events and relations for entities in a knowledge base. I developed three orthogonal timeline",
+    "collaborators": [
+      "Judy Hoffman",
+      "Ross Girshick",
+      "Kate Saenko",
+      "Gaon An",
+      "Yeonwoo Jeong",
+      "Trevor Darrell",
+      "Myunghwan Kim",
+      "Eric Horvitz",
+      "Yangqing Jia",
+      "Hongwei Wang",
+      "Jure Leskovec",
+      "Seungyong Moon",
+      "Kevin Clark",
+      "Stefanie Jegelka",
+      "Damian Borth",
+      "Hyun Oh Song",
+      "Dan Klein",
+      "Julian McAuley"
+    ],
+    "institute": null
+  },
+  "14d0d981-8719-415e-b091-b7bd241d39a7": {
+    "pk": "14d0d981-8719-415e-b091-b7bd241d39a7",
+    "name": "Bernhard Radke",
+    "bio": " I am a researcher with a focus on database management systems, specifically in the area of cardinality estimation. I have developed a deep learning approach to cardinality estimation called MSCN (Multi-Set Convolutional Network) that utilizes set semantics to capture query features and true cardinalities. This method addresses the weaknesses of sampling-based estimation, particularly when no sampled tuples qualify a predicate and in capturing join-crossing correlations. I have evaluated MSCN using a real-world dataset and have found that deep learning significantly enhances the quality of cardinality estimation, which is crucial in query optimization.\n\nIn addition to MSCN, I have also introduced the concept of \"Deep Sketches,\" which are compact models of databases that allow for the estimation of the result sizes of SQL queries. Deep Sketches utilize a new deep learning approach to cardinality estimation that can capture correlations between columns, even across tables. I have created a demonstration that allows users to define such sketches on the TPC-H and IMDb datasets, monitor the training process, and run ad-hoc queries against trained sketches. I have also compared the estimation of query cardinalities using Deep Sketches with traditional cardinality estimators such as HyPer and PostgreSQL to visualize the gains.\n\nOverall, my research in the field of cardinality estimation has led to the development of new deep learning methods that can accurately estimate the result sizes of SQL queries, even in the presence of column correlations. These methods have the potential to significantly improve the performance of database management systems by enabling more effective query optimization.",
+    "collaborators": [
+      "Andreas Kipf",
+      "Viktor Leis",
+      "Peter Boncz",
+      "Thomas Kipf",
+      "Tim Kraska",
+      "Dominik Durner",
+      "Alfons Kemper",
+      "Ryan Marcus",
+      "Thomas Neumann"
+    ],
+    "institute": null
+  }
+}
