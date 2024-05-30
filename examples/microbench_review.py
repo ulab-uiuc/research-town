@@ -140,9 +140,9 @@ def main(data_path: str, domain:str) -> None:
     # 3. how to get the scores of papers? Store to review log lists.
     reviews: List[AgentPaperReviewLog] = []
     for agent in agents:
-        reviews.append(agent.write_paper_review(
-             paper=Papers2eval[0])
-        )
+        for paper in Papers2eval:
+            reviews.append(agent.write_paper_review(paper=paper))
+    
     
     # get ranking consistency
     real_paper_db.map_agent_reviews_to_real_paper(reviews)
