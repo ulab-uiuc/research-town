@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict
+from beartype.typing import Dict, List
 
 from .model_prompting import model_prompting
 
@@ -184,6 +184,124 @@ def paper_quality_eval_prompting(
         "abstract": paper["abstract"],
     }
     prompt = paper_prompt.format_map(input_data)
+    evaluation_result = model_prompting(model_name, prompt)
+    # merge results from List[Str] to Str
+    combined_result = "\n".join(evaluation_result)
+
+    return combined_result
+
+
+
+def review_quality_eval_prompting(
+    idea: str,
+    trend:  str,
+    paper: Dict[str,str],
+    review: List[str],
+    decision: str,
+    model_name: str
+) -> str:
+    review_prompt = """
+    <Instruction>
+    Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. The output format should follow these rules: Overall Score of a review (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=92. Dimension Scores=[9,9,9,9,9,9,9,9,9,9]'. <Instruction>
+    Output format:
+    </Instruction>
+    <Approach> The details of rating are as follows:
+    {regulations}
+    </Approach>
+    Here is the review to evaluate:
+    idea: {idea}
+    research trend: {trend}
+    paper: title-- {title}; abstract-- {abstract}.
+    reviews: {review}
+    final_decision:{final_decision}
+    """
+
+    regulations = """
+    1. Review Summarization
+        - Rating (1-10):
+        - Comments:
+        - Does the review accurately summarize the paper's motivation?
+        - Are the key contributions and achievements clearly summarized?
+        - Are there any misunderstandings that need to be addressed in the author's response?
+
+    2. Strengths
+        - Rating (1-10):
+        - Comments:
+        - Are the strengths of the work clearly described?
+        - Are the claims sound, both theoretically and empirically?
+        - Is the contribution significant and novel?
+        - Is the work relevant to the community?
+
+    3. Weaknesses
+        - Rating (1-10):
+        - Comments:
+        - Are the limitations of the work clearly explained?
+        - Are the weaknesses addressed along the same axes as the strengths?
+        - Are the criticisms detailed, specific, and polite?
+
+    4. Correctness
+        - Rating (1-10):
+        - Comments:
+        - Are the claims and methods correct?
+        - Is the empirical methodology sound?
+        - Are there any incorrect claims or methods detailed thoroughly?
+        - Is the criticism well-motivated and understandable?
+
+    5. Clarity
+        - Rating (1-10):
+        - Comments:
+        - Is the paper well-written?
+        - Is the exposition of the paper clear?
+        - What parts of the paper need revision to improve clarity?
+
+    6. Relation to Prior Work
+        - Rating (1-10):
+        - Comments:
+        - Is it clearly discussed how this work differs from previous contributions?
+        - Does the submission show due scholarship, relating the proposed work to prior work?
+        - Does the related work section explain how the proposed work differs from prior literature?
+
+    7. Reproducibility
+        - Rating (1-10):
+        - Comments:
+        - Are there enough details to reproduce the major results of this work?
+        - Is the work reasonably reproducible?
+        - If not, are the reproducibility issues listed among the weaknesses?
+
+    8. Impacts and Implications
+        - Rating (1-10):
+        - Comments:
+        - Have the authors adequately addressed the broader impact of their work?
+        - Are potential negative ethical and societal implications considered?
+
+    9. Ethical Considerations
+        - Rating (1-10):
+        - Comments:
+        - Does the submission raise potential ethical concerns?
+        - Are there methods, applications, or data that create or reinforce unfair bias?
+        - Does the work have a primary purpose of harm or injury?
+
+    10. Fairness
+        - Rating (1-10):
+        - Comments:
+        - Are the review scores distributed fairly?
+        - Is there a balance in the scoring, without significant bias towards extremely high or low scores?
+        - Do the scores reflect a reasonable and unbiased assessment of the paper?
+    """
+
+
+    # Organize the reviews
+    organized_reviews = "\n".join([f"Reviewer {i+1}'s comment: {review[i]}" for i in range(len(review))])
+    input_data = {
+        "regulations": regulations,
+        "idea": idea,
+        "trend": trend,
+        "title": paper["title"],
+        "abstract": paper["abstract"],
+        "review": organized_reviews,
+        "final_decision": decision,
+    }
+    prompt = review_prompt.format_map(input_data)
     evaluation_result = model_prompting(model_name, prompt)
     # merge results from List[Str] to Str
     combined_result = "\n".join(evaluation_result)
