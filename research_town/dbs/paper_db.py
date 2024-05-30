@@ -33,7 +33,7 @@ class PaperProfileDB:
     def add_paper(self, paper: PaperProfile) -> None:
         self.data[paper.pk] = paper
 
-    def update_paper(self, paper_pk: str, updates: Dict[str, Optional[str]]) -> bool:
+    def update_paper(self, paper_pk: str, updates: Dict[str, Any]) -> bool:
         if paper_pk in self.data:
             for key, value in updates.items():
                 if value is not None:

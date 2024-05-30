@@ -15,8 +15,10 @@ from research_town.dbs.progress_db import (
     ResearchProgressDB,
 )
 
+from typing import Optional, Dict, Any
 
-def test_agent_profile_db():
+
+def test_agent_profile_db()->None:
     db = AgentProfileDB()
     agent1 = AgentProfile(name="John Doe", bio="Researcher in AI", institute="AI Institute")
     agent2 = AgentProfile(name="Jane Smith", bio="Expert in NLP", institute="NLP Lab")
@@ -28,8 +30,11 @@ def test_agent_profile_db():
     assert agent3.pk in db.data
     assert db.data[agent3.pk].name == "Alice Johnson"
 
+
     updates = {"bio": "Senior Researcher in AI"}
-    success = db.update(agent1.pk, updates)
+    updates_with_optional: Dict[str, Optional[str]] = {k: v for k, v in updates.items()}
+    success = db.update(agent1.pk, updates_with_optional)
+
     assert success
     assert db.data[agent1.pk].bio == "Senior Researcher in AI"
 
@@ -42,8 +47,12 @@ def test_agent_profile_db():
 
     success = db.delete("non-existing-pk")
     assert not success
+    
+    conditions: Dict[str, Any] = {"name": "Jane Smith"}
 
-    results = db.get(name="Jane Smith")
+    # 使用**操作符解包字典，将其作为关键字参数传入get方法
+    results = db.get(**conditions)
+    
     assert len(results) == 1
     assert results[0].name == "Jane Smith"
 
@@ -76,7 +85,7 @@ def test_agent_profile_db():
     assert "new-pk" in db.data
     assert db.data["new-pk"].name == "New Agent"
 
-def test_env_log_db():
+def test_env_log_db()->None:
     db = EnvLogDB()
     review_log = AgentPaperReviewLog(paper_pk="paper1", agent_pk="agent1", review_score=5, review_content="Good paper")
     rebuttal_log = AgentPaperRebuttalLog(paper_pk="paper1", agent_pk="agent1", rebuttal_content="I disagree with the review")
@@ -92,20 +101,23 @@ def test_env_log_db():
     db.add(new_log)
     assert new_log.dict() in db.data["AgentPaperReviewLog"]
 
-    results = db.get(AgentPaperReviewLog, paper_pk="paper1")
+    conditions: Dict[str, Any] = {"paper_pk": "paper1"}
+    results = db.get(AgentPaperReviewLog, **conditions)
     assert len(results) == 1
     assert results[0].review_content == "Good paper"
 
     updates = {"review_score": 3, "review_content": "Decent paper"}
     updated_count = db.update(AgentPaperReviewLog, {"paper_pk": "paper1"}, updates)
     assert updated_count == 2
-    updated_log = db.get(AgentPaperReviewLog, paper_pk="paper1")[0]
+
+    updated_log = db.get(AgentPaperReviewLog, **conditions)[0]
+
     assert updated_log.review_score == 3
     assert updated_log.review_content == "Decent paper"
 
-    deleted_count = db.delete(AgentPaperReviewLog, paper_pk="paper1")
+    deleted_count = db.delete(AgentPaperReviewLog, **conditions)
     assert deleted_count == 1
-    results = db.get(AgentPaperReviewLog, paper_pk="paper1")
+    results = db.get(AgentPaperReviewLog, **conditions)
     assert len(results) == 0
 
     file_name = "test_env_logs.json"
@@ -120,7 +132,7 @@ def test_env_log_db():
     assert len(new_db.data["AgentAgentDiscussionLog"]) == 1
     assert new_db.data["AgentPaperReviewLog"][0]["review_content"] == "Interesting paper"
 
-def test_paper_profile_db():
+def test_paper_profile_db()->None:
     db = PaperProfileDB()
     paper1 = PaperProfile(
         title="Sample Paper 1",
@@ -162,10 +174,12 @@ def test_paper_profile_db():
     assert paper is not None
     assert paper.title == "Sample Paper 1"
 
-    updates = {"title": "Updated Sample Paper 1", "citation_count": 15}
+    updates:Dict[str, Any] = {"title": "Updated Sample Paper 1", "citation_count": 15}
+
     result = db.update_paper(paper1.pk, updates)
     assert result
-    updated_paper = db.get_paper(paper1.pk)
+    updated_paper:Optional[PaperProfile] = db.get_paper(paper1.pk)
+    assert updated_paper is not None
     assert updated_paper.title == "Updated Sample Paper 1"
     assert updated_paper.citation_count == 15
 
@@ -173,7 +187,8 @@ def test_paper_profile_db():
     assert result
     assert db.get_paper(paper2.pk) is None
 
-    results = db.query_papers(domain="Computer Science")
+    domain:Dict[str, Any] = {"domain": "Computer Science"}
+    results = db.query_papers(**domain)
     assert len(results) == 2
     assert results[0].title == "Updated Sample Paper 1"
     assert results[1].title == "Sample Paper 3"
@@ -188,7 +203,7 @@ def test_paper_profile_db():
     assert paper1.pk in new_db.data
     assert new_db.data[paper1.pk].title == "Updated Sample Paper 1"
 
-def test_research_progress_db():
+def test_research_progress_db()->None:
     db = ResearchProgressDB()
     idea1 = ResearchIdea(content="Idea for a new AI algorithm")
     idea2 = ResearchIdea(content="Quantum computing research plan")
@@ -200,8 +215,8 @@ def test_research_progress_db():
     db.add(new_idea)
     assert new_idea.dict() in db.data["ResearchIdea"]
 
-
-    results = db.get(ResearchIdea, content="Idea for a new AI algorithm")
+    content:Dict[str, Any] = {"content": "Idea for a new AI algorithm"}
+    results = db.get(ResearchIdea, **content)
     assert len(results) == 1
     assert results[0].content == "Idea for a new AI algorithm"
 
@@ -209,14 +224,16 @@ def test_research_progress_db():
     updates = {"content": "Updated idea content"}
     updated_count = db.update(ResearchIdea, {"content": "Idea for a new AI algorithm"}, updates)
     assert updated_count == 1
-    updated_results = db.get(ResearchIdea, content="Updated idea content")
+    content2:Dict[str, Any] = {"content": "Updated idea content"}
+    updated_results = db.get(ResearchIdea, **content2)
     assert len(updated_results) == 1
     assert updated_results[0].content == "Updated idea content"
 
 
-    deleted_count = db.delete(ResearchIdea, content="Quantum computing research plan")
+    content3:Dict[str, Any] = {"content": "Quantum computing research plan"}
+    deleted_count = db.delete(ResearchIdea, **content3)
     assert deleted_count == 1
-    remaining_results = db.get(ResearchIdea, content="Quantum computing research plan")
+    remaining_results = db.get(ResearchIdea, **content3)
     assert len(remaining_results) == 0
 
     file_name = "test_research_db.json"
