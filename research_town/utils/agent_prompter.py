@@ -109,7 +109,7 @@ def think_idea_prompting(
     model_name: str,
 ) -> List[str]:
     prompt_template = (prompt_template[0])
-    prompt = prompt_template.format_map({'insight': insight['content']})
+    prompt = prompt_template.format_map({'insight': insight['trend']})
     return model_prompting(model_name, prompt)
 
 
