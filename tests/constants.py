@@ -7,8 +7,8 @@ from research_town.dbs import (
     AgentProfile,
     PaperProfile,
     ResearchIdea,
-    ResearchPaperSubmission,
     ResearchInsight,
+    ResearchPaperSubmission,
 )
 
 paper_profile_A = PaperProfile(

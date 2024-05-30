@@ -11,8 +11,8 @@ from ..dbs import (
     AgentProfile,
     PaperProfile,
     ResearchIdea,
-    ResearchPaperSubmission,
     ResearchInsight,
+    ResearchPaperSubmission,
 )
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
