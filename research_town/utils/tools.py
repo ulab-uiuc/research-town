@@ -1,7 +1,8 @@
 import datetime
 import json
 import os
-from typing import Any, Dict
+
+from beartype.typing import Any, Dict
 
 
 def show_time() -> str:

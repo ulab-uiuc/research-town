@@ -1,4 +1,4 @@
-from typing import Dict, List
+from beartype.typing import Dict, List
 
 from research_town.dbs import (
     AgentProfile,

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from beartype.typing import List, Optional
 
 
 def mock_papers(corpus: List[str], query: str, num: int) -> List[str]:

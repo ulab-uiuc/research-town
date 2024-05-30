@@ -1,6 +1,5 @@
-from typing import Dict
-
 from beartype import beartype
+from beartype.typing import Dict
 
 from .model_prompting import model_prompting
 

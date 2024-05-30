@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import Any, Dict, List, Tuple
 
 from beartype import beartype
+from beartype.typing import Any, Dict, List, Tuple
 
 from ..dbs import (
     AgentAgentDiscussionLog,
