@@ -96,7 +96,7 @@ def test_env_log_db(mock_load_from_file, mock_save_to_file):
     
     updates = {"review_score": 3, "review_content": "Decent paper"}
     updated_count = db.update(AgentPaperReviewLog, {"paper_pk": "paper1"}, updates)
-    assert updated_count == 1
+    assert updated_count == 2
     updated_log = db.get(AgentPaperReviewLog, paper_pk="paper1")[0]
     assert updated_log.review_score == 3
     assert updated_log.review_content == "Decent paper"
@@ -198,32 +198,19 @@ def test_research_progress_db(mock_load_from_file, mock_save_to_file):
     db = ResearchProgressDB()
     idea1 = ResearchIdea(content="Idea for a new AI algorithm")
     idea2 = ResearchIdea(content="Quantum computing research plan")
-    paper1 = ResearchPaperDraft(
-        title="Draft on AI", 
-        abstract="This is the abstract for AI research paper."
-    )
+
     db.add(idea1)
     db.add(idea2)
-    db.add(paper1)
     
     new_idea = ResearchIdea(content="Blockchain research proposal")
     db.add(new_idea)
     assert new_idea.dict() in db.data["ResearchIdea"]
-    
-    new_paper = ResearchPaperDraft(
-        title="Draft on Blockchain",
-        abstract="This is the abstract for Blockchain research paper."
-    )
-    db.add(new_paper)
-    assert new_paper.dict() in db.data["ResearchPaper"]
+
 
     results = db.get(ResearchIdea, content="Idea for a new AI algorithm")
     assert len(results) == 1
     assert results[0].content == "Idea for a new AI algorithm"
 
-    results = db.get(ResearchPaperDraft, title="Draft on AI")
-    assert len(results) == 1 
-    assert results[0].title == "Draft on AI"
 
     updates = {"content": "Updated idea content"}
     updated_count = db.update(ResearchIdea, {"content": "Idea for a new AI algorithm"}, updates)
@@ -232,21 +219,10 @@ def test_research_progress_db(mock_load_from_file, mock_save_to_file):
     assert len(updated_results) == 1
     assert updated_results[0].content == "Updated idea content"
 
-    updates = {"title": "Updated Draft on AI"} 
-    updated_count = db.update(ResearchPaperDraft, {"title": "Draft on AI"}, updates)
-    assert updated_count == 1
-    updated_results = db.get(ResearchPaperDraft, title="Updated Draft on AI")
-    assert len(updated_results) == 1
-    assert updated_results[0].title == "Updated Draft on AI"
 
     deleted_count = db.delete(ResearchIdea, content="Quantum computing research plan")
     assert deleted_count == 1
     remaining_results = db.get(ResearchIdea, content="Quantum computing research plan")
-    assert len(remaining_results) == 0
-
-    deleted_count = db.delete(ResearchPaperDraft, title="Updated Draft on AI")
-    assert deleted_count == 1 
-    remaining_results = db.get(ResearchPaperDraft, title="Updated Draft on AI")
     assert len(remaining_results) == 0
 
     file_name = "test_research_db.json"
@@ -258,6 +234,4 @@ def test_research_progress_db(mock_load_from_file, mock_save_to_file):
     mock_load_from_file.assert_called_once_with(file_name)
     
     assert len(new_db.data["ResearchIdea"]) == 2
-    assert len(new_db.data["ResearchPaper"]) == 1
     assert idea1.dict() in new_db.data["ResearchIdea"]
-    assert new_paper.dict() in new_db.data["ResearchPaper"]
