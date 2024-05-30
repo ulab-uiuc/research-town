@@ -1,195 +1,220 @@
-import datetime
-from typing import Any, Dict, List, Tuple
-from xml.etree import ElementTree
+from datetime import datetime
 
-import requests
-
-from ..utils.agent_prompting import (
-    communicate_with_multiple_researchers,
-    generate_ideas,
-    summarize_research_direction,
-    summarize_research_field,
-    write_paper_abstract,
+from beartype import beartype
+from beartype.typing import Any, Dict, List, Tuple
+from ..configs.config import cfg
+from ..dbs import (
+    AgentAgentDiscussionLog,
+    AgentPaperMetaReviewLog,
+    AgentPaperRebuttalLog,
+    AgentPaperReviewLog,
+    AgentProfile,
+    PaperProfile,
+    ResearchIdea,
+    ResearchInsight,
+    ResearchPaperSubmission,
 )
-from ..utils.author_relation import bfs
-from ..utils.paper_collection import get_bert_embedding
+from ..utils.agent_collector import bfs
+from ..utils.agent_prompter import (
+    discuss_prompting,
+    find_collaborators_prompting,
+    read_paper_prompting,
+    review_paper_prompting,
+    review_score_prompting,
+    think_idea_prompting,
+    write_meta_review_prompting,
+    write_paper_prompting,
+    write_rebuttal_prompting,
+)
+from ..utils.serializer import Serializer
 
 
 class BaseResearchAgent(object):
-    def __init__(self, name: str) -> None:
-        self.profile = self.get_profile(name)
-        self.name = name
+    def __init__(self, agent_profile: AgentProfile, model_name: str) -> None:
+        self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
+        self.model_name: str = model_name
+        self.serializer = Serializer()
 
-    def find_text(self, element: ElementTree.Element, path: str) -> str:
-        found_element = element.find(path)
-        if found_element is not None and found_element.text is not None:
-            return found_element.text.strip()
-        return ""
+    @beartype
+    def get_profile(self, author_name: str) -> AgentProfile:
+        # TODO: db get based on name
+        # TODO: need rebuild
+        agent_profile = AgentProfile(
+            name='Geoffrey Hinton',
+            bio='A researcher in the field of neural network.',
+        )
+        return agent_profile
 
-    def get_profile(self, author_name: str) -> Dict[str, Any]:
-        author_query = author_name.replace(" ", "+")
-        url = f"http://export.arxiv.org/api/query?search_query=au:{author_query}&start=0&max_results=300"
+    @beartype
+    def find_collaborators(
+        self, paper: PaperProfile, parameter: float = 0.5, max_number: int =cfg.max_collaborators_num
+    ) -> List[AgentProfile]:
+        # TODO: need rebuild
+        start_author: List[str] = (
+            [self.profile.name] if self.profile.name is not None else []
+        )
+        graph, _, _ = bfs(author_list=start_author, node_limit=max_number)
+        collaborators = list(
+            {name for pair in graph for name in pair if name != self.profile.name}
+        )
+        self_profile: Dict[str, str] = (
+            {self.profile.name: self.profile.bio}
+            if self.profile.name is not None and self.profile.bio is not None
+            else {}
+        )
+        collaborator_profiles: Dict[str, str] = {}
+        for author in collaborators:
+            author_bio = self.get_profile(author).bio
+            if author_bio is not None:
+                collaborator_profiles[author] = author_bio
+        paper_serialize: Dict[str, str] = (
+            {paper.title: paper.abstract}
+            if paper.title is not None and paper.abstract is not None
+            else {}
+        )
+        result = find_collaborators_prompting(
+            paper_serialize, self_profile, collaborator_profiles, cfg.prompt_template.find_collaborators, parameter,max_number)
+        collaborators_list = []
+        for collaborator in collaborators:
+            if collaborator in result:
+                collaborators_list.append(self.get_profile(collaborator))
+        return collaborators_list
 
-        response = requests.get(url)
-        papers_list: List[Dict[str, Any]] = []
-
-        if response.status_code == 200:
-            root = ElementTree.fromstring(response.content)
-            entries = root.findall("{http://www.w3.org/2005/Atom}entry")
-
-            total_papers = 0
-            papers_by_year: Dict[int, List[ElementTree.Element]] = {}
-
-            for entry in entries:
-                title = self.find_text(entry, "{http://www.w3.org/2005/Atom}title")
-                published = self.find_text(
-                    entry, "{http://www.w3.org/2005/Atom}published"
-                )
-                abstract = self.find_text(entry, "{http://www.w3.org/2005/Atom}summary")
-                authors_elements = entry.findall("{http://www.w3.org/2005/Atom}author")
-                authors = [
-                    self.find_text(author, "{http://www.w3.org/2005/Atom}name")
-                    for author in authors_elements
-                ]
-                link = self.find_text(entry, "{http://www.w3.org/2005/Atom}id")
-
-                if author_name in authors:
-                    coauthors = [author for author in authors if author != author_name]
-                    coauthors_str = ", ".join(coauthors)
-
-                    papers_list.append(
-                        {
-                            "date": published,
-                            "Title & Abstract": f"{title}; {abstract}",
-                            "coauthors": coauthors_str,
-                            "link": link,
-                        }
-                    )
-
-                    total_papers += 1
-                    published_date = published
-                    date_obj = datetime.datetime.strptime(
-                        published_date, "%Y-%m-%dT%H:%M:%SZ"
-                    )
-                    year = date_obj.year
-                    if year not in papers_by_year:
-                        papers_by_year[year] = []
-                    papers_by_year[year].append(entry)
-
-            if total_papers > 40:
-                for cycle_start in range(
-                    min(papers_by_year), max(papers_by_year) + 1, 5
-                ):
-                    cycle_end = cycle_start + 4
-                    for year in range(cycle_start, cycle_end + 1):
-                        if year in papers_by_year:
-                            selected_papers = papers_by_year[year][:2]
-                            for paper in selected_papers:
-                                title = self.find_text(
-                                    paper, "{http://www.w3.org/2005/Atom}title"
-                                )
-                                abstract = self.find_text(
-                                    paper, "{http://www.w3.org/2005/Atom}summary"
-                                )
-                                authors_elements = paper.findall(
-                                    "{http://www.w3.org/2005/Atom}author"
-                                )
-                                co_authors = [
-                                    self.find_text(
-                                        author, "{http://www.w3.org/2005/Atom}name"
-                                    )
-                                    for author in authors_elements
-                                    if self.find_text(
-                                        author, "{http://www.w3.org/2005/Atom}name"
-                                    )
-                                    != author_name
-                                ]
-
-                                papers_list.append(
-                                    {
-                                        "Author": author_name,
-                                        "Title & Abstract": f"{title}; {abstract}",
-                                        "Date Period": f"{year}",
-                                        "Cycle": f"{cycle_start}-{cycle_end}",
-                                        "Co_author": ", ".join(co_authors),
-                                    }
-                                )
-
-            # Trim the list to the 10 most recent papers
-            papers_list = papers_list[:10]
-
-            personal_info = "; ".join(
-                [f"{details['Title & Abstract']}" for details in papers_list]
-            )
-            info = summarize_research_direction(personal_info)
-            return {"name": author_name, "profile": info[0]}
-
-        else:
-            print("Failed to fetch data from arXiv.")
-            return {"info": "fail!"}
-
-    def communicate(self, message: Dict[str, str]) -> str:
-        return communicate_with_multiple_researchers(message)[0]
-
-    def read_paper(
-        self, external_data: Dict[str, Dict[str, List[str]]], domain: str
-    ) -> str:
-        time_chunks_embed = {}
-        dataset = external_data
-        for time in dataset.keys():
-            papers = dataset[time]["abstract"]
-            papers_embedding = get_bert_embedding(papers)
-            time_chunks_embed[time] = papers_embedding
-
-        trend = summarize_research_field(
-            profile=self.profile,
-            keywords=[domain],
-            dataset=dataset,
-            data_embedding=time_chunks_embed,
-        )  # trend
-        trend_output=trend[0]
-        return trend_output
-
-    def find_collaborators(self, input: Dict[str, str]) -> List[str]:
-        return ["Alice", "Bob", "Charlie"]
-
-    def get_co_author_relationships(self, name: str, max_node: int) -> Tuple[List[Tuple[str, str]], Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
-        start_author = [name]
+    @beartype
+    def get_co_author_relationships(
+        self, agent_profile: AgentProfile, max_node: int
+    ) -> Tuple[
+        List[Tuple[str, str]],
+        Dict[str, List[Dict[str, Any]]],
+        Dict[str, List[Dict[str, Any]]],
+    ]:
+        # TODO: need rebuild
+        start_author: List[str] = (
+            [self.profile.name] if self.profile.name is not None else []
+        )
         graph, node_feat, edge_feat = bfs(author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat
 
-    def generate_idea(
-        self, external_data: Dict[str, Dict[str, List[str]]], domain: str
-    ) -> List[str]:
-        time_chunks_embed = {}
-        dataset = external_data
-        for time in dataset.keys():
-            papers = dataset[time]["abstract"]
-            papers_embedding = get_bert_embedding(papers)
-            time_chunks_embed[time] = papers_embedding
+    # =======================================
 
-        trends, paper_links = summarize_research_field(
-            profile=self.profile,
-            keywords=[domain],
-            dataset=dataset,
-            data_embedding=time_chunks_embed,
-        )  # trend
-        ideas: List[str] = []
-        for trend in trends:
-            idea = generate_ideas(trend)[0]
-            ideas.append(idea)
+    @beartype
+    def read_paper(
+        self, papers: List[PaperProfile], domains: List[str]
+    ) -> List[ResearchInsight]:
+        serialized_papers = self.serializer.serialize(papers)
+        serialized_profile = self.serializer.serialize(self.profile)
+        insight_contents = read_paper_prompting(
+            profile=serialized_profile,
+            papers=serialized_papers,
+            query_template=cfg.prompt_template.read_paper_query,
+            prompt_template=cfg.prompt_template.read_paper_sum,
+            domains=domains,
+            model_name=self.model_name,
+        )
+        insights: List[ResearchInsight] = []
+        for content in insight_contents:
+            insights.append(ResearchInsight(content=content))
+        return insights
 
+    @beartype
+    def think_idea(
+        self,
+        insights: List[ResearchInsight],
+    ) -> List[ResearchIdea]:
+        serialized_insights = self.serializer.serialize(insights)
+        idea_contents: List[str] = []
+        for insight in serialized_insights:
+            idea_contents.append(
+                think_idea_prompting(insight=insight, prompt_template=cfg.prompt_template.think_idea, model_name=self.model_name)[0]
+            )
+        ideas: List[ResearchIdea] = []
+        for content in idea_contents:
+            ideas.append(ResearchIdea(content=content))
         return ideas
 
-    def write_paper(self, input: List[str], external_data: Dict[str, Dict[str, List[str]]]) -> str:
-        paper_abstract = write_paper_abstract(input, external_data)
-        return paper_abstract[0]
+    @beartype
+    def write_paper(
+        self, ideas: List[ResearchIdea], papers: List[PaperProfile]
+    ) -> ResearchPaperSubmission:
+        serialized_ideas = self.serializer.serialize(ideas)
+        serialized_papers = self.serializer.serialize(papers)
+        paper_abstract = write_paper_prompting(
+            ideas=serialized_ideas, papers=serialized_papers,prompt_template=cfg.prompt_template.write_paper, model_name=self.model_name
+        )[0]
+        return ResearchPaperSubmission(abstract=paper_abstract)
 
-    def review_paper(self, input: Dict[str, str], external_data: Dict[str, str]) -> str:
-        return "review comments"
+    @beartype
+    def write_paper_review(self, paper: PaperProfile) -> AgentPaperReviewLog:
+        serialized_paper = self.serializer.serialize(paper)
+        paper_review = review_paper_prompting(
+            paper=serialized_paper,prompt_template=cfg.prompt_template.review_paper, model_name=self.model_name
+        )[0]
+        review_score = review_score_prompting(
+            paper_review=paper_review,prompt_template=cfg.prompt_template.review_score, model_name=self.model_name
+        )
+        return AgentPaperReviewLog(
+            timestep=(int)(datetime.now().timestamp()),
+            paper_pk=paper.pk,
+            agent_pk=self.profile.pk,
+            review_content=paper_review,
+            review_score=review_score,
+        )
 
-    def make_review_decision(
-        self, input: Dict[str, str], external_data: Dict[str, str]
-    ) -> str:
-        return "accept"
+    @beartype
+    def write_paper_meta_review(
+        self, paper: PaperProfile, reviews: List[AgentPaperReviewLog]
+    ) -> AgentPaperMetaReviewLog:
+        serialized_paper = self.serializer.serialize(paper)
+        serialized_reviews = self.serializer.serialize(reviews)
+
+        meta_review = write_meta_review_prompting(
+            paper=serialized_paper,
+            reviews=serialized_reviews,
+            prompt_template=cfg.prompt_template.write_meta_review,
+            model_name=self.model_name,
+        )
+        review_decision = 'accept' in meta_review[0].lower()
+
+        return AgentPaperMetaReviewLog(
+            timestep=(int)(datetime.now().timestamp()),
+            paper_pk=paper.pk,
+            agent_pk=self.profile.pk,
+            decision=review_decision,
+            meta_review=meta_review[0],
+        )
+
+    @beartype
+    def write_rebuttal(
+        self,
+        paper: PaperProfile,
+        review: AgentPaperReviewLog,
+    ) -> AgentPaperRebuttalLog:
+        serialized_paper = self.serializer.serialize(paper)
+        serialized_review = self.serializer.serialize(review)
+
+        rebuttal_content = write_rebuttal_prompting(
+            paper=serialized_paper, review=serialized_review,prompt_template=cfg.prompt_template.write_rebuttal, model_name=self.model_name
+        )[0]
+
+        return AgentPaperRebuttalLog(
+            timestep=(int)(datetime.now().timestamp()),
+            paper_pk=paper.pk,
+            agent_pk=self.profile.pk,
+            rebuttal_content=rebuttal_content,
+        )
+
+    @beartype
+    def discuss(self, message: AgentAgentDiscussionLog) -> AgentAgentDiscussionLog:
+        serialized_message = self.serializer.serialize(message)
+        message_content = discuss_prompting(
+            message=serialized_message,prompt_template=cfg.prompt_template.discuss, model_name=self.model_name
+        )[0]
+        return AgentAgentDiscussionLog(
+            timestep=(int)(datetime.now().timestamp()),
+            agent_from_pk=message.agent_from_pk,
+            agent_from_name=message.agent_from_name,
+            agent_to_pk=message.agent_to_pk,
+            agent_to_name=message.agent_to_name,
+            message=message_content,
+        )
