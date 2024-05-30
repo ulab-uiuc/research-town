@@ -1,33 +1,38 @@
 import logging
+from typing import Any, Callable, Dict, List, Never, Union
 
-from beartype.typing import Dict, List, Union
-
-logging.basicConfig(
-    level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s'
+app_logger = logging.getLogger('research_town')
+app_logger.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+console_formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
+console_handler.setFormatter(console_formatter)
+app_logger.addHandler(console_handler)
 
 
-def logging_callback(messages: Union[List[Dict[str, str]], None] = None) -> None:
-    """
-    Logs messages using the logging module.
+def logging_decorator(
+    func: Callable[..., Union[List[Dict[str, str]], List[Never], None]],
+) -> Callable[..., None]:
+    def wrapper(*args: List[Any], **kwargs: Dict[str, Any]) -> None:
+        messages = func(*args, **kwargs)
+        if not messages:
+            return
+        for message in messages:
+            text = message.get('text', '')
+            level = str(message.get('level', 'INFO')).upper()
 
-    :param messages: List of dictionaries containing 'text' and 'level' keys.
-    """
-    if not messages:
-        return
-    for message in messages:
-        text = message.get('text', '')
-        level = message.get('level', 'INFO').upper()
+            if level == 'DEBUG':
+                app_logger.debug(text)
+            elif level == 'INFO':
+                app_logger.info(text)
+            elif level == 'WARNING':
+                app_logger.warning(text)
+            elif level == 'ERROR':
+                app_logger.error(text)
+            elif level == 'CRITICAL':
+                app_logger.critical(text)
+            else:
+                app_logger.info(text)  # Default to INFO if the level is not recognized
 
-        if level == 'DEBUG':
-            logging.debug(text)
-        elif level == 'INFO':
-            logging.info(text)
-        elif level == 'WARNING':
-            logging.warning(text)
-        elif level == 'ERROR':
-            logging.error(text)
-        elif level == 'CRITICAL':
-            logging.critical(text)
-        else:
-            logging.info(text)  # Default to INFO if the level is not recognized
+    return wrapper

@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, List, Tuple
+from beartype.typing import Dict, Generator, List, Never, Tuple, Union
 
 from ..dbs import (
     AgentPaperMetaReviewLog,
@@ -23,9 +23,6 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         env_db: EnvLogDB,
     ) -> None:
         super().__init__(agent_profiles)
-        self.turn_number = 0
-        self.turn_max = 1
-        self.terminated = False
         self.decision = 'reject'
         self.submission = PaperProfile()
         self.reviewer_mask = [False] * len(agent_profiles)
@@ -60,32 +57,52 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                 count_max = count
                 self.decision = d
 
-    def step(self) -> None:
+    def _step(
+        self,
+    ) -> Generator[Union[List[Dict[str, str]], List[Never], None], None, None]:
+        yield [{'text': 'Paper Reviewing started', 'level': 'INFO'}]
         # Paper Reviewing
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
-                self.reviews.append(agent.write_paper_review(paper=self.submission))
+                review = agent.write_paper_review(paper=self.submission)
+                self.reviews.append(review)
+                yield [
+                    {
+                        'text': f'Agent {agent.profile.name} gave review {str(review)}',
+                        'level': 'INFO',
+                    }
+                ]
 
+        yield [{'text': 'Paper Meta Reviewing started', 'level': 'INFO'}]
         # Paper Meta Reviewing
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
-                self.meta_reviews.append(
-                    agent.write_paper_meta_review(
-                        paper=self.submission, reviews=self.reviews
-                    )
+                meta_review = agent.write_paper_meta_review(
+                    paper=self.submission, reviews=self.reviews
                 )
+                self.meta_reviews.append(meta_review)
+                yield [
+                    {
+                        'text': f'Agent {agent.profile.name} gave meta-review {str(meta_review)}',
+                        'level': 'INFO',
+                    }
+                ]
 
+        yield [{'text': 'Rebuttal Submitting started', 'level': 'INFO'}]
         # Rebuttal Submitting
         for index, agent in enumerate(self.agents):
             for review in self.reviews:
                 if self.reviewer_mask[index]:
-                    self.rebuttals.append(
-                        agent.write_rebuttal(
-                            paper=self.submission,
-                            review=review,
-                        )
+                    rebuttal = agent.write_rebuttal(
+                        paper=self.submission,
+                        review=review,
                     )
+                    self.rebuttals.append(rebuttal)
+                    yield [
+                        {
+                            'text': f'Agent {agent.profile.name} gave rebuttal {str(rebuttal)}',
+                            'level': 'INFO',
+                        }
+                    ]
 
-        self.turn_number += 1
-        if self.turn_number >= self.turn_max:
-            self.terminated = True
+        yield [{'text': 'PaperRebuttalMultiAgentEnv complete', 'level': 'INFO'}]

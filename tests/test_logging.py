@@ -1,7 +1,8 @@
-from research_town.utils.logging import logging_callback
+from typing import Dict, List, Never, Union
+
+from research_town.utils.logging import logging_decorator
 
 
-def test_logging_callback() -> None:
-    logging_callback()
-    logging_callback([])
-    logging_callback([{'text': 'text', 'level': 'INFO'}])
+@logging_decorator
+def test_logging_callback() -> Union[List[Dict[str, str]], List[Never], None]:
+    return []
