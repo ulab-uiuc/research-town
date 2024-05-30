@@ -38,7 +38,11 @@ class RealPaperWithReviewDB:
 
     def load_from_file(self, file_name: str) -> None:
         with open(file_name, 'r') as f:
-            self.data = json.load(f)
+            raw_data = json.load(f)
+            self.data = {
+                title: RealPaperWithReview(**details)
+                for title, details in raw_data.items()
+            }
     
     def save_to_file(self, file_name: str) -> None:
         # Combine data and rank_consistency into one dictionary
