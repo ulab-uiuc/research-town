@@ -35,13 +35,13 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def step(self) -> None:
         # TODO: support retrieval from database
         # external_data = self.db.get(cls=PaperProfile, conditions={})
-        external_data = [PaperProfile(title="A Survey on Machine Learning",
+        papers = [PaperProfile(title="A Survey on Machine Learning",
                                       abstract="This paper surveys the field of machine learning."), PaperProfile(title="A Survey on Natural Language Processing", abstract="This paper surveys the field of natural language processing.")]
         agent_names_to_objs: Dict[str, BaseResearchAgent] = {}
         for iter_agent in self.agents:
             if iter_agent.profile.name is not None:
                 agent_names_to_objs[iter_agent.profile.name] = iter_agent
-        abstracts: Dict[str, PaperProfile] = {}
+        submissions: Dict[str, PaperProfile] = {}
         for agent in self.agents:
             # TODO: update find collaborator functions with initial task
             collaborators = agent.find_collaborators(PaperProfile(title="A Survey on Machine Learning",
@@ -60,16 +60,20 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         collaborator_agents.append(
                             agent_names_to_objs[researcher_profile.name])
 
-            ideas = agent.generate_idea(
-                papers=external_data, domain="machine learning")
+            insights = agent.read_paper(
+                papers=papers,
+                domains=["machine learning"]
+            )
+            ideas = agent.think_idea(insights=insights)
             for collaborator_agent in collaborator_agents:
-                ideas.extend(collaborator_agent.generate_idea(
-                    papers=external_data, domain="machine learning"))
-            abstract = agent.write_paper(ideas, external_data)
+                ideas.extend(collaborator_agent.think_idea(insights=insights))
+            paper = agent.write_paper(ideas, papers)
+
+            # TODO: this is not correct, we cannot write PaperProfile, we can only write PaperSubmission
             if agent.profile.name is not None:
-                abstracts[agent.profile.name] = abstract
-        self.db.update(cls=PaperProfile, conditions={}, updates=abstracts)
-        self.submit_paper(abstracts)
+                submissions[agent.profile.name] = PaperProfile(abstract=paper.abstract)
+        self.db.update(cls=PaperProfile, conditions={}, updates=submissions)
+        self.submit_paper(submissions)
         self.terminated = True
 
     @beartype
