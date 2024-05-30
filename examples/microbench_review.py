@@ -40,15 +40,15 @@ class RealPaperWithReviewDB:
             self.data = json.load(f)
     
     def save_to_file(self, file_name: str) -> None:
+        # Combine data and rank_consistency into one dictionary
+        combined_data = {
+            "rank_consistency": self.rank_consistency,
+            "papers": {title: real_paper.dict() for title, real_paper in self.data.items()}
+            
+        }
+        
         with open(file_name, 'w') as f:
-            # save the data
-            json.dump(
-                {title: real_paper.dict() for title, real_paper in self.data.items()}, f, indent=2
-            )
-            # save the rank consistency
-            json.dump(
-                {"rank_consistency": self.rank_consistency}, f, indent=2
-            )
+            json.dump(combined_data, f, indent=2)
 
     def profile_paper_from_real_review(self) -> List[PaperProfile]:
         papers = []

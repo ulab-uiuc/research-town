@@ -1,0 +1,272 @@
+{
+  "ChunkAttention: Efficient Attention on KV Cache with Chunking Sharing and Batching": {
+    "paper_pk": null,
+    "title": "ChunkAttention: Efficient Attention on KV Cache with Chunking Sharing and Batching",
+    "abstract": "Self-attention is an essential component of GPT-style models and a significant cause of LLM inference latency for long sequences. In multi-tenant LLM inference servers, the compute and memory operation cost of self-attention can be amortized by making use of the probability that sequences from users may share long prompt prefixes. This paper introduces ChunkAttention, a unique self-attention kernel built on chunking, sharing the KV cache, and batching the attention computation. ChunkAttention recognizes matching prompt prefixes across several sequences and shares their KV cache in memory by chunking the KV cache and structuring it into the auxiliary prefix tree. To significantly improve the memory reuse of KV cache and consequently the speed of self-attention for long shared prompts, we design an efficient computation kernel on this new storage structure, where two-phased partitioning is implemented to reduce memory operations on shared KV cache during self-attention. Experiments show that ChunkAttention can speed up self-attention of long shared prompts 1.6-3 times, with lengths ranging from 1024 to 8192.",
+    "authors": [],
+    "keywords": [
+      "large language model",
+      "model inference",
+      "self attention"
+    ],
+    "real_avg_scores": null,
+    "real_all_scores": [
+      5,
+      5,
+      5,
+      3
+    ],
+    "real_contents": [],
+    "real_rank": 0,
+    "real_decision": "Reject",
+    "sim_avg_scores": null,
+    "sim_all_scores": [],
+    "sim_contents": [],
+    "sim_rank": 0,
+    "sim_decision": null
+  },
+  "mBLIP: Efficient Bootstrapping of Multilingual Vision-LLMs": {
+    "paper_pk": null,
+    "title": "mBLIP: Efficient Bootstrapping of Multilingual Vision-LLMs",
+    "abstract": "Modular vision-language models (Vision-LLMs) align pretrained image encoders with (pretrained) large language models (LLMs), representing a computationally much more efficient alternative to end-to-end training of large vision-language models from scratch, which is prohibitively expensive for most. Vision-LLMs instead post-hoc condition LLMs to `understand' the output of an image encoder. With the abundance of readily available high-quality English image-text data as well as monolingual English LLMs, the research focus has been on English-only Vision-LLMs. Multilingual vision-language models are still predominantly obtained via expensive end-to-end pretraining, resulting in comparatively smaller models, trained on limited multilingual image data supplemented with text-only multilingual corpora. In this work, we present mBLIP, the first multilingual Vision-LLM, which we obtain in a computationally efficient manner -- on consumer hardware using only a few million training examples -- by leveraging a pretrained multilingual LLM. To this end, we re-align an image encoder previously tuned to an English LLM to a new, multilingual LLM -- for this, we leverage multilingual data from a mix of vision-and-language tasks, which we obtain by machine-translating high-quality English data to 95 languages. On the IGLUE benchmark, mBLIP yields results competitive with state-of-the-art models. Moreover, in image captioning on XM3600, mBLIP (zero-shot) even outperforms PaLI-X (a model with 55B parameters). Compared to these very large multilingual vision-language models trained from scratch, we obtain mBLIP by training orders of magnitude fewer parameters on magnitudes less data. We release our model and code at ANONYMIZED.",
+    "authors": [],
+    "keywords": [
+      "image",
+      "text",
+      "language",
+      "vision",
+      "llm",
+      "multilingual"
+    ],
+    "real_avg_scores": null,
+    "real_all_scores": [
+      5,
+      6,
+      5,
+      6
+    ],
+    "real_contents": [],
+    "real_rank": 0,
+    "real_decision": "Reject",
+    "sim_avg_scores": null,
+    "sim_all_scores": [],
+    "sim_contents": [],
+    "sim_rank": 0,
+    "sim_decision": null
+  },
+  "SqueezeLLM: Dense and Sparse Quantization": {
+    "paper_pk": null,
+    "title": "SqueezeLLM: Dense and Sparse Quantization",
+    "abstract": "Generative Large Language Models (LLMs) have demonstrated remarkable results for a wide range of tasks. However, deploying these models for inference has been a significant challenge due to their unprecedented resource requirements. This has forced existing deployment frameworks to use multi-GPU inference pipelines, which are often complex and costly, or to use smaller and less performant models. In this work, we demonstrate that the main bottleneck for generative inference with LLMs is memory bandwidth, rather than compute, specifically for single batch inference. While quantization has emerged as a promising solution by representing weights with reduced precision, previous efforts have often resulted in notable performance degradation. To address this, we introduce SqueezeLLM, a post-training quantization framework that not only enables lossless compression to ultra-low precisions of up to 3-bit, but also achieves higher quantization performance under the same memory constraint. Our framework incorporates two novel ideas: (i) sensitivity-based non-uniform quantization, which searches for the optimal bit precision assignment based on second-order information; and (ii) the Dense-and-Sparse decomposition that stores outliers and sensitive weight values in an efficient sparse format. When applied to the LLaMA models, our 3-bit quantization significantly reduces the perplexity gap from the FP16 baseline by up to 2.1\u00d7 as compared to the state-of-the-art methods with the same memory requirement. Furthermore, when deployed on an A6000 GPU, our quantized models achieve up to 2.3\u00d7 speedup compared to the baseline.",
+    "authors": [],
+    "keywords": [
+      "Quantization",
+      "model compression",
+      "efficient LLM",
+      "efficient inference"
+    ],
+    "real_avg_scores": null,
+    "real_all_scores": [
+      5,
+      5,
+      5,
+      8
+    ],
+    "real_contents": [],
+    "real_rank": 0,
+    "real_decision": "Reject",
+    "sim_avg_scores": null,
+    "sim_all_scores": [],
+    "sim_contents": [],
+    "sim_rank": 0,
+    "sim_decision": null
+  },
+  "KVTQ: Compressing the KV Cache to Hardware Efficient Ternary Digits by Fine-Grained Dynamic Quantization": {
+    "paper_pk": null,
+    "title": "KVTQ: Compressing the KV Cache to Hardware Efficient Ternary Digits by Fine-Grained Dynamic Quantization",
+    "abstract": "Large language models(LLMs) exhibit capabilities beyond expectations in various NLP tasks. Since the inference of LLM consumes huge resources, optimizing the inference process of LLM is of great significance to promote the application of LLM. In the text generation process, caching the key-value embeddings (KV cache) for subsequent generation process is a basic optimization method. However, huge size of the KV cache limits the inference batch size. Compressing the space occupied by the cached key-value embeddings can enlarge the batch size of LLM inference to improve throughput. Besides, based on the analysis of the usage mode of the KV cache, we find compressing the KV cache to ternary digits can not only compress the space occupied by the KV cache, but also greatly reduce the required multiplication operation in the attention block. Combined with the numerical features of the KV cache, we propose KVTQ, a method which compresses the KV cache to hardware efficient ternary digits. We validate our KVTQ method on different series of LLMs and get the conclusion that the KVTQ method which compresses the KV cache to ultra-low bits can still preserve the model quality.",
+    "authors": [],
+    "keywords": [
+      "compression",
+      "dynamic quantization",
+      "ternary digits",
+      "KV cache"
+    ],
+    "real_avg_scores": null,
+    "real_all_scores": [
+      3,
+      5,
+      3,
+      6,
+      5
+    ],
+    "real_contents": [],
+    "real_rank": 0,
+    "real_decision": "Reject",
+    "sim_avg_scores": null,
+    "sim_all_scores": [],
+    "sim_contents": [],
+    "sim_rank": 0,
+    "sim_decision": null
+  },
+  "Efficient Streaming Language Models with Attention Sinks": {
+    "paper_pk": null,
+    "title": "Efficient Streaming Language Models with Attention Sinks",
+    "abstract": "Deploying Large Language Models (LLMs) in streaming applications such as multi-round dialogue, where long interactions are expected, is urgently needed but poses two major challenges. Firstly, during the decoding stage, caching previous tokens' Key and Value states (KV) consumes extensive memory. Secondly, popular LLMs cannot generalize to longer texts than the training sequence length. Window attention, where only the most recent KVs are cached, is a natural approach --- but we show that it fails when the text length surpasses the cache size. We observe an interesting phenomenon, namely attention sink, that keeping the KV of initial tokens will largely recover the performance of window attention. In this paper, we first demonstrate that the emergence of attention sink is due to the strong attention scores towards initial tokens as a sink even if they are not semantically important. Based on the above analysis, we introduce StreamingLLM, an efficient framework that enables LLMs trained with a finite length attention window to generalize to infinite sequence length without any fine-tuning. We show that StreamingLLM can enable Llama-2, MPT, Falcon, and Pythia to perform stable and efficient language modeling with up to 4 million tokens and more. In addition, we discover that adding a placeholder token as a dedicated attention sink during pre-training can further improve streaming deployment. In streaming settings, StreamingLLM outperforms the sliding window recomputation baseline by up to 22.2 speedup. Code and datasets are provided at https://github.com/mit-han-lab/streaming-llm.",
+    "authors": [],
+    "keywords": [
+      "Large Language Models",
+      "Length Extrapolation",
+      "Efficiency"
+    ],
+    "real_avg_scores": null,
+    "real_all_scores": [
+      8,
+      8,
+      6,
+      8
+    ],
+    "real_contents": [],
+    "real_rank": 0,
+    "real_decision": "Accept(poster)",
+    "sim_avg_scores": null,
+    "sim_all_scores": [],
+    "sim_contents": [],
+    "sim_rank": 0,
+    "sim_decision": null
+  },
+  "SpQR: A Sparse-Quantized Representation for Near-Lossless LLM Weight Compression": {
+    "paper_pk": null,
+    "title": "SpQR: A Sparse-Quantized Representation for Near-Lossless LLM Weight Compression",
+    "abstract": "Recent advances in large language model (LLM) pretraining have led to high-quality LLMs with impressive abilities. By compressing such LLMs via quantization to 3-4 bits per parameter, they can fit into memory-limited devices such as laptops and mobile phones, enabling personalized use. Quantizing models to 3-4 bits per parameter can lead to moderate to high accuracy losses, especially for smaller models (1-10B parameters), which are suitable for edge deployment. To address this accuracy issue, we introduce the Sparse-Quantized Representation (SpQR), a new compressed format and quantization technique that enables for the first time \\emph{near-lossless} compression of LLMs across model scales while reaching similar compression levels to previous methods. SpQR works by identifying and isolating \\emph{outlier weights}, which cause particularly large quantization errors, and storing them in higher precision while compressing all other weights to 3-4 bits, and achieves relative accuracy losses of less than in perplexity for highly-accurate LLaMA and Falcon LLMs. This makes it possible to run a 33B parameter LLM on a single 24 GB consumer GPU without performance degradation at 15% speedup, thus making powerful LLMs available to consumers without any downsides. SpQR comes with efficient algorithms for both encoding weights into its format, as well as decoding them efficiently at runtime. Specifically, we provide an efficient GPU inference algorithm for SpQR, which yields faster inference than 16-bit baselines at similar accuracy while enabling memory compression gains of more than 4x.",
+    "authors": [],
+    "keywords": [
+      "quantization",
+      "sparsity",
+      "large language models"
+    ],
+    "real_avg_scores": null,
+    "real_all_scores": [
+      6,
+      6,
+      8,
+      6
+    ],
+    "real_contents": [],
+    "real_rank": 0,
+    "real_decision": "Accept(poster)",
+    "sim_avg_scores": null,
+    "sim_all_scores": [],
+    "sim_contents": [],
+    "sim_rank": 0,
+    "sim_decision": null
+  },
+  "OmniQuant: Omnidirectionally Calibrated Quantization for Large Language Models": {
+    "paper_pk": null,
+    "title": "OmniQuant: Omnidirectionally Calibrated Quantization for Large Language Models",
+    "abstract": "Large language models (LLMs) have revolutionized natural language processing tasks. However, their practical deployment is hindered by their immense memory and computation requirements. Although recent post-training quantization (PTQ) methods are effective in reducing memory footprint and improving the computational efficiency of LLM, they hand-craft quantization parameters, leading to low performance, especially in extremely low-bit quantization. To tackle this issue, we introduce an Omnidirectionally calibrated Quantization technique for LLMs, which achieves good performance in diverse quantization settings while maintaining the computational efficiency of PTQ by efficiently optimizing various quantization parameters. OmniQuant comprises two innovative components including Learnable Weight Clipping (LWC) and Learnable Equivalent Transformation (LET). LWC modulates the extreme values of weights by optimizing the clipping threshold. Meanwhile, LET tackles activation outliers by shifting the challenge of quantization from activations to weights. Operating within a differentiable framework using block-wise error minimization, OmniQuant can optimize the quantization process efficiently for both weight-only and weight-activation quantization. For instance, the LLaMA-2 model family size 7-70B can be processed with OmniQuant on a single A100-40G GPU within 1-16 hours using 128 samples. Extensive experiments validate OmniQuant's superior performance across diverse quantization configurations such as W4A4 (4-bit weight, 4-bit activation), W6A6, W4A16, W3A16, and W2A16. Additionally, OmniQuant demonstrates effectiveness in instruction-tuned models and delivers notable improvements in inference speed and memory reduction on real devices. ",
+    "authors": [],
+    "keywords": [
+      "Large Language Model Compression",
+      "Differentiable Quantization"
+    ],
+    "real_avg_scores": null,
+    "real_all_scores": [
+      6,
+      6,
+      6,
+      8
+    ],
+    "real_contents": [],
+    "real_rank": 0,
+    "real_decision": "Accept(spoltight)",
+    "sim_avg_scores": null,
+    "sim_all_scores": [],
+    "sim_contents": [],
+    "sim_rank": 0,
+    "sim_decision": null
+  },
+  "EfficientDM: Efficient Quantization-Aware Fine-Tuning of Low-Bit Diffusion Models": {
+    "paper_pk": null,
+    "title": "EfficientDM: Efficient Quantization-Aware Fine-Tuning of Low-Bit Diffusion Models",
+    "abstract": "Diffusion models have demonstrated remarkable capabilities in image synthesis and related generative tasks. Nevertheless, their practicality for low-latency real-world applications is constrained by substantial computational costs and latency issues. Quantization is a dominant way to compress and accelerate diffusion models, where post-training quantization (PTQ) and quantization-aware training (QAT) are two main approaches, each bearing its own properties. While PTQ exhibits efficiency in terms of both time and data usage, it may lead to diminished performance in low bit-width settings. On the other hand, QAT can help alleviate performance degradation but comes with substantial demands on computational and data resources. To capitalize on the advantages while avoiding their respective drawbacks, we introduce a data-free, quantization-aware and parameter-efficient fine-tuning framework for low-bit diffusion models, dubbed EfficientDM, to achieve QAT-level performance with PTQ-like efficiency. Specifically, we propose a quantization-aware variant of the low-rank adapter (QALoRA) that can be merged with model weights and jointly quantized to low bit-width. The fine-tuning process distills the denoising capabilities of the full-precision model into its quantized counterpart, eliminating the requirement for training data. To further enhance performance, we introduce scale-aware optimization to address ineffective learning of QALoRA due to variations in weight quantization scales across different layers. We also employ temporal learned step-size quantization to handle notable variations in activation distributions across denoising steps. Extensive experimental results demonstrate that our method significantly outperforms previous PTQ-based diffusion models while maintaining similar time and data efficiency. Specifically, there is only a marginals. FID increase when quantizing both weights and activations of LDM-4 to 4-bit on ImageNet . Compared to QAT-based methods, our EfficientDM also boasts a faster quantization speed with comparable generation quality, rendering it a compelling choice for practical applications.",
+    "authors": [],
+    "keywords": [
+      "Diffusion Models",
+      "Model Quantization",
+      "Model Compression",
+      "Efficient Models"
+    ],
+    "real_avg_scores": null,
+    "real_all_scores": [
+      6,
+      6,
+      6,
+      8
+    ],
+    "real_contents": [],
+    "real_rank": 0,
+    "real_decision": "Accept(spoltight)",
+    "sim_avg_scores": null,
+    "sim_all_scores": [],
+    "sim_contents": [],
+    "sim_rank": 0,
+    "sim_decision": null
+  },
+  "LoftQ: LoRA-Fine-Tuning-aware Quantization for Large Language Models": {
+    "paper_pk": null,
+    "title": "LoftQ: LoRA-Fine-Tuning-aware Quantization for Large Language Models",
+    "abstract": "Quantization is an indispensable technique for serving Large Language Models (LLMs) and has recently found its way into LoRA fine-tuning (Dettmers et al., 2023). In this work we focus on the scenario where quantization and LoRA fine- tuning are applied together on a pre-trained model. In such cases it is common to observe a consistent gap in the performance on downstream tasks between full fine-tuning and quantization plus LoRA fine-tuning approach. In response, we propose LoftQ (LoRA-Fine-Tuning-aware Quantization), a novel quantization framework that simultaneously quantizes an LLM and finds a proper low-rank initialization for LoRA fine-tuning. Such an initialization alleviates the discrep- ancy between the quantized and full-precision model and significantly improves the generalization in downstream tasks. We evaluate our method on natural lan- guage understanding, question answering, summarization, and natural language generation tasks. Experiments show that our method is highly effective and out- performs existing quantization methods, especially in the challenging 2-bit and 2/4-bit mixed precision regimes. We will release our code.",
+    "authors": [],
+    "keywords": [
+      "quantization",
+      "compression",
+      "large language models",
+      "NLP",
+      "machine learning",
+      "low rank"
+    ],
+    "real_avg_scores": null,
+    "real_all_scores": [
+      6,
+      8,
+      8
+    ],
+    "real_contents": [],
+    "real_rank": 0,
+    "real_decision": "Accept(oral)",
+    "sim_avg_scores": null,
+    "sim_all_scores": [],
+    "sim_contents": [],
+    "sim_rank": 0,
+    "sim_decision": null
+  },
+  "Model Tells You What to Discard: Adaptive KV Cache Compression for LLMs": {
+    "paper_pk": null,
+    "title": "Model Tells You What to Discard: Adaptive KV Cache Compression for LLMs",
+    "abstract": "In this study, we introduce adaptive KV cache compression, a plug-and-play method that reduces the memory footprint of generative inference for Large Language Models (LLMs). Different from the conventional KV cache that retains key and value vectors for all context tokens, we conduct targeted profiling to discern the intrinsic structure of attention modules. Based on the recognized structure, we then construct the KV cache in an adaptive manner: evicting long-range contexts on attention heads emphasizing local contexts, discarding non-special tokens on attention heads centered on special tokens, and only employing the standard KV cache for attention heads that broadly attend to all tokens. Moreover, with the lightweight attention profiling used to guide the construction of the adaptive KV cache, FastGen can be deployed without resource-intensive fine-tuning or re-training. In our experiments across various asks, FastGen demonstrates substantial reduction on GPU memory consumption with negligible generation quality loss. We will release our code and the compatible CUDA kernel for reproducibility.",
+    "authors": [],
+    "keywords": [
+      "Large Language Model",
+      "Efficient Inference",
+      "Generative Inference",
+      "Key-Value Cache"
+    ],
+    "real_avg_scores": null,
+    "real_all_scores": [
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    "real_contents": [],
+    "real_rank": 0,
+    "real_decision": "Accept(oral)",
+    "sim_avg_scores": null,
+    "sim_all_scores": [],
+    "sim_contents": [],
+    "sim_rank": 0,
+    "sim_decision": null
+  }
+}
