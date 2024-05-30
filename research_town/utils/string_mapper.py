@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from beartype.typing import Dict, List, Union
 
 
 def map_idea_list_to_str(ideas: List[Dict[str, str]]) -> str:

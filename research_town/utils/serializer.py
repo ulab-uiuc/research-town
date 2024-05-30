@@ -1,6 +1,6 @@
 import importlib
-from typing import Any, Dict, List, Set, Tuple, Union
 
+from beartype.typing import Any, Dict, List, Set, Tuple, Union
 from pydantic import BaseModel
 
 

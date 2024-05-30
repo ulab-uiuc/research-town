@@ -1,6 +1,5 @@
-from typing import Dict, List
-
 from beartype import beartype
+from beartype.typing import Dict, List
 
 from .model_prompting import model_prompting
 

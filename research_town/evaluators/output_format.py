@@ -1,6 +1,5 @@
 
-from typing import Type, TypeVar
-
+from beartype.typing import Type, TypeVar
 from pydantic import BaseModel, Extra, Field, validator
 
 T = TypeVar('T', bound=BaseModel)

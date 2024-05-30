@@ -1,6 +1,7 @@
 
 import re
-from typing import Any
+
+from beartype.typing import Any
 
 from ..utils.decorator import parsing_error_exponential_backoff
 from ..utils.eval_prompter import (
