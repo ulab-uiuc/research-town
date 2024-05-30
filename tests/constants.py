@@ -8,7 +8,7 @@ from research_town.dbs import (
     PaperProfile,
     ResearchIdea,
     ResearchPaperSubmission,
-    ResearchTrend,
+    ResearchInsight,
 )
 
 paper_profile_A = PaperProfile(
@@ -40,12 +40,12 @@ research_idea_B = ResearchIdea(
     content="Another idea",
 )
 
-research_trend_A = ResearchTrend(
-    content="A new trend",
+research_insight_A = ResearchInsight(
+    content="A new insight",
 )
 
-research_trend_B = ResearchTrend(
-    content="Another trend",
+research_insight_B = ResearchInsight(
+    content="Another insight",
 )
 
 research_paper_submission_A = ResearchPaperSubmission(

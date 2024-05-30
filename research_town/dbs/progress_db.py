@@ -75,6 +75,6 @@ class ResearchPaperSubmission(BaseModel):
     abstract: Optional[str] = Field(default=None)
     conference: Optional[str] = Field(default=None)
 
-class ResearchTrend(BaseModel):
+class ResearchInsight(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content: Optional[str] = Field(default=None)

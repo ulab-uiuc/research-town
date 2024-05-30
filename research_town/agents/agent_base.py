@@ -12,7 +12,7 @@ from ..dbs import (
     PaperProfile,
     ResearchIdea,
     ResearchPaperSubmission,
-    ResearchTrend,
+    ResearchInsight,
 )
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
@@ -106,31 +106,31 @@ class BaseResearchAgent(object):
         self,
         papers: List[PaperProfile],
         domains: List[str]
-    ) -> List[ResearchTrend]:
+    ) -> List[ResearchInsight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
-        trend_contents = read_paper_prompting(
+        insight_contents = read_paper_prompting(
             profile=serialized_profile,
             papers=serialized_papers,
             domains=domains,
             model_name=self.model_name
         )
-        trends: List[ResearchTrend] = []
-        for content in trend_contents:
-            trends.append(ResearchTrend(content=content))
-        return trends
+        insights: List[ResearchInsight] = []
+        for content in insight_contents:
+            insights.append(ResearchInsight(content=content))
+        return insights
 
 
     @beartype
     def think_idea(
         self,
-        trends: List[ResearchTrend],
+        insights: List[ResearchInsight],
     ) -> List[ResearchIdea]:
-        serialized_trends = self.serializer.serialize(trends)
+        serialized_insights = self.serializer.serialize(insights)
         idea_contents: List[str] = []
-        for trend in serialized_trends:
+        for insight in serialized_insights:
             idea_contents.append(think_idea_prompting(
-                trend=trend,
+                insight=insight,
                 model_name=self.model_name
             )[0])
         ideas: List[ResearchIdea] = []

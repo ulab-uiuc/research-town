@@ -76,12 +76,12 @@ def read_paper_prompting(
     model_name: str,
 ) -> List[str]:
     query_template = (
-        "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
+        "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible)."
         "Here is my profile biology: {profile_bio}"
         "Here are the domains: {domains}"
     )
     prompt_template = (
-        "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and trends in this field (related to my profile if possible)."
+        "Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible)."
         "Here is my profile biology: {profile_bio}"
         "Here are the research domains: {domains}"
         "Here are some recent paper titles and abstracts: {papers}"
@@ -105,15 +105,15 @@ def read_paper_prompting(
 
 @beartype
 def think_idea_prompting(
-    trend: Dict[str, str],
+    insight: Dict[str, str],
     model_name: str,
 ) -> List[str]:
     prompt_template = (
-        "Here is a high-level summarized trend of a research field {trend}. "
+        "Here is a high-level summarized insight of a research field {insight}. "
         "How do you view this field? Do you have any novel ideas or insights? "
         "Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences."
     )
-    prompt = prompt_template.format_map({"trend": trend['content']})
+    prompt = prompt_template.format_map({"insight": insight['content']})
     return model_prompting(model_name, prompt)
 
 

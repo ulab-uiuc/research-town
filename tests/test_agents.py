@@ -10,8 +10,8 @@ from tests.constants import (
     paper_profile_B,
     research_idea_A,
     research_idea_B,
-    research_trend_A,
-    research_trend_B,
+    research_insight_A,
+    research_insight_B,
 )
 from tests.utils import mock_papers, mock_prompting
 
@@ -51,13 +51,13 @@ def test_read_paper(
         agent_profile=agent_profile_A,
         model_name="together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"
     )
-    research_trend = research_agent.read_paper(
+    research_insight = research_agent.read_paper(
         papers=[paper_profile_A, paper_profile_B],
         domains=["machine learning", "graph neural network"],
     )
-    assert len(research_trend) == 1
-    assert research_trend[0].pk is not None
-    assert research_trend[0].content == "Graph Neural Network"
+    assert len(research_insight) == 1
+    assert research_insight[0].pk is not None
+    assert research_insight[0].content == "Graph Neural Network"
 
 
 @patch("research_town.utils.agent_prompter.model_prompting")
@@ -74,7 +74,7 @@ def test_think_idea(
         model_name="together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"
     )
     research_ideas = research_agent.think_idea(
-        trends=[research_trend_A, research_trend_B],
+        insights=[research_insight_A, research_insight_B],
     )
     assert len(research_ideas) == 2
     assert research_ideas[0].pk is not None
