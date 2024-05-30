@@ -106,8 +106,10 @@ class ReviewQualityEvaluator(object):
     )-> ReviewEvalOutput:
         raw_output = review_quality_eval_prompting(
             idea=kwargs['idea'], # idea: str,
+            trend=kwargs['trend'], # trend: str,
             paper=kwargs['paper'], # paper: Dict[str,str],
             review=kwargs['review'], # review: Dict[str,str],
+            decision=kwargs['decision'], # decision: str,
             model_name=self.model_name
         )
         self.parsed_output = self.parse(raw_output)
