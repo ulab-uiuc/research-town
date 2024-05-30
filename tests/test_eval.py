@@ -8,19 +8,18 @@ from research_town.evaluators.quality_evaluator import (
     PaperQualityEvaluator,
     ReviewQualityEvaluator,
 )
-from tests.eval_constants import(
+from tests.eval_constants import (
     idea_constant_A,
-    trend_constant_A,
-    paper_title_constant_A,
     paper_abstract_constant_A,
+    paper_title_constant_A,
     review_constant_A,
     review_constant_B,
     review_constant_C,
     review_constant_D,
+    trend_constant_A,
 )
 
 idea = 'The idea behind Mamba is to improve upon existing foundation models in deep learning, which typically rely on the Transformer architecture and its attention mechanism. While subquadratic-time architectures like linear attention, gated convolution, recurrent models, and structured state space models (SSMs) have been developed to address the inefficiency of Transformers on long sequences, they have not matched the performance of attention-based models in key areas such as language processing. Mamba addresses the shortcomings of these models by enabling content-based reasoning and making several key improvements: Adaptive SSM Parameters: By allowing SSM parameters to be functions of the input, Mamba effectively handles discrete modalities. This enables the model to selectively propagate or forget information along the sequence based on the current token.Parallel Recurrent Algorithm: Despite the changes preventing the use of efficient convolutions, Mamba employs a hardware-aware parallel algorithm in recurrent mode to maintain efficiency.Simplified Architecture: Mamba integrates these selective SSMs into a streamlined neural network architecture that does not rely on attention or MLP blocks.'
-
 
 
 @pytest.fixture(params=['gpt-4o', 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1'])
@@ -85,7 +84,12 @@ def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
     paper = {'title': paper_title_constant_A, 'abstract': paper_abstract_constant_A}
-    reviews = [review_constant_A, review_constant_B, review_constant_C, review_constant_D]
+    reviews = [
+        review_constant_A,
+        review_constant_B,
+        review_constant_C,
+        review_constant_D,
+    ]
     input_dict = {
         'idea': idea_constant_A,
         'trend': trend_constant_A,
