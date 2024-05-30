@@ -60,13 +60,13 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         collaborator_agents.append(
                             agent_names_to_objs[researcher_profile.name])
 
-            Insights = agent.read_paper(
+            insights = agent.read_paper(
                 papers=papers,
                 domains=["machine learning"]
             )
-            ideas = agent.think_idea(Insights=Insights)
+            ideas = agent.think_idea(insights=insights)
             for collaborator_agent in collaborator_agents:
-                ideas.extend(collaborator_agent.think_idea(Insights=Insights))
+                ideas.extend(collaborator_agent.think_idea(insights=insights))
             paper = agent.write_paper(ideas, papers)
 
             # TODO: this is not correct, we cannot write PaperProfile, we can only write PaperSubmission
