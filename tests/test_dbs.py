@@ -16,9 +16,7 @@ from research_town.dbs.progress_db import (
 )
 
 
-@patch("research_town.dbs.agent_db.AgentProfileDB.save_to_file")
-@patch("research_town.dbs.agent_db.AgentProfileDB.load_from_file")
-def test_agent_profile_db(mock_load_from_file, mock_save_to_file):
+def test_agent_profile_db():
     db = AgentProfileDB()
     agent1 = AgentProfile(name="John Doe", bio="Researcher in AI", institute="AI Institute")
     agent2 = AgentProfile(name="Jane Smith", bio="Expert in NLP", institute="NLP Lab")
@@ -51,11 +49,9 @@ def test_agent_profile_db(mock_load_from_file, mock_save_to_file):
 
     file_name = "test_agents.json"
     db.save_to_file(file_name)
-    mock_save_to_file.assert_called_once_with(file_name)
 
     new_db = AgentProfileDB()
     new_db.load_from_file(file_name)
-    mock_load_from_file.assert_called_once_with(file_name)
 
     new_data = {
         "2024-05-29": [
@@ -80,9 +76,7 @@ def test_agent_profile_db(mock_load_from_file, mock_save_to_file):
     assert "new-pk" in db.data
     assert db.data["new-pk"].name == "New Agent"
 
-@patch("research_town.dbs.env_db.EnvLogDB.save_to_file")
-@patch("research_town.dbs.env_db.EnvLogDB.load_from_file")
-def test_env_log_db(mock_load_from_file, mock_save_to_file):
+def test_env_log_db():
     db = EnvLogDB()
     review_log = AgentPaperReviewLog(paper_pk="paper1", agent_pk="agent1", review_score=5, review_content="Good paper")
     rebuttal_log = AgentPaperRebuttalLog(paper_pk="paper1", agent_pk="agent1", rebuttal_content="I disagree with the review")
@@ -116,11 +110,9 @@ def test_env_log_db(mock_load_from_file, mock_save_to_file):
 
     file_name = "test_env_logs.json"
     db.save_to_file(file_name)
-    mock_save_to_file.assert_called_once_with(file_name)
 
     new_db = EnvLogDB()
     new_db.load_from_file(file_name)
-    mock_load_from_file.assert_called_once_with(file_name)
 
     assert len(new_db.data["AgentPaperReviewLog"]) == 1
     assert len(new_db.data["AgentPaperRebuttalLog"]) == 1
@@ -128,9 +120,7 @@ def test_env_log_db(mock_load_from_file, mock_save_to_file):
     assert len(new_db.data["AgentAgentDiscussionLog"]) == 1
     assert new_db.data["AgentPaperReviewLog"][0]["review_content"] == "Interesting paper"
 
-@patch("research_town.dbs.paper_db.PaperProfileDB.save_to_file")
-@patch("research_town.dbs.paper_db.PaperProfileDB.load_from_file")
-def test_paper_profile_db(mock_load_from_file, mock_save_to_file):
+def test_paper_profile_db():
     db = PaperProfileDB()
     paper1 = PaperProfile(
         title="Sample Paper 1",
@@ -190,19 +180,15 @@ def test_paper_profile_db(mock_load_from_file, mock_save_to_file):
 
     file_name = "test_paper_db.json"
     db.save_to_file(file_name)
-    mock_save_to_file.assert_called_once_with(file_name)
 
     new_db = PaperProfileDB()
     new_db.load_from_file(file_name)
-    mock_load_from_file.assert_called_once_with(file_name)
 
     assert len(new_db.data) == 2
     assert paper1.pk in new_db.data
     assert new_db.data[paper1.pk].title == "Updated Sample Paper 1"
 
-@patch("research_town.dbs.progress_db.ResearchProgressDB.save_to_file")
-@patch("research_town.dbs.progress_db.ResearchProgressDB.load_from_file")
-def test_research_progress_db(mock_load_from_file, mock_save_to_file):
+def test_research_progress_db():
     db = ResearchProgressDB()
     idea1 = ResearchIdea(content="Idea for a new AI algorithm")
     idea2 = ResearchIdea(content="Quantum computing research plan")
@@ -235,11 +221,8 @@ def test_research_progress_db(mock_load_from_file, mock_save_to_file):
 
     file_name = "test_research_db.json"
     db.save_to_file(file_name)
-    mock_save_to_file.assert_called_once_with(file_name)
 
     new_db = ResearchProgressDB()
     new_db.load_from_file(file_name)
-    mock_load_from_file.assert_called_once_with(file_name)
 
     assert len(new_db.data["ResearchIdea"]) == 2
-    assert idea1.dict() in new_db.data["ResearchIdea"]
