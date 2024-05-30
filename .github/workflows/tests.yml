@@ -1,10 +1,17 @@
 name: Pytest
 
 on:
-  workflow_dispatch
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: mypy-pytest-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  if: github.event_name == 'workflow_dispatch'
+
   Pytest:
     runs-on: ubuntu-latest
     strategy:
