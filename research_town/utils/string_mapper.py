@@ -38,3 +38,12 @@ def map_review_to_str(review: Dict[str, Union[int, str]]) -> str:
 
 def map_message_to_str(message: Dict[str, str]) -> str:
     return f"Message from {message['agent_from_name']} to {message['agent_to_name']}\n"
+
+def map_insights_to_str(insights: List[Dict[str, str]]) -> str:
+    result = ''
+    for insight in insights:
+        result += map_insight_to_str(insight)
+    return result
+
+def map_insight_to_str(insight: Dict[str, str]) -> str:
+    return f"{insight['content']}"
