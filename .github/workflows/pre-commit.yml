@@ -1,8 +1,13 @@
 name: pre-commit
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 on:
-  pull_request:
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
 
 jobs:
@@ -10,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10"]
+        python-version: ["3.10"]
 
     steps:
     - uses: actions/checkout@v2
