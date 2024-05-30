@@ -148,7 +148,7 @@ def main(data_path: str, domain:str) -> None:
     
     # get ranking consistency
     real_paper_db.map_agent_reviews_to_real_paper(reviews)
-    rank_consistency = real_paper_db.calculate_rank_consistency
+    rank_consistency = real_paper_db.calculate_rank_consistency()
     # print rank consistency
     print(f"rank_consistency = {rank_consistency}\n")
     # save the RealPaperWithReviewDB
