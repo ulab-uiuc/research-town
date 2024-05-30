@@ -1,6 +1,5 @@
-from beartype.typing import Any, Dict, List, Tuple
-
 from arxiv import Client, Search
+from beartype.typing import Any, Dict, List, Tuple
 from tqdm import tqdm
 
 

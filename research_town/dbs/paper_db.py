@@ -1,7 +1,7 @@
 import json
 import uuid
-from beartype.typing import Any, Dict, List, Optional
 
+from beartype.typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from ..utils.paper_collector import get_daily_papers

@@ -1,4 +1,5 @@
-from unittest.mock import patch
+
+from beartype.typing import Any, Dict, Optional
 
 from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
 from research_town.dbs.env_db import (
@@ -14,7 +15,6 @@ from research_town.dbs.progress_db import (
     ResearchProgressDB,
 )
 
-from beartype.typing import Optional, Dict, Any
 
 def test_envlogdb_basic()->None:
     db = EnvLogDB()
@@ -22,9 +22,9 @@ def test_envlogdb_basic()->None:
     rebuttal_log = AgentPaperRebuttalLog(paper_pk="paper1", agent_pk="agent1", rebuttal_content="I disagree with the review")
     meta_review_log = AgentPaperMetaReviewLog(paper_pk="paper1", agent_pk="agent1", decision=True, meta_review="Accept")
     discussion_log = AgentAgentDiscussionLog(
-        agent_from_pk="agent1", 
+        agent_from_pk="agent1",
         agent_from_name='Rex Ying',
-        agent_to_pk="agent2", 
+        agent_to_pk="agent2",
         agent_to_name='John Doe',
         message="Let's discuss this paper"
     )
@@ -100,11 +100,11 @@ def test_agentprofiledb_basic()->None:
 
     success = db.delete("non-existing-pk")
     assert not success
-    
+
     conditions: Dict[str, Any] = {"name": "Jane Smith"}
 
     results = db.get(**conditions)
-    
+
     assert len(results) == 1
     assert results[0].name == "Jane Smith"
 
@@ -216,7 +216,7 @@ def test_researchprogressdb_basic()->None:
 
     db.add(idea1)
     db.add(idea2)
-    
+
     new_idea = ResearchIdea(content="Blockchain research proposal")
     db.add(new_idea)
     assert new_idea.dict() in db.data["ResearchIdea"]
@@ -249,4 +249,3 @@ def test_researchprogressdb_basic()->None:
     new_db.load_from_file(file_name)
 
     assert len(new_db.data["ResearchIdea"]) == 2
-

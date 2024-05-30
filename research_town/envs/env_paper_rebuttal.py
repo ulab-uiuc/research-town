@@ -1,6 +1,5 @@
-from beartype.typing import Dict, List, Tuple
-
 from beartype import beartype
+from beartype.typing import Dict, List, Tuple
 
 from ..dbs import (
     AgentPaperMetaReviewLog,

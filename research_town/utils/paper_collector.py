@@ -1,11 +1,11 @@
 import datetime
-from beartype.typing import Any, Dict, List, Tuple
 from xml.etree import ElementTree
 
 import arxiv
 import faiss
 import requests
 import torch
+from beartype.typing import Any, Dict, List, Tuple
 from transformers import BertModel, BertTokenizer
 
 ATOM_NAMESPACE = "{http://www.w3.org/2005/Atom}"

@@ -1,6 +1,5 @@
-from beartype.typing import Dict, List, Union
-
 from beartype import beartype
+from beartype.typing import Dict, List, Union
 
 from .model_prompting import model_prompting
 from .paper_collector import get_related_papers

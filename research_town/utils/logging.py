@@ -1,4 +1,5 @@
 import logging
+
 from beartype.typing import Dict, List, Union
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
