@@ -103,7 +103,8 @@ def main(data_path: str, domain:str) -> None:
     print(f"Domain is: {domain}")
     # collect papers from openreview
     real_paper_db = RealPaperWithReviewDB()
-    real_paper_db.load_from_file(data_path+"paper_"+ domain + ".json")
+    paper_file = os.path.join(data_path, f"paper_{domain}.json")
+    real_paper_db.load_from_file(paper_file)
     Papers2eval = real_paper_db.profile_paper_from_real_review()
     # generate envs of agents with reviewers
     # 1. how to select reviewers? Retrive the reviewers from the database.
@@ -139,7 +140,9 @@ def main(data_path: str, domain:str) -> None:
     # print rank consistency
     print(f"rank_consistency = {rank_consistency}\n")
     # save the RealPaperWithReviewDB
-    real_paper_db.save_to_file(data_path+"output_microbench_review"+ domain + ".json")
+    # Construct the output file path
+    output_file = os.path.join(data_path, f"output_microbench_review_{domain}.json")
+    real_paper_db.save_to_file(output_file)
     
 
 
