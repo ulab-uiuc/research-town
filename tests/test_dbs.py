@@ -226,3 +226,4 @@ def test_research_progress_db():
     new_db.load_from_file(file_name)
 
     assert len(new_db.data["ResearchIdea"]) == 2
+

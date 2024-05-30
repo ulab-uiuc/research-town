@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import Any, Dict, List, Tuple
 
+from beartype import beartype
+
 from ..dbs import (
     AgentAgentDiscussionLog,
     AgentPaperMetaReviewLog,
@@ -8,19 +10,23 @@ from ..dbs import (
     AgentPaperReviewLog,
     AgentProfile,
     PaperProfile,
+    ResearchIdea,
+    ResearchInsight,
+    ResearchPaperSubmission,
 )
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
-    communicate_with_multiple_researchers_prompting,
+    discuss_prompting,
     find_collaborators_prompting,
-    generate_ideas_prompting,
-    make_review_decision_prompting,
-    rebut_review_prompting,
+    read_paper_prompting,
     review_paper_prompting,
     review_score_prompting,
-    summarize_research_field_prompting,
-    write_paper_abstract_prompting,
+    think_idea_prompting,
+    write_meta_review_prompting,
+    write_paper_prompting,
+    write_rebuttal_prompting,
 )
+from ..utils.serializer import Serializer
 
 
 class BaseResearchAgent(object):
@@ -31,67 +37,27 @@ class BaseResearchAgent(object):
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
         self.model_name: str = model_name
+        self.serializer = Serializer()
 
+    @beartype
     def get_profile(self, author_name: str) -> AgentProfile:
         # TODO: db get based on name
+        # TODO: need rebuild
         agent_profile = AgentProfile(
             name='Geoffrey Hinton',
             bio="A researcher in the field of neural network.",
         )
         return agent_profile
 
-    def communicate(
-        self,
-        message: AgentAgentDiscussionLog
-    ) -> AgentAgentDiscussionLog:
-        # TODO: find a meaningful key
-        message_dict: Dict[str, str] = {}
-        if message.message is not None:
-            message_dict[message.agent_from_pk] = message.message
-        message_content = communicate_with_multiple_researchers_prompting(
-            messages=message_dict,
-            model_name=self.model_name
-        )[0]
-        discussion_log = AgentAgentDiscussionLog(
-            timestep=(int)(datetime.now().timestamp()),
-            agent_from_pk=message.agent_from_pk,
-            agent_to_pk=message.agent_to_pk,
-            message=message_content
-        )
-        return discussion_log
 
-    def read_paper(
-        self,
-        papers: List[PaperProfile],
-        domain: str
-    ) -> str:
-        papers_dict: Dict[str, Dict[str, List[str]]] = {}
-        for paper in papers:
-            papers_dict[paper.pk] = {}
-            if paper.abstract is not None:
-                papers_dict[paper.pk]["abstract"] = [paper.abstract]
-            if paper.title is not None:
-                papers_dict[paper.pk]["title"] = [paper.title]
-        profile: Dict[str, str] = {}
-        if self.profile.name is not None:
-            profile["name"] = self.profile.name
-        if self.profile.bio is not None:
-            profile["profile"] = self.profile.bio
-        trend = summarize_research_field_prompting(
-            profile=profile,
-            keywords=[domain],
-            papers=papers_dict,
-            model_name=self.model_name
-        )
-        trend_output = trend[0]
-        return trend_output
-
+    @beartype
     def find_collaborators(
         self,
         paper: PaperProfile,
         parameter: float = 0.5,
         max_number: int = 3
     ) -> List[AgentProfile]:
+        # TODO: need rebuild
         start_author: List[str] = [
             self.profile.name] if self.profile.name is not None else []
         graph, _, _ = bfs(
@@ -120,87 +86,88 @@ class BaseResearchAgent(object):
                 collaborators_list.append(self.get_profile(collaborator))
         return collaborators_list
 
+    @beartype
     def get_co_author_relationships(
         self,
         agent_profile: AgentProfile,
         max_node: int
     ) -> Tuple[List[Tuple[str, str]], Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
+        # TODO: need rebuild
         start_author: List[str] = [
             self.profile.name] if self.profile.name is not None else []
         graph, node_feat, edge_feat = bfs(
             author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat
 
-    def generate_idea(
+# =======================================
+
+    @beartype
+    def read_paper(
         self,
         papers: List[PaperProfile],
-        domain: str
-    ) -> List[str]:
-        papers_dict: Dict[str, Dict[str, List[str]]] = {}
-        for paper_profile in papers:
-            papers_dict[paper_profile.pk] = {}
-            if paper_profile.abstract is not None:
-                papers_dict[paper_profile.pk]["abstract"] = [
-                    paper_profile.abstract]
-            if paper_profile.title is not None:
-                papers_dict[paper_profile.pk]["title"] = [paper_profile.title]
-        profile: Dict[str, str] = {}
-        if self.profile.name is not None:
-            profile["name"] = self.profile.name
-        if self.profile.bio is not None:
-            profile["profile"] = self.profile.bio
-        trends = summarize_research_field_prompting(
-            profile=profile,
-            keywords=[domain],
-            papers=papers_dict,
+        domains: List[str]
+    ) -> List[ResearchInsight]:
+        serialized_papers = self.serializer.serialize(papers)
+        serialized_profile = self.serializer.serialize(self.profile)
+        insight_contents = read_paper_prompting(
+            profile=serialized_profile,
+            papers=serialized_papers,
+            domains=domains,
             model_name=self.model_name
         )
-        ideas: List[str] = []
-        for trend in trends:
-            idea = generate_ideas_prompting(
-                trend=trend,
-                model_name=self.model_name
-            )[0]
-            ideas.append(idea)
+        insights: List[ResearchInsight] = []
+        for content in insight_contents:
+            insights.append(ResearchInsight(content=content))
+        return insights
 
+
+    @beartype
+    def think_idea(
+        self,
+        insights: List[ResearchInsight],
+    ) -> List[ResearchIdea]:
+        serialized_insights = self.serializer.serialize(insights)
+        idea_contents: List[str] = []
+        for insight in serialized_insights:
+            idea_contents.append(think_idea_prompting(
+                insight=insight,
+                model_name=self.model_name
+            )[0])
+        ideas: List[ResearchIdea] = []
+        for content in idea_contents:
+            ideas.append(ResearchIdea(content=content))
         return ideas
 
+
+    @beartype
     def write_paper(
         self,
-        research_ideas: List[str],
+        ideas: List[ResearchIdea],
         papers: List[PaperProfile]
-    ) -> PaperProfile:
-        papers_dict: Dict[str, Dict[str, List[str]]] = {}
-        for paper_profile in papers:
-            papers_dict[paper_profile.pk] = {}
-            if paper_profile.abstract is not None:
-                papers_dict[paper_profile.pk]["abstract"] = [
-                    paper_profile.abstract]
-            if paper_profile.title is not None:
-                papers_dict[paper_profile.pk]["title"] = [paper_profile.title]
-        paper_abstract = write_paper_abstract_prompting(
-            ideas=research_ideas,
-            papers=papers_dict,
+    ) -> ResearchPaperSubmission:
+        serialized_ideas = self.serializer.serialize(ideas)
+        serialized_papers = self.serializer.serialize(papers)
+        paper_abstract = write_paper_prompting(
+            ideas=serialized_ideas,
+            papers=serialized_papers,
             model_name=self.model_name
         )[0]
-        paper_profile = PaperProfile(abstract=paper_abstract)
-        return paper_profile
+        return ResearchPaperSubmission(abstract=paper_abstract)
 
-    def review_paper(
+    @beartype
+    def write_paper_review(
         self,
         paper: PaperProfile
     ) -> AgentPaperReviewLog:
-        paper_dict:  Dict[str, str] = {
-            paper.title: paper.abstract} if paper.title is not None and paper.abstract is not None else {}
+        serialized_paper = self.serializer.serialize(paper)
         paper_review = review_paper_prompting(
-            paper=paper_dict,
+            paper=serialized_paper,
             model_name=self.model_name
         )[0]
         review_score = review_score_prompting(
             paper_review=paper_review,
             model_name=self.model_name
         )
-
         return AgentPaperReviewLog(
             timestep=(int)(datetime.now().timestamp()),
             paper_pk=paper.pk,
@@ -209,22 +176,18 @@ class BaseResearchAgent(object):
             review_score=review_score
         )
 
-    def make_review_decision(
+    @beartype
+    def write_paper_meta_review(
         self,
         paper: PaperProfile,
-        review: List[AgentPaperReviewLog]
+        reviews: List[AgentPaperReviewLog]
     ) -> AgentPaperMetaReviewLog:
-        paper_dict: Dict[str, str] = {
-            paper.title: paper.abstract} if paper.title is not None and paper.abstract is not None else {}
-        review_dict: Dict[str, Tuple[int, str]] = {}
-        for agent_review_log in review:
-            if agent_review_log.review_score is not None and agent_review_log.review_content is not None:
-                review_dict[agent_review_log.pk] = (
-                    agent_review_log.review_score, agent_review_log.review_content)
+        serialized_paper = self.serializer.serialize(paper)
+        serialized_reviews = self.serializer.serialize(reviews)
 
-        meta_review = make_review_decision_prompting(
-            paper=paper_dict,
-            review=review_dict,
+        meta_review = write_meta_review_prompting(
+            paper=serialized_paper,
+            reviews=serialized_reviews,
             model_name=self.model_name
         )
         review_decision = "accept" in meta_review[0].lower()
@@ -237,30 +200,18 @@ class BaseResearchAgent(object):
             meta_review=meta_review[0],
         )
 
-    def rebut_review(
+    @beartype
+    def write_rebuttal(
         self,
         paper: PaperProfile,
-        review: List[AgentPaperReviewLog],
-        decision: List[AgentPaperMetaReviewLog]
+        review: AgentPaperReviewLog,
     ) -> AgentPaperRebuttalLog:
-        paper_dict: Dict[str, str] = {
-            paper.title: paper.abstract} if paper.title is not None and paper.abstract is not None else {}
-        review_dict: Dict[str, Tuple[int, str]] = {}
-        for agent_review_log in review:
-            if agent_review_log.review_score is not None and agent_review_log.review_content is not None:
-                review_dict[agent_review_log.pk] = (
-                    agent_review_log.review_score, agent_review_log.review_content)
+        serialized_paper = self.serializer.serialize(paper)
+        serialized_review = self.serializer.serialize(review)
 
-        decision_dict: Dict[str, Tuple[bool, str]] = {}
-        for agent_meta_review_log in decision:
-            if agent_meta_review_log.decision is not None and agent_meta_review_log.meta_review is not None:
-                decision_dict[agent_meta_review_log.pk] = (
-                    agent_meta_review_log.decision, agent_meta_review_log.meta_review)
-
-        rebut_review = rebut_review_prompting(
-            paper=paper_dict,
-            review=review_dict,
-            decision=decision_dict,
+        rebuttal_content = write_rebuttal_prompting(
+            paper=serialized_paper,
+            review=serialized_review,
             model_name=self.model_name
         )[0]
 
@@ -268,5 +219,24 @@ class BaseResearchAgent(object):
             timestep=(int)(datetime.now().timestamp()),
             paper_pk=paper.pk,
             agent_pk=self.profile.pk,
-            rebuttal_content=rebut_review
+            rebuttal_content=rebuttal_content
+        )
+
+    @beartype
+    def discuss(
+        self,
+        message: AgentAgentDiscussionLog
+    ) -> AgentAgentDiscussionLog:
+        serialized_message = self.serializer.serialize(message)
+        message_content = discuss_prompting(
+            message=serialized_message,
+            model_name=self.model_name
+        )[0]
+        return AgentAgentDiscussionLog(
+            timestep=(int)(datetime.now().timestamp()),
+            agent_from_pk=message.agent_from_pk,
+            agent_from_name=message.agent_from_name,
+            agent_to_pk=message.agent_to_pk,
+            agent_to_name=message.agent_to_name,
+            message=message_content
         )

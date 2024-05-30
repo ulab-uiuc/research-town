@@ -9,7 +9,8 @@ from .env_db import (
 from .paper_db import PaperProfile, PaperProfileDB
 from .progress_db import (
     ResearchIdea,
-    ResearchPaperDraft,
+    ResearchInsight,
+    ResearchPaperSubmission,
     ResearchProgressDB,
 )
 
@@ -21,7 +22,8 @@ __all__ = [
     "PaperProfile",
     "AgentProfile",
     "ResearchIdea",
-    "ResearchPaperDraft",
+    "ResearchInsight",
+    "ResearchPaperSubmission",
     "EnvLogDB",
     "PaperProfileDB",
     "AgentProfileDB",
