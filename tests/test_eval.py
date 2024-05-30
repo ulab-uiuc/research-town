@@ -154,8 +154,8 @@ Rating: 8: accept, good paper
 Confidence: 4: You are confident in your assessment, but not absolutely certain. It is unlikely, but not impossible, that you did not understand some parts of the submission or that you are unfamiliar with some pieces of related work.
 Code Of Conduct: Yes
 """
-# @pytest.fixture(params=["gpt-4o", "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"])
-@pytest.fixture(params=["gpt-4o"])
+# @pytest.fixture(params=["gpt-4o"])
+@pytest.fixture(params=["gpt-4o", "together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1"])
 def model_name(request: pytest.FixtureRequest) -> str:
     return request.param
 
@@ -203,7 +203,7 @@ def  test_evaluator_eval_paper(use_mock:bool,model_name: str) -> None:
 
 # Note(jinwei): please make sure the OPENAI API key is set for real tests with "use_mock=False".
 @pytest.mark.parametrize("use_mock", [True,False])
-def  test_evaluator_eval_review(use_mock:bool) -> None:
+def  test_evaluator_eval_review(use_mock:bool,model_name: str) -> None:
     paper = {'title': paper_title, 'abstract':paper_abstract}
     reviews = [review1, review2, review3, review4]
     input_dict = {'idea': idea, 'trend': trend, 'paper': paper,'pk':0,'review':reviews,'decision':'Reject'}
