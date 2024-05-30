@@ -41,7 +41,7 @@ class ReviewEvalOutput(BaseModel):
         extra = Extra.allow  # Allows extra fields to be stored
 
     @validator('overall_score')
-    def validate_overall_score(cls, v):
+    def validate_overall_score(cls, v)-> int:
         if v is None:
             raise ValueError("Overall score cannot be None")
         if not (0 <= v <= 100):
