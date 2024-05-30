@@ -18,7 +18,7 @@ arxiv = "^2.1.0"
 faiss-cpu = "^1.8.0"
 types-requests = "^2.31.0"
 torch = ">=2.1.0 <2.3.0"
-transformers = "^4.40.0"
+transformers = "^4.41.2"
 litellm = "^1.39.4"
 beartype = "^0.18.5"
 
