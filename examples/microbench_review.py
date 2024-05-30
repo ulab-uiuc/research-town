@@ -64,6 +64,7 @@ class RealPaperWithReviewDB:
                 authors = review.authors,
                 keywords = review.keywords
             )
+            assert paper.pk is not None
             review.paper_pk = paper.pk # write back the pk to the review
             papers.append(paper)
         return papers
@@ -76,6 +77,9 @@ class RealPaperWithReviewDB:
                     real_paper.sim_contents.append(agent_review.review_content)
         # calculate the average score
         for real_paper in self.data.values():
+            assert  len(real_paper.real_all_scores) > 0, f"no real review score for paper {real_paper.paper_pk} with title of {real_paper.title}"
+            real_paper.real_avg_scores = sum(real_paper.real_all_scores) / len(real_paper.real_all_scores)
+            assert  len(real_paper.sim_all_scores) > 0, f"no simulated review score for paper {real_paper.paper_pk} with title of {real_paper.title}"
             real_paper.sim_avg_scores = sum(real_paper.sim_all_scores) / len(real_paper.sim_all_scores)
         # calculate the real review rank
         real_papers = list(self.data.values())
