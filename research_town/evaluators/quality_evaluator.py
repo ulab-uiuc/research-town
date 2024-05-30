@@ -112,7 +112,6 @@ class ReviewQualityEvaluator(object):
             decision=kwargs['decision'], # decision: str,
             model_name=self.model_name
         )
-        print(f"raw_output={raw_output}\n")  # debug
         self.parsed_output = self.parse(raw_output)
         # Store the input kwargs in parsed_output
         for key, value in kwargs.items():
@@ -127,4 +126,4 @@ class ReviewQualityEvaluator(object):
             except ValueError as e:
                 raise OutputFormatError(f"Invalid overall score: {e}")
         else:
-            raise OutputFormatError("Output format error: 'Overall Score' not found")
+            raise OutputFormatError(f"Output format error: 'Overall Score' not found. Raw output is {raw_output}.")
