@@ -8,6 +8,22 @@ on:
     types: [ready_for_review]
 
 jobs:
+  Label-Ready-For-Review:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'ready_for_review'
+    steps:
+      - name: Apply `ready-for-review` Label
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['ready-for-review']
+            })
+
   Pytest:
     runs-on: ubuntu-latest
     strategy:
@@ -32,19 +48,3 @@ jobs:
         TOGETHER_API_KEY: ${{ secrets.TOGETHER_API_KEY }}
       run: |
         poetry run pytest
-
-  Label-Ready-For-Review:
-    runs-on: ubuntu-latest
-    if: github.event.action == 'ready_for_review'
-    steps:
-      - name: Apply `ready-for-review` Label
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              labels: ['ready-for-review']
-            })
