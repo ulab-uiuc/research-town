@@ -7,7 +7,7 @@ import os
 # Global configfile object
 cfg = CN()
 cfg.files=CN()
-cfg.files.config_path='../../configfile/all_config.yaml'
+cfg.files.config_path='../../configfile/default_config.yaml'
 
 
 
