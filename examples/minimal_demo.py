@@ -5,10 +5,10 @@ from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
     PaperSubmissionMultiAgentEnvironment,
 )
-
+from research_town.configs.cmd_args import parse_args
 
 def run_sync_experiment(
-    agent_list: List[str], role_list: List[str], task: Dict[str, str]
+    agent_list: List[str], role_list: List[str], task: Dict[str, str],arg:Dict[str,str]
 ) -> None:
     # Create Environment and Agents
     agent_profiles = [
@@ -24,6 +24,7 @@ def run_sync_experiment(
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
+        args=arg,
     )
     paper_rebuttal_env = PaperRebuttalMultiAgentEnv(
         agent_profiles=agent_profiles,
@@ -52,10 +53,12 @@ def run_sync_experiment(
 
 
 def main() -> None:
+    args = parse_args()
     run_sync_experiment(
         agent_list=['Jiaxuan You', 'Jure Leskovec'],
         role_list=['author', 'reviewer'],
         task={},
+        arg=args,
     )
 
 
