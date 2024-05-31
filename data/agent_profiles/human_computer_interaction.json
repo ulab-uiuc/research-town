@@ -1,0 +1,375 @@
+{
+  "216bd80e-e542-47b2-964d-e9accf720a9b": {
+    "pk": "216bd80e-e542-47b2-964d-e9accf720a9b",
+    "name": "Peter Mancini",
+    "bio": " Hello, I am a researcher with a focus on creating interactive data visualizations to enhance the understanding and accessibility of important economic reports. In particular, I have worked on improving the online presentation of the Bureau of Labor Statistics Employment Situation Report.\n\nThis report is highly anticipated and influential, but the current online format is outdated and not user-friendly. It is presented as a PDF containing only text and fixed tables, which can be difficult to interpret and explore for further insights. I believe that implementing interactive visual analysis techniques can greatly improve the user experience and encourage more engagement with the data.\n\nIn my research, I have developed two prototypes to demonstrate the potential of interactive visualizations for the Employment Situation Report. The first is a dashboard of interactive visualizations, which allows users to easily see trends and patterns in the data through charts and graphs. The second is an interactive time series explorer, which enables users to analyze the data over time and compare it to previous periods. Both of these prototypes also allow for spatial analysis and the ability to combine data sets to create customized visualizations.\n\nI am passionate about using technology to make data more accessible and understandable to the public. By creating interactive visualizations for important economic reports like the Employment Situation Report, I hope to promote greater civic engagement and foster a more informed society.",
+    "collaborators": [
+      "Ben Shneiderman",
+      "Benjamin Bengfort"
+    ],
+    "institute": null
+  },
+  "80d4713e-8c87-4e25-8908-080d8462beec": {
+    "pk": "80d4713e-8c87-4e25-8908-080d8462beec",
+    "name": "Yi-Chia Wang",
+    "bio": " Sure, I'd be happy to help! Here's a comprehensive first person persona based on the list of personas you provided, with a focus on more recent personas:\n\nI am a seasoned researcher with a passion for uncovering insights that can drive business success. I have over a decade of experience in the market research industry, and I have worked with clients across a range of industries, from technology and finance to consumer goods and healthcare.\n\nIn my current role, I lead a team of researchers who are dedicated to understanding consumer behavior and attitudes. I am known for my ability to design and execute rigorous research studies that yield actionable insights. I am equally comfortable conducting qualitative research, such as in-depth interviews and focus groups, as I am with quantitative research, such as surveys and data analysis.\n\nI am a collaborative leader who values the input of my team members and colleagues. I believe that the best insights come from a diversity of perspectives, and I work to create an inclusive and supportive work environment where everyone feels valued and heard.\n\nIn my personal life, I am a curious and lifelong learner. I enjoy reading widely, from fiction to non-fiction, and I am always seeking out new experiences and challenges. I am also an avid traveler, and I love exploring new cultures and cuisines.\n\nRecently, I have become increasingly interested in the role of technology in market research. I believe that advances in data analytics and machine learning have the potential to transform the way we conduct research and uncover insights. I am excited about the opportunities that these technologies present, and I am committed to staying up-to-date with the latest developments in the field.\n\nOverall, I am a dedicated and experienced researcher who is passionate about uncovering insights that can drive business success. I am a collaborative leader who values diversity and inclusivity, and I am committed to staying up-to-date with the latest developments in the field of market research.",
+    "collaborators": [],
+    "institute": null
+  },
+  "c9d4b636-da03-4039-86d1-e7c2daaa512f": {
+    "pk": "c9d4b636-da03-4039-86d1-e7c2daaa512f",
+    "name": "Nazneen Nazneen",
+    "bio": " Hello, I am a researcher who has recently focused on the development of TapNet, a multi-task learning Convolutional Neural Network (CNN) for off-screen mobile input. My goal is to make off-screen interaction without specialized hardware practical by using deep learning methods to process the common built-in IMU sensor (accelerometers and gyroscopes) on mobile phones into a useful set of one-handed interaction events.\n\nTapNet is a network that detects tapping on a smartphone, and with phone form factor as auxiliary information, it can jointly learn from data across devices and simultaneously recognize multiple tap properties, including tap direction and tap location. I have developed two datasets consisting of over 135K training samples, 38K testing samples, and 32 participants in total to train and evaluate the performance of TapNet.\n\nThe experimental evaluation of TapNet has demonstrated its effectiveness and significant improvement over the state of the art. The results have shown that TapNet can accurately detect taps and their properties, making it a promising approach for off-screen mobile input. Along with the datasets and extensive experiments, TapNet establishes a new technical foundation for off-screen mobile input.\n\nI am passionate about exploring the potential of deep learning methods for mobile interaction and am excited to continue my research in this area. I believe that the development of TapNet is just the beginning, and there are many opportunities to further improve and expand its capabilities for various applications.",
+    "collaborators": [
+      "Shumin Zhai",
+      "Michael Xuelin Huang",
+      "Andreas Bulling",
+      "Philipp M\u00fcller",
+      "Inken Hagestedt",
+      "Julian Steil",
+      "Alexander Chao",
+      "Yang Li"
+    ],
+    "institute": null
+  },
+  "7cd8f7bf-4557-49a1-98b1-fa583c6aadf9": {
+    "pk": "7cd8f7bf-4557-49a1-98b1-fa583c6aadf9",
+    "name": "Benjamin Bengfort",
+    "bio": " Hello, I am a researcher with a focus on creating interactive data visualizations to enhance the understanding and accessibility of important economic reports. In particular, I have worked on improving the online presentation of the Bureau of Labor Statistics Employment Situation Report.\n\nThis report is highly anticipated and influential, but the current online format is outdated and not user-friendly. It is presented as a PDF containing only text and fixed tables, which can be difficult to interpret and explore for further insights. I believe that implementing interactive visual analysis techniques can greatly improve the user experience and encourage more engagement with the data.\n\nIn my research, I have developed two prototypes to demonstrate the potential of interactive visualizations for the Employment Situation Report. The first is a dashboard of interactive visualizations, which allows users to easily see trends and patterns in the data through charts and graphs. The second is an interactive time series explorer, which enables users to analyze the data over time and compare it to previous periods. Both of these prototypes also allow for spatial analysis and the ability to combine data sets to create customized visualizations.\n\nI am passionate about using technology to make data more accessible and understandable to the public. By creating interactive visualizations for important economic reports like the Employment Situation Report, I hope to promote greater civic engagement and foster a more informed society.",
+    "collaborators": [
+      "Ben Shneiderman",
+      "Peter Mancini"
+    ],
+    "institute": null
+  },
+  "50c61de4-541a-4c57-b9be-7b83ab745f32": {
+    "pk": "50c61de4-541a-4c57-b9be-7b83ab745f32",
+    "name": "Shirley Anugrah Hayati",
+    "bio": " I am a researcher with a focus on natural language processing, specifically in the areas of linguistic styles, large language models, and sociable recommendation dialog systems. I enjoy investigating how humans perceive and convey intentions through linguistic styles and examining the differences between human perception and machine interpretation.\n\nIn my recent work, I have contributed to the development of StyLEx, a model that learns from human-annotated explanations of stylistic features and provides human-like stylistic lexical explanations without sacrificing the performance of sentence-level style prediction. I am particularly interested in improving the explainability of large language models and ensuring that their explanations align with human understanding.\n\nI have also explored the potential of large language models (LLMs) in generating diverse perspectives and rationales on subjective topics, such as social norms and argumentative texts. I believe that LLMs can offer scalable and efficient solutions for collecting diverse human opinions, and I have proposed a criteria-based prompting technique to ground diverse opinions and a step-by-step recall prompting method for generating more outputs from the model in an iterative manner.\n\nIn the realm of sociable recommendation dialog systems, I have presented INSPIRED, a new dataset of 1,001 human-human dialogs for movie recommendation with measures for successful recommendations. I have designed an annotation scheme related to recommendation strategies based on social science theories and shown that sociable recommendation strategies more frequently lead to successful recommendations. I have also trained end-to-end recommendation dialog systems with and without strategy labels, and my model with strategy incorporation has outperformed the baseline model in both automatic and human evaluation.\n\nMy research is driven by the desire to build sociable recommendation dialog systems with a basis in social science theories and to improve the explainability and performance of large language models in various tasks. I am excited about the potential of these technologies and look forward to continuing my research in this field.",
+    "collaborators": [
+      "Aman Madaan",
+      "Vidhisha Balachandran",
+      "Dheeraj Rajagopal",
+      "Eric Wong",
+      "Jo\u00e3o Sedoc",
+      "Niket Tandon",
+      "Dongyeop Kang",
+      "Ashish Sabharwal",
+      "Eduard Hovy",
+      "Zhou Yu",
+      "Tianlin Liu",
+      "Ville Satop\u00e4\u00e4",
+      "Varun Gangal",
+      "Yiming Yang",
+      "Shreya Havaldar",
+      "Lyle Ungar",
+      "Tushar Khot",
+      "Dyah Adila",
+      "Weiyan Shi"
+    ],
+    "institute": null
+  },
+  "f068e740-712c-4fcf-97ac-d5fc4dc46c8b": {
+    "pk": "f068e740-712c-4fcf-97ac-d5fc4dc46c8b",
+    "name": "Michael Xuelin Huang",
+    "bio": " I am a researcher focused on developing innovative methods and technologies to improve human-computer interaction. In my recent work, I have been exploring various approaches to enhance the accuracy and usability of eye tracking systems, natural interaction analysis, privacy-aware gaze interfaces, and off-screen mobile input.\n\nIn the SacCalib project, I proposed a novel method to reduce calibration distortion in stationary eye trackers using saccadic eye movements. This non-intrusive solution exploits the curving effect of calibration distortion on straight saccade trajectories, undistorting the gaze projection plane and improving the overall accuracy of eye trackers during long-term use.\n\nIn the Detecting Low Rapport project, I investigated the automatic prediction of low rapport during natural interactions within small groups using non-verbal behavior analysis. By analyzing facial expressions, hand motion, gaze, speaker turns, and speech prosody, I was able to detect low rapport with an average precision of 0.7, demonstrating the potential for early prediction and intervention in social dynamics.\n\nPrivacy-aware eye tracking using differential privacy is another area of focus for me. I conducted a large-scale online survey to understand users' willingness to share gaze data and designed a privacy-aware VR interface using differential privacy. This interface prevents user re-identification and protects gender information while maintaining high performance for gaze-based document type classification.\n\nIn the TapNet project, I developed a multi-task learning CNN for off-screen mobile input using built-in IMU sensors on mobile phones. TapNet can detect tapping on smartphones with high accuracy, recognizing multiple tap properties and establishing a new technical foundation for off-screen mobile input.\n\nLastly, I presented Rambler, an LLM-powered graphical user interface that supports gist-level manipulation of dictated text for efficient writing on mobile devices. Rambler's gist extraction and macro revision functions facilitate iterative revisions and user control over the content, improving the quality of spoken text and supporting diverse user strategies.\n\nIn summary, my research aims to improve human-computer interaction by developing innovative methods and technologies in eye tracking, natural interaction analysis, privacy-aware gaze interfaces, and off-screen mobile input. I am committed to exploring new approaches and pushing the boundaries of what is possible in these areas.",
+    "collaborators": [
+      "Yuanbo Zhang",
+      "Shumin Zhai",
+      "Sabrina Hoppe",
+      "Andreas Bulling",
+      "Philipp M\u00fcller",
+      "Inken Hagestedt",
+      "Nazneen Nazneen",
+      "Julian Steil",
+      "Yusuke Sugano",
+      "Alexander Chao",
+      "Yang Li"
+    ],
+    "institute": null
+  },
+  "34169fb7-b10b-482e-a0a7-e86a7c2f88eb": {
+    "pk": "34169fb7-b10b-482e-a0a7-e86a7c2f88eb",
+    "name": "Mark Whiting",
+    "bio": " Hello, I am a researcher with a focus on improving assessment in Massive Open Online Courses (MOOCs) through the use of peer identification and aligned incentives. My work aims to enhance the quality of feedback and learner interactions in MOOCs, which traditionally rely on peer assessment for open-ended questions at scale.\n\nIn my research, I have identified the Improving Peer Review (IPR) framework, which utilizes non-blind peer assessment and incentives to drive high-quality feedback. This approach has been shown to result in significantly longer and more useful feedback, as well as increased discussion between peers compared to traditional peer assessment methods.\n\nI am passionate about finding innovative solutions to the challenges faced in MOOCs and am dedicated to continuously improving the learning experience for students. I believe that by providing high-quality feedback and fostering interactions between peers, MOOCs can better engage and retain students.\n\nIn my recent work, I have been exploring the use of technology to support the IPR framework and facilitate the peer assessment process. I am interested in the potential of natural language processing and machine learning to analyze and provide insights on the feedback provided by peers. This could help to further improve the quality of feedback and provide valuable data for instructors and course designers.\n\nI am also committed to making my research accessible and useful to the broader community. I strive to clearly communicate my findings and provide practical recommendations for instructors and course designers looking to implement peer assessment in their MOOCs.\n\nIn summary, I am a researcher dedicated to improving assessment in MOOCs through the use of peer identification and aligned incentives. I am excited about the potential of technology to support the peer assessment process and am committed to making my research accessible and useful to the broader community.",
+    "collaborators": [],
+    "institute": null
+  },
+  "0708e617-db4e-438d-b687-07b7078974fe": {
+    "pk": "0708e617-db4e-438d-b687-07b7078974fe",
+    "name": "Jacob Ritchie",
+    "bio": " I am a researcher with a focus on using technology and data to understand and address real-world problems. I have experience in crowdsourcing and have used it to gather partial county-level data on non-pharmaceutical interventions implemented in response to the COVID-19 pandemic in the United States. I am interested in the concept of common fate in visualization and have explored how coordinated changes in luminance and size can result in visual grouping.\n\nIn the area of natural language processing, I have benchmarked multiple methods of text feature representation for social media posts and compared their downstream use with automated machine learning tools to triage content for moderator attention. I have found that transfer learning is an effective strategy for predicting risk with relatively little labeled data, and that finetuning of pretrained language models provides further gains when large amounts of unlabeled text is available.\n\nI am also interested in the role of cable TV news in shaping public opinion and discourse. I have analyzed a data set of nearly 24/7 video, audio, and text captions from three U.S. cable TV networks from January 2010 to July 2019, using machine learning tools to detect faces, label their presented gender, identify prominent public figures, and align text captions to audio. I have used these labels to perform screen time and word frequency analyses and have found, for example, that overall, much more screen time is given to male-presenting individuals than to female-presenting individuals. I have presented an interactive web-based tool that allows the general public to perform their own analyses on the full cable TV news data set.",
+    "collaborators": [
+      "Bjoern Hartmann",
+      "Shengjia Zhao",
+      "Brian Bullins",
+      "Allison Koenecke",
+      "J. D. Zamfirescu-Pereira",
+      "Mark Whiting",
+      "Madhav Marathe",
+      "Stefano Ermon",
+      "Emily Wen",
+      "Marianna Bolla",
+      "Jerry Chen",
+      "Achla Marathe",
+      "Ashish Sabharwal",
+      "Qian Yang",
+      "Sorathan Chaturapruek"
+    ],
+    "institute": null
+  },
+  "4052397f-7643-41cc-8a5c-b7b65962bc88": {
+    "pk": "4052397f-7643-41cc-8a5c-b7b65962bc88",
+    "name": "J. D. Zamfirescu-Pereira",
+    "bio": " I am a researcher with a focus on developing and improving techniques for designing and implementing artificial intelligence systems, particularly chatbots and image analysis algorithms. I am interested in understanding how these systems can be made more effective and reliable, as well as how they can be used to help humans make better decisions.\n\nIn my work on chatbot design, I have introduced the concept of Conversation Regression Testing, which is a technique for tracking and understanding how different prompt strategies impact the unfolding of conversations in chatbots. I have developed an interactive design tool, BotDesigner, which uses this technique to help designers identify and address common errors and issues in chatbot conversations. This tool allows designers to see how different prompt strategies affect the chatbot's performance and to visualize the common threads of conversation using a graph visualization.\n\nIn addition to my work on chatbots, I have also developed machine learning methods for analyzing human error in image interpretation tasks. Using a unique dataset of human predictions of whether a neighborhood voted for Donald Trump or Joe Biden in the 2020 US election, based on a Google Street View image, I have shown that it is possible to provide an actionable decomposition of human error into bias, variance, and noise terms. This allows for the identification of specific features, such as pickup trucks, which lead humans astray in their image interpretations. These methods can be applied to ensure that human-in-the-loop decision-making is accurate and fair, and can also be used to improve the performance of black-box algorithmic systems.\n\nOverall, my research is focused on developing and improving techniques for designing and implementing AI systems that are effective, reliable, and fair. I am committed to using my expertise to help advance the field of AI and to make these systems more useful and beneficial to society.",
+    "collaborators": [
+      "Bjoern Hartmann",
+      "Allison Koenecke",
+      "Shuyao Zhou",
+      "Jerry Chen",
+      "Emily Wen",
+      "Qian Yang",
+      "Kyu Won Kim",
+      "Jeremy Warner"
+    ],
+    "institute": null
+  },
+  "f217e2bd-42c4-42a2-a9fd-ffca737973bb": {
+    "pk": "f217e2bd-42c4-42a2-a9fd-ffca737973bb",
+    "name": "Durim Morina",
+    "bio": " I am a researcher with a focus on studying online communities and the cultural artifacts that are shared within them. In my work, I strive to take a web-scale, cross-community approach in order to gain a more comprehensive understanding of the online cultural ecosystem.\n\nIn one of my studies, I performed a web-scale analysis of the origins of image memes, which are cultural artifacts that often originate in peripheral communities and then diffuse to the mainstream core. However, my research found that communities at the core of the network are actually the ones that originate the most highly diffused image memes. The top 10% of communities by network centrality originate the memes that generate 62% of the image meme diffusion events on the web. This challenges the notion that cultural innovations originate in the periphery and highlights the importance of engaging in web-scale, cross-community analyses.\n\nIn another line of research, I studied the issue of low-quality work and unfair rejections on paid crowdsourcing platforms. I found that these problems are often caused by inflated reputation scores, which make high-quality work and workers difficult to find. These inflated scores stem from social pressure to avoid giving negative feedback. To address this issue, I introduced Boomerang, a reputation system for crowdsourcing that elicits more accurate feedback by rebounding the consequences of feedback directly back onto the person who gave it. Field experiments have shown that Boomerang causes both workers and requesters to provide feedback that is more closely aligned with their private opinions.\n\nOverall, my research is focused on using web-scale, cross-community analyses to gain a deeper understanding of online communities and the cultural artifacts that are shared within them. I am also interested in using game-theoretic notions of incentive-compatibility to design systems that incentivize honest reporting over strategic dishonesty.",
+    "collaborators": [
+      "Snehalkumar",
+      "Dalton Lunga",
+      "Adam Ginzberg",
+      "Sorathan Chaturapruek",
+      "J. D. Zamfirescu-Pereira",
+      "Mark Whiting",
+      "S. Gaikwad",
+      "Dilrukshi Gamage",
+      "Yu-Ru Lin",
+      "Aaron Gilbee",
+      "Shankar Iyer",
+      "Alipta Ballav",
+      "Shirish Goyal",
+      "Elizabeth Bondi",
+      "Michael S. Bernstein",
+      "Jacob Ritchie",
+      "Catherine Mullings"
+    ],
+    "institute": null
+  },
+  "ce64135b-2d26-4c28-a2cd-3b2f496fe7ea": {
+    "pk": "ce64135b-2d26-4c28-a2cd-3b2f496fe7ea",
+    "name": "Ben Shneiderman",
+    "bio": " I am a researcher with a focus on Human-Centered Artificial Intelligence (HCAI) and the use of technology to facilitate dynamic data discovery. My work in HCAI is centered on the idea that well-designed technologies which offer a high level of human control and high level of computer automation can lead to increased human performance and wider adoption. I am dedicated to clarifying how to design for high levels of human control and high levels of computer automation, as well as understanding the situations in which full human control or full computer control are necessary. I also aim to avoid the dangers of excessive human control or excessive computer control, with the goal of producing designs that are Reliable, Safe & Trustworthy (RST). I believe that achieving these goals will significantly increase human performance and support human self-efficacy, mastery, creativity, and responsibility.\n\nIn addition to my work in HCAI, I am also interested in the interactive exploration of data, specifically the Employment Situation Report released monthly by the Bureau of Labor Statistics. I believe that the current online access to this data, which is in a PDF format containing solely text and fixed tabular information, is outdated and not conducive to dynamic data discovery. I propose the implementation of interactive visual analysis techniques to enable dynamic discovery on the BLS website, which I believe will lead to rapid interpretation of data and provide the means to explore the data for further insights. I have created two inspirational prototypes, a dashboard of interactive visualizations and an interactive time series explorer, which allow for temporal and spatial analyses and enable users to combine data sets to create their own customized visualization. I believe that this interactive interface will elicit more dialogue between the public and government spheres, drawing more traffic to government websites and triggering greater civic engagement.",
+    "collaborators": [
+      "Benjamin Bengfort",
+      "Peter Mancini"
+    ],
+    "institute": null
+  },
+  "a8588193-84a9-4f91-9184-616dfdab8ce9": {
+    "pk": "a8588193-84a9-4f91-9184-616dfdab8ce9",
+    "name": "Sorathan Chaturapruek",
+    "bio": " I am a researcher with a focus on computer science, specifically in the areas of combinatorial searches, graph spectra, stochastic convex optimization, and crowdsourcing. My work has been published in various conferences and technical reports.\n\nIn my research on combinatorial searches, I have contributed to closing the gap between short and long XORs for model counting. Many recent algorithms for approximate model counting rely on a reduction to combinatorial searches over random subsets of the space defined by parity or XOR constraints. I have provided matching necessary and sufficient conditions on the required asymptotic length of the parity constraints, and have developed a new family of lower bounds and the first non-trivial upper bounds on the model count that are valid for arbitrarily short XORs. I have also demonstrated the effectiveness of these bounds on model counting benchmarks and in a Satisfiability Modulo Theory (SMT) application.\n\nIn the field of graph spectra, I have addressed the open problem posed by D. Stevanovic at the Conference on Applications of Graph Spectra in Computer Science in 2012, regarding which graphs have the zero as the largest eigenvalue of their modularity matrix. I have proven that only complete and complete multipartite graphs have this property and have also shown that both the modularity and the normalized modularity matrix of a graph is negative semidefinite if and only if the graph is complete or complete multipartite.\n\nIn the area of stochastic convex optimization, I have shown that completely asynchronous stochastic gradient procedures achieve optimal (even to constant factors) convergence rates for the solution of convex optimization problems under nearly the same conditions required for asymptotic optimality of standard stochastic gradient procedures. I have also provided empirical evidence demonstrating the strong performance of asynchronous, parallel stochastic optimization schemes.\n\nAdditionally, I have been involved in a crowdsourcing project gathering partial county-level data on non-pharmaceutical interventions implemented in response to the COVID-19 pandemic in the United States. I have documented the data collection process and summarized the results in a technical report, with the aim of increasing the utility of the open data and informing the design of future rapid crowdsourcing data collection efforts.",
+    "collaborators": [
+      "Horst Samulowitz",
+      "Aditya Grover",
+      "Brian Bullins",
+      "Kyle Richardson",
+      "Christopher Yeh",
+      "Stefano Ermon",
+      "Jiaming Song",
+      "Hanie Sedghi",
+      "Marianna Bolla",
+      "Jonathan Ho",
+      "William Merrill",
+      "Russell Stewart",
+      "Anusri Pampari",
+      "Ashish Sabharwal",
+      "Volodymyr Kuleshov",
+      "Shengjia Zhao"
+    ],
+    "institute": null
+  },
+  "6e5aca30-de37-42b6-8b8d-a37025a96e24": {
+    "pk": "6e5aca30-de37-42b6-8b8d-a37025a96e24",
+    "name": "Yang Li",
+    "bio": " I am a researcher with a focus on geometric analysis, specifically in the areas of complex geometry, differential geometry, and symplectic geometry. I am interested in the study of Calabi-Yau manifolds, special Lagrangian submanifolds, and Hermitian Yang-Mills connections.\n\nIn my recent work, I have been exploring the gluing method for constructing and describing collapsing Calabi-Yau metrics on 3-folds with a Lefschetz K3 fibration. I have also been studying the Dirichlet boundary value problem for graphical maximal submanifolds in Lorentzian type ambient spaces, obtaining existence and uniqueness results for any codimension.\n\nI am also interested in the metric formulation of the SYZ conjecture, and assuming a conjecture in non-archimedean geometry, I have shown that a metric formulation of the SYZ conjecture can be proved in large generality.\n\nIn addition, I have been studying the bubbling phenomenon for Hermitian Yang-Mills connections, constructing local examples of singular connections with uniformly bounded L^2-energy, but with an arbitrarily large number of essential singular points.\n\nI have also constructed special Lagrangian pair of pants in general dimensions, inside the cotangent bundle of T^n with the Euclidean structure. I have proven a uniform Skoda type estimate and a uniform L^\u221e-estimate for the Calabi-Yau K\\\"ahler potentials in the study of polarised algebraic degenerations of Calabi-Yau manifolds.\n\nMy recent papers also include a differential geometric perspective on Mukai duality on K3 surfaces, and the study of special Lagrangian T^n-fibrations on the generic regions of some Calabi-Yau hypersurfaces in the Fermat family near the large complex structure limit.\n\nI have also obtained quantitative estimates on the closeness between two Lagrangians under Floer theoretic conditions, and a characterization of varifold convergence to special Lagrangians in terms of Lagrangian angles.\n\nMotivated by the study of collapsing Calabi-Yau threefolds with a Lefschetz K3 fibration, I have constructed a new complete Calabi-Yau metric on C^3 with",
+    "collaborators": [],
+    "institute": null
+  },
+  "44903688-41be-4ce9-a82c-0d3ec20df6dd": {
+    "pk": "44903688-41be-4ce9-a82c-0d3ec20df6dd",
+    "name": "Raj Sanjay Shah",
+    "bio": " I am a researcher focused on investigating and improving the performance of language models, with a particular interest in making them more human-like. I have explored various aspects of language models, from their ability to learn contextual word representations to their capacity to capture human concepts and behaviors.\n\nIn my work on pre-training Large Language Models (LLMs), I compared their language acquisition to human language acquisition, evaluating their performance in learning contextual word representations using a similar number of tokens as seen by children. I provided strong baselines, including different architectures and evaluation of changes in performance across epochs, and replicated the RoBERTa baseline to observe the training robustness to hyperparameter selection and replicability.\n\nI have also delved into the issue of catastrophic interference (CI) in neural networks, which contrasts with humans' ability to sequentially learn new tasks without forgetting previous ones. By simulating naturalistic learning environments, I evaluated the extent of mitigation of CI when training simple rehearsal-based methods in power-law environments similar to those humans face. My results showed that performance was comparable or superior to that of models trained using popular regularization methods and rehearsals in non-power-law environments.\n\nIn addition, I have studied how well deep learning models capture human concepts, specifically focusing on the typicality effect, which is the finding that people judge some instances of a category to be more typical than others. I evaluated language and vision models across a broader range of architectures and concepts, finding that combined language and vision models better predict human typicality data than models of either modality alone.\n\nFrom a behavioral perspective, I have investigated how Large Language Models (LLMs) capture the magnitudes of numbers, revealing surprisingly human-like representations across language models of different architectures. I have also explored the processing of garden-path sentences and the fate of lingering misinterpretations in four large language models, finding promising alignment between humans and LLMs in the processing of garden-path sentences, especially when extra-syntactic information is available to guide processing.\n\nRecently, I have been working on leveraging large language models to provide contextualized and multi-level feedback to empower peer counselors, especially novices, at scale. I co-designed a multi-level feedback taxonomy with senior psychotherapy supervisors, constructed a publicly available dataset with comprehensive feedback annotations, and designed a self",
+    "collaborators": [
+      "Khushi Bhardwaj",
+      "Vijay Marupudi",
+      "Vima Gupta",
+      "Jiaao Chen",
+      "Le Zhang",
+      "Caleb Ziems",
+      "Reba Koenen",
+      "Robert Kraut",
+      "Kunal Chawla",
+      "Diyi Yang",
+      "Zichao Yang",
+      "Sashank Varma"
+    ],
+    "institute": null
+  },
+  "6f7c7a3d-808e-4c91-ab7b-e4922a702f7b": {
+    "pk": "6f7c7a3d-808e-4c91-ab7b-e4922a702f7b",
+    "name": "Michael S. Bernstein",
+    "bio": " I am a researcher with a focus on web-scale analysis, crowdsourcing, and online communities. My work involves analyzing large-scale data from various online platforms to understand the origins and diffusion of cultural artifacts, such as image memes. In a recent study, I conducted a web-scale analysis of the origins of image memes and found that communities at the core of the network are the ones that originate the most highly diffused image memes.\n\nIn addition to my work on image memes, I have also explored the use of crowdsourcing for data collection, particularly during the early stages of the COVID-19 pandemic. I led a team that gathered partial county-level data on non-pharmaceutical interventions implemented in response to the pandemic in the United States using both volunteer and paid crowdsourcing.\n\nI am also interested in real-time crowdsourcing and have used queueing theory to analyze the retainer model for real-time crowdsourcing. I have developed an algorithm that allows requesters to minimize their cost subject to performance requirements and have proposed and analyzed techniques to improve performance.\n\nI have also worked on designing online field experiments and have introduced a language for online field experiments called PlanOut. This language separates experimental design from application code, allowing the experimenter to concisely describe experimental designs.\n\nIn the area of online creative communities, I have proposed an online community where sharing process, rather than showcasing outcomes, is the main method of sharing creative work. I have presented Mosaic, an online community where illustrators share work-in-progress snapshots showing how an artwork was completed from start to finish.\n\nI am committed to ensuring that AI research is conducted ethically and have developed the Ethics and Society Review board (ESR), a feedback panel that works with researchers to mitigate negative ethical and societal aspects of AI research. The ESR serves as a requirement for funding and has been successful in identifying issues such as harms to minority groups, inclusion of diverse stakeholders in the research plan, dual use, and representation in data.\n\nFinally, I have explored long-term crowd worker quality in the context of microtask crowdsourcing. I have found that workers are extremely stable in their quality over long periods of time and have demonstrated that it is possible to predict workers' long-term quality using just a glimpse of their quality on the first five tasks.",
+    "collaborators": [
+      "Snehalkumar",
+      "Adam Ginzberg",
+      "J. D. Zamfirescu-Pereira",
+      "Mark Whiting",
+      "Durim Morina",
+      "S. Gaikwad",
+      "Madhav Marathe",
+      "Catherine Mullings",
+      "Achla Marathe",
+      "Jacob Ritchie",
+      "Sorathan Chaturapruek"
+    ],
+    "institute": null
+  },
+  "1009647e-e5ce-4eca-b38d-e912e9190505": {
+    "pk": "1009647e-e5ce-4eca-b38d-e912e9190505",
+    "name": "Jason Hong",
+    "bio": " I am a researcher with a focus on incorporating human influence in algorithmic decision-making, particularly in contentious public policy domains. I am passionate about finding ways to make technology, such as email, more dynamic and user-friendly. In my work, I strive to bring together insights from communication literature and human-computer interaction (HCI) to create practical solutions that benefit both individuals and society as a whole.\n\nIn my recent position paper, I introduced the concept of \"Public(s)-in-the-Loop,\" a framework for involving human influence in algorithmic decision-making for contentious public policy issues. This approach emphasizes the importance of viewing publics as plural political entities, collective decision-making through deliberation, and the construction of publics. I believe that by incorporating these features, we can advance our understanding of stakeholder participation in AI design and improve the way that contentious public policy issues are addressed.\n\nIn addition to my work on algorithmic decision-making, I have also been exploring ways to enhance email functionality. I believe that there is still much that can be done to improve this long-standing communication tool. In particular, I have been investigating the use of late bound content, a simple and generalizable technique that defers message content binding through image lazy-loading. This allows email senders and third-party services to update delivered emails, adding new features and functionality.\n\nOverall, my research is focused on finding ways to make technology more responsive to the needs and desires of users, while also taking into account the broader societal implications of these tools. I am excited to continue exploring these topics and to contribute to the ongoing conversation about the role of humans in the design and implementation of technology.",
+    "collaborators": [
+      "Adam Perer",
+      "Jason I. Hong",
+      "Shishao Bao",
+      "Hong Shen",
+      "Jason Lin",
+      "Fred Hohman",
+      "Venkatesh Sivaraman",
+      "Zhigang Lu",
+      "Duen Horng Chau",
+      "Enrico Bertini",
+      "\u00c1ngel Alexander Cabrera",
+      "Josua Krause",
+      "Yuzhe Lu"
+    ],
+    "institute": null
+  },
+  "70800265-cb4f-4e56-b344-d4c094ab01c1": {
+    "pk": "70800265-cb4f-4e56-b344-d4c094ab01c1",
+    "name": "Alexander Chao",
+    "bio": " Hello, I am a researcher who has recently focused on the development of TapNet, a multi-task learning Convolutional Neural Network (CNN) for off-screen mobile input. My goal is to make off-screen interaction without specialized hardware practical by using deep learning methods to process the common built-in IMU sensor (accelerometers and gyroscopes) on mobile phones into a useful set of one-handed interaction events.\n\nTapNet is a network that detects tapping on a smartphone, and with phone form factor as auxiliary information, it can jointly learn from data across devices and simultaneously recognize multiple tap properties, including tap direction and tap location. I have developed two datasets consisting of over 135K training samples, 38K testing samples, and 32 participants in total to train and evaluate the performance of TapNet.\n\nThe experimental evaluation of TapNet has demonstrated its effectiveness and significant improvement over the state of the art. The results have shown that TapNet can accurately detect taps and their properties, making it a promising approach for off-screen mobile input. Along with the datasets and extensive experiments, TapNet establishes a new technical foundation for off-screen mobile input.\n\nI am passionate about exploring the potential of deep learning methods for mobile interaction and am excited to continue my research in this area. I believe that the development of TapNet is just the beginning, and there are many opportunities to further improve and expand its capabilities for various applications.",
+    "collaborators": [],
+    "institute": null
+  },
+  "ea4c23fd-4048-43c2-acf7-36a02aff761a": {
+    "pk": "ea4c23fd-4048-43c2-acf7-36a02aff761a",
+    "name": "Aastha Agarwal",
+    "bio": " Hello, I am a researcher who has been studying the use of motivational interviewing (MI) techniques in online peer-to-peer counseling platforms. My work involves analyzing large datasets of chat conversations between volunteer counselors and clients in order to understand how the use of MI techniques impacts client satisfaction.\n\nIn my most recent research, I annotated 14,797 utterances from 734 chat conversations using 17 MI techniques and introduced four new interviewing codes to account for the unique conversational patterns observed on online platforms. I then used large domain-specific language models to automate the process of labeling peer-counselor responses to MI techniques and conducted correlational studies to investigate the behavior of the peer counselors.\n\nMy findings suggest that when counselors use techniques such as reflection and affirmation, clients are more satisfied with their counseling sessions. Additionally, I found that as volunteer counselors gain experience, they tend to use more introduction and open questions. This suggests that training programs for volunteer counselors on online platforms can be improved by focusing on these specific MI techniques.\n\nOverall, my research provides a deeper understanding of the use of MI techniques in online peer-to-peer counseling platforms and highlights the importance of training and support for volunteer counselors in order to improve client satisfaction. I am excited to continue this line of research and to explore new ways to support the mental health and well-being of individuals through online peer-to-peer counseling.",
+    "collaborators": [
+      "Khushi Bhardwaj",
+      "Faye Holt",
+      "Vijay Marupudi",
+      "Dheeraj Rajagopal",
+      "Robert E. Kraut",
+      "Zhou Yu",
+      "Yi-Chia Wang",
+      "Robert Kraut",
+      "Diyi Yang",
+      "Dongyeop Kang",
+      "Weiyan Shi",
+      "Shirley Anugrah Hayati",
+      "Raj Sanjay Shah",
+      "Sashank Varma",
+      "Lyle Ungar"
+    ],
+    "institute": null
+  },
+  "77c7440b-28cd-4f50-a939-46b2902b8675": {
+    "pk": "77c7440b-28cd-4f50-a939-46b2902b8675",
+    "name": "Robert E. Kraut",
+    "bio": " Hello, I am a researcher who has been studying the use of motivational interviewing (MI) techniques in online peer-to-peer counseling platforms. My work involves analyzing large datasets of chat conversations between volunteer counselors and clients in order to understand how the use of MI techniques impacts client satisfaction.\n\nIn my most recent research, I annotated 14,797 utterances from 734 chat conversations using 17 MI techniques and introduced four new interviewing codes to account for the unique conversational patterns observed on online platforms. I then used large domain-specific language models to automate the process of labeling peer-counselor responses to MI techniques and conducted correlational studies to investigate the behavior of the peer counselors.\n\nMy findings suggest that when counselors use techniques such as reflection and affirmation, clients are more satisfied with their counseling sessions. Additionally, I found that as volunteer counselors gain experience, they tend to use more introduction and open questions. This suggests that training programs for volunteer counselors on online platforms can be improved by focusing on these specific MI techniques.\n\nOverall, my research provides a deeper understanding of the use of MI techniques in online peer-to-peer counseling platforms and highlights the importance of training and support for volunteer counselors in order to improve client satisfaction. I am excited to continue this line of research and to explore new ways to support the mental health and well-being of individuals through online peer-to-peer counseling.",
+    "collaborators": [
+      "Khushi Bhardwaj",
+      "Faye Holt",
+      "Vijay Marupudi",
+      "Dheeraj Rajagopal",
+      "Zhou Yu",
+      "Yi-Chia Wang",
+      "Robert Kraut",
+      "Diyi Yang",
+      "Dongyeop Kang",
+      "Weiyan Shi",
+      "Shirley Anugrah Hayati",
+      "Raj Sanjay Shah",
+      "Sashank Varma",
+      "Lyle Ungar",
+      "Aastha Agarwal"
+    ],
+    "institute": null
+  },
+  "f1074fe1-f70a-46db-9d4f-ee9d39682a7d": {
+    "pk": "f1074fe1-f70a-46db-9d4f-ee9d39682a7d",
+    "name": "Faye Holt",
+    "bio": " Hello, I am a researcher who has been studying the use of motivational interviewing (MI) techniques in online peer-to-peer counseling platforms. My work involves analyzing large datasets of chat conversations between volunteer counselors and clients in order to understand how the use of MI techniques impacts client satisfaction.\n\nIn my most recent research, I annotated 14,797 utterances from 734 chat conversations using 17 MI techniques and introduced four new interviewing codes to account for the unique conversational patterns observed on online platforms. I then used large domain-specific language models to automate the process of labeling peer-counselor responses to MI techniques and conducted correlational studies to investigate the behavior of the peer counselors.\n\nMy findings suggest that when counselors use techniques such as reflection and affirmation, clients are more satisfied with their counseling sessions. Additionally, I found that as volunteer counselors gain experience, they tend to use more introduction and open questions. This suggests that training programs for volunteer counselors on online platforms can be improved by focusing on these specific MI techniques.\n\nOverall, my research provides a deeper understanding of the use of MI techniques in online peer-to-peer counseling platforms and highlights the importance of training and support for volunteer counselors in order to improve client satisfaction. I am excited to continue this line of research and to explore new ways to support the mental health and well-being of individuals through online peer-to-peer counseling.",
+    "collaborators": [
+      "Khushi Bhardwaj",
+      "Vijay Marupudi",
+      "Dheeraj Rajagopal",
+      "Robert E. Kraut",
+      "Zhou Yu",
+      "Yi-Chia Wang",
+      "Robert Kraut",
+      "Diyi Yang",
+      "Dongyeop Kang",
+      "Weiyan Shi",
+      "Shirley Anugrah Hayati",
+      "Raj Sanjay Shah",
+      "Sashank Varma",
+      "Lyle Ungar",
+      "Aastha Agarwal"
+    ],
+    "institute": null
+  },
+  "105489ab-0c78-43a9-95d2-8ae4c46743cc": {
+    "pk": "105489ab-0c78-43a9-95d2-8ae4c46743cc",
+    "name": "Shumin Zhai",
+    "bio": " I am a researcher with a focus on developing innovative solutions for mobile and keyboard interaction. My work involves investigating and implementing cutting-edge deep learning methods to enhance the user experience.\n\nIn my research on TapNet, I designed and trained a multi-task network to process built-in IMU sensors on mobile phones into a useful set of one-handed interaction events. This network, TapNet, can detect tapping on a smartphone and jointly learn from data across devices, recognizing multiple tap properties such as tap direction and tap location. I developed two datasets, which I have made publicly available, to demonstrate the effectiveness of TapNet and its significant improvement over the state of the art.\n\nIn my work on Private Federated Learning in Gboard, I explored the use of federated learning, DP-Follow-the-Regularized-Leader (DP-FTRL) algorithm, and secure aggregation techniques to train machine learning models for suggestion, prediction, and correction intelligence from many users' typing data. I established technical strategies and practices to allow ML models to be trained and deployed with meaningfully formal DP guarantees and high utility, ensuring users' typing data remains private and secure.\n\nMost recently, I have been working on Rambler, an LLM-powered graphical user interface that supports gist-level manipulation of dictated text. Rambler includes two main sets of functions: gist extraction and macro revision. Gist extraction generates keywords and summaries as anchors to support the review and interaction with spoken text, while LLM-assisted macro revisions allow users to respeak, split, merge, and transform dictated text without specifying precise editing locations. In a comparative study, Rambler outperformed the baseline of a speech-to-text editor + ChatGPT, demonstrating its ability to facilitate iterative revisions with enhanced user control over the content.\n\nIn summary, my research focuses on developing innovative solutions for mobile and keyboard interaction, utilizing deep learning methods to enhance user experience while ensuring privacy and security.",
+    "collaborators": [
+      "Yuanbo Zhang",
+      "Michael Xuelin Huang",
+      "Andreas Bulling",
+      "Philipp M\u00fcller",
+      "Inken Hagestedt",
+      "Nazneen Nazneen",
+      "Julian Steil",
+      "Alexander Chao",
+      "Yang Li"
+    ],
+    "institute": null
+  },
+  "92ca773f-4974-4858-bbe5-b9f388db7d4a": {
+    "pk": "92ca773f-4974-4858-bbe5-b9f388db7d4a",
+    "name": "Yuanbo Zhang",
+    "bio": " I am a researcher with a focus on graphene, a two-dimensional honeycomb lattice of carbon atoms that has unique electrical properties. My work has involved using the electric field effect (EFE) to create large density modulations of carriers with linear dispersion, known as Dirac fermions, in graphene. I have used Raman spectra to study the interactions of lattice vibrations with these unusual carriers and have demonstrated the optically observable particle-hole symmetry about the charge-neutral Dirac-point.\n\nIn addition to my work on graphene, I have also investigated the use of large language models (LLMs) to improve the quality of pre-training data for on-device language models that are trained with differential privacy and federated learning. I have designed prompts for the LLMs to filter and transform existing public data and generate new data to resemble the real user data distribution. This method has resulted in a relative improvement of 19.0% and 22.8% in next word prediction accuracy compared to the baseline model.\n\nI have also studied electronic transport in lithographically patterned graphene ribbon structures, where the lateral confinement of charge carriers creates an energy gap near the charge neutrality point. I have found that the energy gap scales inversely with the ribbon width, demonstrating the ability to engineer the band gap of graphene nanostructures by lithographic processes.\n\nIn addition to my work on graphene, I have also explored the use of twisted bilayer MnBi2Te4 in realizing time-reversal breaking correlated topological phases. I have constructed a continuum model for the Moir\u00e9 superlattice of twisted bilayer MnBi2Te4 and studied the band structure of the bilayer in both ferromagnetic and antiferromagnetic phases. I have found that the system exhibits highly tunable Chern bands with Chern number up to 3, and that a twist angle of 1\u00b0 turns the highest valence band into a flat band with Chern number \u00b11 that is isolated from all other bands in both phases.\n\nI have also worked on the development of private federated learning in Gboard, a mobile keyboard application. I have used the DP-Follow-the-Regularized-Leader (DP-FTRL) algorithm and secure aggregation techniques to train machine learning models",
+    "collaborators": [
+      "Yuri M. Zuev",
+      "Zheng Xu",
+      "Philip Kim",
+      "Yeon Suk Hong",
+      "Jun Yan",
+      "Ge Wang",
+      "Daniel Ramage",
+      "Latha Venkataraman",
+      "Yanxiang Zhang",
+      "Willy Chang",
+      "Zijing Zhang"
+    ],
+    "institute": null
+  }
+}
