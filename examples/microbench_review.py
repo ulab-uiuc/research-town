@@ -118,7 +118,7 @@ class RealPaperWithReviewDB(object):
         return rank_consistency_float
 
 
-def main(data_path: str, domain: str) -> None:
+def main(data_path: str, domain: str, model_name:str, review_agent_num: int) -> None:
     print(f'Data path is: {data_path}')
     print(f'Domain is: {domain}')
     # collect papers from openreview
@@ -132,11 +132,11 @@ def main(data_path: str, domain: str) -> None:
     agent_file = os.path.join(data_path, f'agent_{domain}.json')
     agent_db.load_from_file(agent_file)
     # 2. how to assign reviewers to papers?
-    # (jinwei) Hardcode-- select top 3 reviewers in the agent_db to agent_profiles
+    # Note: we hardcode and select top review_agent_num reviewers in the agent_db to agent_profiles
     agent_profiles: List[AgentProfile] = []
     all_reviewers = list(agent_db.data.values())  # Convert dict_values to a list
 
-    for i in range(3):
+    for i in range(review_agent_num):
         agent_profiles.append(all_reviewers[i])
     # create agents
     agents: List[BaseResearchAgent] = []
@@ -144,7 +144,7 @@ def main(data_path: str, domain: str) -> None:
         agents.append(
             BaseResearchAgent(
                 agent_profile=agent_profile,
-                model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+                model_name=model_name,
             )
         )
 
@@ -164,7 +164,7 @@ def main(data_path: str, domain: str) -> None:
     print(f'rank_consistency = {rank_consistency}\n')
     # save the RealPaperWithReviewDB
     # Construct the output file path
-    output_file = os.path.join(data_path, f'output_microbench_review_{domain}.json')
+    output_file = os.path.join(data_path, f'output_microbench_review_{domain}_by_{model_name}.json')
     real_paper_db.save_to_file(output_file)
 
 
@@ -190,5 +190,21 @@ if __name__ == '__main__':
         help='Domain of papers to be reviewed.',
     )
 
+     # Add argument for models
+    parser.add_argument(
+        "--model_name", 
+        type=str, 
+        default='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1', 
+        help="Models for reviewers."
+    )
+
+    # Add argument for review_agent_num
+    parser.add_argument(
+        "--review_agent_num", 
+        type=int, 
+        default=3, 
+        help="Number of total reviewers."
+    )
+
     args = parser.parse_args()
-    main(args.data_path, args.domain)
+    main(args.data_path, args.domain, args.model_name, args.review_agent_num)
