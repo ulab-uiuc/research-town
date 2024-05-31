@@ -91,6 +91,5 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def submit_paper(self, paper_dict: Dict[str, ResearchPaperSubmission]) -> None:
         # TODO: clarify paper submission
         for _, paper in paper_dict.items():
-            profile_paper = PaperProfile(title=paper.title, abstract=paper.abstract)
-            self.paper = profile_paper
+            self.paper = PaperProfile(title=paper.title, abstract=paper.abstract)
             break
