@@ -67,7 +67,7 @@ def find_collaborators_prompting(
         'task_serialize_all': task_serialize_all,
         'collaborators_serialize_all': collaborator_serialize_all,
     }
-    prompt_template=(prompt_template[0])
+    prompt_template = prompt_template[0]
     prompt = prompt_template.format_map(input)
     return model_prompting(model_name, prompt)
 
@@ -79,19 +79,19 @@ def find_collaborators_prompting(
 def read_paper_prompting(
     profile: Dict[str, str],
     papers: List[Dict[str, str]],
-    query_template:List[str],
-    prompt_template:List[str],
+    query_template: List[str],
+    prompt_template: List[str],
     domains: List[str],
     model_name: str,
 ) -> List[str]:
-    query_template=(query_template[0])
+    query_template = query_template[0]
     query = query_template.format_map(
         {'profile_bio': profile['bio'], 'domains': '; '.join(domains)}
     )
 
     corpus = [paper['abstract'] for paper in papers]
     related_papers = get_related_papers(corpus, query, num=1)
-    prompt_template = (prompt_template[0])
+    prompt_template = prompt_template[0]
     prompt = prompt_template.format_map(
         {
             'profile_bio': profile['bio'],
@@ -108,7 +108,7 @@ def think_idea_prompting(
     prompt_template: List[str],
     model_name: str,
 ) -> List[str]:
-    prompt_template = (prompt_template[0])
+    prompt_template = prompt_template[0]
     prompt = prompt_template.format_map({'trend': insight['content']})
     return model_prompting(model_name, prompt)
 
@@ -122,14 +122,16 @@ def write_paper_prompting(
 ) -> List[str]:
     ideas_str = map_idea_list_to_str(ideas)
     papers_str = map_paper_list_to_str(papers)
-    prompt_template = (prompt_template[0])
+    prompt_template = prompt_template[0]
     prompt = prompt_template.format_map({'ideas': ideas_str, 'papers': papers_str})
     return model_prompting(model_name, prompt)
 
 
 @beartype
-def review_score_prompting(paper_review: str,prompt_template: List[str], model_name: str) -> int:
-    prompt_template = (prompt_template[0])
+def review_score_prompting(
+    paper_review: str, prompt_template: List[str], model_name: str
+) -> int:
+    prompt_template = prompt_template[0]
     prompt = prompt_template.format_map(
         {
             'paper_review': paper_review,
@@ -146,7 +148,7 @@ def review_paper_prompting(
     model_name: str,
 ) -> List[str]:
     papers_str = map_paper_to_str(paper)
-    prompt_template = (prompt_template[0])
+    prompt_template = prompt_template[0]
     prompt = prompt_template.format_map({'papers': papers_str})
     return model_prompting(model_name, prompt)
 
@@ -160,7 +162,7 @@ def write_meta_review_prompting(
 ) -> List[str]:
     paper_str = map_paper_to_str(paper)
     reviews_str = map_review_list_to_str(reviews)
-    prompt_template = (prompt_template[0])
+    prompt_template = prompt_template[0]
     prompt = prompt_template.format_map({'paper': paper_str, 'reviews': reviews_str})
     return model_prompting(model_name, prompt)
 
@@ -174,7 +176,7 @@ def write_rebuttal_prompting(
 ) -> List[str]:
     paper_str = map_paper_to_str(paper)
     review_str = map_review_to_str(review)
-    prompt_template = (prompt_template[0])
+    prompt_template = prompt_template[0]
     prompt = prompt_template.format_map({'paper': paper_str, 'review': review_str})
     return model_prompting(model_name, prompt)
 
@@ -186,6 +188,6 @@ def discuss_prompting(
     model_name: str,
 ) -> List[str]:
     message_str = map_message_to_str(message)
-    prompt_template = (prompt_template[0])
+    prompt_template = prompt_template[0]
     prompt = prompt_template.format_map({'message': message_str})
     return model_prompting(model_name, prompt)

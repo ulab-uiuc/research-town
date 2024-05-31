@@ -62,9 +62,3 @@ prompt_template:
         "Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way.",
         "Here are the messages from other researchers: {single_round_chat_serialize_all}"
     ]
-
-
-
-
-
-

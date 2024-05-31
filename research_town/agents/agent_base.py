@@ -2,6 +2,7 @@ from datetime import datetime
 
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Tuple
+
 from ..configs.config import cfg
 from ..dbs import (
     AgentAgentDiscussionLog,
@@ -48,7 +49,10 @@ class BaseResearchAgent(object):
 
     @beartype
     def find_collaborators(
-        self, paper: PaperProfile, parameter: float = 0.5, max_number: int =cfg.parameters.max_collaborators_num
+        self,
+        paper: PaperProfile,
+        parameter: float = 0.5,
+        max_number: int = cfg.parameters.max_collaborators_num,
     ) -> List[AgentProfile]:
         # TODO: need rebuild
         start_author: List[str] = (
@@ -74,7 +78,13 @@ class BaseResearchAgent(object):
             else {}
         )
         result = find_collaborators_prompting(
-            paper_serialize, self_profile, collaborator_profiles, cfg.prompt_template.find_collaborators, parameter,max_number)
+            paper_serialize,
+            self_profile,
+            collaborator_profiles,
+            cfg.prompt_template.find_collaborators,
+            parameter,
+            max_number,
+        )
         collaborators_list = []
         for collaborator in collaborators:
             if collaborator in result:
@@ -126,7 +136,11 @@ class BaseResearchAgent(object):
         idea_contents: List[str] = []
         for insight in serialized_insights:
             idea_contents.append(
-                think_idea_prompting(insight=insight, prompt_template=cfg.prompt_template.think_idea, model_name=self.model_name)[0]
+                think_idea_prompting(
+                    insight=insight,
+                    prompt_template=cfg.prompt_template.think_idea,
+                    model_name=self.model_name,
+                )[0]
             )
         ideas: List[ResearchIdea] = []
         for content in idea_contents:
@@ -140,7 +154,10 @@ class BaseResearchAgent(object):
         serialized_ideas = self.serializer.serialize(ideas)
         serialized_papers = self.serializer.serialize(papers)
         paper_abstract = write_paper_prompting(
-            ideas=serialized_ideas, papers=serialized_papers,prompt_template=cfg.prompt_template.write_paper, model_name=self.model_name
+            ideas=serialized_ideas,
+            papers=serialized_papers,
+            prompt_template=cfg.prompt_template.write_paper,
+            model_name=self.model_name,
         )[0]
         return ResearchPaperSubmission(abstract=paper_abstract)
 
@@ -148,10 +165,14 @@ class BaseResearchAgent(object):
     def write_paper_review(self, paper: PaperProfile) -> AgentPaperReviewLog:
         serialized_paper = self.serializer.serialize(paper)
         paper_review = review_paper_prompting(
-            paper=serialized_paper,prompt_template=cfg.prompt_template.review_paper, model_name=self.model_name
+            paper=serialized_paper,
+            prompt_template=cfg.prompt_template.review_paper,
+            model_name=self.model_name,
         )[0]
         review_score = review_score_prompting(
-            paper_review=paper_review,prompt_template=cfg.prompt_template.review_score, model_name=self.model_name
+            paper_review=paper_review,
+            prompt_template=cfg.prompt_template.review_score,
+            model_name=self.model_name,
         )
         return AgentPaperReviewLog(
             timestep=(int)(datetime.now().timestamp()),
@@ -194,7 +215,10 @@ class BaseResearchAgent(object):
         serialized_review = self.serializer.serialize(review)
 
         rebuttal_content = write_rebuttal_prompting(
-            paper=serialized_paper, review=serialized_review,prompt_template=cfg.prompt_template.write_rebuttal, model_name=self.model_name
+            paper=serialized_paper,
+            review=serialized_review,
+            prompt_template=cfg.prompt_template.write_rebuttal,
+            model_name=self.model_name,
         )[0]
 
         return AgentPaperRebuttalLog(
@@ -208,7 +232,9 @@ class BaseResearchAgent(object):
     def discuss(self, message: AgentAgentDiscussionLog) -> AgentAgentDiscussionLog:
         serialized_message = self.serializer.serialize(message)
         message_content = discuss_prompting(
-            message=serialized_message,prompt_template=cfg.prompt_template.discuss, model_name=self.model_name
+            message=serialized_message,
+            prompt_template=cfg.prompt_template.discuss,
+            model_name=self.model_name,
         )[0]
         return AgentAgentDiscussionLog(
             timestep=(int)(datetime.now().timestamp()),
