@@ -13,8 +13,8 @@ app_logger.addHandler(console_handler)
 
 
 def logging_decorator(
-    func: Callable[..., Union[List[Dict[str, str]], List[Never], None]],
-) -> Callable[..., None]:
+    func: Callable[..., Union[List[Dict[str, str]], None]],
+) ->  Callable[..., Union[List[Dict[str, str]], None]]:
     def wrapper(*args: List[Any], **kwargs: Dict[str, Any]) -> None:
         messages = func(*args, **kwargs)
         if not messages:

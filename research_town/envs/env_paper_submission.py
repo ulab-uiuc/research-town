@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, Generator, List, Never, Union
+from beartype.typing import Dict, Generator, List, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfile, PaperProfileDB
@@ -24,10 +24,10 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
 
     def _step(
         self,
-    ) -> Generator[Union[List[Dict[str, str]], List[Never], None], None, None]:
+    ) -> Generator[Union[List[Dict[str, str]], None], None, None]:
         # TODO: support retrieval from database
         # external_data = self.db.get(cls=PaperProfile, conditions={})
-        yield [{'text': 'Retrieval from database started', 'level': 'INFO'}]
+        yield [{'text': 'Retrieval from database started'}]
         papers = [
             PaperProfile(
                 title='A Survey on Machine Learning',
@@ -45,10 +45,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         submissions: Dict[str, PaperProfile] = {}
         for agent in self.agents:
             yield [
-                {
-                    'text': f'Agent {agent.profile.name} started finding collaborators',
-                    'level': 'INFO',
-                }
+                {'text': f'Agent {agent.profile.name} started finding collaborators'}
             ]
             # TODO: update find collaborator functions with initial task
             collaborators = agent.find_collaborators(
@@ -73,55 +70,37 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         )
                     yield [
                         {
-                            'text': f'Agent {agent.profile.name} found {researcher_profile.name} as collaborator',
-                            'level': 'INFO',
+                            'text': f'Agent {agent.profile.name} found {researcher_profile.name} as collaborator'
                         }
                     ]
 
             insights = agent.read_paper(papers=papers, domains=['machine learning'])
             yield [
                 {
-                    'text': f'Agent {agent.profile.name} generated insights: {str(insights)}',
-                    'level': 'INFO',
+                    'text': f'Agent {agent.profile.name} generated insights: {str(insights)}'
                 }
             ]
             ideas = agent.think_idea(insights=insights)
             yield [
-                {
-                    'text': f'Agent {agent.profile.name} generated ideas: {str(ideas)}',
-                    'level': 'INFO',
-                }
+                {'text': f'Agent {agent.profile.name} generated ideas: {str(ideas)}'}
             ]
             for collaborator_agent in collaborator_agents:
                 ideas.extend(collaborator_agent.think_idea(insights=insights))
                 yield [
                     {
-                        'text': f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(ideas)}",
-                        'level': 'INFO',
+                        'text': f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(ideas)}"
                     }
                 ]
             paper = agent.write_paper(ideas, papers)
-            yield [
-                {
-                    'text': f'Agent {agent.profile.name} wrote paper: {str(paper)}',
-                    'level': 'INFO',
-                }
-            ]
+            yield [{'text': f'Agent {agent.profile.name} wrote paper: {str(paper)}'}]
 
-            yield [
-                {
-                    'text': f'Agent {agent.profile.name} started paper submission',
-                    'level': 'INFO',
-                }
-            ]
+            yield [{'text': f'Agent {agent.profile.name} started paper submission'}]
             # TODO: this is not correct, we cannot write PaperProfile, we can only write PaperSubmission
             if agent.profile.name is not None:
                 submissions[agent.profile.name] = PaperProfile(abstract=paper.abstract)
         self.db.update(cls=PaperProfile, conditions={}, updates=submissions)
         self.submit_paper(submissions)
-        yield [
-            {'text': 'PaperSubmissionMultiAgentEnvironment completed', 'level': 'INFO'}
-        ]
+        yield [{'text': 'PaperSubmissionMultiAgentEnvironment completed'}]
 
     @beartype
     def submit_paper(self, paper_dict: Dict[str, PaperProfile]) -> None:

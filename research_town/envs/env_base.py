@@ -1,8 +1,8 @@
-from beartype.typing import Dict, Generator, List, Never, Union
+from beartype.typing import Dict, Generator, List, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import AgentProfile, EnvLogDB
-from ..utils.logging import logging_decorator
+from ..utils.logger import logging_decorator
 
 
 class BaseMultiAgentEnv(object):
@@ -13,9 +13,9 @@ class BaseMultiAgentEnv(object):
         self.agent_profiles: List[AgentProfile] = agent_profiles
         self.db = EnvLogDB()
         self.agents: List[BaseResearchAgent] = []
-        self.step_iter_obj: Generator[
-            Union[List[Dict[str, str]], List[Never], None], None, None
-        ] = self._step()
+        self.step_obj: Generator[Union[List[Dict[str, str]], None], None, None] = (
+            self._step()
+        )
         for agent_profile in agent_profiles:
             self.agents.append(
                 BaseResearchAgent(
@@ -26,20 +26,20 @@ class BaseMultiAgentEnv(object):
 
     def _step(
         self,
-    ) -> Generator[Union[List[Dict[str, str]], List[Never], None], None, None]:
+    ) -> Generator[Union[List[Dict[str, str]], None], None, None]:
         raise NotImplementedError
 
     @logging_decorator
-    def step(self) -> Union[List[Dict[str, str]], List[Never], None]:
+    def step(self) -> Union[List[Dict[str, str]], None]:
         if not self.terminated:
             try:
-                return next(self.step_iter_obj)
+                return next(self.step_obj)
             except Exception:
                 self.turn_number += 1
                 if self.turn_number >= self.turn_max:
                     self.terminated = True
-                self.step_iter_obj = self._step()
-                return next(self.step_iter_obj)
+                self.step_obj = self._step()
+                return next(self.step_obj)
         else:
             return [
                 {

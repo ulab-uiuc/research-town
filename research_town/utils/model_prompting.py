@@ -2,7 +2,7 @@ import litellm
 from beartype import beartype
 from beartype.typing import List, Optional
 
-from .decorator import api_calling_error_exponential_backoff
+from .error_handler import api_calling_error_exponential_backoff
 
 
 @beartype
