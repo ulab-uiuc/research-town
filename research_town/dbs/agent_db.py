@@ -4,13 +4,24 @@ import uuid
 from beartype.typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
-
+from ..utils.paper_collector import get_bert_embedding,neiborhood_search
+import numpy as np
 class AgentProfile(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: Optional[str] = Field(default=None)
     bio: Optional[str] = Field(default=None)
     collaborators: Optional[List[str]] = Field(default=[])
     institute: Optional[str] = Field(default=None)
+
+    def profile_match(self,idea:str,profile_l:List[str],name_l:List[str],num:int) -> List[str]:
+        idea_embed=get_bert_embedding([idea])
+        profile__embed=get_bert_embedding(profile_l)
+        index_l=neiborhood_search(idea_embed,profile__embed,num).reshape(-1)
+        index_all=list(index_l)
+        output_name=[]
+        for inter in index_all:
+            output_name.append(name_l[inter])
+        return output_name
 
 
 class AgentProfileDB(object):
@@ -40,6 +51,8 @@ class AgentProfileDB(object):
             if all(getattr(agent, key) == value for key, value in conditions.items()):
                 result.append(agent)
         return result
+
+
 
     def save_to_file(self, file_name: str) -> None:
         with open(file_name, 'w') as f:
