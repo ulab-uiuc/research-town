@@ -2,14 +2,13 @@ from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
 from research_town.dbs import AgentPaperRebuttalLog
-from tests.constants import (
+from tests.db_constants import (
     agent_agent_discussion_log,
     agent_profile_A,
     agent_profile_B,
     paper_profile_A,
     paper_profile_B,
     research_idea_A,
-    research_idea_B,
     research_insight_A,
     research_insight_B,
 )
@@ -78,14 +77,11 @@ def test_think_idea(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     )
-    research_ideas = research_agent.think_idea(
+    research_idea = research_agent.think_idea(
         insights=[research_insight_A, research_insight_B],
     )
-    assert len(research_ideas) == 2
-    assert research_ideas[0].pk is not None
-    assert research_ideas[0].content == 'This is a research idea.'
-    assert research_ideas[1].pk is not None
-    assert research_ideas[1].content == 'This is a research idea.'
+    assert research_idea.pk is not None
+    assert research_idea.content == 'This is a research idea.'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -97,7 +93,7 @@ def test_write_paper(mock_model_prompting: MagicMock) -> None:
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     )
     paper = research_agent.write_paper(
-        ideas=[research_idea_A, research_idea_B],
+        idea=research_idea_A,
         papers=[paper_profile_A, paper_profile_B],
     )
     assert paper.abstract == 'This is a paper abstract.'
