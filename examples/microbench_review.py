@@ -32,7 +32,9 @@ class RealPaperWithReviewDB:
     def __init__(self):
         self.data: Dict[str, RealPaperWithReview] = {}
         self.rank_consistency:float = 0.0
-    
+        self.sim_ranks: List[int] = []
+        self.real_ranks: List[int] = []
+
     def add(self, real_paper: RealPaperWithReview) -> None:
         self.data[real_paper.title] = real_paper
 
@@ -48,6 +50,8 @@ class RealPaperWithReviewDB:
         # Combine data and rank_consistency into one dictionary
         combined_data = {
             "rank_consistency": self.rank_consistency,
+            'sim_ranks': self.sim_ranks,
+            'real_ranks': self.real_ranks,
             "papers": {title: real_paper.dict() for title, real_paper in self.data.items()}
             
         }
@@ -96,6 +100,8 @@ class RealPaperWithReviewDB:
         rank_consistency_float = 0
         for real_paper in self.data.values():
             rank_consistency_float += abs(real_paper.real_rank - real_paper.sim_rank)
+            self.sim_ranks.append(real_paper.sim_rank)
+            self.real_ranks.append(real_paper.real_rank)
         rank_consistency_float = rank_consistency_float / len(self.data)
         # store the rank consistency
         self.rank_consistency = rank_consistency_float
@@ -152,6 +158,8 @@ def main(data_path: str, domain:str, model_name:str, review_agent_num: int) -> N
     rank_consistency = real_paper_db.calculate_rank_consistency()
     # print rank consistency
     print(f"rank_consistency = {rank_consistency}\n")
+    print(f"real_ranks = {real_paper_db.real_ranks}\n")
+    print(f"sim_ranks = {real_paper_db.sim_ranks}\n")
     # save the RealPaperWithReviewDB
     # Construct the output file path
     output_file = os.path.join(data_path, f"output_microbench_review_{domain}.json")
