@@ -21,11 +21,11 @@ from ..utils.agent_prompter import (
     read_paper_prompting,
     review_paper_prompting,
     review_score_prompting,
+    summarize_ideas_prompting,
     think_idea_prompting,
     write_meta_review_prompting,
     write_paper_prompting,
     write_rebuttal_prompting,
-    summarize_ideas_prompting,
 )
 from ..utils.serializer import Serializer
 
@@ -138,7 +138,6 @@ class BaseResearchAgent(object):
             ideas=serialized_ideas, model_name=self.model_name
         )[0]
         return ResearchIdea(content=idea_summarized)
-
 
     @beartype
     def write_paper(

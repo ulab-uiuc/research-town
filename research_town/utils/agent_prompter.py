@@ -4,8 +4,8 @@ from beartype.typing import Dict, List, Union
 from .model_prompting import model_prompting
 from .paper_collector import get_related_papers
 from .string_mapper import (
-    map_idea_to_str,
     map_idea_list_to_str,
+    map_idea_to_str,
     map_insights_to_str,
     map_message_to_str,
     map_paper_list_to_str,
@@ -33,6 +33,7 @@ def summarize_research_direction_prompting(
     template_input = {'personalinfo': personal_info}
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
+
 
 @beartype
 def find_collaborators_prompting(
@@ -131,6 +132,7 @@ def think_idea_prompting(
     prompt = prompt_template.format_map({'insights': insights_str})
     return model_prompting(model_name, prompt)
 
+
 @beartype
 def summarize_ideas_prompting(
     ideas: List[Dict[str, str]],
@@ -142,9 +144,9 @@ def summarize_ideas_prompting(
     ideas_str = map_idea_list_to_str(ideas)
 
     prompt_template = (
-        "Given a list of research ideas, please summarize them by removing duplicates "
-        "and resolving any contradictory ideas by selecting the more reasonable one. "
-        "Here are the research ideas:\n{ideas}\n"
+        'Given a list of research ideas, please summarize them by removing duplicates '
+        'and resolving any contradictory ideas by selecting the more reasonable one. '
+        'Here are the research ideas:\n{ideas}\n'
     )
     prompt = prompt_template.format_map({'ideas': ideas_str})
     return model_prompting(model_name, prompt)
