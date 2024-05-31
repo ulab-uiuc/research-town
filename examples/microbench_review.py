@@ -3,7 +3,7 @@ from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
 from research_town.dbs.paper_db import PaperProfile, PaperProfileDB
 from research_town.dbs.env_db import AgentPaperReviewLog
 from research_town.agents.agent_base import BaseResearchAgent
-from typing import List, Optional, Dict
+from beartype.typing import List, Optional, Dict
 from pydantic import BaseModel, Field
 import os
 import json
