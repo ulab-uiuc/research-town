@@ -106,7 +106,7 @@ class RealPaperWithReviewDB:
 
 
 
-def main(data_path: str, domain:str) -> None:
+def main(data_path: str, domain:str, model_name:str, review_agent_num: int) -> None:
     print(f"Data path is: {data_path}")
     print(f"Domain is: {domain}")
     # collect papers from openreview
@@ -124,7 +124,8 @@ def main(data_path: str, domain:str) -> None:
     agent_profiles: List[AgentProfile] = []
     all_reviewers = list(agent_db.data.values()) # Convert dict_values to a list
     
-    for i in range(3):
+    reviewer_num = review_agent_num  if review_agent_num<=len(all_reviewers) else len(all_reviewers)
+    for i in range(reviewer_num):
         agent_profiles.append(all_reviewers[i])
     # create agents
     agents: List[BaseResearchAgent] = []
@@ -132,7 +133,7 @@ def main(data_path: str, domain:str) -> None:
             agents.append(
                 BaseResearchAgent(
                     agent_profile=agent_profile,
-                    model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+                    model_name=model_name,
                 )
             )
     
@@ -179,6 +180,21 @@ if __name__ == '__main__':
         default="machine_learning_system", 
         help="Domain of papers to be reviewed."
     )
+
+    # Add argument for models
+    parser.add_argument(
+        "--model_name", 
+        type=str, 
+        default='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1', 
+        help="Models for reviewers."
+    )
     
+    # Add argument for review_agent_num
+    parser.add_argument(
+        "--review_agent_num", 
+        type=int, 
+        default=3, 
+        help="Number of total reviewers."
+    )
     args = parser.parse_args()
-    main(args.data_path, args.domain)
+    main(args.data_path, args.domain, args.model_name, args.review_agent_num)
