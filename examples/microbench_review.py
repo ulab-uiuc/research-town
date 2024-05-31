@@ -9,30 +9,34 @@ import os
 import json
 import argparse
 from tqdm import tqdm
+import uuid
+
+
 class RealPaperWithReview (BaseModel): # paper review from real reviewers
-    paper_pk: Optional[str] = Field(default=None) # primary key to decide after paper profile
-    title: Optional[str] = Field(default=None)
+    paper_pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str = Field(default='')
     abstract: Optional[str] = Field(default=None)
     authors: Optional[List[str]] = Field(default=[])
     keywords: Optional[List[str]] = Field(default=None)
-    # real reviews
-    real_avg_scores: Optional[float] = Field(default=None)
-    real_all_scores: Optional[List[int]] = Field(default=[])
-    real_contents: Optional[List[str]] = Field(default=[])
-    real_rank: Optional[int] = Field(default=0)
-    real_decision: Optional[str] = Field(default=None)
-    # simulated reviews
-    sim_avg_scores: Optional[float] = Field(default=None) # from the simulation
-    sim_all_scores: Optional[List[int]] = Field(default=[])
-    sim_contents: Optional[List[str]] = Field(default=[])
-    sim_rank: Optional[int] = Field(default=0)
-    sim_decision: Optional[str] = Field(default=None)
 
-class RealPaperWithReviewDB:
-    def __init__(self):
+    real_avg_scores: float = Field(default=-1)
+    real_all_scores: List[int] = Field(default=[])
+    real_contents: List[str] = Field(default=[])
+    real_rank: int = Field(default=0)
+    real_decision: str = Field(default='None')
+
+    sim_avg_scores: float = Field(default=-1) # from the simulation
+    sim_all_scores: List[int] = Field(default=[])
+    sim_contents: List[str] = Field(default=[])
+    sim_rank: int = Field(default=-1)
+    sim_decision: str = Field(default='None')
+
+
+class RealPaperWithReviewDB(object):
+    def __init__(self) -> None:
         self.data: Dict[str, RealPaperWithReview] = {}
         self.rank_consistency:float = 0.0
-    
+
     def add(self, real_paper: RealPaperWithReview) -> None:
         self.data[real_paper.title] = real_paper
 
@@ -45,11 +49,9 @@ class RealPaperWithReviewDB:
             }
     
     def save_to_file(self, file_name: str) -> None:
-        # Combine data and rank_consistency into one dictionary
         combined_data = {
             "rank_consistency": self.rank_consistency,
             "papers": {title: real_paper.dict() for title, real_paper in self.data.items()}
-            
         }
         
         with open(file_name, 'w') as f:
@@ -73,37 +75,34 @@ class RealPaperWithReviewDB:
         for agent_review in agent_reviews:
             for real_paper in self.data.values():
                 if agent_review.paper_pk == real_paper.paper_pk:
-                    real_paper.sim_all_scores.append(agent_review.review_score)
-                    real_paper.sim_contents.append(agent_review.review_content)
-        # calculate the average score
+                    if agent_review.review_score is not None:
+                        real_paper.sim_all_scores.append(agent_review.review_score)
+                    if agent_review.review_content is not None:
+                        real_paper.sim_contents.append(agent_review.review_content)
+        
         for real_paper in self.data.values():
             assert  len(real_paper.real_all_scores) > 0, f"no real review score for paper {real_paper.paper_pk} with title of {real_paper.title}"
             real_paper.real_avg_scores = sum(real_paper.real_all_scores) / len(real_paper.real_all_scores)
             assert  len(real_paper.sim_all_scores) > 0, f"no simulated review score for paper {real_paper.paper_pk} with title of {real_paper.title}"
             real_paper.sim_avg_scores = sum(real_paper.sim_all_scores) / len(real_paper.sim_all_scores)
-        # calculate the real review rank
+
         real_papers = list(self.data.values())
         real_papers.sort(key=lambda x: x.real_avg_scores, reverse=True)
         for i, real_paper in enumerate(real_papers):
             real_paper.real_rank = i + 1
-        # calculate the simulated review rank
+
         real_papers.sort(key=lambda x: x.sim_avg_scores, reverse=True)
         for i, real_paper in enumerate(real_papers):
             real_paper.sim_rank = i + 1
         
     def calculate_rank_consistency(self) -> float:
-        # calculate the rank consistency
-        rank_consistency_float = 0
+        rank_consistency_float = 0.
         for real_paper in self.data.values():
             rank_consistency_float += abs(real_paper.real_rank - real_paper.sim_rank)
         rank_consistency_float = rank_consistency_float / len(self.data)
-        # store the rank consistency
+
         self.rank_consistency = rank_consistency_float
         return rank_consistency_float
- 
-
-
-
 
 
 def main(data_path: str, domain:str) -> None:
@@ -144,7 +143,6 @@ def main(data_path: str, domain:str) -> None:
         # Inner loop (papers) with tqdm
         for paper in tqdm(Papers2eval, desc="Paper Review Progress"):
             reviews.append(agent.write_paper_review(paper=paper))
-    
     
     # get ranking consistency
     real_paper_db.map_agent_reviews_to_real_paper(reviews)
