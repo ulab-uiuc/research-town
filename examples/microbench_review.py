@@ -29,7 +29,7 @@ class RealPaperWithReview (BaseModel): # paper review from real reviewers
     sim_decision: Optional[str] = Field(default=None)
 
 class RealPaperWithReviewDB:
-    def __init__(self):
+    def __init__(self)-> None:
         self.data: Dict[str, RealPaperWithReview] = {}
         self.rank_consistency:float = 0.0
         self.sim_ranks: List[int] = []
