@@ -67,12 +67,13 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         )
 
             insights = agent.read_paper(papers=papers, domains=['machine learning'])
-            # TODO: this part of logic is wrong, we cannot write paper based on multiple ideas
             ideas = []
             ideas.append(agent.think_idea(insights=insights))
+
             for collaborator_agent in collaborator_agents:
                 ideas.append(collaborator_agent.think_idea(insights=insights))
-            paper = agent.write_paper(ideas[0], papers)
+            summarized_idea = agent.summarize_ideas(ideas)
+            paper = agent.write_paper(summarized_idea, papers)
 
             # TODO: this is not correct, we cannot write PaperProfile, we can only write PaperSubmission
             if agent.profile.name is not None:
