@@ -4,7 +4,8 @@ from beartype.typing import Dict, List, Union
 from .model_prompting import model_prompting
 from .paper_collector import get_related_papers
 from .string_mapper import (
-    map_idea_list_to_str,
+    map_idea_to_str,
+    map_insights_to_str,
     map_message_to_str,
     map_paper_list_to_str,
     map_paper_to_str,
@@ -118,35 +119,36 @@ def read_paper_prompting(
 
 @beartype
 def think_idea_prompting(
-    insight: Dict[str, str],
+    insights: List[Dict[str, str]],
     model_name: str,
 ) -> List[str]:
+    insights_str = map_insights_to_str(insights)
     prompt_template = (
-        'Here is a high-level summarized insight of a research field {insight}. '
+        'Here is a high-level summarized insight of a research field {insights}. '
         'How do you view this field? Do you have any novel ideas or insights? '
         'Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.'
     )
-    prompt = prompt_template.format_map({'insight': insight['content']})
+    prompt = prompt_template.format_map({'insights': insights_str})
     return model_prompting(model_name, prompt)
 
 
 @beartype
 def write_paper_prompting(
-    ideas: List[Dict[str, str]],
+    idea: Dict[str, str],
     papers: List[Dict[str, str]],
     model_name: str,
 ) -> List[str]:
-    ideas_str = map_idea_list_to_str(ideas)
+    idea_str = map_idea_to_str(idea)
     papers_str = map_paper_list_to_str(papers)
 
     prompt_template = (
         'Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract. '
         'You might use two or more of these ideas if they are related and works well together. '
-        'Here are the ideas: {ideas}'
+        'Here is the idea: {idea}'
         'Here are the external data, which is a list abstracts of related papers: {papers}'
     )
 
-    prompt = prompt_template.format_map({'ideas': ideas_str, 'papers': papers_str})
+    prompt = prompt_template.format_map({'idea': idea_str, 'papers': papers_str})
     return model_prompting(model_name, prompt)
 
 
