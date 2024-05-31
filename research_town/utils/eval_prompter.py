@@ -11,7 +11,14 @@ def idea_quality_eval_prompting(
     model_name: str,
 ) -> str:
     prompt_idea = (
-        "<Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the ML community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea. The output format should follow these rules: Overall Score of an idea (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=89. Dimension Scores=[8,9,9,9,9,9,9,9,9,9]'.<Instruction>\n"
+        "<Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the research community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea. <Instruction>\n"
+        '<Input>'
+        'Here is the idea to evaluate: {idea}.\n'
+        'Here is the research trend: {trend}.\n'
+        '</Input>\n'
+        '<Output>'
+        'The output format should follow these rules: Overall Score of an idea (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where di is the score of the i-th dimension. An example of output is: Overall Score=89 Dimension Scores=[8,9,9,9,9,9].'
+        '</Output>\n'
         '<Approach> The details of rating are as follow:\n'
         '1. Novelty\n'
         'Rating (1-10):\n'
@@ -19,7 +26,7 @@ def idea_quality_eval_prompting(
         'How original and unique is the idea?\n'
         'Does it introduce a new perspective or significant advancement compared to existing methods?\n'
         'How does it align with or diverge from the innovations highlighted in the trend?\n'
-        '2. Technical Depth\n'
+        '2. Technical Depth\n' # change to Tehchnical Rigor
         'Rating (1-10):\n'
         'Comments:\n'
         'Assess the technical rigor of the idea.\n'
@@ -28,7 +35,7 @@ def idea_quality_eval_prompting(
         '3. Impact and Significance\n'
         'Rating (1-10):\n'
         'Comments:\n'
-        'Evaluate the potential impact of the idea on the ML community and beyond.\n'
+        'Evaluate the potential impact of the idea on the specfic domain of research community that the idea belongs to and beyond.\n'
         'How significant is its contribution to advancing the field?\n'
         'Does it address high-impact problems or gaps identified in the trend?\n'
         '4. Feasibility and Practicality\n'
@@ -37,7 +44,7 @@ def idea_quality_eval_prompting(
         'Assess the feasibility of implementing the idea.\n'
         'Is it practically applicable in real-world scenarios?\n'
         'Does it consider efficiency and scalability, in line with the practical application focus of the trend?\n'
-        '5. Theoretical Foundation and Conceptual Soundness\n'
+        '5. Theoretical Foundation and Conceptual Soundness\n' # merge to 2
         'Rating (1-10):\n'
         'Comments:\n'
         'Evaluate the theoretical foundation and conceptual soundness of the idea.\n'
@@ -49,13 +56,13 @@ def idea_quality_eval_prompting(
         'Comments:\n'
         'Assess the clarity, organization, and presentation quality of the idea.\n'
         'Is the idea communicated effectively, adhering to high presentation standards seen in top-tier ML conferences?\n'
-        '7. Potential for Real-world Applications\n'
+        '7. Potential for Real-world Applications\n' # similar to 3, merge
         'Rating (1-10):\n'
         'Comments:\n'
         'Evaluate the potential of the idea to be applied in real-world scenarios.\n'
         'How applicable is it in practical settings and industry contexts?\n'
         'Does it address real-world problems or challenges identified in the trend?\n'
-        '8. Innovation Potential\n'
+        '8. Innovation Potential\n' # merege to 1
         'Rating (1-10):\n'
         'Comments:\n'
         'Assess the potential of the idea to inspire further research and innovation within the ML community.\n'
@@ -64,14 +71,13 @@ def idea_quality_eval_prompting(
         'Rating (1-10):\n'
         'Comments:\n'
         'Consider the ethical implications and societal impact of the idea.\n'
-        'Does it adhere to the growing emphasis on ethical AI and responsible ML practices as highlighted in the trend?\n'
-        '10. Interdisciplinary Connections\n'
+        'Does it adhere to the growing emphasis on ethical research practices as highlighted in the trend?\n'
+        '10. Interdisciplinary Connections\n' # delete
         'Rating (1-10):\n'
         'Comments:\n'
         'Evaluate the potential for the idea to connect with and contribute to other disciplines beyond ML.\n'
         'Does it align with the trend of interdisciplinary research and collaboration, integrating with fields such as data science, neuroscience, or social sciences?</Approach>\n'
-        'Here is the idea to evaluate: {idea}.\n'
-        'Here is the research trend: {trend}.\n'
+        
     )
 
     input_data = {'idea': idea, 'trend': trend}
@@ -87,12 +93,16 @@ def idea_quality_eval_prompting(
 def paper_quality_eval_prompting(
     idea: str, paper: Dict[str, str], model_name: str
 ) -> str:
+    # refer to idea eval, but replace those not needed, and paraphrase thoese have overlaps.
+    # 1. writing (comments for each conponent); 
+    # 2. novelty (different with comments of idea eval);
+    # 3. reproduct.
     paper_prompt = """
     <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft. The output format should follow these rules: Overall Score of a paper draft (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=85. Dimension Scores=[7,8,9,7,8,9,8,8,8,9]'. <Instruction>
 
     <Approach> The details of rating are as follows:
 
-    1. Title Appeal
+    1. Title Quality
     Rating (1-10):
     Comments:
     Does the title grab attention and generate interest?
@@ -105,7 +115,7 @@ def paper_quality_eval_prompting(
     Is it clear, concise, and informative?
     Does it effectively convey the significance and main contributions of the paper?
 
-    3. Title and Abstract Consistency
+    3. Title and Abstract Consistency # merge to 7, replace 3 with Novelty or something similar.
     Rating (1-10):
     Comments:
     How well do the title and abstract align with each other?
@@ -139,7 +149,7 @@ def paper_quality_eval_prompting(
     Is the content well-structured and easy to follow?
     Are figures, tables, and references used effectively?
 
-    8. Contribution to the Field
+    8. Contribution to the Field 
     Rating (1-10):
     Comments:
     Evaluate the significance of the paper's contributions to the field.
@@ -165,6 +175,7 @@ def paper_quality_eval_prompting(
     Title: {title}
     Abstract: {abstract}
     Idea: {idea}
+    Research Trend: {trend}
     <Approach>
     """
 
@@ -172,6 +183,7 @@ def paper_quality_eval_prompting(
         'idea': idea,
         'title': paper['title'],
         'abstract': paper['abstract'],
+        'trend': paper['trend'], # Todo: if no key return None.
     }
     prompt = paper_prompt.format_map(input_data)
     evaluation_result = model_prompting(model_name, prompt)
