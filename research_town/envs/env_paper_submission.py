@@ -14,6 +14,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
         task: Dict[str, str],
+        ideas_summarize: bool = True,
     ) -> None:
         super().__init__(agent_profiles)
         self.turn_number = 0
@@ -24,6 +25,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
+        self.ideas_summarize = ideas_summarize
 
     def step(self) -> None:
         # TODO: support retrieval from database
@@ -67,12 +69,16 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         )
 
             insights = agent.read_paper(papers=papers, domains=['machine learning'])
-            # TODO: this part of logic is wrong, we cannot write paper based on multiple ideas
             ideas = []
             ideas.append(agent.think_idea(insights=insights))
-            for collaborator_agent in collaborator_agents:
-                ideas.append(collaborator_agent.think_idea(insights=insights))
-            paper = agent.write_paper(ideas[0], papers)
+            
+            if self.ideas_summarize:
+                for collaborator_agent in collaborator_agents:
+                    ideas.append(collaborator_agent.think_idea(insights=insights))
+                summarized_idea = agent.summarize_ideas(ideas)
+                paper = agent.write_paper(summarized_idea, papers)
+            else:
+                paper = agent.write_paper(ideas[0], papers)
 
             # TODO: this is not correct, we cannot write PaperProfile, we can only write PaperSubmission
             if agent.profile.name is not None:

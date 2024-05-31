@@ -33,6 +33,30 @@ def summarize_research_direction_prompting(
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
 
+@beartype
+def summarize_research_ideas_prompting(
+    ideas: List[Dict[str, str]],
+    model_name: str,
+) -> List[str]:
+    """
+    Summarize research ideas by removing duplicates and resolving contradictions.
+    """
+    # 将ideas列表中的每个字典解析并格式化为字符串
+    formatted_ideas = [
+        f"The ideas of Research no.{i+1}: {idea['content']}"
+        for i, idea in enumerate(ideas)
+    ]
+    ideas_str = '\n'.join(formatted_ideas)
+
+    prompt_template = (
+        "Given a list of research ideas, please summarize them by removing duplicates "
+        "and resolving any contradictory ideas by selecting the more reasonable one. "
+        "Here are the research ideas:\n{ideas}\n"
+    )
+    template_input = {'ideas': ideas_str}
+    prompt = prompt_template.format_map(template_input)
+    
+    return model_prompting(model_name, prompt)
 
 @beartype
 def find_collaborators_prompting(
