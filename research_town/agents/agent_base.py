@@ -25,7 +25,7 @@ from ..utils.agent_prompter import (
     write_meta_review_prompting,
     write_paper_prompting,
     write_rebuttal_prompting,
-    summarize_research_ideas_prompting,
+    summarize_ideas_prompting,
 )
 from ..utils.serializer import Serializer
 
@@ -134,10 +134,9 @@ class BaseResearchAgent(object):
         ideas: List[ResearchIdea],
     ) -> ResearchIdea:
         serialized_ideas = self.serializer.serialize(ideas)
-        idea_summarized = summarize_research_ideas_prompting(
+        idea_summarized = summarize_ideas_prompting(
             ideas=serialized_ideas, model_name=self.model_name
         )[0]
-        print(idea_summarized)
         return ResearchIdea(content=idea_summarized)
 
 

@@ -3,8 +3,8 @@ from beartype.typing import Dict, List, Union
 
 def map_idea_list_to_str(ideas: List[Dict[str, str]]) -> str:
     result = ''
-    for idea in ideas:
-        result += map_idea_to_str(idea)
+    for i, idea in enumerate(ideas):
+        result += f"The ideas of Research no.{i+1}: " + map_idea_to_str(idea)
     return result
 
 
