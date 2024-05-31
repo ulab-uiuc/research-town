@@ -21,6 +21,7 @@ from ..utils.agent_prompter import (
     read_paper_prompting,
     review_paper_prompting,
     review_score_prompting,
+    summarize_ideas_prompting,
     think_idea_prompting,
     write_meta_review_prompting,
     write_paper_prompting,
@@ -126,6 +127,17 @@ class BaseResearchAgent(object):
             insights=serialized_insights, model_name=self.model_name
         )[0]
         return ResearchIdea(content=idea_content)
+
+    @beartype
+    def summarize_ideas(
+        self,
+        ideas: List[ResearchIdea],
+    ) -> ResearchIdea:
+        serialized_ideas = self.serializer.serialize(ideas)
+        idea_summarized = summarize_ideas_prompting(
+            ideas=serialized_ideas, model_name=self.model_name
+        )[0]
+        return ResearchIdea(content=idea_summarized)
 
     @beartype
     def write_paper(

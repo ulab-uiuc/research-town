@@ -2,7 +2,14 @@ from beartype import beartype
 from beartype.typing import Dict, List
 
 from ..agents.agent_base import BaseResearchAgent
-from ..dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfile, PaperProfileDB
+from ..dbs import (
+    AgentProfile,
+    AgentProfileDB,
+    EnvLogDB,
+    PaperProfile,
+    PaperProfileDB,
+    ResearchPaperSubmission,
+)
 from .env_base import BaseMultiAgentEnv
 
 
@@ -42,7 +49,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         for iter_agent in self.agents:
             if iter_agent.profile.name is not None:
                 agent_names_to_objs[iter_agent.profile.name] = iter_agent
-        submissions: Dict[str, PaperProfile] = {}
+        submissions: Dict[str, ResearchPaperSubmission] = {}
         for agent in self.agents:
             # TODO: update find collaborator functions with initial task
             collaborators = agent.find_collaborators(
@@ -67,23 +74,22 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         )
 
             insights = agent.read_paper(papers=papers, domains=['machine learning'])
-            # TODO: this part of logic is wrong, we cannot write paper based on multiple ideas
             ideas = []
             ideas.append(agent.think_idea(insights=insights))
+
             for collaborator_agent in collaborator_agents:
                 ideas.append(collaborator_agent.think_idea(insights=insights))
-            paper = agent.write_paper(ideas[0], papers)
+            summarized_idea = agent.summarize_ideas(ideas)
+            paper: ResearchPaperSubmission = agent.write_paper(summarized_idea, papers)
 
-            # TODO: this is not correct, we cannot write PaperProfile, we can only write PaperSubmission
             if agent.profile.name is not None:
-                submissions[agent.profile.name] = PaperProfile(abstract=paper.abstract)
-        self.db.update(cls=PaperProfile, conditions={}, updates=submissions)
+                submissions[agent.profile.name] = paper
+        self.db.update(cls=ResearchPaperSubmission, conditions={}, updates=submissions)
         self.submit_paper(submissions)
         self.terminated = True
 
     @beartype
-    def submit_paper(self, paper_dict: Dict[str, PaperProfile]) -> None:
-        # TODO: clarify paper submission
+    def submit_paper(self, paper_dict: Dict[str, ResearchPaperSubmission]) -> None:
         for _, paper in paper_dict.items():
-            self.paper = paper
+            self.paper = PaperProfile(title=paper.title, abstract=paper.abstract)
             break
