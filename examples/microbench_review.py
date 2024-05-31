@@ -18,6 +18,7 @@ class RealPaperWithReview (BaseModel): # paper review from real reviewers
     abstract: Optional[str] = Field(default=None)
     authors: Optional[List[str]] = Field(default=[])
     keywords: Optional[List[str]] = Field(default=None)
+<<<<<<< HEAD
 
     real_avg_scores: float = Field(default=-1)
     real_all_scores: List[int] = Field(default=[])
@@ -34,9 +35,50 @@ class RealPaperWithReview (BaseModel): # paper review from real reviewers
 
 class RealPaperWithReviewDB(object):
     def __init__(self) -> None:
+||||||| 8ab953c
+    # real reviews
+    real_avg_scores: Optional[float] = Field(default=None)
+    real_all_scores: Optional[List[int]] = Field(default=[])
+    real_contents: Optional[List[str]] = Field(default=[])
+    real_rank: Optional[int] = Field(default=0)
+    real_decision: Optional[str] = Field(default=None)
+    # simulated reviews
+    sim_avg_scores: Optional[float] = Field(default=None) # from the simulation
+    sim_all_scores: Optional[List[int]] = Field(default=[])
+    sim_contents: Optional[List[str]] = Field(default=[])
+    sim_rank: Optional[int] = Field(default=0)
+    sim_decision: Optional[str] = Field(default=None)
+
+class RealPaperWithReviewDB:
+    def __init__(self):
+=======
+    # real reviews
+    real_avg_scores: Optional[float] = Field(default=None)
+    real_all_scores: Optional[List[int]] = Field(default=[])
+    real_contents: Optional[List[str]] = Field(default=[])
+    real_rank: Optional[int] = Field(default=0)
+    real_decision: Optional[str] = Field(default=None)
+    # simulated reviews
+    sim_avg_scores: Optional[float] = Field(default=None) # from the simulation
+    sim_all_scores: Optional[List[int]] = Field(default=[])
+    sim_contents: Optional[List[str]] = Field(default=[])
+    sim_rank: Optional[int] = Field(default=0)
+    sim_decision: Optional[str] = Field(default=None)
+
+class RealPaperWithReviewDB:
+    def __init__(self)-> None:
+>>>>>>> eb5f7ba5d67cb085a4684c1dff80dce5fe9d5e5c
         self.data: Dict[str, RealPaperWithReview] = {}
         self.rank_consistency:float = 0.0
+<<<<<<< HEAD
 
+||||||| 8ab953c
+    
+=======
+        self.sim_ranks: List[int] = []
+        self.real_ranks: List[int] = []
+
+>>>>>>> eb5f7ba5d67cb085a4684c1dff80dce5fe9d5e5c
     def add(self, real_paper: RealPaperWithReview) -> None:
         self.data[real_paper.title] = real_paper
 
@@ -51,6 +93,8 @@ class RealPaperWithReviewDB(object):
     def save_to_file(self, file_name: str) -> None:
         combined_data = {
             "rank_consistency": self.rank_consistency,
+            'sim_ranks': self.sim_ranks,
+            'real_ranks': self.real_ranks,
             "papers": {title: real_paper.dict() for title, real_paper in self.data.items()}
         }
         
@@ -99,13 +143,15 @@ class RealPaperWithReviewDB(object):
         rank_consistency_float = 0.
         for real_paper in self.data.values():
             rank_consistency_float += abs(real_paper.real_rank - real_paper.sim_rank)
+            self.sim_ranks.append(real_paper.sim_rank)
+            self.real_ranks.append(real_paper.real_rank)
         rank_consistency_float = rank_consistency_float / len(self.data)
 
         self.rank_consistency = rank_consistency_float
         return rank_consistency_float
 
 
-def main(data_path: str, domain:str) -> None:
+def main(data_path: str, domain:str, model_name:str, review_agent_num: int) -> None:
     print(f"Data path is: {data_path}")
     print(f"Domain is: {domain}")
     # collect papers from openreview
@@ -123,7 +169,8 @@ def main(data_path: str, domain:str) -> None:
     agent_profiles: List[AgentProfile] = []
     all_reviewers = list(agent_db.data.values()) # Convert dict_values to a list
     
-    for i in range(3):
+    reviewer_num = review_agent_num  if review_agent_num<=len(all_reviewers) else len(all_reviewers)
+    for i in range(reviewer_num):
         agent_profiles.append(all_reviewers[i])
     # create agents
     agents: List[BaseResearchAgent] = []
@@ -131,7 +178,7 @@ def main(data_path: str, domain:str) -> None:
             agents.append(
                 BaseResearchAgent(
                     agent_profile=agent_profile,
-                    model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+                    model_name=model_name,
                 )
             )
     
@@ -149,6 +196,8 @@ def main(data_path: str, domain:str) -> None:
     rank_consistency = real_paper_db.calculate_rank_consistency()
     # print rank consistency
     print(f"rank_consistency = {rank_consistency}\n")
+    print(f"real_ranks = {real_paper_db.real_ranks}\n")
+    print(f"sim_ranks = {real_paper_db.sim_ranks}\n")
     # save the RealPaperWithReviewDB
     # Construct the output file path
     output_file = os.path.join(data_path, f"output_microbench_review_{domain}.json")
@@ -177,6 +226,21 @@ if __name__ == '__main__':
         default="machine_learning_system", 
         help="Domain of papers to be reviewed."
     )
+
+    # Add argument for models
+    parser.add_argument(
+        "--model_name", 
+        type=str, 
+        default='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1', 
+        help="Models for reviewers."
+    )
     
+    # Add argument for review_agent_num
+    parser.add_argument(
+        "--review_agent_num", 
+        type=int, 
+        default=3, 
+        help="Number of total reviewers."
+    )
     args = parser.parse_args()
-    main(args.data_path, args.domain)
+    main(args.data_path, args.domain, args.model_name, args.review_agent_num)
