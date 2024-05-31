@@ -2,7 +2,14 @@ from beartype import beartype
 from beartype.typing import Dict, List
 
 from ..agents.agent_base import BaseResearchAgent
-from ..dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfile, PaperProfileDB, ResearchPaperSubmission
+from ..dbs import (
+    AgentProfile,
+    AgentProfileDB,
+    EnvLogDB,
+    PaperProfile,
+    PaperProfileDB,
+    ResearchPaperSubmission,
+)
 from .env_base import BaseMultiAgentEnv
 
 
@@ -72,7 +79,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             ideas.append(agent.think_idea(insights=insights))
             for collaborator_agent in collaborator_agents:
                 ideas.append(collaborator_agent.think_idea(insights=insights))
-            paper:ResearchPaperSubmission = agent.write_paper(ideas[0], papers)
+            paper: ResearchPaperSubmission = agent.write_paper(ideas[0], papers)
 
             if agent.profile.name is not None:
                 submissions[agent.profile.name] = paper
@@ -84,9 +91,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def submit_paper(self, paper_dict: Dict[str, ResearchPaperSubmission]) -> None:
         # TODO: clarify paper submission
         for _, paper in paper_dict.items():
-            profile_paper = PaperProfile(
-                title=paper.title,
-                abstract=paper.abstract
-            )
+            profile_paper = PaperProfile(title=paper.title, abstract=paper.abstract)
             self.paper = profile_paper
             break
