@@ -1,15 +1,17 @@
 
-from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
-from research_town.dbs.paper_db import PaperProfile, PaperProfileDB
-from research_town.dbs.env_db import AgentPaperReviewLog
-from research_town.agents.agent_base import BaseResearchAgent
-from typing import List, Optional, Dict
-from pydantic import BaseModel, Field
-import os
-import json
 import argparse
-from tqdm import tqdm
+import json
+import os
 import uuid
+from typing import Dict, List, Optional
+
+from pydantic import BaseModel, Field
+from tqdm import tqdm
+
+from research_town.agents.agent_base import BaseResearchAgent
+from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
+from research_town.dbs.env_db import AgentPaperReviewLog
+from research_town.dbs.paper_db import PaperProfile, PaperProfileDB
 
 
 class RealPaperWithReview (BaseModel): # paper review from real reviewers
@@ -73,7 +75,7 @@ class RealPaperWithReviewDB:
 <<<<<<< HEAD
 
 ||||||| 8ab953c
-    
+
 =======
         self.sim_ranks: List[int] = []
         self.real_ranks: List[int] = []
@@ -89,7 +91,7 @@ class RealPaperWithReviewDB:
                 title: RealPaperWithReview(**details)
                 for title, details in raw_data.items()
             }
-    
+
     def save_to_file(self, file_name: str) -> None:
         combined_data = {
             "rank_consistency": self.rank_consistency,
@@ -97,7 +99,7 @@ class RealPaperWithReviewDB:
             'real_ranks': self.real_ranks,
             "papers": {title: real_paper.dict() for title, real_paper in self.data.items()}
         }
-        
+
         with open(file_name, 'w') as f:
             json.dump(combined_data, f, indent=2)
 
@@ -123,7 +125,7 @@ class RealPaperWithReviewDB:
                         real_paper.sim_all_scores.append(agent_review.review_score)
                     if agent_review.review_content is not None:
                         real_paper.sim_contents.append(agent_review.review_content)
-        
+
         for real_paper in self.data.values():
             assert  len(real_paper.real_all_scores) > 0, f"no real review score for paper {real_paper.paper_pk} with title of {real_paper.title}"
             real_paper.real_avg_scores = sum(real_paper.real_all_scores) / len(real_paper.real_all_scores)
@@ -138,7 +140,7 @@ class RealPaperWithReviewDB:
         real_papers.sort(key=lambda x: x.sim_avg_scores, reverse=True)
         for i, real_paper in enumerate(real_papers):
             real_paper.sim_rank = i + 1
-        
+
     def calculate_rank_consistency(self) -> float:
         rank_consistency_float = 0.
         for real_paper in self.data.values():
@@ -168,7 +170,7 @@ def main(data_path: str, domain:str, model_name:str, review_agent_num: int) -> N
     # (jinwei) Hardcode-- select top 3 reviewers in the agent_db to agent_profiles
     agent_profiles: List[AgentProfile] = []
     all_reviewers = list(agent_db.data.values()) # Convert dict_values to a list
-    
+
     reviewer_num = review_agent_num  if review_agent_num<=len(all_reviewers) else len(all_reviewers)
     for i in range(reviewer_num):
         agent_profiles.append(all_reviewers[i])
@@ -181,7 +183,7 @@ def main(data_path: str, domain:str, model_name:str, review_agent_num: int) -> N
                     model_name=model_name,
                 )
             )
-    
+
     # review papers
     # 3. how to get the scores of papers? Store to review log lists.
     reviews: List[AgentPaperReviewLog] = []
@@ -190,7 +192,7 @@ def main(data_path: str, domain:str, model_name:str, review_agent_num: int) -> N
         # Inner loop (papers) with tqdm
         for paper in tqdm(Papers2eval, desc="Paper Review Progress"):
             reviews.append(agent.write_paper_review(paper=paper))
-    
+
     # get ranking consistency
     real_paper_db.map_agent_reviews_to_real_paper(reviews)
     rank_consistency = real_paper_db.calculate_rank_consistency()
@@ -202,44 +204,44 @@ def main(data_path: str, domain:str, model_name:str, review_agent_num: int) -> N
     # Construct the output file path
     output_file = os.path.join(data_path, f"output_microbench_review_{domain}.json")
     real_paper_db.save_to_file(output_file)
-    
+
 
 
 if __name__ == '__main__':
     # Get the directory of the current script
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    
+
     # Construct the path to data/microbench
     default_data_path = os.path.join(current_dir, '..', 'data', 'microbench')
 
     parser = argparse.ArgumentParser(description="Process folder path of microbench.")
     parser.add_argument(
-        "--data_path", 
-        type=str, 
-        default=default_data_path, 
+        "--data_path",
+        type=str,
+        default=default_data_path,
         help="Path to the data directory for microbenchmark."
     )
     # Add argument for domain
     parser.add_argument(
-        "--domain", 
-        type=str, 
-        default="machine_learning_system", 
+        "--domain",
+        type=str,
+        default="machine_learning_system",
         help="Domain of papers to be reviewed."
     )
 
     # Add argument for models
     parser.add_argument(
-        "--model_name", 
-        type=str, 
-        default='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1', 
+        "--model_name",
+        type=str,
+        default='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         help="Models for reviewers."
     )
-    
+
     # Add argument for review_agent_num
     parser.add_argument(
-        "--review_agent_num", 
-        type=int, 
-        default=3, 
+        "--review_agent_num",
+        type=int,
+        default=3,
         help="Number of total reviewers."
     )
     args = parser.parse_args()
