@@ -1,5 +1,6 @@
 import logging
-from typing import Any, Callable, Dict, List, Never, Union
+
+from beartype.typing import Any, Callable, Dict, List, Never, Union
 
 app_logger = logging.getLogger('research_town')
 app_logger.setLevel(logging.DEBUG)

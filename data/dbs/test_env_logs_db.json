@@ -2,7 +2,7 @@
   "PaperProfile": [],
   "AgentPaperReviewLog": [
     {
-      "pk": "aabf1a16-5ce4-4d52-b903-532203f68117",
+      "pk": "7e35246e-4c8d-4136-9250-bbf7f1c8ca0b",
       "timestep": 0,
       "paper_pk": "paper2",
       "agent_pk": "agent2",
@@ -12,7 +12,7 @@
   ],
   "AgentPaperRebuttalLog": [
     {
-      "pk": "aba3b7f3-252d-4b0b-8772-752a77bb486a",
+      "pk": "ffdd12b5-bbb9-412f-b019-5d54425bcf29",
       "timestep": 0,
       "paper_pk": "paper1",
       "agent_pk": "agent1",
@@ -21,7 +21,7 @@
   ],
   "AgentPaperMetaReviewLog": [
     {
-      "pk": "818bc004-8bfe-4621-9171-48c7425cb4bb",
+      "pk": "5b5d1b0a-a511-4868-962e-d5a5b6a279c0",
       "timestep": 0,
       "paper_pk": "paper1",
       "agent_pk": "agent1",
@@ -31,7 +31,7 @@
   ],
   "AgentAgentDiscussionLog": [
     {
-      "pk": "044d9283-5467-4919-aa65-3461522aeb27",
+      "pk": "f9aa9d1c-b8b3-4808-ae64-3d8893e13ac6",
       "timestep": 0,
       "agent_from_pk": "agent1",
       "agent_from_name": "Rex Ying",

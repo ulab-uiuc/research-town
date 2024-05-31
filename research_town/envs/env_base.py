@@ -1,11 +1,8 @@
-from typing import Dict, Generator, Never, Union
-
-from beartype.typing import List
-
-from research_town.utils.logging import logging_decorator
+from beartype.typing import Dict, Generator, List, Never, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import AgentProfile, EnvLogDB
+from ..utils.logging import logging_decorator
 
 
 class BaseMultiAgentEnv(object):
