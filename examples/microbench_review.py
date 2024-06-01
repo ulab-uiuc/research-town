@@ -6,7 +6,7 @@ import uuid
 from beartype.typing import Dict, List, Optional
 from pydantic import BaseModel, Field
 from tqdm import tqdm
-from scipy.stats import spearmanr
+from scipy.stats import spearmanr, kendalltau
 from research_town.agents.agent_base import BaseResearchAgent
 from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
 from research_town.dbs.env_db import AgentPaperReviewLog
@@ -40,6 +40,7 @@ class RealPaperWithReviewDB(object):
         self.real_ranks: List[int] = []
         self.absolute_rank_consistency: float = 0.0
         self.spearman_rank_consistency: float = 0.0
+        self.kendall_rank_consistency: float = 0.0
 
     def add(self, real_paper: RealPaperWithReview) -> None:
         self.data[real_paper.title] = real_paper
@@ -56,6 +57,7 @@ class RealPaperWithReviewDB(object):
         combined_data = {
             'absolute_rank_consistency': self.absolute_rank_consistency,
             'spearman_rank_consistency': self.spearman_rank_consistency,
+            'kendall_rank_consistency': self.kendall_rank_consistency,
             'sim_ranks': self.sim_ranks,
             'real_ranks': self.real_ranks,
             'papers': {
@@ -125,6 +127,8 @@ class RealPaperWithReviewDB(object):
         self.absolute_rank_consistency = rank_consistency_float
         spearank_consistency, _ = spearmanr(self.real_ranks, self.sim_ranks)
         self.spearman_rank_consistency = spearank_consistency
+        kendall_rank_consistency, _ = kendalltau(self.real_ranks, self.sim_ranks)
+        self.kendall_rank_consistency = kendall_rank_consistency
         
 
 
@@ -173,6 +177,7 @@ def main(data_path: str, domain: str, model_name:str, review_agent_num: int) -> 
     # print rank consistency
     print(f'absoulte_rank_consistency = {real_paper_db.absolute_rank_consistency}\n')
     print(f'spearman_rank_consistency = {real_paper_db.spearman_rank_consistency}\n')
+    print(f"kendall_rank_consistency = {real_paper_db.kendall_rank_consistency}\n")
     # save the RealPaperWithReviewDB
     # Construct the output file path
     output_file = os.path.join(data_path, f'output_microbench_review_{domain}_by_{model_name}.json')
