@@ -81,7 +81,7 @@ def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
         ), f"overall score of paper should be an Int between 0 and 100, but it's  {evals_output.overall_score}"
 
 
-@pytest.mark.parametrize('use_mock', [True])
+@pytest.mark.parametrize('use_mock', [True, False])
 def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
     paper = {'title': paper_title_constant_A, 'abstract': paper_abstract_constant_A}
     reviews = [
