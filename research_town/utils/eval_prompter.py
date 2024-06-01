@@ -12,16 +12,16 @@ def idea_quality_eval_prompting(
 ) -> str:
     prompt_idea = """
     <Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the research community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea. <Instruction>
-    
+
     <Input>
     Here is the idea to evaluate: {idea}.
     Here is the research trend: {trend}.
     </Input>
-    
+
     <Output>
     The output format should follow these rules: Overall Score of an idea (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where di is the score of the i-th dimension. An example of output is: Overall Score=89 Dimension Scores=[8,9,9,9,9,9].'
     </Output>
-    
+
     <Approach> The details of rating are as follow:
     1. Novelty
     Rating (1-10):
@@ -73,13 +73,13 @@ def idea_quality_eval_prompting(
 
 @beartype
 def paper_quality_eval_prompting(
-    idea: str, paper: Dict[str, str], model_name: str, trend:Optional[str] = None
+    idea: str, paper: Dict[str, str], model_name: str, trend: Optional[str] = None
 ) -> str:
     # refer to idea eval, but replace those not needed, and paraphrase thoese have overlaps.
     paper_prompt = """
-    <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft. . 
+    <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft. .
     <Instruction>
-    
+
     <Input>
     Here is the paper draft to evaluate:
     Title: {title}
@@ -87,7 +87,7 @@ def paper_quality_eval_prompting(
     Idea: {idea}
     Research Trend: {trend}
     </Input>
-    
+
     <Output>
     The output format should follow these rules: Overall Score of an idea (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where di is the score of the i-th dimension. An example of output is: Overall Score=89 Dimension Scores=[8,9,9,9,9,9].'
     </Output>
@@ -137,7 +137,7 @@ def paper_quality_eval_prompting(
         'idea': idea,
         'title': paper['title'],
         'abstract': paper['abstract'],
-        'trend': trend if trend is not None else '' # Provide default value if None
+        'trend': trend if trend is not None else '',  # Provide default value if None
     }
     prompt = paper_prompt.format_map(input_data)
     evaluation_result = model_prompting(model_name, prompt)
@@ -157,9 +157,9 @@ def review_quality_eval_prompting(
 ) -> str:
     review_prompt = """
     <Instruction>
-    Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.  
+    Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.
     </Instruction>
-    
+
     <Input>
     Here is the review to evaluate:
     idea: {idea}
@@ -168,7 +168,7 @@ def review_quality_eval_prompting(
     reviews: {review}
     final_decision:{final_decision}
     </Input>
-    
+
     <Output>
     Output format:
     The output format should follow these rules: Overall Score of a review (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: Overall Score=91. Dimension Scores=[9,9,9,9,9,9,9,9,9,10].
