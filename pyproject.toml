@@ -73,7 +73,6 @@ target-version = "py310"
 [tool.ruff.format]
 quote-style = "single"
 indent-style = "space"
-docstring-code-line-length = 88
 
 [tool.mypy-arxiv]
 ignore_missing_imports = true
