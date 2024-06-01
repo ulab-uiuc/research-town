@@ -169,9 +169,10 @@ def main(data_path: str, domain: str, model_name:str, review_agent_num: int) -> 
 
     # get ranking consistency
     real_paper_db.map_agent_reviews_to_real_paper(reviews)
-    rank_consistency = real_paper_db.calculate_rank_consistency()
+    real_paper_db.calculate_rank_consistency()
     # print rank consistency
-    print(f'rank_consistency = {rank_consistency}\n')
+    print(f'absoulte_rank_consistency = {real_paper_db.absolute_rank_consistency}\n')
+    print(f'spearman_rank_consistency = {real_paper_db.spearman_rank_consistency}\n')
     # save the RealPaperWithReviewDB
     # Construct the output file path
     output_file = os.path.join(data_path, f'output_microbench_review_{domain}_by_{model_name}.json')
