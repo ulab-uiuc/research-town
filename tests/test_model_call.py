@@ -18,7 +18,7 @@ def test_togetherai_mistral_call() -> None:
         'Here is a high-level summarized insight of a research field Machine Learning. '
     )
     response = model_prompting(
-        'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1', prompt
+        'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1', prompt, mode='TEST'
     )
     assert response is not None
     assert len(response) > 0
