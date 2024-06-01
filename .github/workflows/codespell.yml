@@ -28,4 +28,4 @@ jobs:
         pip install codespell==2.2.6 tomli==2.0.1
     - name: Spelling check with codespell
       run: |
-        codespell --toml pyproject.toml
+        codespell -c pyproject.toml

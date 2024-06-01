@@ -57,6 +57,7 @@ def test_paper_submission_env(
         paper_db=paper_db,
         env_db=env_db,
     )
-    env.step()
+    while not env.terminated:
+        env.step()
     assert env.paper.abstract is not None
     assert env.paper.abstract == 'This is a paper.'
