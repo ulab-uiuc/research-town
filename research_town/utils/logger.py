@@ -1,6 +1,6 @@
 import logging
 
-from beartype.typing import Any, Callable, Dict, List, Never, Union
+from beartype.typing import Any, Callable, Dict, List, Union
 
 app_logger = logging.getLogger('research_town')
 app_logger.setLevel(logging.DEBUG)
@@ -14,7 +14,7 @@ app_logger.addHandler(console_handler)
 
 def logging_decorator(
     func: Callable[..., Union[List[Dict[str, str]], None]],
-) ->  Callable[..., Union[List[Dict[str, str]], None]]:
+) -> Callable[..., Union[List[Dict[str, str]], None]]:
     def wrapper(*args: List[Any], **kwargs: Dict[str, Any]) -> None:
         messages = func(*args, **kwargs)
         if not messages:

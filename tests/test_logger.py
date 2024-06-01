@@ -1,4 +1,4 @@
-from beartype.typing import Dict, List, Never, Union
+from beartype.typing import Dict, List, Union
 
 from research_town.utils.logger import logging_decorator
 
