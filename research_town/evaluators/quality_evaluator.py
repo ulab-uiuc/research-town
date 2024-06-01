@@ -37,14 +37,37 @@ class IdeaQualityEvaluator(object):
         return self.parsed_output
 
     def parse(self, raw_output: str) -> IdeaEvalOutput:
-        match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE)
-        if match:
+        overall_score_match = re.search(
+            r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE
+        )
+        dimension_scores_match = re.search(
+            r'Dimension\s*Scores\s*\W*\s*\[([0-9,\s]+)\]', raw_output, re.IGNORECASE
+        )
+
+        if overall_score_match:
             try:
-                return IdeaEvalOutput(overall_score=int(match.group(1)))
+                overall_score = int(overall_score_match.group(1))
             except ValueError as e:
                 raise OutputFormatError(f'Invalid overall score: {e}')
         else:
-            raise OutputFormatError("Output format error: 'Overall Score' not found")
+            raise OutputFormatError(
+                f"Output format error: 'Overall Score' not found. Raw output is {raw_output}."
+            )
+
+        if dimension_scores_match:
+            try:
+                dimension_scores = list(
+                    map(int, dimension_scores_match.group(1).split(','))
+                )
+            except ValueError as e:
+                raise OutputFormatError(f'Invalid dimension scores: {e}')
+        else:
+            raise OutputFormatError(
+                f"Output format error: 'Dimension Scores' not found. Raw output is {raw_output}."
+            )
+        return IdeaEvalOutput(
+            overall_score=overall_score, dimension_scores=dimension_scores
+        )
 
 
 class PaperQualityEvaluator(object):
@@ -68,14 +91,37 @@ class PaperQualityEvaluator(object):
         return self.parsed_output
 
     def parse(self, raw_output: str) -> PaperEvalOutput:
-        match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE)
-        if match:
+        overall_score_match = re.search(
+            r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE
+        )
+        dimension_scores_match = re.search(
+            r'Dimension\s*Scores\s*\W*\s*\[([0-9,\s]+)\]', raw_output, re.IGNORECASE
+        )
+
+        if overall_score_match:
             try:
-                return PaperEvalOutput(overall_score=int(match.group(1)))
+                overall_score = int(overall_score_match.group(1))
             except ValueError as e:
                 raise OutputFormatError(f'Invalid overall score: {e}')
         else:
-            raise OutputFormatError("Output format error: 'Overall Score' not found")
+            raise OutputFormatError(
+                f"Output format error: 'Overall Score' not found. Raw output is {raw_output}."
+            )
+
+        if dimension_scores_match:
+            try:
+                dimension_scores = list(
+                    map(int, dimension_scores_match.group(1).split(','))
+                )
+            except ValueError as e:
+                raise OutputFormatError(f'Invalid dimension scores: {e}')
+        else:
+            raise OutputFormatError(
+                f"Output format error: 'Dimension Scores' not found. Raw output is {raw_output}."
+            )
+        return PaperEvalOutput(
+            overall_score=overall_score, dimension_scores=dimension_scores
+        )
 
 
 class ReviewQualityEvaluator(object):
@@ -104,13 +150,35 @@ class ReviewQualityEvaluator(object):
         return self.parsed_output
 
     def parse(self, raw_output: str) -> ReviewEvalOutput:
-        match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE)
-        if match:
+        overall_score_match = re.search(
+            r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE
+        )
+        dimension_scores_match = re.search(
+            r'Dimension\s*Scores\s*\W*\s*\[([0-9,\s]+)\]', raw_output, re.IGNORECASE
+        )
+
+        if overall_score_match:
             try:
-                return ReviewEvalOutput(overall_score=int(match.group(1)))
+                overall_score = int(overall_score_match.group(1))
             except ValueError as e:
                 raise OutputFormatError(f'Invalid overall score: {e}')
         else:
             raise OutputFormatError(
                 f"Output format error: 'Overall Score' not found. Raw output is {raw_output}."
             )
+
+        if dimension_scores_match:
+            try:
+                dimension_scores = list(
+                    map(int, dimension_scores_match.group(1).split(','))
+                )
+            except ValueError as e:
+                raise OutputFormatError(f'Invalid dimension scores: {e}')
+        else:
+            raise OutputFormatError(
+                f"Output format error: 'Dimension Scores' not found. Raw output is {raw_output}."
+            )
+
+        return ReviewEvalOutput(
+            overall_score=overall_score, dimension_scores=dimension_scores
+        )

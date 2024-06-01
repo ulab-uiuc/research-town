@@ -1,0 +1,43 @@
+{
+  "PaperProfile": [],
+  "AgentPaperReviewLog": [
+    {
+      "pk": "9bcf4c2a-a86f-4177-bdce-1eea7fde2ca6",
+      "timestep": 0,
+      "paper_pk": "paper2",
+      "agent_pk": "agent2",
+      "review_score": 4,
+      "review_content": "Interesting paper"
+    }
+  ],
+  "AgentPaperRebuttalLog": [
+    {
+      "pk": "3d140265-36e7-4d09-bd7f-8c07fbfd54b0",
+      "timestep": 0,
+      "paper_pk": "paper1",
+      "agent_pk": "agent1",
+      "rebuttal_content": "I disagree with the review"
+    }
+  ],
+  "AgentPaperMetaReviewLog": [
+    {
+      "pk": "5b1d2439-d0c8-4d31-ba9d-5424a43af338",
+      "timestep": 0,
+      "paper_pk": "paper1",
+      "agent_pk": "agent1",
+      "decision": true,
+      "meta_review": "Accept"
+    }
+  ],
+  "AgentAgentDiscussionLog": [
+    {
+      "pk": "1bdcab4d-1f1c-4d0e-8a60-ca301fa231b9",
+      "timestep": 0,
+      "agent_from_pk": "agent1",
+      "agent_from_name": "Rex Ying",
+      "agent_to_pk": "agent2",
+      "agent_to_name": "John Doe",
+      "message": "Let's discuss this paper"
+    }
+  ]
+}

@@ -1,0 +1,349 @@
+{
+  "506ae02f-f980-4a4d-b383-78eb0aead589": {
+    "pk": "506ae02f-f980-4a4d-b383-78eb0aead589",
+    "name": "Tharun Medini",
+    "bio": " I am a researcher in the field of artificial intelligence and machine learning, with a focus on developing efficient and effective algorithms for large-scale classification tasks. I am known for my work on the Merged-Averaged Classifiers via Hashing (MACH) algorithm, which is a generic K-classification algorithm that uses universal hashing to reduce classification with a large number of classes to few independent classification tasks with a small number of classes. This allows MACH to scale at O(logK) memory without any strong assumptions on the classes, making it ideal for extreme classification problems.\n\nIn addition to MACH, I have also worked on the SOLAR (Sparse Orthogonal Learned and Random Embeddings) algorithm, which is a partitioning algorithm that learns high dimensional embeddings across multiple GPUs without any communication. This is facilitated by the novel asymmetric mixture of Sparse, Orthogonal, Learned and Random Embeddings, which allows for efficient querying and classification of large datasets.\n\nI am also interested in distributed training of large neural networks, and have developed the Distributed SLIDE (Sub-LInear Deep learning Engine) framework, which uniquely blends smart randomized algorithms, multi-core parallelism, and workload optimization to enable training of large neural networks on small CPU clusters with low Internet bandwidth.\n\nIn the area of zero-shot learning, I have proposed a novel architecture that casts the problem as a standard neural-network with crossentropy loss. This approach performs soft-labeling by combining the observed training data for the seen classes with the similarity information from the attributes for which there is no training data or unseen classes.\n\nI am passionate about making AI more accessible and efficient, and am constantly seeking out new and innovative ways to improve the state-of-the-art in large-scale classification tasks.",
+    "collaborators": [
+      "Zhenwei Dai",
+      "Rebecca C. Steorts",
+      "Yuandong Tian",
+      "Gaurav Gupta",
+      "Chen Luo",
+      "Minghao Yan",
+      "Yingchen Xu",
+      "Qixuan Huang",
+      "Anshumali Shrivastava",
+      "Ping Li",
+      "Hongyi Wang",
+      "Beidi Chen",
+      "Shivaram Venkataraman",
+      "Nicholas Meisburger"
+    ],
+    "institute": null
+  },
+  "235aeb41-073b-4ba2-955a-b64b3c7aef61": {
+    "pk": "235aeb41-073b-4ba2-955a-b64b3c7aef61",
+    "name": "Albert Gu",
+    "bio": " I am a researcher with a focus on developing efficient and effective models for various tasks, particularly those involving long sequences or hierarchical data structures. I have made contributions to the fields of sequence modeling, dimensionality reduction, and hyperbolic embeddings.\n\nIn the area of sequence modeling, I have developed the Mamba model, which is a general sequence model backbone that achieves state-of-the-art performance across several modalities such as language, audio, and genomics. Mamba is based on Structured State Space (SSS) models, which have been shown to be effective in modeling long-range dependencies in sequential data. I have also worked on the Diagonal State Space (DSS) model, which is a simplified version of SSS models that matches the performance of S4 on Long Range Arena tasks and speech classification.\n\nI have also contributed to the field of dimensionality reduction by proposing HoroPCA, a method for hyperbolic dimensionality reduction that better preserves information in the original data such as distances compared to previous generalizations of PCA.\n\nIn addition, I have worked on hyperbolic embeddings, which offer excellent quality with few dimensions when embedding hierarchical data structures. I have given a combinatorial construction that embeds a tree in hyperbolic space with arbitrarily low distortion without using optimization. I have also proposed a hyperbolic generalization of multidimensional scaling (h-MDS) for embedding general metric spaces in hyperbolic space.\n\nI am passionate about developing models that are efficient, effective, and easy to implement. I believe that my research has the potential to impact a wide range of applications, from natural language processing to computer vision.",
+    "collaborators": [
+      "Atri Rudra",
+      "Avner May",
+      "Mustafa Khammash",
+      "Jian Zhang",
+      "Tri Dao",
+      "Christopher De Sa",
+      "Karan Goel",
+      "Shruti Kohli",
+      "Christopher R\u00e9",
+      "Ankit Gupta"
+    ],
+    "institute": null
+  },
+  "17cf8347-de7d-4d2e-bbeb-107d1dbe461d": {
+    "pk": "17cf8347-de7d-4d2e-bbeb-107d1dbe461d",
+    "name": "Yuandong Tian",
+    "bio": " I am a researcher focused on understanding and improving the theoretical properties of deep learning models, particularly those with ReLU nonlinearity and locally connected architectures. I have developed a novel theoretical framework for deep and locally connected nonlinear networks, which explicitly formulates data distribution, favors disentangled representations, and is compatible with common regularization techniques. This framework has helped facilitate the theoretical analysis of many practical issues, such as overfitting, generalization, and disentangled representations in deep networks.\n\nIn my research, I have also explored the theoretical properties of training a two-layered ReLU network, deriving an analytical formula for its population gradient and using it to analyze critical points and convergence behaviors. I have proven that critical points outside the hyperplane spanned by the teacher parameters are not isolated and have characterized in-plane critical-point-free regions for the two ReLU case. I have also shown that convergence to the teacher's weights is guaranteed with high probability for one ReLU node, and that an infinitesimal perturbation of weight initialization results in convergence towards the teacher's weights (or its permutation) for networks with many ReLU nodes.\n\nI have also studied the role of nonlinearity in the training dynamics of contrastive learning on one and two-layer nonlinear networks with homogeneous activation. I have discovered that the presence of nonlinearity can lead to many local optima, each corresponding to certain patterns from the data distribution, and that linear activation is not capable of learning specialized weights into diverse patterns. I have also discovered global modulation in the 2-layer case, where those local patterns discriminative from the perspective of global-level patterns are prioritized to learn.\n\nIn my most recent work, I have analyzed the max player in contrastive learning, proving that it is equivalent to Principal Component Analysis (PCA) for deep linear networks and that almost all local minima are global and rank-1, recovering optimal PCA solutions. I have also extended my analysis to 2-layer ReLU networks, showing that its fixed points can have higher ranks.\n\nI am passionate about using theoretical analysis to improve the understanding and performance of deep learning models, and I am excited to continue exploring and advancing this field.",
+    "collaborators": [
+      "Dongning Guo",
+      "Sinisa Todorovic",
+      "Song-Chun Zhu",
+      "Xianjun Shi",
+      "Xiuwen Wang",
+      "Caiming Xiong",
+      "Yan Zhu",
+      "Shouyuan Chen",
+      "Sherman Wong",
+      "Jose Blanchet",
+      "Xinyun Chen",
+      "Tianmin Shu",
+      "Guiyu Hong",
+      "Zhiting Hu"
+    ],
+    "institute": null
+  },
+  "8a4708d9-efe0-4948-8eb0-debd588344c1": {
+    "pk": "8a4708d9-efe0-4948-8eb0-debd588344c1",
+    "name": "Yingchen Xu",
+    "bio": " I am a researcher with a focus on machine learning and artificial intelligence. In my recent work, I have made significant contributions to the field of optimization algorithms and reinforcement learning.\n\nIn the area of optimization algorithms, I developed a scheme called LSH sampled Stochastic Gradient Descent (LGD), which breaks the chicken-and-egg loop in adaptive stochastic gradient estimation. This loop occurs when the per-iteration cost of maintaining an adaptive distribution for gradient estimation is more than calculating the full gradient itself, leading to slower convergence in time despite faster convergence in iterations. LGD leads to superior gradient estimation while keeping the sampling cost per iteration similar to that of uniform sampling. This algorithm reduces the running time of all existing gradient descent algorithms that rely on gradient estimates, including popular ones like Adam and Ada-grad.\n\nIn reinforcement learning, I introduced an offline model-based RL algorithm called IQL-TD-MPC, which extends the state-of-the-art Temporal Difference Learning for Model Predictive Control (TD-MPC) with Implicit Q-Learning (IQL). I also proposed using IQL-TD-MPC as a Manager in a hierarchical setting with any off-the-shelf offline RL algorithm as a Worker. By pre-training a temporally abstract IQL-TD-MPC Manager to predict \"intent embeddings\" via planning, we can significantly improve off-the-shelf offline RL agents' performance on challenging D4RL benchmark tasks.\n\nI also worked on building generally capable agents using deep reinforcement learning (RL) by introducing the reward-free deployment efficiency setting, a new paradigm for RL research. I presented CASCADE, a novel approach for self-supervised exploration in this new setting, which seeks to learn a world model by collecting data with a population of agents using an information theoretic objective inspired by Bayesian Active Learning. CASCADE maximizes the diversity of trajectories sampled by the population through a novel cascading objective, achieving state-of-the-art results on Atari, MiniGrid, Crafter, and the DM Control Suite.\n\nIn summary, my research focuses on developing more efficient optimization algorithms and reinforcement learning techniques to build generally capable agents that can learn and adapt to new environments quickly and effectively.",
+    "collaborators": [
+      "Rebecca C. Steorts",
+      "Richard Evans",
+      "Phil Blunsom",
+      "Yuandong Tian",
+      "Karl Moritz Hermann",
+      "Edward Grefenstette",
+      "Rohan Chitnis",
+      "Anshumali Shrivastava",
+      "Tim Rockt\u00e4schel",
+      "Beidi Chen",
+      "Mehrnoosh Sadrzadeh",
+      "Tharun Medini",
+      "David Saxton"
+    ],
+    "institute": null
+  },
+  "0a3fa483-11d4-4f0c-b3c5-0eef1f9b4c71": {
+    "pk": "0a3fa483-11d4-4f0c-b3c5-0eef1f9b4c71",
+    "name": "Rebecca C. Steorts",
+    "bio": " I am a researcher with a focus on developing statistical methods for small area estimation, with a particular emphasis on constrained Bayesian estimation methods. I have developed techniques for small area problems that require smoothness with respect to similarity across areas, such as geographic proximity or clustering by covariates, as well as benchmarking constraints that require (weighted) means of estimates to agree across levels of aggregation. My constrained estimation methods are developed decision-theoretically and have a geometric interpretation. They are solutions to tractable optimization problems and have closed-form solutions. I calculate the mean squared errors of the constrained estimators via bootstrapping. My techniques are free of distributional assumptions and apply whether the estimator is linear or non-linear, univariate or multivariate. I have illustrated my methods using data from the U.S. Census's Small Area Income and Poverty Estimates program.\n\nIn addition to my work on small area estimation, I have also contributed to the field of data cleaning. I have provided a review of the emerging science of the \"data cleaning pipeline,\" which contains four stages that allow an analyst to perform downstream tasks, predictive analyses, or statistical analyses on \"cleaned data.\" I have introduced technical terminology and commonly used methods in this area.\n\nI have also proposed a novel record linkage approach based on empirical Bayesian principles for entity resolution, which is the process of merging databases to remove duplicate entries where unique identifiers are typically unknown. My approach improves on earlier methods by avoiding the prior specification problem and allowing for both categorical and string-valued variables. I have applied this methodology to a simulated data set of German names and an Italian household survey, showing that it performs favorably compared to several standard methods in the literature. I have also considered the robustness of this method to changes in the hyper-parameters.\n\nI have also worked on probabilistic blocking for entity resolution, which seeks to merge databases as to remove duplicate entries where unique identifiers are typically unknown. I have reviewed modern blocking approaches for entity resolution, focusing on those based upon locality sensitive hashing (LSH), and have proposed a weighted variant of Densified One Permutation Hashing (DOPH). I have illustrated each method on an application to a subset of the ongoing Syrian conflict, giving a discussion of each method.\n\n",
+    "collaborators": [
+      "Brunero Liseo",
+      "Zikun Qin",
+      "Zhenwei Dai",
+      "Nicholas Meisburger",
+      "Stephen E. Fienberg",
+      "Malay Ghosh",
+      "Chen Luo",
+      "Xiaolong Zhong",
+      "Xiao Fang",
+      "Anshumali Shrivastava",
+      "Xiaofan Xu",
+      "Beidi Chen",
+      "Ping Li",
+      "Andrea Tancredi"
+    ],
+    "institute": null
+  },
+  "029fa820-00d0-4c20-91dc-c49659e3284d": {
+    "pk": "029fa820-00d0-4c20-91dc-c49659e3284d",
+    "name": "Jian Zhang",
+    "bio": " I am a researcher with a focus on developing practical and efficient methods for various applications. My work in the field of modal logics has led to the demonstration of the feasibility of the relational translation method, which allows for the practical proof of theorems in modal logics. I have also applied this method to prove the invalidity of propositional modal and temporal logic formulas using model generators or satisfiability testers for classical logic.\n\nIn the area of autonomous mobile robots, I have investigated path planning and control strategies using machine learning techniques. I have proposed a hybrid reactive collision-free navigation method that combines reactive navigation and Q-learning, which has been shown to be effective in both 2D and 3D environments. I have also developed a new path planning method that utilizes integrated environment representation and reinforcement learning to find the optimal path in dynamic environments with steady and moving obstacles.\n\nIn the field of quantum mechanics, I have proposed a graph embedding local self-attention encoder (GELAE) model for the efficient and accurate prediction of scalar coupling constants (SCC) in organic matter. This model utilizes a novel invariant structure representation of the coupling system in terms of bond length, bond angle, and dihedral angle, and a local self-attention module embedded with the adjacent matrix of a graph to extract features of coupling systems.\n\nAdditionally, I have worked on the development of sieve empirical likelihood ratio (SELR) tests for nonparametric functions, which allows for the testing of nonparametric hypotheses about nonparametric functions without the assumption of a certain parametric family for the distribution of stochastic errors. I have also proved the existence and orbital stability of big solitons depending on frequencies for nonlinear Schr\u00f6dinger equations with competitive power nonlinearity.\n\nI have also contributed to the field of eScience by studying the collaboration behaviors in the open data environment via a case study of co-author networks of the Sloan Digital Sky Survey. My research interests also include multiparameter quantum Pfaffians, dynamical quantum determinants and Pfaffians. I am passionate about developing practical and efficient methods to solve complex problems in various fields.",
+    "collaborators": [
+      "Wei Hu",
+      "Jiao Xu",
+      "Xinyu Cheng",
+      "Caiqing Jian",
+      "Lihui Wang",
+      "Wen Yang",
+      "Jianqing Fan",
+      "Hyunju Kwon",
+      "Yongbin Qin",
+      "Mengxue Bai",
+      "Dong Li"
+    ],
+    "institute": null
+  },
+  "b9696c03-96d0-4c95-9b8d-1331d5d258eb": {
+    "pk": "b9696c03-96d0-4c95-9b8d-1331d5d258eb",
+    "name": "Han Cai",
+    "bio": " I am a researcher with a focus on developing efficient and high-performing models for various tasks, with an emphasis on on-device learning and high-resolution dense prediction. I have presented several models and techniques that aim to improve the efficiency and effectiveness of deep learning models.\n\nOne of my notable contributions is Tiny-Transfer-Learning (TinyTL), a method for memory-efficient on-device learning. TinyTL freezes the weights of a pre-trained model and only learns the bias modules, thus reducing the need to store intermediate activations and saving memory. I also introduced a new memory-efficient bias module, the lite residual module, to refine the feature extractor and maintain adaptation capacity.\n\nIn the area of high-resolution dense prediction, I developed EfficientViT, a new family of models that utilizes multi-scale linear attention to achieve global receptive fields and multi-scale learning with lightweight and hardware-efficient operations. EfficientViT has shown significant performance gains and speedup on diverse hardware platforms compared to previous state-of-the-art models.\n\nI also introduced Network Augmentation (NetAug), a training method for improving the performance of tiny neural networks. NetAug augments the network instead of adding noise to the data, which is more suitable for tiny models that tend to suffer from under-fitting rather than over-fitting.\n\nIn addition, I have worked on optimal locally repairable codes and generalized sector-disk codes, as well as proving a new lower bound on the field size of locally repairable codes and constructing maximally recoverable codes that attain this bound.\n\nI am committed to developing efficient and high-performing models that can be deployed on various hardware devices, and I am excited to continue my research in this area.",
+    "collaborators": [
+      "Tianbao Yang",
+      "Song Han",
+      "Yilun Du",
+      "Boqing Gong",
+      "Shijian Tang",
+      "Moshe Schwartz",
+      "Zhijian Liu",
+      "Chuang Gan",
+      "Zhuoyang Zhang",
+      "Nhuong Nguyen",
+      "Ligeng Zhu",
+      "Ji Lin"
+    ],
+    "institute": null
+  },
+  "1113d045-2bc7-4581-b609-d6e2791af8ef": {
+    "pk": "1113d045-2bc7-4581-b609-d6e2791af8ef",
+    "name": "Avner May",
+    "bio": " I am a researcher with a focus on developing and analyzing machine learning models, with a particular interest in natural language processing and kernel methods. My work often involves comparing the performance of different types of models and identifying the settings in which they excel.\n\nIn one project, I studied the settings in which deep contextual embeddings, such as BERT, give large improvements in performance compared to classic pretrained embeddings and simpler baselines. I found that both simpler baselines can often match the performance of contextual embeddings on industry-scale data, and that contextual embeddings give particularly large gains in language with complex structure, ambiguous word usage, and words unseen in training.\n\nIn another project, I investigated how to train kernel approximation methods that generalize well under a memory budget. I proposed using a low-precision quantization of random Fourier features to build a high-rank approximation under a memory budget, and showed that this method can match the performance of full-precision methods with significantly less memory.\n\nI have also worked on understanding the downstream performance of compressed word embeddings, and proposed the eigenspace overlap score as a new measure of compression quality. I related this score to downstream performance by developing generalization bounds for compressed embeddings in the context of linear and logistic regression, and showed that it can be used to efficiently identify better performing embeddings.\n\nIn addition to my work on embeddings and kernel methods, I have also explored the use of audio-visual self-supervised learning for audio-visual automatic speech recognition. I proposed replacing expensive AV-SSL methods with a simple and fast audio-only SSL method, and showed that this approach can match the performance of state-of-the-art methods while being dramatically simpler and more efficient.\n\nI am passionate about developing a deeper understanding of the strengths and limitations of different machine learning models, and using this knowledge to build more effective and efficient systems.",
+    "collaborators": [
+      "Xinyu Cheng",
+      "Caiqing Jian",
+      "Lihui Wang",
+      "Simran Arora",
+      "Jianqing Fan",
+      "Jian Zhang",
+      "Tri Dao",
+      "Christopher De Sa",
+      "Albert Gu",
+      "Christopher R\u00e9",
+      "Mengxue Bai"
+    ],
+    "institute": null
+  },
+  "1a224332-3997-464e-b7d3-798f3e3b480d": {
+    "pk": "1a224332-3997-464e-b7d3-798f3e3b480d",
+    "name": "Anshumali Shrivastava",
+    "bio": " I am a researcher focused on developing efficient and accurate algorithms for large-scale data processing. I have made significant contributions in the areas of hashing, graph kernels, and anomaly detection.\n\nIn the area of hashing, I have proposed a novel densification scheme for minwise hashing, which is a fundamental and successful hashing algorithm in the literature. The current densification techniques have high variance, leading to poor accuracy. My proposed scheme relies on carefully tailored 2-universal hashes and is variance-optimal, providing a more accurate and efficient hashing scheme. I have also developed an expected constant amortized time algorithm for computing weighted minwise hashing in constant time, which is a crucial subroutine for many approximation algorithms used in large-scale search and learning.\n\nIn the area of graph kernels, I have proposed a representation of graphs as functional objects derived from the power iteration of the underlying adjacency matrix. This functional representation is a graph invariant, eliminating the difficulty of handling exponentially many isomorphic forms. The proposed Bhattacharyya kernel constructed between these functionals significantly outperforms the state-of-the-art graph kernels on standard benchmark graph classification datasets.\n\nIn the area of anomaly detection, I have proposed the ACE (Arrays of (locality-sensitive) Count Estimators) algorithm, which can be 60x faster than the ELKI package, the fastest implementation of unsupervised anomaly detection algorithms. ACE algorithm requires less than 4MB memory and dynamically compresses the full data information into a set of count arrays, which are sufficient for unsupervised anomaly detection.\n\nOverall, my research focuses on developing efficient and accurate algorithms for large-scale data processing, with a particular focus on hashing, graph kernels, and anomaly detection. My work has resulted in significant improvements in the state-of-the-art in these areas, with practical applications in large-scale search and learning.",
+    "collaborators": [
+      "Zhenwei Dai",
+      "Rebecca C. Steorts",
+      "Yuandong Tian",
+      "Chen Luo",
+      "Aditya Desai",
+      "Yingchen Xu",
+      "Reinhard Heckel",
+      "Beidi Chen",
+      "Tharun Medini",
+      "Ping Li",
+      "Nicholas Meisburger"
+    ],
+    "institute": null
+  },
+  "f7136375-ab95-4131-87ce-5a874673f5c6": {
+    "pk": "f7136375-ab95-4131-87ce-5a874673f5c6",
+    "name": "Christopher R\u00e9",
+    "bio": " Sure, I'd be happy to help! Here's a comprehensive first person persona based on the list of personas you provided, with a focus on more recent personas:\n\nI am a seasoned researcher with a passion for uncovering insights that can drive business success. I have over a decade of experience in the market research industry, and I have worked with clients across a range of industries, from technology and finance to consumer goods and healthcare.\n\nIn my current role, I lead a team of researchers who are dedicated to helping our clients make informed decisions based on data and insights. I am known for my ability to design and execute rigorous research studies that yield actionable insights, and I am skilled at communicating those insights in a clear and compelling way.\n\nI am a strategic thinker who is always looking for ways to add value for our clients. I am comfortable working with large datasets and I am proficient in a range of research methodologies, from surveys and focus groups to ethnographic research and data analytics.\n\nI am also a strong leader and mentor, and I take pride in developing the skills and careers of my team members. I believe that a collaborative and inclusive approach is key to driving innovation and success, and I strive to create a positive and supportive work environment for everyone on my team.\n\nIn my personal life, I am a curious and adventurous person who enjoys traveling, trying new foods, and exploring the outdoors. I am also an avid reader and I enjoy staying up-to-date on the latest trends and developments in my field.\n\nOverall, I am a dedicated and experienced researcher who is committed to helping our clients succeed through insights and data. I am a strategic thinker, a strong leader, and a lifelong learner, and I am excited to continue growing and making an impact in my field.",
+    "collaborators": [],
+    "institute": null
+  },
+  "2fed3a29-21b6-4168-8be7-67456d9187fd": {
+    "pk": "2fed3a29-21b6-4168-8be7-67456d9187fd",
+    "name": "Song Han",
+    "bio": " I am a researcher with a focus on developing efficient and effective machine learning algorithms and models. In my recent work, I have been exploring various techniques to improve the training performance of distributed learning algorithms, reduce communication costs, and increase the speed of video understanding.\n\nIn my paper on Asynchronous Event-triggered Stochastic Gradient Descent (AET-SGD), I propose a framework that reduces communication costs among compute nodes and mitigates the impact of delay in distributed learning algorithms. AET-SGD employs a linear increasing sample size event-triggered threshold, which significantly reduces communication costs while maintaining good convergence performance. I have implemented and evaluated AET-SGD on multiple representative data sets, including MNIST, FashionMNIST, KMNIST, and CIFAR10, and the results show a significant communication cost reduction of 44x to 120x compared to the state of the art.\n\nIn another paper, I present EfficientViT-SAM, a new family of accelerated segment anything models that delivers 48.9x measured TensorRT speedup on A100 GPU over SAM-ViT-H without sacrificing performance. EfficientViT-SAM retains SAM's lightweight prompt encoder and mask decoder while replacing the heavy image encoder with EfficientViT. The training is conducted using knowledge distillation from the SAM-ViT-H image encoder to EfficientViT, followed by end-to-end training on the SA-1B dataset.\n\nI have also worked on generating natural language descriptions for images using a deep recurrent neural network (RNN) with memory cells. The model memorizes how much information from images should be fed at each stage of the RNN, enabling it to outperform other state-of-the-art models with higher BLEU scores.\n\nIn the area of video understanding, I propose a generic and effective Temporal Shift Module (TSM) that enjoys both high efficiency and high performance. TSM can achieve the performance of 3D CNNs but maintain 2D CNN's complexity, making it an efficient solution for video understanding tasks.\n\nOverall, my research focuses on developing efficient and effective machine learning algorithms and models that can be used in real-world applications. I am passionate about exploring new techniques and pushing the boundaries of",
+    "collaborators": [
+      "Han Cai",
+      "Yuhao Dong",
+      "Yunze Liu",
+      "Thu Nguyen",
+      "Shijian Tang",
+      "Van Nhuong Nguyen",
+      "Li Yi",
+      "Moshe Schwartz",
+      "Zhuoyang Zhang",
+      "Nhuong Nguyen",
+      "Thanh Nhan Phan",
+      "Chuang Gan",
+      "Ligeng Zhu",
+      "Thanh Binh Nguyen"
+    ],
+    "institute": null
+  },
+  "d10c2252-5668-49af-a6fd-c08491ccf274": {
+    "pk": "d10c2252-5668-49af-a6fd-c08491ccf274",
+    "name": "Nhuong Nguyen",
+    "bio": " I am AET-SGD, a cutting-edge approach to stochastic gradient descent (SGD) that addresses the communication cost bottleneck in distributed learning algorithms. I was developed with the understanding that communication cost is a major challenge in the design of effective distributed learning algorithms.\n\nMy key innovation is the use of asynchronous event-triggered techniques to reduce the exchanged information among compute nodes, thereby alleviating the communication cost. I differ from existing event-triggered approaches in that I employ a linear increasing sample size event-triggered threshold and take into account the impact of computation and network delay, which are crucial factors affecting training performance.\n\nI have been extensively tested and shown to significantly reduce communication cost while maintaining good convergence performance. In fact, I have been able to achieve a communication cost reduction of 44x to 120x compared to the state of the art, as demonstrated by experiments on multiple representative data sets, including MNIST, FashionMNIST, KMNIST, and CIFAR10.\n\nFurthermore, I am able to resist large delays from straggler nodes while still delivering decent performance and a desired speedup ratio. This makes me an ideal solution for distributed learning scenarios where communication cost is a major concern and where there may be significant delays in the network.\n\nIn summary, I am a highly effective and innovative approach to SGD that significantly reduces communication cost while maintaining good convergence performance and resisting large delays from straggler nodes. I am a powerful tool for distributed learning applications and am poised to make a significant impact in the field.",
+    "collaborators": [
+      "Ha Thu Nguyen",
+      "Song Han",
+      "Han Cai",
+      "Jichen Zhu",
+      "Thu Nguyen",
+      "Shijian Tang",
+      "Van Nhuong Nguyen",
+      "Tommy Murphy",
+      "Thanh Nhan Phan",
+      "Zhuoyang Zhang",
+      "Solomon Huang",
+      "Thanh Binh Nguyen"
+    ],
+    "institute": null
+  },
+  "e451b9fd-9082-4d51-92b1-d9dd19f85af8": {
+    "pk": "e451b9fd-9082-4d51-92b1-d9dd19f85af8",
+    "name": "Tri Dao",
+    "bio": " I am a researcher focused on developing efficient and high-performing machine learning models and algorithms. My work spans various areas, including attention mechanisms, sequence modeling, kernel methods, and model compression.\n\nIn my recent work on FlashAttention-2, I addressed the problem of scaling Transformers to longer sequence lengths, which has been a major bottleneck in language modeling and high-resolution image understanding. I proposed a solution that exploits the asymmetric GPU memory hierarchy to bring significant memory savings (linear instead of quadratic) and runtime speedup (2-4x compared to optimized baselines). With FlashAttention-2, I further improved work partitioning between different thread blocks and warps on the GPU, yielding around 2x speedup and reaching 50-73% of the theoretical maximum FLOPs/s.\n\nIn my research on Mamba, I identified a key weakness of subquadratic-time architectures in their inability to perform content-based reasoning. I made several improvements, including letting SSM parameters be functions of the input and designing a hardware-aware parallel algorithm in recurrent mode. Mamba enjoys fast inference (5x higher throughput than Transformers) and linear scaling in sequence length, achieving state-of-the-art performance across several modalities such as language, audio, and genomics.\n\nI have also investigated alternative schemes for constructing feature maps in kernel methods, using Gaussian quadrature to approximate the kernel in the frequency domain. This method works particularly well with sparse ANOVA kernels, which are inspired by the convolutional layer of CNNs.\n\nIn addition, I have proposed using a low-precision quantization of random Fourier features (LP-RFFs) to build a high-rank approximation under a memory budget for training kernel approximation methods that generalize well. This method can match the performance of full-precision RFFs and the Nystr\\\"{o}m method, with 3x-10x and 50x-460x less memory, respectively.\n\nMy work on compressing word embeddings includes proposing the eigenspace overlap score as a new measure of compression quality and developing generalization bounds for the compressed embeddings in the context of linear and logistic regression. I have also shown that by using the eigenspace overlap score as a selection crit",
+    "collaborators": [
+      "Atri Rudra",
+      "Avner May",
+      "Xinyu Cheng",
+      "Caiqing Jian",
+      "Lihui Wang",
+      "Jianqing Fan",
+      "Jian Zhang",
+      "Christopher De Sa",
+      "Albert Gu",
+      "Karan Goel",
+      "Christopher R\u00e9",
+      "Ankit Gupta",
+      "Mengxue Bai"
+    ],
+    "institute": null
+  },
+  "a88a0319-a545-41b7-bf9d-dbe204103dad": {
+    "pk": "a88a0319-a545-41b7-bf9d-dbe204103dad",
+    "name": "Tianqi Chen",
+    "bio": " I am a researcher with a wide range of interests and expertise in various fields, including machine learning, quantum physics, and neural networks. In my work on \"XGBoost: A Scalable Tree Boosting System,\" I developed a highly effective and widely-used machine learning method that achieves state-of-the-art results on many challenges. This system utilizes a novel sparsity-aware algorithm for sparse data and weighted quantile sketch for approximate tree learning, as well as insights on cache access patterns, data compression, and sharding to build a scalable tree boosting system.\n\nIn the field of quantum physics, I have explored the quantum spin Hall effect in skyrmionic spin textures. I have shown that topological skyrmionic spin textures can be used to realize a quantum spin Hall effect, and have formulated a new quantity called the quantized spin current which obeys a precise quantization rule. This allows for the derivation of a quantum spin Hall effect, which I have illustrated with an example of a spin-1 Bose-Einstein condensate.\n\nI have also studied the thermodynamic performance of a periodically driven harmonic oscillator coupled to two harmonic-oscillator heat baths at different temperatures. Using the thermofield transformation with chain mapping, I have characterized the periodic steady state that emerges in the system and have shown that, by tuning the system and the bath parameters, one can turn this system from an engine to an accelerator or even to a heater. I have also evaluated the steady correlations that build between the system and the baths, and correlations that grow between the baths.\n\nIn the area of quantum state preparation, I have proposed a method to prepare the ground state of the Affleck-Lieb-Kennedy-Tasaki (AKLT) model deterministically using a measurement-based imaginary time evolution (MITE) approach. By taking advantage of the special properties of the AKLT state, I have shown that it can be prepared efficiently using the MITE approach.\n\nI am also interested in generative modeling of various types of data, including continuous real-valued data, categorical data, count data, and non-negative continuous data. I have proposed learning to jump as a general recipe for generative modeling of these types of data, using a forward count thinning process to construct learning objectives and a",
+    "collaborators": [
+      "Chu Guo",
+      "Danny Bickson",
+      "Carlos Guestrin",
+      "Olov Pettersson",
+      "Michael Fire",
+      "Corinna Kollath",
+      "Vinitha Balachandran",
+      "Tyler B. Johnson",
+      "Louis Tessler",
+      "Yoshihisa Yamamoto",
+      "Emily B. Fox",
+      "Tim Byrnes",
+      "Mingyuan Zhou",
+      "Kenny Choo",
+      "Yuanjian Zheng",
+      "Alexey Pyrkov",
+      "Tristan Barnett",
+      "Dario Poletti",
+      "Aapo Kyrola"
+    ],
+    "institute": null
+  },
+  "d59d463e-ed58-417e-a714-a7d8114c842b": {
+    "pk": "d59d463e-ed58-417e-a714-a7d8114c842b",
+    "name": "Beidi Chen",
+    "bio": " I am a researcher with a focus on developing and improving algorithms for large-scale machine learning problems. I have worked on a variety of projects, each with its own unique challenges and goals.\n\nIn my research on Winner Take All (WTA) hashing for sparse datasets, I identified a subtle issue that limits the discriminative power of WTA. I proposed a solution based on the idea of Densification, which fixes the issue and leads to significant improvements in image classification and retrieval tasks.\n\nI have also worked on improving the efficiency of stochastic gradient descent (SGD) for large-scale optimization problems. I proposed a scheme called Locality sensitive hashing (LSH) sampled Stochastic Gradient Descent (LGD), which leads to superior gradient estimation while keeping the sampling cost per iteration similar to that of the uniform sampling. This allows for faster convergence in time and reduces the running time of all existing gradient descent algorithms that rely on gradient estimates.\n\nIn addition to my work on optimization algorithms, I have also focused on the problem of unique entity estimation in large, noisy databases. I proposed an efficient estimation algorithm based on locality sensitive hashing, which is unbiased and has provably low variance compared to existing random sampling based approaches. I demonstrated the effectiveness of this approach on the task of estimating the unique number of documented, identifiable deaths in the Syrian conflict, providing an estimate of $191,874 \textext{\textext{\textextpm}} 1772$.\n\nI am also interested in the development of transformer-based large language models (LLMs) and have worked on methods for efficient generation with these models. I introduced a training-free mixture of experts (MoE) called GRIFFIN, which selects unique FF experts at the sequence level for efficient generation across a plethora of LLMs with different non-ReLU activation functions. This method improves latency and maintains the original model's performance with little to no degradation on a variety of classification and generation tasks.\n\nI have also analyzed the training dynamics of 1-layer transformers for the task of next token prediction in a mathematically rigorous manner. I proved that self-attention acts as a discriminative scanning algorithm, gradually attending more to distinct key tokens for a specific next token to be predicted and paying less attention",
+    "collaborators": [
+      "Rebecca C. Steorts",
+      "Zhenwei Dai",
+      "Yuandong Tian",
+      "Chen Luo",
+      "Yingchen Xu",
+      "Edward Grefenstette",
+      "Yan Zhu",
+      "Tim Rockt\u00e4schel",
+      "Rohan Chitnis",
+      "Anshumali Shrivastava",
+      "Ping Li",
+      "Shouyuan Chen",
+      "Sherman Wong",
+      "Xinyun Chen",
+      "Tianmin Shu",
+      "Tharun Medini",
+      "Nicholas Meisburger"
+    ],
+    "institute": null
+  },
+  "eb6986c8-80ec-4771-94e1-c4339b5217e6": {
+    "pk": "eb6986c8-80ec-4771-94e1-c4339b5217e6",
+    "name": "Shijian Tang",
+    "bio": " I am a researcher focused on developing and improving deep learning models for various tasks. In my recent work, I have been exploring ways to enhance the performance of deep neural networks and optimize their training process.\n\nOne of my notable contributions is the proposal of a new model for generating natural language descriptions for images. This model combines a convolutional neural network (CNN) with a recurrent neural network (RNN) and adds memory cells to regulate the flow of image features into the deep neural network. By enabling the model to memorize how much information from images should be fed at each stage of the RNN, I was able to achieve higher BLEU scores on the Flickr8K and Flickr30K datasets, outperforming other state-of-the-art models.\n\nIn addition to this, I have also developed a dense-sparse-dense (DSD) training flow for regularizing deep neural networks and improving optimization performance. The DSD training flow consists of three steps: a dense step, a sparse step, and a re-dense step. In the first dense step, a dense network is trained to learn connection weights and importance. In the second sparse step, the network is regularized by pruning unimportant connections with small weights and retraining the network under a sparsity constraint. In the final re-dense step, the model capacity is increased by removing the sparsity constraint, re-initializing the pruned parameters from zero, and retraining the whole dense network.\n\nI have conducted experiments on a wide range of CNNs, RNNs, and LSTMs, and the results show that DSD training can significantly improve the performance on tasks such as image classification, caption generation, and speech recognition. For instance, on ImageNet, DSD improved the Top-1 accuracy of GoogLeNet by 1.1%, VGG-16 by 4.3%, ResNet-18 by 1.2%, and ResNet-50 by 1.1%. On the WSJ'93 dataset, DSD improved the word error rate (WER) of DeepSpeech and DeepSpeech2 by 2.0% and 1.1%, respectively. On the Flickr-8K dataset, DSD improved the NeuralTalk BLEU score by over 1.7.\n\nThe DSD",
+    "collaborators": [
+      "Gregory Diamos",
+      "Sharan Narang",
+      "Song Han",
+      "Han Cai",
+      "Feiwen Zhu",
+      "Shubho Sengupta",
+      "Erich Elsen",
+      "Jeff Pool",
+      "Enhao Gong",
+      "Prasanna Parthasarathi",
+      "Michael Andersch",
+      "Zhuoyang Zhang",
+      "Nhuong Nguyen",
+      "William J. Dally",
+      "Eric Undersander",
+      "Chong Yu",
+      "Huizi Mao"
+    ],
+    "institute": null
+  },
+  "eb710ebc-6098-4d85-9fa9-5b37afe544f8": {
+    "pk": "eb710ebc-6098-4d85-9fa9-5b37afe544f8",
+    "name": "Zhuoyang Zhang",
+    "bio": " I am a researcher focused on developing efficient and accurate models for various computer vision tasks. In my recent work, I have been exploring the use of efficient vision transformers (EfficientViT) and neural scene models to improve the performance of segmentation models and 4D point cloud sequence understanding.\n\nIn my paper \"EfficientViT-SAM: Accelerated Segment Anything Model Without Accuracy Loss,\" I presented a new family of accelerated segment anything models that utilize EfficientViT as the image encoder. By replacing the heavy image encoder in the SAM model with EfficientViT, I was able to achieve a 48.9x measured TensorRT speedup on A100 GPU over the SAM-ViT-H model without sacrificing performance.\n\nIn another paper, \"NSM4D: Neural Scene Model Based Online 4D Point Cloud Sequence Understanding,\" I introduced a generic online 4D perception paradigm called NSM4D that can be adapted to existing 4D backbones to enhance their online perception capabilities. The NSM4D model uses a neural scene model to factorize geometry and motion information in 4D point cloud sequences, allowing for efficient querying and updating of the historical context as new observations arrive. I demonstrated significant improvements on various online perception benchmarks in indoor and outdoor settings using NSM4D.\n\nI am also interested in self-supervised point cloud representation learning and proposed a new 4D self-supervised pre-training method called Complete-to-Partial 4D Distillation in my paper \"Complete-to-Partial 4D Distillation for Self-Supervised Point Cloud Sequence Representation Learning.\" This method significantly outperforms previous pre-training approaches on a wide range of 4D point cloud sequence understanding tasks.\n\nIn addition to my work on segmentation and 4D point cloud sequence understanding, I have also explored the use of condition-aware neural networks for controlled image generation. In my paper \"Condition-Aware Neural Network for Controlled Image Generation,\" I presented a new method called CAN that controls the image generation process by dynamically manipulating the weight of the neural network based on the input condition. I demonstrated significant improvements for diffusion transformer models, including DiT and UViT, using CAN.\n\nI have also worked on developing image-conditioned diffusion models for generating",
+    "collaborators": [
+      "Song Han",
+      "Han Cai",
+      "Yuhao Dong",
+      "Yunze Liu",
+      "Shijian Tang",
+      "Moshe Schwartz",
+      "Li Yi",
+      "Chuang Gan",
+      "Nhuong Nguyen",
+      "Ligeng Zhu"
+    ],
+    "institute": null
+  }
+}

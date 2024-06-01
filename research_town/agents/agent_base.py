@@ -21,6 +21,7 @@ from ..utils.agent_prompter import (
     read_paper_prompting,
     review_paper_prompting,
     review_score_prompting,
+    summarize_ideas_prompting,
     think_idea_prompting,
     write_meta_review_prompting,
     write_paper_prompting,
@@ -120,26 +121,32 @@ class BaseResearchAgent(object):
     def think_idea(
         self,
         insights: List[ResearchInsight],
-    ) -> List[ResearchIdea]:
+    ) -> ResearchIdea:
         serialized_insights = self.serializer.serialize(insights)
-        idea_contents: List[str] = []
-        for insight in serialized_insights:
-            idea_contents.append(
-                think_idea_prompting(insight=insight, model_name=self.model_name)[0]
-            )
-        ideas: List[ResearchIdea] = []
-        for content in idea_contents:
-            ideas.append(ResearchIdea(content=content))
-        return ideas
+        idea_content = think_idea_prompting(
+            insights=serialized_insights, model_name=self.model_name
+        )[0]
+        return ResearchIdea(content=idea_content)
+
+    @beartype
+    def summarize_ideas(
+        self,
+        ideas: List[ResearchIdea],
+    ) -> ResearchIdea:
+        serialized_ideas = self.serializer.serialize(ideas)
+        idea_summarized = summarize_ideas_prompting(
+            ideas=serialized_ideas, model_name=self.model_name
+        )[0]
+        return ResearchIdea(content=idea_summarized)
 
     @beartype
     def write_paper(
-        self, ideas: List[ResearchIdea], papers: List[PaperProfile]
+        self, idea: ResearchIdea, papers: List[PaperProfile]
     ) -> ResearchPaperSubmission:
-        serialized_ideas = self.serializer.serialize(ideas)
+        serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
         paper_abstract = write_paper_prompting(
-            ideas=serialized_ideas, papers=serialized_papers, model_name=self.model_name
+            idea=serialized_idea, papers=serialized_papers, model_name=self.model_name
         )[0]
         return ResearchPaperSubmission(abstract=paper_abstract)
 

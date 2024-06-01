@@ -1,0 +1,16 @@
+{
+  "183ade20-1031-437d-9395-3e987211ea70": {
+    "pk": "183ade20-1031-437d-9395-3e987211ea70",
+    "name": "Jane Smith",
+    "bio": "Expert in NLP",
+    "collaborators": [],
+    "institute": "NLP Lab"
+  },
+  "24d93932-2a6b-4b89-8213-ce30155e1765": {
+    "pk": "24d93932-2a6b-4b89-8213-ce30155e1765",
+    "name": "Alice Johnson",
+    "bio": "Data Scientist",
+    "collaborators": [],
+    "institute": "Data Lab"
+  }
+}
