@@ -13,6 +13,7 @@ from ..dbs import (
 )
 from .env_base import BaseMultiAgentEnv
 
+LogType = Union[List[Dict[str, str]], None]
 
 class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
     def __init__(
@@ -59,18 +60,17 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
 
     def _step(
         self,
-    ) -> Generator[Union[List[Dict[str, str]], None], None, None]:
-        yield [{'text': 'Paper Reviewing started'}]
+    ) -> Generator[LogType, None, None]:
+        yield from self.log('Paper Reviewing started')
         # Paper Reviewing
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
                 review = agent.write_paper_review(paper=self.submission)
                 self.reviews.append(review)
-                yield [
-                    {'text': f'Agent {agent.profile.name} gave review {str(review)}'}
-                ]
+                yield from self.log(f'Agent {agent.profile.name} gave review {str(review)}')
 
-        yield [{'text': 'Paper Meta Reviewing started'}]
+
+        yield from self.log('Paper Meta Reviewing started')
         # Paper Meta Reviewing
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
@@ -78,13 +78,10 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                     paper=self.submission, reviews=self.reviews
                 )
                 self.meta_reviews.append(meta_review)
-                yield [
-                    {
-                        'text': f'Agent {agent.profile.name} gave meta-review {str(meta_review)}'
-                    }
-                ]
+                yield from self.log(f'Agent {agent.profile.name} gave meta-review {str(meta_review)}')
 
-        yield [{'text': 'Rebuttal Submitting started'}]
+
+        yield from self.log('Rebuttal Submitting started')
         # Rebuttal Submitting
         for index, agent in enumerate(self.agents):
             for review in self.reviews:
@@ -94,10 +91,6 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                         review=review,
                     )
                     self.rebuttals.append(rebuttal)
-                    yield [
-                        {
-                            'text': f'Agent {agent.profile.name} gave rebuttal {str(rebuttal)}'
-                        }
-                    ]
+                    yield from self.log(f'Agent {agent.profile.name} gave rebuttal {str(rebuttal)}')
 
-        yield [{'text': 'PaperRebuttalMultiAgentEnv complete'}]
+        yield from self.log('PaperRebuttalMultiAgentEnv completed')

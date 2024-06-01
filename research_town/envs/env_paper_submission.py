@@ -1,10 +1,11 @@
 from beartype import beartype
-from beartype.typing import Dict, Generator, List, Union
+from beartype.typing import Dict, Generator, List, Union, Optional
 
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfile, PaperProfileDB
 from .env_base import BaseMultiAgentEnv
 
+LogType = Union[List[Dict[str, str]], None]
 
 class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def __init__(
@@ -22,12 +23,13 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         self.paper_db = paper_db
         self.env_db = env_db
 
+
     def _step(
         self,
-    ) -> Generator[Union[List[Dict[str, str]], None], None, None]:
+    ) -> Generator[LogType, None, None]:
         # TODO: support retrieval from database
         # external_data = self.db.get(cls=PaperProfile, conditions={})
-        yield [{'text': 'Retrieval from database started'}]
+        yield from self.log('PaperSubmissionMultiAgentEnvironment started')
         papers = [
             PaperProfile(
                 title='A Survey on Machine Learning',
@@ -44,9 +46,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 agent_names_to_objs[iter_agent.profile.name] = iter_agent
         submissions: Dict[str, PaperProfile] = {}
         for agent in self.agents:
-            yield [
-                {'text': f'Agent {agent.profile.name} started finding collaborators'}
-            ]
+            yield from self.log(f'Agent {agent.profile.name} started finding collaborators')
             # TODO: update find collaborator functions with initial task
             collaborators = agent.find_collaborators(
                 PaperProfile(
@@ -75,32 +75,25 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                     ]
 
             insights = agent.read_paper(papers=papers, domains=['machine learning'])
-            yield [
-                {
-                    'text': f'Agent {agent.profile.name} generated insights: {str(insights)}'
-                }
-            ]
+            yield from self.log(f'Agent {agent.profile.name} generated insights: {str(insights)}')
+
             ideas = agent.think_idea(insights=insights)
-            yield [
-                {'text': f'Agent {agent.profile.name} generated ideas: {str(ideas)}'}
-            ]
+            yield from self.log(f'Agent {agent.profile.name} generated ideas: {str(ideas)}')
+
             for collaborator_agent in collaborator_agents:
                 ideas.extend(collaborator_agent.think_idea(insights=insights))
-                yield [
-                    {
-                        'text': f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(ideas)}"
-                    }
-                ]
-            paper = agent.write_paper(ideas, papers)
-            yield [{'text': f'Agent {agent.profile.name} wrote paper: {str(paper)}'}]
+                yield from self.log(f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(ideas)}")
 
-            yield [{'text': f'Agent {agent.profile.name} started paper submission'}]
+            paper = agent.write_paper(ideas, papers)
+            yield from self.log(f'Agent {agent.profile.name} wrote paper: {str(paper)}')
+            yield from self.log(f'Agent {agent.profile.name} started paper submission')
+
             # TODO: this is not correct, we cannot write PaperProfile, we can only write PaperSubmission
             if agent.profile.name is not None:
                 submissions[agent.profile.name] = PaperProfile(abstract=paper.abstract)
         self.db.update(cls=PaperProfile, conditions={}, updates=submissions)
         self.submit_paper(submissions)
-        yield [{'text': 'PaperSubmissionMultiAgentEnvironment completed'}]
+        yield from self.log('PaperSubmissionMultiAgentEnvironment completed')
 
     @beartype
     def submit_paper(self, paper_dict: Dict[str, PaperProfile]) -> None:

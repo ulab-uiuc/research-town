@@ -10,11 +10,11 @@ console_formatter = logging.Formatter(
 )
 console_handler.setFormatter(console_formatter)
 app_logger.addHandler(console_handler)
-
+LogType = Union[List[Dict[str, str]], None]
 
 def logging_decorator(
-    func: Callable[..., Union[List[Dict[str, str]], None]],
-) -> Callable[..., Union[List[Dict[str, str]], None]]:
+    func: Callable[..., LogType],
+) -> Callable[..., LogType]:
     def wrapper(*args: List[Any], **kwargs: Dict[str, Any]) -> None:
         messages = func(*args, **kwargs)
         if not messages:

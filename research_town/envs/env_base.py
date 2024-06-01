@@ -1,9 +1,10 @@
-from beartype.typing import Dict, Generator, List, Union
+from beartype.typing import Dict, Generator, List, Union, Optional
 
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import AgentProfile, EnvLogDB
 from ..utils.logger import logging_decorator
 
+LogType = Union[List[Dict[str, str]], None]
 
 class BaseMultiAgentEnv(object):
     def __init__(self, agent_profiles: List[AgentProfile]) -> None:
@@ -13,7 +14,7 @@ class BaseMultiAgentEnv(object):
         self.agent_profiles: List[AgentProfile] = agent_profiles
         self.db = EnvLogDB()
         self.agents: List[BaseResearchAgent] = []
-        self.step_obj: Generator[Union[List[Dict[str, str]], None], None, None] = (
+        self.step_obj: Generator[LogType, None, None] = (
             self._step()
         )
         for agent_profile in agent_profiles:
@@ -24,13 +25,16 @@ class BaseMultiAgentEnv(object):
                 )
             )
 
+    def log(self, message: str, level: Optional[str] = 'INFO') -> Generator[LogType, None, None]:
+        yield [{'text': message, 'level': level}]
+
     def _step(
         self,
-    ) -> Generator[Union[List[Dict[str, str]], None], None, None]:
+    ) -> Generator[LogType, None, None]:
         raise NotImplementedError
 
     @logging_decorator
-    def step(self) -> Union[List[Dict[str, str]], None]:
+    def step(self) -> LogType:
         if not self.terminated:
             try:
                 return next(self.step_obj)
@@ -41,10 +45,7 @@ class BaseMultiAgentEnv(object):
                 self.step_obj = self._step()
                 return next(self.step_obj)
         else:
-            return [
-                {
-                    'text': f"Call 'step()' on a envionment that has terminated ({self.turn_number} / {self.turn_max}).",
-                    'level': 'ERROR',
-                }
-            ]
-        return None
+            return self.log(
+                f'Call \'step()\' on a envionment that has terminated ({self.turn_number} / {self.turn_max}).', 
+                'ERROR'
+            )
