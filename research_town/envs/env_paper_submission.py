@@ -1,11 +1,12 @@
 from beartype import beartype
-from beartype.typing import Dict, Generator, List, Union, Optional
+from beartype.typing import Dict, Generator, List, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfile, PaperProfileDB
 from .env_base import BaseMultiAgentEnv
 
 LogType = Union[List[Dict[str, str]], None]
+
 
 class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def __init__(
@@ -22,7 +23,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
-
 
     def _step(
         self,
@@ -46,7 +46,9 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 agent_names_to_objs[iter_agent.profile.name] = iter_agent
         submissions: Dict[str, PaperProfile] = {}
         for agent in self.agents:
-            yield from self.log(f'Agent {agent.profile.name} started finding collaborators')
+            yield from self.log(
+                f'Agent {agent.profile.name} started finding collaborators'
+            )
             # TODO: update find collaborator functions with initial task
             collaborators = agent.find_collaborators(
                 PaperProfile(
@@ -75,14 +77,20 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                     ]
 
             insights = agent.read_paper(papers=papers, domains=['machine learning'])
-            yield from self.log(f'Agent {agent.profile.name} generated insights: {str(insights)}')
+            yield from self.log(
+                f'Agent {agent.profile.name} generated insights: {str(insights)}'
+            )
 
             ideas = agent.think_idea(insights=insights)
-            yield from self.log(f'Agent {agent.profile.name} generated ideas: {str(ideas)}')
+            yield from self.log(
+                f'Agent {agent.profile.name} generated ideas: {str(ideas)}'
+            )
 
             for collaborator_agent in collaborator_agents:
                 ideas.extend(collaborator_agent.think_idea(insights=insights))
-                yield from self.log(f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(ideas)}")
+                yield from self.log(
+                    f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(ideas)}"
+                )
 
             paper = agent.write_paper(ideas, papers)
             yield from self.log(f'Agent {agent.profile.name} wrote paper: {str(paper)}')

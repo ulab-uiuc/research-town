@@ -15,6 +15,7 @@ from .env_base import BaseMultiAgentEnv
 
 LogType = Union[List[Dict[str, str]], None]
 
+
 class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
     def __init__(
         self,
@@ -67,8 +68,9 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
             if self.reviewer_mask[index]:
                 review = agent.write_paper_review(paper=self.submission)
                 self.reviews.append(review)
-                yield from self.log(f'Agent {agent.profile.name} gave review {str(review)}')
-
+                yield from self.log(
+                    f'Agent {agent.profile.name} gave review {str(review)}'
+                )
 
         yield from self.log('Paper Meta Reviewing started')
         # Paper Meta Reviewing
@@ -78,8 +80,9 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                     paper=self.submission, reviews=self.reviews
                 )
                 self.meta_reviews.append(meta_review)
-                yield from self.log(f'Agent {agent.profile.name} gave meta-review {str(meta_review)}')
-
+                yield from self.log(
+                    f'Agent {agent.profile.name} gave meta-review {str(meta_review)}'
+                )
 
         yield from self.log('Rebuttal Submitting started')
         # Rebuttal Submitting
@@ -91,6 +94,8 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                         review=review,
                     )
                     self.rebuttals.append(rebuttal)
-                    yield from self.log(f'Agent {agent.profile.name} gave rebuttal {str(rebuttal)}')
+                    yield from self.log(
+                        f'Agent {agent.profile.name} gave rebuttal {str(rebuttal)}'
+                    )
 
         yield from self.log('PaperRebuttalMultiAgentEnv completed')

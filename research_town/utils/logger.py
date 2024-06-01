@@ -12,6 +12,7 @@ console_handler.setFormatter(console_formatter)
 app_logger.addHandler(console_handler)
 LogType = Union[List[Dict[str, str]], None]
 
+
 def logging_decorator(
     func: Callable[..., LogType],
 ) -> Callable[..., LogType]:

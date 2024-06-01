@@ -1,10 +1,11 @@
-from beartype.typing import Dict, Generator, List, Union, Optional
+from beartype.typing import Dict, Generator, List, Optional, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import AgentProfile, EnvLogDB
 from ..utils.logger import logging_decorator
 
 LogType = Union[List[Dict[str, str]], None]
+
 
 class BaseMultiAgentEnv(object):
     def __init__(self, agent_profiles: List[AgentProfile]) -> None:
@@ -14,9 +15,7 @@ class BaseMultiAgentEnv(object):
         self.agent_profiles: List[AgentProfile] = agent_profiles
         self.db = EnvLogDB()
         self.agents: List[BaseResearchAgent] = []
-        self.step_obj: Generator[LogType, None, None] = (
-            self._step()
-        )
+        self.step_obj: Generator[LogType, None, None] = self._step()
         for agent_profile in agent_profiles:
             self.agents.append(
                 BaseResearchAgent(
@@ -25,7 +24,9 @@ class BaseMultiAgentEnv(object):
                 )
             )
 
-    def log(self, message: str, level: Optional[str] = 'INFO') -> Generator[LogType, None, None]:
+    def log(
+        self, message: str, level: Optional[str] = 'INFO'
+    ) -> Generator[LogType, None, None]:
         yield [{'text': message, 'level': level}]
 
     def _step(
@@ -46,6 +47,6 @@ class BaseMultiAgentEnv(object):
                 return next(self.step_obj)
         else:
             return self.log(
-                f'Call \'step()\' on a envionment that has terminated ({self.turn_number} / {self.turn_max}).', 
-                'ERROR'
+                f"Call 'step()' on a envionment that has terminated ({self.turn_number} / {self.turn_max}).",
+                'ERROR',
             )
