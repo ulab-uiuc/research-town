@@ -76,11 +76,9 @@ def paper_quality_eval_prompting(
     idea: str, paper: Dict[str, str], model_name: str, trend:Optional[str] = None
 ) -> str:
     # refer to idea eval, but replace those not needed, and paraphrase thoese have overlaps.
-    # 1. writing (comments for each conponent);
-    # 2. novelty (different with comments of idea eval);
-    # 3. reproduct.
     paper_prompt = """
-    <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft. The output format should follow these rules: Overall Score of a paper draft (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=85. Dimension Scores=[7,8,9,7,8,9,8,8,8,9]'. <Instruction>
+    <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft. . 
+    <Instruction>
     
     <Input>
     Here is the paper draft to evaluate:
@@ -90,6 +88,10 @@ def paper_quality_eval_prompting(
     Research Trend: {trend}
     </Input>
     
+    <Output>
+    The output format should follow these rules: Overall Score of an idea (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where di is the score of the i-th dimension. An example of output is: Overall Score=89 Dimension Scores=[8,9,9,9,9,9].'
+    </Output>
+
     <Approach> The details of rating are as follow:
     1. Novelty
     Rating (1-10):
@@ -155,8 +157,7 @@ def review_quality_eval_prompting(
 ) -> str:
     review_prompt = """
     <Instruction>
-    Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. The output format should follow these rules: Overall Score of a review (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: 'Overall Score=92. Dimension Scores=[9,9,9,9,9,9,9,9,9,9]'. <Instruction>
-    Output format:
+    Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.  
     </Instruction>
     
     <Input>
@@ -168,6 +169,11 @@ def review_quality_eval_prompting(
     final_decision:{final_decision}
     </Input>
     
+    <Output>
+    Output format:
+    The output format should follow these rules: Overall Score of a review (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: Overall Score=91. Dimension Scores=[9,9,9,9,9,9,9,9,9,10].
+    </Output>
+
     <Approach> The details of rating are as follows:
     {regulations}
     </Approach>
