@@ -1,6 +1,5 @@
 import math
 import time
-import os
 from functools import wraps
 
 from beartype.typing import Any, Callable, List, Optional, TypeVar, cast
@@ -42,7 +41,9 @@ def api_calling_error_exponential_backoff(
                     print(f'Waiting {wait_time} seconds before retrying...')
                     time.sleep(wait_time)
                     attempts += 1
-            print(f"Failed to execute '{func.__name__}' after {modified_retries} retries.")
+            print(
+                f"Failed to execute '{func.__name__}' after {modified_retries} retries."
+            )
             return None
 
         return cast(T, wrapper)
