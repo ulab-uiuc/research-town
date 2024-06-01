@@ -10,7 +10,6 @@ from research_town.dbs import (
     ResearchPaperSubmission,
 )
 
-
 agent_profile_A = AgentProfile(
     name='Jiaxuan You',
     bio='A researcher in the field of machine learning.',
@@ -24,13 +23,13 @@ agent_profile_B = AgentProfile(
 paper_profile_A = PaperProfile(
     title='A Survey on Machine Learning',
     abstract='This paper surveys the field of machine learning.',
-    authors=[agent_profile_A.name]
+    authors=[agent_profile_A.name],
 )
 
 paper_profile_B = PaperProfile(
     title='A Survey on Graph Neural Networks',
     abstract='This paper surveys the field of graph neural networks.',
-    authors=[agent_profile_B.name]
+    authors=[agent_profile_B.name],
 )
 
 research_idea_A = ResearchIdea(

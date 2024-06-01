@@ -5,7 +5,6 @@ from beartype.typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from ..utils.paper_collector import get_bert_embedding, neiborhood_search
-import numpy as np
 
 
 class AgentProfile(BaseModel):
@@ -14,6 +13,18 @@ class AgentProfile(BaseModel):
     bio: Optional[str] = Field(default=None)
     collaborators: Optional[List[str]] = Field(default=[])
     institute: Optional[str] = Field(default=None)
+
+    def profile_match(
+        self, idea: str, profile_l: List[str], name_l: List[str], num: int
+    ) -> List[str]:
+        idea_embed = get_bert_embedding([idea])
+        profile__embed = get_bert_embedding(profile_l)
+        index_l = neiborhood_search(idea_embed, profile__embed, num).reshape(-1)
+        index_all = list(index_l)
+        output_name = []
+        for inter in index_all:
+            output_name.append(name_l[inter])
+        return output_name
 
 
 class AgentProfileDB(object):
@@ -44,11 +55,12 @@ class AgentProfileDB(object):
                 result.append(agent)
         return result
 
-    def profile_match(self, idea: str, profile_l: List[str], name_l: List[str], num: int) -> List[str]:
+    def profile_match(
+        self, idea: str, profile_l: List[str], name_l: List[str], num: int
+    ) -> List[str]:
         idea_embed = get_bert_embedding([idea])
         profile__embed = get_bert_embedding(profile_l)
-        index_l = neiborhood_search(
-            idea_embed, profile__embed, num).reshape(-1)
+        index_l = neiborhood_search(idea_embed, profile__embed, num).reshape(-1)
         index_all = list(index_l)
         output_name = []
         for inter in index_all:

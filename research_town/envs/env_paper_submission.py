@@ -51,14 +51,15 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             insights = agent.read_paper(papers=papers, domains=['machine learning'])
             # TODO: this part of logic is wrong, we cannot write paper based on multiple ideas
             ideas = []
-            self_idea=agent.think_idea(insights=insights)
+            self_idea = agent.think_idea(insights=insights)
             ideas.append(self_idea)
 
             collaborators = agent.find_collaborators(
                 PaperProfile(
                     title='A Survey on Machine Learning',
                     abstract='This paper surveys the field of machine learning.',
-                ),self_idea[0].content
+                ),
+                self_idea[0].content,
             )
             collaborator_agents: List[BaseResearchAgent] = []
             for researcher_profile in collaborators:
@@ -75,7 +76,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         collaborator_agents.append(
                             agent_names_to_objs[researcher_profile.name]
                         )
-
 
             for collaborator_agent in collaborator_agents:
                 ideas.append(collaborator_agent.think_idea(insights=insights))

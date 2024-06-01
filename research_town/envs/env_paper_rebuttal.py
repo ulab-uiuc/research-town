@@ -37,7 +37,9 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.env_db = env_db
 
     @beartype
-    def assign_roles(self, role_dict: Union[Dict[str, str], None],  num: int = 1) -> None:
+    def assign_roles(
+        self, role_dict: Union[Dict[str, str], None], num: int = 1
+    ) -> None:
         if role_dict is not None:
             for index, agent_profile in enumerate(self.agent_profiles):
                 if role_dict[agent_profile.pk] == 'reviewer':
@@ -45,11 +47,18 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         else:
             idea = self.submission.abstract
             reviewer_profiles = [
-                agent_profile.bio for agent_profiles in self.agent_profiles if agent_profiles.name not in self.submission.authors]
+                agent_profile.bio
+                for agent_profiles in self.agent_profiles
+                if agent_profiles.name not in self.submission.authors
+            ]
             reviewer_names = [
-                agent_profile.name for agent_profiles in self.agent_profiles if agent_profiles.name not in self.submission.authors]
+                agent_profile.name
+                for agent_profiles in self.agent_profiles
+                if agent_profiles.name not in self.submission.authors
+            ]
             reviewer_list = self.agent_db.profile_match(
-                idea=idea, profile_l=reviewer_profiles, name_l=reviewer_names, num=num)
+                idea=idea, profile_l=reviewer_profiles, name_l=reviewer_names, num=num
+            )
             for index, agent_profile in enumerate(self.agent_profiles):
                 if agent_profile.name in reviewer_list:
                     self.reviewer_mask[index] = True
@@ -76,8 +85,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         # Paper Reviewing
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
-                self.reviews.append(
-                    agent.write_paper_review(paper=self.submission))
+                self.reviews.append(agent.write_paper_review(paper=self.submission))
 
         # Paper Meta Reviewing
         for index, agent in enumerate(self.agents):

@@ -13,12 +13,11 @@ from ..dbs import (
     PaperProfile,
     ResearchIdea,
     ResearchInsight,
-    ResearchPaperSubmission
+    ResearchPaperSubmission,
 )
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
     discuss_prompting,
-    find_collaborators_prompting,
     read_paper_prompting,
     review_paper_prompting,
     review_score_prompting,
@@ -37,7 +36,6 @@ class BaseResearchAgent(object):
         self.model_name: str = model_name
         self.serializer = Serializer()
 
-
     @beartype
     def get_profile(self, author_name: str) -> AgentProfile:
         # TODO: db get based on name
@@ -49,15 +47,15 @@ class BaseResearchAgent(object):
         return agent_profile
 
     @beartype
-    def write_config(self, config_file:str) -> None:
-        cfg.files.config_path=config_file
+    def write_config(self, config_file: str) -> None:
+        cfg.files.config_path = config_file
         return None
 
     @beartype
     def find_collaborators(
         self,
         paper: PaperProfile,
-        self_idea:str,
+        self_idea: str,
         parameter: float = 0.5,
         max_number: int = cfg.parameters.max_collaborators_num,
     ) -> List[AgentProfile]:
@@ -84,10 +82,15 @@ class BaseResearchAgent(object):
             if paper.title is not None and paper.abstract is not None
             else {}
         )
-        result=self.profile.profile_match(idea=self_idea,profile_l=list(collaborator_profiles.values()),name_l=collaborators,num=4)
+        result = self.profile.profile_match(
+            idea=self_idea,
+            profile_l=list(collaborator_profiles.values()),
+            name_l=collaborators,
+            num=4,
+        )
         collaborators_list = []
         for collaborator in result:
-                collaborators_list.append(self.get_profile(collaborator))
+            collaborators_list.append(self.get_profile(collaborator))
         return collaborators_list
 
     @beartype

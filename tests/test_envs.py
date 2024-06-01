@@ -1,7 +1,5 @@
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB
 from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
@@ -11,7 +9,6 @@ from tests.db_constants import agent_profile_A, agent_profile_B, paper_profile_A
 from tests.utils import mock_papers
 
 
-@pytest.mark.match
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.return_value = ['Paper Rebuttal Environment.']
