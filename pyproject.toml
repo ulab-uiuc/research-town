@@ -51,6 +51,7 @@ python_files = "test_*.py"
 
 [tool.codespell]
 ignore-words-list = "dout, te, indicies, astroid"
+skip = ["data"]
 
 [tool.isort]
 profile = "black"
