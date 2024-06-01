@@ -38,7 +38,7 @@ class IdeaQualityEvaluator(object):
 
     def parse(self, raw_output: str) -> IdeaEvalOutput:
         overall_score_match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE)
-        dimension_scores_match = re.search(r'Dimension\s*Scores\s*=\s*\[([0-9,\s]+)\]', raw_output, re.IGNORECASE)
+        dimension_scores_match = re.search(r'Dimension\s*Scores\s*\W*\s*\[([0-9,\s]+)\]', raw_output, re.IGNORECASE)
 
         if overall_score_match:
             try:
@@ -79,7 +79,7 @@ class PaperQualityEvaluator(object):
 
     def parse(self, raw_output: str) -> PaperEvalOutput:
         overall_score_match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE)
-        dimension_scores_match = re.search(r'Dimension\s*Scores\s*=\s*\[([0-9,\s]+)\]', raw_output, re.IGNORECASE)
+        dimension_scores_match = re.search(r'Dimension\s*Scores\s*\W*\s*\[([0-9,\s]+)\]', raw_output, re.IGNORECASE)
 
         if overall_score_match:
             try:
@@ -125,7 +125,7 @@ class ReviewQualityEvaluator(object):
 
     def parse(self, raw_output: str) -> ReviewEvalOutput:
         overall_score_match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE)
-        dimension_scores_match = re.search(r'Dimension\s*Scores\s*=\s*\[([0-9,\s]+)\]', raw_output, re.IGNORECASE)
+        dimension_scores_match = re.search(r'Dimension\s*Scores\s*\W*\s*\[([0-9,\s]+)\]', raw_output, re.IGNORECASE)
 
         if overall_score_match:
             try:
