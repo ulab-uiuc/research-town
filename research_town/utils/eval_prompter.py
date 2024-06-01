@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, List
+from beartype.typing import Dict, List, Optional
 
 from .model_prompting import model_prompting
 
@@ -73,7 +73,7 @@ def idea_quality_eval_prompting(
 
 @beartype
 def paper_quality_eval_prompting(
-    idea: str, paper: Dict[str, str], model_name: str
+    idea: str, paper: Dict[str, str], model_name: str, trend:Optional[str] = None
 ) -> str:
     # refer to idea eval, but replace those not needed, and paraphrase thoese have overlaps.
     # 1. writing (comments for each conponent);
@@ -135,7 +135,7 @@ def paper_quality_eval_prompting(
         'idea': idea,
         'title': paper['title'],
         'abstract': paper['abstract'],
-        'trend': paper['trend'],  # Todo: if no key return None.
+        'trend': trend if trend is not None else '' # Provide default value if None
     }
     prompt = paper_prompt.format_map(input_data)
     evaluation_result = model_prompting(model_name, prompt)
