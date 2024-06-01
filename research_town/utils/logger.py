@@ -1,29 +1,73 @@
 import logging
 
-import colorlog
-from beartype.typing import Any, Callable, Dict, List, Union
+from termcolor import colored
+from beartype.typing import Any, Callable, Dict, List, Union, Literal, Mapping
+
+LogType = Union[List[Dict[str, str]], None]
+
+ColorType = Literal[
+    'red',
+    'green',
+    'yellow',
+    'blue',
+    'magenta',
+    'cyan',
+    'light_grey',
+    'dark_grey',
+    'light_red',
+    'light_green',
+    'light_yellow',
+    'light_blue',
+    'light_magenta',
+    'light_cyan',
+    'white',
+]
+
+LOG_COLORS: Mapping[str, ColorType] = {
+    'BACKGROUND LOG': 'blue',
+    'ACTION': 'green',
+    'OBSERVATION': 'yellow',
+    'DETAIL': 'cyan',
+    'ERROR': 'red',
+    'PLAN': 'light_magenta',
+}
+
+class ColoredFormatter(logging.Formatter):
+    def format(self, record):
+        msg_type = record.__dict__.get('msg_type', None)
+        if msg_type in LOG_COLORS:
+            msg_type_color = colored(msg_type, LOG_COLORS[msg_type])
+            msg = colored(record.msg, LOG_COLORS[msg_type])
+            time_str = colored(
+                self.formatTime(record, self.datefmt), LOG_COLORS[msg_type]
+            )
+            name_str = colored(record.name, LOG_COLORS[msg_type])
+            level_str = colored(record.levelname, LOG_COLORS[msg_type])
+            if msg_type in ['ERROR']:
+                return f'{time_str} - {name_str}:{level_str}: {record.filename}:{record.lineno}\n{msg_type_color}\n{msg}'
+            return f'{time_str} - {msg_type_color}\n{msg}'
+        elif msg_type == 'STEP':
+            msg = '\n\n==============\n' + record.msg + '\n'
+            return f'{msg}'
+        return super().format(record)
+
+console_formatter = ColoredFormatter(
+    '\033[92m%(asctime)s - %(name)s:%(levelname)s\033[0m: %(filename)s:%(lineno)s - %(message)s',
+    datefmt='%H:%M:%S',
+)
+
+def get_console_handler():
+    """
+    Returns a console handler for logging.
+    """
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    console_handler.setFormatter(console_formatter)
+    return console_handler
 
 app_logger = logging.getLogger('research_town')
 app_logger.setLevel(logging.DEBUG)
-console_handler = logging.StreamHandler()
-console_formatter = colorlog.ColoredFormatter(
-    '%(log_color)s%(levelname)s:%(name)s:%(message)s',
-    datefmt=None,
-    reset=True,
-    log_colors={
-        'DEBUG': 'cyan',
-        'INFO': 'green',
-        'WARNING': 'yellow',
-        'ERROR': 'red',
-        'CRITICAL': 'red,bg_white',
-    },
-    secondary_log_colors={},
-    style='%',
-)
-console_handler.setFormatter(console_formatter)
-app_logger.addHandler(console_handler)
-
-LogType = Union[List[Dict[str, str]], None]
+app_logger.addHandler(get_console_handler())
 
 
 def logging_decorator(
