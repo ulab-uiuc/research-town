@@ -77,11 +77,9 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         collaborator_agents.append(
                             agent_names_to_objs[researcher_profile.name]
                         )
-                    yield [
-                        {
-                            'text': f'Agent {agent.profile.name} found {researcher_profile.name} as collaborator'
-                        }
-                    ]
+                    yield from self.log(
+                        f'Agent {agent.profile.name} found {researcher_profile.name} as collaborator'
+                    )
 
             insights = agent.read_paper(papers=papers, domains=['machine learning'])
             yield from self.log(
