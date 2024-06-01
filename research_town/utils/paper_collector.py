@@ -9,7 +9,8 @@ from beartype.typing import Any, Dict, List, Tuple
 from transformers import BertModel, BertTokenizer
 
 ATOM_NAMESPACE = '{http://www.w3.org/2005/Atom}'
-
+tokenizer = BertTokenizer.from_pretrained('facebook/contriever')
+model = BertModel.from_pretrained('facebook/contriever').to(torch.device('cpu'))
 
 def get_related_papers(corpus: List[str], query: str, num: int) -> List[str]:
     corpus_embedding = get_bert_embedding(corpus)
@@ -20,8 +21,7 @@ def get_related_papers(corpus: List[str], query: str, num: int) -> List[str]:
 
 
 def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:
-    tokenizer = BertTokenizer.from_pretrained('facebook/contriever')
-    model = BertModel.from_pretrained('facebook/contriever').to(torch.device('cpu'))
+
 
     encoded_input_all = [
         tokenizer(text, return_tensors='pt', truncation=True, max_length=512).to(
