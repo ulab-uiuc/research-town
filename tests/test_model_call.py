@@ -1,4 +1,5 @@
 from research_town.utils.model_prompting import model_prompting
+import os
 
 
 def test_openai_call() -> None:
@@ -6,7 +7,7 @@ def test_openai_call() -> None:
     prompt = (
         'Here is a high-level summarized insight of a research field Machine Learning. '
     )
-    response = model_prompting('gpt-3.5-turbo', prompt)
+    response = model_prompting('gpt-3.5-turbo', prompt, mode='TEST')
     assert response is not None
     assert len(response) > 0
     assert len(response[0]) > 0

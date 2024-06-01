@@ -6,7 +6,7 @@ from .error_handler import api_calling_error_exponential_backoff
 
 
 @beartype
-@api_calling_error_exponential_backoff(retries=0, base_wait_time=1)
+@api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
 def model_prompting(
     llm_model: str,
     prompt: str,
@@ -15,6 +15,7 @@ def model_prompting(
     temperature: Optional[float] = None,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
+    mode: Optional[str] = None,
 ) -> List[str]:
     """
     Select model via router in LiteLLM.
