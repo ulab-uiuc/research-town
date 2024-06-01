@@ -6,7 +6,7 @@ from .error_handler import api_calling_error_exponential_backoff
 
 
 @beartype
-@api_calling_error_exponential_backoff(retries=1, base_wait_time=1)
+@api_calling_error_exponential_backoff(retries=0, base_wait_time=1)
 def model_prompting(
     llm_model: str,
     prompt: str,
