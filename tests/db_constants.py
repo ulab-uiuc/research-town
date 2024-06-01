@@ -10,16 +10,6 @@ from research_town.dbs import (
     ResearchPaperSubmission,
 )
 
-paper_profile_A = PaperProfile(
-    title='A Survey on Machine Learning',
-    abstract='This paper surveys the field of machine learning.',
-)
-
-paper_profile_B = PaperProfile(
-    title='A Survey on Graph Neural Networks',
-    abstract='This paper surveys the field of graph neural networks.',
-)
-
 
 agent_profile_A = AgentProfile(
     name='Jiaxuan You',
@@ -29,6 +19,18 @@ agent_profile_A = AgentProfile(
 agent_profile_B = AgentProfile(
     name='Rex Ying',
     bio='A researcher in the field of GNN.',
+)
+
+paper_profile_A = PaperProfile(
+    title='A Survey on Machine Learning',
+    abstract='This paper surveys the field of machine learning.',
+    authors=[agent_profile_A.name]
+)
+
+paper_profile_B = PaperProfile(
+    title='A Survey on Graph Neural Networks',
+    abstract='This paper surveys the field of graph neural networks.',
+    authors=[agent_profile_B.name]
 )
 
 research_idea_A = ResearchIdea(
