@@ -1,4 +1,5 @@
 import logging
+from logging import StreamHandler
 
 from beartype.typing import Any, Callable, Dict, List, Literal, Mapping, Union
 from termcolor import colored
@@ -59,11 +60,11 @@ console_formatter = ColoredFormatter(
 )
 
 
-def get_console_handler() -> logging.StreamHandler[Any]:
+def get_console_handler() -> Any:
     """
     Returns a console handler for logging.
     """
-    console_handler = logging.StreamHandler()
+    console_handler = StreamHandler()
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(console_formatter)
     return console_handler
