@@ -2,7 +2,7 @@ import re
 
 from beartype.typing import Any
 
-from ..utils.decorator import parsing_error_exponential_backoff
+from ..utils.error_handler import parsing_error_exponential_backoff
 from ..utils.eval_prompter import (
     idea_quality_eval_prompting,
     paper_quality_eval_prompting,
