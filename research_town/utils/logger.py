@@ -1,7 +1,7 @@
 import logging
 
+from beartype.typing import Any, Callable, Dict, List, Literal, Mapping, Union
 from termcolor import colored
-from beartype.typing import Any, Callable, Dict, List, Union, Literal, Mapping
 
 LogType = Union[List[Dict[str, str]], None]
 
@@ -32,6 +32,7 @@ LOG_COLORS: Mapping[str, ColorType] = {
     'PLAN': 'light_magenta',
 }
 
+
 class ColoredFormatter(logging.Formatter):
     def format(self, record):
         msg_type = record.__dict__.get('msg_type', None)
@@ -51,10 +52,12 @@ class ColoredFormatter(logging.Formatter):
             return f'{msg}'
         return super().format(record)
 
+
 console_formatter = ColoredFormatter(
     '\033[92m%(asctime)s - %(name)s:%(levelname)s\033[0m: %(filename)s:%(lineno)s - %(message)s',
     datefmt='%H:%M:%S',
 )
+
 
 def get_console_handler():
     """
@@ -64,6 +67,7 @@ def get_console_handler():
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(console_formatter)
     return console_handler
+
 
 app_logger = logging.getLogger('research_town')
 app_logger.setLevel(logging.DEBUG)

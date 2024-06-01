@@ -89,23 +89,22 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             )
 
             ideas = []
-            ideas.append(agent.think_idea(insights=insights))
+            idea = agent.think_idea(insights=insights)
+            ideas.append(idea)
             yield from self.log(
-                f'Agent {agent.profile.name} generated ideas: {str(ideas)}'
+                f'Agent {agent.profile.name} generated idea: {str(idea)}'
             )
 
-
             for collaborator_agent in collaborator_agents:
-                idea = collaborator_agent.think_idea(insights=insights))
+                idea = collaborator_agent.think_idea(insights=insights)
                 ideas.append(idea)
                 yield from self.log(
-                    f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(ideas)}"
+                    f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(idea)}"
                 )
             summarized_idea = agent.summarize_ideas(ideas)
             paper: ResearchPaperSubmission = agent.write_paper(summarized_idea, papers)
             yield from self.log(f'Agent {agent.profile.name} wrote paper: {str(paper)}')
             yield from self.log(f'Agent {agent.profile.name} started paper submission')
-
 
             if agent.profile.name is not None:
                 submissions[agent.profile.name] = paper
