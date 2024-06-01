@@ -6,7 +6,7 @@ import uuid
 from beartype.typing import Dict, List, Optional
 from pydantic import BaseModel, Field
 from tqdm import tqdm
-
+from scipy.stats import spearmanr
 from research_town.agents.agent_base import BaseResearchAgent
 from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
 from research_town.dbs.env_db import AgentPaperReviewLog
@@ -36,7 +36,10 @@ class RealPaperWithReview(BaseModel):  # paper review from real reviewers
 class RealPaperWithReviewDB(object):
     def __init__(self) -> None:
         self.data: Dict[str, RealPaperWithReview] = {}
-        self.rank_consistency: float = 0.0
+        self.sim_ranks: List[int] = []
+        self.real_ranks: List[int] = []
+        self.absolute_rank_consistency: float = 0.0
+        self.spearman_rank_consistency: float = 0.0
 
     def add(self, real_paper: RealPaperWithReview) -> None:
         self.data[real_paper.title] = real_paper
@@ -51,7 +54,10 @@ class RealPaperWithReviewDB(object):
 
     def save_to_file(self, file_name: str) -> None:
         combined_data = {
-            'rank_consistency': self.rank_consistency,
+            'absolute_rank_consistency': self.absolute_rank_consistency,
+            'spearman_rank_consistency': self.spearman_rank_consistency,
+            'sim_ranks': self.sim_ranks,
+            'real_ranks': self.real_ranks,
             'papers': {
                 title: real_paper.dict() for title, real_paper in self.data.items()
             },
@@ -108,14 +114,18 @@ class RealPaperWithReviewDB(object):
         for i, real_paper in enumerate(real_papers):
             real_paper.sim_rank = i + 1
 
-    def calculate_rank_consistency(self) -> float:
+    def calculate_rank_consistency(self) -> None:
         rank_consistency_float = 0.0
         for real_paper in self.data.values():
             rank_consistency_float += abs(real_paper.real_rank - real_paper.sim_rank)
+            self.sim_ranks.append(real_paper.sim_rank)
+            self.real_ranks.append(real_paper.real_rank)
         rank_consistency_float = rank_consistency_float / len(self.data)
 
-        self.rank_consistency = rank_consistency_float
-        return rank_consistency_float
+        self.absolute_rank_consistency = rank_consistency_float
+        spearank_consistency, _ = spearmanr(self.real_ranks, self.sim_ranks)
+        self.spearman_rank_consistency = spearank_consistency
+        
 
 
 def main(data_path: str, domain: str, model_name:str, review_agent_num: int) -> None:
