@@ -40,50 +40,38 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 abstract='This paper surveys the field of natural language processing.',
             ),
         ]
-        agent_names_to_objs: Dict[str, BaseResearchAgent] = {}
-        for iter_agent in self.agents:
-            if iter_agent.profile.name is not None:
-                agent_names_to_objs[iter_agent.profile.name] = iter_agent
+
         submissions: Dict[str, PaperProfile] = {}
 
-        for agent in self.agents:
-            # TODO: update find collaborator functions with initial task
-            insights = agent.read_paper(papers=papers, domains=['machine learning'])
+        for lead_agent in self.agents:
+
+            insights = lead_agent.read_paper(
+                papers=papers, domains=['machine learning'])
+
             # TODO: this part of logic is wrong, we cannot write paper based on multiple ideas
-            ideas = []
-            self_idea = agent.think_idea(insights=insights)
-            ideas.append(self_idea)
 
-            collaborators = agent.find_collaborators(
-                PaperProfile(
-                    title='A Survey on Machine Learning',
-                    abstract='This paper surveys the field of machine learning.',
-                ),
-                self_idea[0].content,
-            )
-            collaborator_agents: List[BaseResearchAgent] = []
-            for researcher_profile in collaborators:
-                if researcher_profile.name:
-                    if researcher_profile.name not in agent_names_to_objs:
-                        new_agent_obj = BaseResearchAgent(
-                            agent_profile=researcher_profile,
-                            model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-                        )
-                        new_agent_obj.write_config(self.config_file)
-                        collaborator_agents.append(new_agent_obj)
-                        agent_names_to_objs[researcher_profile.name] = new_agent_obj
-                    else:
-                        collaborator_agents.append(
-                            agent_names_to_objs[researcher_profile.name]
-                        )
+            ideas = [lead_agent.think_idea(insights=insights)]
 
-            for collaborator_agent in collaborator_agents:
-                ideas.append(collaborator_agent.think_idea(insights=insights))
-            paper = agent.write_paper(ideas[0], papers)
+            previous_collaborator_profiles = []
+            for agent_profile in self.agent_profiles:
+                if agent_profile.name in lead_agent.profile.collaborators:
+                    previous_collaborator_profiles.append(agent_profile)
+
+            collaborator_pks = self.agent_db.match(
+                idea=ideas[0], agent_profiles=previous_collaborator_profiles, num=1)
+
+            for agent in self.agents:
+                if agent.profile.pk in collaborator_pks:
+                    ideas.append(agent.think_idea(insights=insights))
+
+            paper = lead_agent.write_paper(ideas, papers)
 
             # TODO: this is not correct, we cannot write PaperProfile, we can only write PaperSubmission
-            if agent.profile.name is not None:
-                submissions[agent.profile.name] = PaperProfile(abstract=paper.abstract)
+
+            if lead_agent.profile.name is not None:
+                submissions[lead_agent.profile.name] = PaperProfile(
+                    abstract=paper.abstract)
+
         self.db.update(cls=PaperProfile, conditions={}, updates=submissions)
         self.submit_paper(submissions)
         self.terminated = True

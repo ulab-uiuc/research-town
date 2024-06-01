@@ -52,48 +52,6 @@ class BaseResearchAgent(object):
         return None
 
     @beartype
-    def find_collaborators(
-        self,
-        paper: PaperProfile,
-        self_idea: str,
-        parameter: float = 0.5,
-        max_number: int = cfg.parameters.max_collaborators_num,
-    ) -> List[AgentProfile]:
-        # TODO: need rebuild
-        start_author: List[str] = (
-            [self.profile.name] if self.profile.name is not None else []
-        )
-        graph, _, _ = bfs(author_list=start_author, node_limit=max_number)
-        collaborators = list(
-            {name for pair in graph for name in pair if name != self.profile.name}
-        )
-        self_profile: Dict[str, str] = (
-            {self.profile.name: self.profile.bio}
-            if self.profile.name is not None and self.profile.bio is not None
-            else {}
-        )
-        collaborator_profiles: Dict[str, str] = {}
-        for author in collaborators:
-            author_bio = self.get_profile(author).bio
-            if author_bio is not None:
-                collaborator_profiles[author] = author_bio
-        paper_serialize: Dict[str, str] = (
-            {paper.title: paper.abstract}
-            if paper.title is not None and paper.abstract is not None
-            else {}
-        )
-        result = self.profile.profile_match(
-            idea=self_idea,
-            profile_l=list(collaborator_profiles.values()),
-            name_l=collaborators,
-            num=4,
-        )
-        collaborators_list = []
-        for collaborator in result:
-            collaborators_list.append(self.get_profile(collaborator))
-        return collaborators_list
-
-    @beartype
     def get_co_author_relationships(
         self, agent_profile: AgentProfile, max_node: int
     ) -> Tuple[
@@ -105,7 +63,8 @@ class BaseResearchAgent(object):
         start_author: List[str] = (
             [self.profile.name] if self.profile.name is not None else []
         )
-        graph, node_feat, edge_feat = bfs(author_list=start_author, node_limit=max_node)
+        graph, node_feat, edge_feat = bfs(
+            author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat
 
     # =======================================

@@ -14,18 +14,6 @@ class AgentProfile(BaseModel):
     collaborators: Optional[List[str]] = Field(default=[])
     institute: Optional[str] = Field(default=None)
 
-    def profile_match(
-        self, idea: str, profile_l: List[str], name_l: List[str], num: int
-    ) -> List[str]:
-        idea_embed = get_bert_embedding([idea])
-        profile__embed = get_bert_embedding(profile_l)
-        index_l = neiborhood_search(idea_embed, profile__embed, num).reshape(-1)
-        index_all = list(index_l)
-        output_name = []
-        for inter in index_all:
-            output_name.append(name_l[inter])
-        return output_name
-
 
 class AgentProfileDB(object):
     def __init__(self) -> None:
@@ -55,17 +43,24 @@ class AgentProfileDB(object):
                 result.append(agent)
         return result
 
-    def profile_match(
-        self, idea: str, profile_l: List[str], name_l: List[str], num: int
+    def match(
+        self, idea: str, agent_profiles: List[AgentProfile], num: int = 1
     ) -> List[str]:
         idea_embed = get_bert_embedding([idea])
-        profile__embed = get_bert_embedding(profile_l)
-        index_l = neiborhood_search(idea_embed, profile__embed, num).reshape(-1)
+        bio_list = []
+        for agent_profile in agent_profiles:
+            if agent_profile.bio is not None:
+                bio_list.append(agent_profile.bio)
+            else:
+                bio_list.append("")
+        profile_embed = get_bert_embedding(bio_list)
+        index_l = neiborhood_search(
+            idea_embed, profile_embed, num).reshape(-1)
         index_all = list(index_l)
-        output_name = []
-        for inter in index_all:
-            output_name.append(name_l[inter])
-        return output_name
+        match_pk = []
+        for index in index_all:
+            match_pk.append(agent_profiles[index].pk)
+        return match_pk
 
     def save_to_file(self, file_name: str) -> None:
         with open(file_name, 'w') as f:
