@@ -1,4 +1,4 @@
-from beartype.typing import Dict, Generator, List, Optional, Union
+from beartype.typing import Dict, Generator, List, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import AgentProfile, EnvLogDB
@@ -24,9 +24,7 @@ class BaseMultiAgentEnv(object):
                 )
             )
 
-    def log(
-        self, message: str, level: str = 'INFO'
-    ) -> Generator[LogType, None, None]:
+    def log(self, message: str, level: str = 'INFO') -> Generator[LogType, None, None]:
         yield [{'text': message, 'level': level}]
 
     def _step(
@@ -46,7 +44,9 @@ class BaseMultiAgentEnv(object):
                 self.step_obj = self._step()
                 return next(self.step_obj)
         else:
-            return next(self.log(
-                f"Call 'step()' on a envionment that has terminated ({self.turn_number} / {self.turn_max}).",
-                'ERROR',
-            ))
+            return next(
+                self.log(
+                    f"Call 'step()' on a envionment that has terminated ({self.turn_number} / {self.turn_max}).",
+                    'ERROR',
+                )
+            )
