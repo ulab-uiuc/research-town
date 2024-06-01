@@ -25,7 +25,7 @@ class BaseMultiAgentEnv(object):
             )
 
     def log(
-        self, message: str, level: Optional[str] = 'INFO'
+        self, message: str, level: str = 'INFO'
     ) -> Generator[LogType, None, None]:
         yield [{'text': message, 'level': level}]
 
@@ -46,7 +46,7 @@ class BaseMultiAgentEnv(object):
                 self.step_obj = self._step()
                 return next(self.step_obj)
         else:
-            return self.log(
+            return next(self.log(
                 f"Call 'step()' on a envionment that has terminated ({self.turn_number} / {self.turn_max}).",
                 'ERROR',
-            )
+            ))
