@@ -41,7 +41,7 @@ class IdeaQualityEvaluator(object):
                           raw_output, re.IGNORECASE)
         if match:
             try:
-                return IdeaEvalOutput(overall_score=int(match.group(1)))
+                overall_score = int(overall_score_match.group(1))
             except ValueError as e:
                 raise OutputFormatError(f'Invalid overall score: {e}')
         else:
@@ -74,7 +74,7 @@ class PaperQualityEvaluator(object):
                           raw_output, re.IGNORECASE)
         if match:
             try:
-                return PaperEvalOutput(overall_score=int(match.group(1)))
+                overall_score = int(overall_score_match.group(1))
             except ValueError as e:
                 raise OutputFormatError(f'Invalid overall score: {e}')
         else:
@@ -112,10 +112,26 @@ class ReviewQualityEvaluator(object):
                           raw_output, re.IGNORECASE)
         if match:
             try:
-                return ReviewEvalOutput(overall_score=int(match.group(1)))
+                overall_score = int(overall_score_match.group(1))
             except ValueError as e:
                 raise OutputFormatError(f'Invalid overall score: {e}')
         else:
             raise OutputFormatError(
                 f"Output format error: 'Overall Score' not found. Raw output is {raw_output}."
             )
+
+        if dimension_scores_match:
+            try:
+                dimension_scores = list(
+                    map(int, dimension_scores_match.group(1).split(','))
+                )
+            except ValueError as e:
+                raise OutputFormatError(f'Invalid dimension scores: {e}')
+        else:
+            raise OutputFormatError(
+                f"Output format error: 'Dimension Scores' not found. Raw output is {raw_output}."
+            )
+
+        return ReviewEvalOutput(
+            overall_score=overall_score, dimension_scores=dimension_scores
+        )
