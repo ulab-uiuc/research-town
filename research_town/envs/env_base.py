@@ -9,6 +9,8 @@ LogType = Union[List[Dict[str, str]], None]
 
 class BaseMultiAgentEnv(object):
     def __init__(self, agent_profiles: List[AgentProfile]) -> None:
+        self.env_run_number = 0
+        self.max_env_run_number = 1
         self.terminated = False
         self.agent_profiles: List[AgentProfile] = agent_profiles
         self.db = EnvLogDB()
@@ -36,13 +38,16 @@ class BaseMultiAgentEnv(object):
             try:
                 return next(self.step_obj)
             except Exception:
-                self.terminated = True
+                if self.env_run_number < self.max_env_run_number:
+                    self.env_run_number += 1
+                else:
+                    self.terminated = True
                 self.step_obj = self._step()
                 return next(self.step_obj)
         else:
             return next(
                 self.log(
-                    f"Call 'step()' on a envionment that has terminated ({self.turn_number} / {self.turn_max}).",
+                    f"Call 'step()' on a environment that has terminated ({self.env_run_number} / {self.max_env_run_number}).",
                     'ERROR',
                 )
             )

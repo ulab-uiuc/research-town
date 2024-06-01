@@ -34,7 +34,7 @@ LOG_COLORS: Mapping[str, ColorType] = {
 
 
 class ColoredFormatter(logging.Formatter):
-    def format(self, record):
+    def format(self: logging.Formatter, record: logging.LogRecord) -> Any:
         msg_type = record.__dict__.get('msg_type', None)
         if msg_type in LOG_COLORS:
             msg_type_color = colored(msg_type, LOG_COLORS[msg_type])
@@ -44,13 +44,13 @@ class ColoredFormatter(logging.Formatter):
             )
             name_str = colored(record.name, LOG_COLORS[msg_type])
             level_str = colored(record.levelname, LOG_COLORS[msg_type])
-            if msg_type in ['ERROR']:
+            if msg_type == 'ERROR':
                 return f'{time_str} - {name_str}:{level_str}: {record.filename}:{record.lineno}\n{msg_type_color}\n{msg}'
             return f'{time_str} - {msg_type_color}\n{msg}'
         elif msg_type == 'STEP':
             msg = '\n\n==============\n' + record.msg + '\n'
             return f'{msg}'
-        return super().format(record)
+        return logging.Formatter.format(self, record)
 
 
 console_formatter = ColoredFormatter(
@@ -59,7 +59,7 @@ console_formatter = ColoredFormatter(
 )
 
 
-def get_console_handler():
+def get_console_handler() -> logging.StreamHandler[Any]:
     """
     Returns a console handler for logging.
     """
