@@ -154,6 +154,8 @@ def review_quality_eval_prompting(
     review: List[str],
     decision: str,
     model_name: str,
+    rebuttal: Optional[str] = None,
+    meta_review: Optional[str] = None,
 ) -> str:
     review_prompt = """
     <Instruction>
@@ -166,6 +168,8 @@ def review_quality_eval_prompting(
     research trend: {trend}
     paper: title-- {title}; abstract-- {abstract}.
     reviews: {review}
+    rebutal: {rebuttal}
+    meta_review: {meta_review}
     final_decision:{final_decision}
     </Input>
 
@@ -263,6 +267,8 @@ def review_quality_eval_prompting(
         'title': paper['title'],
         'abstract': paper['abstract'],
         'review': organized_reviews,
+        'rebuttal': rebuttal if rebuttal is not None else '',
+        'meta_review': meta_review if meta_review is not None else '',
         'final_decision': decision,
     }
     prompt = review_prompt.format_map(input_data)
