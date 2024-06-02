@@ -39,7 +39,7 @@ def idea_quality_eval_prompting(
     3. Significance
     Rating (1-10):
     Comments:
-    Evaluate the potential impact of the idea on the specfic domain of research community that the idea belongs to and beyond.
+    Evaluate the potential impact of the idea on the specific domain of research community that the idea belongs to and beyond.
     How significant is its contribution to advancing the field?
     Does it address high-impact problems or gaps identified in the trend?
     How applicable is it in practical settings and industry contexts?
@@ -75,7 +75,7 @@ def idea_quality_eval_prompting(
 def paper_quality_eval_prompting(
     idea: str, paper: Dict[str, str], model_name: str, trend: Optional[str] = None
 ) -> str:
-    # refer to idea eval, but replace those not needed, and paraphrase thoese have overlaps.
+    # refer to idea eval, but replace those not needed, and paraphrase those have overlaps.
     paper_prompt = """
     <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft. .
     <Instruction>
@@ -107,7 +107,7 @@ def paper_quality_eval_prompting(
     3. Significance
     Rating (1-10):
     Comments:
-    Evaluate the potential contribution and impact of the paper on the specfic domain of research community that the paper belongs to and beyond.
+    Evaluate the potential contribution and impact of the paper on the specific domain of research community that the paper belongs to and beyond.
     How does it compare to existing works in terms of impact?
     4. Rigorousness
     Rating (1-10):
@@ -154,6 +154,8 @@ def review_quality_eval_prompting(
     review: List[str],
     decision: str,
     model_name: str,
+    rebuttal: Optional[str] = None,
+    meta_review: Optional[str] = None,
 ) -> str:
     review_prompt = """
     <Instruction>
@@ -166,6 +168,8 @@ def review_quality_eval_prompting(
     research trend: {trend}
     paper: title-- {title}; abstract-- {abstract}.
     reviews: {review}
+    rebutal: {rebuttal}
+    meta_review: {meta_review}
     final_decision:{final_decision}
     </Input>
 
@@ -263,6 +267,8 @@ def review_quality_eval_prompting(
         'title': paper['title'],
         'abstract': paper['abstract'],
         'review': organized_reviews,
+        'rebuttal': rebuttal if rebuttal is not None else '',
+        'meta_review': meta_review if meta_review is not None else '',
         'final_decision': decision,
     }
     prompt = review_prompt.format_map(input_data)
