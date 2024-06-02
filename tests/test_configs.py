@@ -35,8 +35,8 @@ def test_yaml_loading() -> None:
     assert config.param.related_paper_num == 5
     assert config.param.base_llm == 'some/other-LLM'
     assert config.param.max_collaborators_num == 2
-    assert config.prompt_template.test1 == 'template1'
-    assert config.prompt_template.test2 == 'template2'
+    assert config.prompt_template.test1 == 'template1' # type: ignore
+    assert config.prompt_template.test2 == 'template2' # type: ignore
 
 
 def test_merging_configurations() -> None:
@@ -54,13 +54,13 @@ def test_merging_configurations() -> None:
 
     assert config.param.related_paper_num == 10
     assert config.param.max_collaborators_num == 10
-    assert config.prompt_template.test == 'template1'
+    assert config.prompt_template.test == 'template1' # type: ignore
 
     config.merge_from_other_cfg(new_config)
 
     assert config.param.related_paper_num == 5
     assert config.param.max_collaborators_num == 10
-    assert config.prompt_template.test == 'template1'
+    assert config.prompt_template.test == 'template1' # type: ignore
     assert config.prompt_template.query_paper == 'template2 {profile_bio} {domains}'
 
 
