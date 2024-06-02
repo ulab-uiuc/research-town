@@ -22,6 +22,7 @@ class RealPaperWithReview(BaseModel):  # paper review from real reviewers
 
     real_avg_scores: float = Field(default=-1)
     real_all_scores: List[int] = Field(default=[])
+    real_confidences: List[int] = Field(default=[])
     real_contents: List[str] = Field(default=[])
     real_rank: int = Field(default=0)
     real_decision: str = Field(default='None')
@@ -132,7 +133,7 @@ class RealPaperWithReviewDB(object):
         
 
 
-def main(data_path: str, domain: str, model_name:str, review_agent_num: int) -> None:
+def main(data_path: str, domain: str, model_name:str, review_agent_num: int, review_paper_num:int) -> None:
     print(f'Data path is: {data_path}')
     print(f'Domain is: {domain}')
     # collect papers from openreview
@@ -140,47 +141,43 @@ def main(data_path: str, domain: str, model_name:str, review_agent_num: int) -> 
     paper_file = os.path.join(data_path, f'paper_{domain}.json')
     real_paper_db.load_from_file(paper_file)
     Papers2eval = real_paper_db.profile_paper_from_real_review()
-    # generate envs of agents with reviewers
-    # 1. how to select reviewers? Retrive the reviewers from the database.
+
+    # Step1: generate envs of agents with reviewers
     agent_db = AgentProfileDB()
-    agent_file = os.path.join(data_path, f'agent_{domain}.json')
+    agent_file = os.path.join(data_path, 'agent_data',f'{domain}.json')
     agent_db.load_from_file(agent_file)
-    # 2. how to assign reviewers to papers?
-    # Note: we hardcode and select top review_agent_num reviewers in the agent_db to agent_profiles
-    agent_profiles: List[AgentProfile] = []
-    all_reviewers = list(agent_db.data.values())  # Convert dict_values to a list
-
-    for i in range(review_agent_num):
-        agent_profiles.append(all_reviewers[i])
-    # create agents
-    agents: List[BaseResearchAgent] = []
-    for agent_profile in agent_profiles:
-        agents.append(
-            BaseResearchAgent(
-                agent_profile=agent_profile,
-                model_name=model_name,
-            )
-        )
-
-    # review papers
-    # 3. how to get the scores of papers? Store to review log lists.
+    # Step2: start simulated review process for each paper. Total number of to papers to review is 'review_paper_num'.
     reviews: List[AgentPaperReviewLog] = []
-    # Outer loop (agents) with tqdm
-    for agent in tqdm(agents, desc='Agents Review Progress'):
-        # Inner loop (papers) with tqdm
-        for paper in tqdm(Papers2eval, desc='Paper Review Progress'):
+    for idx, paper in enumerate(tqdm(Papers2eval, desc="Review Papers by Agents", unit="paper")):
+        if idx >= review_paper_num:
+            break
+        # 1. select reviewers. Retrive the reviewers from the database.
+        selected_review_pks = agent_db.match(idea=paper.abstract, agent_profiles=agent_db.data.values(), num=review_agent_num)
+        select_reviewers = [agent_db.data[pk] for pk in selected_review_pks]
+        # 2. create the review agents
+        review_agents: List[BaseResearchAgent] = []
+        for agent_profile in select_reviewers:
+            review_agents.append(
+                BaseResearchAgent(
+                    agent_profile=agent_profile,
+                    model_name=model_name,
+                )
+            )
+        # 3. review the paper
+        for agent in review_agents:
             reviews.append(agent.write_paper_review(paper=paper))
 
-    # get ranking consistency
+    # Step 3: get ranking consistency
     real_paper_db.map_agent_reviews_to_real_paper(reviews)
     real_paper_db.calculate_rank_consistency()
     # print rank consistency
     print(f'absoulte_rank_consistency = {real_paper_db.absolute_rank_consistency}\n')
     print(f'spearman_rank_consistency = {real_paper_db.spearman_rank_consistency}\n')
     print(f"kendall_rank_consistency = {real_paper_db.kendall_rank_consistency}\n")
-    # save the RealPaperWithReviewDB
+
+    # Step 4: save the RealPaperWithReviewDB
     # Construct the output file path
-    output_file = os.path.join(data_path, f'output_microbench_review_{domain}_by_{model_name}.json')
+    output_file = os.path.join(data_path,'eval_data','review_eval_data','review_score_eval_data', 'output',f'output_review_eval_score_{domain}_by_{model_name}.json')
     real_paper_db.save_to_file(output_file)
 
 
@@ -188,8 +185,8 @@ if __name__ == '__main__':
     # Get the directory of the current script
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Construct the path to data/microbench
-    default_data_path = os.path.join(current_dir, '..', 'data', 'microbench')
+    # Construct the path to data/ directory
+    default_data_path = os.path.join(current_dir, '..', '..','..','data')
 
     parser = argparse.ArgumentParser(description='Process folder path of microbench.')
     parser.add_argument(
@@ -202,7 +199,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--domain',
         type=str,
-        default='machine_learning_system',
+        default='graph_neural_networks',
         help='Domain of papers to be reviewed.',
     )
 
@@ -214,13 +211,21 @@ if __name__ == '__main__':
         help="Models for reviewers."
     )
 
-    # Add argument for review_agent_num
+    # Add argument for review_agent_num for each paper
     parser.add_argument(
         "--review_agent_num", 
         type=int, 
         default=3, 
-        help="Number of total reviewers."
+        help="Number of reviewers for each paper."
+    )
+
+    # Add argument for papers to review
+    parser.add_argument(
+        "--review_paper_num", 
+        type=int, 
+        default=10, 
+        help="Number of total papers to review."
     )
 
     args = parser.parse_args()
-    main(args.data_path, args.domain, args.model_name, args.review_agent_num)
+    main(args.data_path, args.domain, args.model_name, args.review_agent_num, args.review_paper_num)
