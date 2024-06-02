@@ -37,16 +37,14 @@ class IdeaQualityEvaluator(object):
         return self.parsed_output
 
     def parse(self, raw_output: str) -> IdeaEvalOutput:
-        match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*',
-                          raw_output, re.IGNORECASE)
+        match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE)
         if match:
             try:
                 overall_score = int(overall_score_match.group(1))
             except ValueError as e:
                 raise OutputFormatError(f'Invalid overall score: {e}')
         else:
-            raise OutputFormatError(
-                "Output format error: 'Overall Score' not found")
+            raise OutputFormatError("Output format error: 'Overall Score' not found")
 
 
 class PaperQualityEvaluator(object):
@@ -70,16 +68,14 @@ class PaperQualityEvaluator(object):
         return self.parsed_output
 
     def parse(self, raw_output: str) -> PaperEvalOutput:
-        match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*',
-                          raw_output, re.IGNORECASE)
+        match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE)
         if match:
             try:
                 overall_score = int(overall_score_match.group(1))
             except ValueError as e:
                 raise OutputFormatError(f'Invalid overall score: {e}')
         else:
-            raise OutputFormatError(
-                "Output format error: 'Overall Score' not found")
+            raise OutputFormatError("Output format error: 'Overall Score' not found")
 
 
 class ReviewQualityEvaluator(object):
@@ -108,8 +104,7 @@ class ReviewQualityEvaluator(object):
         return self.parsed_output
 
     def parse(self, raw_output: str) -> ReviewEvalOutput:
-        match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*',
-                          raw_output, re.IGNORECASE)
+        match = re.search(r'Overall\s*Score\s*\W*(\d+)\W*', raw_output, re.IGNORECASE)
         if match:
             try:
                 overall_score = int(overall_score_match.group(1))
