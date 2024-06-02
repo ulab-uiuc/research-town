@@ -1,9 +1,9 @@
 from yacs.config import CfgNode as CN
-import os
+from typing import Optional
 import yaml
 
 class Config(CN):
-    def __init__(self, yaml_config_path=None):
+    def __init__(self, yaml_config_path: Optional[str] = None) -> None:
         super().__init__()
 
         self.param = CN()
@@ -16,14 +16,14 @@ class Config(CN):
         if yaml_config_path:
             self.load_from_yaml(yaml_config_path)
 
-    def set_default_params(self):
+    def set_default_params(self) -> None:
         self.param = {
             'related_paper_num': 10,
             'base_llm': "mistralai/Mixtral-8x7B-Instruct-v0.1",
             'max_collaborators_num': 3
         }
 
-    def set_default_prompt_templates(self):
+    def set_default_prompt_templates(self) -> None:
         templates = {
             'read_paper_query': (
                 'Given the profile of me, keywords, some recent paper titles and abstracts. '
@@ -85,7 +85,11 @@ class Config(CN):
         for key, value in templates.items():
             self.prompt_template[key] = value
 
-    def load_from_yaml(self, yaml_config_path):
+    def load_from_yaml(self, yaml_config_path) -> None:
         with open(yaml_config_path, 'r') as f:
             yaml_cfg = yaml.safe_load(f)
         self.merge_from_other_cfg(CN(yaml_cfg))
+
+    def save_to_yaml(self, yaml_config_path) -> None:
+        with open(yaml_config_path, 'w') as f:
+            yaml.dump(self, f)
