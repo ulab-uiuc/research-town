@@ -194,11 +194,23 @@ def review_paper_prompting(
 ) -> List[str]:
     papers_str = map_paper_to_str(paper)
     prompt_template = (
-        'Please give some reviews based on the following inputs and external data.'
-        'You might use two or more of these titles if they are related and works well together.'
-        'Here are the external data, which is a list of related papers: {papers}'
+        'Please provide a detailed review of the following paper based on the inputs and external data. '
+        'Your review should follow the format typically used in OpenReview, including sections for Strengths, Weaknesses, and Suggestions for Improvement. '
+        'You might use two or more of these titles if they are related and work well together. '
+        'Here are the external data, which is a list of related papers: {papers}\n\n'
+        'Here is the review template:\n'
+        '### Paper Review\n'
+        '#### Summary\n'
+        'Provide a brief summary of the paper.\n\n'
+        '#### Strengths\n'
+        '- List the strengths of the paper.\n\n'
+        '#### Weaknesses\n'
+        '- List the weaknesses of the paper.\n\n'
+        '#### Suggestions for Improvement\n'
+        '- Provide suggestions for improving the paper.\n\n'
+        '#### Overall Assessment\n'
+        'Provide your overall assessment of the paper.'
     )
-
     prompt = prompt_template.format_map({'papers': papers_str})
     return model_prompting(model_name, prompt)
 
