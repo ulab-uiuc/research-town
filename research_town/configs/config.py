@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Extra
+from pydantic import BaseModel, ConfigDict
 
 
 def merge_a_into_b(a: Dict[str, Any], b: Dict[str, Any]) -> None:
@@ -20,8 +20,9 @@ class ParamConfig(BaseModel):
     base_llm: str = 'mistralai/Mixtral-8x7B-Instruct-v0.1'
     max_collaborators_num: int = 3
 
-    class Config:
-        extra = Extra.allow
+    model_config = ConfigDict(
+        extra='allow',
+    )
 
 
 class PromptTemplateConfig(BaseModel):
@@ -83,8 +84,9 @@ class PromptTemplateConfig(BaseModel):
         'Here are the messages from other researchers: {message}'
     )
 
-    class Config:
-        extra = Extra.allow
+    model_config = ConfigDict(
+        extra='allow',
+    )
 
 
 class Config(BaseModel):
