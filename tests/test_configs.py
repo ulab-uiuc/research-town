@@ -1,9 +1,12 @@
+from tempfile import NamedTemporaryFile
+
 import pytest
 import yaml
-from tempfile import NamedTemporaryFile
+
 from research_town.configs import Config, ConfigDict
 
-def test_default_initialization():
+
+def test_default_initialization() -> None:
     config = Config()
     assert config.param.related_paper_num == 10
     assert config.param.base_llm == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
@@ -13,7 +16,8 @@ def test_default_initialization():
         'Here are the messages from other researchers: {message}'
     )
 
-def test_yaml_loading():
+
+def test_yaml_loading() -> None:
     yaml_content = """
     param:
         related_paper_num: 5
@@ -23,7 +27,7 @@ def test_yaml_loading():
         test1: 'template1'
         test2: 'template2'
     """
-    with NamedTemporaryFile(delete=False, suffix=".yaml") as tmpfile:
+    with NamedTemporaryFile(delete=False, suffix='.yaml') as tmpfile:
         tmpfile.write(yaml_content.encode())
         tmpfile_path = tmpfile.name
 
@@ -35,15 +39,19 @@ def test_yaml_loading():
     assert config.prompt_template.test2 == 'template2'
 
 
-def test_merging_configurations():
-    base_config = ConfigDict(__root__={
-        'param': {'related_paper_num': 10, 'max_collaborators_num': 10},
-        'prompt_template': {'test': 'template1'}
-    })
-    new_config = ConfigDict(__root__={
-        'param': {'related_paper_num': 5},
-        'prompt_template': {'query_paper': 'template2 {profile_bio} {domains}'}
-    })
+def test_merging_configurations() -> None:
+    base_config = ConfigDict(
+        __root__={
+            'param': {'related_paper_num': 10, 'max_collaborators_num': 10},
+            'prompt_template': {'test': 'template1'},
+        }
+    )
+    new_config = ConfigDict(
+        __root__={
+            'param': {'related_paper_num': 5},
+            'prompt_template': {'query_paper': 'template2 {profile_bio} {domains}'},
+        }
+    )
 
     config = Config()
     config.merge_from_other_cfg(base_config)
@@ -53,15 +61,16 @@ def test_merging_configurations():
     assert config.prompt_template.test == 'template1'
 
     config.merge_from_other_cfg(new_config)
-    
+
     assert config.param.related_paper_num == 5
     assert config.param.max_collaborators_num == 10
     assert config.prompt_template.test == 'template1'
     assert config.prompt_template.query_paper == 'template2 {profile_bio} {domains}'
 
-def test_yaml_serialization():
+
+def test_yaml_serialization() -> None:
     config = Config()
-    with NamedTemporaryFile(delete=False, suffix=".yaml") as tmpfile:
+    with NamedTemporaryFile(delete=False, suffix='.yaml') as tmpfile:
         tmpfile_path = tmpfile.name
         config.save_to_yaml(tmpfile_path)
 
@@ -72,7 +81,8 @@ def test_yaml_serialization():
     assert loaded_data['param']['base_llm'] == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
     assert loaded_data['param']['max_collaborators_num'] == 3
 
-def test_placeholder_check():
+
+def test_placeholder_check() -> None:
     config = Config()
     config.check_prompt_template_placeholder()
 

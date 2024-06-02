@@ -1,7 +1,8 @@
-from beartype.typing import Optional, MutableMapping, Union, Dict, Any
 import yaml
+from beartype.typing import Any, Dict, Optional
 
 NestedDictType = Dict[str, Any]
+
 
 def merge_a_into_b(a: Dict[str, Any], b: Dict[str, Any]) -> None:
     """
@@ -13,19 +14,21 @@ def merge_a_into_b(a: Dict[str, Any], b: Dict[str, Any]) -> None:
         else:
             b[key] = value
 
+
 class ConfigDict(Dict[str, Any]):
     def __getattr__(self, attr: str) -> Any:
         try:
             value = self[attr]
             return value
         except KeyError:
-            raise AttributeError(f"No such attribute: {attr}")
+            raise AttributeError(f'No such attribute: {attr}')
 
     def __setattr__(self, key: str, value: Any) -> None:
         self[key] = value
 
     def __delattr__(self, item: str) -> None:
         del self[item]
+
 
 class Config(object):
     def __init__(self, yaml_config_path: Optional[str] = None) -> None:
@@ -76,7 +79,7 @@ class Config(object):
                 'How do you view this field? Do you have any novel ideas or insights? '
                 'Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.'
             ),
-            'summarize_idea': (
+            'summarize_ideas': (
                 'Given a list of research ideas, please summarize them by removing duplicates '
                 'and resolving any contradictory ideas by selecting the more reasonable one. '
                 'Here are the research ideas:\n{ideas}\n'
@@ -109,7 +112,7 @@ class Config(object):
             'discuss': (
                 'Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. '
                 'Here are the messages from other researchers: {message}'
-            )
+            ),
         }
         self.prompt_template.update(templates)
 
@@ -139,11 +142,16 @@ class Config(object):
     def check_prompt_template_placeholder(self) -> None:
         templates = self.prompt_template
         required_placeholders = {
-            'find_collaborators': ['{max_number}', '{self_serialize_all}', '{task_serialize_all}', '{collaborators_serialize_all}'],
+            'find_collaborators': [
+                '{max_number}',
+                '{self_serialize_all}',
+                '{task_serialize_all}',
+                '{collaborators_serialize_all}',
+            ],
             'query_paper': ['{profile_bio}', '{domains}'],
             'read_paper': ['{profile_bio}', '{domains}', '{papers}'],
             'think_idea': ['{insights}'],
-            'summarize_idea': ['{ideas}'],
+            'summarize_ideas': ['{ideas}'],
             'write_paper': ['{idea}', '{papers}'],
             'review_score': ['{paper_review}'],
             'review_paper': ['{papers}'],
@@ -153,9 +161,11 @@ class Config(object):
         }
 
         for template_name, placeholders in required_placeholders.items():
-            template = templates.get(template_name, "")
+            template = templates.get(template_name, '')
             for placeholder in placeholders:
-                assert placeholder in template, f"Template '{template_name}' is missing placeholder '{placeholder}'"
+                assert (
+                    placeholder in template
+                ), f"Template '{template_name}' is missing placeholder '{placeholder}'"
 
     def merge_from_other_cfg(self, other_cfg: ConfigDict) -> None:
         if '__root__' in other_cfg:

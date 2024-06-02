@@ -100,7 +100,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             yield from self.log(
                 f'Agent {agent.profile.name} generated idea: {str(idea)}'
             )
-
             for collaborator_agent in collaborator_agents:
                 idea = collaborator_agent.think_idea(
                     insights=insights, config=self.config

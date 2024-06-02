@@ -34,7 +34,6 @@ def summarize_research_direction_prompting(
 @beartype
 def find_collaborators_prompting(
     input: Dict[str, str],
-    prompt_template: str,
     self_profile: Dict[str, str],
     collaborator_profiles: Dict[str, str],
     parameter: float = 0.5,

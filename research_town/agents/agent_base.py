@@ -85,7 +85,6 @@ class BaseResearchAgent(object):
             collaborator_profiles=collaborator_profiles,
             parameter=parameter,
             max_number=max_number,
-            prompt_template=config.prompt_template.find_collaborators,
         )
         collaborators_list = []
         for collaborator in collaborators:
