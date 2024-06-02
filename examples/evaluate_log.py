@@ -22,37 +22,19 @@ from .evaluator_constants import (
 
 
 def run_sync_evaluation(
-    insight_list: List[ResearchInsight],
-    idea_list: List[ResearchIdea],
-    paper_list: List[ResearchPaperSubmission],
-    review_list: List[AgentPaperReviewLog],
-    meta_review_list: List[AgentPaperMetaReviewLog],
+    insight_list:ResearchInsight,
+    idea_list: ResearchIdea,
+    paper_list: ResearchPaperSubmission,
+    review_list: AgentPaperReviewLog,
+    meta_review_list: AgentPaperMetaReviewLog,
     model_name: str | None = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
 ):
     # Serialize Logs
-    insight_serialize = '\n\n'.join(
-        [f'Content: {insight.content}' for insight in insight_list]
-    )
-    idea_serialize = '\n\n'.join(
-        [f'Content: {idea.content}' for idea in idea_list])
-    paper_serialize = '\n\n'.join(
-        [
-            f'Title: {paper.title}\nAbstract: {paper.abstract}\nConference: {paper.conference}'
-            for paper in paper_list
-        ]
-    )
-    review_serialize = '\n\n'.join(
-        [
-            f'Score: {review.review_score}\nContent: {review.review_content}'
-            for review in review_list
-        ]
-    )
-    meta_review_serialize = '\n\n'.join(
-        [
-            f'Decision: {meta_review.decision}\nMeta Review:{meta_review.meta_review}'
-            for meta_review in meta_review_list
-        ]
-    )
+    insight_serialize =  f'content: {insight_list.content}' 
+    idea_serialize = f'content: {idea_list.content}'
+    paper_serialize = {"title": paper_list.title, "abstract": paper_list.abstract, "conference": paper_list.conference}
+    review_serialize =  f'score: {review_list.review_score}\ncontent: {review_list.review_content}'
+    meta_review_serialize =  f'decision: {meta_review_list.decision}\nmeta review:{meta_review_list.meta_review}'
     # Create Evaluators
     idea_quality_evaluator = IdeaQualityEvaluator(model_name=model_name)
     paper_quality_evaluator = PaperQualityEvaluator(model_name=model_name)
@@ -78,21 +60,21 @@ def run_sync_evaluation(
         }
     )
     # Save Logs
-    with open('evaluate_log/idea_quality.json', 'w') as file:
+    with open('examples/evaluate_log/idea_quality.json', 'w') as file:
         json.dump(idea_quality.dict(), file)
-    with open('evaluate_log/paper_quality.json', 'w') as file:
+    with open('examples/evaluate_log/paper_quality.json', 'w') as file:
         json.dump(paper_quality.dict(), file)
-    with open('evaluate_log/review_quality.json', 'w') as file:
+    with open('examples/evaluate_log/review_quality.json', 'w') as file:
         json.dump(review_quality.dict(), file)
 
 
 def main() -> None:
     run_sync_evaluation(
-        insight_list=[insight_A],
-        idea_list=[idea_A],
-        paper_list=[paper_submission_A],
-        review_list=[paper_review_A],
-        meta_review_list=[paper_meta_review_A],
+        insight_list=insight_A,
+        idea_list=idea_A,
+        paper_list=paper_submission_A,
+        review_list=paper_review_A,
+        meta_review_list=paper_meta_review_A,
     )
 
 
