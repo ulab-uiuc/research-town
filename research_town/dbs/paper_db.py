@@ -59,7 +59,7 @@ class PaperProfileDB:
     def save_to_file(self, file_name: str) -> None:
         with open(file_name, 'w') as f:
             json.dump(
-                {pk: paper.dict() for pk, paper in self.data.items()}, f, indent=2
+                {pk: paper.model_dump() for pk, paper in self.data.items()}, f, indent=2
             )
 
     def load_from_file(self, file_name: str) -> None:
