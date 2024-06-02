@@ -1,6 +1,8 @@
-from yacs.config import CfgNode as CN
 from typing import Optional
+
 import yaml
+from yacs.config import CfgNode as CN
+
 
 class Config(CN):
     def __init__(self, yaml_config_path: Optional[str] = None) -> None:
@@ -18,8 +20,8 @@ class Config(CN):
     def set_default_params(self) -> None:
         self.param = {
             'related_paper_num': 10,
-            'base_llm': "mistralai/Mixtral-8x7B-Instruct-v0.1",
-            'max_collaborators_num': 3
+            'base_llm': 'mistralai/Mixtral-8x7B-Instruct-v0.1',
+            'max_collaborators_num': 3,
         }
 
     def set_default_prompt_templates(self) -> None:
