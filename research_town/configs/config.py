@@ -12,7 +12,6 @@ class Config(CN):
         self.prompt_template = CN()
         self.set_default_prompt_templates()
 
-        # Load from YAML if path is provided
         if yaml_config_path:
             self.load_from_yaml(yaml_config_path)
 
