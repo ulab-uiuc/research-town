@@ -3,7 +3,7 @@ from tempfile import NamedTemporaryFile
 import pytest
 import yaml
 
-from research_town.configs import Config, ConfigDict
+from research_town.configs import Config
 
 
 def test_default_initialization() -> None:
@@ -40,18 +40,14 @@ def test_yaml_loading() -> None:
 
 
 def test_merging_configurations() -> None:
-    base_config = ConfigDict(
-        __root__={
-            'param': {'related_paper_num': 10, 'max_collaborators_num': 10},
-            'prompt_template': {'test': 'template1'},
-        }
-    )
-    new_config = ConfigDict(
-        __root__={
-            'param': {'related_paper_num': 5},
-            'prompt_template': {'query_paper': 'template2 {profile_bio} {domains}'},
-        }
-    )
+    base_config = {
+        'param': {'related_paper_num': 10, 'max_collaborators_num': 10},
+        'prompt_template': {'test': 'template1'},
+    }
+    new_config = {
+        'param': {'related_paper_num': 5},
+        'prompt_template': {'query_paper': 'template2 {profile_bio} {domains}'},
+    }
 
     config = Config()
     config.merge_from_other_cfg(base_config)
@@ -86,6 +82,6 @@ def test_placeholder_check() -> None:
     config = Config()
     config.check_prompt_template_placeholder()
 
-    config.prompt_template['discuss'] = 'missing {test}'
+    config.prompt_template.discuss = 'missing {test}'
     with pytest.raises(AssertionError):
         config.check_prompt_template_placeholder()

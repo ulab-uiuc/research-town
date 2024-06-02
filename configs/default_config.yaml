@@ -20,17 +20,17 @@ prompt_template:
     Here are the research domains: {domains}
     Here are some recent paper titles and abstracts: {papers}
   think_idea: |
-    Here is a high-level summarized insight of a research field {insights}. 
-    How do you view this field? Do you have any novel ideas or insights? 
+    Here is a high-level summarized insight of a research field {insights}.
+    How do you view this field? Do you have any novel ideas or insights?
     Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.
   summarize_ideas: |
-    Given a list of research ideas, please summarize them by removing duplicates 
-    and resolving any contradictory ideas by selecting the more reasonable one. 
+    Given a list of research ideas, please summarize them by removing duplicates
+    and resolving any contradictory ideas by selecting the more reasonable one.
     Here are the research ideas:
     {ideas}
   write_paper: |
-    Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract. 
-    You might use two or more of these ideas if they are related and work well together. 
+    Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract.
+    You might use two or more of these ideas if they are related and work well together.
     Here is the idea: {idea}
     Here are the external data, which is a list of abstracts of related papers: {papers}
   review_score: |
@@ -49,5 +49,5 @@ prompt_template:
     Here is the submission: {paper}
     Here are the reviews: {review}
   discuss: |
-    Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. 
+    Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way.
     Here are the messages from other researchers: {message}

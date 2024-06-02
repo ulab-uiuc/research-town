@@ -1,3 +1,3 @@
-from .config import Config, ConfigDict
+from .config import Config
 
-__all__ = ['Config', 'ConfigDict']
+__all__ = ['Config']
