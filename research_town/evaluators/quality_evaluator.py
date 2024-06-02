@@ -82,7 +82,10 @@ class PaperQualityEvaluator(object):
         **kwargs: Any,
     ) -> PaperEvalOutput:
         raw_output = paper_quality_eval_prompting(
-            idea=kwargs['idea'], paper=kwargs['paper'], model_name=self.model_name,trend= kwargs['trend'] if 'trend' in kwargs else None
+            idea=kwargs['idea'],
+            paper=kwargs['paper'],
+            model_name=self.model_name,
+            trend=kwargs['trend'] if 'trend' in kwargs else None,
         )
         self.parsed_output = self.parse(raw_output)
 
@@ -142,8 +145,12 @@ class ReviewQualityEvaluator(object):
             review=kwargs['review'],  # review: List[str],
             decision=kwargs['decision'],  # decision: str,
             model_name=self.model_name,
-            rebuttal=kwargs['rebuttal'] if 'rebuttal' in kwargs else None, # rebuttal: str,
-            meta_review=kwargs['meta_review'] if 'meta_review' in kwargs else None, # meta_review: str,
+            rebuttal=kwargs['rebuttal']
+            if 'rebuttal' in kwargs
+            else None,  # rebuttal: str,
+            meta_review=kwargs['meta_review']
+            if 'meta_review' in kwargs
+            else None,  # meta_review: str,
         )
         self.parsed_output = self.parse(raw_output)
         # Store the input kwargs in parsed_output
