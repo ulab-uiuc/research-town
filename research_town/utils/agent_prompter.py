@@ -21,15 +21,11 @@ from .string_mapper import (
 def summarize_research_direction_prompting(
     personal_info: str,
     model_name: str,
+    prompt_template: str,
 ) -> List[str]:
     """
     Summarize research direction based on personal research history
     """
-    prompt_template = (
-        "Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. "
-        'Focus more on more recent personas. Be concise and clear (around 300 words). '
-        'Here are the personas from different times: {personalinfo}'
-    )
     template_input = {'personalinfo': personal_info}
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
@@ -88,47 +84,33 @@ def read_paper_prompting(
     papers: List[Dict[str, str]],
     domains: List[str],
     model_name: str,
+    prompt_template_query: str,
+    prompt_template_read: str,
 ) -> List[str]:
-    query_template = (
-        'Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).'
-        'Here is my profile biology: {profile_bio}'
-        'Here are the domains: {domains}'
-    )
-    prompt_template = (
-        'Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).'
-        'Here is my profile biology: {profile_bio}'
-        'Here are the research domains: {domains}'
-        'Here are some recent paper titles and abstracts: {papers}'
-    )
-
-    query = query_template.format_map(
+    query_prompt = prompt_template_query.format_map(
         {'profile_bio': profile['bio'], 'domains': '; '.join(domains)}
     )
 
     corpus = [paper['abstract'] for paper in papers]
-    related_papers = get_related_papers(corpus, query, num=1)
+    related_papers = get_related_papers(corpus, query_prompt, num=1)
 
-    prompt = prompt_template.format_map(
+    read_prompt = prompt_template_read.format_map(
         {
             'profile_bio': profile['bio'],
             'domains': '; '.join(domains),
             'papers': '; '.join(related_papers),
         }
     )
-    return model_prompting(model_name, prompt)
+    return model_prompting(model_name, read_prompt)
 
 
 @beartype
 def think_idea_prompting(
     insights: List[Dict[str, str]],
     model_name: str,
+    prompt_template: str,
 ) -> List[str]:
     insights_str = map_insights_to_str(insights)
-    prompt_template = (
-        'Here is a high-level summarized insight of a research field {insights}. '
-        'How do you view this field? Do you have any novel ideas or insights? '
-        'Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.'
-    )
     prompt = prompt_template.format_map({'insights': insights_str})
     return model_prompting(model_name, prompt)
 
@@ -137,17 +119,9 @@ def think_idea_prompting(
 def summarize_ideas_prompting(
     ideas: List[Dict[str, str]],
     model_name: str,
+    prompt_template: str,
 ) -> List[str]:
-    """
-    Summarize research ideas by removing duplicates and resolving contradictions.
-    """
     ideas_str = map_idea_list_to_str(ideas)
-
-    prompt_template = (
-        'Given a list of research ideas, please summarize them by removing duplicates '
-        'and resolving any contradictory ideas by selecting the more reasonable one. '
-        'Here are the research ideas:\n{ideas}\n'
-    )
     prompt = prompt_template.format_map({'ideas': ideas_str})
     return model_prompting(model_name, prompt)
 
@@ -157,27 +131,20 @@ def write_paper_prompting(
     idea: Dict[str, str],
     papers: List[Dict[str, str]],
     model_name: str,
+    prompt_template: str,
 ) -> List[str]:
     idea_str = map_idea_to_str(idea)
     papers_str = map_paper_list_to_str(papers)
-
-    prompt_template = (
-        'Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract. '
-        'You might use two or more of these ideas if they are related and works well together. '
-        'Here is the idea: {idea}'
-        'Here are the external data, which is a list abstracts of related papers: {papers}'
-    )
-
     prompt = prompt_template.format_map({'idea': idea_str, 'papers': papers_str})
     return model_prompting(model_name, prompt)
 
 
 @beartype
-def review_score_prompting(paper_review: str, model_name: str) -> int:
-    prompt_template = (
-        'Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only returns one number score.'
-        'Here are the reviews: {paper_review}'
-    )
+def review_score_prompting(
+    paper_review: str,
+    model_name: str,
+    prompt_template: str,
+) -> int:
     prompt = prompt_template.format_map(
         {
             'paper_review': paper_review,
@@ -191,14 +158,9 @@ def review_score_prompting(paper_review: str, model_name: str) -> int:
 def review_paper_prompting(
     paper: Dict[str, str],
     model_name: str,
+    prompt_template: str,
 ) -> List[str]:
     papers_str = map_paper_to_str(paper)
-    prompt_template = (
-        'Please give some reviews based on the following inputs and external data.'
-        'You might use two or more of these titles if they are related and works well together.'
-        'Here are the external data, which is a list of related papers: {papers}'
-    )
-
     prompt = prompt_template.format_map({'papers': papers_str})
     return model_prompting(model_name, prompt)
 
@@ -208,15 +170,10 @@ def write_meta_review_prompting(
     paper: Dict[str, str],
     reviews: List[Dict[str, Union[int, str]]],
     model_name: str,
+    prompt_template: str,
 ) -> List[str]:
     paper_str = map_paper_to_str(paper)
     reviews_str = map_review_list_to_str(reviews)
-
-    prompt_template = (
-        'Please make an review decision to decide whether the following submission should be accepted or rejected by an academic conference. Here are several reviews from reviewers for this submission. Please indicate your review decision as accept or reject.'
-        'Here is the submission: {paper}'
-        'Here are the reviews: {reviews}'
-    )
     prompt = prompt_template.format_map({'paper': paper_str, 'reviews': reviews_str})
     return model_prompting(model_name, prompt)
 
@@ -226,15 +183,10 @@ def write_rebuttal_prompting(
     paper: Dict[str, str],
     review: Dict[str, Union[int, str]],
     model_name: str,
+    prompt_template: str,
 ) -> List[str]:
     paper_str = map_paper_to_str(paper)
     review_str = map_review_to_str(review)
-
-    prompt_template = (
-        'Please write a rebuttal for the following submission you have made to an academic conference. Here are the reviews and decisions from the reviewers. Your rebuttal should rebut the reviews to convince the reviewers to accept your submission.'
-        'Here is the submission: {paper}'
-        'Here are the reviews: {review}'
-    )
     prompt = prompt_template.format_map({'paper': paper_str, 'review': review_str})
     return model_prompting(model_name, prompt)
 
@@ -243,11 +195,8 @@ def write_rebuttal_prompting(
 def discuss_prompting(
     message: Dict[str, str],
     model_name: str,
+    prompt_template: str,
 ) -> List[str]:
     message_str = map_message_to_str(message)
-    prompt_template = (
-        'Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. '
-        'Here are the messages from other researchers: {message}'
-    )
     prompt = prompt_template.format_map({'message': message_str})
     return model_prompting(model_name, prompt)

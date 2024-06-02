@@ -1,3 +1,5 @@
+from tempfile import NamedTemporaryFile
+
 from beartype.typing import Any, Dict, Optional
 
 from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
@@ -48,7 +50,7 @@ def test_envlogdb_basic() -> None:
         review_content='Interesting paper',
     )
     db.add(new_log)
-    assert new_log.dict() in db.data['AgentPaperReviewLog']
+    assert new_log.model_dump() in db.data['AgentPaperReviewLog']
 
     conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
     results = db.get(AgentPaperReviewLog, **conditions)
@@ -69,7 +71,8 @@ def test_envlogdb_basic() -> None:
     results = db.get(AgentPaperReviewLog, **conditions)
     assert len(results) == 0
 
-    file_name = './data/dbs/test_env_logs_db.json'
+    with NamedTemporaryFile(delete=False) as temp_file:
+        file_name = temp_file.name
     db.save_to_file(file_name)
 
     new_db = EnvLogDB()
@@ -124,7 +127,8 @@ def test_agentprofiledb_basic() -> None:
     assert len(results) == 1
     assert results[0].name == 'Jane Smith'
 
-    file_name = './data/dbs/test_agent_profile_db.json'
+    with NamedTemporaryFile(delete=False) as temp_file:
+        file_name = temp_file.name
     db.save_to_file(file_name)
 
     new_db = AgentProfileDB()
@@ -215,7 +219,8 @@ def test_paperprofiledb_basic() -> None:
     assert results[0].title == 'Updated Sample Paper 1'
     assert results[1].title == 'Sample Paper 3'
 
-    file_name = './data/dbs/test_paper_profile_db.json'
+    with NamedTemporaryFile(delete=False) as temp_file:
+        file_name = temp_file.name
     db.save_to_file(file_name)
 
     new_db = PaperProfileDB()
@@ -236,7 +241,7 @@ def test_researchprogressdb_basic() -> None:
 
     new_idea = ResearchIdea(content='Blockchain research proposal')
     db.add(new_idea)
-    assert new_idea.dict() in db.data['ResearchIdea']
+    assert new_idea.model_dump() in db.data['ResearchIdea']
 
     content: Dict[str, Any] = {'content': 'Idea for a new AI algorithm'}
     results = db.get(ResearchIdea, **content)
@@ -259,7 +264,8 @@ def test_researchprogressdb_basic() -> None:
     remaining_results = db.get(ResearchIdea, **content3)
     assert len(remaining_results) == 0
 
-    file_name = './data/dbs/test_research_progress_db.json'
+    with NamedTemporaryFile(delete=False) as temp_file:
+        file_name = temp_file.name
     db.save_to_file(file_name)
 
     new_db = ResearchProgressDB()

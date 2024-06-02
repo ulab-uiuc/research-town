@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
+from research_town.configs import Config
 from research_town.dbs import AgentPaperRebuttalLog
 from tests.db_constants import (
     agent_agent_discussion_log,
@@ -37,7 +38,7 @@ def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     )
     collaborators = research_agent.find_collaborators(
-        paper=paper_profile_A, parameter=0.5, max_number=3
+        paper=paper_profile_A, parameter=0.5, max_number=3, config=Config()
     )
     assert isinstance(collaborators, list)
     assert len(collaborators) <= 3
@@ -58,6 +59,7 @@ def test_read_paper(
     research_insight = research_agent.read_paper(
         papers=[paper_profile_A, paper_profile_B],
         domains=['machine learning', 'graph neural network'],
+        config=Config(),
     )
     assert len(research_insight) == 1
     assert research_insight[0].pk is not None
@@ -79,6 +81,7 @@ def test_think_idea(
     )
     research_idea = research_agent.think_idea(
         insights=[research_insight_A, research_insight_B],
+        config=Config(),
     )
     assert research_idea.pk is not None
     assert research_idea.content == 'This is a research idea.'
@@ -95,6 +98,7 @@ def test_write_paper(mock_model_prompting: MagicMock) -> None:
     paper = research_agent.write_paper(
         idea=research_idea_A,
         papers=[paper_profile_A, paper_profile_B],
+        config=Config(),
     )
     assert paper.abstract == 'This is a paper abstract.'
     assert paper.pk is not None
@@ -108,7 +112,10 @@ def test_write_paper_review(mock_model_prompting: MagicMock) -> None:
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     )
-    review = research_agent.write_paper_review(paper=paper_profile_A)
+    review = research_agent.write_paper_review(
+        paper=paper_profile_A,
+        config=Config(),
+    )
     assert review.review_score == 2
     assert review.review_content == 'This is a paper review for MambaOut.'
 
@@ -121,9 +128,14 @@ def test_write_paper_meta_review(mock_model_prompting: MagicMock) -> None:
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     )
-    reviews = research_agent.write_paper_review(paper=paper_profile_A)
+    reviews = research_agent.write_paper_review(
+        paper=paper_profile_A,
+        config=Config(),
+    )
     meta_review = research_agent.write_paper_meta_review(
-        paper=paper_profile_A, reviews=[reviews]
+        paper=paper_profile_A,
+        reviews=[reviews],
+        config=Config(),
     )
     assert meta_review.decision is True
     assert meta_review.meta_review == 'Accept. This is a good paper.'
@@ -139,10 +151,14 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     )
-    review = research_agent.write_paper_review(paper=paper_profile_A)
+    review = research_agent.write_paper_review(
+        paper=paper_profile_A,
+        config=Config(),
+    )
     rebuttal = research_agent.write_rebuttal(
         paper=paper_profile_A,
         review=review,
+        config=Config(),
     )
     assert isinstance(rebuttal, AgentPaperRebuttalLog)
     if rebuttal.rebuttal_content is not None:
@@ -160,7 +176,10 @@ def test_discuss(mock_model_prompting: MagicMock) -> None:
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     )
-    response = research_agent.discuss(agent_agent_discussion_log)
+    response = research_agent.discuss(
+        message=agent_agent_discussion_log,
+        config=Config(),
+    )
     assert (
         response.message
         == 'I believe in the potential of using automous agents to simulate the current research pipeline.'

@@ -31,7 +31,7 @@ class ResearchProgressDB:
     def add(self, obj: T) -> None:
         class_name = obj.__class__.__name__
         if class_name in self.data:
-            self.data[class_name].append(obj.dict())
+            self.data[class_name].append(obj.model_dump())
         else:
             raise ValueError(f'Unsupported type: {class_name}')
 
@@ -63,7 +63,7 @@ class ResearchProgressDB:
                 for key, value in updates.items():
                     setattr(instance, key, value)
                 self.data[class_name].remove(data)
-                self.data[class_name].append(instance.dict())
+                self.data[class_name].append(instance.model_dump())
                 updated_count += 1
         return updated_count
 

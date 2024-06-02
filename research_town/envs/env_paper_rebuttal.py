@@ -1,6 +1,7 @@
 from beartype import beartype
 from beartype.typing import Dict, Generator, List, Tuple, Union
 
+from ..configs import Config
 from ..dbs import (
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
@@ -23,6 +24,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
+        config: Config,
     ) -> None:
         super().__init__(agent_profiles)
         self.decision = 'reject'
@@ -34,6 +36,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
+        self.config = config
 
     @beartype
     def assign_roles(self, role_dict: Dict[str, str]) -> None:
@@ -66,7 +69,10 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         # Paper Reviewing
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
-                review = agent.write_paper_review(paper=self.submission)
+                review = agent.write_paper_review(
+                    paper=self.submission,
+                    config=self.config,
+                )
                 self.reviews.append(review)
                 yield from self.log(
                     f'Agent {agent.profile.name} gave review {str(review)}'
@@ -77,7 +83,9 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
                 meta_review = agent.write_paper_meta_review(
-                    paper=self.submission, reviews=self.reviews
+                    paper=self.submission,
+                    reviews=self.reviews,
+                    config=self.config,
                 )
                 self.meta_reviews.append(meta_review)
                 yield from self.log(
@@ -92,6 +100,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                     rebuttal = agent.write_rebuttal(
                         paper=self.submission,
                         review=review,
+                        config=self.config,
                     )
                     self.rebuttals.append(rebuttal)
                     yield from self.log(
