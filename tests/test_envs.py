@@ -7,6 +7,7 @@ from research_town.envs import (
 )
 from tests.db_constants import agent_profile_A, agent_profile_B, paper_profile_A
 from tests.utils import mock_papers
+from research_town.configs import Config
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -15,11 +16,13 @@ def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
     agent_db = AgentProfileDB()
     paper_db = PaperProfileDB()
     env_db = EnvLogDB()
+    config = Config()
     env = PaperRebuttalMultiAgentEnv(
         agent_profiles=[agent_profile_A, agent_profile_B],
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
+        config=config
     )
 
     submission = paper_profile_A
@@ -48,6 +51,7 @@ def test_paper_submission_env(
     agent_db = AgentProfileDB()
     paper_db = PaperProfileDB()
     env_db = EnvLogDB()
+    config = Config()
     env = PaperSubmissionMultiAgentEnvironment(
         agent_profiles=[agent_profile_A],
         task={
@@ -56,6 +60,7 @@ def test_paper_submission_env(
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
+        config=config,
     )
     while not env.terminated:
         env.step()

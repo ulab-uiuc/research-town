@@ -34,9 +34,9 @@ def summarize_research_direction_prompting(
 @beartype
 def find_collaborators_prompting(
     input: Dict[str, str],
+    prompt_template: str,
     self_profile: Dict[str, str],
     collaborator_profiles: Dict[str, str],
-    prompt_template: str,
     parameter: float = 0.5,
     max_number: int = 3,
     model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',

@@ -50,7 +50,11 @@ class BaseResearchAgent(object):
 
     @beartype
     def find_collaborators(
-        self, paper: PaperProfile, parameter: float = 0.5, max_number: int = 3
+        self, 
+        paper: PaperProfile, 
+        config: Config,
+        parameter: float = 0.5, 
+        max_number: int = 3,
     ) -> List[AgentProfile]:
         # TODO: need rebuild
         start_author: List[str] = (
@@ -76,7 +80,12 @@ class BaseResearchAgent(object):
             else {}
         )
         result = find_collaborators_prompting(
-            paper_serialize, self_profile, collaborator_profiles, parameter, max_number
+            input=paper_serialize, 
+            self_profile=self_profile, 
+            collaborator_profiles=collaborator_profiles, 
+            parameter=parameter, 
+            max_number=max_number,
+            prompt_template=config.prompt_template.find_collaborators,
         )
         collaborators_list = []
         for collaborator in collaborators:
@@ -192,6 +201,7 @@ class BaseResearchAgent(object):
             paper=serialized_paper,
             reviews=serialized_reviews,
             model_name=self.model_name,
+            prompt_template=config.prompt_template.write_meta_review,
         )
         review_decision = 'accept' in meta_review[0].lower()
 
