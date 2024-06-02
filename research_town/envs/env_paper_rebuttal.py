@@ -1,6 +1,7 @@
 from beartype import beartype
 from beartype.typing import Dict, Generator, List, Tuple, Union
 
+from ..configs import Config
 from ..dbs import (
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
@@ -23,6 +24,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
+        config: Config,
     ) -> None:
         super().__init__(agent_profiles)
         self.decision = 'reject'
@@ -34,6 +36,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
+        self.config = config
 
     @beartype
     def assign_roles(self, role_dict: Dict[str, str]) -> None:
