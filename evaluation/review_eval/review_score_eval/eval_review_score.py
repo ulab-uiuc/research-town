@@ -4,7 +4,7 @@ import os
 import uuid
 
 from beartype.typing import Dict, List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 from tqdm import tqdm
 from scipy.stats import spearmanr, kendalltau
 from research_town.agents.agent_base import BaseResearchAgent
@@ -33,6 +33,9 @@ class RealPaperWithReview(BaseModel):  # paper review from real reviewers
     sim_rank: int = Field(default=-1)
     sim_decision: str = Field(default='None')
 
+    @validator('paper_pk', pre=True, always=True)
+    def set_paper_pk(cls, v):
+        return v or str(uuid.uuid4())
 
 class RealPaperWithReviewDB(object):
     def __init__(self) -> None:
