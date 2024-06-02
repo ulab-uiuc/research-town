@@ -59,7 +59,7 @@ class Serializer:
 
             if issubclass(target_class, BaseModel):
                 # Use Pydantic's construct method for BaseModel subclasses
-                obj = target_class.construct(**attributes)
+                obj = target_class.model_construct(**attributes)
             else:
                 for key, value in attributes.items():
                     setattr(obj, key, cls.deserialize(value))

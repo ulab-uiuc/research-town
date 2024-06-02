@@ -64,7 +64,7 @@ class AgentProfileDB(object):
     def save_to_file(self, file_name: str) -> None:
         with open(file_name, 'w') as f:
             json.dump(
-                {aid: agent.dict() for aid, agent in self.data.items()}, f, indent=2
+                {aid: agent.model_dump() for aid, agent in self.data.items()}, f, indent=2
             )
 
     def load_from_file(self, file_name: str) -> None:

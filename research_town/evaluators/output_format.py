@@ -1,5 +1,5 @@
 from beartype.typing import List, Type, TypeVar
-from pydantic import BaseModel, Extra, Field, validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 
 T = TypeVar('T', bound=BaseModel)
 
@@ -9,10 +9,9 @@ class IdeaEvalOutput(BaseModel):
     pk: str = Field(default='0')
     dimension_scores: List[int] = Field(default=[])
 
-    class Config:
-        extra = Extra.allow  # Allows extra fields to be stored
+    model_config = ConfigDict(extra='allow')
 
-    @validator('overall_score')
+    @field_validator('overall_score')
     def validate_overall_score(cls: Type[T], v: int) -> int:
         if v is None:
             raise ValueError('Overall score cannot be None')
@@ -20,10 +19,11 @@ class IdeaEvalOutput(BaseModel):
             raise ValueError('Overall score must be between 0 and 100')
         return v
 
-    @validator('dimension_scores', each_item=True)
-    def validate_dimension_scores(cls: Type[T], v: int) -> int:
-        if not (0 <= v <= 10):
-            raise ValueError('Each dimension score must be between 0 and 10')
+    @field_validator('dimension_scores')
+    def validate_dimension_scores(cls, v: List[int]) -> List[int]:
+        for score in v:
+            if not (0 <= score <= 10):
+                raise ValueError('Each dimension score must be between 0 and 10')
         return v
 
 
@@ -32,10 +32,9 @@ class PaperEvalOutput(BaseModel):
     pk: str = Field(default='0')
     dimension_scores: List[int] = Field(default=[])
 
-    class Config:
-        extra = Extra.allow  # Allows extra fields to be stored
+    model_config = ConfigDict(extra='allow')
 
-    @validator('overall_score')
+    @field_validator('overall_score')
     def validate_overall_score(cls: Type[T], v: int) -> int:
         if v is None:
             raise ValueError('Overall score cannot be None')
@@ -43,10 +42,11 @@ class PaperEvalOutput(BaseModel):
             raise ValueError('Overall score must be between 0 and 100')
         return v
 
-    @validator('dimension_scores', each_item=True)
-    def validate_dimension_scores(cls: Type[T], v: int) -> int:
-        if not (0 <= v <= 10):
-            raise ValueError('Each dimension score must be between 0 and 10')
+    @field_validator('dimension_scores')
+    def validate_dimension_scores(cls, v: List[int]) -> List[int]:
+        for score in v:
+            if not (0 <= score <= 10):
+                raise ValueError('Each dimension score must be between 0 and 10')
         return v
 
 
@@ -55,10 +55,9 @@ class ReviewEvalOutput(BaseModel):
     pk: str = Field(default='0')
     dimension_scores: List[int] = Field(default=[])
 
-    class Config:
-        extra = Extra.allow  # Allows extra fields to be stored
+    model_config = ConfigDict(extra='allow')
 
-    @validator('overall_score')
+    @field_validator('overall_score')
     def validate_overall_score(cls: Type[T], v: int) -> int:
         if v is None:
             raise ValueError('Overall score cannot be None')
@@ -66,10 +65,11 @@ class ReviewEvalOutput(BaseModel):
             raise ValueError('Overall score must be between 0 and 100')
         return v
 
-    @validator('dimension_scores', each_item=True)
-    def validate_dimension_scores(cls: Type[T], v: int) -> int:
-        if not (0 <= v <= 10):
-            raise ValueError('Each dimension score must be between 0 and 10')
+    @field_validator('dimension_scores')
+    def validate_dimension_scores(cls, v: List[int]) -> List[int]:
+        for score in v:
+            if not (0 <= score <= 10):
+                raise ValueError('Each dimension score must be between 0 and 10')
         return v
 
 

@@ -48,7 +48,7 @@ def test_envlogdb_basic() -> None:
         review_content='Interesting paper',
     )
     db.add(new_log)
-    assert new_log.dict() in db.data['AgentPaperReviewLog']
+    assert new_log.model_dump() in db.data['AgentPaperReviewLog']
 
     conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
     results = db.get(AgentPaperReviewLog, **conditions)
@@ -236,7 +236,7 @@ def test_researchprogressdb_basic() -> None:
 
     new_idea = ResearchIdea(content='Blockchain research proposal')
     db.add(new_idea)
-    assert new_idea.dict() in db.data['ResearchIdea']
+    assert new_idea.model_dump() in db.data['ResearchIdea']
 
     content: Dict[str, Any] = {'content': 'Idea for a new AI algorithm'}
     results = db.get(ResearchIdea, **content)
