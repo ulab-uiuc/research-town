@@ -29,3 +29,6 @@ jobs:
     - name: Analysing the code with ruff
       run: |
         ruff check .
+    - name: Format the code with ruff
+      run: |
+        ruff format .
