@@ -19,8 +19,10 @@ faiss-cpu = "^1.8.0"
 types-requests = "^2.31.0"
 torch = ">=2.1.0 <2.3.0"
 transformers = "^4.41.2"
-litellm = "^1.39.4"
+litellm = "^1.39.5"
 beartype = "^0.18.5"
+termcolor = "^1.1.0"
+
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "*"
@@ -49,6 +51,7 @@ python_files = "test_*.py"
 
 [tool.codespell]
 ignore-words-list = "dout, te, indicies, astroid"
+skip = ["data"]
 
 [tool.isort]
 profile = "black"
@@ -71,8 +74,6 @@ target-version = "py310"
 [tool.ruff.format]
 quote-style = "single"
 indent-style = "space"
-docstring-code-format = true
-docstring-code-line-length = 88
 
 [tool.mypy-arxiv]
 ignore_missing_imports = true

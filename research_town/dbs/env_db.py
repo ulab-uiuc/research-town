@@ -47,6 +47,7 @@ class EnvLogDB:
     def __init__(self) -> None:
         self.data: Dict[str, List[Any]] = {
             'PaperProfile': [],
+            'ResearchPaperSubmission': [],
             'AgentPaperReviewLog': [],
             'AgentPaperRebuttalLog': [],
             'AgentPaperMetaReviewLog': [],

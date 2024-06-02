@@ -23,17 +23,27 @@ def api_calling_error_exponential_backoff(
     def decorator(func: T) -> T:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Optional[List[str]]:
+            error_handler_mode = kwargs.get('mode', None)
+            if error_handler_mode == 'TEST':
+                modified_retries = 1
+                modified_base_wait_time = 1
+            else:
+                modified_retries = retries
+                modified_base_wait_time = base_wait_time
+
             attempts = 0
-            while attempts < retries:
+            while attempts < modified_retries:
                 try:
                     return func(*args, **kwargs)
                 except Exception as e:
-                    wait_time = base_wait_time * (2**attempts)
+                    wait_time = modified_base_wait_time * (2**attempts)
                     print(f'Attempt {attempts + 1} failed: {e}')
                     print(f'Waiting {wait_time} seconds before retrying...')
                     time.sleep(wait_time)
                     attempts += 1
-            print(f"Failed to execute '{func.__name__}' after {retries} retries.")
+            print(
+                f"Failed to execute '{func.__name__}' after {modified_retries} retries."
+            )
             return None
 
         return cast(T, wrapper)

@@ -1,4 +1,4 @@
-from beartype.typing import Type, TypeVar
+from beartype.typing import List, Type, TypeVar
 from pydantic import BaseModel, Extra, Field, validator
 
 T = TypeVar('T', bound=BaseModel)
@@ -7,6 +7,7 @@ T = TypeVar('T', bound=BaseModel)
 class IdeaEvalOutput(BaseModel):
     overall_score: int = Field(default=-1)
     pk: str = Field(default='0')
+    dimension_scores: List[int] = Field(default=[])
 
     class Config:
         extra = Extra.allow  # Allows extra fields to be stored
@@ -17,12 +18,19 @@ class IdeaEvalOutput(BaseModel):
             raise ValueError('Overall score cannot be None')
         if not (0 <= v <= 100):
             raise ValueError('Overall score must be between 0 and 100')
+        return v
+
+    @validator('dimension_scores', each_item=True)
+    def validate_dimension_scores(cls: Type[T], v: int) -> int:
+        if not (0 <= v <= 10):
+            raise ValueError('Each dimension score must be between 0 and 10')
         return v
 
 
 class PaperEvalOutput(BaseModel):
     overall_score: int = Field(default=-1)
     pk: str = Field(default='0')
+    dimension_scores: List[int] = Field(default=[])
 
     class Config:
         extra = Extra.allow  # Allows extra fields to be stored
@@ -35,10 +43,17 @@ class PaperEvalOutput(BaseModel):
             raise ValueError('Overall score must be between 0 and 100')
         return v
 
+    @validator('dimension_scores', each_item=True)
+    def validate_dimension_scores(cls: Type[T], v: int) -> int:
+        if not (0 <= v <= 10):
+            raise ValueError('Each dimension score must be between 0 and 10')
+        return v
+
 
 class ReviewEvalOutput(BaseModel):
     overall_score: int = Field(default=-1)
     pk: str = Field(default='0')
+    dimension_scores: List[int] = Field(default=[])
 
     class Config:
         extra = Extra.allow  # Allows extra fields to be stored
@@ -49,6 +64,12 @@ class ReviewEvalOutput(BaseModel):
             raise ValueError('Overall score cannot be None')
         if not (0 <= v <= 100):
             raise ValueError('Overall score must be between 0 and 100')
+        return v
+
+    @validator('dimension_scores', each_item=True)
+    def validate_dimension_scores(cls: Type[T], v: int) -> int:
+        if not (0 <= v <= 10):
+            raise ValueError('Each dimension score must be between 0 and 10')
         return v
 
 
