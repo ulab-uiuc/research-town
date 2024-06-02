@@ -138,7 +138,7 @@ def main(data_path: str, domain: str, model_name:str, review_agent_num: int, rev
     print(f'Domain is: {domain}')
     # collect papers from openreview
     real_paper_db = RealPaperWithReviewDB()
-    paper_file = os.path.join(data_path, f'paper_{domain}.json')
+    paper_file = os.path.join(data_path, 'eval_data','review_eval_data','review_score_eval_data',f'paper_{domain}.json')
     real_paper_db.load_from_file(paper_file)
     Papers2eval = real_paper_db.profile_paper_from_real_review()
 
