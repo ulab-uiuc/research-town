@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
+from research_town.configs import Config
 from research_town.dbs import AgentPaperRebuttalLog
 from tests.db_constants import (
     agent_agent_discussion_log,
@@ -13,7 +14,6 @@ from tests.db_constants import (
     research_insight_B,
 )
 from tests.utils import mock_papers, mock_prompting
-from research_town.configs import Config
 
 
 def test_get_profile() -> None:
@@ -133,7 +133,7 @@ def test_write_paper_meta_review(mock_model_prompting: MagicMock) -> None:
         config=Config(),
     )
     meta_review = research_agent.write_paper_meta_review(
-        paper=paper_profile_A, 
+        paper=paper_profile_A,
         reviews=[reviews],
         config=Config(),
     )

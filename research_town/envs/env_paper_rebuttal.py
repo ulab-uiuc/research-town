@@ -83,7 +83,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
                 meta_review = agent.write_paper_meta_review(
-                    paper=self.submission, 
+                    paper=self.submission,
                     reviews=self.reviews,
                     config=self.config,
                 )

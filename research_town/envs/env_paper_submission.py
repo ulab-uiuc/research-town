@@ -2,6 +2,7 @@ from beartype import beartype
 from beartype.typing import Dict, Generator, List, Union
 
 from ..agents.agent_base import BaseResearchAgent
+from ..configs import Config
 from ..dbs import (
     AgentProfile,
     AgentProfileDB,
@@ -11,7 +12,6 @@ from ..dbs import (
     ResearchPaperSubmission,
 )
 from .env_base import BaseMultiAgentEnv
-from ..configs import Config
 
 LogType = Union[List[Dict[str, str]], None]
 
@@ -86,7 +86,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                     )
 
             insights = agent.read_paper(
-                papers=papers, 
+                papers=papers,
                 domains=['machine learning'],
                 config=self.config,
             )
@@ -102,13 +102,17 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             )
 
             for collaborator_agent in collaborator_agents:
-                idea = collaborator_agent.think_idea(insights=insights, config=self.config)
+                idea = collaborator_agent.think_idea(
+                    insights=insights, config=self.config
+                )
                 ideas.append(idea)
                 yield from self.log(
                     f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(idea)}"
                 )
             summarized_idea = agent.summarize_ideas(ideas=ideas, config=self.config)
-            paper: ResearchPaperSubmission = agent.write_paper(idea=summarized_idea, papers=papers, config=self.config)
+            paper: ResearchPaperSubmission = agent.write_paper(
+                idea=summarized_idea, papers=papers, config=self.config
+            )
             yield from self.log(f'Agent {agent.profile.name} wrote paper: {str(paper)}')
             yield from self.log(f'Agent {agent.profile.name} started paper submission')
 

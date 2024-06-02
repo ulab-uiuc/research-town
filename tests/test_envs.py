@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock, patch
 
+from research_town.configs import Config
 from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB
 from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
@@ -7,7 +8,6 @@ from research_town.envs import (
 )
 from tests.db_constants import agent_profile_A, agent_profile_B, paper_profile_A
 from tests.utils import mock_papers
-from research_town.configs import Config
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -22,7 +22,7 @@ def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
-        config=config
+        config=config,
     )
 
     submission = paper_profile_A

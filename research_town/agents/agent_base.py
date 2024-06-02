@@ -50,10 +50,10 @@ class BaseResearchAgent(object):
 
     @beartype
     def find_collaborators(
-        self, 
-        paper: PaperProfile, 
+        self,
+        paper: PaperProfile,
         config: Config,
-        parameter: float = 0.5, 
+        parameter: float = 0.5,
         max_number: int = 3,
     ) -> List[AgentProfile]:
         # TODO: need rebuild
@@ -80,10 +80,10 @@ class BaseResearchAgent(object):
             else {}
         )
         result = find_collaborators_prompting(
-            input=paper_serialize, 
-            self_profile=self_profile, 
-            collaborator_profiles=collaborator_profiles, 
-            parameter=parameter, 
+            input=paper_serialize,
+            self_profile=self_profile,
+            collaborator_profiles=collaborator_profiles,
+            parameter=parameter,
             max_number=max_number,
             prompt_template=config.prompt_template.find_collaborators,
         )

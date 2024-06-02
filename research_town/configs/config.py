@@ -1,7 +1,11 @@
-from beartype.typing import Optional, MutableMapping
 import yaml
+from beartype.typing import Any, Dict, MutableMapping, Optional, Union
 
-def merge_a_into_b(a: MutableMapping, b: MutableMapping) -> None:
+# Define the specific type for the nested dictionaries
+NestedDictType = Dict[str, Any]
+
+
+def merge_a_into_b(a: MutableMapping[str, Any], b: MutableMapping[str, Any]) -> None:
     """
     Merge dictionary a into dictionary b recursively.
     """
@@ -11,23 +15,34 @@ def merge_a_into_b(a: MutableMapping, b: MutableMapping) -> None:
         else:
             b[key] = value
 
-class ConfigDict(dict):
+
+class ConfigDict(Dict[str, Union[NestedDictType, str]]):
     def __getattr__(self, attr: str) -> str:
         try:
             value = self[attr]
             if isinstance(value, dict):
-                return ConfigDict(value)
+                raise AttributeError(f'Attribute {attr} is a dictionary, not a string')
             return value
         except KeyError:
-            raise AttributeError(f"No such attribute: {attr}")
+            raise AttributeError(f'No such attribute: {attr}')
 
-    def __setattr__(self, key: str, value: Optional[dict]) -> None:
+    def __getitem__(self, key: str) -> Union['ConfigDict', str]:
+        value = super().__getitem__(key)
+        if isinstance(value, dict):
+            return ConfigDict(value)
+        return value
+
+    def __setattr__(self, key: str, value: Union[NestedDictType, str]) -> None:
         self[key] = value
 
     def __delattr__(self, item: str) -> None:
         del self[item]
 
+
 class Config(object):
+    param: ConfigDict
+    prompt_template: ConfigDict
+
     def __init__(self, yaml_config_path: Optional[str] = None) -> None:
         super().__init__()
         self.set_default_params()
@@ -35,11 +50,11 @@ class Config(object):
 
         if yaml_config_path:
             self.load_from_yaml(yaml_config_path)
-        
+
         self.check_prompt_template_placeholder()
 
     def set_default_params(self) -> None:
-        param = {
+        param: NestedDictType = {
             'related_paper_num': 10,
             'base_llm': 'mistralai/Mixtral-8x7B-Instruct-v0.1',
             'max_collaborators_num': 3,
@@ -47,7 +62,7 @@ class Config(object):
         self.param = ConfigDict(param)
 
     def set_default_prompt_templates(self) -> None:
-        templates = {
+        templates: NestedDictType = {
             'find_collaborators': (
                 'Given the name and profile of me, could you find {max_number} collaborators for the following collaboration task?'
                 'Here is my profile: {self_serialize_all}'
@@ -104,15 +119,13 @@ class Config(object):
             'discuss': (
                 'Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. '
                 'Here are the messages from other researchers: {message}'
-            )
+            ),
         }
-        self.prompt_template = ConfigDict()
-        for key, value in templates.items():
-            self.prompt_template[key] = value
+        self.prompt_template = ConfigDict(templates)
 
     def load_from_yaml(self, yaml_config_path: str) -> None:
         with open(yaml_config_path, 'r') as f:
-            yaml_cfg = yaml.safe_load(f)
+            yaml_cfg: NestedDictType = yaml.safe_load(f)
         self.merge_from_other_cfg(ConfigDict(yaml_cfg))
 
     def save_to_yaml(self, yaml_config_path: str) -> None:
@@ -122,7 +135,12 @@ class Config(object):
     def check_prompt_template_placeholder(self) -> None:
         templates = self.prompt_template
         required_placeholders = {
-            'find_collaborators': ['{max_number}', '{self_serialize_all}', '{task_serialize_all}', '{collaborators_serialize_all}'],
+            'find_collaborators': [
+                '{max_number}',
+                '{self_serialize_all}',
+                '{task_serialize_all}',
+                '{collaborators_serialize_all}',
+            ],
             'query_paper': ['{profile_bio}', '{domains}'],
             'read_paper': ['{profile_bio}', '{domains}', '{papers}'],
             'think_idea': ['{insights}'],
@@ -136,13 +154,19 @@ class Config(object):
         }
 
         for template_name, placeholders in required_placeholders.items():
-            template = templates.get(template_name, "")
+            template = templates.get(template_name, '')
             for placeholder in placeholders:
-                assert placeholder in template, f"Template '{template_name}' is missing placeholder '{placeholder}'"
+                assert (
+                    placeholder in template
+                ), f"Template '{template_name}' is missing placeholder '{placeholder}'"
 
     def merge_from_other_cfg(self, other_cfg: ConfigDict) -> None:
         for attr in vars(self):
-            if isinstance(getattr(self, attr), ConfigDict) and attr in other_cfg:
-                merge_a_into_b(other_cfg[attr], getattr(self, attr))
-            elif attr in other_cfg:
-                setattr(self, attr, other_cfg[attr])
+            current_attr = getattr(self, attr)
+            other_attr = other_cfg.get(attr)
+            if isinstance(current_attr, ConfigDict) and isinstance(
+                other_attr, ConfigDict
+            ):
+                merge_a_into_b(other_attr, current_attr)
+            elif other_attr is not None:
+                setattr(self, attr, other_attr)
