@@ -10,7 +10,7 @@ from research_town.dbs.env_db import (
 )
 from research_town.dbs.paper_db import PaperProfile, PaperProfileDB
 from research_town.dbs.progress_db import ResearchIdea, ResearchProgressDB
-
+from tempfile import NamedTemporaryFile
 
 def test_envlogdb_basic() -> None:
     db = EnvLogDB()
@@ -69,7 +69,8 @@ def test_envlogdb_basic() -> None:
     results = db.get(AgentPaperReviewLog, **conditions)
     assert len(results) == 0
 
-    file_name = './data/dbs/test_env_logs_db.json'
+    with NamedTemporaryFile(delete=False) as temp_file:
+        file_name = temp_file.name
     db.save_to_file(file_name)
 
     new_db = EnvLogDB()
@@ -124,7 +125,8 @@ def test_agentprofiledb_basic() -> None:
     assert len(results) == 1
     assert results[0].name == 'Jane Smith'
 
-    file_name = './data/dbs/test_agent_profile_db.json'
+    with NamedTemporaryFile(delete=False) as temp_file:
+        file_name = temp_file.name
     db.save_to_file(file_name)
 
     new_db = AgentProfileDB()
@@ -215,7 +217,8 @@ def test_paperprofiledb_basic() -> None:
     assert results[0].title == 'Updated Sample Paper 1'
     assert results[1].title == 'Sample Paper 3'
 
-    file_name = './data/dbs/test_paper_profile_db.json'
+    with NamedTemporaryFile(delete=False) as temp_file:
+        file_name = temp_file.name
     db.save_to_file(file_name)
 
     new_db = PaperProfileDB()
@@ -259,7 +262,8 @@ def test_researchprogressdb_basic() -> None:
     remaining_results = db.get(ResearchIdea, **content3)
     assert len(remaining_results) == 0
 
-    file_name = './data/dbs/test_research_progress_db.json'
+    with NamedTemporaryFile(delete=False) as temp_file:
+        file_name = temp_file.name
     db.save_to_file(file_name)
 
     new_db = ResearchProgressDB()

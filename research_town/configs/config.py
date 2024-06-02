@@ -1,7 +1,6 @@
 from beartype.typing import Optional, MutableMapping, Union, Dict, Any
 import yaml
 
-# Define the specific type for the nested dictionaries
 NestedDictType = Dict[str, Any]
 
 def merge_a_into_b(a: Dict[str, Any], b: Dict[str, Any]) -> None:
@@ -118,6 +117,7 @@ class Config(object):
         with open(yaml_config_path, 'r') as f:
             yaml_cfg: NestedDictType = yaml.safe_load(f)
         self.merge_from_other_cfg(ConfigDict(yaml_cfg))
+        self.check_prompt_template_placeholder()
 
     def save_to_yaml(self, yaml_config_path: str) -> None:
         with open(yaml_config_path, 'w') as f:
@@ -158,6 +158,8 @@ class Config(object):
                 assert placeholder in template, f"Template '{template_name}' is missing placeholder '{placeholder}'"
 
     def merge_from_other_cfg(self, other_cfg: ConfigDict) -> None:
+        if '__root__' in other_cfg:
+            other_cfg = other_cfg['__root__']
         for attr, value in other_cfg.items():
             if isinstance(value, dict):
                 if hasattr(self, attr) and isinstance(getattr(self, attr), ConfigDict):
@@ -166,3 +168,4 @@ class Config(object):
                     setattr(self, attr, ConfigDict(value))
             else:
                 setattr(self, attr, value)
+        self.check_prompt_template_placeholder()
