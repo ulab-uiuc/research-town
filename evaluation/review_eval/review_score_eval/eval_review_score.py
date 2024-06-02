@@ -186,7 +186,7 @@ if __name__ == '__main__':
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Construct the path to data/ directory
-    default_data_path = os.path.join(current_dir, '..', '..','..','data')
+    default_data_path = os.path.abspath(os.path.join(current_dir, '..', '..', '..', 'data'))
 
     parser = argparse.ArgumentParser(description='Process folder path of microbench.')
     parser.add_argument(
