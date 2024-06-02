@@ -52,10 +52,9 @@ class AgentProfileDB(object):
             if agent_profile.bio is not None:
                 bio_list.append(agent_profile.bio)
             else:
-                bio_list.append("")
+                bio_list.append('')
         profile_embed = get_bert_embedding(bio_list)
-        index_l = neiborhood_search(
-            idea_embed, profile_embed, num).reshape(-1)
+        index_l = neiborhood_search(idea_embed, profile_embed, num).reshape(-1)
         index_all = list(index_l)
         match_pk = []
         for index in index_all:

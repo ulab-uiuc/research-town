@@ -37,9 +37,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.env_db = env_db
 
     @beartype
-    def assign_roles(
-        self, num: int = 1
-    ) -> None:
+    def assign_roles(self, num: int = 1) -> None:
         idea = self.submission.abstract
         reviewer_profiles = [
             agent_profile.bio
@@ -50,7 +48,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
             idea=idea, profile_l=reviewer_profiles, num=num
         )
         for index, agent_profile in enumerate(self.agent_profiles):
-            if agent_profile.name in reviewer_pks:
+            if agent_profile.pk in reviewer_pks:
                 self.reviewer_mask[index] = True
 
     @beartype
@@ -75,8 +73,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         # Paper Reviewing
         for index, agent in enumerate(self.agents):
             if self.reviewer_mask[index]:
-                self.reviews.append(
-                    agent.write_paper_review(paper=self.submission))
+                self.reviews.append(agent.write_paper_review(paper=self.submission))
 
         # Paper Meta Reviewing
         for index, agent in enumerate(self.agents):
