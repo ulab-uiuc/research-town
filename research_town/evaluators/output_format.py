@@ -1,5 +1,5 @@
 from beartype.typing import List, Type, TypeVar
-from pydantic import BaseModel, Field, field_validator, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 T = TypeVar('T', bound=BaseModel)
 
