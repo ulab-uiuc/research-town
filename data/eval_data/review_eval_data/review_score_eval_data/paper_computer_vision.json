@@ -1,0 +1,2451 @@
+{
+  "Time Will Tell: New Outlooks and A Baseline for Temporal Multi-View 3D Object Detection": {
+    "paper_pk": null,
+    "title": "Time Will Tell: New Outlooks and A Baseline for Temporal Multi-View 3D Object Detection",
+    "abstract": "While recent camera-only 3D detection methods leverage multiple timesteps, the limited history they use significantly hampers the extent to which temporal fusion can improve object perception. Observing that existing works' fusion of multi-frame images are instances of temporal stereo matching, we find that performance is hindered by the interplay between 1) the low granularity of matching resolution and 2) the sub-optimal multi-view setup produced by limited history usage. Our theoretical and empirical analysis demonstrates that the optimal temporal difference between views varies significantly for different pixels and depths, making it necessary to fuse many timesteps over long-term history. Building on our investigation, we propose to generate a cost volume from a long history of image observations, compensating for the coarse but efficient matching resolution with a more optimal multi-view matching setup. Further, we augment the per-frame monocular depth predictions used for long-term, coarse matching with short-term, fine-grained matching and find that long and short term temporal fusion are highly complementary. While maintaining high efficiency, our framework sets new state-of-the-art on nuScenes, achieving first place on the test set and outperforming previous best art by 5.2% mAP and 3.7% NDS on the validation set. Code will be released here: https://github.com/Divadi/SOLOFusion.",
+    "authors": [
+      "Jinhyung Park",
+      "Chenfeng Xu",
+      "Shijia Yang",
+      "Kurt Keutzer",
+      "Kris M. Kitani",
+      "Masayoshi Tomizuka",
+      "Wei Zhan"
+    ],
+    "keywords": [
+      "Computer Vision",
+      "3D Object Detection",
+      "Stereo Matching"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      5,
+      5
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Pareto Rank-Preserving Supernetwork for HW-NAS": {
+    "paper_pk": null,
+    "title": "Pareto Rank-Preserving Supernetwork for HW-NAS",
+    "abstract": "In neural architecture search (NAS), training every sampled architecture is very time-consuming and should be avoided. \nWeight-sharing is a promising solution to speed up the evaluation process. \nHowever, a sampled subnetwork is not guaranteed to be estimated precisely unless a complete individual training process is done. \nAdditionally, practical deep learning engineering processes require incorporating realistic hardware-performance metrics into the NAS evaluation process, also known as hardware-aware NAS (HW-NAS). \nHW-NAS results a Pareto front, a set of all architectures that optimize conflicting objectives, i.e. task-specific performance and hardware efficiency. \nThis paper proposes a supernetwork training methodology that preserves the Pareto ranking between its different subnetworks resulting in more efficient and accurate neural networks for a variety of hardware platforms. The results show a 97% near Pareto front approximation in less than 2 GPU days of search, which provides x2 speed up compared to state-of-the-art methods. We validate our methodology on NAS-Bench-201, DARTS and ImageNet. Our optimal model achieves 77.2% accuracy (+1.7% compared to baseline) with an inference time of 3.68ms on Edge GPU for ImageNet.",
+    "authors": [
+      "Hadjer Benmeziane",
+      "Hamza Ouarnoughi",
+      "Smail Niar",
+      "Kaoutar El Maghraoui"
+    ],
+    "keywords": [
+      "Neural Architecture Search",
+      "Supernetwork",
+      "Computer Vision"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "real_confidences": [
+      3,
+      5,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Aligning Model and Macaque Inferior Temporal Cortex Representations Improves Model-to-Human Behavioral Alignment and Adversarial Robustness": {
+    "paper_pk": null,
+    "title": "Aligning Model and Macaque Inferior Temporal Cortex Representations Improves Model-to-Human Behavioral Alignment and Adversarial Robustness",
+    "abstract": "While some state-of-the-art artificial neural network systems in computer vision are strikingly accurate models of the corresponding primate visual processing, there are still many discrepancies between these models and the behavior of primates on object recognition tasks. Many current models suffer from extreme sensitivity to adversarial attacks and often do not align well with the image-by-image behavioral error patterns observed in humans. Previous research has provided strong evidence that primate object recognition behavior can be very accurately predicted by neural population activity in the inferior temporal (IT) cortex, a brain area in the late stages of the visual processing hierarchy. Therefore, here we directly test whether making the late stage representations of models more similar to that of macaque IT produces new models that exhibit more robust, primate-like behavior. We conducted chronic, large-scale multi-electrode recordings  across the IT cortex in six non-human primates (rhesus macaques). We then use these data to fine-tune (end-to-end) the model \"IT\" representations such that they are more aligned with the biological IT representations, while preserving accuracy on object recognition tasks. We generate a cohort of models with a range of IT similarity scores validated on held-out animals across two image sets with distinct statistics. Across a battery of optimization conditions, we observed a strong correlation between the models' IT-likeness and alignment with human behavior, as well as an increase in its adversarial robustness. We further assessed the limitations of this approach and find that the improvements in behavioral alignment and adversarial robustness generalize across different image statistics, but not to object categories outside of those covered in our IT training set. Taken together, our results demonstrate that building models that are more aligned with the primate brain leads to more robust and human-like behavior, and call for larger neural data-sets to further augment these gains.",
+    "authors": [
+      "Joel Dapello",
+      "Kohitij Kar",
+      "Martin Schrimpf",
+      "Robert Baldwin Geary",
+      "Michael Ferguson",
+      "David Daniel Cox",
+      "James J. DiCarlo"
+    ],
+    "keywords": [
+      "Computer Vision",
+      "Primate Vision",
+      "Adversarial Robustness",
+      "Behavioral Alignment",
+      "Inferior Temporal Cortex"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      6,
+      6
+    ],
+    "real_confidences": [
+      3,
+      3,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Keypoint Matching via Random Network Consensus": {
+    "paper_pk": null,
+    "title": "Keypoint Matching via Random Network Consensus",
+    "abstract": "Visual description, detection, and matching of keypoints in images are fundamental components of many computer vision problems, such as camera tracking and (re)localization. Recently, learning-based feature extractors on top of convolutional neural networks (CNNs) have achieved state-of-the-art performance. In this paper, we further explore the usage of CNN and present a new approach that ensembles randomly initialized CNNs without any training. Our observation is that the CNN architecture inherently extracts features with certain extents of robustness to viewpoint/illumination changes and thus, it can be regarded as visual descriptors. Consequently, randomized CNNs serve as descriptor extractors and a subsequent consensus mechanism detects keypoints using them. Such description and detection pipeline can be used to match keypoints in images and achieves higher generalization ability than the state-of-the-art methods in our experiments. ",
+    "authors": [
+      "Siyan Dong",
+      "Shuzhe Wang",
+      "Daniel Barath",
+      "Juho Kannala",
+      "Marc Pollefeys",
+      "Baoquan Chen"
+    ],
+    "keywords": [
+      "Computer Vision",
+      "Keypoint Matching",
+      "Randomized Networks",
+      "Visual Descriptor",
+      "Detector"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      8
+    ],
+    "real_confidences": [
+      3,
+      3,
+      2
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "Route, Interpret, Repeat: Blurring the Line Between Posthoc Explainability and Interpretable Models ": {
+    "paper_pk": null,
+    "title": "Route, Interpret, Repeat: Blurring the Line Between Posthoc Explainability and Interpretable Models ",
+    "abstract": "The current approach to ML model design is either to choose a flexible Blackbox model and explain it post hoc or to start with an interpretable model. Blackbox models are flexible but difficult to explain, whereas interpretable models are designed to be explainable. However, developing interpretable models necessitates extensive ML knowledge, and the resulting models tend to be less flexible, offering potentially subpar performance compared to their Blackbox equivalents. This paper aims to blur the distinction between a post hoc explanation of a BlackBox and constructing interpretable models. We propose beginning with a flexible BlackBox model and gradually carving out a mixture of interpretable models and a residual network. Our design identifies a subset of samples and routes them through the interpretable models. The remaining samples are routed through a flexible residual network. We adopt First Order Logic (FOL) as the interpretable model's backbone, which provides basic reasoning on the concept retrieved from the BlackBox model. On the residual network, we repeat the method until the proportion of data explained by the residual network falls below a desired threshold. \nOur approach offers several advantages. First, the mixture of interpretable and flexible residual networks results in almost no compromise in performance. Second, the rout, interpret, and repeat approach yields a highly flexible interpretable model. Our extensive experiment demonstrates the performance of the model on various datasets. We show that by editing the FOL model, we can fix the shortcut learned by the original BlackBox model. Finally, our method provides a framework for a hybrid symbolic-connectionist network that is simple to train and adaptable to many applications.",
+    "authors": [
+      "Shantanu Ghosh",
+      "Ke Yu",
+      "Forough Arabshahi",
+      "kayhan Batmanghelich"
+    ],
+    "keywords": [
+      "Explainable AI",
+      "Posthoc explanation",
+      "Computer Vision"
+    ],
+    "real_all_scores": [
+      8,
+      5,
+      8
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "How deep convolutional neural networks lose spatial information with training": {
+    "paper_pk": null,
+    "title": "How deep convolutional neural networks lose spatial information with training",
+    "abstract": "A central question of machine learning is how deep nets  manage to learn tasks in high dimensions. An appealing hypothesis is that they achieve this feat by building a representation of the data where information  irrelevant to the task is lost. For image data sets, this view is supported by the observation that after (and not before) training,  the neural representation becomes less and less sensitive to diffeomorphisms acting on images as the signal propagates through the net.  \nThis loss of sensitivity correlates with performance, and surprisingly  also correlates  with a gain of sensitivity to white noise acquired during training. These facts are unexplained, and as we demonstrate still hold when white noise is added to the images of the training set. Here, we (i) show empirically for various architectures that stability to image diffeomorphisms is achieved by spatial pooling in the first half of the net, and by channel pooling in the second half, (ii) introduce a scale-detection task for a simple model of data where pooling is learnt during training, which captures all empirical observations above and (iii) compute in this model how stability to diffeomorphisms and noise scale with depth. The scalings are found to depend on the presence of strides in the net architecture. We find that the increased sensitivity to noise is due to the perturbing noise piling up during pooling, after a ReLU non-linearity is applied to the noise in the internal layers.",
+    "authors": [
+      "Umberto Maria Tomasini",
+      "Leonardo Petrini",
+      "Francesco Cagnetta",
+      "Matthieu Wyart"
+    ],
+    "keywords": [
+      "Deep Learning Theory",
+      "Convolutional Neural Networks",
+      "Curse of Dimensionality",
+      "Representation Learning",
+      "Feature Learning",
+      "Computer Vision",
+      "Pooling",
+      "Stability",
+      "Diffeomorphisms",
+      "Gaussian noise",
+      "Image Classification",
+      "Learning Invariants"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      3,
+      1
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4,
+      5
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Human alignment of neural network representations": {
+    "paper_pk": null,
+    "title": "Human alignment of neural network representations",
+    "abstract": "Today\u2019s computer vision models achieve human or near-human level performance across a wide variety of vision tasks. However, their architectures, data, and learning algorithms differ in numerous ways from those that give rise to human vision. In this paper, we investigate the factors that affect the alignment between the representations learned by neural networks and human mental representations inferred from behavioral responses. We find that model scale and architecture have essentially no effect on the alignment with human behavioral responses, whereas the training dataset and objective function both have a much larger impact. These findings are consistent across three datasets of human similarity judgments collected using two different tasks. Linear transformations of neural network representations learned from behavioral responses from one dataset substantially improve alignment with human similarity judgments on the other two datasets. In addition, we find that some human concepts such as food and animals are well-represented by neural networks whereas others such as royal or sports-related objects are not. Overall, although models trained on larger, more diverse datasets achieve better alignment with humans than models trained on ImageNet alone, our results indicate that scaling alone is unlikely to be sufficient to train neural networks with conceptual representations that match those used by humans.",
+    "authors": [
+      "Lukas Muttenthaler",
+      "Jonas Dippel",
+      "Lorenz Linhardt",
+      "Robert A. Vandermeulen",
+      "Simon Kornblith"
+    ],
+    "keywords": [
+      "Human Alignment",
+      "Robustness",
+      "Neural Network Representations",
+      "Human Concepts",
+      "Object Similarity",
+      "Computer Vision"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      6,
+      6
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Vera Verto: Multimodal Hijacking Attack": {
+    "paper_pk": null,
+    "title": "Vera Verto: Multimodal Hijacking Attack",
+    "abstract": "The increasing cost of training machine learning (ML) models has led to the inclusion of new parties to the training pipeline, such as users who contribute training data and companies that provide computing resources. This involvement of such new parties in the ML training process has introduced new attack surfaces for an adversary to exploit. A recent attack in this domain is the model hijacking attack, whereby an adversary hijacks a victim model to implement their own -- possibly malicious -- hijacking tasks. However, the scope of the model hijacking attack is so far limited to computer vision-related tasks. In this paper, we transform the model hijacking attack into a more general multimodal setting, where the hijacking and original tasks are performed on data of different modalities. Specifically, we focus on the setting where an adversary implements a natural language processing (NLP) hijacking task into an image classification model. To mount the attack, we propose a novel encoder-decoder based framework, namely the Blender, which relies on advanced image and language models. Experimental results show that our modal hijacking attack achieves strong performances in different settings. For instance, our attack achieves 94%, 94%, and 95% attack success rate when using the Sogou news dataset to hijack STL10, CIFAR-10, and MNIST classifiers.",
+    "authors": [
+      "Minxing Zhang",
+      "Ahmed Salem",
+      "Michael Backes",
+      "Yang Zhang"
+    ],
+    "keywords": [
+      "Hijacking Attack",
+      "Modal Hijacking",
+      "Computer Vision",
+      "Natural Language Processing"
+    ],
+    "real_all_scores": [
+      6,
+      8,
+      5,
+      6
+    ],
+    "real_confidences": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "PBFormer: Capturing Complex Scene Text Shape with Polynomial Band Transformer": {
+    "paper_pk": null,
+    "title": "PBFormer: Capturing Complex Scene Text Shape with Polynomial Band Transformer",
+    "abstract": "We present PBFormer, an efficient yet powerful scene text detector that unifies the transformer with a novel text shape representation Polynomial  Band (PB).  The representation has four polynomial curves to fit a text's top, bottom, left, and right sides, which can capture a text with a complex shape by varying polynomial coefficients.  PB has appealing features compared with conventional representations: 1)  It can model different curvatures with a fixed number of parameters, while polygon-points-based methods need to utilize a different number of points.  2) It can distinguish adjacent or overlapping texts as they have apparent different curve coefficients, while segmentation-based methods suffer from adhesive spatial positions. PBFormer combines the PB with the transformer, which can directly generate smooth text contours sampled from predicted curves without interpolation.  To leverage the advantage of PB,  PBFormer has a parameter-free cross-scale pixel attention module.  The module can enlarge text features and suppress irrelevant areas to benefit from detecting texts with diverse scale variations.  Furthermore, PBFormer is trained with a shape-contained loss, which not only enforces the piecewise alignment between the ground truth and the predicted curves but also makes curves' position and shapes consistent with each other.  Without bells and whistles about text pre-training, our method is superior to the previous state-of-the-art text detectors on the arbitrary-shaped CTW1500 and Total-Text datasets. Codes will be public.",
+    "authors": [
+      "Ruijin Liu",
+      "Ning Lu",
+      "Dapeng Chen",
+      "Cheng LI",
+      "Zejian Yuan",
+      "Wei Peng"
+    ],
+    "keywords": [
+      "Complex Shape Text Detection",
+      "Text Representation",
+      "Transformer",
+      "Computer Vision",
+      "Application"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      8,
+      5
+    ],
+    "real_confidences": [
+      2,
+      3,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "The Geometry of Self-supervised Learning Models and its Impact on Transfer Learning": {
+    "paper_pk": null,
+    "title": "The Geometry of Self-supervised Learning Models and its Impact on Transfer Learning",
+    "abstract": "Self-supervised learning~(SSL) has emerged as a desirable paradigm in computer vision due to the inability of supervised models to learn representations that can generalize in domains with limited labels. The recent popularity of SSL has led to the development of several models that make use of diverse training strategies, architectures, and data augmentation policies with no existing unified framework to study or assess their effectiveness in transfer learning.\nWe propose a data-driven geometric strategy to analyze different SSL models using local neighborhoods in the feature space induced by each. Unlike existing approaches that consider mathematical approximations of the parameters, individual components, or optimization landscape, our work aims to explore the geometric properties of the representation manifolds learned by SSL models.\nOur proposed manifold graph metrics~(MGMs) \nprovide insights into the geometric similarities and differences between available SSL models, their invariances with respect to specific augmentations, and their performances on transfer learning tasks. Our key findings are two fold: $(i)$ contrary to popular belief, the geometry of SSL models is not tied to its training paradigm (contrastive, non-contrastive, and cluster-based); $(ii)$ we can predict the transfer learning capability for a specific model based on the geometric properties of its semantic and augmentation manifolds.",
+    "authors": [
+      "Romain Cosentino",
+      "Sarath Shekkizhar",
+      "Mahdi Soltanolkotabi",
+      "Salman Avestimehr",
+      "Antonio Ortega"
+    ],
+    "keywords": [
+      "Self-supervised learning",
+      "Transfer Learning",
+      "Graphs",
+      "Geometry",
+      "Embedding",
+      "Computer Vision"
+    ],
+    "real_all_scores": [
+      10,
+      3,
+      3
+    ],
+    "real_confidences": [
+      5,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Measuring axiomatic soundness of counterfactual image models": {
+    "paper_pk": null,
+    "title": "Measuring axiomatic soundness of counterfactual image models",
+    "abstract": "We present a general framework for evaluating image counterfactuals. The power and flexibility of deep generative models make them valuable tools for learning mechanisms in structural causal models. However, their flexibility makes counterfactual identifiability impossible in the general case.\nMotivated by these issues, we revisit Pearl's axiomatic definition of counterfactuals to determine the necessary constraints of any counterfactual inference model: composition, reversibility, and effectiveness. We frame counterfactuals as functions of an input variable, its parents, and counterfactual parents and use the axiomatic constraints to restrict the set of functions that could represent the counterfactual, thus deriving distance metrics between the approximate and ideal functions. We demonstrate how these metrics can be used to compare and choose between different approximate counterfactual inference models and to provide insight into a model's shortcomings and trade-offs.",
+    "authors": [
+      "Miguel Monteiro",
+      "Fabio De Sousa Ribeiro",
+      "Nick Pawlowski",
+      "Daniel C. Castro",
+      "Ben Glocker"
+    ],
+    "keywords": [
+      "Counterfactual inference",
+      "Generative Models",
+      "Computer Vision"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      3,
+      1
+    ],
+    "real_confidences": [
+      5,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Semi-supervised Counting via Pixel-by-pixel Density Distribution Modelling": {
+    "paper_pk": null,
+    "title": "Semi-supervised Counting via Pixel-by-pixel Density Distribution Modelling",
+    "abstract": "This paper focuses on semi-supervised crowd counting, where only a small portion of the training data are labeled. We formulate the pixel-wise density value to regress as a probability distribution, instead of a single deterministic value, and utilize a dual-branch structure to model the corresponding discrete form of the distribution function. On the basis, we propose a semi-supervised crowd counting model. Firstly, we enhance the transformer decoder by usingdensity tokens to specialize the forwards of decoders w.r.t. different density intervals; Secondly, we design a pixel-wise distribution matching loss to measure the differences in the pixel-wise density distributions between the prediction and the ground-truth; Thirdly, we propose an interleaving consistency regularization term to align the prediction of two branches and make them consistent. Extensive experiments on four datasets are performed to show that our method clearly outperforms the competitors by a large margin under various labeled ratio settings.",
+    "authors": [
+      "Hui LIN",
+      "Zhiheng Ma",
+      "Rongrong Ji",
+      "Yaowei Wang",
+      "su zhou",
+      "Xiaopeng Hong"
+    ],
+    "keywords": [
+      "Computer Vision",
+      "Crowd Counting",
+      "Semi-Supervised Learning"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      6,
+      5
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "TaskPrompter: Spatial-Channel Multi-Task Prompting for Dense Scene Understanding": {
+    "paper_pk": null,
+    "title": "TaskPrompter: Spatial-Channel Multi-Task Prompting for Dense Scene Understanding",
+    "abstract": "Learning effective representations simultaneously from multiple tasks in a unified network framework is a fundamental paradigm for multi-task dense visual scene understanding. This requires joint modeling (i) task-generic and (ii) task-specific representations, and (iii) cross-task representation interactions. Existing works typically model these three perspectives with separately designed structures, using shared network modules for task-generic learning, different modules for task-specific learning, and establishing connections among these components for cross-task interactions. It is barely explored in the literature to model these three perspectives in each network layer in an end-to-end manner, which can not only minimize the effort of carefully designing empirical structures for the three multi-task representation learning objectives, but also greatly improve the representation learning capability of the multi-task network since all the model capacity will be used to optimize the three objectives together. In this paper, we propose TaskPrompter, a novel spatial-channel multi-task prompting transformer framework to achieve this target. Specifically, we design a set of spatial-channel task prompts and learn their spatial- and channel interactions with the shared image tokens in each transformer layer with attention mechanism, as aggregating spatial and channel information is critical for dense prediction tasks. Each task prompt learns task-specific representation for one task, while all the prompts can jointly contribute to the learning of the shared image token representations, and the interactions between different task prompts model the cross-task relationship. To decode dense predictions for multiple tasks with the learned spatial-channel task prompts from transformer, we accordingly design a dense task prompt decoding mechanism, which queries the shared image tokens using task prompts to obtain spatial- and channel-wise task-specific representations. Extensive experiments on two challenging multi-task dense scene understanding benchmarks (i.e. NYUD-V2 and PASCAL-Context) show the superiority of the proposed framework and TaskPrompter establishes significant state-of-the-art performances on multi-task dense predictions. Codes and models are made publicly available at https://github.com/prismformore/Multi-Task-Transformer.",
+    "authors": [
+      "Hanrong Ye",
+      "Dan Xu"
+    ],
+    "keywords": [
+      "Multi-task Learning",
+      "Scene Understanding",
+      "Computer Vision"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      5,
+      8
+    ],
+    "real_confidences": [
+      5,
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Understanding the Covariance Structure of Convolutional Filters": {
+    "paper_pk": null,
+    "title": "Understanding the Covariance Structure of Convolutional Filters",
+    "abstract": "Neural network weights are typically initialized at random from univariate distributions, controlling just the variance of individual weights even in highly-structured operations like convolutions. Recent ViT-inspired convolutional networks such as ConvMixer and ConvNeXt use large-kernel depthwise convolutions whose learned filters have notable structure; this presents an opportunity to study their empirical covariances. In this work, we first observe that such learned filters have highly-structured covariance matrices, and moreover, we find that covariances calculated from small networks may be used to effectively initialize a variety of larger networks of different depths, widths, patch sizes, and kernel sizes, indicating a degree of model-independence to the covariance structure. Motivated by these findings, we then propose a learning-free multivariate initialization scheme for convolutional filters using a simple, closed-form construction of their covariance. Models using our initialization outperform those using traditional univariate initializations, and typically meet or exceed the performance of those initialized from the covariances of learned filters; in some cases, this improvement can be achieved without training the depthwise convolutional filters at all. Our code is available at https://github.com/locuslab/convcov.",
+    "authors": [
+      "Asher Trockman",
+      "Devin Willmott",
+      "J Zico Kolter"
+    ],
+    "keywords": [
+      "initialization",
+      "init",
+      "covariance",
+      "gaussian",
+      "convolutional neural network",
+      "convmixer",
+      "convnext",
+      "transfer learning",
+      "spatial mixing",
+      "computer vision",
+      "convolution"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      5,
+      8
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Exploring perceptual straightness in learned visual representations": {
+    "paper_pk": null,
+    "title": "Exploring perceptual straightness in learned visual representations",
+    "abstract": "Humans have been shown to use a ''straightened'' encoding to represent the natural visual world as it evolves in time (Henaff et al. 2019). In the context of discrete video sequences, ''straightened'' means that changes between frames follow a more linear path in representation space at progressively deeper levels of processing. While deep convolutional networks are often proposed as models of human visual processing, many do not straighten natural videos. In this paper, we explore the relationship between network architecture, differing types of robustness, biologically-inspired filtering mechanisms, and representational straightness in response to time-varying input; we identify strengths and limitations of straightness as a useful way of evaluating neural network representations. We find that (1) adversarial training leads to straighter representations in both CNN and transformer-based architectures but (2) this effect is task-dependent, not generalizing to tasks such as segmentation and frame-prediction, where straight representations are not favorable for predictions; and nor to other types of robustness. In addition, (3) straighter representations impart temporal stability to class predictions, even for out-of-distribution data. Finally, (4) biologically-inspired elements increase straightness in the early stages of a network, but do not guarantee increased straightness in downstream layers of CNNs. We show that straightness is an easily computed measure of representational robustness and stability, as well as a hallmark of human representations with benefits for computer vision models.",
+    "authors": [
+      "Anne Harrington",
+      "Vasha DuTell",
+      "Ayush Tewari",
+      "Mark Hamilton",
+      "Simon Stent",
+      "Ruth Rosenholtz",
+      "William T. Freeman"
+    ],
+    "keywords": [
+      "adversarial robustness",
+      "deep learning",
+      "representation learning",
+      "computer vision",
+      "neuroscience",
+      "human vision"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      6,
+      5
+    ],
+    "real_confidences": [
+      3,
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Laser: Latent Set Representations for 3D Generative Modeling": {
+    "paper_pk": null,
+    "title": "Laser: Latent Set Representations for 3D Generative Modeling",
+    "abstract": "NeRF provides unparalleled fidelity of novel view synthesis---rendering a 3D scene from an arbitrary viewpoint. NeRF requires training on a large number of views that fully cover a scene, which limits its applicability.\nWhile these issues can be addressed by learning a prior over scenes in various forms, previous approaches have been either applied to overly simple scenes or struggling to render unobserved parts.\nWe introduce Laser-NV---a generative model which achieves high modelling capacity, and which is based on a set-valued latent representation modelled by normalizing flows.\nSimilarly to previous amortized approaches, Laser-NV learns structure from multiple scenes and is capable of fast, feed-forward inference from few views. \nTo encourage higher rendering fidelity and consistency with observed views, Laser-NV further incorporates a geometry-informed attention mechanism over the observed views.\nLaser-NV further produces diverse and plausible completions of occluded parts of a scene while remaining consistent with observations.\nLaser-NV shows state-of-the-art novel-view synthesis quality when evaluated on ShapeNet and on a novel simulated City dataset, which features high uncertainty in the unobserved regions of the scene.",
+    "authors": [
+      "Pol Moreno",
+      "Adam R. Kosiorek",
+      "Heiko Strathmann",
+      "Daniel Zoran",
+      "Rosalia Galiazzi Schneider",
+      "Bj\u00f6rn Winckler",
+      "Larisa Markeeva",
+      "Theophane Weber",
+      "Danilo Jimenez Rezende"
+    ],
+    "keywords": [
+      "generative models",
+      "nerf",
+      "computer vision",
+      "3D scenes",
+      "novel view synthesis",
+      "variational auto-encoder"
+    ],
+    "real_all_scores": [
+      3,
+      8,
+      5,
+      5
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "URVoice: An Akl-Toussaint/ Graham- Sklansky Approach towards Convex Hull Computation for Sign Language Interpretation": {
+    "paper_pk": null,
+    "title": "URVoice: An Akl-Toussaint/ Graham- Sklansky Approach towards Convex Hull Computation for Sign Language Interpretation",
+    "abstract": "We present URVoice, a vocalizer for the communication impaired, based on the Indian Sign Language Notations. Contemporary psychological theories consider language and speech as devices to understand complex psychological processes and deliver them as cultural products of ideas and communication. Sign and gesture language, offering an intelligent co-ordination of eye-and-hand and ear-and-mouth, has evolved as an intelligent manifestation of speech for the impaired. However, they have very limited modality and iconicity in accommodating a greater range of linguistically relevant meanings. URVoice is an Augmentative and Alternative Communication (AAC) device, which currently features a pipeline of forward communication from signer to collocutor with a novel approach shouldered on convex hull using vision-based approach. The solution achieves real time translation of gesture to text/voice using convex hull as the computational geometry, which follows Akl-Toussaint heuristic and Graham-Sklansky scan algorithms. The results are weighed against our other solutions based on conventional Machine Learning and Deep Learning approaches. A futuristic version of URVoice, with voice translated to sign language gestures, will be a complete solution for effectively bridging the cognitive and communication gap between the impaired and the abled lot.",
+    "authors": [
+      "Madhumitha V",
+      "Santhi Natarajan",
+      "Bharathi Malarkeddy A"
+    ],
+    "keywords": [
+      "Communication disorder",
+      "computational geometry",
+      "convex hull",
+      "sign language",
+      "URVoice",
+      "vocalizer",
+      "computer vision",
+      "deep learning"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      4,
+      3,
+      3,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Tiered Pruning for Efficient Differentialble Inference-Aware Neural Architecture Search": {
+    "paper_pk": null,
+    "title": "Tiered Pruning for Efficient Differentialble Inference-Aware Neural Architecture Search",
+    "abstract": "We propose three novel pruning techniques to improve the cost and results of inference-aware Differentiable Neural Architecture Search (DNAS). First, we introduce $\\textbf{Prunode}$, a stochastic bi-path building block for DNAS, which can search over inner hidden dimensions with $\\mathcal{O}(1)$ memory and compute complexity. Second, we present an algorithm for pruning blocks within a stochastic layer of the SuperNet during the search. Third, we describe a novel technique for pruning unnecessary stochastic layers during the search. The optimized models resulting from the search are called PruNet and establishes a new state-of-the-art Pareto frontier for NVIDIA V100 in terms of inference latency for ImageNet Top-1 image classification accuracy. PruNet as a backbone also outperforms GPUNet and EfficientNet on the COCO object detection task on inference latency relative to mean Average Precision (mAP).",
+    "authors": [
+      "Slawomir Kierat",
+      "Mateusz Sieniawski",
+      "Denys Fridman",
+      "Chenhan D. Yu",
+      "Szymon Migacz",
+      "Pawel Morkisz",
+      "Alex Fit-Florea"
+    ],
+    "keywords": [
+      "nas",
+      "dnas",
+      "neural architecture search",
+      "differentiable neural architecture search",
+      "state-of-the-art",
+      "imagenet",
+      "classification",
+      "gpunet",
+      "efficientnet",
+      "pruning",
+      "inference-aware",
+      "computer vision",
+      "object detection"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      6,
+      5
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "A View From Somewhere: Human-Centric Face Representations": {
+    "paper_pk": null,
+    "title": "A View From Somewhere: Human-Centric Face Representations",
+    "abstract": "Few datasets contain self-identified demographic information, inferring demographic information risks introducing additional biases, and collecting and storing data on sensitive attributes can carry legal risks. Besides, categorical demographic labels do not necessarily capture all the relevant dimensions of human diversity. We propose to implicitly learn a set of continuous face-varying dimensions, without ever asking an annotator to explicitly categorize a person. We uncover the dimensions by learning on A View From Somewhere (AVFS) dataset of 638,180 human judgments of face similarity. We demonstrate the utility of our learned embedding space for predicting face similarity judgments, collecting continuous face attribute values, attribute classification, and comparative dataset diversity auditing. Moreover, using a novel conditional framework, we show that an annotator's demographics influences the \\emph{importance} they place on different attributes when judging similarity, underscoring the \\emph{need} for diverse annotator groups to avoid biases. Data and code are available at \\url{https://github.com/SonyAI/a_view_from_somewhere}.",
+    "authors": [
+      "Jerone Theodore Alexander Andrews",
+      "Przemyslaw Joniak",
+      "Alice Xiang"
+    ],
+    "keywords": [
+      "similarity",
+      "faces",
+      "annotator bias",
+      "computer vision",
+      "cognitive",
+      "mental representations",
+      "diversity"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      5,
+      3
+    ],
+    "real_confidences": [
+      4,
+      3,
+      3,
+      5
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Caption supervision enables robust learners: a controlled study of distributionally robust model training": {
+    "paper_pk": null,
+    "title": "Caption supervision enables robust learners: a controlled study of distributionally robust model training",
+    "abstract": "Vision language models like CLIP are robust to natural distribution shifts, in part because CLIP learns on unstructured data using a technique called caption supervision; the model inteprets image-linked texts as ground-truth labels. In a carefully controlled comparison study, we show that CNNs trained on a standard cross-entropy loss can also benefit from caption supervision, in some cases even more than VL models, on the same data. To facilitate future experiments with high-accuracy caption-supervised models, we introduce CaptionNet, one piece of which is a class-balanced, fully supervised dataset with over 50,000 new human-labeled ImageNet-compliant samples which includes web-scraped captions. In a series of experiments on CaptionNet, we show how the choice of loss function, data filtration and supervision strategy enable robust computer vision.",
+    "authors": [
+      "Benjamin Feuer",
+      "Ameya Joshi",
+      "Chinmay Hegde"
+    ],
+    "keywords": [
+      "self-supervised learning",
+      "computer vision",
+      "effective robustness",
+      "vision language",
+      "CLIP",
+      "ImageNet",
+      "LAION",
+      "CC12M",
+      "YFCC"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      6
+    ],
+    "real_confidences": [
+      4,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Mosaic Representation Learning for Self-supervised Visual Pre-training": {
+    "paper_pk": null,
+    "title": "Mosaic Representation Learning for Self-supervised Visual Pre-training",
+    "abstract": "Self-supervised learning has achieved significant success in learning visual representations without the need for manual annotation. To obtain generalizable representations, a meticulously designed data augmentation strategy is one of the most crucial parts. Recently, multi-crop strategies utilizing a set of small crops as positive samples have been shown to learn spatially structured features. However, it overlooks the diverse contextual backgrounds, which reduces the variance of the input views and degenerates the performance. To address this problem, we propose a mosaic representation learning framework (MosRep), consisting of a new data augmentation strategy that enriches the backgrounds of each small crop and improves the quality of visual representations. Specifically, we randomly sample numbers of small crops from different input images and compose them into a mosaic view, which is equivalent to introducing different background information for each small crop. Additionally, we further jitter the mosaic view to prevent memorizing the spatial locations of each crop. Along with optimization, our MosRep gradually extracts more discriminative features. Extensive experimental results demonstrate that our method improves the performance far greater than the multi-crop strategy on a series of downstream tasks, e.g., +7.4% and +4.9% than the multi-crop strategy on ImageNet-1K with 1% label and 10% label, respectively. Code is available at https://github.com/DerrickWang005/MosRep.git.\n",
+    "authors": [
+      "Zhaoqing Wang",
+      "Ziyu Chen",
+      "Yaqian Li",
+      "Yandong Guo",
+      "Jun Yu",
+      "Mingming Gong",
+      "Tongliang Liu"
+    ],
+    "keywords": [
+      "self-supervised learning",
+      "computer vision"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      5
+    ],
+    "real_confidences": [
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "How hard are computer vision datasets? Calibrating dataset difficulty to viewing time": {
+    "paper_pk": null,
+    "title": "How hard are computer vision datasets? Calibrating dataset difficulty to viewing time",
+    "abstract": "Humans outperform object recognizers despite the fact that models perform well on current datasets. Numerous attempts have been made to create more challenging datasets by scaling them up from the web, exploring distribution shift, or adding controls for biases. The difficulty of each image in each dataset is not independently evaluated, nor is the concept of dataset difficulty as a whole well-posed. We develop a new dataset difficulty metric based on how long humans must view an image in order to classify a target object. Images whose objects can be recognized in 17ms are considered to be easier than those which require seconds of viewing time. Using 133,588 judgments on two major datasets, ImageNet and ObjectNet, we determine the distribution of image difficulties in those datasets, which we find varies wildly, but significantly undersamples hard images. Rather than hoping that distribution shift or other approaches will lead to hard datasets, we should measure the difficulty of datasets and seek to explicitly fill out the class of difficult examples. Analyzing model performance guided by image difficulty reveals that models tend to have lower performance and a larger generalization gap on harder images. Encouragingly for the biological validity of current architectures, much of the variance in human difficulty can be accounted for given an object recognizer by computing a combination of prediction depth, c-score, and adversarial robustness. We release a dataset of such judgments as a complementary metric to raw performance and a network\u2019s ability to explain neural recordings. Such experiments with humans allow us to create a metric for progress in object recognition datasets, which we find are skewed toward easy examples, to test the biological validity of models in a novel way, and to develop tools for shaping datasets as they are being gathered to focus them on filling out the missing class of hard examples from today\u2019s datasets. Dataset and analysis code can be found at https://github.com/image-flash/image-flash-2022.",
+    "authors": [
+      "David Mayo",
+      "Jesse Cummings",
+      "Xinyu Lin",
+      "Dan Gutfreund",
+      "Boris Katz",
+      "Andrei Barbu"
+    ],
+    "keywords": [
+      "deep learning",
+      "computer vision",
+      "cognitive science",
+      "datasets"
+    ],
+    "real_all_scores": [
+      8,
+      5,
+      8,
+      6
+    ],
+    "real_confidences": [
+      4,
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "Shortcut Learning Through the Lens of Early Training Dynamics": {
+    "paper_pk": null,
+    "title": "Shortcut Learning Through the Lens of Early Training Dynamics",
+    "abstract": "Deep Neural Networks (DNNs) are prone to learn shortcut patterns that damage the generalization of the DNN during deployment. Shortcut learning is concerning, particularly when the DNNs are applied to safety-critical domains. This paper aims to better understand shortcut learning through the lens of the learning dynamics of the internal neurons during the training process. More specifically, we make the following observations: (1) While previous works treat shortcuts as synonymous with spurious correlations, we emphasize that not all spurious correlations are shortcuts. We show that shortcuts are only those spurious features that are ``easier'' than the core features. (2) We build upon this premise and use instance difficulty methods (like Prediction Depth) to quantify ``easy'' and to identify this behavior during the training phase. (3) We empirically show that shortcut learning can be detected by observing the learning dynamics of the DNN's early layers, irrespective of the network architecture used. In other words, easy features learned by the initial layers of a DNN early during the training are potential shortcuts. We verify our claims on simulated and real medical imaging data and justify the empirical success of our hypothesis by showing the theoretical connections between Prediction Depth and information-theoretic concepts like $\\mathcal{V}$-usable information. Lastly, our experiments show the insufficiency of monitoring only accuracy plots during training (as is common in machine learning pipelines), and we highlight the need for monitoring early training dynamics using example difficulty metrics.",
+    "authors": [
+      "Nihal Murali",
+      "Aahlad Manas Puli",
+      "Ke Yu",
+      "Rajesh Ranganath",
+      "kayhan Batmanghelich"
+    ],
+    "keywords": [
+      "shortcut learning",
+      "spurious correlations",
+      "convolutional neural networks",
+      "deep learning",
+      "machine learning",
+      "computer vision",
+      "training dynamics"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      6,
+      6,
+      3
+    ],
+    "real_confidences": [
+      3,
+      4,
+      1,
+      2,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Part-Based Models Improve Adversarial Robustness": {
+    "paper_pk": null,
+    "title": "Part-Based Models Improve Adversarial Robustness",
+    "abstract": "We show that combining human prior knowledge with end-to-end learning can improve the robustness of deep neural networks by introducing a part-based model for object classification. We believe that the richer form of annotation helps guide neural networks to learn more robust features without requiring more samples or larger models. Our model combines a part segmentation model with a tiny classifier and is trained end-to-end to simultaneously segment objects into parts and then classify the segmented object. Empirically, our part-based models achieve both higher accuracy and higher adversarial robustness than a ResNet-50 baseline on all three datasets. For instance, the clean accuracy of our part models is up to 15 percentage points higher than the baseline's, given the same level of robustness. Our experiments indicate that these models also reduce texture bias and yield better robustness against common corruptions and spurious correlations. The code is publicly available at https://github.com/chawins/adv-part-model.",
+    "authors": [
+      "Chawin Sitawarin",
+      "Kornrapat Pongmala",
+      "Yizheng Chen",
+      "Nicholas Carlini",
+      "David Wagner"
+    ],
+    "keywords": [
+      "adversarial robustness",
+      "adversarial examples",
+      "computer vision",
+      "part-based model"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      5,
+      8
+    ],
+    "real_confidences": [
+      4,
+      3,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "CWATR: Generating Richer Captions with Object Attributes": {
+    "paper_pk": null,
+    "title": "CWATR: Generating Richer Captions with Object Attributes",
+    "abstract": "Image captioning is a popular yet challenging task which is at the intersection of Computer Vision and Natural Language Processing. Recently, transformer-based unified Vision and Language models advanced the state-of-the-art further on image captioning. However, there are still fundamental problems in these models. Even though the generated captions by these models are grammatically correct and describe the input image fairly good, they might overlook important details in the image. In this paper, we demonstrate these problems in a state-of-the-art baseline image captioning method and analyze the reasoning behind these problems. We propose a novel approach, named CWATR (Captioning With ATtRibutes), to integrate object attributes to the generated captions in order to obtain richer and more detailed captions. Our analyses demonstrate that the proposed approach generates richer and more visually grounded captions by integrating attributes of the objects in the scene to the generated captions successfully.",
+    "authors": [
+      "Enes Muvahhid \u015eahin",
+      "G\u00f6zde BOZDA\u011eI AKAR"
+    ],
+    "keywords": [
+      "image captioning",
+      "vision and language pretraining",
+      "object attributes",
+      "machine learning",
+      "deep learning",
+      "computer vision"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      3
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Robust Self-Supervised Learning with Lie Groups": {
+    "paper_pk": null,
+    "title": "Robust Self-Supervised Learning with Lie Groups",
+    "abstract": "Deep learning has led to remarkable advances in computer vision. Even so, today\u2019s best models are brittle when presented with variations that differ even slightly from those seen during training. Minor shifts in the pose, color, or illumination of an object can lead to catastrophic misclassifications. State-of-the art models struggle to understand how a set of variations can affect different objects. We propose a framework for instilling a notion of how objects vary in more realistic settings. Our approach applies the formalism of Lie groups to capture continuous transformations to improve models\u2019 robustness to distributional shifts. We apply our framework on top of state-of-the-art self-supervised learning (SSL) models, finding that explicitly modeling transformations with Lie groups leads to substantial performance gains of greater than 10% for MAE on both known instances seen in typical poses now presented in new poses, and on unknown instances in any pose. We also apply our approach to ImageNet, finding that the Lie operator improves performance by almost 4%. These results demonstrate the promise of learning transformations to improve model robustness.",
+    "authors": [
+      "Mark Ibrahim",
+      "Diane Bouchacourt",
+      "Ari S. Morcos"
+    ],
+    "keywords": [
+      "robustness",
+      "computer vision",
+      "generalization",
+      "self-supervised learning",
+      "out-of-domain generalization"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Uncertainty and Traffic Light Aware Pedestrian Crossing Intention Prediction": {
+    "paper_pk": null,
+    "title": "Uncertainty and Traffic Light Aware Pedestrian Crossing Intention Prediction",
+    "abstract": "Predicting Vulnerable Road User (VRU) crossing intention is one of the major challenges in automated driving. Crossing intention prediction systems trained only on pedestrian features underperform in situations that are most obvious to humans, as the latter take additional context features into consideration. Moreover, such systems tend to be over-confident for out-of-distribution samples, therefore making them less reliable to be used by downstream tasks like sensor fusion and trajectory planning for automated vehicles. In this work, we demonstrate that the results of crossing intention prediction systems can be improved by incorporating traffic light status as an additional input. Further, we make the model robust and interpretable by estimating uncertainty. Experiments on the PIE dataset show that the F1-score improved from 0.77 to 0.82 and above for three different baseline systems when considering traffic-light context. By adding uncertainty, we show increased uncertainty values for out-of-distribution samples, therefore leading to interpretable and reliable predictions of crossing intention.",
+    "authors": [
+      "Minali Upreti",
+      "Jayanth Ramesh",
+      "Chandan R Kumar",
+      "Bodhisattwa Chakraborty",
+      "VIKRAM BALISAVIRA",
+      "Phillip Czech",
+      "Vitali Kaiser",
+      "Markus Roth"
+    ],
+    "keywords": [
+      "deep learning",
+      "computer vision",
+      "recurrent neural networks",
+      "uncertainty estimation",
+      "intention prediction",
+      "attention mechanism",
+      "autonomous driving"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      3
+    ],
+    "real_confidences": [
+      3,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Video Scene Graph Generation from Single-Frame Weak Supervision": {
+    "paper_pk": null,
+    "title": "Video Scene Graph Generation from Single-Frame Weak Supervision",
+    "abstract": "Video scene graph generation (VidSGG) aims to generate a sequence of graph-structure representations for the given video. However, all existing VidSGG methods are fully-supervised, i.e., they need dense and costly manual annotations. In this paper, we propose the first weakly-supervised VidSGG task with only single-frame weak supervision: SF-VidSGG. By ``weakly-supervised\", we mean that SF-VidSGG relaxes the training supervision from two different levels: 1) It only provides single-frame annotations instead of all-frame annotations. 2) The single-frame ground-truth annotation is still a weak image SGG annotation, i.e., an unlocalized scene graph. To solve this new task, we also propose a novel Pseudo Label Assignment based method, dubbed as PLA. PLA is a two-stage method, which generates pseudo visual relation annotations for the given video at the first stage, and then trains a fully-supervised VidSGG model with these pseudo labels. Specifically, PLA consists of three modules: an object PLA module, a predicate PLA module, and a future predicate prediction (FPP) module. Firstly, in the object PLA, we localize all objects for every frame. Then, in the predicate PLA, we design two different teachers to assign pseudo predicate labels. Lastly, in the FPP module, we fusion these two predicate pseudo labels by the regularity of relation transition in videos. Extensive ablations and results on the benchmark Action Genome have demonstrated the effectiveness of our PLA.",
+    "authors": [
+      "Siqi Chen",
+      "Jun Xiao",
+      "Long Chen"
+    ],
+    "keywords": [
+      "computer vision",
+      "video scene graph generation",
+      "weakly-supervised learning"
+    ],
+    "real_all_scores": [
+      8,
+      5,
+      6,
+      5,
+      8
+    ],
+    "real_confidences": [
+      3,
+      3,
+      4,
+      4,
+      5
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "DiffEdit: Diffusion-based semantic image editing with mask guidance": {
+    "paper_pk": null,
+    "title": "DiffEdit: Diffusion-based semantic image editing with mask guidance",
+    "abstract": "Image generation has recently seen tremendous advances, with diffusion models allowing to synthesize convincing images for a large variety of text prompts. In this article, we propose DiffEdit, a method to take advantage of text-conditioned diffusion models for the task of semantic image editing, where the goal is to edit an image based on a text query. Semantic image editing is an extension of image generation, with the additional constraint that the generated image should be as similar as possible to a given input image. \nCurrent editing methods based on diffusion models usually require to provide a mask, making the task much easier by treating it as a conditional inpainting task. In contrast, our main contribution is able to automatically generate a mask highlighting regions of the input image that need to be edited, by contrasting predictions of a diffusion model conditioned on different text prompts. Moreover, we rely on latent inference to preserve content in those regions of interest and show excellent synergies with mask-based diffusion. \nDiffEdit achieves state-of-the-art editing performance on ImageNet. In addition, we evaluate semantic image editing in more challenging settings, using images from the COCO dataset as well as text-based generated images.",
+    "authors": [
+      "Guillaume Couairon",
+      "Jakob Verbeek",
+      "Holger Schwenk",
+      "Matthieu Cord"
+    ],
+    "keywords": [
+      "computer vision",
+      "image editing",
+      "diffusion models"
+    ],
+    "real_all_scores": [
+      6,
+      8,
+      5
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "Spatio-temporal Self-Attention for Egocentric 3D Pose Estimation": {
+    "paper_pk": null,
+    "title": "Spatio-temporal Self-Attention for Egocentric 3D Pose Estimation",
+    "abstract": "Vision-based ego-centric 3D human pose estimation (ego-HPE) is essential to support critical applications of xR-technologies. However, severe self-occlusions and strong distortion introduced by the fish-eye view from the head mounted camera, make ego-HPE extremely challenging. While current state-of-the-art (SOTA) methods try to address the distortion, they still suffer from large errors in the most critical joints (such as hands) due to self-occlusions. To this end, we propose a spatio-temporal transformer model that can attend to semantically rich feature maps obtained from popular convolutional backbones. Leveraging the complex spatio-temporal information encoded in ego-centric videos, we design a spatial concept called feature map tokens (FMT) which can attend to all the other spatial units in our spatio-temporal feature maps. Powered by this FMT-based transformer, we build Egocentric Spatio-Temporal Self-Attention Network (Ego-STAN), which uses heatmap-based representations and spatio-temporal attention specialized to address distortions and self-occlusions in ego-HPE.\nOur quantitative evaluation on the contemporary sequential xR-EgoPose dataset, achieves a 38.2% improvement on the highest error joints against the SOTA ego-HPE model, while accomplishing a 22% decrease in the number of parameters. Finally, we also demonstrate the generalization capabilities of our model to real-world HPE tasks beyond ego-views.",
+    "authors": [
+      "Jinman Park",
+      "Kimathi Kaai",
+      "Saad Hossain",
+      "Norikatsu Sumi",
+      "Sirisha Rambhatla",
+      "Paul W. Fieguth"
+    ],
+    "keywords": [
+      "pose estimation",
+      "egocentric vision",
+      "computer vision",
+      "self-attention",
+      "spatio-temporal data analysis"
+    ],
+    "real_all_scores": [
+      5,
+      6,
+      5
+    ],
+    "real_confidences": [
+      4,
+      3,
+      5
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Iterative Patch Selection for High-Resolution Image Recognition": {
+    "paper_pk": null,
+    "title": "Iterative Patch Selection for High-Resolution Image Recognition",
+    "abstract": "High-resolution images are prevalent in various applications, such as autonomous driving and computer-aided diagnosis. However, training neural networks on such images is computationally challenging and easily leads to out-of-memory errors even on modern GPUs. We propose a simple method, Iterative Patch Selection (IPS), which decouples the memory usage from the input size and thus enables the processing of arbitrarily large images under tight hardware constraints. IPS achieves this by selecting only the most salient patches, which are then aggregated into a global representation for image recognition. For both patch selection and aggregation, a cross-attention based transformer is introduced, which exhibits a close connection to Multiple Instance Learning. Our method demonstrates strong performance and has wide applicability across different domains, training regimes and image sizes while using minimal accelerator memory. For example, we are able to finetune our model on whole-slide images consisting of up to 250k patches (>16 gigapixels) with only 5 GB of GPU VRAM at a batch size of 16.",
+    "authors": [
+      "Benjamin Bergner",
+      "Christoph Lippert",
+      "Aravindh Mahendran"
+    ],
+    "keywords": [
+      "high-resolution images",
+      "memory-efficient deep learning",
+      "multiple instance learning",
+      "transformer",
+      "image recognition",
+      "computer vision"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      5,
+      3
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Light-weight probing of unsupervised representations for Reinforcement Learning": {
+    "paper_pk": null,
+    "title": "Light-weight probing of unsupervised representations for Reinforcement Learning",
+    "abstract": "Unsupervised visual representation learning offers the opportunity to leverage large corpora of unlabeled trajectories to form useful visual representations, which can benefit the training of reinforcement learning (RL) algorithms. However, evaluating the fitness of such representations requires training RL algorithms which is both computationally intensive and has high variance outcomes. To alleviate this issue, we design an evaluation protocol for unsupervised RL representations with lower variance and up to 600x lower computational cost. Inspired by the vision community, we propose two linear probing tasks: predicting the reward observed in a given state, and predicting the action of an expert in a given state. These two tasks are generally applicable to many RL domains, and we show through rigorous experimentation that they correlate strongly with the actual downstream control performance on the Atari100k Benchmark. This provides a better method for exploring the space of pretraining algorithms without the need of running RL evaluations for every setting. Leveraging this framework, we further improve existing self-supervised learning (SSL) recipes for RL, highlighting the importance of the forward model, the size of the visual backbone, and the precise formulation of the unsupervised objective.",
+    "authors": [
+      "Wancong Zhang",
+      "Anthony GX-Chen",
+      "Vlad Sobal",
+      "Yann LeCun",
+      "Nicolas Carion"
+    ],
+    "keywords": [
+      "machine learning",
+      "unsupervised learning",
+      "reinforcement learning",
+      "computer vision"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      3,
+      3
+    ],
+    "real_confidences": [
+      4,
+      4,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "ManiSkill2: A Unified Benchmark for Generalizable Manipulation Skills": {
+    "paper_pk": null,
+    "title": "ManiSkill2: A Unified Benchmark for Generalizable Manipulation Skills",
+    "abstract": "Generalizable manipulation skills, which can be composed to tackle long-horizon and complex daily chores, are one of the cornerstones of Embodied AI. However, existing benchmarks, mostly composed of a suite of simulatable environments, are insufficient to push cutting-edge research works because they lack object-level topological and geometric variations, are not based on fully dynamic simulation, or are short of native support for multiple types of manipulation tasks. To this end, we present ManiSkill2, the next generation of the SAPIEN ManiSkill benchmark, to address critical pain points often encountered by researchers when using benchmarks for generalizable manipulation skills. ManiSkill2 includes 20 manipulation task families with 2000+ object models and 4M+ demonstration frames, which cover stationary/mobile-base, single/dual-arm, and rigid/soft-body manipulation tasks with 2D/3D-input data simulated by fully dynamic engines. It defines a unified interface and evaluation protocol to support a wide range of algorithms (e.g., classic sense-plan-act, RL, IL), visual observations (point cloud, RGBD), and controllers (e.g., action type and parameterization). Moreover, it empowers fast visual input learning algorithms so that a CNN-based policy can collect samples at about 2000 FPS with 1 GPU and 16 processes on a regular workstation. It implements a render server infrastructure to allow sharing rendering resources across all environments, thereby significantly reducing memory usage. We open-source all codes of our benchmark (simulator, environments, and baselines) and host an online challenge open to interdisciplinary researchers.",
+    "authors": [
+      "Jiayuan Gu",
+      "Fanbo Xiang",
+      "Xuanlin Li",
+      "Zhan Ling",
+      "Xiqiang Liu",
+      "Tongzhou Mu",
+      "Yihe Tang",
+      "Stone Tao",
+      "Xinyue Wei",
+      "Yunchao Yao",
+      "Xiaodi Yuan",
+      "Pengwei Xie",
+      "Zhiao Huang",
+      "Rui Chen",
+      "Hao Su"
+    ],
+    "keywords": [
+      "object manipulation",
+      "benchmark",
+      "computer vision",
+      "robotics",
+      "reinforcement learning"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      8,
+      6,
+      6
+    ],
+    "real_confidences": [
+      3,
+      3,
+      2,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "CLIP-PAE: Projection-Augmentation Embedding to Extract Relevant Features for a Disentangled, Interpretable and Controllable Text-Guided Image Manipulation": {
+    "paper_pk": null,
+    "title": "CLIP-PAE: Projection-Augmentation Embedding to Extract Relevant Features for a Disentangled, Interpretable and Controllable Text-Guided Image Manipulation",
+    "abstract": "Recently introduced Contrastive Language-Image Pre-Training (CLIP) bridges images and text by embedding them into a joint latent space. This opens the door to ample literature that aims to manipulate an input image by providing a textual explanation. However, due to the discrepancy between image and text embeddings in the joint space, using text embeddings as the optimization target often introduces undesired artifacts in the resulting images. Disentanglement, interpretability, and controllability are also hard to guarantee for manipulation. To alleviate these problems, we propose to define corpus subspaces spanned by prompts to capture specific image characteristics. We introduce CLIP projection-augmentation embedding (PAE) as an optimization target to improve the performance of text-guided image manipulation. Our method is a simple and general paradigm that can be easily computed and adapted, and smoothly incorporated into any CLIP-based latent manipulation algorithm to improve performance. To demonstrate the effectiveness of our method, we conduct several theoretical and empirical system studies. As a case study, we utilize the method for text-guided semantic face editing. We quantitatively and qualitatively demonstrate that PAE facilitates a more disentangled, interpretable, and controllable image manipulation method with state of the art quality and accuracy.",
+    "authors": [
+      "Chenliang Zhou",
+      "Fangcheng Zhong",
+      "Cengiz Oztireli"
+    ],
+    "keywords": [
+      "computer vision",
+      "text-guided image manipulation",
+      "latent manipulation"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      5,
+      5
+    ],
+    "real_confidences": [
+      2,
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Suppressing the Heterogeneity: A Strong Feature Extractor for Few-shot Segmentation": {
+    "paper_pk": null,
+    "title": "Suppressing the Heterogeneity: A Strong Feature Extractor for Few-shot Segmentation",
+    "abstract": "This paper tackles the Few-shot Semantic Segmentation (FSS) task with focus on learning the feature extractor. Somehow the feature extractor has been overlooked by recent state-of-the-art methods, which directly use a deep model pretrained on ImageNet for feature extraction (without further fine-tuning). Under this background, we think the FSS feature extractor deserves exploration and observe the heterogeneity (i.e., the intra-class diversity in the raw images) as a critical challenge hindering the intra-class feature compactness. The heterogeneity has three levels from coarse to fine: 1) Sample-level: the inevitable distribution gap between the support and query images makes them heterogeneous from each other. 2) Region-level: the background in FSS actually contains multiple regions with different semantics. 3) Patch-level: some neighboring patches belonging to a same class may appear quite different from each other. Motivated by these observations, we propose a feature extractor with Multi-level Heterogeneity Suppressing (MuHS). MuHS leverages the attention mechanism in transformer backbone to effectively suppress all these three-level heterogeneity. Concretely, MuHS reinforces the attention / interaction between different samples (query and support), different regions and neighboring patches by constructing cross-sample attention, cross-region interaction and a novel masked image segmentation (inspired by the recent masked image modeling), respectively. We empirically show that 1) MuHS brings consistent improvement for various FSS heads and 2) using a simple linear classification head, MuHS sets new states of the art on multiple FSS datasets, validating the importance of FSS feature learning.",
+    "authors": [
+      "Zhengdong Hu",
+      "Yifan Sun",
+      "Yi Yang"
+    ],
+    "keywords": [
+      "deep learning",
+      "computer vision",
+      "few-shot learning",
+      "few-shot semantic segmentation"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      5,
+      3
+    ],
+    "real_confidences": [
+      2,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Evaluating Weakly Supervised Object Localization Methods Right? A Study on Heatmap-based XAI and Neural Backed Decision Tree": {
+    "paper_pk": null,
+    "title": "Evaluating Weakly Supervised Object Localization Methods Right? A Study on Heatmap-based XAI and Neural Backed Decision Tree",
+    "abstract": "Choe et al have investigated several aspects of Weakly Supervised Object Localization (WSOL) with only image label. They addressed the ill-posed nature of the problem and showed that WSOL has not significantly improved beyond the baseline method class activation mapping (CAM). We report the results of similar experiments on ResNet50 with some crucial differences: (1) we perform WSOL using heatmap-based eXplanaible AI (XAI) methods (2) our model is not class agnostic since we are interested in the XAI aspect as well. Under similar protocol, we find that XAI methods perform WSOL with very sub-standard MaxBoxAcc scores. The experiment is then repeated for the same model trained with Neural Backed Decision Tree (NBDT) and we found that vanilla CAM yields significantly better WSOL performance after NBDT training.",
+    "authors": [
+      "Erico Tjoa",
+      "Cuntai Guan"
+    ],
+    "keywords": [
+      "object localization",
+      "computer vision",
+      "deep learning",
+      "deep neural network"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      8,
+      8
+    ],
+    "real_confidences": [
+      4,
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Transport with Support: Data-Conditional Diffusion Bridges": {
+    "paper_pk": null,
+    "title": "Transport with Support: Data-Conditional Diffusion Bridges",
+    "abstract": "The dynamic Schr\u00f6dinger bridge problem provides an appealing setting for posing optimal transport problems as learning non-linear diffusion processes and enables efficient iterative solvers. Recent works have demonstrated state-of-the-art results (eg, in modelling single-cell embryo RNA sequences or sampling from complex posteriors) but are typically limited to learning bridges with only initial and terminal constraints. Our work extends this paradigm by proposing the Iterative Smoothing Bridge (ISB). We combine learning diffusion models with Bayesian filtering and optimal control, allowing for constrained stochastic processes governed by sparse observations at intermediate stages and terminal constraints. We assess the effectiveness of our method on synthetic and real-world data and show that the ISB generalises well to high-dimensional data, is computationally efficient, and provides accurate estimates of the marginals at intermediate and terminal times. ",
+    "authors": [
+      "Ella Tamir",
+      "Martin Trapp",
+      "Arno Solin"
+    ],
+    "keywords": [
+      "diffusion models",
+      "optimal transport",
+      "particle filtering",
+      "stochastic control",
+      "sequential Monte Carlo"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      6,
+      8
+    ],
+    "real_confidences": [
+      2,
+      3,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Diffusion-GAN: Training GANs with Diffusion": {
+    "paper_pk": null,
+    "title": "Diffusion-GAN: Training GANs with Diffusion",
+    "abstract": "Generative adversarial networks (GANs) are challenging to train stably, and a promising remedy of injecting instance noise into the discriminator input has not been very effective in practice.  In this paper, we propose Diffusion-GAN, a novel GAN framework that leverages a forward diffusion chain to generate Gaussian-mixture distributed instance noise. Diffusion-GAN consists of three components, including an adaptive diffusion process, a diffusion timestep-dependent discriminator, and a generator. Both the observed and generated data are diffused by the adaptive diffusion process via different noise-to-data ratios at each timestep. The timestep-dependent discriminator learns to distinguish the diffused real data from the diffused generated data at each diffusion timestep. The generator learns from the discriminator's feedback by backpropagating through the forward diffusion chain, whose length is adaptively adjusted to balance the noise and data levels. We theoretically show that the discriminator's timestep-dependent strategy gives consistent and helpful guidance to the generator, enabling it to match the true data distribution. We demonstrate the advantages of Diffusion-GAN over strong GAN baselines on various datasets, showing that it can produce more realistic images with higher stability and data efficiency than state-of-the-art GANs.",
+    "authors": [
+      "Zhendong Wang",
+      "Huangjie Zheng",
+      "Pengcheng He",
+      "Weizhu Chen",
+      "Mingyuan Zhou"
+    ],
+    "keywords": [
+      "deep generative models",
+      "diffusion models",
+      "data-efficient stable GAN training",
+      "adaptive data augmentation"
+    ],
+    "real_all_scores": [
+      6,
+      8,
+      6,
+      6
+    ],
+    "real_confidences": [
+      3,
+      4,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "Denoising Diffusion Samplers": {
+    "paper_pk": null,
+    "title": "Denoising Diffusion Samplers",
+    "abstract": "Denoising diffusion models are a popular class of generative models providing state-of-the-art results in many domains. One adds gradually noise to data using a diffusion to transform the data distribution into a Gaussian distribution. Samples from the generative model are then obtained by simulating an approximation of the time-reversal of this diffusion initialized by Gaussian samples. Practically, the intractable score terms appearing in the time-reversed process are approximated using score matching techniques. We explore here a similar idea to sample approximately from unnormalized probability density functions and estimate their normalizing constants. We consider a process where the target density diffuses towards a Gaussian. Denoising Diffusion Samplers (DDS) are obtained by approximating the corresponding time-reversal.  While score matching is not applicable in this context, we can leverage many of the ideas introduced in generative modeling for Monte Carlo sampling. Existing theoretical results from denoising diffusion models also provide theoretical guarantees for DDS. We discuss the connections between DDS, optimal control and Schr\\\"odinger bridges and finally demonstrate DDS experimentally on a variety of challenging sampling tasks.",
+    "authors": [
+      "Francisco Vargas",
+      "Will Sussman Grathwohl",
+      "Arnaud Doucet"
+    ],
+    "keywords": [
+      "diffusion models",
+      "importance sampling",
+      "monte carlo",
+      "variational inference"
+    ],
+    "real_all_scores": [
+      5,
+      8,
+      6,
+      6
+    ],
+    "real_confidences": [
+      5,
+      4,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "f-DM: A Multi-stage Diffusion Model via Progressive Signal Transformation": {
+    "paper_pk": null,
+    "title": "f-DM: A Multi-stage Diffusion Model via Progressive Signal Transformation",
+    "abstract": "Diffusion models (DMs) have recently emerged as SoTA tools for generative modeling in various domains. Standard DMs can be viewed as an instantiation of hierarchical variational autoencoders (VAEs) where the latent variables are inferred from input-centered Gaussian distributions with fixed scales and variances. Unlike VAEs, this formulation constrains DMs from changing the latent spaces and\nlearning abstract representations. In this work, we propose f-DM, a generalized family of DMs which allows progressive signal transformation. More precisely, we extend DMs to incorporate a set of (hand-designed or learned) transformations, where the transformed input is the mean of each diffusion step. We propose a generalized formulation and derive the corresponding de-noising objective with a modified sampling algorithm. As a demonstration, we apply f-DM in image generation tasks with a range of functions, including down-sampling, blurring, and learned transformations based on the encoder of pretrained VAEs. In addition, we identify the importance of adjusting the noise levels whenever the signal is sub-sampled and propose a simple rescaling recipe. f-DM can produce high-quality samples on standard image generation benchmarks like FFHQ, AFHQ, LSUN, and ImageNet with better efficiency and semantic interpretation.",
+    "authors": [
+      "Jiatao Gu",
+      "Shuangfei Zhai",
+      "Yizhe Zhang",
+      "Miguel \u00c1ngel Bautista",
+      "Joshua M. Susskind"
+    ],
+    "keywords": [
+      "diffusion models",
+      "progressive signal transformation"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      3,
+      3
+    ],
+    "real_confidences": [
+      4,
+      3,
+      2,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "DreamFusion: Text-to-3D using 2D Diffusion": {
+    "paper_pk": null,
+    "title": "DreamFusion: Text-to-3D using 2D Diffusion",
+    "abstract": "Recent breakthroughs in text-to-image synthesis have been driven by diffusion models trained on billions of image-text pairs. Adapting this approach to 3D synthesis would require large-scale datasets of labeled 3D or multiview data and efficient architectures for denoising 3D data, neither of which currently exist. In this work, we circumvent these limitations by using a pretrained 2D text-to-image diffusion model to perform text-to-3D synthesis. We introduce a loss based on probability density distillation that enables the use of a 2D diffusion model as a prior for optimization of a parametric image generator. Using this loss in a DeepDream-like procedure, we optimize a randomly-initialized 3D model (a Neural Radiance Field, or NeRF) via gradient descent such that its 2D renderings from random angles achieve a low loss. The resulting 3D model of the given text can be viewed from any angle, relit by arbitrary illumination, or composited into any 3D environment. Our approach requires no 3D training data and no modifications to the image diffusion model, demonstrating the effectiveness of pretrained image diffusion models as priors.",
+    "authors": [
+      "Ben Poole",
+      "Ajay Jain",
+      "Jonathan T. Barron",
+      "Ben Mildenhall"
+    ],
+    "keywords": [
+      "diffusion models",
+      "score-based generative models",
+      "NeRF",
+      "neural rendering",
+      "3d synthesis"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      6,
+      6,
+      3
+    ],
+    "real_confidences": [
+      2,
+      4,
+      5,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Sampling is as easy as learning the score: theory for diffusion models with minimal data assumptions": {
+    "paper_pk": null,
+    "title": "Sampling is as easy as learning the score: theory for diffusion models with minimal data assumptions",
+    "abstract": "We provide theoretical convergence guarantees for score-based generative models (SGMs) such as denoising diffusion probabilistic models (DDPMs), which constitute the backbone of large-scale real-world generative models such as DALL$\\cdot$E 2. Our main result is that, assuming accurate score estimates, such SGMs can efficiently sample from essentially any realistic data distribution. In contrast to prior works, our results (1) hold for an $L^2$-accurate score estimate (rather than $L^\\infty$-accurate); (2) do not require restrictive functional inequality conditions that preclude substantial non-log-concavity; (3) scale polynomially in all relevant problem parameters; and (4) match state-of-the-art complexity guarantees for discretization of the Langevin diffusion, provided that the score error is sufficiently small. We view this as strong theoretical justification for the empirical success of SGMs. We also examine SGMs based on the critically damped Langevin diffusion (CLD). Contrary to conventional wisdom, we provide evidence that the use of the CLD does *not* reduce the complexity of SGMs.",
+    "authors": [
+      "Sitan Chen",
+      "Sinho Chewi",
+      "Jerry Li",
+      "Yuanzhi Li",
+      "Adil Salim",
+      "Anru Zhang"
+    ],
+    "keywords": [
+      "diffusion models",
+      "score-based generative models",
+      "sampling",
+      "score estimation",
+      "Langevin",
+      "stochastic differential equations"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      5
+    ],
+    "real_confidences": [
+      3,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "From Points to Functions: Infinite-dimensional Representations in Diffusion Models": {
+    "paper_pk": null,
+    "title": "From Points to Functions: Infinite-dimensional Representations in Diffusion Models",
+    "abstract": "Diffusion-based generative models learn to iteratively transfer unstructured noise to a complex target distribution as opposed to Generative Adversarial Networks (GANs) or the decoder of Variational Autoencoders (VAEs) which produce samples from the target distribution in a single step. Thus, in diffusion models every sample is naturally connected to a random trajectory which is a solution to a learned stochastic differential equation (SDE). Generative models are only concerned with the final state of this trajectory that delivers samples from the desired distribution. \\cite{abstreiter2021diffusion} showed that these stochastic trajectories can be seen as continuous filters that wash out information along the way. Consequently, it is reasonable to ask if there is an intermediate time step at which the preserved information is optimal for a given downstream task. In this work, we show that a combination of information content from different time steps gives a strictly better representation for the downstream task. We introduce an attention and recurrence based modules that ``learn to mix'' information content of various time-steps such that the resultant representation leads to superior performance in downstream tasks.\n",
+    "authors": [
+      "Sarthak Mittal",
+      "Guillaume Lajoie",
+      "Stefan Bauer",
+      "Arash Mehrjou"
+    ],
+    "keywords": [
+      "representation learning",
+      "diffusion models",
+      "score-based learning"
+    ],
+    "real_all_scores": [
+      3,
+      6,
+      6,
+      8
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Pseudoinverse-Guided Diffusion Models for Inverse Problems": {
+    "paper_pk": null,
+    "title": "Pseudoinverse-Guided Diffusion Models for Inverse Problems",
+    "abstract": "Diffusion models have become competitive candidates for solving various inverse problems. Models trained for specific inverse problems work well but are limited to their particular use cases, whereas methods that use problem-agnostic models are general but often perform worse empirically. To address this dilemma, we introduce Pseudoinverse-guided Diffusion Models ($\\Pi$GDM), an approach that uses problem-agnostic models to close the gap in performance. $\\Pi$GDM directly estimates conditional scores from the measurement model of the inverse problem without additional training. It can address inverse problems with noisy, non-linear, or even non-differentiable measurements, in contrast to many existing approaches that are limited to noiseless linear ones. We illustrate the empirical effectiveness of $\\Pi$GDM on several image restoration tasks, including super-resolution, inpainting and JPEG restoration. On ImageNet, $\\Pi$GDM is competitive with state-of-the-art diffusion models trained on specific tasks, and is the first to achieve this with problem-agnostic diffusion models. $\\Pi$GDM can also solve a wider set of inverse problems where the measurement processes are composed of several simpler ones.",
+    "authors": [
+      "Jiaming Song",
+      "Arash Vahdat",
+      "Morteza Mardani",
+      "Jan Kautz"
+    ],
+    "keywords": [
+      "diffusion models",
+      "inverse problems"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      8
+    ],
+    "real_confidences": [
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Meta-Learning via Classifier(-free) Guidance": {
+    "paper_pk": null,
+    "title": "Meta-Learning via Classifier(-free) Guidance",
+    "abstract": "State-of-the-art meta-learning techniques do not optimize for zero-shot adaptation to unseen tasks, a setting in which humans excel. On the contrary, meta-learning algorithms learn hyperparameters and weight initializations that explicitly optimize for few-shot learning performance. In this work, we take inspiration from recent advances in generative modeling and language-conditioned image synthesis to propose meta-learning techniques that use natural language guidance to achieve higher zero-shot performance compared to the state-of-the-art. We do so by recasting the meta-learning problem as a multi-modal generative modeling problem: given a task, we consider its adapted neural network weights and its natural language description as equivalent multi-modal task representations. We first train an unconditional generative hypernetwork model to produce neural network weights; then we train a second \"guidance\" model that, given a natural language task description, traverses the hypernetwork latent space to find high-performance task-adapted weights in a zero-shot manner. We explore two alternative approaches for latent space guidance: \"HyperCLIP\"-based classifier guidance and a conditional Hypernetwork Latent Diffusion Model (\"HyperLDM\"), which we show to benefit from the classifier-free guidance technique common in image generation. Finally, we demonstrate that our approaches outperform existing meta-learning methods with zero-shot learning experiments on our Meta-VQA dataset, which we specifically constructed to reflect the multi-modal meta-learning setting.",
+    "authors": [
+      "Elvis Nava",
+      "Seijin Kobayashi",
+      "Yifei Yin",
+      "Robert K. Katzschmann",
+      "Benjamin F Grewe"
+    ],
+    "keywords": [
+      "deep leaning",
+      "meta learning",
+      "hypernetworks",
+      "generative models",
+      "classifier guidance",
+      "contrastive learning",
+      "clip",
+      "classifier-free guidance",
+      "latent diffusion",
+      "diffusion models"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      8,
+      6
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "Understanding DDPM Latent Codes Through Optimal Transport": {
+    "paper_pk": null,
+    "title": "Understanding DDPM Latent Codes Through Optimal Transport",
+    "abstract": "Diffusion models have recently outperformed alternative approaches to model the distribution of natural images. Such diffusion models allow for deterministic sampling via the probability flow ODE, giving rise to a latent space and an encoder map. While having important practical applications, such as the estimation of the likelihood, the theoretical properties of this map are not yet fully understood. In the present work, we partially address this question for the popular case of the VP-SDE (DDPM) approach. We show that, perhaps surprisingly, the DDPM encoder map coincides with the optimal transport map for common distributions; we support this claim by extensive numerical experiments using advanced tensor train solver for multidimensional Fokker-Planck equation. We provide additional theoretical evidence for the case of multivariate normal distributions.",
+    "authors": [
+      "Valentin Khrulkov",
+      "Gleb Ryzhakov",
+      "Andrei Chertkov",
+      "Ivan Oseledets"
+    ],
+    "keywords": [
+      "diffusion models",
+      "ddpm",
+      "optimal transport",
+      "theory"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      6
+    ],
+    "real_confidences": [
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Removing Structured Noise with Diffusion Models": {
+    "paper_pk": null,
+    "title": "Removing Structured Noise with Diffusion Models",
+    "abstract": "Solving ill-posed inverse problems requires careful formulation of prior beliefs over the signals of interest and an accurate description of their manifestation into noisy measurements. Handcrafted signal priors based on e.g. sparsity are increasingly replaced by data-driven deep generative models, and several groups have recently shown that state-of-the-art score-based diffusion models yield particularly strong performance and flexibility. In this paper, we show that the powerful paradigm of posterior sampling with diffusion models can be extended to include rich, structured, noise models. To that end, we propose a joint conditional reverse diffusion process with learned scores for the noise and signal-generating distribution. We demonstrate strong performance gains across various inverse problems with structured noise, outperforming competitive baselines that use normalizing flows and adversarial networks. This opens up new opportunities and relevant practical applications of diffusion modeling for inverse problems in the context of non-Gaussian measurements.",
+    "authors": [
+      "Tristan Stevens",
+      "Ruud Van Sloun",
+      "Jean-luc Robert",
+      "Faik C Meral",
+      "Jason Yu",
+      "Junseob Shin"
+    ],
+    "keywords": [
+      "inverse problems",
+      "diffusion models",
+      "score-based",
+      "generative models",
+      "structured noise"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      5
+    ],
+    "real_confidences": [
+      5,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Diffusion Policies as an Expressive Policy Class for Offline Reinforcement Learning": {
+    "paper_pk": null,
+    "title": "Diffusion Policies as an Expressive Policy Class for Offline Reinforcement Learning",
+    "abstract": "Offline reinforcement learning (RL), which aims to learn an optimal policy using a previously collected static dataset, is an important paradigm of RL. Standard RL methods often perform poorly in this regime due to the function approximation errors on out-of-distribution actions. While a variety of regularization methods have been proposed to mitigate this issue, they are often constrained by policy classes with limited expressiveness that can lead to highly suboptimal solutions. In this paper, we propose representing the policy as a diffusion model, a recent class of highly-expressive deep generative models. We introduce Diffusion Q-learning (Diffusion-QL) that utilizes a conditional diffusion model to represent the policy. In our approach, we learn an action-value function and we add a term maximizing action-values into the training loss of the conditional diffusion model, which results in a loss that seeks optimal actions that are near the behavior policy. We show the expressiveness of the diffusion model-based policy, and the coupling of the behavior cloning and policy improvement under the diffusion model both contribute to the outstanding performance of Diffusion-QL. We illustrate the superiority of our method compared to prior works in a simple 2D bandit example with a multimodal behavior policy. We then show that our method can achieve state-of-the-art performance on the majority of the D4RL benchmark tasks.",
+    "authors": [
+      "Zhendong Wang",
+      "Jonathan J Hunt",
+      "Mingyuan Zhou"
+    ],
+    "keywords": [
+      "offline RL",
+      "diffusion models",
+      "behavior cloning",
+      "policy regularization",
+      "Q-learning"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      5,
+      5,
+      3
+    ],
+    "real_confidences": [
+      5,
+      3,
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Autoregressive Generative Modeling with Noise Conditional Maximum Likelihood Estimation": {
+    "paper_pk": null,
+    "title": "Autoregressive Generative Modeling with Noise Conditional Maximum Likelihood Estimation",
+    "abstract": "We introduce a simple modification to the standard maximum likelihood estimation (MLE) framework. Rather than maximizing a single unconditional likelihood of the data under the model, we maximize a family of \\textit{noise conditional} likelihoods consisting of the data perturbed by a continuum of noise levels. We find that models trained this way are more robust to noise, obtain higher test likelihoods, and generate higher quality images. They can also be sampled from via a novel score-based sampling scheme which combats the classical \\textit{covariate shift} problem that occurs during sample generation in autoregressive models. Applying this augmentation to autoregressive image models, we obtain 3.32 bits per dimension on the ImageNet 64x64 dataset, and substantially improve the quality of generated samples in terms of the Frechet Inception distance (FID) --- from 37.50 to 12.09 on the CIFAR-10 dataset.",
+    "authors": [
+      "Henry Li",
+      "Yuval Kluger"
+    ],
+    "keywords": [
+      "density estimation",
+      "autoregressive models",
+      "generative modeling",
+      "score-based models",
+      "diffusion models"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      8,
+      5
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Analyzing diffusion as serial reproduction": {
+    "paper_pk": null,
+    "title": "Analyzing diffusion as serial reproduction",
+    "abstract": "Diffusion models are a class of generative models that learn to synthesize samples by inverting a diffusion process that gradually maps data into noise. While these models have enjoyed great success recently, a full theoretical understanding of their observed properties is still lacking, in particular, their weak sensitivity to the choice of noise family and the role of adequate scheduling of noise levels for good synthesis. By identifying a correspondence between diffusion models and a well-known paradigm in cognitive science known as serial reproduction, whereby human agents iteratively observe and reproduce stimuli from memory, we show how the aforementioned properties of diffusion models can be explained as a natural consequence of this correspondence. We then complement our theoretical analysis with simulations that exhibit these key features. Our work highlights how classic paradigms in cognitive science can shed light on state-of-the-art machine learning problems.",
+    "authors": [
+      "Raja Marjieh",
+      "Ilia Sucholutsky",
+      "Thomas A Langlois",
+      "Nori Jacoby",
+      "Thomas L. Griffiths"
+    ],
+    "keywords": [
+      "diffusion models",
+      "cognitive science",
+      "serial reproduction",
+      "generative models"
+    ],
+    "real_all_scores": [
+      3,
+      1,
+      3,
+      3,
+      3,
+      5,
+      3,
+      3,
+      3
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      3,
+      4,
+      5,
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Imitating Human Behaviour with Diffusion Models": {
+    "paper_pk": null,
+    "title": "Imitating Human Behaviour with Diffusion Models",
+    "abstract": "Diffusion models have emerged as powerful generative models in the text-to-image domain. This paper studies their application as observation-to-action models for imitating human behaviour in sequential environments. Human behaviour is stochastic and multimodal, with structured correlations between action dimensions. Meanwhile, standard modelling choices in behaviour cloning are limited in their expressiveness and may introduce bias into the cloned policy. We begin by pointing out the limitations of these choices. We then propose that diffusion models are an excellent fit for imitating human behaviour, since they learn an expressive distribution over the joint action space. We introduce several innovations to make diffusion models suitable for sequential environments; designing suitable architectures, investigating the role of guidance, and developing reliable sampling strategies. Experimentally, diffusion models closely match human demonstrations in a simulated robotic control task and a modern 3D gaming environment.",
+    "authors": [
+      "Tim Pearce",
+      "Tabish Rashid",
+      "Anssi Kanervisto",
+      "Dave Bignell",
+      "Mingfei Sun",
+      "Raluca Georgescu",
+      "Sergio Valcarcel Macua",
+      "Shan Zheng Tan",
+      "Ida Momennejad",
+      "Katja Hofmann",
+      "Sam Devlin"
+    ],
+    "keywords": [
+      "imitation learning",
+      "behavioral cloning",
+      "behavioral cloning",
+      "diffusion models",
+      "generative models"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      8
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-5%"
+  },
+  "Score Matching via Differentiable Physics": {
+    "paper_pk": null,
+    "title": "Score Matching via Differentiable Physics",
+    "abstract": "Diffusion models based on stochastic differential equations (SDEs) gradually perturb a data distribution $p(\\mathbf{x})$ over time by adding noise to it. A neural network is trained to approximate the score $\\nabla_\\mathbf{x} \\log p_t(\\mathbf{x})$ at time $t$, which can be used to reverse the corruption process. In this paper, we focus on learning the score field that is associated with the time evolution according to a physics operator in the presence of natural non-deterministic physical processes like diffusion. A decisive difference to previous methods is that the SDE underlying our approach transforms the state of a physical system to another state at a later time. For that purpose, we replace the drift of the underlying SDE formulation with a differentiable simulator or a neural network approximation of the physics. At the core of our method, we optimize the so-called probability flow ODE to fit a training set of simulation trajectories inside an ODE solver and solve the reverse-time SDE for inference to sample plausible trajectories that evolve towards a given end state. We demonstrate the competitiveness of our approach for different challenging inverse problems.",
+    "authors": [
+      "Benjamin Holzschuh",
+      "Simona Vegetti",
+      "Nils Thuerey"
+    ],
+    "keywords": [
+      "diffusion models",
+      "physics simulations",
+      "stochastic partial differential equations"
+    ],
+    "real_all_scores": [
+      6,
+      8,
+      8,
+      8
+    ],
+    "real_confidences": [
+      4,
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "Defending against Adversarial Audio  via Diffusion Model": {
+    "paper_pk": null,
+    "title": "Defending against Adversarial Audio  via Diffusion Model",
+    "abstract": "Deep learning models have been widely used in commercial acoustic systems in recent years. However, adversarial audio examples can cause abnormal behaviors for those acoustic systems, while being hard for humans to perceive. Various methods, such as transformation-based defenses and adversarial training, have been proposed to protect acoustic systems from adversarial attacks, but they are less effective against adaptive attacks. Furthermore, directly applying the methods from the image domain can lead to suboptimal results because of the unique properties of audio data. In this paper, we propose an adversarial purification-based defense pipeline, AudioPure, for acoustic systems via off-the-shelf diffusion models. Taking advantage of the strong generation ability of diffusion models, AudioPure first adds a small amount of noise to the adversarial audio and then runs the reverse sampling step to purify the noisy audio and recover clean audio. AudioPure is a plug-and-play method that can be directly applied to any pretrained classifier without any fine-tuning or re-training. We conduct extensive experiments on the speech command recognition task to evaluate the robustness of AudioPure. Our method is effective against diverse adversarial attacks (e.g. L2 or L\u221e-norm). It outperforms the existing methods under both strong adaptive white-box and black-box attacks bounded by L2 or L\u221e-norm (up to +20% in robust accuracy). Besides, we also evaluate the certified robustness for perturbations bounded by L2-norm via randomized smoothing. Our pipeline achieves a higher certified accuracy than baselines.",
+    "authors": [
+      "Shutong Wu",
+      "Jiongxiao Wang",
+      "Wei Ping",
+      "Weili Nie",
+      "Chaowei Xiao"
+    ],
+    "keywords": [
+      "Adversarial attack and defense",
+      "AI security",
+      "speech recognition",
+      "diffusion models"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      3,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Offline Reinforcement Learning via High-Fidelity Generative Behavior Modeling": {
+    "paper_pk": null,
+    "title": "Offline Reinforcement Learning via High-Fidelity Generative Behavior Modeling",
+    "abstract": "In offline reinforcement learning, weighted regression is a common method to ensure the learned policy stays close to the behavior policy and to prevent selecting out-of-sample actions. In this work, we show that due to the limited distributional expressivity of policy models, previous methods might still select unseen actions during training, which deviates from their initial motivation. To address this problem, we adopt a generative approach by decoupling the learned policy into two parts: an expressive generative behavior model and an action evaluation model. The key insight is that such decoupling avoids learning an explicitly parameterized policy model with a closed-form expression. Directly learning the behavior policy allows us to leverage existing advances in generative modeling, such as diffusion-based methods, to model diverse behaviors. As for action evaluation, we combine our method with an in-sample planning technique to further avoid selecting out-of-sample actions and increase computational efficiency. Experimental results on D4RL datasets show that our proposed method achieves competitive or superior performance compared with state-of-the-art offline RL methods, especially in complex tasks such as AntMaze. We also empirically demonstrate that our method can successfully learn from a heterogeneous dataset containing multiple distinctive but similarly successful strategies, whereas previous unimodal policies fail.",
+    "authors": [
+      "Huayu Chen",
+      "Cheng Lu",
+      "Chengyang Ying",
+      "Hang Su",
+      "Jun Zhu"
+    ],
+    "keywords": [
+      "offline reinforcement learning",
+      "generative models",
+      "diffusion models",
+      "behavior modeling"
+    ],
+    "real_all_scores": [
+      5,
+      6,
+      3,
+      6,
+      3,
+      6
+    ],
+    "real_confidences": [
+      4,
+      3,
+      2,
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Pre-training Protein Structure Encoder via Siamese Diffusion Trajectory Prediction": {
+    "paper_pk": null,
+    "title": "Pre-training Protein Structure Encoder via Siamese Diffusion Trajectory Prediction",
+    "abstract": "Due to the determining role of protein structures on diverse protein functions, pre-training representations of proteins on massive unlabeled protein structures has attracted rising research interests. Among recent efforts on this direction, mutual information (MI) maximization based methods have gained the superiority on various downstream benchmark tasks. The core of these methods is to design correlated views that share common information about a protein. Previous view designs focus on capturing structural motif co-occurrence on the same protein structure, while they cannot capture detailed atom/residue interactions. To address this limitation, we propose the Siamese Diffusion Trajectory Prediction (SiamDiff) method. SiamDiff builds a view as the trajectory that gradually approaches protein native structure from scratch, which facilitates the modeling of atom/residue interactions underlying the protein structural dynamics. Specifically, we employ the multimodal diffusion process as a faithful simulation of the structure-sequence co-diffusion trajectory, where rich patterns of protein structural changes are embedded. On such basis, we design a principled theoretical framework to maximize the MI between correlated multimodal diffusion trajectories. We study the effectiveness of SiamDiff on both residue-level and atom-level structures. On the EC and ATOM3D benchmarks, we extensively compare our method with previous protein structure pre-training approaches. The experimental results verify the consistently superior or competitive performance of SiamDiff on all benchmark tasks compared to existing baselines. The source code will be made public upon acceptance.",
+    "authors": [
+      "Zuobai Zhang",
+      "Minghao Xu",
+      "Aurelie Lozano",
+      "Vijil Chenthamarakshan",
+      "Payel Das",
+      "Jian Tang"
+    ],
+    "keywords": [
+      "Protein representation learning",
+      "diffusion models",
+      "self-supervised learning"
+    ],
+    "real_all_scores": [
+      6,
+      8,
+      1
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Reduce, Reuse, Recycle: Compositional Generation with Energy-Based Diffusion Models and MCMC": {
+    "paper_pk": null,
+    "title": "Reduce, Reuse, Recycle: Compositional Generation with Energy-Based Diffusion Models and MCMC",
+    "abstract": "Since their introduction, diffusion models have quickly become the prevailing approach to generative modeling in many domains. They can be interpreted as learning the gradients of a time-varying sequence of log-probability density functions. This interpretation has motivated classifier-based and classifier-free guidance as methods for post-hoc control of diffusion models. In this work, we build upon these ideas using the score-based interpretation of diffusion models, and explore alternative ways to condition, modify, and reuse diffusion models for tasks involving compositional generation and guidance. In particular, we investigate why certain types of composition fail using current techniques and present a number of solutions. We conclude that the sampler (not the model) is responsible for this failure and propose new samplers, inspired by MCMC, which enable successful compositional generation. Further, we propose an energy-based parameterization of diffusion models which enables the use of new compositional operators and more sophisticated, Metropolis-corrected samplers. Intriguingly we find these samplers lead to notable improvements in compositional generation across a wide variety of problems such as classifier-guided ImageNet modeling and compositional text-to-image generation.",
+    "authors": [
+      "Yilun Du",
+      "Conor Durkan",
+      "Robin Strudel",
+      "Joshua B. Tenenbaum",
+      "Sander Dieleman",
+      "Rob Fergus",
+      "Jascha Sohl-Dickstein",
+      "Arnaud Doucet",
+      "Will Sussman Grathwohl"
+    ],
+    "keywords": [
+      "Generative models",
+      "diffusion models",
+      "compositional generation"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      5
+    ],
+    "real_confidences": [
+      3,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Quasi-Taylor Samplers for Diffusion Generative Models based on Ideal Derivatives": {
+    "paper_pk": null,
+    "title": "Quasi-Taylor Samplers for Diffusion Generative Models based on Ideal Derivatives",
+    "abstract": "Diffusion generative models have emerged as a new challenger to popular deep neural generative models such as GANs, but have the drawback that they often require a huge number of neural function evaluations (NFEs) during synthesis unless some sophisticated sampling strategies are employed. This paper proposes new efficient samplers based on the numerical schemes derived by the familiar Taylor expansion, which directly solves the ODE/SDE of interest. In general, it is not easy to compute the derivatives that are required in higher-order Taylor schemes, but in the case of diffusion models, this difficulty is alleviated by the trick that the authors call ``ideal derivative substitution,'' in which the higher-order derivatives are replaced by tractable ones. To derive ideal derivatives, the authors argue the ``single point approximation,'' in which the true score function is approximated by a conditional one, holds in many cases, and considered the derivatives of this approximation. Applying thus obtained new quasi-Taylor samplers to image generation tasks, the authors experimentally confirmed that the proposed samplers could synthesize plausible images in small number of NFEs, and that the performance was better or at the same level as DDIM and Runge-Kutta methods. The paper also argues the relevance of the proposed samplers to the existing ones mentioned above. ",
+    "authors": [
+      "Hideyuki Tachibana",
+      "Mocho Go",
+      "Muneyoshi Inahara",
+      "Yotaro Katayama",
+      "Yotaro Watanabe"
+    ],
+    "keywords": [
+      "diffusion models",
+      "score based models",
+      "neural generative models"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      8,
+      6
+    ],
+    "real_confidences": [
+      3,
+      5,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "DiffDock: Diffusion Steps, Twists, and Turns for Molecular Docking": {
+    "paper_pk": null,
+    "title": "DiffDock: Diffusion Steps, Twists, and Turns for Molecular Docking",
+    "abstract": "Predicting the binding structure of a small molecule ligand to a protein---a task known as molecular docking---is critical to drug design. Recent deep learning methods that treat docking as a regression problem have decreased runtime compared to traditional search-based methods but have yet to offer substantial improvements in accuracy. We instead frame molecular docking as a generative modeling problem and develop DiffDock, a diffusion generative model over the non-Euclidean manifold of ligand poses. To do so, we map this manifold to the product space of the degrees of freedom (translational, rotational, and torsional) involved in docking and develop an efficient diffusion process on this space. Empirically, DiffDock obtains a 38% top-1 success rate (RMSD<2A) on PDBBind, significantly outperforming the previous state-of-the-art of traditional docking (23%) and deep learning (20%) methods. Moreover, while previous methods are not able to dock on computationally folded structures (maximum accuracy 10.4%), DiffDock maintains significantly higher precision (21.7%). Finally, DiffDock has fast inference times and provides confidence estimates with high selective accuracy. ",
+    "authors": [
+      "Gabriele Corso",
+      "Hannes St\u00e4rk",
+      "Bowen Jing",
+      "Regina Barzilay",
+      "Tommi S. Jaakkola"
+    ],
+    "keywords": [
+      "molecular docking",
+      "protein-ligand binding",
+      "diffusion models",
+      "score-based models",
+      "molecular structure",
+      "equivariance",
+      "geometric deep learning"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      5,
+      6
+    ],
+    "real_confidences": [
+      2,
+      4,
+      5,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "TabDDPM: Modelling Tabular Data with Diffusion Models": {
+    "paper_pk": null,
+    "title": "TabDDPM: Modelling Tabular Data with Diffusion Models",
+    "abstract": "Denoising diffusion probabilistic models are currently becoming the leading paradigm of generative modeling for many important data modalities. Being the most prevalent in the computer vision community, diffusion models have also recently gained some attention for other domains, including speech, NLP, and graph-like data. In this work, we investigate if the framework of diffusion models can be advantageous for general tabular problems, where datapoints are typically represented by vectors of heterogeneous features. The inherent heterogeneity of tabular data makes it quite challenging for accurate modeling, since the individual features can be of completely different nature, i.e., some of them can be continuous and some of them can be discrete. To address such data types, we introduce TabDDPM --- a diffusion model that can be universally applied to any tabular dataset and handles any types of features. We extensively evaluate TabDDPM on a wide set of benchmarks and demonstrate its superiority over existing GAN/VAE alternatives, which is consistent with the advantage of diffusion models in other fields. Additionally, we show that TabDDPM can be successfully used in privacy-oriented setups, where the original datapoints cannot be shared.",
+    "authors": [
+      "Akim Kotelnikov",
+      "Dmitry Baranchuk",
+      "Ivan Rubachev",
+      "Artem Babenko"
+    ],
+    "keywords": [
+      "tabular data",
+      "diffusion models",
+      "generative modelling"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      3,
+      6,
+      3
+    ],
+    "real_confidences": [
+      3,
+      2,
+      4,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Neural Diffusion Processes": {
+    "paper_pk": null,
+    "title": "Neural Diffusion Processes",
+    "abstract": "Gaussian processes provide an elegant framework for specifying prior and posterior distributions over functions. They are, however, also computationally expensive, and limited by the expressivity of their covariance function. We propose Neural Diffusion Processes (NDPs), a novel approach based upon diffusion models, that learns to sample from distributions over functions. Using a novel attention block we are able to incorporate properties of stochastic processes, such as exchangeability, directly into the NDP's architecture. We empirically show that NDPs are able to capture functional distributions that are close to the true Bayesian posterior. This enables a variety of downstream tasks, including hyperparameter marginalisation, non-Gaussian posteriors and global optimisation.",
+    "authors": [
+      "Vincent Dutordoir",
+      "Alan Saul",
+      "Zoubin Ghahramani",
+      "Fergus Simpson"
+    ],
+    "keywords": [
+      "diffusion models",
+      "gaussian processes",
+      "neural processes",
+      "stochastic processes"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Unifying Diffusion Models' Latent Space, with Applications to CycleDiffusion and Guidance": {
+    "paper_pk": null,
+    "title": "Unifying Diffusion Models' Latent Space, with Applications to CycleDiffusion and Guidance",
+    "abstract": "Diffusion models have achieved unprecedented performance in generative modeling. The commonly-adopted formulation of the latent code of diffusion models is a sequence of gradually denoised samples, as opposed to the simpler (e.g., Gaussian) latent space of GANs, VAEs, and normalizing flows. This paper provides an alternative, Gaussian formulation of the latent space of various diffusion models, as well as an invertible DPM-Encoder that maps images into the latent space. While our formulation is purely based on the definition of diffusion models, we demonstrate several intriguing consequences. (1) Empirically, we observe that a common latent space emerges from two diffusion models trained independently on related domains. In light of this finding, we propose CycleDiffusion, which uses DPM-Encoder for unpaired image-to-image translation. Furthermore, applying CycleDiffusion to text-to-image diffusion models, we show that large-scale text-to-image diffusion models can be used as zero-shot image-to-image editors. (2) One can guide pre-trained diffusion models and GANs by controlling the latent codes in a unified, plug-and-play formulation based on energy-based models. Using the CLIP model and a face recognition model as guidance, we demonstrate that diffusion models have better coverage of low-density sub-populations and individuals than GANs.",
+    "authors": [
+      "Chen Henry Wu",
+      "Fernando De la Torre"
+    ],
+    "keywords": [
+      "diffusion models",
+      "generative models",
+      "image-to-image translation",
+      "controllable generation",
+      "zero-shot learning",
+      "text-to-image synthesis"
+    ],
+    "real_all_scores": [
+      5,
+      6,
+      3
+    ],
+    "real_confidences": [
+      3,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Diffusion Models Already Have A Semantic Latent Space": {
+    "paper_pk": null,
+    "title": "Diffusion Models Already Have A Semantic Latent Space",
+    "abstract": "Diffusion models achieve outstanding generative performance in various domains. Despite their great success, they lack semantic latent space which is essential for controlling the generative process. To address the problem, we propose asymmetric reverse process (Asyrp) which discovers the semantic latent space in frozen pretrained diffusion models. Our semantic latent space, named h-space, has nice properties for accommodating semantic image manipulation: homogeneity, linearity, robustness, and consistency across timesteps. In addition, we measure editing strength and quality deficiency of a generative process at timesteps to provide a principled design of the process for versatility and quality improvements. Our method is applicable to various architectures (DDPM++, iDDPM, and ADM) and datasets (CelebA-HQ, AFHQ-dog, LSUN-church, LSUN-bedroom, and METFACES).",
+    "authors": [
+      "Mingi Kwon",
+      "Jaeseok Jeong",
+      "Youngjung Uh"
+    ],
+    "keywords": [
+      "diffusion models",
+      "semantic image editing"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      3,
+      5
+    ],
+    "real_confidences": [
+      5,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Self-conditioned Embedding Diffusion for Text Generation": {
+    "paper_pk": null,
+    "title": "Self-conditioned Embedding Diffusion for Text Generation",
+    "abstract": "Can continuous diffusion models bring the same performance breakthrough on natural language they did for image generation? To circumvent the discrete nature of text data, we can simply project tokens in a continuous space of embeddings, as is standard in language modeling. We propose Self-conditioned Embedding Diffusion (SED), a continuous diffusion mechanism that operates on token embeddings and allows to learn flexible and scalable diffusion models for both conditional and unconditional text generation. Through qualitative and quantitative evaluation, we show that our text diffusion models generate samples comparable with those produced by standard autoregressive language models \u2014 while being in theory more efficient on accelerator hardware at inference time.  Our work paves the way for scaling up diffusion models for text, similarly to autoregressive models, and for improving performance with recent refinements to continuous diffusion.",
+    "authors": [
+      "Robin Strudel",
+      "Corentin Tallec",
+      "Florent Altch\u00e9",
+      "Yilun Du",
+      "Yaroslav Ganin",
+      "Arthur Mensch",
+      "Will Sussman Grathwohl",
+      "Nikolay Savinov",
+      "Sander Dieleman",
+      "Laurent Sifre",
+      "R\u00e9mi Leblond"
+    ],
+    "keywords": [
+      "language models",
+      "diffusion models",
+      "generative models"
+    ],
+    "real_all_scores": [
+      3,
+      1,
+      8
+    ],
+    "real_confidences": [
+      4,
+      5,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Training-Free Structured Diffusion Guidance for Compositional Text-to-Image Synthesis": {
+    "paper_pk": null,
+    "title": "Training-Free Structured Diffusion Guidance for Compositional Text-to-Image Synthesis",
+    "abstract": "Large-scale diffusion models have achieved state-of-the-art results on text-to-image synthesis (T2I) tasks. Despite their ability to generate high-quality yet creative images, we observe that attribution-binding and compositional capabilities are still considered major challenging issues, especially when involving multiple objects. Attribute-binding requires the model to associate objects with the correct attribute descriptions, and compositional skills require the model to combine and generate multiple concepts into a single image. In this work, we improve these two aspects of T2I models to achieve more accurate image compositions. To do this, we incorporate linguistic structures with the diffusion guidance process based on the controllable properties of manipulating cross-attention layers in diffusion-based T2I models. We observe that keys and values in cross-attention layers have strong semantic meanings associated with object layouts and content. Therefore, by manipulating the cross-attention representations based on linguistic insights, we can better preserve the compositional semantics in the generated image. Built upon Stable Diffusion, a SOTA T2I model, our structured cross-attention design is efficient that requires no additional training samples. We achieve better compositional skills in qualitative and quantitative results, leading to a significant 5-8\\% advantage in head-to-head user comparison studies. Lastly, we conduct an in-depth analysis to reveal potential causes of incorrect image compositions and justify the properties of cross-attention layers in the generation process. ",
+    "authors": [
+      "Weixi Feng",
+      "Xuehai He",
+      "Tsu-Jui Fu",
+      "Varun Jampani",
+      "Arjun Reddy Akula",
+      "Pradyumna Narayana",
+      "Sugato Basu",
+      "Xin Eric Wang",
+      "William Yang Wang"
+    ],
+    "keywords": [
+      "Text-to-Image Synthesis",
+      "Diffusion Models",
+      "Compositional Generation"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      6,
+      1
+    ],
+    "real_confidences": [
+      4,
+      3,
+      1,
+      5
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Is Conditional Generative Modeling all you need for Decision Making?": {
+    "paper_pk": null,
+    "title": "Is Conditional Generative Modeling all you need for Decision Making?",
+    "abstract": "Recent improvements in conditional generative modeling have made it possible to generate high-quality images from language descriptions alone. We investigate whether these methods can directly address the problem of sequential decision-making. We view decision-making not through the lens of reinforcement learning (RL), but rather through conditional generative modeling. To our surprise, we find that our formulation leads to policies that can outperform existing offline RL approaches across standard benchmarks. By modeling a policy as a return-conditional generative model, we avoid the need for dynamic programming and subsequently eliminate many of the complexities that come with traditional offline RL. We further demonstrate the advantages of modeling policies as conditional generative models by considering two other conditioning variables: constraints and skills. Conditioning on a single constraint or skill during training leads to behaviors at test-time that can satisfy several constraints together or demonstrate a composition of skills. Our results illustrate that conditional generative modeling is a powerful tool for decision-making. ",
+    "authors": [
+      "Anurag Ajay",
+      "Yilun Du",
+      "Abhi Gupta",
+      "Joshua B. Tenenbaum",
+      "Tommi S. Jaakkola",
+      "Pulkit Agrawal"
+    ],
+    "keywords": [
+      "Offline Reinforcement Learning",
+      "Conditional Generative Modeling",
+      "Sequential Decision Making",
+      "Diffusion Models"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      6,
+      5
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Denoising MCMC for Accelerating Diffusion-Based Generative Models": {
+    "paper_pk": null,
+    "title": "Denoising MCMC for Accelerating Diffusion-Based Generative Models",
+    "abstract": "Diffusion models are powerful generative models that simulate the reverse of diffusion processes using score functions to synthesize data from noise. The sampling process of diffusion models can be interpreted as solving the reverse stochastic differential equation (SDE) or the ordinary differential equation (ODE) of the diffusion process, which often requires up to thousands of discretization steps to generate a single image. This has sparked a great interest in developing efficient integration techniques for reverse-S/ODEs. Here, we propose an orthogonal approach to accelerating score-based sampling: Denoising MCMC (DMCMC). DMCMC first uses MCMC to produce samples in the product space of data and variance (or diffusion time). Then, a reverse-S/ODE integrator is used to denoise the MCMC samples. Since MCMC traverses close to the data manifold, the computation cost of producing a clean sample for DMCMC is much less than that of producing a clean sample from noise. To verify the proposed concept, we show that Denoising Langevin Gibbs (DLG), an instance of DMCMC, successfully accelerates all six reverse-S/ODE integrators considered in this work on the tasks of CIFAR10 and CelebA-HQ-256 image generation. Notably, combined with integrators of Karras et al. (2022) and pre-trained score models of Song et al. (2021b), DLG achieves state-of-the-art results. In the limited number of score function evaluation (NFE) settings on CIFAR10, we have $3.86$ FID with $\\approx 10$ NFE and $2.63$ FID with $\\approx 20$ NFE. On CelebA-HQ-256, we have $6.99$ FID with $\\approx 160$ NFE, which beats the current best record of Kim et al. (2022) among score-based models, $7.16$ FID with $4000$ NFE.",
+    "authors": [
+      "Beomsu Kim",
+      "Jong Chul Ye"
+    ],
+    "keywords": [
+      "Markov Chain Monte Carlo",
+      "Diffusion Models",
+      "Score-Based Models"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      3,
+      6,
+      5
+    ],
+    "real_confidences": [
+      4,
+      2,
+      5,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Diffusion Models for Causal Discovery via Topological Ordering": {
+    "paper_pk": null,
+    "title": "Diffusion Models for Causal Discovery via Topological Ordering",
+    "abstract": "Discovering causal relations from observational data becomes possible with additional assumptions such as considering the functional relations to be constrained as nonlinear with additive noise (ANM). Even with strong assumptions, causal discovery involves an expensive search problem over the space of directed acyclic graphs (DAGs). \\emph{Topological ordering} approaches reduce the optimisation space of causal discovery by searching over a permutation rather than graph space.\nFor ANMs, the \\emph{Hessian} of the data log-likelihood can be used for finding leaf nodes in a causal graph, allowing its topological ordering. However, existing computational methods for obtaining the Hessian still do not scale as the number of variables and the number of samples are increased. Therefore, inspired by recent innovations in diffusion probabilistic models (DPMs), we propose \\emph{DiffAN}, a topological ordering algorithm that leverages DPMs for learning a Hessian function. We introduce theory for updating the learned Hessian without re-training the neural network, and we show that computing with a subset of samples gives an accurate approximation of the ordering, which allows scaling to datasets with more samples and variables. We show empirically that our method scales exceptionally well to datasets with up to $500$ nodes and up to $10^5$ samples while still performing on par over small datasets with state-of-the-art causal discovery methods.\nImplementation is available at \\url{https://github.com/vios-s/DiffAN} .",
+    "authors": [
+      "Pedro Sanchez",
+      "Xiao Liu",
+      "Alison Q O'Neil",
+      "Sotirios A. Tsaftaris"
+    ],
+    "keywords": [
+      "Diffusion Models",
+      "Causal Discovery",
+      "Topological Ordering",
+      "Score-based Methods"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      6,
+      6
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      2
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Equivariant 3D-Conditional Diffusion Models for Molecular Linker Design": {
+    "paper_pk": null,
+    "title": "Equivariant 3D-Conditional Diffusion Models for Molecular Linker Design",
+    "abstract": "Fragment-based drug discovery has been an effective paradigm in early-stage drug development. An open challenge in this area is designing linkers between disconnected molecular fragments of interest to obtain chemically-relevant candidate drug molecules. In this work, we propose DiffLinker, an E(3)-equivariant 3D-conditional diffusion model for molecular linker design. Given a set of disconnected fragments, our model places missing atoms in between and designs a molecule incorporating all the initial fragments. Unlike previous approaches that are only able to connect pairs of molecular fragments, our method can link an arbitrary number of fragments. Additionally, the model automatically determines the number of atoms in the linker and its attachment points to the input fragments. We demonstrate that DiffLinker outperforms other methods on the standard datasets generating more diverse and synthetically-accessible molecules. Besides, we experimentally test our method in real-world applications, showing that it can successfully generate valid linkers conditioned on target protein pockets.",
+    "authors": [
+      "Ilia Igashov",
+      "Hannes St\u00e4rk",
+      "Clement Vignac",
+      "Victor Garcia Satorras",
+      "Pascal Frossard",
+      "Max Welling",
+      "Michael M. Bronstein",
+      "Bruno Correia"
+    ],
+    "keywords": [
+      "Molecules",
+      "Drug Discovery",
+      "Molecular Linker Design",
+      "Equivariant",
+      "Diffusion Models"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      3,
+      8
+    ],
+    "real_confidences": [
+      4,
+      4,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Diffusion Probabilistic Fields": {
+    "paper_pk": null,
+    "title": "Diffusion Probabilistic Fields",
+    "abstract": "Diffusion probabilistic models have quickly become a major approach for generative modeling of images, 3D geometry, video and other domains. However, to adapt diffusion generative modeling to these domains the denoising network needs to be carefully designed for each domain independently, oftentimes under the assumption that data lives in a Euclidean grid. In this paper we introduce Diffusion Probabilistic Fields (DPF), a diffusion model that can learn distributions over continuous functions defined over metric spaces, commonly known as fields. We extend the formulation of diffusion probabilistic models to deal with this field parametrization in an explicit way, enabling us to define an end-to-end learning algorithm that side-steps the requirement of representing fields with latent vectors as in previous approaches (Dupont et al., 2022a; Du et al., 2021). We empirically show that, while using the same denoising network, DPF effectively deals with different modalities like 2D images and 3D geometry, in addition to modeling distributions over fields defined on non-Euclidean metric spaces.",
+    "authors": [
+      "Peiye Zhuang",
+      "Samira Abnar",
+      "Jiatao Gu",
+      "Alex Schwing",
+      "Joshua M. Susskind",
+      "Miguel \u00c1ngel Bautista"
+    ],
+    "keywords": [
+      "Generative Models",
+      "Field Representation",
+      "Diffusion Models"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      8,
+      8
+    ],
+    "real_confidences": [
+      5,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-5%"
+  },
+  "Analog Bits: Generating Discrete Data using Diffusion Models with Self-Conditioning": {
+    "paper_pk": null,
+    "title": "Analog Bits: Generating Discrete Data using Diffusion Models with Self-Conditioning",
+    "abstract": "We present Bit Diffusion: a simple and generic approach for generating discrete data with continuous state and continuous time diffusion models. The main idea behind our approach is to first represent the discrete data as binary bits, and then train a continuous diffusion model to model these bits as real numbers which we call analog bits. To generate samples, the model first generates the analog bits, which are then thresholded to obtain the bits that represent the discrete variables. We further propose two simple techniques, namely Self-Conditioning and Asymmetric Time Intervals, which lead to a significant improvement in sample quality. Despite its simplicity, the proposed approach can achieve strong performance in both discrete image generation and image captioning tasks. For discrete image generation, we significantly improve previous state-of-the-art on both CIFAR-10 (which has 3K discrete 8-bit tokens) and ImageNet-64x64 (which has 12K discrete 8-bit tokens), outperforming the best autoregressive model in both sample quality (measured by FID) and efficiency. For image captioning on MS-COCO dataset, our approach achieves competitive results compared to autoregressive models.",
+    "authors": [
+      "Ting Chen",
+      "Ruixiang ZHANG",
+      "Geoffrey Hinton"
+    ],
+    "keywords": [
+      "Diffusion Models",
+      "Discrete Data"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      3
+    ],
+    "real_confidences": [
+      5,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Diffusion Probabilistic Modeling of Protein Backbones in 3D for the motif-scaffolding problem": {
+    "paper_pk": null,
+    "title": "Diffusion Probabilistic Modeling of Protein Backbones in 3D for the motif-scaffolding problem",
+    "abstract": "Construction of a scaffold structure that supports a desired motif, conferring protein function, shows promise for the design of vaccines and enzymes. But a general solution to this motif-scaffolding problem remains open. Current machine-learning techniques for scaffold design are either limited to unrealistically small scaffolds (up to length 20) or struggle to produce multiple diverse scaffolds. We propose to learn a distribution over diverse and longer protein backbone structures via an E(3)-equivariant graph neural network. We develop SMCDiff to efficiently sample scaffolds from this distribution conditioned on a given motif; our algorithm is the first to theoretically guarantee conditional samples from a diffusion model in the large-compute limit. We evaluate our designed backbones by how well they align with AlphaFold2-predicted structures. We show that our method can (1) sample scaffolds up to 80 residues and (2) achieve structurally diverse scaffolds for a fixed motif.",
+    "authors": [
+      "Brian L. Trippe",
+      "Jason Yim",
+      "Doug Tischer",
+      "David Baker",
+      "Tamara Broderick",
+      "Regina Barzilay",
+      "Tommi S. Jaakkola"
+    ],
+    "keywords": [
+      "Diffusion Models",
+      "Sequential Monte Carlo",
+      "Protein Design",
+      "Geometric Deep Learning"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      5,
+      8
+    ],
+    "real_confidences": [
+      3,
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model": {
+    "paper_pk": null,
+    "title": "Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model",
+    "abstract": "Most existing Image Restoration (IR) models are task-specific, which can not be generalized to different degradation operators. In this work, we propose the Denoising Diffusion Null-Space Model (DDNM), a novel zero-shot framework for arbitrary linear IR problems, including but not limited to image super-resolution, colorization, inpainting, compressed sensing, and deblurring. DDNM only needs a pre-trained off-the-shelf diffusion model as the generative prior, without any extra training or network modifications. By refining only the null-space contents during the reverse diffusion process, we can yield diverse results satisfying both data consistency and realness. We further propose an enhanced and robust version, dubbed DDNM+, to support noisy restoration and improve restoration quality for hard tasks. Our experiments on several IR tasks reveal that DDNM outperforms other state-of-the-art zero-shot IR methods. We also demonstrate that DDNM+ can solve complex real-world applications, e.g., old photo restoration. ",
+    "authors": [
+      "Yinhuai Wang",
+      "Jiwen Yu",
+      "Jian Zhang"
+    ],
+    "keywords": [
+      "Zero-Shot",
+      "Inverse Problems",
+      "Super-Resolution",
+      "Diffusion Models",
+      "Range-Null Space",
+      "Image Restoration",
+      "Colorization",
+      "Compressed Sensing",
+      "Inpainting",
+      "Deblur",
+      "Old Photo Restoration",
+      "Blind Restoration"
+    ],
+    "real_all_scores": [
+      3,
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      3,
+      2,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Denoising Diffusion Error Correction Codes": {
+    "paper_pk": null,
+    "title": "Denoising Diffusion Error Correction Codes",
+    "abstract": "Error correction code (ECC) is an integral part of the physical communication layer, ensuring reliable data transfer over noisy channels. \nRecently, neural decoders have demonstrated their advantage over classical decoding techniques. \nHowever, recent state-of-the-art neural decoders suffer from high complexity and lack the important iterative scheme characteristic of many legacy decoders. \nIn this work, we propose to employ denoising diffusion models for the soft decoding of linear codes at arbitrary block lengths. \nOur framework models the forward channel corruption as a series of diffusion steps that can be reversed iteratively. \nThree contributions are made: (i) a diffusion process suitable for the decoding setting is introduced, (ii) the neural diffusion decoder is conditioned on the number of parity errors, which indicates the level of corruption at a given step, (iii) a line search procedure based on the code's syndrome obtains the optimal reverse diffusion step size. \nThe proposed approach demonstrates the power of diffusion models for ECC and is able to achieve state-of-the-art accuracy, outperforming the other neural decoders by sizable margins, even for a single reverse diffusion step. ",
+    "authors": [
+      "Yoni Choukroun",
+      "Lior Wolf"
+    ],
+    "keywords": [
+      "ECC",
+      "Deep Learning",
+      "Diffusion Models"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      5,
+      5
+    ],
+    "real_confidences": [
+      5,
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "DDM$^2$: Self-Supervised Diffusion MRI Denoising with Generative Diffusion Models": {
+    "paper_pk": null,
+    "title": "DDM$^2$: Self-Supervised Diffusion MRI Denoising with Generative Diffusion Models",
+    "abstract": "Magnetic resonance imaging (MRI) is a common and life-saving medical imaging technique. However, acquiring high signal-to-noise ratio MRI scans requires long scan times, resulting in increased costs and patient discomfort, and decreased throughput. Thus, there is great interest in denoising MRI scans, especially for the subtype of diffusion MRI scans that are severely SNR-limited. While most prior MRI denoising methods are supervised in nature, acquiring supervised training datasets for the multitude of anatomies, MRI scanners, and scan parameters proves impractical. Here, we propose Denoising Diffusion Models for Denoising Diffusion MRI (DDM^2), a self-supervised denoising method for MRI denoising using diffusion denoising generative models. Our three-stage framework integrates statistic-based denoising theory into diffusion models and performs denoising through conditional generation. During inference, we represent input noisy measurements as a sample from an intermediate posterior distribution within the diffusion Markov chain. We conduct experiments on 4 real-world in-vivo diffusion MRI datasets and show that our DDM^2 demonstrates superior denoising performances ascertained with clinically-relevant visual qualitative and quantitative metrics.",
+    "authors": [
+      "Tiange Xiang",
+      "Mahmut Yurt",
+      "Ali B Syed",
+      "Kawin Setsompop",
+      "Akshay Chaudhari"
+    ],
+    "keywords": [
+      "Unsupervised MRI Denoising",
+      "Diffusion Models"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      8,
+      8
+    ],
+    "real_confidences": [
+      3,
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-5%"
+  },
+  "Structure-based Drug Design with Equivariant Diffusion Models": {
+    "paper_pk": null,
+    "title": "Structure-based Drug Design with Equivariant Diffusion Models",
+    "abstract": "Structure-based drug design (SBDD) aims to design small-molecule ligands that bind with high affinity and specificity to pre-determined protein targets. Traditional SBDD pipelines start with large-scale docking of compound libraries from public databases, thus limiting the exploration of chemical space to existent previously studied regions.\nRecent machine learning methods approached this problem using an atom-by-atom generation approach, which is computationally expensive. \nIn this paper, we formulate SBDD as a 3D-conditional generation problem and present DiffSBDD, an E(3)-equivariant 3D-conditional diffusion model that generates novel ligands conditioned on protein pockets. \nFurthermore, we curate a new dataset of experimentally determined binding complex data from Binding MOAD to provide realistic binding scenario rather than the synthetic CrossDocked dataset. Comprehensive in silico experiments demonstrate the efficiency of DiffSBDD in generating novel and diverse drug-like ligands that engage protein pockets with high binding energies as predicted by in silico docking.",
+    "authors": [
+      "Arne Schneuing",
+      "Yuanqi Du",
+      "Charles Harris",
+      "Arian Rokkum Jamasb",
+      "Ilia Igashov",
+      "weitao Du",
+      "Tom Leon Blundell",
+      "Pietro Lio",
+      "Carla P Gomes",
+      "Max Welling",
+      "Michael M. Bronstein",
+      "Bruno Correia"
+    ],
+    "keywords": [
+      "Diffusion Models",
+      "Equivariant Neural Networks",
+      "Structure-based Drug Design",
+      "Molecule Generation",
+      "Conditional Generation"
+    ],
+    "real_all_scores": [
+      8,
+      5,
+      5
+    ],
+    "real_confidences": [
+      4,
+      3,
+      2
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  }
+}
