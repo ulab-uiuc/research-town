@@ -22,6 +22,7 @@ transformers = "^4.41.2"
 litellm = "^1.39.5"
 beartype = "^0.18.5"
 termcolor = "^1.1.0"
+types-PyYAML = "^6.0.0"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -2,6 +2,7 @@ from beartype import beartype
 from beartype.typing import Dict, Generator, List, Union
 
 from ..agents.agent_base import BaseResearchAgent
+from ..configs import Config
 from ..dbs import (
     AgentProfile,
     AgentProfileDB,
@@ -22,6 +23,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
+        config: Config,
         task: Dict[str, str],
     ) -> None:
         super().__init__(agent_profiles)
@@ -30,6 +32,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
+        self.config = config
 
     def _step(
         self,
@@ -58,10 +61,11 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             )
             # TODO: update find collaborator functions with initial task
             collaborators = agent.find_collaborators(
-                PaperProfile(
+                paper=PaperProfile(
                     title='A Survey on Machine Learning',
                     abstract='This paper surveys the field of machine learning.',
-                )
+                ),
+                config=self.config,
             )
             collaborator_agents: List[BaseResearchAgent] = []
             for researcher_profile in collaborators:
@@ -81,26 +85,33 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         f'Agent {agent.profile.name} found {researcher_profile.name} as collaborator'
                     )
 
-            insights = agent.read_paper(papers=papers, domains=['machine learning'])
+            insights = agent.read_paper(
+                papers=papers,
+                domains=['machine learning'],
+                config=self.config,
+            )
             yield from self.log(
                 f'Agent {agent.profile.name} generated insights: {str(insights)}'
             )
 
             ideas = []
-            idea = agent.think_idea(insights=insights)
+            idea = agent.think_idea(insights=insights, config=self.config)
             ideas.append(idea)
             yield from self.log(
                 f'Agent {agent.profile.name} generated idea: {str(idea)}'
             )
-
             for collaborator_agent in collaborator_agents:
-                idea = collaborator_agent.think_idea(insights=insights)
+                idea = collaborator_agent.think_idea(
+                    insights=insights, config=self.config
+                )
                 ideas.append(idea)
                 yield from self.log(
                     f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(idea)}"
                 )
-            summarized_idea = agent.summarize_ideas(ideas)
-            paper: ResearchPaperSubmission = agent.write_paper(summarized_idea, papers)
+            summarized_idea = agent.summarize_ideas(ideas=ideas, config=self.config)
+            paper: ResearchPaperSubmission = agent.write_paper(
+                idea=summarized_idea, papers=papers, config=self.config
+            )
             yield from self.log(f'Agent {agent.profile.name} wrote paper: {str(paper)}')
             yield from self.log(f'Agent {agent.profile.name} started paper submission')
 
