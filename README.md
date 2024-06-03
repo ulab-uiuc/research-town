@@ -30,7 +30,7 @@ Step2. Run the scripts
 Next, run the script microbench_review.py with the desired arguments:
 
 ```bash
-python examples/microbench_review.py --review_agent_num=3  --model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1' 
+python examples/microbench_review.py --review_agent_num=3  --model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1'
 ```
 
 #### Explanation of Arguments

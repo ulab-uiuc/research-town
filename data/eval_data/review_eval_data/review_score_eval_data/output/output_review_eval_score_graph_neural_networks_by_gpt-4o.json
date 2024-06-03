@@ -1,0 +1,441 @@
+{
+  "absolute_rank_consistency": 1.0,
+  "spearman_rank_consistency": 0.8181818181818182,
+  "kendall_rank_consistency": 0.7777777777777777,
+  "sim_ranks": [
+    3,
+    7,
+    2,
+    4,
+    5,
+    6,
+    9,
+    8,
+    10,
+    1
+  ],
+  "real_ranks": [
+    4,
+    2,
+    3,
+    5,
+    6,
+    7,
+    9,
+    8,
+    10,
+    1
+  ],
+  "papers": {
+    "Ordered GNN: Ordering Message Passing to Deal with Heterophily and Over-smoothing": {
+      "paper_pk": "ea774226-3a7a-4a64-96fc-2f71eda3cb13",
+      "title": "Ordered GNN: Ordering Message Passing to Deal with Heterophily and Over-smoothing",
+      "abstract": "Most graph neural networks follow the message passing mechanism. However, it faces the over-smoothing problem when multiple times of message passing is applied to a graph, causing indistinguishable node representations and prevents the model to effectively learn dependencies between farther-away nodes. On the other hand, features of neighboring nodes with different labels are likely to be falsely mixed, resulting in the heterophily problem. In this work, we propose to order the messages passing into the node representation, with specific blocks of neurons targeted for message passing within specific hops. This is achieved by aligning the hierarchy of the rooted-tree of a central node with the ordered neurons in its node representation. Experimental results on an extensive set of datasets show that our model can simultaneously achieve the state-of-the-art in both homophily and heterophily settings, without any targeted design. Moreover, its performance maintains pretty well while the model becomes really deep, effectively preventing the over-smoothing problem. Finally, visualizing the gating vectors shows that our model learns to behave differently between homophily and heterophily settings, providing an explainable graph neural model.",
+      "authors": [
+        "Yunchong Song",
+        "Chenghu Zhou",
+        "Xinbing Wang",
+        "Zhouhan Lin"
+      ],
+      "keywords": [
+        "GNN",
+        "heterophily",
+        "over-smoothing"
+      ],
+      "real_avg_scores": 5.75,
+      "real_all_scores": [
+        5,
+        5,
+        5,
+        8
+      ],
+      "real_confidences": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "real_contents": [],
+      "real_rank": 4,
+      "real_decision": "Accept: poster",
+      "sim_avg_scores": 9.0,
+      "sim_all_scores": [
+        9
+      ],
+      "sim_contents": [
+        "### Reviews: Ordered GNN: Ordering Message Passing to Deal with Heterophily and Over-smoothing\n\n**Review 1:**\nThe paper \"Ordered GNN: Ordering Message Passing to Deal with Heterophily and Over-smoothing\" presents an innovative approach to addressing persistent problems in Graph Neural Networks (GNNs)\u2014specifically, the over-smoothing and heterophily issues. The authors propose a novel method that orders message passing to provide targeted neuron interactions within specific hops, establishing a hierarchy within the rooted-tree of a central node. \n\nExperimental results are robust, showing that the model excels in both homophily and heterophily contexts without needing specialized tweaks. This comprehensive performance across various datasets is a significant strength. The ability of the model to maintain effectiveness even with increasing depth directly counters the common over-smoothing problem seen in many GNN implementations, representing a solid advance in the field.\n\nOne of the standout features of the paper is the explainability of the model. Through visualization of gating vectors, the model offers insights into its operations under different settings, adding a layer of transparency that is often lacking in deep learning models. This characteristic provides additional value, especially for applications where interpretability is crucial.\n\nOverall, \"Ordered GNN\" is a well-executed piece of research that pushes the boundaries of GNN performance and interpretability. Its innovative approach and thorough validation make it a valuable contribution to the field of graph-based machine learning.\n\n**Review 2:**\nThe innovative work presented in \"Ordered GNN: Ordering Message Passing to Deal with Heterophily and Over-smoothing\" introduces a fresh perspective on managing message passing in GNNs. By ordering messages explicitly and aligning node representations hierarchically, the authors effectively counter two significant challenges: over-smoothing and heterophily. \n\nThe strength of this approach lies in its simplicity and effectiveness. The ordered message passing technique can be comprehensively adopted across various types of graphs, demonstrating versatility and robustness in practice. The empirical results speak volumes, showing state-of-the-art performance across an extensive array of datasets in both homophily and heterophily settings. Maintaining high performance as the model deepens serves as a testament to its ability to prevent the over-smoothing problem effectively.\n\nMoreover, the explainability introduced through gating vector visualization provides an additional layer of understanding which is crucial for both academic and practical applications. Being able to visually interpret how the model behaves differently in homophily and heterophily scenarios adds a substantial practical advantage.\n\nIn conclusion, \"Ordered GNN"
+      ],
+      "sim_rank": 3,
+      "sim_decision": "None"
+    },
+    "Distributed Graph Neural Network Training with Periodic Stale Representation Synchronization": {
+      "paper_pk": "f685d3e2-f914-4c35-8e0c-5491de563058",
+      "title": "Distributed Graph Neural Network Training with Periodic Stale Representation Synchronization",
+      "abstract": "Despite the recent success of Graph Neural Networks (GNNs), it remains challenging to train a GNN on large graphs with over millions of nodes & billions of edges, which are prevalent in many graph-based applications such as social networks, recommender systems, and knowledge graphs. Traditional sampling-based methods accelerate GNN training by dropping edges and nodes, which impairs the graph integrity and model performance. Differently, distributed GNN algorithms accelerate GNN training by utilizing multiple computing devices and can be classified into two types: \"partition-based\" methods enjoy low communication cost but suffer from information loss due to dropped edges, while \"propagation-based\" methods avoid information loss but suffer from prohibitive communication overhead caused by neighbor explosion. To jointly address these problems, this paper proposes DIGEST (DIstributed Graph reprEsentation SynchronizaTion), a novel distributed GNN training framework that synergizes the complementary strength of both categories of existing methods. We propose to allow each device utilize the stale representations of its neighbors in other subgraphs during subgraph parallel training. This way, out method preserves global graph information from neighbors to avoid information loss and reduce the communication cost. Therefore, DIGEST is both computation-efficient and communication-efficient as it does not need to frequently (re-)compute and transfer the massive representation data across the devices, due to neighbor explosion. DIGEST provides synchronous and asynchronous training manners for homogeneous and heterogeneous training environment, respectively. We proved that the approximation error induced by the staleness of the representations can be upper-bounded. More importantly, our convergence analysis demonstrates that DIGEST enjoys the state-of-the-art convergence rate. Extensive experimental evaluation on large, real-world graph datasets shows that DIGEST achieves up to 21.82\u00d7 speedup without compromising the performance compared to state-of-the-art distributed GNN training frameworks",
+      "authors": [
+        "Zheng Chai",
+        "Guangji Bai",
+        "Liang Zhao",
+        "Yue Cheng"
+      ],
+      "keywords": [
+        "GNN",
+        "Distributed training"
+      ],
+      "real_avg_scores": 6.5,
+      "real_all_scores": [
+        6,
+        8,
+        6,
+        6
+      ],
+      "real_confidences": [
+        5,
+        4,
+        5,
+        4
+      ],
+      "real_contents": [],
+      "real_rank": 2,
+      "real_decision": "",
+      "sim_avg_scores": 8.0,
+      "sim_all_scores": [
+        8
+      ],
+      "sim_contents": [
+        "### Review 1: Distributed Graph Neural Network Training with Periodic Stale Representation Synchronization\n\nThe paper \"Distributed Graph Neural Network Training with Periodic Stale Representation Synchronization\" introduces DIGEST\u2014a novel distributed framework aiming to overcome the prevalent challenges in large-scale Graph Neural Network (GNN) training. Traditional sampling-based methods, which often drop edges and nodes, potentially compromise the integrity of the graph and the resultant model performance. DIGEST addresses this critical issue by making use of stale representations of neighboring nodes, striking a balance between the computational efficiency of partition-based methods and the communication efficiency of propagation-based methods.\n\nKey features of DIGEST include:\n- **Stale Representation Utilization**: By allowing each computing device to use stale representations of its neighbors in other subgraphs, DIGEST mitigates information loss while also significantly reducing communication overhead.\n- **Methodological Versatility**: The framework supports both synchronous and asynchronous training modes, making it adaptable to various homogeneous and heterogeneous computational environments.\n- **Performance Metrics**: Extensive empirical evaluation on large, real-world graph datasets indicates that DIGEST achieves up to 21.82\u00d7 speedup compared to state-of-the-art distributed GNN training frameworks. Notably, this acceleration does not come at the cost of model performance.\n\n### Review 2: Integrative Approach in Large-Scale GNN Training: DIGEST Achieves New Heights\n\n\"Distributed Graph Neural Network Training with Periodic Stale Representation Synchronization\" introduces DIGEST, a breakthrough training framework for large-scale GNNs. One of the fundamental challenges in GNN training is managing the sheer scale of nodes and edges, particularly in domains like social networks and knowledge graphs. Traditional methods either drop graph components or face prohibitive communication overheads, compromising speed and accuracy. DIGEST, however, promises a solution that effectively synthesizes the benefits of both partition-based and propagation-based methods.\n\nKey Innovative Aspects:\n- **Stale Representation Synchronization**: This unique approach significantly reduces the communication burden while ensuring that the intrinsic properties of the graph are preserved.\n- **Convergence and Efficiency**: The paper's theoretical contributions are noteworthy, particularly the proof that the staleness-induced approximation error can be upper-bounded. The convergence analysis further demonstrates that DIGEST enjoys state-of-the-art convergence rates.\n- **Empirical Validation**: Real-world experimental evaluations highlight that DIGEST offers up to 21.82\u00d7 speedup without a decline in model performance, effectively validating the framework's practicality and efficiency.\n\n### Combined Review\n\nThe innovative paper \"Distributed Graph"
+      ],
+      "sim_rank": 7,
+      "sim_decision": "None"
+    },
+    "Learnable Graph Convolutional Attention Networks": {
+      "paper_pk": "fab23cce-3aae-40c5-b9c8-b7defc174396",
+      "title": "Learnable Graph Convolutional Attention Networks",
+      "abstract": "Existing Graph Neural Networks (GNNs) compute the message exchange between nodes by either aggregating uniformly (convolving) the features of all the neighbor- ing nodes, or by applying a non-uniform score (attending) to the features. Recent works have shown the strengths and weaknesses of the resulting GNN architectures, respectively, GCNs and GATs. In this work, we aim at exploiting the strengths of both approaches to their full extent. To this end, we first introduce the graph convolutional attention layer (CAT), which relies on convolutions to compute the attention scores. Unfortunately, as in the case of GCNs and GATs, we show that there exists no clear winner between the three\u2014neither theoretically nor in practice\u2014as their performance directly depends on the nature of the data (i.e., of the graph and features). This result brings us to the main contribution of our work, the learnable graph convolutional attention network (L-CAT): a GNN architecture that automatically interpolates between GCN, GAT and CAT in each layer, by adding only two scalar parameters. Our results demonstrate that L-CAT is able to efficiently combine different GNN layers along the network, outperforming competing methods in a wide range of datasets, and resulting in a more robust model that reduces the need of cross-validating.",
+      "authors": [
+        "Adri\u00e1n Javaloy",
+        "Pablo Sanchez Martin",
+        "Amit Levi",
+        "Isabel Valera"
+      ],
+      "keywords": [
+        "GNN",
+        "GCN",
+        "GAT"
+      ],
+      "real_avg_scores": 6.5,
+      "real_all_scores": [
+        6,
+        6,
+        6,
+        8
+      ],
+      "real_confidences": [
+        4,
+        4,
+        3,
+        4
+      ],
+      "real_contents": [],
+      "real_rank": 3,
+      "real_decision": "Accept: notable-top-25%",
+      "sim_avg_scores": 9.0,
+      "sim_all_scores": [
+        9
+      ],
+      "sim_contents": [
+        "**Review of \"Learnable Graph Convolutional Attention Networks\"**\n\nTitle: Excelling in Flexibility and Performance - A Review of L-CAT for Graph Neural Networks\n\nAbstract Review:\nThe paper \"Learnable Graph Convolutional Attention Networks\" introduces a novel, adaptable GNN architecture, L-CAT, which seeks to harness the benefits of both Graph Convolutional Networks (GCNs) and Graph Attention Networks (GATs). Unlike prior models where one is forced to choose between uniform aggregation (GCNs) and score-based aggregation (GATs), L-CAT offers a blended approach through its unique graph convolutional attention layer (CAT). This hybrid method effectively combines the strengths of GCNs, GATs, and the new CAT layer by employing two scalar parameters, thus allowing greater flexibility and performance. The authors demonstrate that L-CAT often surpasses competing methods across various datasets due to its intrinsic ability to adapt based on the graph's nature and feature distribution.\n\nDetailed Review:\nThe introduction of the graph convolutional attention layer (CAT) is a significant innovation in the GNN space, offering a new way to compute attention scores via convolutions. This hybrid technique addresses the limitations of existing GCN and GAT architectures by dynamically adjusting the message-passing mechanism. The CAT layer serves as a bridge, ensuring that the strengths of both GCNs (uniform aggregation) and GATs (non-uniform score aggregation) are effectively utilized.\n\nOne of the most compelling aspects of L-CAT is its robustness and adaptability. The architecture\u2019s ability to interpolate between GCN, GAT, and CAT layers automatically is a game-changer. This adaptability is achieved with minimal overhead, as it requires only two scalar parameters \u2013 a testament to the design's elegance and efficiency.\n\nThe authors' empirical evaluations demonstrate L-CAT's broad applicability and superior performance across a diverse set of datasets. This suggests that the L-CAT model is well-suited for real-world applications where the nature of the graph data can vary significantly. By reducing the need for extensive cross-validation, L-CAT also simplifies the training process, making it highly attractive for practitioners.\n\n**Comparative Review: Interplay Between GCNs and GATs Enhanced by L-CAT**\n\nTitle: L-CAT: Bridging the Gap Between GCNs and GATs for Superior Graph Representation\n\nAbstract Review:\nThe convergence of Graph Convolutional Networks and Graph Attention Networks has long been an area of interest in GNN research. The paper \"Learnable Graph Convolution"
+      ],
+      "sim_rank": 2,
+      "sim_decision": "None"
+    },
+    "PREDICTION OF TOURISM FLOW WITH SPARSE DATA INCORPORATING TOURIST GEOLOCATIONS": {
+      "paper_pk": "5a5e5042-fc70-48d6-a49b-d567c2731d92",
+      "title": "PREDICTION OF TOURISM FLOW WITH SPARSE DATA INCORPORATING TOURIST GEOLOCATIONS",
+      "abstract": "Modern tourism in the 21st century is facing numerous challenges. One of these\nchallenges is the rapidly growing number of tourists in space-limited regions such\nas historical city centers, museums, or geographical bottlenecks like narrow val-\nleys. In this context, a proper and accurate prediction of tourism volume and\ntourism flow within a certain area is important and critical for visitor management\ntasks such as sustainable treatment of the environment and prevention of over-\ncrowding. Static flow control methods like conventional low-level controllers or\nlimiting access to overcrowded venues could not solve the problem yet. In this\npaper, we empirically evaluate the performance of state-of-the-art deep-learning\nmethods such as RNNs, GNNs, and Transformers as well as the classic statistical\nARIMA method. Granular limited data supplied by a tourism region is extended\nby exogenous data such as geolocation trajectories of individual tourists, weather\nand holidays. In the field of visitor flow prediction with sparse data, we are thereby\ncapable of increasing the accuracy of our predictions, incorporating modern input\nfeature handling as well as mapping geolocation data on top of discrete POI data.",
+      "authors": [
+        "Julian Lemmel",
+        "Zahra Babaiee",
+        "Marvin Kleinlehner",
+        "Ivan Majic",
+        "Philipp Neubauer",
+        "Johannes Scholz",
+        "Radu Grosu",
+        "Sophie Neubauer"
+      ],
+      "keywords": [
+        "GNN",
+        "RNN",
+        "Transformer",
+        "Tourism",
+        "Tourism flow prediction"
+      ],
+      "real_avg_scores": 5.5,
+      "real_all_scores": [
+        6,
+        5,
+        3,
+        8
+      ],
+      "real_confidences": [
+        2,
+        3,
+        5,
+        4
+      ],
+      "real_contents": [],
+      "real_rank": 5,
+      "real_decision": "",
+      "sim_avg_scores": 9.0,
+      "sim_all_scores": [
+        9
+      ],
+      "sim_contents": [
+        "**Title: PREDICTION OF TOURISM FLOW WITH SPARSE DATA INCORPORATING TOURIST GEOLOCATIONS**\n**Abstract: Modern tourism in the 21st century is facing numerous challenges. One of these challenges is the rapidly growing number of tourists in space-limited regions such as historical city centers, museums, or geographical bottlenecks like narrow valleys. In this context, a proper and accurate prediction of tourism volume and tourism flow within a certain area is important and critical for visitor management tasks such as sustainable treatment of the environment and prevention of overcrowding. Static flow control methods like conventional low-level controllers or limiting access to overcrowded venues could not solve the problem yet. In this paper, we empirically evaluate the performance of state-of-the-art deep-learning methods such as RNNs, GNNs, and Transformers as well as the classic statistical ARIMA method. Granular limited data supplied by a tourism region is extended by exogenous data such as geolocation trajectories of individual tourists, weather, and holidays. In the field of visitor flow prediction with sparse data, we are thereby capable of increasing the accuracy of our predictions, incorporating modern input feature handling as well as mapping geolocation data on top of discrete POI data.**\n\n**Review:**\nThe paper \"Prediction of Tourism Flow with Sparse Data Incorporating Tourist Geolocations\" addresses a highly relevant issue in the realm of modern tourism management\u2014predicting and managing visitor flow in areas that are prone to overcrowding. The authors commendably focus on leveraging advanced deep-learning methods such as RNNs, GNNs, and Transformers, alongside the traditional ARIMA model. Notably, the integration of granular limited data with exogenous variables, including geolocation trajectories, weather, and holidays, stands out as a highly innovative approach. This methodology not only boosts the prediction accuracy but also enables more refined and dynamic management strategies for preventing overcrowding. The empirical evaluation of different models presents a comprehensive overview, providing actionable insights for policymakers and tourism managers in optimizing their visitor flow strategies.\n\nThe coupling of tourism geolocation data with discrete Points of Interest (POI) further enhances the potential for detailed, real-time predictions. This advancement could be crucial for developing sustainable tourism practices and preserving environmentally sensitive areas.\n\nOverall, this paper makes a significant contribution to the field by demonstrating the benefits of incorporating complex data inputs into predictive models, potentially setting a new standard for tourism flow prediction.\n\n**Title: APPLICATION OF DEEP LEARNING TECHNIQUES FOR TOURISM PREDICTION IN SMART CITIES**\n**"
+      ],
+      "sim_rank": 4,
+      "sim_decision": "None"
+    },
+    "ReG-NAS: Graph Neural Network Architecture Search using Regression Proxy Task": {
+      "paper_pk": "a543c063-a76f-45a1-b8a1-95745944c1c6",
+      "title": "ReG-NAS: Graph Neural Network Architecture Search using Regression Proxy Task",
+      "abstract": "Neural Architecture Search (NAS) has become a focus that has been extensively researched in recent years. Innovative achievements are yielded from the area like convolutional neural networks (CNN), recurrent neural networks (RNN) and so on. However, research on NAS for graph neural networks (GNN) is still in a preliminary stage. Because of the special structure of graph data, some conclusions drew from CNN cannot be directly applied to GNN. At the same time, for NAS, the models' ranking stability is of great importance for it reflects the reliability of the NAS performance. Unfortunately, little research attention has been paid to it, making it a pitfall in the development of NAS research. In this paper, we proposed a novel NAS pipeline, ReG-NAS, which balances stability, reliability and time cost to search the best GNN architecture. Besides, for the first time, we systematically analyzed factors that will affect models' ranking stability in a given search space, which can be used as a guideline for subsequent studies. Our codes are available at https://anonymous.4open.science/r/ReG-NAS-4D21",
+      "authors": [
+        "Boyi Wei",
+        "Cong Hao"
+      ],
+      "keywords": [
+        "Neural Architecture Search",
+        "GNN",
+        "Machine Learning"
+      ],
+      "real_avg_scores": 5.333333333333333,
+      "real_all_scores": [
+        8,
+        5,
+        3
+      ],
+      "real_confidences": [
+        4,
+        4,
+        5
+      ],
+      "real_contents": [],
+      "real_rank": 6,
+      "real_decision": "Reject",
+      "sim_avg_scores": 9.0,
+      "sim_all_scores": [
+        9
+      ],
+      "sim_contents": [
+        "Certainly! Here are reviews based on the given input and external data using two related titles. \n\n---\n\n### 1. Review of \"ReG-NAS: Graph Neural Network Architecture Search using Regression Proxy Task\"\n\nIn recent years, Neural Architecture Search (NAS) has emerged as a valuable technique in the optimization of various neural network architectures, driving significant advancements in convolutional and recurrent neural networks. However, its application to Graph Neural Networks (GNNs) has remained underexplored due to the unique challenges posed by graph-structured data. The paper \"ReG-NAS: Graph Neural Network Architecture Search using Regression Proxy Task\" addresses this gap by introducing a novel NAS framework tailored specifically for GNNs. \n\nThe authors have meticulously balanced three critical dimensions in their proposed NAS pipeline: stability, reliability, and time efficiency. This trifold approach highlights the importance of model ranking stability, an area that has been relatively overlooked in the context of NAS for GNNs. Their work not only introduces key innovations but also systematically analyzes factors impacting ranking stability within the search space. \n\nAn integral contribution of this paper is providing a set of guidelines for future research in NAS for GNNs, thus setting a precedent for further explorations. Furthermore, the availability of their code on an open platform enhances the reproducibility and practical applicability of their findings. Overall, this paper marks a pivotal step forward in the domain of NAS for GNNs, offering substantial insights and tools for both researchers and practitioners.\n\n---\n\n### 2. Comparative Analysis: \"ReG-NAS: Graph Neural Network Architecture Search using Regression Proxy Task\" and Progress in NAS for Traditional Neural Networks\n\nThe landscape of Neural Architecture Search (NAS) has yielded significant breakthroughs in optimizing traditional neural network domains such as convolutional neural networks (CNNs) and recurrent neural networks (RNNs). However, the application of NAS to Graph Neural Networks (GNNs) has lagged, primarily due to the distinct nature of graph-structured data. The paper \"ReG-NAS: Graph Neural Network Architecture Search using Regression Proxy Task\" aims to bridge this gap by presenting a novel NAS pipeline that prioritizes the unique demands of GNNs.\n\nIn contrast to traditional NAS approaches that have predominantly focused on CNNs and RNNs, \"ReG-NAS\" brings to light new challenges and solutions when dealing with GNNs. One notable innovation is the emphasis on model ranking stability. While previous NAS research concentrated on accuracy and efficiency, the stability of model rankings in GNNs is crucial for assessing"
+      ],
+      "sim_rank": 5,
+      "sim_decision": "None"
+    },
+    "Bi-Stride Multi-Scale Graph Neural Network for Mesh-Based Physical Simulation": {
+      "paper_pk": "8ab4c27a-c03d-491b-a5c2-c5226d9f40f5",
+      "title": "Bi-Stride Multi-Scale Graph Neural Network for Mesh-Based Physical Simulation",
+      "abstract": "Learning physical systems on unstructured meshes by flat Graph neural networks (GNNs) faces the challenge of modeling the long-range interactions due to the scaling complexity w.r.t. the number of nodes, limiting the generalization under mesh refinement. On regular grids, the convolutional neural networks (CNNs) with a U-net structure can resolve this challenge by efficient stride, pooling, and upsampling operations. Nonetheless, these tools are much less developed for graph neural networks (GNNs), especially when GNNs are employed for learning large-scale mesh-based physics. The challenges arise from the highly irregular meshes and the lack of effective ways to construct the multi-level structure without losing connectivity. Inspired by the bipartite graph determination algorithm, we introduce Bi-Stride Multi-Scale Graph Neural Network (BSMS-GNN) by proposing \\textit{bi-stride} as a simple pooling strategy for building the multi-level GNN. \\textit{Bi-stride} pools nodes by striding every other BFS frontier; it 1) works robustly on any challenging mesh in the wild, 2) avoids using a mesh generator at coarser levels, 3) avoids the spatial proximity for building coarser levels, and 4) uses non-parametrized aggregating/returning instead of MLPs during pooling and unpooling. Experiments show that our framework significantly outperforms the state-of-the-art method's computational efficiency in representative physics-based simulation cases.",
+      "authors": [
+        "Yadi Cao",
+        "Menglei Chai",
+        "Minchen Li",
+        "Chenfanfu Jiang"
+      ],
+      "keywords": [
+        "GNN",
+        "physics-based simulation"
+      ],
+      "real_avg_scores": 4.333333333333333,
+      "real_all_scores": [
+        5,
+        3,
+        5
+      ],
+      "real_confidences": [
+        3,
+        4,
+        4
+      ],
+      "real_contents": [],
+      "real_rank": 7,
+      "real_decision": "",
+      "sim_avg_scores": 9.0,
+      "sim_all_scores": [
+        9
+      ],
+      "sim_contents": [
+        "### Review for \"Bi-Stride Multi-Scale Graph Neural Network for Mesh-Based Physical Simulation\" and Related Papers\n\n#### Title: Bi-Stride Multi-Scale Graph Neural Network for Mesh-Based Physical Simulation\nThe introduction of the Bi-Stride Multi-Scale Graph Neural Network (BSMS-GNN) marks a significant advancement in the field of mesh-based physical simulation. This novel approach addresses a perennial challenge in the domain: the modeling of long-range interactions in unstructured meshes through traditional flat Graph Neural Networks (GNNs). The authors draw a parallel to the efficiency seen in convolutional neural networks (CNNs) with U-net structures, which adeptly handle similar issues through strides, pooling, and upsampling.\n\nBSMS-GNN innovatively utilizes a `bi-stride` pooling strategy, a clever tactic inspired by bipartite graph determination algorithms. By striding every other BFS frontier, this method not only offers robustness across various challenging meshes but also circumvents the need for coarse-level mesh generators. This significantly trims down computational costs without compromising on generalization under mesh refinement. Additionally, the non-parametrized aggregation/return strategy during pooling and unpooling further enhances computational efficiency.\n\nExperiments conducted demonstrate the framework\u2019s superior performance compared to state-of-the-art methods in representative physics-based simulation cases. This opens promising avenues for future research focused on large-scale, irregular mesh-based physical systems.\n\n#### Title: Hierarchical Graph Neural Networks for Scalable Physical Simulation on Unstructured Meshes\nAnother pertinent work in this space is the development of Hierarchical Graph Neural Networks (HGNNs), which parallels BSMS-GNN in the aim to effectively simulate physical systems over unstructured meshes. HGNNs emphasize building a hierarchy of graphs to capture multi-scale interactions, ensuring scalability and robustness.\n\nMuch like BSMS-GNN\u2019s bi-stride approach, HGNNs tackle the scalability issue by creating higher-level representations that simplify the simulation problem. However, HGNNs focus more on dynamically adapting the hierarchy based on specific simulation needs. This flexibility can be advantageous for simulations requiring varying levels of detail across different regions of the mesh.\n\n#### Comparative Analysis:\nWhile both methodologies\u2014BSMS-GNN and HGNN\u2014share the objective of improving physical simulations on unstructured meshes, BSMS-GNN\u2019s bi-stride strategy stands out for its simplicity and computational efficiency. The novel pooling technique proposed in BSMS-GNN might be less adaptable compared to HGNN\u2019s dynamic hierarchical approach, but it excels in scenarios where fixed, efficient stratification is beneficial.\n\nOn the other hand,"
+      ],
+      "sim_rank": 6,
+      "sim_decision": "None"
+    },
+    "Vectorial Graph Convolutional Networks": {
+      "paper_pk": "f7ec0b91-1a32-405a-b340-0fdfac140fdc",
+      "title": "Vectorial Graph Convolutional Networks",
+      "abstract": "   Graph Convolutional Networks (GCN) have drawn considerable attention recently due to their outstanding performance in processing graph-structured data. However, GCNs still limited to the undirected graph because they theoretically require a symmetric matrix as the basis for the Laplacian transform. This causes the isotropic problem of the operator and reduced sensitivity in response to different information. In order to solve the problem, we generalize the spectral convolution operator to directed graphs by field extension, which improves the edge representations from scalars to vectors. Therefore, it brings in the concept of direction. That is to say, and even homogeneous information can become distinguishable by its differences in directions.In this paper, we propose the Vectorial Graph Convolutional Network(VecGCN) and the experimental evidence showing the advantages of a variety of directed graph node classification and link prediction tasks. ",
+      "authors": [
+        "ZhongYu Li",
+        "Geng Zhao",
+        "Hao Ning"
+      ],
+      "keywords": [
+        "GNN",
+        "GCN"
+      ],
+      "real_avg_scores": 3.5,
+      "real_all_scores": [
+        5,
+        3,
+        3,
+        3
+      ],
+      "real_confidences": [
+        4,
+        5,
+        5,
+        4
+      ],
+      "real_contents": [],
+      "real_rank": 9,
+      "real_decision": "Reject",
+      "sim_avg_scores": 8.0,
+      "sim_all_scores": [
+        8
+      ],
+      "sim_contents": [
+        "Title: Comparative Analysis of Directed Graph Neural Networks: An Emphasis on Vectorial Graph Convolutional Networks\n\nAbstract Review:\nGraph Neural Networks (GNNs) are a rapidly evolving field designed to handle graph-structured data, known for their impressive success in various applications. However, traditional Graph Convolutional Networks (GCNs) have often been restricted to undirected graphs, primarily because these networks utilize symmetric matrices as the basis for Laplacian transforms. This limitation can result in an isotropic problem, reducing sensitivity to directional information which may be inherent in various datasets.\n\nThe paper \"Vectorial Graph Convolutional Networks\" (VecGCN) addresses this limitation by extending the spectral convolution operator to directed graphs. This is achieved through field extension, which shifts edge representations from scalars to vectors. Introducing directionality allows previously homogeneous information to be differentiated based on direction, potentially increasing the utility of GCNs in scenarios where direction is a critical factor. The study provides experimental evidence to illustrate the superior performance of VecGCN across a variety of directed graph node classification and link prediction tasks.\n\nThe notion of incorporating direction significantly advances the field, potentially opening up new horizons for research and applications in GNNs. The experimental results presented are particularly compelling, as they demonstrate the practical benefits of moving beyond the limitations of traditional GCNs. Future work could involve exploring the integration of VecGCN with other state-of-the-art techniques in GNNs and comparing performance across a wider range of real-world datasets.\n\n---\n\nTitle: Advances in Directed Graph Processing with Vectorial Graph Convolutional Networks and Beyond\n\nAbstract Review:\nThe advancement in Graph Neural Networks (GNNs) has brought forth many novel approaches to efficiently process and extract useful representations from graph-structured data. A notable challenge in this domain has been the inherent limitation of traditional Graph Convolutional Networks (GCNs) to undirected graphs due to the dependence on symmetric matrices for Laplacian transformations. This constraint introduces the isotropic problem, diminishing the ability to capture directional differences in information processing.\n\nThe paper \"Vectorial Graph Convolutional Networks\" (VecGCN) proposes an innovative solution to this issue by enhancing the spectral convolution operator to accommodate directed graphs. By utilizing field extension, edge representations evolve from basic scalars to more detailed vectors, integrating the concept of directionality into the convolutions. This enhancement allows VecGCN to distinguish between otherwise homogeneous data based on directional vectors, thus improving the network's sensitivity and adaptability across various datasets.\n\nExperimental results demonstrate the superiority of VecGCN"
+      ],
+      "sim_rank": 9,
+      "sim_decision": "None"
+    },
+    "Graph Contrastive Learning Under Heterophily: Utilizing Graph Filters to Generate Graph Views": {
+      "paper_pk": "97d06e98-8257-4f8a-8225-b346cb26239f",
+      "title": "Graph Contrastive Learning Under Heterophily: Utilizing Graph Filters to Generate Graph Views",
+      "abstract": "Graph Neural Networks have achieved tremendous success in (semi-)supervised tasks for which task-specific node labels are available. However, obtaining labels is expensive in many domains, specially as the graphs grow larger in size. Hence, there has been a growing interest in the application of self-supervised techniques, in particular contrastive learning (CL), to graph data. In general, CL methods work by maximizing the agreement between encoded augmentations of the same example, and minimizing agreement between encoded augmentations of different examples. However, we show that existing graph CL methods perform very poorly on graphs with heterophily, in which connected nodes tend to belong to different classes. First, we show that this is attributed to the ineffectiveness of existing graph augmentation methods. Then, we leverage graph filters to directly generate augmented graph views for graph CL under heterophily. In particular, instead of explicitly augmenting the graph topology and encoding the augmentations, we use a high-pass filter in the encoder to generate node representations only based on high-frequency graph signals. Then, we contrast the high-pass filtered representations with their low-pass counterparts produced by the same encoder, to generate representations. Our experimental results confirm that our proposed method, HLCL, outperforms state-of-the-art CL methods on benchmark graphs with heterophily, by up to 10%.",
+      "authors": [
+        "Wenhan Yang",
+        "Baharan Mirzasoleiman"
+      ],
+      "keywords": [
+        "GNN",
+        "Contrastive learning",
+        "Heterophily",
+        "Graph Representation Learning"
+      ],
+      "real_avg_scores": 4.0,
+      "real_all_scores": [
+        3,
+        5,
+        5,
+        3
+      ],
+      "real_confidences": [
+        5,
+        3,
+        3,
+        4
+      ],
+      "real_contents": [],
+      "real_rank": 8,
+      "real_decision": "Reject",
+      "sim_avg_scores": 8.0,
+      "sim_all_scores": [
+        8
+      ],
+      "sim_contents": [
+        "### Review 1: A Robust Approach to Contrastive Learning in Heterophilic Graphs\n\n\"Graph Contrastive Learning Under Heterophily: Utilizing Graph Filters to Generate Graph Views\" tackles a critical issue in the realm of Graph Neural Networks (GNNs)\u2014the poor performance of existing contrastive learning (CL) methods on graphs with heterophily. Unlike homophilic graphs where connected nodes often belong to the same class, heterophilic graphs connect nodes that tend to belong to different classes, making traditional data augmentation methods less effective.\n\nThe authors have adeptly introduced a novel paradigm using graph filters to generate more effective representations. By employing a high-pass filter within the encoder to generate node representations dominated by high-frequency graph signals, the proposed method\u2014termed HLCL (Heterophilic Contrastive Learning)\u2014manages to create enhanced augmented views of the graph. This filtered approach is contrasted against low-pass filtered representations to yield more informative features.\n\nThe experimental results presented are compelling, showing that HLCL surpasses state-of-the-art contrastive learning methods by significant margins, with up to a 10% improvement on benchmark heterophilic graphs. The carefully crafted methodology and strong empirical evidence make a very convincing case for the effectiveness of this approach in handling the challenges of heterophilic graph data.\n\n### Review 2: Redefining Graph Augmentation with High-Pass Filtering\n\nIn the paper \"Graph Contrastive Learning Under Heterophily: Utilizing Graph Filters to Generate Graph Views,\" the authors introduce a pivotal advancement in graph contrastive learning (CL) by addressing the hitherto underexplored nuances of graph heterophily. Heterophilic graphs, where connected nodes typically belong to different classes, present significant challenges for conventional CL techniques that rely on homophilic assumptions.\n\nThe novel contribution of this work lies in its application of graph filters to generate augmented views of the graph, specifically tailored for handling heterophily. The paper proposes HLCL (Heterophilic Contrastive Learning), which employs a high-pass filter within the graph encoder to capture information-rich, high-frequency node representations. These high-pass filtered representations are contrasted with their low-pass filtered counterparts to produce robust node embeddings.\n\nThe empirical validation provided in the paper indicates substantial improvements over existing state-of-the-art CL methods, with performance gains up to 10% on benchmark heterophilic datasets. This represents a significant leap in the field, suggesting that high-pass filtering in graph encoders could be a vital tool for enhancing the performance of CL techniques in complex graph structures"
+      ],
+      "sim_rank": 8,
+      "sim_decision": "None"
+    },
+    "FoSR: First-order spectral rewiring for addressing oversquashing in GNNs": {
+      "paper_pk": "269aa3e9-2de3-4689-82ad-221fb48914d5",
+      "title": "FoSR: First-order spectral rewiring for addressing oversquashing in GNNs",
+      "abstract": "Graph neural networks (GNNs) are able to leverage the structure of graph data by passing messages along the edges of the graph. While this allows GNNs to learn features depending on the graph structure, for certain graph topologies it leads to inefficient information propagation and a problem known as oversquashing. This has recently been linked with the curvature and spectral gap of the graph. On the other hand, adding edges to the message-passing graph can lead to increasingly similar node representations and a problem known as oversmoothing. We propose a computationally efficient algorithm that prevents oversquashing by systematically adding edges to the graph based on spectral expansion. We combine this with a relational architecture, which lets the GNN preserve the original graph structure and provably prevents oversmoothing. We find experimentally that our algorithm outperforms existing graph rewiring methods in several graph classification tasks.",
+      "authors": [
+        "Kedar Karhadkar",
+        "Pradeep Kr. Banerjee",
+        "Guido Montufar"
+      ],
+      "keywords": [
+        "oversquashing",
+        "oversmoothing",
+        "graph rewiring",
+        "graph neural networks",
+        "GNN",
+        "relational GNN",
+        "spectral expansion"
+      ],
+      "real_avg_scores": 3.5,
+      "real_all_scores": [
+        3,
+        3,
+        3,
+        5
+      ],
+      "real_confidences": [
+        4,
+        4,
+        5,
+        4
+      ],
+      "real_contents": [],
+      "real_rank": 10,
+      "real_decision": "",
+      "sim_avg_scores": 8.0,
+      "sim_all_scores": [
+        8
+      ],
+      "sim_contents": [
+        "Certainly! The external data provided outlines a key paper titled \"FoSR: First-order Spectral Rewiring for Addressing Oversquashing in GNNs,\" which introduces a novel approach to tackle common issues in Graph Neural Networks (GNNs). Below are reviews and insights that combine this work with related concerns in the field:\n\n---\n\n**Understanding and Mitigating Oversquashing in GNNs with FoSR**\n\nGraph Neural Networks (GNNs) have emerged as powerful tools for tasks involving structured data. However, their performance can be plagued by the issues of oversquashing and oversmoothing, leading to inefficient information propagation and loss of unique node features, respectively. The paper \"FoSR: First-order Spectral Rewiring for Addressing Oversquashing in GNNs\" brings forward an innovative approach to address these challenges. \n\nAuthors of \"FoSR\" argue that by leveraging the spectral properties of graphs, one can systematically add edges to alleviate oversquashing without triggering oversmoothing. Their algorithm achieves this by selectively augmenting the graph based on spectral expansion, which maintains the delicate balance between effective message passing and feature uniqueness preservation. Additionally, the integration of a relational architecture ensures that the GNN retains the integrity of the original graph, thus striking the right balance.\n\n### Key Contributions:\n\n1. **Spectral Expansion:**\n   The paper introduces a method that leverages the spectral gap of a graph to identify where additional edges should be added. This approach prevents the graph from becoming overly dense, thus avoiding the oversmoothing problem.\n   \n2. **Computational Efficiency:**\n   One notable merit of this algorithm is its computational efficiency. Unlike some existing methods, which can be computationally prohibitive or infeasible for large graphs, the proposed approach scales well, making it practical for real-world applications.\n\n3. **Experimental Validation:**\n   Experimental results as highlighted in the paper demonstrate that FoSR outperforms existing graph rewiring methods. On diverse graph classification tasks, the improved node representation enhanced by FoSR leads to better overall performance, underscoring its efficacy.\n\n### Related Work and Further Discussion:\n\nThe problem of oversquashing has been a topic of considerable research interest, closely linked to the topology of the graph and the limitations of standard message-passing frameworks in GNNs. Other notable papers might include methodologies that approach this from different angles, such as modifying the aggregation functions or using attention mechanisms to differentially weigh node connections.\n\nMoreover, some researchers focus on oversmoothing - where overly deep GNNs lead to homogenous"
+      ],
+      "sim_rank": 10,
+      "sim_decision": "None"
+    },
+    "Agent-based Graph Neural Networks": {
+      "paper_pk": "c4d4d5c6-83ce-4b3d-ac3d-86350fa7b0d6",
+      "title": "Agent-based Graph Neural Networks",
+      "abstract": "We present a novel graph neural network we call AgentNet, which is designed specifically for graph-level tasks. AgentNet is inspired by sublinear algorithms, featuring a computational complexity that is independent of the graph size. The architecture of AgentNet differs fundamentally from the architectures of traditional graph neural networks. In AgentNet, some trained \\textit{neural agents} intelligently walk the graph, and then collectively decide on the output. We provide an extensive theoretical analysis of AgentNet: We show that the agents can learn to systematically explore their neighborhood and that AgentNet can distinguish some structures that are even indistinguishable by 2-WL. Moreover, AgentNet is able to separate any two graphs which are sufficiently different in terms of subgraphs. We confirm these theoretical results with synthetic experiments on hard-to-distinguish graphs and real-world graph classification tasks. In both cases, we compare favorably not only to standard GNNs but also to computationally more expensive GNN extensions.",
+      "authors": [
+        "Karolis Martinkus",
+        "P\u00e1l Andr\u00e1s Papp",
+        "Benedikt Schesch",
+        "Roger Wattenhofer"
+      ],
+      "keywords": [
+        "Graph Neural Networks",
+        "GNN",
+        "Graph Classification",
+        "Expressive Graph Neural Networks",
+        "Sublinear algorithms"
+      ],
+      "real_avg_scores": 7.0,
+      "real_all_scores": [
+        6,
+        8,
+        6,
+        8
+      ],
+      "real_confidences": [
+        3,
+        3,
+        4,
+        3
+      ],
+      "real_contents": [],
+      "real_rank": 1,
+      "real_decision": "Accept: poster",
+      "sim_avg_scores": 9.0,
+      "sim_all_scores": [
+        9
+      ],
+      "sim_contents": [
+        "Based on the given input and the details from the provided external data, here are a couple of reviews that combine relevant insights:\n\n---\n\n### Review of \"Agent-based Graph Neural Networks\" \n\nThe paper titled \"Agent-based Graph Neural Networks\" introduces an innovative approach to graph neural networks (GNNs) through a model called AgentNet, which is designed explicitly for graph-level tasks. The primary novelty of AgentNet is its inspiration from sublinear algorithms that enable a computational complexity independent of the graph size. This represents a significant breakthrough in the scalability of GNNs.\n\nAgentNet\u2019s fundamental departure from traditional GNN architecture lies in its use of neural agents that navigate the graph intelligently. These agents collectively decide on the output by systematically exploring their neighborhoods. This method introduces an efficiency and elegance not found in standard GNN approaches, where computational cost typically scales with the size of the graph.\n\nThe theoretical analysis presented in the paper is robust, demonstrating that these intelligent agents of AgentNet can effectively distinguish structures that challenge even the 2-WL (Weisfeiler-Leman) test. Furthermore, AgentNet showcases its capability to separate graph pairs that differ sufficiently in terms of subgraphs.\n\nThe empirical results provided are equally compelling. Synthetic experiments highlight AgentNet\u2019s superiority in distinguishing complex graph structures, while real-world graph classification tasks show AgentNet outperforms not only traditional GNNs but also more computationally intensive GNN variants. This performance underscores the potential of AgentNet in practical applications, suggesting that this approach could redefine efficiency standards for large-scale graph analytics.\n\nIn conclusion, \"Agent-based Graph Neural Networks\" makes a significant contribution to the field of graph neural networks. By leveraging intelligent agents to navigate and process graphs, AgentNet achieves both theoretical depth and empirical efficacy, paving the way for scalable and efficient GNN applications in diverse domains.\n\n---\n\n### Comparative Review: \"Agent-based Graph Neural Networks\" and \"Advances in Graph Neural Networks\"\n\nIn the landscape of advancements in graph neural networks (GNNs), the paper \"Agent-based Graph Neural Networks\" represents a notable stride through the introduction of AgentNet. This model distinguishes itself by leveraging sublinear algorithms, which decouples its computational complexity from the graph size \u2013 a stark contrast to traditional GNNs. This innovation is critical in addressing scalability issues commonly associated with GNNs, making AgentNet particularly relevant for large graph datasets.\n\nComparing AgentNet with the broader developments discussed in \"Advances in Graph Neural Networks,\" it is evident that the field is rapidly evolving with diverse approaches aimed at overcoming specific"
+      ],
+      "sim_rank": 1,
+      "sim_decision": "None"
+    }
+  }
+}
