@@ -1,5 +1,4 @@
 import json
-from typing import List
 
 from research_town.dbs import AgentPaperMetaReviewLog  # Meta-Review
 from research_town.dbs import AgentPaperReviewLog  # Review
@@ -22,19 +21,25 @@ from .evaluator_constants import (
 
 
 def run_sync_evaluation(
-    insight_list:ResearchInsight,
+    insight_list: ResearchInsight,
     idea_list: ResearchIdea,
     paper_list: ResearchPaperSubmission,
     review_list: AgentPaperReviewLog,
     meta_review_list: AgentPaperMetaReviewLog,
-    model_name: str | None = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-):
+    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+) -> None:
     # Serialize Logs
-    insight_serialize =  f'content: {insight_list.content}' 
+    insight_serialize = f'content: {insight_list.content}'
     idea_serialize = f'content: {idea_list.content}'
-    paper_serialize = {"title": paper_list.title, "abstract": paper_list.abstract, "conference": paper_list.conference}
-    review_serialize =  f'score: {review_list.review_score}\ncontent: {review_list.review_content}'
-    meta_review_serialize =  f'decision: {meta_review_list.decision}\nmeta review:{meta_review_list.meta_review}'
+    paper_serialize = {
+        'title': paper_list.title,
+        'abstract': paper_list.abstract,
+        'conference': paper_list.conference,
+    }
+    review_serialize = (
+        f'score: {review_list.review_score}\ncontent: {review_list.review_content}'
+    )
+    meta_review_serialize = f'decision: {meta_review_list.decision}\nmeta review:{meta_review_list.meta_review}'
     # Create Evaluators
     idea_quality_evaluator = IdeaQualityEvaluator(model_name=model_name)
     paper_quality_evaluator = PaperQualityEvaluator(model_name=model_name)
