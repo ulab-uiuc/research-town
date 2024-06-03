@@ -4,8 +4,8 @@ import uuid
 from beartype.typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
+from ..utils.agent_collector import fetch_author_info, get_user_profile
 from ..utils.paper_collector import get_bert_embedding, neiborhood_search
-from ..utils.agent_collector import get_user_profile, bfs
 
 
 class AgentProfile(BaseModel):
@@ -82,19 +82,12 @@ class AgentProfileDB(object):
             for agent_data in agents:
                 agent = AgentProfile(**agent_data)
                 self.add(agent)
-                
-    def fetch_and_add_agents(self, initial_list: List[str] | None, domain: str | None) -> None:
-        final_list = initial_list
+
+    def fetch_and_add_agents(self, initial_list: List[str] | None) -> None:
         for name in initial_list:
             agent_profile = AgentProfile(name=name)
             self.data[agent_profile.pk] = agent_profile
-        
-            graph, _, _ = bfs(initial_list, node_limit=1)
-            collaborators = []
-            for (author_A, author_B) in graph:
-                collaborators.append(author_A)
-                collaborators.append(author_B)
-        # for name in initial_list:
-        #     bio = get_user_profile(name)
-        #     agent_profile = AgentProfile(name=name, bio=bio, collaborators=[])
-            
+            _, coauthor = fetch_author_info(name)
+            self.data[agent_profile.pk].collaborators = coauthor
+            bio = get_user_profile(name)[0]
+            self.data[agent_profile.pk].bio = bio

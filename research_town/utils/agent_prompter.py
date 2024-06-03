@@ -21,14 +21,16 @@ from .string_mapper import (
 def summarize_research_direction_prompting(
     personal_info: str,
     model_name: str,
-    prompt_template: str,
 ) -> List[str]:
     """
     Summarize research direction based on personal research history
     """
-    template_input = {'personalinfo': personal_info}
-    prompt = prompt_template.format_map(template_input)
-    return model_prompting(model_name, prompt)
+    prompt_qa = (
+        "Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. Focus more on more rescent personas. Be concise and clear (around 300 words)."
+        'Here are the personas from different times: {personal_info}'
+    )
+    prompt = prompt_qa.format_map({'personal_info': personal_info})
+    return model_prompting(llm_model=model_name, prompt=prompt)
 
 
 @beartype

@@ -1,7 +1,3 @@
-from beartype.typing import Dict, List
-import torch
-from transformers import BertModel, BertTokenizer
-
 from research_town.configs import Config
 from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB
 from research_town.envs import (
@@ -10,26 +6,21 @@ from research_town.envs import (
 )
 
 
-def run_sync_experiment(
-    config_file_path: str,
-    domain: str
-) -> None:
+def run_sync_experiment(config_file_path: str, domain: str) -> None:
     # Create Environment and Agents
-    tokenizer = BertTokenizer.from_pretrained('facebook/contriever')
-    model = BertModel.from_pretrained('facebook/contriever').to(torch.device('cpu'))
-    
+
     agent_db = AgentProfileDB()
-    agent_db.load_from_file("data/agent_data/" + domain + ".json")
+    agent_db.load_from_file('data/agent_data/' + domain + '.json')
     agent_profiles = []
     for _, agent_profile in agent_db.data.items():
         agent_profiles.append(agent_profile)
-    
+
     paper_db = PaperProfileDB()
-    paper_db.load_from_file("data/paper_data/" + domain + ".json")
+    paper_db.load_from_file('data/paper_data/' + domain + '.json')
     paper_profiles = []
     for _, paper_profile in paper_db.data.items():
         paper_profiles.append(paper_profile)
-        
+
     env_db = EnvLogDB()
     config = Config(config_file_path)
     paper_submission_env = PaperSubmissionMultiAgentEnvironment(
@@ -40,7 +31,7 @@ def run_sync_experiment(
         env_db=env_db,
         config=config,
     )
-    
+
     paper_rebuttal_env = PaperRebuttalMultiAgentEnv(
         agent_profiles=agent_profiles,
         agent_db=agent_db,
@@ -68,7 +59,7 @@ def run_sync_experiment(
 def main() -> None:
     run_sync_experiment(
         config_file_path='./configs/default_config.yaml',
-        domain="machine_learning_system"
+        domain='machine_learning_system',
     )
 
 

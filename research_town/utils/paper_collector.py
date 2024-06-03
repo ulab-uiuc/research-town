@@ -75,18 +75,24 @@ def get_daily_papers(
     for result in results:
         paper_title = result.title
         paper_url = result.entry_id
+        paper_authors = [author.name for author in result.authors]
+        paper_domain = result.primary_category
         paper_abstract = result.summary.replace('\n', ' ')
-        publish_time = result.published.date()
+        publish_time = result.published.timestamp()
         newest_day = publish_time
         if publish_time in content:
-            content[publish_time]['abstract'].append(
-                paper_title + ': ' + paper_abstract
-            )
-            content[publish_time]['info'].append(paper_title + ': ' + paper_url)
+            content[publish_time]['title'].append(paper_title)
+            content[publish_time]['abstract'].append(paper_abstract)
+            content[publish_time]['authors'].append(paper_authors)
+            content[publish_time]['domain'].append(paper_domain)
+            content[publish_time]['url'].append(paper_url)
         else:
             content[publish_time] = {}
-            content[publish_time]['abstract'] = [paper_title + ': ' + paper_abstract]
-            content[publish_time]['info'] = [paper_title + ': ' + paper_url]
+            content[publish_time]['title'] = [paper_title]
+            content[publish_time]['abstract'] = [paper_abstract]
+            content[publish_time]['authors'] = [paper_authors]
+            content[publish_time]['domain'] = [paper_domain]
+            content[publish_time]['url'] = [paper_url]
     return content, newest_day
 
 

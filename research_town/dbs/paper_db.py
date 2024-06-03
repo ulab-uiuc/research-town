@@ -77,10 +77,20 @@ class PaperProfileDB:
 
     def fetch_and_add_papers(self, num: int, domain: str) -> None:
         data, _ = get_daily_papers(domain, query=domain, max_results=num)
-        transformed_data = {}
-        for date, value in data.items():
-            papers = []
-            papers.append({'abstract': value['abstract']})
-            papers.append({'info': value['info']})
-            transformed_data[date] = papers
-        self.update_db(transformed_data)
+        for published, value in data.items():
+            for url, title, authors, abstract, primary_domain in zip(
+                value['url'],
+                value['title'],
+                value['authors'],
+                value['abstract'],
+                value['domain'],
+            ):
+                paper_profile = PaperProfile(
+                    timestamp=published,
+                    url=url,
+                    title=title,
+                    authors=authors,
+                    abstract=abstract,
+                    domain=primary_domain,
+                )
+                self.data[paper_profile.pk] = paper_profile
