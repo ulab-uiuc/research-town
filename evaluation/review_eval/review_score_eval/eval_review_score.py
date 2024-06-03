@@ -151,11 +151,12 @@ def main(data_path: str, domain: str, model_name:str, review_agent_num: int, rev
     agent_db.load_from_file(agent_file)
     # Step2: start simulated review process for each paper. Total number of to papers to review is 'review_paper_num'.
     reviews: List[AgentPaperReviewLog] = []
+    agent_profiles_list:List[AgentProfile] = list(agent_db.data.values())
     for idx, paper in enumerate(tqdm(Papers2eval, desc="Review Papers by Agents", unit="paper")):
         if idx >= review_paper_num:
             break
         # 1. select reviewers. Retrive the reviewers from the database.
-        selected_review_pks = agent_db.match(idea=paper.abstract, agent_profiles=agent_db.data.values(), num=review_agent_num)
+        selected_review_pks = agent_db.match(idea=paper.abstract, agent_profiles=agent_profiles_list, num=review_agent_num)
         select_reviewers = [agent_db.data[pk] for pk in selected_review_pks]
         # 2. create the review agents
         review_agents: List[BaseResearchAgent] = []
