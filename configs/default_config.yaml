@@ -34,7 +34,7 @@ prompt_template:
     Here is the idea: {idea}
     Here are the external data, which is a list of abstracts of related papers: {papers}
   review_score: |
-    Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only return one number score. The paper's borderline acceptance score is 5.
+    Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only return one number score. The more you think a paper should be accepted, the closer to 10 the score should be; conversely, the more you think a paper should be rejected, the closer to 1 the score should be. The paper's borderline acceptance score is 5. 
     <Examples>
     <Exapmle Score of 5>
     <Paper title>--Your Neighbors Are Communicating: Towards Powerful and Scalable Graph Neural Networks.
