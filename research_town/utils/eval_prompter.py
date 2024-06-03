@@ -159,7 +159,7 @@ def review_quality_eval_prompting(
 ) -> str:
     review_prompt = """
     <Instruction>
-    Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.
+    Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. For these components are left blank, please provide your common knowledge to assess the review.
     </Instruction>
 
     <Input>
