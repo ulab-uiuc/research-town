@@ -39,11 +39,21 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.config = config
 
     @beartype
-    def assign_roles(self, role_dict: Dict[str, str]) -> None:
+    def assign_roles(self, num: int = 1) -> None:
+        idea = self.submission.abstract
+        
+        reviewer_profiles = []
+        for agent_profile in self.agent_profiles:
+            print(agent_profile)
+            if agent_profile.name not in self.submission.authors:
+                reviewer_profiles.append(agent_profile.bio)
+                
+        reviewer_pks = self.agent_db.match(
+            idea=idea, profile_l=reviewer_profiles, num=num
+        )
         for index, agent_profile in enumerate(self.agent_profiles):
-            if role_dict[agent_profile.pk] == 'reviewer':
+            if agent_profile.pk in reviewer_pks:
                 self.reviewer_mask[index] = True
-
     @beartype
     def initialize_submission(self, paper_profile: PaperProfile) -> None:
         self.submission = paper_profile
