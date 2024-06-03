@@ -72,9 +72,12 @@ class RealPaperWithReviewDB(object):
         with open(file_name, 'w') as f:
             json.dump(combined_data, f, indent=2)
 
-    def profile_paper_from_real_review(self) -> List[PaperProfile]:
+    def profile_paper_from_real_review(self,paper_num:int) -> List[PaperProfile]:
         papers = []
+        count = 0
         for review in self.data.values():
+            if count >= paper_num:
+                break
             paper = PaperProfile(
                 title=review.title,
                 abstract=review.abstract,
@@ -84,6 +87,7 @@ class RealPaperWithReviewDB(object):
             assert paper.pk is not None
             review.paper_pk = paper.pk  # write back the pk to the review
             papers.append(paper)
+            count += 1
         return papers
 
     def map_agent_reviews_to_real_paper(
@@ -143,7 +147,7 @@ def main(data_path: str, domain: str, model_name:str, review_agent_num: int, rev
     real_paper_db = RealPaperWithReviewDB()
     paper_file = os.path.join(data_path, 'eval_data','review_eval_data','review_score_eval_data',f'paper_{domain}.json')
     real_paper_db.load_from_file(paper_file)
-    Papers2eval = real_paper_db.profile_paper_from_real_review()
+    Papers2eval = real_paper_db.profile_paper_from_real_review(paper_num=review_paper_num)
 
     # Step1: generate envs of agents with reviewers
     agent_db = AgentProfileDB()
