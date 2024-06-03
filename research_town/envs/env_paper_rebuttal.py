@@ -49,7 +49,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                 reviewer_profiles.append(agent_profile.bio)
 
         reviewer_pks = self.agent_db.match(
-            idea=idea, profile_l=reviewer_profiles, num=num
+            idea=idea, agent_profiles=reviewer_profiles, num=num
         )
         for index, agent_profile in enumerate(self.agent_profiles):
             if agent_profile.pk in reviewer_pks:

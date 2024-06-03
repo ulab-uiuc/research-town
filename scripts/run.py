@@ -30,10 +30,10 @@ final_list = list(set(final_list))
 
 agent_db.fetch_and_add_agents(final_list)
 
-agent_db.save_to_file('data/agent_data/' + domain + '.json')
+agent_db.save_to_file('data/agent_data/' + domain_path + '.json')
 
 paper_db = PaperProfileDB()
 
 paper_db.fetch_and_add_papers(10, domain)
 
-paper_db.save_to_file('data/paper_data/' + domain + '.json')
+paper_db.save_to_file('data/paper_data/' + domain_path + '.json')

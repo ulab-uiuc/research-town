@@ -27,7 +27,7 @@ def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
 
     submission = paper_profile_A
     env.initialize_submission(submission)
-    env.assign_roles({agent_profile_A.pk: 'author', agent_profile_B.pk: 'reviewer'})
+    env.assign_roles(num=1)
 
     while not env.terminated:
         env.step()
