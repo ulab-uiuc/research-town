@@ -92,7 +92,8 @@ def read_paper_prompting(
     )
 
     corpus = [paper['abstract'] for paper in papers]
-    related_papers = get_related_papers(corpus, query_prompt, num=1)
+    paper_embed=[paper['embed'] for paper in papers]
+    related_papers = get_related_papers(corpus, query_prompt,paper_embed, num=2)
 
     read_prompt = prompt_template_read.format_map(
         {
@@ -128,11 +129,12 @@ def summarize_ideas_prompting(
 
 @beartype
 def write_paper_prompting(
-    idea: Dict[str, str],
+    idea: List[Dict[str, str]],
     papers: List[Dict[str, str]],
     model_name: str,
     prompt_template: str,
 ) -> List[str]:
+
     idea_str = map_idea_to_str(idea)
     papers_str = map_paper_list_to_str(papers)
     prompt = prompt_template.format_map({'idea': idea_str, 'papers': papers_str})

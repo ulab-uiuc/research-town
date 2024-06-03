@@ -16,7 +16,9 @@ class ResearchPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: Optional[str] = Field(default=None)
     abstract: Optional[str] = Field(default=None)
+    insight:Optional[str] = Field(default=None)
     conference: Optional[str] = Field(default=None)
+    authors: Optional[List[str]] = Field(default=[])
 
 
 class ResearchInsight(BaseModel):

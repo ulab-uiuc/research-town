@@ -15,7 +15,7 @@ class BaseMultiAgentEnv(object):
         self.agent_profiles: List[AgentProfile] = agent_profiles
         self.db = EnvLogDB()
         self.agents: List[BaseResearchAgent] = []
-        self.step_obj: Generator[LogType, None, None] = self._step()
+        # self.step_obj: Generator[LogType, None, None] = self._step()
         for agent_profile in agent_profiles:
             self.agents.append(
                 BaseResearchAgent(

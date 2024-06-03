@@ -154,7 +154,7 @@ class BaseResearchAgent(object):
 
     @beartype
     def write_paper(
-        self, idea: ResearchIdea, papers: List[PaperProfile], config: Config
+        self, idea:  List[ResearchIdea], papers: List[PaperProfile], config: Config
     ) -> ResearchPaperSubmission:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
@@ -168,7 +168,7 @@ class BaseResearchAgent(object):
 
     @beartype
     def write_paper_review(
-        self, paper: PaperProfile, config: Config
+        self, paper: ResearchPaperSubmission, config: Config
     ) -> AgentPaperReviewLog:
         serialized_paper = self.serializer.serialize(paper)
         paper_review = review_paper_prompting(
@@ -191,7 +191,7 @@ class BaseResearchAgent(object):
 
     @beartype
     def write_paper_meta_review(
-        self, paper: PaperProfile, reviews: List[AgentPaperReviewLog], config: Config
+        self, paper: ResearchPaperSubmission, reviews: List[AgentPaperReviewLog], config: Config
     ) -> AgentPaperMetaReviewLog:
         serialized_paper = self.serializer.serialize(paper)
         serialized_reviews = self.serializer.serialize(reviews)
@@ -214,7 +214,7 @@ class BaseResearchAgent(object):
 
     @beartype
     def write_rebuttal(
-        self, paper: PaperProfile, review: AgentPaperReviewLog, config: Config
+        self, paper: ResearchPaperSubmission, review: AgentPaperReviewLog, config: Config
     ) -> AgentPaperRebuttalLog:
         serialized_paper = self.serializer.serialize(paper)
         serialized_review = self.serializer.serialize(review)

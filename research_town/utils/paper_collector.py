@@ -11,10 +11,9 @@ from transformers import BertModel, BertTokenizer
 ATOM_NAMESPACE = '{http://www.w3.org/2005/Atom}'
 
 
-def get_related_papers(corpus: List[str], query: str, num: int) -> List[str]:
-    corpus_embedding = get_bert_embedding(corpus)
+def get_related_papers(corpus: List[str], query: str,corpus_embedding: List[torch.tensor], num: int) -> List[str]:
     query_embedding = get_bert_embedding([query])
-    indices = neiborhood_search(corpus_embedding, query_embedding, num)
+    indices = neiborhood_search(query_embedding,corpus_embedding,  num)
     related_papers = [corpus[idx] for idx in indices[0].tolist()]
     return related_papers
 

@@ -8,8 +8,11 @@ def map_idea_list_to_str(ideas: List[Dict[str, str]]) -> str:
     return result
 
 
-def map_idea_to_str(idea: Dict[str, str]) -> str:
-    return f"{idea['content']}"
+def map_idea_to_str(idea:  List[Dict[str, str]]) -> str:
+    result = ''
+    for ideas in idea:
+        result+=ideas['content']
+    return result
 
 
 def map_paper_list_to_str(papers: List[Dict[str, str]]) -> str:

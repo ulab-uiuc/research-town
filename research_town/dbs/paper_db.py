@@ -1,11 +1,11 @@
 import json
 import uuid
-
+import pickle
 from beartype.typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from ..utils.paper_collector import get_daily_papers
-
+import torch
 
 class PaperProfile(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -23,8 +23,9 @@ class PaperProfile(BaseModel):
     references: Optional[List[Dict[str, str]]] = Field(default=None)
     citation_count: Optional[int] = Field(default=0)
     award: Optional[str] = Field(default=None)
-
-
+    embed: Optional[Any] = Field(default=None)
+    class Config:
+        arbitrary_types_allowed = True
 class PaperProfileDB:
     def __init__(self) -> None:
         self.data: Dict[str, PaperProfile] = {}
@@ -63,8 +64,12 @@ class PaperProfileDB:
             )
 
     def load_from_file(self, file_name: str) -> None:
-        with open(file_name, 'r') as f:
+        with open(file_name + '.pkl', 'rb') as pkl_file:
+            self.data_embed = pickle.load(pkl_file)
+        with open(file_name + ".json", 'r') as f:
             data = json.load(f)
+            for name in data.keys():
+                data[name]['embed'] = self.data_embed[name][0]
             self.data = {
                 pk: PaperProfile(**paper_data) for pk, paper_data in data.items()
             }
