@@ -91,6 +91,7 @@ class review_content_eval_db(object):
             'title': review.title,
             'abstract': review.abstract,
         }
+        assert len(review.contents)>0, f"Error: no reviews\n"
         review_quality = review_quality_evaluator.eval(
             **{
                 'idea': review.idea,
@@ -140,6 +141,7 @@ def main(
         'eval_data',
         'review_eval_data',
         'review_content_eval_data',
+        f'{paper_type}',
         'output',
         f'output_review_eval_content_{domain}_p{review_paper_num}_by_{model_name}.json',
     )
