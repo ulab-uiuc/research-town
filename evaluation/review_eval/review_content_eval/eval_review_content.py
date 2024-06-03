@@ -113,7 +113,7 @@ def main(
     paper_type: str,
     review_paper_num: int,
 ) -> None:
-    review_file = os.path.join(data_path, 'review_eval_data', 'review_content_eval_data','{paper_type}',f'review_{domain}.json')
+    review_file = os.path.join(data_path, 'review_eval_data', 'review_content_eval_data',f'{paper_type}',f'review_{domain}.json')
     review_content_eval = review_content_eval_db()
     review_content_eval.load_from_file(review_file, paper_type)
 
