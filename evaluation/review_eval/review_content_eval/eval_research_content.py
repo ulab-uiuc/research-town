@@ -35,9 +35,11 @@ class review_content_eval_db(object):
         self.avg_all_scores:float = 0.0
         self.avg_dimension_scores:List[float] = 0.0
 
-    def load_from_file(self, file_name: str) -> None:
+    def load_from_file(self, file_name: str, paper_type:str) -> None:
         with open(file_name, 'r') as f:
             raw_data = json.load(f)
+            if paper_type == 'openreview':
+                raw_data=raw_data['papers'] # hardcode for openreview
             self.data = {
                 title: ReviewContentEval(**details)
                 for title, details in raw_data.items()
@@ -113,7 +115,7 @@ def main(
 ) -> None:
     review_file = os.path.join(data_path, 'review_eval_data', 'review_content_eval_data','{paper_type}',f'review_{domain}.json')
     review_content_eval_db = review_content_eval_db()
-    review_content_eval_db.load_from_file(review_file)
+    review_content_eval_db.load_from_file(review_file, paper_type)
 
     # select paper reviews to be evaluated
     PaperReview2eval = review_content_eval_db.select_paper_reviews(review_paper_num)
