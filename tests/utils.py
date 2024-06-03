@@ -22,4 +22,6 @@ def mock_prompting(
         return ['This is a research idea.']
     elif 'summarize the keywords' in prompt:
         return ['Graph Neural Network']
+    elif 'Given a list of research ideas, please summarize them' in prompt:
+        return ['This is a summarized idea.']
     return ['Default response']
