@@ -14,7 +14,11 @@ class AgentPaperReviewLog(BaseModel):
     agent_pk: str
     review_score: Optional[int] = Field(default=0)
     review_content: Optional[str] = Field(default=None)
-
+    review_summary: Optional[str] = Field(default=None)
+    review_strength: Optional[str] = Field(default=None)
+    review_weakness: Optional[str] = Field(default=None)
+    review_improvement: Optional[str] = Field(default=None)
+    review_assessment: Optional[str] = Field(default=None)
 
 class AgentPaperRebuttalLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))

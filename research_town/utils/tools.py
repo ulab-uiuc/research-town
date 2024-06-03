@@ -2,7 +2,7 @@ import datetime
 import json
 import os
 
-from beartype.typing import Any, Dict
+from beartype.typing import Any, Dict, Optional, Tuple
 
 
 def show_time() -> str:
@@ -46,4 +46,34 @@ def clean_title(title: str) -> str:
         .title()
     )
 
-    return cleaned_title
+    return 
+    
+def parse_review(paper_review: str) -> Tuple[Optional[str], Optional[str], Optional[str], Optional[str], Optional[str]]:
+    sections = {
+        'review_summary': None,
+        'review_strength': None,
+        'review_weakness': None,
+        'review_improvement': None,
+        'review_assessment': None
+    }
+    
+    patterns = {
+        'review_summary': r'#### Summary\s*(.*?)\s*(?=####|\Z)',
+        'review_strength': r'#### Strengths\s*(.*?)\s*(?=####|\Z)',
+        'review_weakness': r'#### Weaknesses\s*(.*?)\s*(?=####|\Z)',
+        'review_improvement': r'#### Suggestions for Improvement\s*(.*?)\s*(?=####|\Z)',
+        'review_assessment': r'#### Overall Assessment\s*(.*?)\s*(?=####|\Z)'
+    }
+    
+    for key, pattern in patterns.items():
+        match = re.search(pattern, paper_review, re.DOTALL)
+        if match:
+            sections[key] = match.group(1).strip()
+    
+    return (
+        sections['review_summary'], 
+        sections['review_strength'], 
+        sections['review_weakness'], 
+        sections['review_improvement'], 
+        sections['review_assessment']
+    )

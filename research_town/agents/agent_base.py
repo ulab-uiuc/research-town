@@ -28,6 +28,7 @@ from ..utils.agent_prompter import (
     write_rebuttal_prompting,
 )
 from ..utils.serializer import Serializer
+from ..utils.tools import parse_review
 
 
 class BaseResearchAgent(object):
@@ -156,6 +157,7 @@ class BaseResearchAgent(object):
         paper_review = review_paper_prompting(
             paper=serialized_paper, model_name=self.model_name
         )[0]
+        review_summary, review_strength, review_weakness, review_improvement, review_assessment = parse_review(paper_review)        
         review_score = review_score_prompting(
             paper_review=paper_review, model_name=self.model_name
         )
@@ -164,6 +166,11 @@ class BaseResearchAgent(object):
             paper_pk=paper.pk,
             agent_pk=self.profile.pk,
             review_content=paper_review,
+            review_summary=review_summary,
+            review_strength=review_strength,
+            review_weakness=review_weakness,
+            review_improvement=review_improvement,
+            review_assessment=review_assessment,
             review_score=review_score,
         )
 
