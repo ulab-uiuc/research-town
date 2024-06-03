@@ -1,0 +1,1 @@
+{"overall_score": 85, "pk": "0", "dimension_scores": [8, 8, 9, 8, 8, 5], "idea": "content: We introduce a challenging meta-evaluation benchmark, LLMBar, designed to test the ability of an LLM evaluator in discerning instruction-following outputs.", "trend": "content: Different evaluators (i.e., combinations of LLMs and prompts) exhibit distinct performance."}

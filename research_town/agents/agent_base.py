@@ -3,6 +3,7 @@ from datetime import datetime
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Tuple
 
+from ..configs import Config
 from ..dbs import (
     AgentAgentDiscussionLog,
     AgentPaperMetaReviewLog,
@@ -50,7 +51,11 @@ class BaseResearchAgent(object):
 
     @beartype
     def find_collaborators(
-        self, paper: PaperProfile, parameter: float = 0.5, max_number: int = 3
+        self,
+        paper: PaperProfile,
+        config: Config,
+        parameter: float = 0.5,
+        max_number: int = 3,
     ) -> List[AgentProfile]:
         # TODO: need rebuild
         start_author: List[str] = (
@@ -76,7 +81,11 @@ class BaseResearchAgent(object):
             else {}
         )
         result = find_collaborators_prompting(
-            paper_serialize, self_profile, collaborator_profiles, parameter, max_number
+            input=paper_serialize,
+            self_profile=self_profile,
+            collaborator_profiles=collaborator_profiles,
+            parameter=parameter,
+            max_number=max_number,
         )
         collaborators_list = []
         for collaborator in collaborators:
@@ -103,7 +112,7 @@ class BaseResearchAgent(object):
 
     @beartype
     def read_paper(
-        self, papers: List[PaperProfile], domains: List[str]
+        self, papers: List[PaperProfile], domains: List[str], config: Config
     ) -> List[ResearchInsight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
@@ -112,6 +121,8 @@ class BaseResearchAgent(object):
             papers=serialized_papers,
             domains=domains,
             model_name=self.model_name,
+            prompt_template_query=config.prompt_template.query_paper,
+            prompt_template_read=config.prompt_template.read_paper,
         )
         insights: List[ResearchInsight] = []
         for content in insight_contents:
@@ -120,46 +131,57 @@ class BaseResearchAgent(object):
 
     @beartype
     def think_idea(
-        self,
-        insights: List[ResearchInsight],
+        self, insights: List[ResearchInsight], config: Config
     ) -> ResearchIdea:
         serialized_insights = self.serializer.serialize(insights)
         idea_content = think_idea_prompting(
-            insights=serialized_insights, model_name=self.model_name
+            insights=serialized_insights,
+            model_name=self.model_name,
+            prompt_template=config.prompt_template.think_idea,
         )[0]
         return ResearchIdea(content=idea_content)
 
     @beartype
     def summarize_ideas(
-        self,
-        ideas: List[ResearchIdea],
+        self, ideas: List[ResearchIdea], config: Config
     ) -> ResearchIdea:
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized = summarize_ideas_prompting(
-            ideas=serialized_ideas, model_name=self.model_name
+            ideas=serialized_ideas,
+            model_name=self.model_name,
+            prompt_template=config.prompt_template.summarize_ideas,
         )[0]
         return ResearchIdea(content=idea_summarized)
 
     @beartype
     def write_paper(
-        self, idea: ResearchIdea, papers: List[PaperProfile]
+        self, idea: ResearchIdea, papers: List[PaperProfile], config: Config
     ) -> ResearchPaperSubmission:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
         paper_abstract = write_paper_prompting(
-            idea=serialized_idea, papers=serialized_papers, model_name=self.model_name
+            idea=serialized_idea,
+            papers=serialized_papers,
+            model_name=self.model_name,
+            prompt_template=config.prompt_template.write_paper,
         )[0]
         return ResearchPaperSubmission(abstract=paper_abstract)
 
     @beartype
-    def write_paper_review(self, paper: PaperProfile) -> AgentPaperReviewLog:
+    def write_paper_review(
+        self, paper: PaperProfile, config: Config
+    ) -> AgentPaperReviewLog:
         serialized_paper = self.serializer.serialize(paper)
         paper_review = review_paper_prompting(
-            paper=serialized_paper, model_name=self.model_name
+            paper=serialized_paper,
+            model_name=self.model_name,
+            prompt_template=config.prompt_template.review_paper,
         )[0]
         review_summary, review_strength, review_weakness, review_improvement, review_assessment = parse_review(paper_review)        
         review_score = review_score_prompting(
-            paper_review=paper_review, model_name=self.model_name
+            paper_review=paper_review,
+            model_name=self.model_name,
+            prompt_template=config.prompt_template.review_score,
         )
         return AgentPaperReviewLog(
             timestep=(int)(datetime.now().timestamp()),
@@ -176,7 +198,7 @@ class BaseResearchAgent(object):
 
     @beartype
     def write_paper_meta_review(
-        self, paper: PaperProfile, reviews: List[AgentPaperReviewLog]
+        self, paper: PaperProfile, reviews: List[AgentPaperReviewLog], config: Config
     ) -> AgentPaperMetaReviewLog:
         serialized_paper = self.serializer.serialize(paper)
         serialized_reviews = self.serializer.serialize(reviews)
@@ -185,6 +207,7 @@ class BaseResearchAgent(object):
             paper=serialized_paper,
             reviews=serialized_reviews,
             model_name=self.model_name,
+            prompt_template=config.prompt_template.write_meta_review,
         )
         review_decision = 'accept' in meta_review[0].lower()
 
@@ -198,15 +221,16 @@ class BaseResearchAgent(object):
 
     @beartype
     def write_rebuttal(
-        self,
-        paper: PaperProfile,
-        review: AgentPaperReviewLog,
+        self, paper: PaperProfile, review: AgentPaperReviewLog, config: Config
     ) -> AgentPaperRebuttalLog:
         serialized_paper = self.serializer.serialize(paper)
         serialized_review = self.serializer.serialize(review)
 
         rebuttal_content = write_rebuttal_prompting(
-            paper=serialized_paper, review=serialized_review, model_name=self.model_name
+            paper=serialized_paper,
+            review=serialized_review,
+            model_name=self.model_name,
+            prompt_template=config.prompt_template.write_rebuttal,
         )[0]
 
         return AgentPaperRebuttalLog(
@@ -217,10 +241,14 @@ class BaseResearchAgent(object):
         )
 
     @beartype
-    def discuss(self, message: AgentAgentDiscussionLog) -> AgentAgentDiscussionLog:
+    def discuss(
+        self, message: AgentAgentDiscussionLog, config: Config
+    ) -> AgentAgentDiscussionLog:
         serialized_message = self.serializer.serialize(message)
         message_content = discuss_prompting(
-            message=serialized_message, model_name=self.model_name
+            message=serialized_message,
+            model_name=self.model_name,
+            prompt_template=config.prompt_template.discuss,
         )[0]
         return AgentAgentDiscussionLog(
             timestep=(int)(datetime.now().timestamp()),
