@@ -13,6 +13,7 @@ def run_sync_experiment(
     role_list: List[str],
     task: Dict[str, str],
     config_file_path: str,
+    domain: str
 ) -> None:
     # Create Environment and Agents
     agent_profiles = [
@@ -20,7 +21,9 @@ def run_sync_experiment(
         for agent in agent_list
     ]
     agent_db = AgentProfileDB()
+    agent_db.load_from_file("data/agent_data/" + domain + ".json")
     paper_db = PaperProfileDB()
+    paper_db.load_from_file("data/paper_data/" + domain + ".json")
     env_db = EnvLogDB()
     config = Config(config_file_path)
     paper_submission_env = PaperSubmissionMultiAgentEnvironment(
@@ -64,6 +67,7 @@ def main() -> None:
         role_list=['author', 'reviewer'],
         task={},
         config_file_path='./configs/default_config.yaml',
+        domain="natural_language_processing"
     )
 
 
