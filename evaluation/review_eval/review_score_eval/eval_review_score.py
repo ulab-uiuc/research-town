@@ -36,7 +36,7 @@ class RealPaperWithReview(BaseModel):  # paper review from real reviewers
     sim_decision: str = Field(default='None')
 
     @validator('paper_pk', pre=True, always=True)
-    def set_paper_pk(cls, v):
+    def set_paper_pk(cls, v)->str:
         return v or str(uuid.uuid4())
 
 
@@ -206,6 +206,9 @@ def main(
     # Step 3: get ranking consistency
     real_paper_db.map_agent_reviews_to_real_paper(reviews)
     real_paper_db.calculate_rank_consistency()
+    # print real and sim ranks
+    print(f'real_ranks = {real_paper_db.real_ranks}\n')
+    print(f'sim_ranks = {real_paper_db.sim_ranks}\n')
     # print rank consistency
     print(f'absoulte_rank_consistency = {real_paper_db.absolute_rank_consistency}\n')
     print(f'spearman_rank_consistency = {real_paper_db.spearman_rank_consistency}\n')
