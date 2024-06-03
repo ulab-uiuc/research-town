@@ -15,3 +15,19 @@ Step2. Run the scripts
 ```bash
 python examples/minimal_demo.py
 ```
+
+## Evaluation
+
+You can view an episode evaluation with default parameters by running:
+
+Step1. Install research_town package that we wrote.
+
+```bash
+poetry install
+```
+
+Step2. Run the scripts
+
+```bash
+python examples/evaluate_log.py
+```
