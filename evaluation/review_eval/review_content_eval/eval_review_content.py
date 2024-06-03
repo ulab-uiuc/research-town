@@ -193,4 +193,4 @@ if __name__ == '__main__':
     )
 
     args = parser.parse_args()
-    main()
+    main(args.data_path, args.domain, args.model_name, args.paper_type, args.review_paper_num)
