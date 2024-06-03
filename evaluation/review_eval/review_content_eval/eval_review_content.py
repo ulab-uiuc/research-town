@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 
 class ReviewContentEval(BaseModel):
-    paper_pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    paper_pk: str = Field(default='0')
     title: str = Field(default='')
     idea: str = Field(default='')
     trend: str = Field(default='')
@@ -33,7 +33,7 @@ class review_content_eval_db(object):
         self.data: Dict[str, ReviewContentEval] = {}
         self.selected_paper_reviews: Dict[str, ReviewContentEval] = {}  # save the paper reviews to be evaluated
         self.avg_all_scores:float = 0.0
-        self.avg_dimension_scores:List[float] = 0.0
+        self.avg_dimension_scores:List[float] = []
 
     def load_from_file(self, file_name: str, paper_type:str) -> None:
         with open(file_name, 'r') as f:
@@ -114,11 +114,11 @@ def main(
     review_paper_num: int,
 ) -> None:
     review_file = os.path.join(data_path, 'review_eval_data', 'review_content_eval_data','{paper_type}',f'review_{domain}.json')
-    review_content_eval_db = review_content_eval_db()
-    review_content_eval_db.load_from_file(review_file, paper_type)
+    review_content_eval = review_content_eval_db()
+    review_content_eval.load_from_file(review_file, paper_type)
 
     # select paper reviews to be evaluated
-    PaperReview2eval = review_content_eval_db.select_paper_reviews(review_paper_num)
+    PaperReview2eval = review_content_eval.select_paper_reviews(review_paper_num)
     # start evaluation for 'review_paper_num' papers
     eval_quality:List[ReviewEvalOutput] = []
     for idx, paper_review in enumerate(
@@ -126,14 +126,14 @@ def main(
     ):
         if idx >= review_paper_num:
             break
-        eval = review_content_eval_db.eval_research_content(
+        eval = review_content_eval.eval_research_content(
             review=paper_review,
             model_name = model_name
         )
         eval_quality.append(eval)
     
     # calculate the average scores
-    review_content_eval_db.calculate_avg_scores(eval_quality)
+    review_content_eval.calculate_avg_scores(eval_quality)
     # save the evaluation results
     output_file = os.path.join(
         data_path,
@@ -143,7 +143,7 @@ def main(
         'output',
         f'output_review_eval_content_{domain}_p{review_paper_num}_by_{model_name}.json',
     )
-    review_content_eval_db.save_to_file(output_file)
+    review_content_eval.save_to_file(output_file)
 
 if __name__ == '__main__':
     # Get the directory of the current script
