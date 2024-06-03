@@ -222,7 +222,7 @@ def main(
         'review_eval_data',
         'review_score_eval_data',
         'output',
-        f'output_review_eval_score_{domain}_by_{model_name}.json',
+        f'output_review_eval_score_{domain}_p{review_paper_num}_r{review_agent_num}_by_{model_name}.json',
     )
     real_paper_db.save_to_file(output_file)
 
