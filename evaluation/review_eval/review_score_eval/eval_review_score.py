@@ -40,6 +40,7 @@ class RealPaperWithReview(BaseModel):  # paper review from real reviewers
 class RealPaperWithReviewDB(object):
     def __init__(self) -> None:
         self.data: Dict[str, RealPaperWithReview] = {}
+        self.selected_papers:Dict[str, RealPaperWithReview] = {} # save the papers to be reviewed
         self.sim_ranks: List[int] = []
         self.real_ranks: List[int] = []
         self.absolute_rank_consistency: float = 0.0
@@ -65,7 +66,7 @@ class RealPaperWithReviewDB(object):
             'sim_ranks': self.sim_ranks,
             'real_ranks': self.real_ranks,
             'papers': {
-                title: real_paper.dict() for title, real_paper in self.data.items()
+                title: real_paper.dict() for title, real_paper in self.selected_papers.items()
             },
         }
 
@@ -88,20 +89,21 @@ class RealPaperWithReviewDB(object):
             review.paper_pk = paper.pk  # write back the pk to the review
             papers.append(paper)
             count += 1
+            self.selected_papers[review.title] = review # save the selected papers
         return papers
 
     def map_agent_reviews_to_real_paper(
         self, agent_reviews: List[AgentPaperReviewLog]
     ) -> None:
         for agent_review in agent_reviews:
-            for real_paper in self.data.values():
+            for real_paper in self.selected_papers.values():
                 if agent_review.paper_pk == real_paper.paper_pk:
                     if agent_review.review_score is not None:
                         real_paper.sim_all_scores.append(agent_review.review_score)
                     if agent_review.review_content is not None:
                         real_paper.sim_contents.append(agent_review.review_content)
 
-        for real_paper in self.data.values():
+        for real_paper in self.selected_papers.values():
             assert (
                 len(real_paper.real_all_scores) > 0
             ), f'no real review score for paper {real_paper.paper_pk} with title of {real_paper.title}'
@@ -115,7 +117,7 @@ class RealPaperWithReviewDB(object):
                 real_paper.sim_all_scores
             )
 
-        real_papers = list(self.data.values())
+        real_papers = list(self.selected_papers.values())
         real_papers.sort(key=lambda x: x.real_avg_scores, reverse=True)
         for i, real_paper in enumerate(real_papers):
             real_paper.real_rank = i + 1
@@ -126,11 +128,11 @@ class RealPaperWithReviewDB(object):
 
     def calculate_rank_consistency(self) -> None:
         rank_consistency_float = 0.0
-        for real_paper in self.data.values():
+        for real_paper in self.selected_papers.values():
             rank_consistency_float += abs(real_paper.real_rank - real_paper.sim_rank)
             self.sim_ranks.append(real_paper.sim_rank)
             self.real_ranks.append(real_paper.real_rank)
-        rank_consistency_float = rank_consistency_float / len(self.data)
+        rank_consistency_float = rank_consistency_float / len(self.selected_papers)
 
         self.absolute_rank_consistency = rank_consistency_float
         spearank_consistency, _ = spearmanr(self.real_ranks, self.sim_ranks)
