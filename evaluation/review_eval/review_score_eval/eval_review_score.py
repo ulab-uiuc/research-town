@@ -11,7 +11,7 @@ from research_town.agents.agent_base import BaseResearchAgent
 from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
 from research_town.dbs.env_db import AgentPaperReviewLog
 from research_town.dbs.paper_db import PaperProfile
-
+from research_town.configs import Config
 
 class RealPaperWithReview(BaseModel):  # paper review from real reviewers
     paper_pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -152,6 +152,7 @@ def main(data_path: str, domain: str, model_name:str, review_agent_num: int, rev
     # Step2: start simulated review process for each paper. Total number of to papers to review is 'review_paper_num'.
     reviews: List[AgentPaperReviewLog] = []
     agent_profiles_list:List[AgentProfile] = list(agent_db.data.values())
+    eval_config = Config()
     for idx, paper in enumerate(tqdm(Papers2eval, desc="Review Papers by Agents", unit="paper")):
         if idx >= review_paper_num:
             break
@@ -169,7 +170,7 @@ def main(data_path: str, domain: str, model_name:str, review_agent_num: int, rev
             )
         # 3. review the paper
         for agent in review_agents:
-            reviews.append(agent.write_paper_review(paper=paper))
+            reviews.append(agent.write_paper_review(paper=paper,config=eval_config))
 
     # Step 3: get ranking consistency
     real_paper_db.map_agent_reviews_to_real_paper(reviews)
