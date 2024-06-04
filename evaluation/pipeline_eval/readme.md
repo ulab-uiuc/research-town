@@ -24,6 +24,7 @@ python evaluation/pipeline_eval/eval_pipeline.py  --eval_log_num=10 --domain='co
 2. `--evaluator_model_name`: Specifies the evaluator model to use. Ensure that the model name aligns with your model provider's conventions. Examples of TogetherAI models include:
    - `--evaluator_model_name="together_ai/Qwen/Qwen1.5-110B-Chat"`
    - `--evaluator_model_name="together_ai/meta-llama/Llama-3-70b-chat-hf"`
+   - `--evaluator_model_name="together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1"`
 3. `--eval_log_num`: how many logs of idea/paper/ review to evaluate. 
 4. `--agent_model_name`: means which model works as agent that the logs are collected from.  choices=['llama3_70b', 'mixtral_8_7b','qwen_32','llama3_8b']
 
