@@ -11,7 +11,12 @@ from research_town.dbs import ResearchInsight  # Trend
 from research_town.dbs import ResearchPaperSubmission  # Paper
 from research_town.evaluators import ReviewQualityEvaluator,ReviewEvalOutput
 from tqdm import tqdm
+import re
 
+# Function to sanitize the model name
+def sanitize_filename(filename: str) -> str:
+    # Replace any character that is not a letter, digit, hyphen, or underscore with an underscore
+    return re.sub(r'[^a-zA-Z0-9-_]', '_', filename)
 
 class ReviewContentEval(BaseModel):
     paper_pk: str = Field(default='0')
@@ -142,6 +147,8 @@ def main(
     # calculate the average scores
     review_content_eval.calculate_avg_scores(eval_quality)
     # save the evaluation results
+    # Sanitize the model name to avoid file path issues
+    sanitized_model_name = sanitize_filename(model_name)
     output_file = os.path.join(
         data_path,
         'eval_data',
@@ -149,7 +156,7 @@ def main(
         'review_content_eval_data',
         f'{paper_type}',
         'output',
-        f'output_review_eval_content_{domain}_p{review_paper_num}_by_{model_name}.json',
+        f'output_review_eval_content_{domain}_p{review_paper_num}_by_{sanitized_model_name}.json',
     )
     review_content_eval.save_to_file(output_file)
 
