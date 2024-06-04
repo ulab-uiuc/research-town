@@ -54,6 +54,14 @@ class pipeline_eval_db(object):
         self.review_avg_all_scores:float = 0.0
         self.review_avg_dimension_scores:List[float] = []
 
+        # add varience of the scores
+        self.idea_variance_all_scores:float = 0.0
+        self.idea_variance_dimension_scores:List[float] = []
+        self.paper_variance_all_scores:float = 0.0
+        self.paper_variance_dimension_scores:List[float] = []
+        self.review_variance_all_scores:float = 0.0
+        self.review_variance_dimension_scores:List[float] = []
+
     def load_from_file(self, file_name: str) -> None:
         with open(file_name, 'r') as f:
             raw_data_papers = json.load(f)
@@ -143,6 +151,12 @@ class pipeline_eval_db(object):
             'paper_avg_dimension_scores': self.paper_avg_dimension_scores,
             'review_avg_overall_score': self.review_avg_all_scores,
             'review_avg_dimension_scores': self.review_avg_dimension_scores,
+            'idea_variance_overall_score': self.idea_variance_all_scores,
+            'idea_variance_dimension_scores': self.idea_variance_dimension_scores,
+            'paper_variance_overall_score': self.paper_variance_all_scores,
+            'paper_variance_dimension_scores': self.paper_variance_dimension_scores,
+            'review_variance_overall_score': self.review_variance_all_scores,
+            'review_variance_dimension_scores': self.review_variance_dimension_scores,
             'pipeline evaluation logs': {
                 author: eval_log.dict()
                 for author, eval_log in self.selected_logs.items()
@@ -173,7 +187,25 @@ class pipeline_eval_db(object):
             for i in range(len(selected_logs_list[0].review_dimension_scores))
         ]
 
-
+    def calculate_variance_scores(self)->None:
+        # calculate the variance scores of selected logs
+        assert len(self.selected_logs) > 0
+        selected_logs_list = list(self.selected_logs.values())
+        self.idea_variance_all_scores = sum([(log.idea_overall_score - self.idea_avg_all_scores)**2 for log in selected_logs_list]) / len(selected_logs_list)
+        self.idea_variance_dimension_scores = [
+            sum([(log.idea_dimension_scores[i] - self.idea_avg_dimension_scores[i])**2 for log in selected_logs_list]) / len(selected_logs_list)
+            for i in range(len(selected_logs_list[0].idea_dimension_scores))
+        ]
+        self.paper_variance_all_scores = sum([(log.paper_overall_score - self.paper_avg_all_scores)**2 for log in selected_logs_list]) / len(selected_logs_list)
+        self.paper_variance_dimension_scores = [
+            sum([(log.paper_dimension_scores[i] - self.paper_avg_dimension_scores[i])**2 for log in selected_logs_list]) / len(selected_logs_list)
+            for i in range(len(selected_logs_list[0].paper_dimension_scores))
+        ]
+        self.review_variance_all_scores = sum([(log.review_overall_score - self.review_avg_all_scores)**2 for log in selected_logs_list]) / len(selected_logs_list)
+        self.review_variance_dimension_scores = [
+            sum([(log.review_dimension_scores[i] - self.review_avg_dimension_scores[i])**2 for log in selected_logs_list]) / len(selected_logs_list)
+            for i in range(len(selected_logs_list[0].review_dimension_scores))
+        ]
 
 def main(data_path: str,
     domain: str,
@@ -201,6 +233,8 @@ def main(data_path: str,
 
     # calculate the average scores
     pipeline_eval.calculate_avg_scores()
+    # calculate the variance scores
+    pipeline_eval.calculate_variance_scores()
     # save the evaluation results
     # Sanitize the model name to avoid file path issues
     sanitized_model_name = sanitize_filename(evaluator_model_name)

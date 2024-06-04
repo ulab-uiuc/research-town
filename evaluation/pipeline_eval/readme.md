@@ -9,7 +9,7 @@ This is a pipeline evaluation of idea/paper/review generated in research town ac
 ### Pipeline evaluation
 
 ```bash
-python evaluation/pipeline_eval/eval_pipeline.py --evaluator_model_name="together_ai/meta-llama/Llama-3-70b-chat-hf" --eval_log_num=10 --domain='computer_vision' --agent_model_name="llama3_70b"
+python evaluation/pipeline_eval/eval_pipeline.py --evaluator_model_name="together_ai/meta-llama/Llama-3-70b-chat-hf" --eval_log_num=10 --domain='computer_vision' --agent_model_name="llama3_70b" --evaluator_model_name="together_ai/Qwen/Qwen1.5-110B-Chat"
 ```
 
 ## Arguments
