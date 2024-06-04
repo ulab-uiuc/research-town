@@ -57,6 +57,9 @@ class pipeline_eval_db(object):
         with open(file_name, 'r') as f:
             raw_data_papers = json.load(f)
             for title, details in raw_data_papers.items():
+                reviews = details.pop('reviews', [])
+                if not isinstance(reviews, list):
+                    reviews = [reviews] 
                 details['contents'] = details.pop('reviews', [])  # set 'contents' key from 'reviews'
                 details['decision'] = details.pop('meta_reviews', 'None')  # set 'decision' key from 'meta_reviews'
                 details['pipeline_pk'] = title  # assign the key to pipeline_pk
