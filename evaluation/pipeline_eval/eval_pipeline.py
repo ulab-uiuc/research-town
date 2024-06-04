@@ -16,6 +16,7 @@ from research_town.evaluators import (
 from beartype.typing import Dict, List, Optional
 from tqdm import tqdm
 import re
+import uuid
 from pydantic import BaseModel, Field, validator
 # Function to sanitize the model name
 def sanitize_filename(filename: str) -> str:
@@ -23,7 +24,7 @@ def sanitize_filename(filename: str) -> str:
     return re.sub(r'[^a-zA-Z0-9-_]', '_', filename)
 
 class PipelineEval(BaseModel):
-    pipeline_pk: str = Field(default='0') # use agent name as pipeline_pk
+    pipeline_pk:str = Field(default_factory=lambda: str(uuid.uuid4()))# use agent name as pipeline_pk
     title: str = Field(default='')
     idea: str = Field(default='')
     trend: str = Field(default='')
@@ -56,15 +57,15 @@ class pipeline_eval_db(object):
     def load_from_file(self, file_name: str) -> None:
         with open(file_name, 'r') as f:
             raw_data_papers = json.load(f)
-            for title, details in raw_data_papers.items():
+            for agent, details in raw_data_papers.items():
                 reviews = details.pop('reviews', [])
                 if not isinstance(reviews, list):
                     reviews = [reviews] 
                 details['abstract'] = details.pop('paper', '') 
                 details['contents'] = reviews  # set 'contents' key from 'reviews'
                 details['decision'] = details.pop('meta_reviews', 'None')  # set 'decision' key from 'meta_reviews'
-                details['pipeline_pk'] = title  # assign the key to pipeline_pk
-                self.data[title] = PipelineEval(**details)
+                pipeline_eval = PipelineEval(**details)
+                self.data[pipeline_eval.pipeline_pk] = pipeline_eval 
 
     def select_logs(self, log_num: int) -> List[PipelineEval]:
         logs = []
