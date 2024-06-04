@@ -176,7 +176,7 @@ def main(data_path: str,
     agent_model_name: str,
     eval_log_num: int,) -> None:
     # log file to load
-    log_file =  os.path.join(data_path, 'eval_data','pipeline_eval_data',f'{agent_model_name}',f'{domain}_{agent_model_name}_saved_data.json')
+    log_file =  os.path.join(data_path, 'eval_data','pipeline_eval_data',f'{agent_model_name}',f'{domain}.json')
 
     # select logs to be evaluated
     pipeline_eval = pipeline_eval_db()
@@ -205,7 +205,7 @@ def main(data_path: str,
         'pipeline_eval_data',
         f'{agent_model_name}',
         'output',
-        f'output_pipeline_eval_{domain}_agent-model-{agent_model_name}_p{eval_log_num}_by_{sanitized_model_name}.json',
+        f'output_pipeline_eval_{domain}_agent-model-{agent_model_name}_p{eval_log_num}_eval_by_{sanitized_model_name}.json',
     )
     pipeline_eval.save_to_file(output_file)
 
@@ -247,8 +247,8 @@ if __name__ == '__main__':
     parser.add_argument(
         '--agent_model_name',
         type=str,
-        default='Mixtral-8x7B',
-        choices=['LLaMA-3_70', 'Mixtral-8x7B','LLaMA-3_8','QWen_32'],  # Add more models as needed
+        default='mixtral_8_7b',
+        choices=['llama3_70b', 'mixtral_8_7b','qwen_32','llama3_8b'],  # Add more models as needed
         help='Model type of research agents to classify different logs.',
     )
     # Add argument for papers to review
