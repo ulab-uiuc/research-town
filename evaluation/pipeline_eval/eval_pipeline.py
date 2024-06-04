@@ -75,7 +75,7 @@ class pipeline_eval_db(object):
             select = log
             logs.append(select)
             count += 1
-            self.selected_logs[select.title] = select # save the selected paperreviews
+            self.selected_logs[select.pipeline_pk] = select # save the selected paperreviews
         return logs 
     
     def eval_research_pipeline( 
