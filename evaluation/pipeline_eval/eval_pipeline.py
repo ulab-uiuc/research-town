@@ -216,7 +216,7 @@ if __name__ == '__main__':
 
     # Construct the path to data/ directory
     default_data_path = os.path.abspath(
-        os.path.join(current_dir, '..', '..', '..', 'data')
+        os.path.join(current_dir,  '..', '..', 'data')
     )
 
     parser = argparse.ArgumentParser(description='Args for research content evaluation.')
