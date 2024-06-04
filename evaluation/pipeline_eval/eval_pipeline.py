@@ -60,6 +60,7 @@ class pipeline_eval_db(object):
                 reviews = details.pop('reviews', [])
                 if not isinstance(reviews, list):
                     reviews = [reviews] 
+                details['abstract'] = details.pop('paper', 'None') 
                 details['contents'] = details.pop('reviews', [])  # set 'contents' key from 'reviews'
                 details['decision'] = details.pop('meta_reviews', 'None')  # set 'decision' key from 'meta_reviews'
                 details['pipeline_pk'] = title  # assign the key to pipeline_pk
@@ -89,9 +90,10 @@ class pipeline_eval_db(object):
         # Generate Evaluation
 
         # parse the paper content with title
+        assert research_log.abstract is not None, f"Error: no abstract\n"
         paper_serialize = {
             'title': 'See title in reviews',
-            'abstract': research_log.paper,
+            'abstract': research_log.abstract,
         }
 
         # error check
