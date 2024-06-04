@@ -11,7 +11,7 @@ def idea_quality_eval_prompting(
     model_name: str,
 ) -> str:
     prompt_idea = """
-    <Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the research community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea. <Instruction>
+    <Instruction> Please evaluate the paper draft based on the following dimensions.  You only need to give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. For these components are left blank(for example: Research Trend, Title, etc), please provide your common knowledge to assess the review. You must give a overall score with dimension scores. No detailed anaylsis is needed. <Instruction>
 
     <Input>
     Here is the idea to evaluate: {idea}.
@@ -77,7 +77,7 @@ def paper_quality_eval_prompting(
 ) -> str:
     # refer to idea eval, but replace those not needed, and paraphrase those have overlaps.
     paper_prompt = """
-    <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft. .
+    <Instruction> Please evaluate the paper draft based on the following dimensions.  You only need to give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. For these components are left blank(for example: Research Trend, Title, etc), please provide your common knowledge to assess the review. You must give a overall score with dimension scores. No detailed anaylsis is needed.
     <Instruction>
 
     <Input>
