@@ -61,7 +61,7 @@ class pipeline_eval_db(object):
                 if not isinstance(reviews, list):
                     reviews = [reviews] 
                 details['abstract'] = details.pop('paper', '') 
-                details['contents'] = details.pop('reviews', [])  # set 'contents' key from 'reviews'
+                details['contents'] = reviews  # set 'contents' key from 'reviews'
                 details['decision'] = details.pop('meta_reviews', 'None')  # set 'decision' key from 'meta_reviews'
                 details['pipeline_pk'] = title  # assign the key to pipeline_pk
                 self.data[title] = PipelineEval(**details)
