@@ -42,7 +42,7 @@ class review_content_eval_db(object):
             if paper_type == 'openreview':
                 raw_data_papers = raw_data['papers']  # hardcode for openreview
                 for title, details in raw_data_papers.items():
-                    details['contents'] = raw_data['sim_contents']  # set 'contents' key from 'sim_contents'
+                    details['contents'] = details.pop('sim_contents', [])  # set 'contents' key from 'sim_contents'
             else:
                 raw_data_papers = raw_data
             
