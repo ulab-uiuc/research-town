@@ -9,7 +9,7 @@ This is a pipeline evaluation of idea/paper/review generated in research town ac
 ### Pipeline evaluation
 
 ```bash
-python evaluation/pipeline_eval/eval_pipeline.py --evaluator_model_name="together_ai/meta-llama/Llama-3-70b-chat-hf" --eval_log_num=10 --domain='computer_vision' --agent_model_name="llama3_70b" --evaluator_model_name="together_ai/Qwen/Qwen1.5-110B-Chat"
+python evaluation/pipeline_eval/eval_pipeline.py  --eval_log_num=10 --domain='computer_vision' --agent_model_name="llama3_70b" --evaluator_model_name="together_ai/Qwen/Qwen1.5-110B-Chat"
 ```
 
 ## Arguments
@@ -22,8 +22,8 @@ python evaluation/pipeline_eval/eval_pipeline.py --evaluator_model_name="togethe
    - "reinforcement_learning"
 
 2. `--evaluator_model_name`: Specifies the evaluator model to use. Ensure that the model name aligns with your model provider's conventions. Examples of TogetherAI models include:
-   - `--model_name="together_ai/Qwen/Qwen1.5-110B-Chat"`
-   - `--model_name="together_ai/meta-llama/Llama-3-70b-chat-hf"`
+   - `--evaluator_model_name="together_ai/Qwen/Qwen1.5-110B-Chat"`
+   - `--evaluator_model_name="together_ai/meta-llama/Llama-3-70b-chat-hf"`
 3. `--eval_log_num`: how many logs of idea/paper/ review to evaluate. 
 4. `--agent_model_name`: means which model works as agent that the logs are collected from.  choices=['llama3_70b', 'mixtral_8_7b','qwen_32','llama3_8b']
 

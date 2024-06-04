@@ -57,10 +57,13 @@ class pipeline_eval_db(object):
         # add varience of the scores
         self.idea_variance_all_scores:float = 0.0
         self.idea_variance_dimension_scores:List[float] = []
+        self.idea_sum_variance_dimension_scores:float = 0.0
         self.paper_variance_all_scores:float = 0.0
         self.paper_variance_dimension_scores:List[float] = []
+        self.paper_sum_variance_dimension_scores:float = 0.0
         self.review_variance_all_scores:float = 0.0
         self.review_variance_dimension_scores:List[float] = []
+        self.review_sum_variance_dimension_scores:float = 0.0
 
     def load_from_file(self, file_name: str) -> None:
         with open(file_name, 'r') as f:
@@ -153,10 +156,16 @@ class pipeline_eval_db(object):
             'review_avg_dimension_scores': self.review_avg_dimension_scores,
             'idea_variance_overall_score': self.idea_variance_all_scores,
             'idea_variance_dimension_scores': self.idea_variance_dimension_scores,
+            # add sum of dimension score variance
+            'idea_sum_variance_dimension_scores': self.idea_sum_variance_dimension_scores,
             'paper_variance_overall_score': self.paper_variance_all_scores,
             'paper_variance_dimension_scores': self.paper_variance_dimension_scores,
+            # add sum of dimension score variance
+            'paper_sum_variance_dimension_scores': self.paper_sum_variance_dimension_scores,
             'review_variance_overall_score': self.review_variance_all_scores,
             'review_variance_dimension_scores': self.review_variance_dimension_scores,
+            # add sum of dimension score variance
+            'review_sum_variance_dimension_scores': self.review_sum_variance_dimension_scores,
             'pipeline evaluation logs': {
                 author: eval_log.dict()
                 for author, eval_log in self.selected_logs.items()
@@ -206,6 +215,10 @@ class pipeline_eval_db(object):
             sum([(log.review_dimension_scores[i] - self.review_avg_dimension_scores[i])**2 for log in selected_logs_list]) / len(selected_logs_list)
             for i in range(len(selected_logs_list[0].review_dimension_scores))
         ]
+        # add sum of dimension score variance
+        self.idea_sum_variance_dimension_scores = sum(self.idea_variance_dimension_scores)
+        self.paper_sum_variance_dimension_scores = sum(self.paper_variance_dimension_scores)
+        self.review_sum_variance_dimension_scores = sum(self.review_variance_dimension_scores)
 
 def main(data_path: str,
     domain: str,
