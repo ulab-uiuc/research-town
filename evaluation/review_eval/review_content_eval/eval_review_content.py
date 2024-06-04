@@ -38,11 +38,17 @@ class review_content_eval_db(object):
     def load_from_file(self, file_name: str, paper_type:str) -> None:
         with open(file_name, 'r') as f:
             raw_data = json.load(f)
+            
             if paper_type == 'openreview':
-                raw_data=raw_data['papers'] # hardcode for openreview
+                raw_data_papers = raw_data['papers']  # hardcode for openreview
+                for title, details in raw_data_papers.items():
+                    details['contents'] = raw_data['sim_contents']  # set 'contents' key from 'sim_contents'
+            else:
+                raw_data_papers = raw_data
+            
             self.data = {
                 title: ReviewContentEval(**details)
-                for title, details in raw_data.items()
+                for title, details in raw_data_papers.items()
             }
     def select_paper_reviews(self, paperreview_num: int) -> List[ReviewContentEval]:
         paperreviews = []
