@@ -14,7 +14,7 @@ def sanitize_filename(filename: str) -> str:
 
 
 def main():
-    agent_model_options = ["llama3_70b", "mixtral_8_7b", "qwen_32", "llama3_8b"]
+    agent_model_options = ["llama3_70b", "mixtral_8_7b", "qwen_32", "llama3_8b",  "gpt_4o"]
     evaluator_model_options = ["together_ai/meta-llama/Llama-3-70b-chat-hf", "together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1",  "gpt-4o"]
     domain_options = ["natural_language_processing", "computer_vision", "graph_neural_networks", "federated_learning", "reinforcement_learning"]
     eval_log_num = 10
