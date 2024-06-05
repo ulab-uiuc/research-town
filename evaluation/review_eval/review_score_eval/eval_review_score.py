@@ -24,6 +24,7 @@ class RealPaperWithReview(BaseModel):  # paper review from real reviewers
 
     real_avg_scores: float = Field(default=-1)
     real_all_scores: List[int] = Field(default=[])
+    
     real_confidences: List[int] = Field(default=[])
     real_contents: List[str] = Field(default=[])
     real_rank: int = Field(default=0)
@@ -31,6 +32,7 @@ class RealPaperWithReview(BaseModel):  # paper review from real reviewers
 
     sim_avg_scores: float = Field(default=-1)  # from the simulation
     sim_all_scores: List[int] = Field(default=[])
+    
     sim_contents: List[str] = Field(default=[])
     sim_rank: int = Field(default=-1)
     sim_decision: str = Field(default='None')
@@ -51,7 +53,8 @@ class RealPaperWithReviewDB(object):
         self.absolute_rank_consistency: float = 0.0
         self.spearman_rank_consistency: float = 0.0
         self.kendall_rank_consistency: float = 0.0
-
+        self.real_avg_score_variance:float = 0.0
+        self.sim_avg_score_variance:float = 0.0
     def add(self, real_paper: RealPaperWithReview) -> None:
         self.data[real_paper.title] = real_paper
 
@@ -70,6 +73,8 @@ class RealPaperWithReviewDB(object):
             'kendall_rank_consistency': self.kendall_rank_consistency,
             'sim_ranks': self.sim_ranks,
             'real_ranks': self.real_ranks,
+            'sim_avg_score_variance': self.sim_avg_score_variance,
+            'real_avg_score_variance': self.real_avg_score_variance,
             'papers': {
                 title: real_paper.dict()
                 for title, real_paper in self.selected_papers.items()
@@ -122,15 +127,22 @@ class RealPaperWithReviewDB(object):
             real_paper.sim_avg_scores = sum(real_paper.sim_all_scores) / len(
                 real_paper.sim_all_scores
             )
+        # calculate the variance of the average scores
+        real_papers = list(self.selected_papers.values())
+        self.real_avg_score_variance = sum([(real_paper.real_avg_scores - sum([paper.real_avg_scores for paper in real_papers])/len(real_papers))**2 for real_paper in real_papers])/len(real_papers)
+        self.sim_avg_score_variance = sum([(real_paper.sim_avg_scores - sum([paper.sim_avg_scores for paper in real_papers])/len(real_papers))**2 for real_paper in real_papers])/len(real_papers)
+
+        # calculate the rank of the papers
+        real_papers.sort(key=lambda x: x.sim_avg_scores, reverse=True)
+        for i, real_paper in enumerate(real_papers):
+            real_paper.sim_rank = i + 1
 
         real_papers = list(self.selected_papers.values())
         real_papers.sort(key=lambda x: x.real_avg_scores, reverse=True)
         for i, real_paper in enumerate(real_papers):
             real_paper.real_rank = i + 1
 
-        real_papers.sort(key=lambda x: x.sim_avg_scores, reverse=True)
-        for i, real_paper in enumerate(real_papers):
-            real_paper.sim_rank = i + 1
+
 
     def calculate_rank_consistency(self) -> None:
         rank_consistency_float = 0.0
