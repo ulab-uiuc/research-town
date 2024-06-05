@@ -2,7 +2,7 @@ import argparse
 import json
 import os
 import uuid
-
+import re
 from beartype.typing import Dict, List, Optional
 from pydantic import BaseModel, Field, validator
 from scipy.stats import kendalltau, spearmanr
@@ -13,7 +13,10 @@ from research_town.configs import Config
 from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
 from research_town.dbs.env_db import AgentPaperReviewLog
 from research_town.dbs.paper_db import PaperProfile
-
+# Function to sanitize the model name
+def sanitize_filename(filename: str) -> str:
+    # Replace any character that is not a letter, digit, hyphen, or underscore with an underscore
+    return re.sub(r'[^a-zA-Z0-9-_]', '_', filename)
 
 class RealPaperWithReview(BaseModel):  # paper review from real reviewers
     paper_pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -227,6 +230,7 @@ def main(
     print(f'kendall_rank_consistency = {real_paper_db.kendall_rank_consistency}\n')
 
     # Step 4: save the RealPaperWithReviewDB
+    sanitized_modelname=sanitize_filename(model_name)
     # Construct the output file path
     output_file = os.path.join(
         data_path,
@@ -234,7 +238,7 @@ def main(
         'review_eval_data',
         'review_score_eval_data',
         'output',
-        f'output_review_eval_score_{domain}_p{review_paper_num}_r{review_agent_num}_by_{model_name}.json',
+        f'output_review_eval_score_{domain}_p{review_paper_num}_r{review_agent_num}_by_{sanitized_modelname}.json',
     )
     real_paper_db.save_to_file(output_file)
 
