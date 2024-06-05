@@ -2,15 +2,22 @@
 
 This is a pipeline evaluation of idea/paper/review generated in research town across 5 domains.
 
-## Run Scripts
+## Run Scripts for all evaluation settings
 
-
-
-### Pipeline evaluation
+```bash
+bash pipeline_eval.sh
+```
+to parse output（make sure you get output for all settings）,
+```bash
+parse_pipeline_eval_output.py
+```
+### Pipeline evaluation for single setting
 
 ```bash
 python evaluation/pipeline_eval/eval_pipeline.py  --eval_log_num=10 --domain='computer_vision' --agent_model_name="llama3_70b" --evaluator_model_name="together_ai/Qwen/Qwen1.5-110B-Chat"
 ```
+
+
 
 ## Arguments
 
@@ -27,6 +34,5 @@ python evaluation/pipeline_eval/eval_pipeline.py  --eval_log_num=10 --domain='co
    - `--evaluator_model_name="together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1"`
 3. `--eval_log_num`: how many logs of idea/paper/ review to evaluate. 
 4. `--agent_model_name`: means which model works as agent that the logs are collected from.  choices=['llama3_70b', 'mixtral_8_7b','qwen_32','llama3_8b']
-
 
 
