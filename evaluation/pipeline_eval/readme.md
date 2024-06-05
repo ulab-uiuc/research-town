@@ -9,7 +9,7 @@ bash pipeline_eval.sh
 ```
 to parse output（make sure you get output for all settings）,
 ```bash
-parse_pipeline_eval_output.py
+python evaluation/pipeline_eval/parse_pipeline_eval_output.py
 ```
 ### Pipeline evaluation for single setting
 
