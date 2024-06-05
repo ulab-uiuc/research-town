@@ -5,7 +5,7 @@ review_agent_num=3
 review_paper_num=20
 
 
-model_names=("gpt-4o" "together_ai/meta-llama/Llama-3-70b-chat-hf")
+model_names=("together_ai/meta-llama/Llama-3-70b-chat-hf") # model_names=("gpt-4o" "together_ai/meta-llama/Llama-3-70b-chat-hf")
 
 
 domain_options=("natural_language_processing" "computer_vision" "graph_neural_networks" "federated_learning" "reinforcement_learning")
