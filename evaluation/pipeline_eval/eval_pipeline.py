@@ -300,7 +300,7 @@ if __name__ == '__main__':
         '--agent_model_name',
         type=str,
         default='mixtral_8_7b',
-        choices=['llama3_70b', 'mixtral_8_7b','qwen_32','llama3_8b'],  # Add more models as needed
+        choices=['llama3_70b', 'mixtral_8_7b','qwen_32','llama3_8b','gpt_4o'],  # Add more models as needed
         help='Model type of research agents to classify different logs.',
     )
     # Add argument for papers to review

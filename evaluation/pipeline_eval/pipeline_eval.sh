@@ -3,7 +3,7 @@
 # set args
 domain_options=("natural_language_processing" "computer_vision" "graph_neural_networks" "federated_learning" "reinforcement_learning")
 evaluator_model_options=("together_ai/meta-llama/Llama-3-70b-chat-hf" "together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1")
-agent_model_options=( "mixtral_8_7b") # agent_model_options=("llama3_70b" "mixtral_8_7b" "qwen_32" "llama3_8b")
+agent_model_options=( "gpt_4o") # agent_model_options=("llama3_70b" "mixtral_8_7b" "qwen_32" "llama3_8b")
 eval_log_num=10
 
 # 
