@@ -6,7 +6,7 @@
     9.0,
     8.0,
     8.1,
-    8.3
+    8.2
   ],
   "paper_avg_overall_score": 84.0,
   "paper_avg_dimension_scores": [
@@ -14,20 +14,20 @@
     8.9,
     8.9,
     7.9,
-    8.1,
+    8.0,
     8.0
   ],
-  "review_avg_overall_score": 82.5,
+  "review_avg_overall_score": 83.0,
   "review_avg_dimension_scores": [
-    8.7,
+    8.6,
     8.8,
-    7.6,
-    8.0,
-    8.0,
-    7.9,
-    7.6,
     7.7,
-    9.6,
+    7.9,
+    8.1,
+    7.8,
+    7.7,
+    7.7,
+    9.4,
     9.3
   ],
   "idea_variance_overall_score": 6.0,
@@ -37,36 +37,36 @@
     0.0,
     0.0,
     0.08999999999999997,
-    0.21000000000000002
+    0.15999999999999998
   ],
-  "idea_sum_variance_dimension_scores": 0.7,
+  "idea_sum_variance_dimension_scores": 0.6499999999999999,
   "paper_variance_overall_score": 9.0,
   "paper_variance_dimension_scores": [
     0.09,
     0.09,
     0.09,
     0.09,
-    0.08999999999999998,
+    0.0,
     0.0
   ],
-  "paper_sum_variance_dimension_scores": 0.44999999999999996,
-  "review_variance_overall_score": 46.25,
+  "paper_sum_variance_dimension_scores": 0.36,
+  "review_variance_overall_score": 16.0,
   "review_variance_dimension_scores": [
-    0.21000000000000002,
-    0.16000000000000003,
     0.24,
-    0.2,
-    0.2,
-    0.2899999999999999,
-    0.43999999999999995,
-    0.61,
-    0.43999999999999984,
+    0.16000000000000003,
+    0.21000000000000002,
+    0.09,
+    0.09,
+    0.15999999999999998,
+    0.21000000000000002,
+    0.21000000000000002,
+    0.6399999999999999,
     0.6100000000000001
   ],
-  "review_sum_variance_dimension_scores": 3.3999999999999995,
+  "review_sum_variance_dimension_scores": 2.62,
   "pipeline evaluation logs": {
-    "4d5ae3c6-a540-425f-9f63-61fe7c39ddd9": {
-      "pipeline_pk": "4d5ae3c6-a540-425f-9f63-61fe7c39ddd9",
+    "888f59b1-deb0-4f15-a16d-326dcfd95e16": {
+      "pipeline_pk": "888f59b1-deb0-4f15-a16d-326dcfd95e16",
       "title": "",
       "idea": " High level research backgrounds and insights in your field:\n\n* Development of deep learning-based approaches for object detection, shape-from-shading, video to depth estimation, navigation in virtual environments, automated theorem proving, and SLAM\n* Pioneering work in object detection using CornerNet, which detects objects as paired keypoints using a single convolution neural network\n* Research in shape-from-shading using synthetic images and deep networks, with a unique approach of combining shape evolution and network training\n* Contributions to SLAM with DROID-SLAM, which combines classical geometric algorithms with deep learning\n* Research in machine learning, including the use of diffusion models for 3D scene synthesis and the development of Video-MME, a comprehensive benchmark for evaluating multi-modal large language models in video analysis.\n\nKeywords: deep learning, object detection, shape-from-shading, video to depth estimation, navigation, automated theorem proving, SLAM, CornerNet, diffusion models, 3D scene synthesis, machine learning, Video-MME.",
       "trend": "",
@@ -109,8 +109,8 @@
         8
       ]
     },
-    "aa73dd58-f2ff-4816-a313-1a8f9660e0a0": {
-      "pipeline_pk": "aa73dd58-f2ff-4816-a313-1a8f9660e0a0",
+    "773aa9c2-2d8f-447c-9582-b6bc31968507": {
+      "pipeline_pk": "773aa9c2-2d8f-447c-9582-b6bc31968507",
       "title": "",
       "idea": " High level research backgrounds and insights in this field related to your profile include:\n\n1. Computer vision and deep learning techniques: You have a strong background in applying computer vision and deep learning techniques to various problems such as image recognition, object detection, segmentation, and video classification.\n2. Guided filter: You have made significant contributions to the development of the guided filter, a fast and efficient image filtering technique that has been widely adopted in various applications.\n3. Group Normalization (GN): You have explored the use of GN as an alternative to BN for deep learning, demonstrating its stability and effectiveness across a wide range of batch sizes and its ability to outperform BN and other normalization variants.\n4. Siamese networks: You have investigated the use of Siamese networks for unsupervised visual representation learning, specifically the role of negative sample pairs, large batches, and momentum encoders in preventing collapsing solutions.\n5. Dataset classification: You have observed that modern neural networks can achieve excellent accuracy in classifying which dataset an image is from, indicating that these networks may be learning semantic features that are generalizable and transferable.\n6. Joint object and stuff segmentation: You have proposed a method for joint object and stuff segmentation that exploits shape information via masking convolutional features, resulting in state-of-the-art results on benchmarks.\n7. Accelerating test-time computation of CNNs: You have worked on accelerating the test-time computation of CNNs, especially very deep CNNs, by taking nonlinear units into account and developing an effective solution to the resulting nonlinear optimization problem.\n8. Neural network verification: You have developed a general framework for conducting branch-and-bound (BaB) for general nonlinearities in general computational graphs based on linear bound propagation, allowing the verification of a wide range of NNs and general nonlinear computation graphs.\n9. Multi-modal Large Language Models (MLLMs) in Video analysis: You have introduced the first-ever full-spectrum, Multi-Modal Evaluation benchmark of MLLMs in Video analysis, highlighting the need for further improvements in handling longer sequences and multi-modal data.",
       "trend": "",
@@ -153,8 +153,8 @@
         9
       ]
     },
-    "d2091ec2-0da6-42c9-acc6-d216b824a510": {
-      "pipeline_pk": "d2091ec2-0da6-42c9-acc6-d216b824a510",
+    "5aedab19-07cf-4b6a-989b-d13e73f86957": {
+      "pipeline_pk": "5aedab19-07cf-4b6a-989b-d13e73f86957",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, here are some high-level research backgrounds and insights in this field:\n\n1. Object Detection and Visual Recognition: Your work on Fast R-CNN and R-CNNs for pose estimation and action detection showcases the development of deep learning models for object detection and visual recognition tasks. These models aim to improve efficiency, accuracy, and generalization in complex real-world scenarios.\n2. Low-shot Visual Recognition: Your research in low-shot visual recognition involves creating techniques for representation regularization and data augmentation to enhance the effectiveness of convolutional networks in low-data scenarios. This is particularly important for improving model performance on novel classes.\n3. Deformable Part Models and Convolutional Neural Networks: Your work on Deformable Part Models as Convolutional Neural Networks (DeepPyramid DPM) demonstrates the potential of integrating these two concepts. This synthesis results in improved performance compared to traditional DPMs and offers faster processing times.\n4. Dataset Development: You have contributed to the field by introducing Large Vocabulary Instance Segmentation (LVIS) and R-CNNs for pose estimation and action detection datasets. These datasets provide valuable resources for driving progress in computer vision research, especially in areas with long-tailed category distributions and human pose prediction.\n5. Multi-modal Large Language Models (MLLMs) in Video Analysis: Recent advancements in artificial general intelligence involve MLLMs, which have shown potential in static image understanding. However, there is a need for comprehensive evaluation of MLLMs in processing sequential visual data, as highlighted by the Video-MME benchmark.\n6. Realistic Conditional 3D Scene Synthesis: Diffusion models have shown great potential in related applications, such as precise arrangements of unordered sets. The MiDiffusion model, which synthesizes plausible 3D indoor scenes from given room types, floor plans, and potentially pre-existing objects, is a novel application of these models in floor-conditioned scene synthesis.\n\nThese research areas reflect the ongoing advancements in computer vision and machine learning, focusing on object detection, visual recognition, low-shot learning, dataset development, and multi-modal data processing.",
       "trend": "",
@@ -197,8 +197,8 @@
         10
       ]
     },
-    "b9fb508f-7f21-4252-be1e-0f87f57b38f1": {
-      "pipeline_pk": "b9fb508f-7f21-4252-be1e-0f87f57b38f1",
+    "496233d8-5cfe-4db7-ba6a-9d712af1b93e": {
+      "pipeline_pk": "496233d8-5cfe-4db7-ba6a-9d712af1b93e",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, the following are high-level research backgrounds and insights in this field:\n\n1. **Computer Vision and Graphics**: Your research specialization, which involves developing novel methods for 3D scene understanding, view synthesis, and generating new views from a single image.\n2. **Single Image View Synthesis**: Your contribution of an end-to-end model that uses a differentiable point cloud renderer to transform a latent 3D point cloud of features into the target view, enabling interpretable manipulation of the latent feature space at test time.\n3. **Image Animation**: Your work on converting a still image into a realistic animated looping video, particularly for scenes with continuous fluid motion such as flowing water and billowing smoke.\n4. **Depth Estimation**: Your algorithm for reconstructing dense, geometrically consistent depth for all pixels in a monocular video, using a learning-based prior in the form of a convolutional neural network trained for single-image depth estimation.\n5. **Structure from Motion**: Your method for reducing drift in structure from motion by using extended structural features such as planes and vanishing points to establish long-range constraints on the scale and shape of the reconstruction.\n6. **Lighting Estimation**: Your physically-based approach to model accidental light probes (ALPs) and estimate lighting from their appearances in single images.\n7. **3D Scene Synthesis**: The use of diffusion models in synthesizing plausible 3D indoor scenes from given room types, floor plans, and potentially pre-existing objects, as demonstrated in the MiDiffusion paper.\n8. **Data-driven Relighting**: The data-driven method for image relighting that represents intrinsics and lighting as latent variables, producing state-of-the-art relightings of real scenes, as described in the second paper.\n9. **Machine Learning**: Your application of machine learning techniques in various areas of computer vision and graphics, such as depth estimation, structure from motion, and 3D scene synthesis.",
       "trend": "",
@@ -216,7 +216,7 @@
         9,
         8,
         8,
-        9
+        8
       ],
       "paper_overall_score": 85,
       "paper_dimension_scores": [
@@ -241,8 +241,8 @@
         10
       ]
     },
-    "c4b1f918-a0cf-49e8-90ef-079635d4a745": {
-      "pipeline_pk": "c4b1f918-a0cf-49e8-90ef-079635d4a745",
+    "447b23a3-6f5a-4fab-ab55-1af1d7b1650f": {
+      "pipeline_pk": "447b23a3-6f5a-4fab-ab55-1af1d7b1650f",
       "title": "",
       "idea": " Based on your profile and the provided research domains and paper titles/abstracts, here are some high-level research backgrounds and insights in this field:\n\n1. **Computer Vision and Art History**: Your work focuses on the intersection of art, computer science, and machine learning, specifically in the context of art history. You have identified a gap in the understanding and familiarity of computer vision technology achievements between computer scientists and art historians. Your research in this area could help bridge this gap and facilitate the use of computer vision technology in art history.\n2. **Creative Adversarial Networks (CAN)**: You have proposed a new system for generating art using CAN, which generates art by learning about style and increasing the arousal potential of the generated art. Your findings indicate that human subjects could not distinguish art generated by the proposed system from art generated by contemporary artists. This research showcases the potential of using machine learning algorithms for creative purposes and raises questions about the role of human artists in the age of AI.\n3. **Stroke Analysis in Line Drawings**: Your work on developing an AI methodology for stroke analysis in line drawings can facilitate attribution of drawings of unknown authors and detect forged art. This research has practical implications for the art world and could help prevent fraud and forgery.\n4. **Proximity-Preserving Distance Correlation Maximization Algorithm**: Your research on developing a dimensionality reduction algorithm that maximizes distance correlation between low-dimensional features and a response variable can help solve prediction problems with a low-dimensional set of features. This research has applications in various fields, including computer vision, natural language processing, and bioinformatics.\n5. **Visual-Semantic Scene Understanding**: Your work on visual-semantic scene understanding by sharing labels in a context network can help name objects in complex natural scenes with varying object appearance and subtle name differences. This research has applications in robotics, autonomous vehicles, and virtual reality.\n6. **Large-scale Classification of Fine-Art Paintings**: Your current work on learning the right metric on the right feature to model the similarity between paintings can help improve the classification and analysis of fine-art paintings. This research has implications for art history, art authentication, and the art market.\n7. **3D Scene Synthesis**: The recent paper on realistic conditional 3D scene synthesis highlights the potential of using diffusion models for synthes",
       "trend": "",
@@ -268,7 +268,7 @@
         9,
         9,
         8,
-        9,
+        8,
         8
       ],
       "review_overall_score": 85,
@@ -280,13 +280,13 @@
         8,
         8,
         7,
-        9,
+        8,
         9,
         9
       ]
     },
-    "54f27a67-1f2b-449e-a944-a6ed0702c461": {
-      "pipeline_pk": "54f27a67-1f2b-449e-a944-a6ed0702c461",
+    "598634dd-8130-40fc-9e7d-5de2f5f029fd": {
+      "pipeline_pk": "598634dd-8130-40fc-9e7d-5de2f5f029fd",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, here are some high-level research backgrounds and insights in this field:\n\n1. **Object Detection and Computer Vision**: You have made significant contributions to real-time object detection systems, particularly with the YOLO series (YOLO, YOLOv2, YOLOv3, YOLO9000). Your work has focused on improving accuracy while maintaining speed, outperforming other methods like RetinaNet and Faster RCNN with ResNet.\n2. **Abnormal Object Recognition**: You have also explored the recognition of abnormal objects, introducing an abnormality detection dataset and a model that can recognize abnormalities and report the main reasons for any recognized abnormality.\n3. **Unsupervised Deep Embedding for Clustering Analysis**: Your work on Deep Embedded Clustering (DEC) involves simultaneously learning feature representations and cluster assignments using deep neural networks, which has applications in unsupervised learning.\n4. **Machine Learning and Multi-modal Learning**: Your recent work on \"Newtonian Image Understanding\" involves the use of machine learning to predict the dynamics of objects in static images. You have also evaluated Multi-modal Large Language Models (MLLMs) in video analysis, highlighting the potential of multi-modal learning.\n5. **3D Scene Synthesis**: You have applied your research to tasks like 2D-to-3D video conversion and proposed MiDiffusion, a mixed discrete-continuous diffusion model for synthesizing plausible 3D indoor scenes from given room types, floor plans, and potentially pre-existing objects.\n6. **Reinforcement Learning**: Your work on Hierarchical Planning and Reinforcement Learning (HIP-RL) shows your involvement in complex tasks like long-term planning in reinforcement learning.\n7. **Benchmarking and Evaluation**: You have introduced comprehensive benchmarks like Video-MME for precise and reliable assessment of model performance in video analysis.\n\nThese research areas highlight your focus on developing and improving state-of-the-art object detection systems, exploring various computer vision tasks, and applying your research to more complex problems in machine learning, 3D scene synthesis, and reinforcement learning.",
       "trend": "",
@@ -329,8 +329,8 @@
         10
       ]
     },
-    "ca5af290-71be-4b85-b659-09c5872f0162": {
-      "pipeline_pk": "ca5af290-71be-4b85-b659-09c5872f0162",
+    "2e9818f2-7e31-4b61-8ec9-7acefe90068a": {
+      "pipeline_pk": "2e9818f2-7e31-4b61-8ec9-7acefe90068a",
       "title": "",
       "idea": " High-level research backgrounds and insights related to your profile:\n\n1. Deep learning for automated theorem proving: Your work on developing a neural generator to synthesize theorems and proofs has addressed the limitation of scarce human-written theorems and proofs for supervised learning, improving the theorem prover and advancing the state of the art in automated theorem proving.\n2. Premise selection using deep learning: You have proposed a deep learning-based approach for premise selection, which involves selecting mathematical statements relevant for proving a given conjecture. By representing a higher-order logic formula as a graph and embedding the graph into a vector using a novel embedding method, you have achieved state-of-the-art results on the HolStep dataset.\n3. Unified framework for surrogate losses in deep networks: Your work on UniLoss has introduced a unified framework for generating surrogate losses for training deep networks with gradient descent. This approach reduces the amount of manual design of task-specific surrogate losses and has shown comparable performance on three tasks and four datasets.\n4. GPU parallel computing in scientific computing: You have described the working principle of GPU parallel computing and analyzed the results of experiments on parallel computing using GPU-based Matlab. Your results show that GPU computing speed is faster than CPU for parallel operations but slower for logical instructions.\n5. Adaptive offloading scheme for space missions: You have proposed an adaptive offloading scheme for space missions that reduces the overall delay by jointly modeling and optimizing the transmission-computation process over the entire network. This scheme has outperformed ground and one-hop offloading schemes.\n6. Coverage-guided fuzzing for enterprise-level DBMSs: Your recent work involves applying coverage-guided fuzzing to enterprise-level DBMSs from Huawei and Bloomberg LP and proposing Ratel, a coverage-guided fuzzer for enterprise-level DBMSs. Ratel enhances feedback precision, input generation robustness, and performs online investigations on the root cause of bugs, outperforming other fuzzers in terms of bug detection.\n\nKeywords: deep learning, automated theorem proving, neural generator, premise selection, graph embedding, surrogate losses, GPU parallel computing, scientific computing, space missions, offloading scheme, coverage-guided fuzzing, enterprise-level DBMSs",
       "trend": "",
@@ -359,22 +359,22 @@
         8,
         8
       ],
-      "review_overall_score": 65,
+      "review_overall_score": 75,
       "review_dimension_scores": [
         8,
         8,
         7,
         7,
+        8,
         7,
         7,
-        6,
-        6,
-        10,
+        7,
+        8,
         8
       ]
     },
-    "801ff632-f3af-4aa2-82f6-0b05a2ed4ed8": {
-      "pipeline_pk": "801ff632-f3af-4aa2-82f6-0b05a2ed4ed8",
+    "23530e7f-5548-4a90-96e5-c76e912f35ac": {
+      "pipeline_pk": "23530e7f-5548-4a90-96e5-c76e912f35ac",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, here are some high-level research backgrounds and insights in this field:\n\n1. Computer Vision: You are a researcher focused on computer vision, specifically in object detection and semantic segmentation in images and videos. Your work on video object detection, semantic segmentation, and instance-aware semantic segmentation has contributed significantly to the field.\n2. Machine Learning: Your research is at the intersection of computer vision and machine learning. You have developed advanced techniques and models for object detection and semantic segmentation using machine learning approaches.\n3. Multi-frame End-to-End Learning: Your unified approach for video object detection based on multi-frame end-to-end learning of features and cross-frame motion is a significant contribution to the field. This approach builds upon recent works and extends them with new techniques, resulting in improved speed-accuracy tradeoff for video object detection.\n4. Generative Models: Your work on generative models for CNNs in the form of exponential tilting of a reference distribution, generative gradient for pre-training CNNs, and generative visualization method for CNNs has advanced the field of generative models in computer vision.\n5. Multi-task Network Cascades: Your proposed model for instance-aware semantic segmentation, Multi-task Network Cascades, consists of three networks that differentiate instances, estimate masks, and categorize objects. This model achieves state-of-the-art instance-aware semantic segmentation accuracy on PASCAL VOC.\n6. Video Analysis using Multi-Modal Large Language Models (MLLMs): The paper on Video-MME highlights the potential of MLLMs in processing sequential visual data. The benchmark provides a comprehensive, high-quality assessment of MLLMs in video analysis, encompassing diversity in video types, duration in temporal dimension, breadth in data modalities, and quality in annotations.\n7. Mixed Discrete-Continuous Diffusion Models: The paper on MiDiffusion presents a novel mixed discrete-continuous diffusion model architecture for realistic conditional 3D scene synthesis. The approach substantially outperforms state-of-the-art autoregressive and diffusion models in floor-conditioned 3D scene synthesis.\n\nThese research areas and insights highlight the impact of your contributions to the field of computer",
       "trend": "",
@@ -403,22 +403,22 @@
         8,
         8
       ],
-      "review_overall_score": 90,
+      "review_overall_score": 85,
       "review_dimension_scores": [
-        9,
-        9,
         8,
         9,
         8,
-        9,
+        8,
+        8,
+        8,
         8,
         8,
         10,
         10
       ]
     },
-    "86263460-dbf4-4424-81a7-e613ba85578a": {
-      "pipeline_pk": "86263460-dbf4-4424-81a7-e613ba85578a",
+    "2ab6ac17-a161-43a1-a2e4-cf46a3b6c1cb": {
+      "pipeline_pk": "2ab6ac17-a161-43a1-a2e4-cf46a3b6c1cb",
       "title": "",
       "idea": " Based on your profile and the provided research papers, some high-level research backgrounds and insights in the field of machine learning include:\n\n1. Development and assessment of Multi-Modal Large Language Models (MLLMs) for processing sequential visual data, particularly in the context of video analysis. This includes the creation of comprehensive evaluation benchmarks, such as Video-MME, to assess the performance of MLLMs across different video types, temporal durations, and data modalities.\n2. Advancements in data-driven relighting methods, which represent intrinsics and lighting as latent variables and can produce state-of-the-art relightings of real scenes. These methods can also recover albedo from latent intrinsics without using any example albedos, resulting in competitive performance with state-of-the-art methods.\n3. The use of machine learning techniques in market research to uncover insights that can drive business success. This includes the ability to design and execute rigorous research studies that yield actionable insights, as well as the ability to communicate those insights in a clear and compelling way.\n4. The importance of strategic thinking and the ability to add value for clients through data and insights. This includes the ability to work with large datasets and proficiency in a range of research methodologies, from surveys and focus groups to ethnographic research and data analytics.\n5. The role of leadership and mentorship in driving innovation and success in the field of machine learning and market research. This includes the importance of creating a positive and supportive work environment for team members and developing their skills and careers.\n\nOverall, the field of machine learning is constantly evolving, with a focus on developing and assessing models that can process and analyze complex data, including sequential visual data in the context of video analysis. The use of data-driven methods and the ability to communicate insights in a clear and compelling way are also critical components of this field. Additionally, strong leadership, mentorship, and strategic thinking are essential for driving innovation and success in the field of machine learning and market research.",
       "trend": "",
@@ -461,8 +461,8 @@
         9
       ]
     },
-    "671f1bbe-a93f-43eb-9ae8-7038a8562d0c": {
-      "pipeline_pk": "671f1bbe-a93f-43eb-9ae8-7038a8562d0c",
+    "21de8eb6-808b-4e0c-b0aa-398f031cd176": {
+      "pipeline_pk": "21de8eb6-808b-4e0c-b0aa-398f031cd176",
       "title": "",
       "idea": " Based on your profile and the papers you have worked on, here are some high-level research backgrounds and insights in this field:\n\n1. Neural Rendering and NeRF: You specialize in 3D computer graphics and vision, with a focus on neural rendering techniques, specifically NeRF (Neural Radiance Fields). Your research has aimed to improve the efficiency and quality of NeRF models, which can synthesize images of 3D scenes from novel views.\n2. MobileNeRF: You have introduced a new NeRF representation based on textured polygons, which can be rendered using standard rendering pipelines. This approach enables NeRFs to be rendered with the traditional polygon rasterization pipeline, providing massive pixel-level parallelism and achieving interactive frame rates on various compute platforms, including mobile phones.\n3. Text-guided Voxel Editing: You have presented a technique that harnesses the power of latent diffusion models for editing existing 3D objects. This method takes oriented 2D images of a 3D object as input and learns a grid-based volumetric representation of it. By optimizing a Score Distillation Sampling (SDS) loss and introducing a novel volumetric regularization loss, your approach can create a myriad of edits which cannot be achieved by prior works.\n4. Real-time View Synthesis: You have developed a method to train a NeRF, then precompute and store it as a Sparse Neural Radiance Grid (SNeRG) that enables real-time rendering on commodity hardware. This method retains NeRF's ability to render fine geometric details and view-dependent appearance, is compact, and can be rendered in real-time on a laptop GPU.\n5. Anti-Aliased Grid-Based Neural Radiance Fields: You have shown how ideas from rendering and signal processing can be used to construct a technique that combines mip-NeRF 360 and grid-based models such as Instant NGP to yield error rates that are 8% - 77% lower than either prior technique, and that trains 24x faster than mip-NeRF 360.\n6. Machine Learning and Neural Network Verification: Your research also includes work on machine learning, specifically in the area of neural network verification. You have developed a general framework, GenBa",
       "trend": "",
@@ -495,7 +495,7 @@
       "review_dimension_scores": [
         9,
         9,
-        7,
+        8,
         8,
         9,
         8,
