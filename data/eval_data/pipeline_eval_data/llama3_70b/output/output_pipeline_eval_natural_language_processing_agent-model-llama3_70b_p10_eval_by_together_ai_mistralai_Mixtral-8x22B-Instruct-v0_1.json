@@ -2,7 +2,7 @@
   "idea_avg_overall_score": 86.0,
   "idea_avg_dimension_scores": [
     8.2,
-    8.6,
+    8.7,
     9.0,
     8.0,
     8.1,
@@ -15,31 +15,31 @@
     8.9,
     7.9,
     8.0,
-    8.1
+    7.9
   ],
-  "review_avg_overall_score": 82.5,
+  "review_avg_overall_score": 83.0,
   "review_avg_dimension_scores": [
     8.7,
     8.8,
-    7.6,
-    8.1,
-    7.9,
     7.7,
-    7.5,
+    8.1,
+    8.1,
+    7.8,
+    7.6,
     7.9,
-    9.2,
-    9.2
+    9.3,
+    9.1
   ],
   "idea_variance_overall_score": 4.0,
   "idea_variance_dimension_scores": [
     0.16000000000000006,
-    0.24000000000000005,
+    0.21000000000000002,
     0.0,
     0.0,
     0.09,
     0.16000000000000003
   ],
-  "idea_sum_variance_dimension_scores": 0.6500000000000001,
+  "idea_sum_variance_dimension_scores": 0.6200000000000001,
   "paper_variance_overall_score": 9.0,
   "paper_variance_dimension_scores": [
     0.09,
@@ -47,26 +47,26 @@
     0.09,
     0.09,
     0.0,
-    0.29
+    0.09
   ],
-  "paper_sum_variance_dimension_scores": 0.6499999999999999,
-  "review_variance_overall_score": 26.25,
+  "paper_sum_variance_dimension_scores": 0.44999999999999996,
+  "review_variance_overall_score": 31.0,
   "review_variance_dimension_scores": [
     0.21000000000000002,
     0.16000000000000003,
-    0.24,
-    0.08999999999999998,
-    0.29,
     0.21000000000000002,
-    0.45,
     0.2899999999999999,
-    0.7600000000000001,
-    0.7600000000000001
+    0.2899999999999999,
+    0.36,
+    0.43999999999999984,
+    0.2899999999999999,
+    0.41,
+    0.69
   ],
-  "review_sum_variance_dimension_scores": 3.4600000000000004,
+  "review_sum_variance_dimension_scores": 3.35,
   "pipeline evaluation logs": {
-    "983d7613-f091-4cc5-b628-c91c6aa26bfa": {
-      "pipeline_pk": "983d7613-f091-4cc5-b628-c91c6aa26bfa",
+    "09b0e89f-6a61-43ac-83da-3628700fd21a": {
+      "pipeline_pk": "09b0e89f-6a61-43ac-83da-3628700fd21a",
       "title": "",
       "idea": " High-level research backgrounds and insights related to your profile include:\n\n1. Advanced technology development for practical applications in IT security, robotics, and software development.\n2. Expertise in IT security, including the creation of a zero-configuration Intrusion Detection System and a tool for teaching IT Security through vulnerability exploitation.\n3. Contributions to robotics through the development of a versatile mobile manipulation framework, MAkEable, which facilitates knowledge transfer across tasks, environments, and robots.\n4. Integration of security considerations into the Scrum framework, resulting in Secure Scrum, which emphasizes secure software development throughout the process.\n5. Development of AutoGPT+P, an affordance-based scene representation system that improves generalizability in task planning.\n6. Research in machine learning, specifically focusing on multimodal large language models (LLMs) and their applications in various domains, such as image, video, 3D, and audio generation.\n7. Utilization of pre-trained LLMs for complex urban and environmental management problems, automating the creation of scenario-based ontology for informed decision support.\n8. Pushing boundaries in these fields by seeking innovative solutions to complex problems and exploring new ways to apply advanced technologies.",
       "trend": "",
@@ -80,7 +80,7 @@
       "idea_overall_score": 85,
       "idea_dimension_scores": [
         8,
-        8,
+        9,
         9,
         8,
         8,
@@ -93,7 +93,7 @@
         9,
         8,
         8,
-        9
+        8
       ],
       "review_overall_score": 75,
       "review_dimension_scores": [
@@ -109,8 +109,8 @@
         8
       ]
     },
-    "1f42a087-f260-4d42-ab2f-b032fc3cee34": {
-      "pipeline_pk": "1f42a087-f260-4d42-ab2f-b032fc3cee34",
+    "ab13bdbd-d7fc-4cfc-ad6a-5201aed8d6a5": {
+      "pipeline_pk": "ab13bdbd-d7fc-4cfc-ad6a-5201aed8d6a5",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, here are some high-level research backgrounds and insights in this field related to your work:\n\n1. **Control Theory and Robotics**: Your research has significantly contributed to the field of nonholonomic mobile robots, particularly in trajectory tracking control and consensus tracking. You have developed methods for converting tracking control into stabilization of relative subsystems and extended single follower tracking controllers to multiple robots in a directed acyclic graph. Your work on dynamic vector field (DVF) based motion planning for nonholonomic multirobot systems also falls under this domain.\n\n2. **Machine Learning and Natural Language Processing**: You have explored the use of character-level encoder-decoder frameworks for question answering with structured knowledge bases, demonstrating the superiority of character-level models over word-level models in terms of accuracy, number of parameters, and data efficiency. Your recent work on Zero-Shot 3D Reasoning Segmentation involves using Large Language Models (LLMs) for interpreting user input queries in a zero-shot manner, showcasing the potential of NLP techniques in 3D segmentation and robotics.\n\n3. **Computer Vision and 3D Segmentation**: Your paper on Zero-Shot 3D Reasoning Segmentation introduces a new task for parts searching and localization for objects, which transcends limitations for previous category-specific 3D semantic segmentation, 3D instance segmentation, and open-vocabulary 3D segmentation. This work highlights the importance of contextual awareness and reasoning in 3D segmentation and computer vision.\n\n4. **Multi-modal Learning**: Your focus on the joint learning of distributed representations for images and texts, as well as the proposed deep multimodal similarity model (DMSM), demonstrates the potential of multi-modal learning in bridging the gap between different data modalities.\n\n5. **Reinforcement Learning**: Your work on predicting popularity of comments in an online discussion forum using a two-stage Q-learning framework and augmented state representation showcases the application of reinforcement learning in addressing complex real-world problems.\n\n6. **Motion Planning**: Your research on motion planning for mobile robots in 3D, involving a novel velocity vector field (VF",
       "trend": "",
@@ -149,12 +149,12 @@
         8,
         8,
         8,
-        10,
-        10
+        9,
+        9
       ]
     },
-    "38206011-4ba7-4e9d-85f5-323bfa83c193": {
-      "pipeline_pk": "38206011-4ba7-4e9d-85f5-323bfa83c193",
+    "48c5c6cb-cf47-4c35-9f52-cf6601683a0e": {
+      "pipeline_pk": "48c5c6cb-cf47-4c35-9f52-cf6601683a0e",
       "title": "",
       "idea": " Based on your profile and the provided research abstracts, here are some high-level research backgrounds and insights in this field:\n\n1. **Zero-shot Learning and Transfer Knowledge**: Your work on Exp-CLIP demonstrates the potential of vision-language-based zero-shot models for addressing challenges in facial expression recognition, such as the lack of large-scale annotated data. By transferring task knowledge from large language models, these models can better capture the nuances of specific tasks.\n2. **Natural Language Processing (NLP) and Emotion Analysis**: Your research on \"Disentangling Latent Emotions of Word Embeddings on Complex Emotional Narratives\" showcases the use of NLP techniques to understand and disentangle complex emotional narratives. By identifying the dimensions of word vectors that contribute to expressing emotions, you have shed light on the emotional polarities of words and their clustering patterns.\n3. **Network Analysis and Political Promotions**: Your work on \"Uncovering Political Promotion in China: A Network Analysis of Patronage Relationship in Autocracy\" highlights the importance of network analysis techniques in examining the drivers of political promotions in autocratic regimes. By analyzing publicly available datasets, you have uncovered the significant impact of factors like gender, home origin, and positions in patronage networks on political careers.\n4. **Cross-domain Transfer and Pretrained Language Models**: Your exploration of the nature of cross-domain transfer in pretrained language models has provided insights into the factors that make transfer learning hard. By conducting controlled transfer studies, you have found that models can recover from syntactic-style shifts but struggle with vocabulary misalignment and embedding matrix re-initialization.\n5. **Machine Learning and Generalization**: The recent paper on Transformers and in-context learning highlights the challenge of achieving structured ICL solutions that generalize. While explicitly inferring task latents can aid interpretability, it may not be sufficient to alleviate the intrinsic limitations of Transformers in achieving robust prediction.\n\nThese research areas and insights reflect your focus on natural language processing, machine learning, and network analysis, as well as your interest in understanding complex emotional narratives and political promotions in autocratic regimes.",
       "trend": "",
@@ -197,8 +197,8 @@
         10
       ]
     },
-    "b46998d8-b013-487b-b15c-94b853896668": {
-      "pipeline_pk": "b46998d8-b013-487b-b15c-94b853896668",
+    "287a2e4f-56c3-4514-a5ca-2b4abe792767": {
+      "pipeline_pk": "287a2e4f-56c3-4514-a5ca-2b4abe792767",
       "title": "",
       "idea": " Based on your profile and the provided research domains and papers, here are some high-level research backgrounds and insights in this field:\n\n1. **Efficient Deep Learning Methods**: Your research focuses on developing efficient methods for parallelizing deep learning models, specifically convolutional networks and transformers. This includes the use of 8-bit approximation algorithms for speedups in data transfer and sparse learning for training deep neural networks with sparse weights.\n2. **Sparse Learning and Optimization**: You have demonstrated the effectiveness of sparse learning, specifically with the development of sparse momentum, an algorithm that identifies and redistributes pruned weights across layers for state-of-the-art sparse performance. You have also developed 8-bit optimizers that use block-wise quantization for maintaining 32-bit performance levels with a small memory footprint.\n3. **Quantization and Inference Scaling Laws**: You have studied the trade-off between accuracy and memory footprint in quantization methods and developed inference scaling laws for Large Language Models (LLMs) to determine the optimal bit-precision and model size for zero-shot performance.\n4. **Transformers and Convolutional Networks**: Your research includes the development of QLoRA, an efficient finetuning approach for transformers, and Convolutional 2D Knowledge Graph Embeddings, a multi-layer convolutional network model for link prediction that achieves state-of-the-art results.\n5. **Open-Source and Accessibility**: You are committed to making your research accessible and open-source, releasing software for Int8 matrix multiplication for transformers, 8-bit optimizers, and QLoRA.\n6. **Pre-training and Fine-tuning Techniques**: The provided paper highlights the importance of exploring fine-tuning approaches for efficient model tuning with reduced GPU memory usage and time costs. It compares various pre-training techniques, such as adversarial learning, contrastive learning, reconstruction, and diffusion denoising learning, to enhance the learning process of neural networks.\n7. **Transformer Inference on RISC-V-based Platforms**: The second paper discusses the first end-to-end inference results of transformer models on an open-source many-tiny-core RISC-V platform, demonstrating significant speedups and FPU util",
       "trend": "",
@@ -241,8 +241,8 @@
         10
       ]
     },
-    "0be4ca29-c0a0-4018-911d-c1ddb8c75ef2": {
-      "pipeline_pk": "0be4ca29-c0a0-4018-911d-c1ddb8c75ef2",
+    "54916c8c-e834-433b-8938-a016d4886923": {
+      "pipeline_pk": "54916c8c-e834-433b-8938-a016d4886923",
       "title": "",
       "idea": " High-level research backgrounds and insights related to your profile include:\n\n1. Robust statistical learning: Developing robust statistical models that can handle issues such as noisy data or mislabeling, as demonstrated by your Robust Logistic Regression using Shift Parameters model.\n2. Non-parametric statistical estimation: Creating methods for non-parametric statistical estimation using techniques such as random forests, as seen in your Generalized Random Forests method.\n3. Local linear regression: Improving random forests for non-parametric regression by pairing them with local linear regression adjustments, as in your Local Linear Forests method.\n4. Generative sampling: Introducing a framework for generating iid samples from an Ito diffusion process using a weak generative sampler and normalizing flows, as described in the Sampling invariant distributions paper.\n5. In-context learning (ICL): Investigating the effect of explicitly inferring task latents in large autoregressive models like Transformers, highlighting the intrinsic limitations of Transformers in achieving structured ICL solutions that generalize.\n\nThese research areas demonstrate your focus on developing and improving statistical models and methods, with an emphasis on creating accurate, efficient, and robust models for various tasks.",
       "trend": "",
@@ -276,7 +276,7 @@
         8,
         8,
         7,
-        8,
+        7,
         8,
         7,
         7,
@@ -285,8 +285,8 @@
         8
       ]
     },
-    "87413f2a-4e61-4cc8-ad85-34cb26c5cbf3": {
-      "pipeline_pk": "87413f2a-4e61-4cc8-ad85-34cb26c5cbf3",
+    "227088f9-d6b7-4fc1-914e-5bc42301526e": {
+      "pipeline_pk": "227088f9-d6b7-4fc1-914e-5bc42301526e",
       "title": "",
       "idea": " Based on your profile and the provided research abstracts, here are some high-level research backgrounds and insights in this field:\n\n1. Natural Language Processing (NLP): You are a researcher in NLP, which is a subfield of artificial intelligence that focuses on the interaction between computers and humans through natural language. NLP covers various tasks, such as information extraction, word sense disambiguation, controllable text generation, and question answering.\n2. Information Extraction: You have been working on pipelined approaches for entity and relation extraction, addressing data imbalance challenges through a non-parametric few-shot learning approach called MetricWSD. This approach transfers knowledge from high-frequency words to infrequent ones, improving relation F1 scores.\n\n3. Word Sense Disambiguation: Your research in this area involves addressing data imbalance challenges. MetricWSD, a non-parametric few-shot learning approach, is proposed to transfer knowledge from high-frequency words to infrequent ones.\n\n4. Controllable Text Generation: You have been investigating the use of language models for controllable text generation with constraints specified in natural language. You created a challenging benchmark called Cognac and proposed a solution called CognacGen, which leverages a language model's own internal knowledge to guide generation.\n\n5. In-context Learning: You are interested in understanding the mechanisms behind in-context learning in large language models. You have characterized two ways through which it leverages demonstrations: task recognition and task learning. Controlled experiments show that models can achieve non-trivial performance with only task recognition, while task learning consistently improves with more demonstrations in context.\n\n6. Question Answering: Your research in this area involves converting tasks into discrete latent variable learning problems with a precomputed, task-specific set of possible solutions. You developed a hard EM learning scheme that computes gradients relative to the most likely solution at each update, outperforming previous methods on six QA tasks.\n\n7. Machine Learning: Your research is focused on developing and improving methods for information extraction, word sense disambiguation, controllable text generation, and question answering, with a focus on addressing challenges such as data imbalance and the limitations of current dense retrieval models.\n\n8. Video-language Understanding: The abstract discusses the use of Large Language",
       "trend": "",
@@ -329,8 +329,8 @@
         10
       ]
     },
-    "aa0103be-2c6d-405d-b396-b9507d3a02b9": {
-      "pipeline_pk": "aa0103be-2c6d-405d-b396-b9507d3a02b9",
+    "41bd6e62-66c6-4a49-b5f5-23a8ea858c28": {
+      "pipeline_pk": "41bd6e62-66c6-4a49-b5f5-23a8ea858c28",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, here are some high-level research backgrounds and insights in this field related to your work:\n\n1. **Robust Classification**: Your research on provable robust classification and randomized smoothing techniques contributes to the development of more reliable and accurate models. This is crucial in addressing issues such as adversarial attacks and improving model performance in real-world scenarios.\n\n2. **Distributed Representations**: Your work on joint learning of distributed representations for images and texts, as well as the deep multimodal similarity model (DMSM), showcases the potential of combining information from different sources to improve model understanding and performance. This is particularly relevant in tasks involving multimodal data, such as image-text pairs.\n\n3. **Multimodal Similarity Models**: Your research on generating image descriptions using multimodal similarity models highlights the potential of these models in understanding and processing information from different sources. This can lead to better performance in tasks involving multiple modalities, such as image captioning and visual question answering.\n\n4. **Pre-training and Fine-tuning**: The recent paper discusses various pre-training techniques and fine-tuning strategies, which are essential in modern deep learning. Understanding the advantages and limitations of these methods can help researchers and practitioners make informed decisions when designing and training models.\n\n5. **Video Text Spotting**: The paper on video text spotting presents a novel approach for simultaneously localizing, recognizing, and tracking text instances in videos. This is an emerging research area, with applications in various fields, such as augmented reality, video surveillance, and robotics.\n\n6. **Language Collaboration and Glyph Perception**: The proposed LOGO model, which integrates a language synergy classifier and glyph supervision, demonstrates the potential of combining language understanding and visual perception to improve model performance in text detection and recognition tasks.\n\nIn summary, your research background and interests lie in robust classification, distributed representations, and multimodal similarity models. The broader field includes pre-training and fine-tuning strategies, video text spotting, and language collaboration in computer vision tasks.",
       "trend": "",
@@ -365,16 +365,16 @@
         8,
         7,
         8,
-        7,
-        7,
-        7,
-        7,
         8,
+        7,
+        7,
+        7,
+        10,
         8
       ]
     },
-    "e6dc1335-72a3-4140-8f0d-35985a18bd72": {
-      "pipeline_pk": "e6dc1335-72a3-4140-8f0d-35985a18bd72",
+    "e82b897b-cf29-4f7c-8863-7247a958bb80": {
+      "pipeline_pk": "e82b897b-cf29-4f7c-8863-7247a958bb80",
       "title": "",
       "idea": " Based on your profile and the provided research domains and papers, here are some high-level research backgrounds and insights in this field:\n\n1. **Natural Language Processing (NLP) and Machine Learning**: You are a researcher in NLP, focusing on developing high-performing models for tasks such as semantic role labeling, coreference resolution, and information extraction. The use of machine learning techniques, particularly deep learning models, is prevalent in these tasks.\n2. **Semantic Role Labeling (SRL)**: You have explored end-to-end models for jointly predicting predicates, arguments, and their relationships, demonstrating state-of-the-art performance on the PropBank SRL task without using gold predicates. This approach highlights the importance of contextualized span representations and independent decisions about word span relationships.\n3. **Coreference Resolution**: You have introduced a differentiable approximation to higher-order inference and an end-to-end coreference resolution model that outperforms previous work without using a syntactic parser or hand-engineered mention detector. This method emphasizes the use of antecedent distribution as attention and softly considering multiple hops in predicted clusters.\n4. **Question-Answering-driven Semantic Role Labeling (QA-SRL)**: You have developed a large-scale corpus of QA-SRL annotations and the first high-quality QA-SRL parser. Additionally, you have presented neural models for two QA-SRL subtasks: detecting argument spans for a predicate and generating questions to label the semantic relationship.\n5. **Numerical Reasoning**: You have shown that a BERT-based reading comprehension model can be augmented with a predefined set of executable 'programs' to achieve lightweight numerical reasoning, resulting in a 33% absolute improvement on the DROP dataset.\n6. **Paraphrase Identification**: You have introduced the PAWS dataset, which includes 108,463 well-formed paraphrase and non-paraphrase pairs with high lexical overlap. This dataset has been used to evaluate model performance in paraphrase identification.\n7. **Large Language Models (LLMs)**: The provided papers discuss the importance of large language models, their training details, and the need for transparency in the research",
       "trend": "",
@@ -401,24 +401,24 @@
         9,
         8,
         8,
-        9
+        8
       ],
-      "review_overall_score": 85,
+      "review_overall_score": 90,
       "review_dimension_scores": [
         9,
         9,
-        7,
+        8,
+        9,
+        9,
+        9,
         8,
         8,
-        8,
-        7,
-        8,
-        8,
-        9
+        9,
+        10
       ]
     },
-    "aafa4c1b-24a3-4309-8055-12d7fc3d7c63": {
-      "pipeline_pk": "aafa4c1b-24a3-4309-8055-12d7fc3d7c63",
+    "00c817e1-9622-4d9b-8f79-02d22f165fbe": {
+      "pipeline_pk": "00c817e1-9622-4d9b-8f79-02d22f165fbe",
       "title": "",
       "idea": " High-level research backgrounds and insights related to your profile:\n\n1. Power Systems:\n* Distributed AC power flow problem\n* Scalable and rapid methods for solving power flow problems\n* Gauss-Newton based inexact ALADIN algorithm\n* Open-source platform for power systems analysis\n2. Robotics:\n* Task-oriented object grasping and rearrangement\n* Multi-feature Implicit Model (MIMO) for object representation\n* Learning from human demonstration videos\n* Imitation learning for manipulation tasks\n* Evaluation in simulation and real-world experiments\n\nRecent paper keywords:\n\n1. Neural Parametric Gaussian Avatars (NPGA)\n2. Multi-view video recordings\n3. 3D Gaussian Splatting\n4. Neural parametric head models (NPHM)\n5. Differentiable optimization\n6. Non-convex optimization\n7. Polynomial optimization\n8. Convex relaxations\n9. Certifiably correct methods\n10. Deep neural network\n11. Image keypoints\n12. Robot localization\n13. Challenging lighting conditions.",
       "trend": "",
@@ -457,12 +457,12 @@
         8,
         8,
         8,
-        10,
-        10
+        9,
+        9
       ]
     },
-    "6307d921-267f-4062-8c13-6774d9a8b4fb": {
-      "pipeline_pk": "6307d921-267f-4062-8c13-6774d9a8b4fb",
+    "8ad8b4a8-cce7-4965-b97d-0ae2f22109e0": {
+      "pipeline_pk": "8ad8b4a8-cce7-4965-b97d-0ae2f22109e0",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, here are some high-level research backgrounds and insights in this field:\n\n1. **Multimodal Learning and Generation**: There is a growing interest in combining large language models (LLMs) with multimodal learning, particularly in the areas of image, video, 3D, and audio generation. This involves investigating key technical components and multimodal datasets to advance the development of Artificial Intelligence for Generative Content (AIGC) and world models.\n2. **Zero-Shot Reasoning and Segmentation**: A new task has been introduced for zero-shot 3D reasoning segmentation, which transcends limitations for previous category-specific 3D semantic segmentation, 3D instance segmentation, and open-vocabulary 3D segmentation. This task involves understanding and executing complex commands for fine-grained segmenting specific parts for 3D meshes with contextual awareness and reasoned answers for interactive segmentation.\n3. **Natural Language Processing and Robotics**: The use of natural language processing in robotics has led to the development of models and frameworks that enable robots to perform complex tasks, such as task-oriented object grasping and rearrangement, by learning from human demonstrations. This includes the creation of novel object representations, such as the Multi-feature Implicit Model (MIMO), which has been shown to improve performance in object shape reconstruction and spatial relation modeling.\n4. **Multimodal Representation Learning**: There is interest in multimodal representation learning, specifically for images and texts. This involves training deep multimodal similarity models (DMSM) to maximize global semantic similarity between images and their captions in natural language, which can capture the combination of various visual concepts and cues.\n5. **Conversational AI**: Research in conversational AI involves surveying neural approaches and grouping conversational systems into three categories: question answering agents, task-oriented dialogue agents, and chatbots. This includes discussing the progress and challenges faced in each category, as well as investigating solutions for data scarcity in spoken language understanding (SLU).\n6. **NLG Evaluation**: Research in NLG evaluation involves surveying evaluation methods and grouping them into three categories: human-centric evaluation metrics, automatic metrics that require no training,",
       "trend": "",

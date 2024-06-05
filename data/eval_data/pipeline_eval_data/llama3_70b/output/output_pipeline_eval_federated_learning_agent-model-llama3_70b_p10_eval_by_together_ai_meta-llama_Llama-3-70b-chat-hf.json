@@ -4,9 +4,9 @@
     8.9,
     8.0,
     9.0,
-    8.8,
     8.7,
-    8.1
+    8.8,
+    8.0
   ],
   "paper_avg_overall_score": 88.5,
   "paper_avg_dimension_scores": [
@@ -35,11 +35,11 @@
     0.08999999999999997,
     0.2,
     0.0,
-    0.1600000000000001,
     0.21000000000000002,
-    0.08999999999999998
+    0.16,
+    0.0
   ],
-  "idea_sum_variance_dimension_scores": 0.7500000000000001,
+  "idea_sum_variance_dimension_scores": 0.66,
   "paper_variance_overall_score": 12.25,
   "paper_variance_dimension_scores": [
     0.25,
@@ -65,8 +65,8 @@
   ],
   "review_sum_variance_dimension_scores": 3.0899999999999994,
   "pipeline evaluation logs": {
-    "00e1f3eb-f5db-47ea-9ff7-66093c383c44": {
-      "pipeline_pk": "00e1f3eb-f5db-47ea-9ff7-66093c383c44",
+    "ecff85cf-fea3-44f7-95f6-25715928b9a0": {
+      "pipeline_pk": "ecff85cf-fea3-44f7-95f6-25715928b9a0",
       "title": "",
       "idea": " Based on your profile and the provided research papers, here are some high-level research backgrounds and insights in this field:\n\n1. **Graph Representation Learning**: Your work on Graph External Attention (GEA) and Graph External Attention Enhanced Transformer (GEAET) shows expertise in graph representation learning, specifically in addressing the challenge of inter-graph correlations. This research has led to state-of-the-art performance on benchmark datasets.\n2. **Recurrent Neural Networks (RNNs) and State-Space Models**: Your research on the optimization challenges of RNNs, particularly the issues of vanishing and exploding gradients, highlights your understanding of the theoretical aspects of RNNs. Your findings on the importance of element-wise recurrence design pattern and careful parametrizations contribute to the understanding of why some architectures perform better than others.\n3. **Computer-Aided Diagnosis**: Your focus on developing automatic models for computer-aided diagnosis, particularly in ophthalmology and cardiovascular diseases, showcases your expertise in applying machine learning to medical diagnosis. Your Detail-Preserving Network (DPN) model, which maintains high/full resolution during processing, is a significant contribution to this field.\n4. **Zero-Shot Recognition**: Your work on adaptively adjusting the semantic feature space and proposing the AMS-SFE model for zero-shot learning demonstrates your expertise in handling domain shift and hubness problems. This research has shown remarkable performance improvement compared to other existing methods.\n5. **Unsupervised Feature Learning**: Your Exclusivity Enhanced unsupervised feature learning approach for autoencoders (AE) highlights your ability to improve conventional methods by utilizing novel concepts. This approach has shown significant performance improvement compared to other related methods.\n6. **Machine Learning and Image Processing**: Your diverse research interests, which include recurrence relations for rooted forests and position-aware neural networks for traffic prediction, show your broad expertise in machine learning and image processing.\n\nIn summary, your research background spans across several areas, including graph representation learning, RNNs, computer-aided diagnosis, zero-shot recognition, unsupervised feature learning, and machine learning applications. Your work has significantly contributed to these fields, with a focus on improving existing methods and developing novel models.",
       "trend": "",
@@ -109,8 +109,8 @@
         9
       ]
     },
-    "ab3bd7b6-56f1-4764-a5c8-62c3137029b0": {
-      "pipeline_pk": "ab3bd7b6-56f1-4764-a5c8-62c3137029b0",
+    "b667f65e-1af3-43a6-96ec-48512eab071d": {
+      "pipeline_pk": "b667f65e-1af3-43a6-96ec-48512eab071d",
       "title": "",
       "idea": " High level research backgrounds and insights in this field related to your profile include:\n\n1. Configuration space integrals in the study of knot and link spaces: This includes filling in gaps in the literature regarding Bott and Taubes' discovery, as well as studying the cohomology of spaces of string links and braids in $\\mathbb{R}^n$ using configuration space integrals.\n2. Calculus of the embedding functor in the study of long knots: This involves associating a Taylor tower supplied by calculus of the embedding functor to the space of long knots and studying its cohomology spectral sequence.\n3. Formality of the little N-disks operad: This includes proving the formality of the little N-disks operad over the field of real numbers and a relative version of the formality for the inclusion of the little m-disks operad in the little N-disks operad for $N>=2m+1$.\n4. Extension of topological constructions to hypergraphs: This involves extending topological constructions such as wedge, cone, and collapse from simplicial complexes to hypergraphs and using them to study mergers, mediators in the context of political structures.\n5. Machine learning: The recent paper titles and abstracts suggest research in machine learning, specifically in the verification of neural networks with general nonlinearities and general computational graphs, as well as theoretical connections between state-space models and variants of attention.\n\nIn summary, your research background is in topology, particularly in the study of knot and link spaces, long knots, and operads, with recent foray into machine learning specifically in the verification of neural networks and theoretical connections between state-space models and attention.",
       "trend": "",
@@ -153,8 +153,8 @@
         8
       ]
     },
-    "1dd19489-2ae5-48c9-8be9-cc60f99682f4": {
-      "pipeline_pk": "1dd19489-2ae5-48c9-8be9-cc60f99682f4",
+    "36188448-97d1-40ff-8908-2e684fa52a13": {
+      "pipeline_pk": "36188448-97d1-40ff-8908-2e684fa52a13",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, here are some high-level research backgrounds and insights in this field related to your work:\n\n1. Online Convex Optimization: You have made significant contributions to unconstrained optimization problems in online convex optimization, achieving near-optimal regret bounds and demonstrating lower bounds. You have also introduced algorithms that adaptively choose regularization functions based on observed loss functions, with problem-dependent regret bounds.\n2. Memory-efficient Online Learning: You have focused on reducing the memory footprint of large-scale online learning methods by projecting weight vectors onto coarse discrete sets using randomized rounding and implementing per-coordinate learning rates with randomized counting.\n3. Neural Network Verification: You have worked on developing a general framework for branch-and-bound (BaB) neural network verification for general nonlinearities in computational graphs, optimizing branching points offline, and demonstrating effectiveness on various activation functions and networks.\n4. Constrained Decoding for Language Models: Research in this area focuses on improving the reliability of large language models in generating structured outputs, such as program code or mathematical formulas, by using constrained decoding approaches like grammar-constrained decoding (GCD). You have identified the challenge of grammar-aligned decoding (GAD) and proposed a solution, ASAp, which guarantees grammatical outputs while maintaining the conditional probability of the LLM's distribution.\n5. Machine Learning: Your research spans various machine learning domains, including online convex optimization, memory-efficient online learning, and neural network verification, contributing to the development of algorithms, theory, and practical applications.\n\nThese keywords and insights highlight your expertise in online convex optimization, memory-efficient online learning, neural network verification, and constrained decoding for language models, which are essential research areas in machine learning.",
       "trend": "",
@@ -197,8 +197,8 @@
         10
       ]
     },
-    "ba3bd35a-23ce-4bc8-9454-c50b32f29981": {
-      "pipeline_pk": "ba3bd35a-23ce-4bc8-9454-c50b32f29981",
+    "326bcf5d-b165-4e8d-adbb-d7f9b8409ca7": {
+      "pipeline_pk": "326bcf5d-b165-4e8d-adbb-d7f9b8409ca7",
       "title": "",
       "idea": " High-level research backgrounds and insights related to your profile:\n\n1. Topological Data Analysis (TDA) and COVID-19 Pandemic: You have been working on the application of TDA to study the spread of COVID-19, using the Mapper algorithm to create visualizations that reflect the pandemic's development across time and space. These Mapper graphs can potentially be used as predictive tools for the spread of the coronavirus.\n2. Neural Architectures and Logical Reasoning: You are interested in developing neural architectures that can perform logical reasoning, which is crucial for various applications such as natural language processing. You have proposed a symbolic reasoning architecture that chains many join operators together to model output logical expressions.\n3. Privacy Implications of Machine Learning Models: You have studied the privacy leakage of adversarial training models in federated learning systems and have shown that attackers can exploit these models to accurately reconstruct users' private training images. To address this concern, you have introduced a defense strategy called PrivaScissors to reduce the mutual information between a model's intermediate outcomes and the device's data and predictions.\n4. Security Vulnerabilities of Deep Learning Models: You have developed a powerful untargeted adversarial attack for action recognition systems in both white-box and black-box settings, which can significantly degrade a model's performance with sparsely and imperceptibly perturbed examples.\n5. Reinforcement Learning and Threat Models: You have proposed a new class of threat models, called snooping threat models, that are unique to reinforcement learning, where the adversary does not have the ability to interact with the target agent.\n\nRecent paper insights:\n\n1. State Space Models (SSMs) and Transformers: The paper shows that SSMs such as Mamba are closely related to Transformers and can match or outperform them at small to medium scale. The SSD framework allows for designing a new architecture (Mamba-2) that is 2-8X faster than Mamba while being competitive with Transformers on language modeling.\n2. Quantum Computer Measurement Outcomes Prediction: The paper introduces a generative pretained transformer (GPT) designed to learn the measurement outcomes of a neutral atom array quantum computer, focusing on Rydberg atoms in a square lattice array. The architecture can general",
       "trend": "",
@@ -241,8 +241,8 @@
         9
       ]
     },
-    "9dcd69bb-0107-4a97-a311-7b44dead3671": {
-      "pipeline_pk": "9dcd69bb-0107-4a97-a311-7b44dead3671",
+    "c1254271-ce48-4cb3-a3bd-cb39a743ac42": {
+      "pipeline_pk": "c1254271-ce48-4cb3-a3bd-cb39a743ac42",
       "title": "",
       "idea": " High level research backgrounds and insights related to your profile:\n\n1. Machine Learning and Automatic Speech Recognition (ASR): You have made significant contributions to the field of ASR by developing and improving machine learning models and techniques. Your work on knowledge distillation from ensembles of acoustic models and extension of multi-teacher distillation methods to joint CTC-attention end-to-end ASR systems has resulted in state-of-the-art error rates on several datasets and languages.\n2. Distant ASR: You have proposed the use of quaternion neural networks to capture internal relations between multi-channel audio recordings, resulting in improved performance in multi-channel distant speech recognition.\n3. Healthcare and Graph Representation Learning: You have worked on predicting patient outcomes in the ICU using Graph Representation Learning. Your proposed strategy to exploit diagnoses as relational information and the development of LSTM-GNNs for patient outcome prediction tasks has shown improved performance on length of stay prediction tasks.\n4. Structured Pruning in Deep Neural Networks: You have developed a method to speed up training and inference in deep neural networks using structured pruning applied before training. This method removes entire channels and hidden units, resulting in significant speed ups.\n5. Unsupervised Domain Adaptation (uDA) in Distributed Settings: Your interest in uDA in distributed settings indicates a focus on developing machine learning models that can adapt to new domains without labeled data, particularly in distributed environments.\n\nRelated research papers:\n\n1. Graph External Attention (GEA) and Graph External Attention Enhanced Transformer (GEAET) for graph representation learning, which leverages multiple external node/edge key-value units to capture inter-graph correlations and integrates local structure and global interaction information for more comprehensive graph representations.\n2. General Branch-and-Bound (GenBaB) framework for neural network (NN) verification, which conducts BaB for general nonlinearities in general computational graphs based on linear bound propagation and allows the verification of general nonlinear computation graphs and enables verification applications beyond simple neural networks.",
       "trend": "",
@@ -285,8 +285,8 @@
         9
       ]
     },
-    "d784a81e-2b8e-462a-ac03-f35d8c177891": {
-      "pipeline_pk": "d784a81e-2b8e-462a-ac03-f35d8c177891",
+    "adac2d5e-4d7a-49a5-83be-d5bae9ed085b": {
+      "pipeline_pk": "adac2d5e-4d7a-49a5-83be-d5bae9ed085b",
       "title": "",
       "idea": " High level research backgrounds and insights in this field related to your profile include:\n\n1. Development and analysis of methods for preserving privacy in data analysis and machine learning, with a focus on local privacy, federated learning, and differential privacy.\n2. Discrete distribution estimation under local privacy, with the creation of new mechanisms such as hashed K-ary Randomized Response (KRR) that maintain or exceed the utility of existing mechanisms at all privacy levels.\n3. Analysis of the flow of language across fields in academia using statistical models, identifying the directional flow of ideas, methods, and vocabulary in science.\n4. Federated learning methods for personalization of global models without exporting sensitive user data, and application in commercial, global-scale settings.\n5. Incorporation of application context into the privacy definition in local differential privacy.\n6. Utilization of large language models trained on public data to improve the quality of pre-training data for on-device language models trained with DP and FL.\n7. Introduction of Federated Optimization as a new and increasingly relevant setting for distributed optimization in machine learning, where communication efficiency is crucial.\n8. Research on constrained decoding approaches for large language models to reliably generate highly structured outputs, such as program code, mathematical formulas, or well-formed markup.\n9. Theoretical connections between state-space models and variants of attention, leading to the design of a new architecture (Mamba-2) that is faster and competitive with Transformers on language modeling.",
       "trend": "",
@@ -302,9 +302,9 @@
         9,
         8,
         9,
-        9,
         8,
-        9
+        9,
+        8
       ],
       "paper_overall_score": 92,
       "paper_dimension_scores": [
@@ -329,8 +329,8 @@
         9
       ]
     },
-    "9f423136-b434-4617-b4d0-cf912f31c1a7": {
-      "pipeline_pk": "9f423136-b434-4617-b4d0-cf912f31c1a7",
+    "e954d79f-fe8a-4f7d-9ff5-51bc0476d218": {
+      "pipeline_pk": "e954d79f-fe8a-4f7d-9ff5-51bc0476d218",
       "title": "",
       "idea": " High level research backgrounds and insights in this field related to your profile include:\n\n1. Local Privacy: Developing mechanisms for estimating the distribution of categorical data while preserving privacy, with a focus on order-optimality and utility-privacy trade-offs.\n2. MIMO Communications: Designing input-output coupling schemes and statistical channel models for MIMO communications over multi-mode optical fibers, with a focus on scalability and capacity improvement.\n3. Extremal Mechanisms for Local Differential Privacy: Studying the fundamental trade-off between local differential privacy and utility, and introducing a combinatorial family of extremal privatization mechanisms.\n4. Neural Network Verification: Developing a general framework for branch-and-bound based verification of neural networks with general nonlinearities and computational graphs, with a focus on efficient branching heuristics and offline optimization of branching points.\n5. Generative Model Adaptation: Proposing a spectrum-aware adaptation framework for generative models, which adjusts both singular values and basis vectors of pretrained weights, offering a balance between computational efficiency and representation capacity.",
       "trend": "",
@@ -373,8 +373,8 @@
         9
       ]
     },
-    "e3c4ec63-65cb-4113-a9b7-f8d2f29af124": {
-      "pipeline_pk": "e3c4ec63-65cb-4113-a9b7-f8d2f29af124",
+    "ba45150e-f7c9-4d6f-8581-e8bd09c10899": {
+      "pipeline_pk": "ba45150e-f7c9-4d6f-8581-e8bd09c10899",
       "title": "",
       "idea": " Based on your profile and the provided research abstracts, here are some high-level research backgrounds and insights in this field:\n\n1. Graph Representation Learning: Your work on Graph External Attention (GEA) and Graph External Attention Enhanced Transformer (GEAET) showcases the importance of this field. GEAET achieves state-of-the-art empirical performance by leveraging multiple external node/edge key-value units to capture inter-graph correlations implicitly, overcoming limitations of Graph Neural Networks (GNNs).\n2. Neural Network Verification: The paper on GenBaB highlights the significance of verifying neural networks with general nonlinearities in general computational graphs. GenBaB, based on linear bound propagation, demonstrates the effectiveness of branch-and-bound (BaB) methods for NN verification, even for networks with activation functions like Sigmoid, Tanh, Sine, and GeLU.\n3. Data Center and Cloud Computing Systems: Your research on minimizing flow completion times (FCT) in data centers and multi-resource allocation mechanisms in cloud computing systems, such as RepFlow and DRFH, showcases the importance of developing practical and effective solutions to improve the performance, efficiency, and security of these systems.\n4. Federated Learning: FedReview, your proposed review mechanism for federated learning, highlights the significance of addressing security concerns in this field. FedReview identifies and declines potential poisoned updates, ensuring the integrity of the model aggregation process.\n5. Electricity Demand Charge Reduction: Your work on reducing electricity demand charge for data centers with partial execution demonstrates the importance of energy efficiency in data centers and cloud computing systems. By using partial execution and a distributed optimization algorithm, you achieved significant reductions in peak power demand and energy cost.\n6. Machine Learning: Your research profile highlights your focus on machine learning, including graph representation learning, neural network verification, federated learning, and energy efficiency in data centers and cloud computing systems. These areas are crucial for the development of practical and effective AI-powered solutions.\n\nThese research backgrounds and insights highlight the importance of your work in addressing various problems in data centers, cloud computing systems, and federated learning, as well as the broader context of machine learning research.",
       "trend": "",
@@ -414,11 +414,11 @@
         9,
         9,
         9,
-        8
+        9
       ]
     },
-    "ec9339ce-134a-4908-9872-b4fb49ca7a16": {
-      "pipeline_pk": "ec9339ce-134a-4908-9872-b4fb49ca7a16",
+    "347ac824-6e5f-46e7-83d1-d58ef0df5ad3": {
+      "pipeline_pk": "347ac824-6e5f-46e7-83d1-d58ef0df5ad3",
       "title": "",
       "idea": " High-level research backgrounds and insights in this field related to your profile include:\n\n1. Analytical frameworks for wireless networks and stochastic geometry: Developing comprehensive mathematical models to analyze and optimize the performance of wireless networks, taking into account factors such as interference, access modes, and user distribution.\n2. Node cooperation and multi-hopping: Investigating the benefits of having network nodes cooperate and use multi-hopping to improve network capacity. This includes proposing multi-phase communication schemes and determining optimal cluster sizes.\n3. Insensitivity of user distribution in multicell networks: Examining the user distribution in multicell networks under various mobility and session patterns, and demonstrating that it is insensitive to these patterns and depends only on average arrival and channel holding times.\n4. Optimal frame transmission for streaming scalable video: Presenting an optimal frame transmission scheme for streaming scalable video over links with limited capacity, including solving the problem for two general classes of hierarchical prediction structures and developing a jointly optimal frame selection and scheduling algorithm.\n5. Joint spectrum allocation and user association in heterogeneous cellular networks: Researching the optimization of spectrum allocation and user association in networks with multiple tiers of base stations, employing stochastic geometric approaches to derive average downlink user data rates and proposing computationally efficient methods for solving the optimization problem.\n6. Distributed online optimization: Considering the problem of distributed online optimization in dynamic communication graphs, proposing novel algorithms for efficient optimization and addressing challenges related to computational complexity and performance guarantees.\n\nAdditionally, the recent papers you provided indicate research interests in:\n\n1. Neural network verification: Developing methods for verifying the behavior of neural networks, particularly using branch-and-bound techniques and linear bound propagation for networks with general nonlinearities and computational graphs.\n2. Parameter-efficient adaptation of generative models: Exploring ways to adapt large-scale pre-trained generative models in a parameter-efficient manner, using techniques such as singular value and basis vector adjustments, Kronecker product, and Stiefel optimizers.",
       "trend": "",
@@ -458,11 +458,11 @@
         9,
         9,
         9,
-        9
+        8
       ]
     },
-    "ebbc5da0-bb20-494f-a064-f48c7f358de4": {
-      "pipeline_pk": "ebbc5da0-bb20-494f-a064-f48c7f358de4",
+    "be757438-4109-4d78-8a9f-1702c81ccad1": {
+      "pipeline_pk": "be757438-4109-4d78-8a9f-1702c81ccad1",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, here are some high-level research backgrounds and insights in this field:\n\n1. **Algorithm Development for Optimization Problems**: You have a strong background in developing algorithms and data structures for various optimization problems, including the B-skip-list and B-treap. Your work has shown that simpler and easier-to-implement algorithms can still maintain strong performance guarantees.\n2. **Submodular Optimization**: You have explored adaptive submodular optimization under matroid constraints, resulting in a natural adaptive greedy algorithm that provides a $1/(p+1)$ approximation for the problem of maximizing an adaptive monotone submodular function subject to $p$ matroid constraints. Your work has extended classic results to adaptive optimization problems under partial observability.\n3. **Online Learning of Assignments**: You have developed algorithms for online learning of assignments that maximize submodular functions. These algorithms have been applied to problems such as ad allocation with submodular utilities and dynamically ranking blogs to detect information cascades.\n4. **Bayesian Active Learning with Noise**: You have tackled the problem of Bayesian active learning with noise, developing a novel, greedy active learning algorithm called EC2 that is competitive with the optimal policy. This work resulted in the first competitiveness guarantees for Bayesian active learning with noisy observations.\n5. **Online Submodular Maximization under Matroid Constraint**: You have worked on algorithms for online submodular maximization under a matroid constraint, as well as the use of random hypervolume scalarizations for provable multi-objective black box optimization.\n6. **Reducing Memory Footprint of Online Learning Methods**: You have explored methods for reducing the memory footprint of popular large-scale online learning methods through randomized rounding and randomized counting.\n7. **Machine Learning**: Your work intersects with machine learning, particularly in the development of algorithms for optimization problems that are relevant to machine learning applications.\n8. **Neural Network Verification**: The provided paper abstract shows the application of optimization techniques to neural network verification, particularly in the development of a general framework for conducting branch-and-bound for general nonlinearities in general computational graphs based on linear bound propagation.\n9. **Generative Model Adaptation**: The other provided paper abstract shows the",
       "trend": "",

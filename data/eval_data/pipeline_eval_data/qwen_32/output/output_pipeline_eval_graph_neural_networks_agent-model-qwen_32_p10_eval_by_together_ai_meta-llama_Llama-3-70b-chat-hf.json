@@ -17,18 +17,18 @@
     8.8,
     8.2
   ],
-  "review_avg_overall_score": 91.6,
+  "review_avg_overall_score": 91.4,
   "review_avg_dimension_scores": [
     8.8,
-    9.0,
+    8.9,
     8.7,
     8.9,
+    8.8,
+    8.3,
+    8.7,
     8.9,
-    8.4,
-    8.6,
     9.0,
-    9.0,
-    9.2
+    9.1
   ],
   "idea_variance_overall_score": 86.0,
   "idea_variance_dimension_scores": [
@@ -50,23 +50,23 @@
     0.16
   ],
   "paper_sum_variance_dimension_scores": 2.4500000000000006,
-  "review_variance_overall_score": 10.440000000000001,
+  "review_variance_overall_score": 13.040000000000001,
   "review_variance_dimension_scores": [
     0.15999999999999998,
-    0.0,
+    0.08999999999999997,
     0.21000000000000002,
     0.08999999999999997,
+    0.15999999999999998,
+    0.41,
+    0.41000000000000003,
     0.09,
-    0.24,
-    0.6399999999999999,
     0.0,
-    0.0,
-    0.56
+    0.48999999999999994
   ],
-  "review_sum_variance_dimension_scores": 1.9899999999999998,
+  "review_sum_variance_dimension_scores": 2.11,
   "pipeline evaluation logs": {
-    "ec18a742-365d-4891-93f6-70797b27bfac": {
-      "pipeline_pk": "ec18a742-365d-4891-93f6-70797b27bfac",
+    "589201d3-a972-4296-9349-7b90721a77bb": {
+      "pipeline_pk": "589201d3-a972-4296-9349-7b90721a77bb",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, here are some high-level research backgrounds and insights in this field:\n\n1. **Deep Learning and Geospatial Data**: Your work on DeepSPACE showcases the potential of deep learning in processing and analyzing large geospatial datasets. This field involves using neural networks to handle spatial data and queries, making it more efficient and accessible.\n2. **Data Compaction in Hybrid OLTP and OLAP Databases**: This area focuses on optimizing the use of memory in databases that handle both transactional and analytical processing. By compacting and compressing data, you can improve memory consumption and query performance, which is crucial for large-scale databases.\n3. **Massively Parallel Sort-Merge Join Algorithms**: These algorithms are designed for large main memory databases, enabling them to scale almost linearly with the number of cores and outperform other hash join proposals. This research is essential for improving query processing in big data systems.\n4. **Artificial Intelligence in Urban and Environmental Management**: This domain involves using AI models, such as Large Language Models (LLMs), to support decision-making in complex urban and environmental systems. By automating the creation of scenario-based ontologies, AI can help integrate data, simulations, and decision-making metrics.\n5. **Zero-Shot 3D Reasoning Segmentation**: This is a new task in 3D segmentation that goes beyond category-specific approaches. By using pre-trained 2D segmentation networks and LLMs, researchers can develop methods for segmenting specific parts of 3D objects based on textual queries, with applications in various fields like robotics, autonomous driving, and medical applications.\n\nThese research areas highlight the importance of optimizing data processing, analysis, and integration in different domains, using techniques like deep learning, data compaction, and AI models.",
       "trend": "",
@@ -109,8 +109,8 @@
         10
       ]
     },
-    "542be0c3-41a7-4001-bd09-60393e45ebb4": {
-      "pipeline_pk": "542be0c3-41a7-4001-bd09-60393e45ebb4",
+    "6ad1fd62-8213-4fb4-8975-653b5bb4276f": {
+      "pipeline_pk": "6ad1fd62-8213-4fb4-8975-653b5bb4276f",
       "title": "",
       "idea": " Based on your profile and the provided research domains and papers, here are some high-level research backgrounds and insights in this field:\n\n1. Natural Gradient: You have shown the connection between natural gradient and other optimization methods, and how unlabeled data can improve generalization error. You have also extended natural gradient to incorporate second-order information and provided a benchmark using a truncated Newton approach.\n2. RNNs: You have analyzed the vanishing and exploding gradient problems and proposed solutions such as gradient norm clipping and a soft constraint for the vanishing gradients problem. You have also evaluated the use of advanced techniques to improve the understanding and efficiency of training RNNs.\n3. Deep Feedforward Networks: You have contributed to the understanding of the complexity of deep feedforward networks with piece-wise linear activations and offered a framework for comparing deep and shallow models based on computational geometry.\n4. Non-convex Optimization: You have argued that the proliferation of saddle points, not local minima, is a deeper and more profound difficulty in minimizing non-convex error functions over continuous, high dimensional spaces. You have proposed a new algorithm, the saddle-free Newton method, that can rapidly escape high dimensional saddle points.\n5. Differentiable Optimization: You have shown that current differentiable optimization techniques are prone to convergence to local minima, which can corrupt the training process. You have presented an approach that leverages convex relaxations to recover a global solution and provide certifiably correct gradients throughout the training process.\n6. Neural Operator Learning Models: You have established the theoretical groundwork that transformers possess the universal approximation property as operator learning models. You have applied transformers to forecast solutions of diverse dynamical systems with solutions of finite regularity for a plurality of initial conditions and forcing terms.\n\nThese research areas and insights highlight the importance of developing and improving optimization techniques for deep learning models, understanding the complexity of deep feedforward networks, and addressing the challenges of non-convex optimization and differentiable optimization in robotics and machine learning.",
       "trend": "",
@@ -142,19 +142,19 @@
       "review_overall_score": 85,
       "review_dimension_scores": [
         8,
-        9,
         8,
         8,
-        9,
+        8,
         8,
         7,
+        8,
         9,
         9,
         8
       ]
     },
-    "cf21b38e-fad8-43c9-849b-6c31ed4dfb84": {
-      "pipeline_pk": "cf21b38e-fad8-43c9-849b-6c31ed4dfb84",
+    "b8c1155d-74d9-456c-8689-c53f3198b455": {
+      "pipeline_pk": "b8c1155d-74d9-456c-8689-c53f3198b455",
       "title": "",
       "idea": " High-level research backgrounds and insights related to your profile include:",
       "trend": "",
@@ -197,8 +197,8 @@
         10
       ]
     },
-    "6d518581-bde9-4d74-8157-d08a63e06f7d": {
-      "pipeline_pk": "6d518581-bde9-4d74-8157-d08a63e06f7d",
+    "387c5b6e-9866-4ad4-9750-d532c3b7a9e5": {
+      "pipeline_pk": "387c5b6e-9866-4ad4-9750-d532c3b7a9e5",
       "title": "",
       "idea": " High level research backgrounds and insights in this field related to your profile include:\n\n1. Probabilistic graphical models: You have made significant contributions to the understanding of Restricted Boltzmann Machines (RBMs) and Boltzmann Machines (BMs), which are types of probabilistic graphical models. Your work on establishing upper bounds for the minimal number of hidden units required for a binary stochastic feedforward network with a single hidden layer to be a universal approximator of Markov kernels, and showing that any distribution of binary variables can be written as a mixture of a certain number of elements from the k-interaction exponential family, has advanced the field's understanding of these models.\n2. Geometry of probability distributions: You have studied the geometry of the sets of probability distributions representable by RBMs and BMs, and have shown that deep narrow Boltzmann machines are universal approximators of probability distributions on the activities of their visible units, provided they have sufficiently many hidden layers, each containing the same number of units as the visible layer. Your work on providing upper and lower bounds on the sufficient depth and width of universal approximators has provided valuable insights into the properties of these models.\n3. Mode posets and probability polytopes: Your investigation of the vertices, the facets, and the volume of such polytopes depending on the sets of (strong) modes and the vicinity structures has contributed to the understanding of the properties of these mathematical objects.\n4. Sequential recurrence-based multidimensional universal source coding: Your work on the problem of sequential recurrence-based multidimensional universal source coding of Lempel-Ziv type, and the definition of an algorithm that parses multidimensional arrays sequentially into mainly unrepeated but nested multidimensional sub-arrays of increasing size, has advanced the field's understanding of data compression techniques.\n5. Deep neural networks on Riemannian manifolds: Recent research has shown the success of deep neural networks (DNNs) on spherical and hyperbolic manifolds, which have rich algebraic structures of gyrogroups and gyrovector spaces. Building upon this work, recent papers have generalized these concepts to matrix manifolds such as Symmetric Positive Definite (SPD) and Grassmann manifolds. This has enabled the design of fully-connected (FC) and",
       "trend": "",
@@ -241,8 +241,8 @@
         10
       ]
     },
-    "b68d4420-a857-4a54-ae96-c74866c0b1e7": {
-      "pipeline_pk": "b68d4420-a857-4a54-ae96-c74866c0b1e7",
+    "25687bf4-df66-4caf-9c66-2f1dbe3bd98a": {
+      "pipeline_pk": "25687bf4-df66-4caf-9c66-2f1dbe3bd98a",
       "title": "",
       "idea": " High level research backgrounds and insights in your field, based on your profile and the provided paper titles and abstracts, include:\n\n1. Machine learning applications in 3D object understanding and segmentation, including the use of large language models for interpreting user input queries in a zero-shot manner.\n2. The impact of socioeconomic factors and network metrics on population response during repeated public health interventions, such as the COVID-19 pandemic.\n3. The use of mobile phone data for informing public health interventions and monitoring adherence, as well as the potential for historical mobility data to inform future disease spatial invasion models.\n4. The importance of considering the ethical and societal implications of research, and conducting work in a responsible and inclusive manner.\n5. The value of strong leadership, effective communication, and continuous learning in the field of research.\n6. The ability to challenge conventional wisdom, push boundaries, and make a positive difference in the world through research.",
       "trend": "",
@@ -285,8 +285,8 @@
         9
       ]
     },
-    "1c8d7838-6c79-418b-93b6-660fbb7ca171": {
-      "pipeline_pk": "1c8d7838-6c79-418b-93b6-660fbb7ca171",
+    "759ec693-32e3-478e-8a94-0424e9862e4f": {
+      "pipeline_pk": "759ec693-32e3-478e-8a94-0424e9862e4f",
       "title": "",
       "idea": " Based on your profile and the titles and abstracts of the recent papers you provided, here are some high-level research backgrounds and insights in your field:\n\n1. Condensed matter physics, particularly in the study of hyperbolic plasmonic media in transition metal ditellurides: Your work has focused on understanding the physical origin of the strong infrared hyperbolic response in WTe2, which you attribute to band-nested anisotropic interband transitions. You have also demonstrated the possibility of inducing such a phenomenon through proper electronic band nesting and illustrated this principle by showing a topological elliptic-to-hyperbolic transition in MoTe2 via strain engineering.\n2. Machine learning, specifically in the areas of graph neural networks and natural language processing: You have studied the relationship between Label Propagation (LPA) and Graph Convolutional Neural Networks (GCN), and proposed a unified model that combines GCN and LPA for node classification. This model has shown superiority over state-of-the-art GCN-based methods in terms of node classification accuracy. In natural language processing, you have presented a comprehensive and empirical analysis of the dimensionality of sentence embeddings and proposed a two-step training method for sentence representation learning models to compress the dimension of sentence embeddings with minimum performance degradation.\n3. Algebraic structures and their applications in quantum computing: You have explored the action of the Kauffman bracket skein algebra of the torus on the Kauffman bracket skein module of the complement of the 3-twist knot. Your work in this area has contributed to the development of new optimal and heuristic algorithms for exact synthesis of multi-qubit unitaries and isometries, which rely on Hermite and Smith Normal Forms of matrices with entries in a ring of integers of a number field.\n4. Millimeter wave/Terahertz (mmWave/THz) communication with extremely large-scale antenna arrays (ELAAs): You have considered the problem of hybrid near/far-field channel estimation by taking spherical wave propagation into account.\n5. Geometric deep learning and 3D vision tasks: You have introduced Neural Isometries, an autoencoder framework that learns to map the observation space to a general-purpose latent space wherein encodings are related by is",
       "trend": "",
@@ -329,8 +329,8 @@
         9
       ]
     },
-    "225a202c-68ac-4db3-aee7-bb4ef2aff569": {
-      "pipeline_pk": "225a202c-68ac-4db3-aee7-bb4ef2aff569",
+    "dd1fab26-5af4-4f45-bb54-1baef28b84e9": {
+      "pipeline_pk": "dd1fab26-5af4-4f45-bb54-1baef28b84e9",
       "title": "",
       "idea": " Based on your profile and the provided paper titles and abstracts, here are some high-level research backgrounds and insights in this field related to your work:\n\n1. **Graph Neural Networks (GNNs)**: GNNs are a class of neural networks designed to perform machine learning on graph-structured data. Your work has significantly contributed to the development of GNNs, specifically in the context of non-rigid shape analysis and processing. You have introduced SpiralNet++, a highly efficient mesh convolution operator, and Bundle Neural Networks (BuNN), which address limitations of local message passing mechanisms in GNNs.\n\n",
       "trend": "",
@@ -373,8 +373,8 @@
         9
       ]
     },
-    "24f9275b-d66c-4624-858b-da8f132292a6": {
-      "pipeline_pk": "24f9275b-d66c-4624-858b-da8f132292a6",
+    "c7aafff6-9a34-451f-9a4b-4f08b9994ca4": {
+      "pipeline_pk": "c7aafff6-9a34-451f-9a4b-4f08b9994ca4",
       "title": "",
       "idea": " High level research backgrounds and insights in your field include:\n\n1. Integration of Artificial Intelligence (AI) models into optimization systems for complex urban and environmental management problems.\n2. Use of pre-trained Large Language Models (LLMs) and natural language processing for automating the creation of scenario-based ontology and knowledge graphs.\n3. In-depth analysis of under-translation and over-translation in Neural Machine Translation (NMT) systems and proposing solutions to optimize the beam search objective.\n4. Metareasoning-partition problem and determining the ideal portion of resources to allocate to metareasoning and control versus to the execution of a solution plan.\n5. Responsible development and fielding of AI technologies, addressing ethical concerns and potential negative impacts on work.\n6. Public perception of AI, analyzing trends in beliefs, interest, and sentiment over time, and addressing concerns about loss of control of AI, ethical issues, and the negative impact of AI on work.\n7. Transformation of decision-making and enabling evidence-based approaches in various fields using AI technologies.\n8. Machine learning techniques and models for natural language processing, optimization, and translation.",
       "trend": "",
@@ -414,11 +414,11 @@
         9,
         9,
         9,
-        10
+        9
       ]
     },
-    "e86d859e-c026-4fea-af29-5ae84be91572": {
-      "pipeline_pk": "e86d859e-c026-4fea-af29-5ae84be91572",
+    "a4f9cf58-d48a-45af-9824-15a9756951bf": {
+      "pipeline_pk": "a4f9cf58-d48a-45af-9824-15a9756951bf",
       "title": "",
       "idea": " High-level research backgrounds and insights in this field related to your profile include:\n\n1. Memory allocation and DBMS performance: The choice of dynamic memory allocator can significantly impact the performance, scalability, memory efficiency, and fairness of high-performance query engines. Comprehensive experimental analysis has identified the strengths and weaknesses of various memory allocators within the context of DBMS, with the right allocator leading to substantial performance improvements.\n2. Deep learning for cardinality estimation: Deep learning techniques, such as multi-set convolutional networks (MSCN), have been developed to enhance the quality of cardinality estimation in query optimization. MSCN builds on sampling-based estimation, addressing its weaknesses and significantly improving estimation quality.\n3. Persistent memory technologies: Persistent memory (PMem) technologies, like Intel's Optane DC Persistent Memory Modules, have been investigated to bridge the gap between NAND-based flash (SSD) and DRAM in disk-based database systems. Performance evaluations of PMem have led to guidelines for efficient PMem usage and the development of I/O primitives tuned for PMem.\n4. Deep Sketches: Compact models of databases, powered by a new deep learning approach to cardinality estimation, have been introduced to estimate the result sizes of SQL queries. Deep Sketches can capture correlations between columns, even across tables, and demonstrate significant improvements over traditional cardinality estimators.\n5. Machine learning for computer vision: Recent research has focused on various training and learning approaches in computer vision, such as adversarial learning, contrastive learning, diffusion denoising learning, and ordinary reconstruction learning. Fine-tuning approaches, like low-rank adaptation (LoRA), have also been explored to enhance overall performance with reduced GPU memory usage and time costs.\n6. Hardware accelerators for deep learning: To address memory and computation resource constraints, hardware accelerators like computation-in-memory (CIM) with memristive devices have been developed. These accelerators focus on optimizing common operations, such as matrix-vector multiplication, and improving confidence in NN predictions in the presence of device non-idealities.",
       "trend": "",
@@ -447,7 +447,7 @@
         9,
         8
       ],
-      "review_overall_score": 86,
+      "review_overall_score": 84,
       "review_dimension_scores": [
         8,
         9,
@@ -456,13 +456,13 @@
         8,
         8,
         7,
-        9,
+        8,
         9,
         8
       ]
     },
-    "579f4906-9f56-4eed-b1a8-caf28df5ad54": {
-      "pipeline_pk": "579f4906-9f56-4eed-b1a8-caf28df5ad54",
+    "4e4a7439-8491-40b0-b27e-7d49befcc43a": {
+      "pipeline_pk": "4e4a7439-8491-40b0-b27e-7d49befcc43a",
       "title": "",
       "idea": " High-level research backgrounds and insights related to your profile:\n\n1. **Natural Language Processing (NLP) and Machine Intelligence:** Your research focuses on developing intelligent machines that can communicate effectively with humans and learn from their environment. You have made significant contributions to NLP, including proposing novel model architectures for computing continuous vector representations of words and developing a method for automating the process of generating and extending dictionaries and phrase tables for machine translation.\n2. **Artificial Life:** You have also contributed to the field of artificial life, introducing Combinatory Chemistry, an Algorithmic Artificial Chemistry based on Combinatory Logic. This system discovers a wide range of emergent patterns that are remarkably similar to biological metabolisms.\n3. **Machine Learning and Material Design:** You have developed a framework named MAGECS that integrates the bird swarm algorithm and supervised graph neural network to navigate the generative model in the immense chemical space towards materials with target properties. This pioneering application of inverse design in CO$_2$RR catalysis showcases the potential of MAGECS to dramatically accelerate the development of functional materials.\n4. **Error Detection and Recovery in Autonomous Robots:** You have proposed an approach for automated error discovery and recovery in autonomous robots without needing annotated data of failures. This approach uses a neuro-symbolic state representation in the form of a dense scene graph and an anytime version of the algorithm for efficient and accurate error recovery.\n5. **Thinking Tokens for Language Modeling:** You have proposed using special 'thinking tokens' in language modeling to enhance the generalization capability of the model, allowing it to perform more calculations whenever a complex problem is encountered.\n6. **Complex System Classification:** You have presented a novel classification method for deterministic discrete space and time dynamical systems that distinguishes between different asymptotic behaviors of a system's average computation time before entering a loop, correlating well with Wolfram's manual classification.\n\nThese research areas and insights highlight your expertise in NLP, machine intelligence, artificial life, machine learning, and complex system classification. Your work has significantly contributed to the development of intelligent machines that can effectively communicate with humans and learn from their environment, as well as to the understanding of the emergence of complex behavior in artificial systems.",
       "trend": "",
