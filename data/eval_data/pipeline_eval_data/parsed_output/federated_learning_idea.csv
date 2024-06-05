@@ -11,3 +11,6 @@ federated_learning,qwen_32,gpt-4o,87.9,7.089999999999999,2.31
 federated_learning,llama3_8b,together_ai/meta-llama/Llama-3-70b-chat-hf,91.3,4.409999999999998,0.8500000000000002
 federated_learning,llama3_8b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,85.0,0.0,0.6200000000000001
 federated_learning,llama3_8b,gpt-4o,88.0,10.2,1.99
+federated_learning,gpt_4o,together_ai/meta-llama/Llama-3-70b-chat-hf,89.9,10.290000000000001,0.66
+federated_learning,gpt_4o,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,85.5,2.25,0.21000000000000002
+federated_learning,gpt_4o,gpt-4o,86.3,8.61,2.03

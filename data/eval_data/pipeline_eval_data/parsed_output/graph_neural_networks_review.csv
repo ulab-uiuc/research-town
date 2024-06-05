@@ -11,3 +11,6 @@ graph_neural_networks,qwen_32,gpt-4o,78.7,53.209999999999994,6.96
 graph_neural_networks,llama3_8b,together_ai/meta-llama/Llama-3-70b-chat-hf,92.5,7.65,2.3000000000000003
 graph_neural_networks,llama3_8b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,84.5,12.25,2.6399999999999997
 graph_neural_networks,llama3_8b,gpt-4o,81.0,15.6,3.21
+graph_neural_networks,gpt_4o,together_ai/meta-llama/Llama-3-70b-chat-hf,92.6,14.639999999999997,3.31
+graph_neural_networks,gpt_4o,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,85.0,30.0,3.1999999999999997
+graph_neural_networks,gpt_4o,gpt-4o,80.9,53.089999999999996,5.880000000000001

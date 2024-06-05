@@ -11,3 +11,6 @@ computer_vision,qwen_32,gpt-4o,86.0,16.6,2.1799999999999997
 computer_vision,llama3_8b,together_ai/meta-llama/Llama-3-70b-chat-hf,91.0,9.0,0.94
 computer_vision,llama3_8b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,86.5,5.25,0.49
 computer_vision,llama3_8b,gpt-4o,87.4,4.84,1.7200000000000002
+computer_vision,gpt_4o,together_ai/meta-llama/Llama-3-70b-chat-hf,91.3,4.409999999999999,0.42
+computer_vision,gpt_4o,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,86.5,5.25,0.38999999999999996
+computer_vision,gpt_4o,gpt-4o,86.1,13.49,2.11

@@ -11,3 +11,6 @@ reinforcement_learning,qwen_32,gpt-4o,79.0,102.8,11.06
 reinforcement_learning,llama3_8b,together_ai/meta-llama/Llama-3-70b-chat-hf,89.4,57.64000000000001,6.5
 reinforcement_learning,llama3_8b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,82.0,41.0,4.54
 reinforcement_learning,llama3_8b,gpt-4o,76.8,156.76000000000002,12.12
+reinforcement_learning,gpt_4o,together_ai/meta-llama/Llama-3-70b-chat-hf,94.6,0.24,1.75
+reinforcement_learning,gpt_4o,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,87.5,6.25,1.4
+reinforcement_learning,gpt_4o,gpt-4o,86.2,2.5599999999999996,2.9099999999999997
