@@ -62,7 +62,7 @@ agent_paper_review_log = AgentPaperReviewLog(
     timestep=0,
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
-    review_score=5,
+    review_score='5',
     review_content='This paper is well-written.',
 )
 

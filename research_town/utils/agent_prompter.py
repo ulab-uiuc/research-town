@@ -12,6 +12,7 @@ from .string_mapper import (
     map_paper_to_str,
     map_review_list_to_str,
     map_review_to_str,
+    map_rebuttal_to_str,
 )
 
 # =======================================
@@ -92,7 +93,8 @@ def read_paper_prompting(
     )
 
     corpus = [paper['abstract'] for paper in papers]
-    related_papers = get_related_papers(corpus, query_prompt, num=1)
+    paper_embed=[paper['embed'] for paper in papers]
+    related_papers = get_related_papers(corpus, query_prompt,paper_embed, num=2)
 
     read_prompt = prompt_template_read.format_map(
         {
@@ -128,11 +130,12 @@ def summarize_ideas_prompting(
 
 @beartype
 def write_paper_prompting(
-    idea: Dict[str, str],
+    idea: List[Dict[str, str]],
     papers: List[Dict[str, str]],
     model_name: str,
     prompt_template: str,
 ) -> List[str]:
+
     idea_str = map_idea_to_str(idea)
     papers_str = map_paper_list_to_str(papers)
     prompt = prompt_template.format_map({'idea': idea_str, 'papers': papers_str})
@@ -144,14 +147,14 @@ def review_score_prompting(
     paper_review: str,
     model_name: str,
     prompt_template: str,
-) -> int:
+) -> str:
     prompt = prompt_template.format_map(
         {
             'paper_review': paper_review,
         }
     )
     score_str = model_prompting(model_name, prompt)[0]
-    return int(score_str[0]) if score_str[0].isdigit() else 0
+    return score_str
 
 
 @beartype
@@ -169,12 +172,14 @@ def review_paper_prompting(
 def write_meta_review_prompting(
     paper: Dict[str, str],
     reviews: List[Dict[str, Union[int, str]]],
+    rebuttals: Dict[str, str],
     model_name: str,
     prompt_template: str,
 ) -> List[str]:
     paper_str = map_paper_to_str(paper)
     reviews_str = map_review_list_to_str(reviews)
-    prompt = prompt_template.format_map({'paper': paper_str, 'reviews': reviews_str})
+    rebuttals_str=map_rebuttal_to_str(rebuttals)
+    prompt = prompt_template.format_map({'paper': paper_str, 'reviews': reviews_str,'rebuttals':rebuttals_str})
     return model_prompting(model_name, prompt)
 
 

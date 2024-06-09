@@ -12,7 +12,7 @@ class AgentPaperReviewLog(BaseModel):
     timestep: int = Field(default=0)
     paper_pk: str
     agent_pk: str
-    review_score: Optional[int] = Field(default=0)
+    review_score: Optional[str] = Field(default=None)
     review_content: Optional[str] = Field(default=None)
 
 

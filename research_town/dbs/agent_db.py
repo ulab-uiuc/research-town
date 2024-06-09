@@ -1,11 +1,12 @@
 import json
 import uuid
-
+import pickle
 from beartype.typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from ..utils.paper_collector import get_bert_embedding, neiborhood_search
-
+from ..utils.agent_collector import get_user_profile, bfs
+import torch
 
 class AgentProfile(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -13,8 +14,9 @@ class AgentProfile(BaseModel):
     bio: Optional[str] = Field(default=None)
     collaborators: Optional[List[str]] = Field(default=[])
     institute: Optional[str] = Field(default=None)
-
-
+    embed: Optional[Any] = Field(default=None)
+    class Config:
+        arbitrary_types_allowed = True
 class AgentProfileDB(object):
     def __init__(self) -> None:
         self.data: Dict[str, AgentProfile] = {}
@@ -53,7 +55,7 @@ class AgentProfileDB(object):
                 bio_list.append(agent_profile.bio)
             else:
                 bio_list.append('')
-        profile_embed = get_bert_embedding(bio_list)
+        profile_embed=[embed_.embed for embed_ in agent_profiles]
         index_l = neiborhood_search(idea_embed, profile_embed, num).reshape(-1)
         index_all = list(index_l)
         match_pk = []
@@ -70,14 +72,34 @@ class AgentProfileDB(object):
             )
 
     def load_from_file(self, file_name: str) -> None:
-        with open(file_name, 'r') as f:
+        with open(file_name+'.pkl', 'rb') as pkl_file:
+            self.data_embed = pickle.load(pkl_file)
+        with open(file_name+ ".json", 'r') as f:
             data = json.load(f)
+            for name in data.keys():
+                data[name]['embed'] = self.data_embed[name][0]
             self.data = {
                 aid: AgentProfile(**agent_data) for aid, agent_data in data.items()
             }
+
+
 
     def update_db(self, data: Dict[str, List[Dict[str, Any]]]) -> None:
         for date, agents in data.items():
             for agent_data in agents:
                 agent = AgentProfile(**agent_data)
                 self.add(agent)
+                
+    def fetch_and_add_agents(self, initial_list: List[str], domain: str) -> None:
+        final_list = initial_list
+        for name in initial_list:
+            agent_profile = AgentProfile(name=name)
+            self.data[agent_profile.pk] = agent_profile
+        
+            graph, _, _ = bfs(initial_list, node_limit=1)
+            collaborators = []
+            for (author_A, author_B) in graph:
+                collaborators.append(author_A)
+                collaborators.append(author_B)
+
+            
