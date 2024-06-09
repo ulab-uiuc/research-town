@@ -1,41 +1,42 @@
-from beartype.typing import Dict
-from research_town_feature.research_town.configs import Config
-from research_town_feature.research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB
-from research_town_feature.research_town.envs import (
+from beartype.typing import Dict, List
+
+from research_town.configs import Config
+from research_town.dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfileDB
+from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
     PaperSubmissionMultiAgentEnvironment,
 )
 
+
 def run_sync_experiment(
-    configs: Dict[str,str]
+    agent_list: List[str],
+    role_list: List[str],
+    task: Dict[str, str],
+    config_file_path: str,
 ) -> None:
+    # Create Environment and Agents
+    agent_profiles = [
+        AgentProfile(name=agent, bio='A researcher in machine learning.')
+        for agent in agent_list
+    ]
     agent_db = AgentProfileDB()
-    agent_db.load_from_file("../data/agent_data/" + configs.param.domain)
-    agent_profiles = []
-    for _, agent_profile in agent_db.data.items():
-        agent_profiles.append(agent_profile)
-    
     paper_db = PaperProfileDB()
-    paper_db.load_from_file("../data/paper_data/" + configs.param.domain)
-    paper_profiles = []
-    for _, paper_profile in paper_db.data.items():
-        paper_profiles.append(paper_profile)
-        
     env_db = EnvLogDB()
+    config = Config(config_file_path)
     paper_submission_env = PaperSubmissionMultiAgentEnvironment(
         agent_profiles=agent_profiles,
+        task=task,
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
-        config=configs,
+        config=config,
     )
-    
     paper_rebuttal_env = PaperRebuttalMultiAgentEnv(
         agent_profiles=agent_profiles,
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
-        config=configs,
+        config=config,
     )
 
     # Paper Submission
@@ -44,21 +45,25 @@ def run_sync_experiment(
         paper_submission_env.next_step()
         submission_done = paper_submission_env.terminated
     paper = paper_submission_env.paper
+
     # Paper Review
     paper_rebuttal_env.initialize_submission(paper)
-    paper_rebuttal_env.assign_roles(num=configs.param.reviewer_num)
+    role_dict = {}
+    for agent_profile, role in zip(agent_profiles, role_list):
+        role_dict[agent_profile.pk] = role
+    paper_rebuttal_env.assign_roles(role_dict=role_dict)
     rebuttal_done = False
     while not rebuttal_done:
         paper_rebuttal_env.next_step_()
         rebuttal_done = paper_rebuttal_env.terminated
 
 
-
 def main() -> None:
-    config_file_path='../configs/default_config.yaml'
-    config = Config(config_file_path)
     run_sync_experiment(
-        configs=config
+        agent_list=['Jiaxuan You', 'Jure Leskovec'],
+        role_list=['author', 'reviewer'],
+        task={},
+        config_file_path='./configs/default_config.yaml',
     )
 
 
