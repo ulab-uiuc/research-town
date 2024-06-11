@@ -6,11 +6,13 @@ from pydantic import BaseModel, Field
 
 T = TypeVar('T', bound=BaseModel)
 
+class ResearchInsight(BaseModel):
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    content: Optional[str] = Field(default=None)
 
 class ResearchIdea(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content: Optional[str] = Field(default=None)
-
 
 class ResearchPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -18,15 +20,36 @@ class ResearchPaperSubmission(BaseModel):
     abstract: Optional[str] = Field(default=None)
     conference: Optional[str] = Field(default=None)
 
-
-class ResearchInsight(BaseModel):
+class ReviewForPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    paper_pk: Optional[str] = Field(default=None)
+    reviewer: Optional[str] = Field(default=None)
     content: Optional[str] = Field(default=None)
 
 
+class RebuttalForPaperSubmission(BaseModel):
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    paper_pk: Optional[str] = Field(default=None)
+    review_pk: Optional[str] = Field(default=None)
+    content: Optional[str] = Field(default=None)
+
+class MetaReviewForPaperSubmission(BaseModel):
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    paper_pk: Optional[str] = Field(default=None)
+    review_pk: List[str] = Field(default=[])
+    content: Optional[str] = Field(default=None)
+    decision: bool = Field(default=False)
+
 class ResearchProgressDB:
     def __init__(self) -> None:
-        self.data: Dict[str, List[Any]] = {'ResearchIdea': [], 'ResearchPaper': []}
+        self.data: Dict[str, List[Any]] = {
+            'ResearchInsight': [], 
+            'ResearchIdea': [],
+            'ResearchPaperSubmission': [],
+            'ReviewForPaperSubmission': [],
+            'RebuttalForPaperSubmission': [],
+            'MetaReviewForPaperSubmission': []
+        }
 
     def add(self, obj: T) -> None:
         class_name = obj.__class__.__name__
