@@ -22,21 +22,21 @@ class ResearchPaperSubmission(BaseModel):
 
 class ReviewForPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    paper_pk: str = Field(default=None)
+    paper_pk: Optional[str] = Field(default=None)
     reviewer: Optional[str] = Field(default=None)
     content: Optional[str] = Field(default=None)
 
 
 class RebuttalForPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    paper_pk: str = Field(default=None)
-    review_pk: str = Field(default=None)
+    paper_pk: Optional[str] = Field(default=None)
+    review_pk: Optional[str] = Field(default=None)
     content: Optional[str] = Field(default=None)
 
 class MetaReviewForPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    paper_pk: str = Field(default=None)
-    review_pk: List[str] = Field(default=None)
+    paper_pk: Optional[str] = Field(default=None)
+    review_pk: List[str] = Field(default=[])
     content: Optional[str] = Field(default=None)
     decision: bool = Field(default=False)
 
