@@ -16,7 +16,7 @@ def get_related_papers(corpus: List[str], query: str,corpus_embedding: List[torc
     query_embedding = get_bert_embedding([query])
     indices = neiborhood_search(query_embedding,corpus_embedding,  num)
     related_papers = [corpus[idx] for idx in indices[0].tolist()]
-    return related_papers
+    return related_papers,indices[0].tolist()
 
 
 def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:

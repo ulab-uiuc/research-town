@@ -42,10 +42,10 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         submissions: Dict[str, ResearchPaperSubmission] = {}
         perform_agents=self.agents[:10]
         for lead_agent in perform_agents:
-            insights = lead_agent.read_paper(
+            insights,related_papers_idx = lead_agent.read_paper(
                 papers=papers, domains=[self.config.param.domain],config=self.config
             )
-
+            related_papers=[papers[idx] for idx in related_papers_idx]
             # TODO: this part of logic is wrong, we cannot write paper based on multiple ideas
 
             ideas = [lead_agent.think_idea(insights=insights,config=self.config)]
@@ -66,7 +66,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         ideas.append(agent.think_idea(insights=insights,config=self.config))
                 author_pks=collaborator_pks.copy()
             author_pks.append(lead_agent.profile.pk)
-            paper = lead_agent.write_paper(ideas, papers,self.config)
+            paper = lead_agent.write_paper(ideas, related_papers,self.config)
             paper.authors=author_pks
             paper.insight=insights[0].content
             # TODO: this is not correct, we cannot write PaperProfile, we can only write PaperSubmission

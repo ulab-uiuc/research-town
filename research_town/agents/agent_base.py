@@ -40,10 +40,10 @@ class BaseResearchAgent(object):
     @beartype
     def read_paper(
         self, papers: List[PaperProfile], domains: List[str], config: Config
-    ) -> List[ResearchInsight]:
+    ) -> Tuple[List[ResearchInsight], List[int]]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
-        insight_contents = read_paper_prompting(
+        insight_contents,related_papers_idx = read_paper_prompting(
             profile=serialized_profile,
             papers=serialized_papers,
             domains=domains,
@@ -54,7 +54,7 @@ class BaseResearchAgent(object):
         insights: List[ResearchInsight] = []
         for content in insight_contents:
             insights.append(ResearchInsight(content=content))
-        return insights
+        return insights,related_papers_idx
 
     @beartype
     def think_idea(

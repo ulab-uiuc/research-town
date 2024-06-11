@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, List, Union
+from beartype.typing import Dict, List, Union,Tuple
 
 from .model_prompting import model_prompting
 from .paper_collector import get_related_papers
@@ -87,14 +87,14 @@ def read_paper_prompting(
     model_name: str,
     prompt_template_query: str,
     prompt_template_read: str,
-) -> List[str]:
+) -> Tuple[List[str], List[int]]:
     query_prompt = prompt_template_query.format_map(
         {'profile_bio': profile['bio'], 'domains': '; '.join(domains)}
     )
 
     corpus = [paper['abstract'] for paper in papers]
     paper_embed=[paper['embed'] for paper in papers]
-    related_papers = get_related_papers(corpus, query_prompt,paper_embed, num=2)
+    related_papers,idx = get_related_papers(corpus, query_prompt,paper_embed, num=3)
 
     read_prompt = prompt_template_read.format_map(
         {
@@ -103,7 +103,7 @@ def read_paper_prompting(
             'papers': '; '.join(related_papers),
         }
     )
-    return model_prompting(model_name, read_prompt)
+    return model_prompting(model_name, read_prompt),idx
 
 
 @beartype
