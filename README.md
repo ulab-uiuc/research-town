@@ -17,6 +17,8 @@ You can view an episode evaluation with default parameters by following the inst
 ### Step 1. Install the `research_town` Package
 
 ```bash
+pip install poetry
+poetry lock --no-update
 poetry install
 ```
 
