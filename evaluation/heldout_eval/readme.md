@@ -1,4 +1,4 @@
-# Review Evaluation
+# Held-out Evaluation
 
 This is a unit evaluation focused on collecting papers from OpenReview for ICLR'23 across 5 domains.
 
@@ -7,7 +7,7 @@ This is a unit evaluation focused on collecting papers from OpenReview for ICLR'
 ### Review Score
 
 ```bash
-python evaluation/held_eval/review_score_eval/eval_review_score.py --review_agent_num=3 --review_paper_num=20 --model_name="gpt-4o" --domain='computer_vision'
+python evaluation/heldout_eval/review_score_eval/eval_review_score.py --review_agent_num=3 --review_paper_num=20 --model_name="gpt-4o" --domain='computer_vision'
 ```
 
 ### Review Content
@@ -29,7 +29,7 @@ python evaluation/heldout_eval/review_content_eval/eval_review_content.py --mode
    - `--model_name="gpt-4o"`
    - `--model_name="together_ai/meta-llama/Llama-3-70b-chat-hf"`
 3. `--review_paper_num`: how many papers with reviews to evaluate. 
-4. `--review_agent_num`: for each paper, the number agents as its reviewers. 
+4. `--review_agent_num`: for each paper, the number of agents as its reviewers. 
 
 
 
