@@ -1139,13 +1139,13 @@ test = ["ipykernel", "pre-commit", "pytest (<8)", "pytest-cov", "pytest-timeout"
 
 [[package]]
 name = "litellm"
-version = "1.40.0"
+version = "1.40.10"
 description = "Library to easily interface with LLM API providers"
 optional = false
 python-versions = "!=2.7.*,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,!=3.7.*,>=3.8"
 files = [
-    {file = "litellm-1.40.0-py3-none-any.whl", hash = "sha256:c3055767ae144585699fdb07b3ad678e66738c2eff19abd7761c8fe22d6e636f"},
-    {file = "litellm-1.40.0.tar.gz", hash = "sha256:12b4c0ad850ede5aebdb2f48e3a8e898efb25df5bc915ff89929ad963cb92f54"},
+    {file = "litellm-1.40.10-py3-none-any.whl", hash = "sha256:46b77c49593f4e5e7bd9c1291f5896549b6ff6ebdad457af3ce0f4937bcfc17d"},
+    {file = "litellm-1.40.10.tar.gz", hash = "sha256:cdfc86f1de60491cd85155d98d64beec019c35dd0d8c8784037655cb7c0bdddc"},
 ]
 
 [package.dependencies]
@@ -1156,7 +1156,7 @@ jinja2 = ">=3.1.2,<4.0.0"
 openai = ">=1.27.0"
 python-dotenv = ">=0.2.0"
 requests = ">=2.31.0,<3.0.0"
-tiktoken = ">=0.4.0"
+tiktoken = ">=0.7.0"
 tokenizers = "*"
 
 [package.extras]
@@ -3408,4 +3408,4 @@ test = ["big-O", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more-it
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8, <3.12"
-content-hash = "5d477bcff2f8488a0cb5cf7cacb6b901208a2faa90bc1b928bdf3f6adac306cb"
+content-hash = "b60fb663092d7d59315ccb30a7bf24ab8c4ba44c2b469f5a27b585f3295cdae2"
