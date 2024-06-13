@@ -25,11 +25,11 @@ python evaluation/heldout_eval/review_content_eval/eval_review_content.py --mode
    - "federated_learning"
    - "reinforcement_learning"
 
-2. `--model_name`: Specifies the model to use. Ensure that the model name aligns with your model provider's conventions. Examples of TogetherAI models include:
-   - `--model_name="together_ai/Qwen/Qwen1.5-110B-Chat"`
+2. `--model_name`: Specifies the model to use. Ensure that the model name aligns with your model provider's conventions. Examples of OpenAI and TogetherAI models include:
+   - `--model_name="gpt-4o"`
    - `--model_name="together_ai/meta-llama/Llama-3-70b-chat-hf"`
 3. `--review_paper_num`: how many papers with reviews to evaluate. 
-4. `--review_agent_num`: for each paper, how many agents as its reviewers. 
+4. `--review_agent_num`: for each paper, the number agents as its reviewers. 
 
 
 
