@@ -8,19 +8,20 @@ This is a pipeline evaluation of idea/paper/review generated in research town ac
 cd evaluation/pipeline_eval/
 bash pipeline_eval.sh
 ```
-to parse output（make sure you get output for all settings）,
+to parse output（make sure you get output for all settings）, you could run:
 ```bash
 python evaluation/pipeline_eval/parse_pipeline_eval_output.py
 ```
 ### Pipeline evaluation for single setting
-If you want to 
+If you want to conduct pipeline evaluation for a single setting, you could run like:
+
 ```bash
 python evaluation/pipeline_eval/eval_pipeline.py  --eval_log_num=10 --domain='computer_vision' --agent_model_name="llama3_70b" --evaluator_model_name="gpt-4o"
 ```
 
 
 
-## Arguments
+### Arguments
 
 1. `--domain`: Specifies the domain of the paper. Options include:
    - "natural_language_processing"
@@ -38,6 +39,6 @@ python evaluation/pipeline_eval/eval_pipeline.py  --eval_log_num=10 --domain='co
    Examples of OpenAI models include:
    - `--evaluator_model_name="gpt-4o"`
 3. `--eval_log_num`: how many logs of idea/paper/ review to evaluate. 
-4. `--agent_model_name`: means which model works as agent that the logs are collected from.  choices=['llama3_70b', 'mixtral_8_7b','qwen_32','llama3_8b']
+4. `--agent_model_name`: means which model works as agents that the logs are collected from.  choices=['llama3_70b', 'mixtral_8_7b','qwen_32','llama3_8b']
 
 

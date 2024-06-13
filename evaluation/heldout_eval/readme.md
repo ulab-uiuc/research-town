@@ -16,7 +16,7 @@ python evaluation/heldout_eval/review_score_eval/eval_review_score.py --review_a
 python evaluation/heldout_eval/review_content_eval/eval_review_content.py --model_name="gpt-4o" --review_paper_num=10 --domain='computer_vision'
 ```
 
-## Arguments
+### Arguments
 
 1. `--domain`: Specifies the domain of the paper. Options include:
    - "natural_language_processing"
