@@ -7,13 +7,13 @@ This is a unit evaluation focused on collecting papers from OpenReview for ICLR'
 ### Review Score
 
 ```bash
-python evaluation/review_eval/review_score_eval/eval_review_score.py --review_agent_num=3 --review_paper_num=20 --model_name="gpt-4o" --domain='computer_vision'
+python evaluation/held_eval/review_score_eval/eval_review_score.py --review_agent_num=3 --review_paper_num=20 --model_name="gpt-4o" --domain='computer_vision'
 ```
 
 ### Review Content
 
 ```bash
-python evaluation/review_eval/review_content_eval/eval_review_content.py --model_name="gpt-4o" --review_paper_num=10 --domain='computer_vision'
+python evaluation/heldout_eval/review_content_eval/eval_review_content.py --model_name="gpt-4o" --review_paper_num=10 --domain='computer_vision'
 ```
 
 ## Arguments

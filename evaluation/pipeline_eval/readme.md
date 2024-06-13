@@ -5,6 +5,7 @@ This is a pipeline evaluation of idea/paper/review generated in research town ac
 ## Run Scripts for all evaluation settings
 
 ```bash
+cd evaluation/pipeline_eval/
 bash pipeline_eval.sh
 ```
 to parse output（make sure you get output for all settings）,
@@ -12,9 +13,9 @@ to parse output（make sure you get output for all settings）,
 python evaluation/pipeline_eval/parse_pipeline_eval_output.py
 ```
 ### Pipeline evaluation for single setting
-
+If you want to 
 ```bash
-python evaluation/pipeline_eval/eval_pipeline.py  --eval_log_num=10 --domain='computer_vision' --agent_model_name="llama3_70b" --evaluator_model_name="together_ai/Qwen/Qwen1.5-110B-Chat"
+python evaluation/pipeline_eval/eval_pipeline.py  --eval_log_num=10 --domain='computer_vision' --agent_model_name="llama3_70b" --evaluator_model_name="gpt-4o"
 ```
 
 
