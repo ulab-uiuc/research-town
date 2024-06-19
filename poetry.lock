@@ -1683,6 +1683,7 @@ description = "Nvidia JIT LTO Library"
 optional = false
 python-versions = ">=3"
 files = [
+    {file = "nvidia_nvjitlink_cu12-12.5.40-py3-none-manylinux2014_aarch64.whl", hash = "sha256:004186d5ea6a57758fd6d57052a123c73a4815adf365eb8dd6a85c9eaa7535ff"},
     {file = "nvidia_nvjitlink_cu12-12.5.40-py3-none-manylinux2014_x86_64.whl", hash = "sha256:d9714f27c1d0f0895cd8915c07a87a1d0029a0aa36acaf9156952ec2a8a12189"},
     {file = "nvidia_nvjitlink_cu12-12.5.40-py3-none-win_amd64.whl", hash = "sha256:c3401dc8543b52d3a8158007a0c1ab4e9c768fcbd24153a48c86972102197ddd"},
 ]
@@ -1700,13 +1701,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.30.5"
+version = "1.35.1"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.7.1"
 files = [
-    {file = "openai-1.30.5-py3-none-any.whl", hash = "sha256:2ad95e926de0d2e09cde632a9204b0a6dca4a03c2cdcc84329b01f355784355a"},
-    {file = "openai-1.30.5.tar.gz", hash = "sha256:5366562eb2c5917e6116ae0391b7ae6e3acd62b0ae3f565ada32b35d8fcfa106"},
+    {file = "openai-1.35.1-py3-none-any.whl", hash = "sha256:53ef8935cf916dc7ece67fee5a8a09fc4db5aadf4d6e95b5b7f767f3c4432e4d"},
+    {file = "openai-1.35.1.tar.gz", hash = "sha256:d85973adc2f4fbb11ba20bfd948e3340b8352f6b8a02f1fa1c387c8eefac8d9d"},
 ]
 
 [package.dependencies]
@@ -3408,4 +3409,4 @@ test = ["big-O", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more-it
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8, <3.12"
-content-hash = "5d477bcff2f8488a0cb5cf7cacb6b901208a2faa90bc1b928bdf3f6adac306cb"
+content-hash = "c0bc40ad1ee6619c7a9e44c8476cc621d659f6774ffb142403ff8ec80a52db01"
