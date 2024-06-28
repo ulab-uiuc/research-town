@@ -23,6 +23,7 @@ litellm = "^1.40.29"
 beartype = "^0.18.5"
 termcolor = "^2.4.0"
 types-PyYAML = "^6.0.0"
+numpy = "<2.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
