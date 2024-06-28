@@ -1,14 +1,13 @@
 # ResearchEval
 
-We built ResearchEval based on ResearchTown in the current version. In future versions, we will separate them.
-
+We store the evaluation scripts of ResearchEval in `research_eval/`. The prompter is in `research_town/`.
 ## Important Components of ResearchEval
 
 ResearchEval consists of three important parts:
 
 1. **Prompting-based Evaluators**: See `research_town/evaluators`.
 2. **Evaluation Prompt Templates**: See `research_town/utils/eval_prompter.py`.
-3. **Evaluation Experiments**: Includes scripts for pipeline and held-out evaluations—see `evaluations/`, and evaluation data for inputs and outputs in `data/eval_data`.
+3. **Evaluation Experiments**: Includes scripts for pipeline and held-out evaluations—see `research_eval/`, and evaluation data for inputs and outputs in `data/eval_data`.
 
 ## Evaluation Preparation
 
@@ -52,5 +51,5 @@ export OPENAI_API_KEY=YOUR_API_KEY
 
 After you set the API key, you could run the experiments for **held-out** & **pipeline evaluations** mentioned in our paper. Detailed instructions are in two other `readme.md` files as follows.
 
-- **Held-out Evaluation Scripts**: See `evaluation/heldout_eval/readme.md`.
-- **Pipeline Evaluation Scripts**: See `evaluation/pipeline_eval/readme.md`.
+- **Held-out Evaluation Scripts**: See `research_eval/heldout_eval/readme.md`.
+- **Pipeline Evaluation Scripts**: See `research_eval/pipeline_eval/readme.md`.

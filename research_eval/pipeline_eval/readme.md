@@ -5,19 +5,19 @@ This is a pipeline evaluation of idea/paper/review generated in research town ac
 ## Run Scripts for all evaluation settings
 
 ```bash
-cd evaluation/pipeline_eval/
+cd research_eval/pipeline_eval/
 bash pipeline_eval.sh
 ```
 to parse output（make sure you get output for all settings）, you could run:
 ```bash
 cd ../.. # return to the root folder path
-python evaluation/pipeline_eval/parse_pipeline_eval_output.py
+python research_eval/pipeline_eval/parse_pipeline_eval_output.py
 ```
 ### Pipeline evaluation for single setting
 If you want to conduct pipeline evaluation for a single setting, you could run like:
 
 ```bash
-python evaluation/pipeline_eval/eval_pipeline.py  --eval_log_num=10 --domain='computer_vision' --agent_model_name="llama3_70b" --evaluator_model_name="gpt-4o"
+python research_eval/pipeline_eval/eval_pipeline.py  --eval_log_num=10 --domain='computer_vision' --agent_model_name="llama3_70b" --evaluator_model_name="gpt-4o"
 ```
 
 
