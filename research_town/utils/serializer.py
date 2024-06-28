@@ -1,14 +1,13 @@
 import importlib
 
-import torch
 from beartype.typing import Any, Dict, List, Set, Tuple, Union
 from pydantic import BaseModel
-
+import torch
 
 class Serializer:
     @classmethod
     def serialize(cls, obj: Any) -> Any:
-        if isinstance(obj, (str, int, float, bool, type(None), torch.Tensor)):
+        if isinstance(obj, (str, int, float, bool, type(None),torch.Tensor)):
             return obj
         elif isinstance(obj, dict):
             return {key: cls.serialize(value) for key, value in obj.items()}
