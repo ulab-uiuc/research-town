@@ -36,7 +36,7 @@ prompt_template:
     Here is the idea: {idea}
     Here are the external data, which is a list of abstracts of related papers: {papers}
   review_score: |
-    Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only return one number score. The more you think a paper should be accepted, the closer to 10 the score should be; conversely, the more you think a paper should be rejected, the closer to 1 the score should be. The paper's borderline acceptance score is 5. 
+    Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only return one number score. The more you think a paper should be accepted, the closer to 10 the score should be; conversely, the more you think a paper should be rejected, the closer to 1 the score should be. The paper's borderline acceptance score is 5.
     <Examples>
     <Exapmle Score of 5>
     <Paper title>--Your Neighbors Are Communicating: Towards Powerful and Scalable Graph Neural Networks.
@@ -55,9 +55,9 @@ prompt_template:
     </Examples>
     Here are the reviews: {paper_review}
   review_paper: |
-    As a reviewer, please provide detailed reviews for the following papers. 
-    Evaluate the paper by highlighting its strengths and weaknesses. 
-    Consider using two or more of these titles together if they are related and complement each other effectively. 
+    As a reviewer, please provide detailed reviews for the following papers.
+    Evaluate the paper by highlighting its strengths and weaknesses.
+    Consider using two or more of these titles together if they are related and complement each other effectively.
     Here are the papers: {papers}
   write_meta_review: |
     Please make a review decision to decide whether the following submission should be accepted or rejected by an academic conference. Here are several reviews from reviewers and rebuttals from the author for this submission. Please indicate your review decision as accept or reject.
