@@ -1,5 +1,10 @@
-# research-town
+<div style="width: 100%;">
+  <img src="assets/research_town.png" style="width: 100%;" alt="sotopia"></img>
+</div>
 
+<h1 align="center">Research Town: Simulator of Human Research</h1>
+
+<div align="center">
 ## Demo
 
 You can view an episode demo with default parameters by running:
