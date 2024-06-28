@@ -8,7 +8,7 @@ from pydantic import BaseModel
 class Serializer:
     @classmethod
     def serialize(cls, obj: Any) -> Any:
-        if isinstance(obj, (str, int, float, bool, type(None)), torch.Tensor):
+        if isinstance(obj, (str, int, float, bool, type(None), torch.Tensor)):
             return obj
         elif isinstance(obj, dict):
             return {key: cls.serialize(value) for key, value in obj.items()}
