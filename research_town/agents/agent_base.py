@@ -36,7 +36,6 @@ class BaseResearchAgent(object):
         self.model_name: str = model_name
         self.serializer = Serializer()
 
-
     @beartype
     def read_paper(
         self, papers: List[PaperProfile], domains: List[str], config: Config
