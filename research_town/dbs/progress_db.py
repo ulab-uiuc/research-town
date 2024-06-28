@@ -6,19 +6,23 @@ from pydantic import BaseModel, Field
 
 T = TypeVar('T', bound=BaseModel)
 
+
 class ResearchInsight(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content: Optional[str] = Field(default=None)
 
+
 class ResearchIdea(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content: Optional[str] = Field(default=None)
+
 
 class ResearchPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: Optional[str] = Field(default=None)
     abstract: Optional[str] = Field(default=None)
     conference: Optional[str] = Field(default=None)
+
 
 class ReviewForPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -33,6 +37,7 @@ class RebuttalForPaperSubmission(BaseModel):
     review_pk: Optional[str] = Field(default=None)
     content: Optional[str] = Field(default=None)
 
+
 class MetaReviewForPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     paper_pk: Optional[str] = Field(default=None)
@@ -40,15 +45,16 @@ class MetaReviewForPaperSubmission(BaseModel):
     content: Optional[str] = Field(default=None)
     decision: bool = Field(default=False)
 
+
 class ResearchProgressDB:
     def __init__(self) -> None:
         self.data: Dict[str, List[Any]] = {
-            'ResearchInsight': [], 
+            'ResearchInsight': [],
             'ResearchIdea': [],
             'ResearchPaperSubmission': [],
             'ReviewForPaperSubmission': [],
             'RebuttalForPaperSubmission': [],
-            'MetaReviewForPaperSubmission': []
+            'MetaReviewForPaperSubmission': [],
         }
 
     def add(self, obj: T) -> None:
