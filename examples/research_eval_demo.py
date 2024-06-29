@@ -1,4 +1,5 @@
 import json
+from typing import Tuple
 
 from research_town.dbs import AgentProfile  # Agent
 from research_town.dbs import PaperProfile  # Paper
@@ -15,7 +16,18 @@ from research_town.evaluators import (
 )
 
 
-def set_constants():
+def set_constants() -> (
+    Tuple[
+        AgentProfile,
+        PaperProfile,
+        ResearchInsight,
+        ResearchIdea,
+        ResearchPaperSubmission,
+        ResearchReviewForPaperSubmission,
+        ResearchRebuttalForPaperSubmission,
+        ResearchMetaReviewForPaperSubmission,
+    ]
+):
     agent_A = AgentProfile(
         name='Danqi Chen',
         bio='An Assistant Professor at Princeton University specializing on natural language processing and machine learning.',
