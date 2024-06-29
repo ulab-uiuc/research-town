@@ -18,8 +18,6 @@ from research_town.evaluators import (
 
 def set_constants() -> (
     Tuple[
-        AgentProfile,
-        PaperProfile,
         ResearchInsight,
         ResearchIdea,
         ResearchPaperSubmission,
