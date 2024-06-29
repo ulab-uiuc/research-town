@@ -19,6 +19,9 @@ class ParamConfig(BaseModel):
     related_paper_num: int = 10
     base_llm: str = 'mistralai/Mixtral-8x7B-Instruct-v0.1'
     max_collaborators_num: int = 3
+    domain: str = 'computer_vision'
+    reviewer_num: int = 3
+    result_path: str = 'Mixtral-8x7B'
 
     model_config = ConfigDict(
         extra='allow',

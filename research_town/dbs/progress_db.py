@@ -1,32 +1,24 @@
 import json
-import uuid
 
-from beartype.typing import Any, Dict, List, Optional, Type, TypeVar
-from pydantic import BaseModel, Field
+from beartype.typing import Any, Dict, List, Type, TypeVar
+from pydantic import BaseModel
 
 T = TypeVar('T', bound=BaseModel)
 
 
-class ResearchIdea(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    content: Optional[str] = Field(default=None)
-
-
-class ResearchPaperSubmission(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    title: Optional[str] = Field(default=None)
-    abstract: Optional[str] = Field(default=None)
-    conference: Optional[str] = Field(default=None)
-
-
-class ResearchInsight(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    content: Optional[str] = Field(default=None)
-
-
 class ResearchProgressDB:
     def __init__(self) -> None:
-        self.data: Dict[str, List[Any]] = {'ResearchIdea': [], 'ResearchPaper': []}
+        self.data: Dict[
+            str,
+            List[Any],
+        ] = {
+            'ResearchInsight': [],
+            'ResearchIdea': [],
+            'ResearchPaperSubmission': [],
+            'ResearchReviewForPaperSubmission': [],
+            'ResearchRebuttalForPaperSubmission': [],
+            'ResearchMetaReviewForPaperSubmission': [],
+        }
 
     def add(self, obj: T) -> None:
         class_name = obj.__class__.__name__

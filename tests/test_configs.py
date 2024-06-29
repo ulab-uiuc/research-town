@@ -11,6 +11,8 @@ def test_default_initialization() -> None:
     assert config.param.related_paper_num == 10
     assert config.param.base_llm == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
     assert config.param.max_collaborators_num == 3
+    assert config.param.domain == 'computer_vision'
+    assert config.param.reviewer_num == 3
     assert config.prompt_template.discuss == (
         'Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. '
         'Here are the messages from other researchers: {message}'

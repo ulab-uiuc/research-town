@@ -2,16 +2,19 @@ from tempfile import NamedTemporaryFile
 
 from beartype.typing import Any, Dict, Optional
 
-from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
-from research_town.dbs.env_db import (
+from research_town.dbs import (
     AgentAgentDiscussionLog,
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
+    AgentProfile,
+    AgentProfileDB,
     EnvLogDB,
+    PaperProfile,
+    PaperProfileDB,
+    ResearchIdea,
+    ResearchProgressDB,
 )
-from research_town.dbs.paper_db import PaperProfile, PaperProfileDB
-from research_town.dbs.progress_db import ResearchIdea, ResearchProgressDB
 
 
 def test_envlogdb_basic() -> None:
