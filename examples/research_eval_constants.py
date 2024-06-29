@@ -3,10 +3,10 @@ from research_town.dbs import (
     PaperProfile,
     ResearchIdea,
     ResearchInsight,
-    ResearchPaperSubmission,
-    ResearchReviewForPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
     ResearchMetaReviewForPaperSubmission,
+    ResearchPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchReviewForPaperSubmission,
 )
 
 agent_A = AgentProfile(

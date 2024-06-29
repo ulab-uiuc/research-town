@@ -1,26 +1,23 @@
 import json
 
-from research_town.dbs import (
-    ResearchIdea,  # Idea
-    ResearchInsight,  # Trend
-    ResearchPaperSubmission,  # Paper
-    ResearchReviewForPaperSubmission,  # Review
-    ResearchRebuttalForPaperSubmission,  # Rebuttal
-    ResearchMetaReviewForPaperSubmission,  # Meta Review
-)
-from research_town.evaluators import (
-    IdeaQualityEvaluator,
-    PaperQualityEvaluator,
-    ReviewQualityEvaluator,
-)
-
 from examples.research_eval_constants import (
     idea_A,
     insight_A,
     paper_meta_review_A,
+    paper_rebuttal_A,
     paper_review_A,
     paper_submission_A,
-    paper_rebuttal_A,
+)
+from research_town.dbs import ResearchIdea  # Idea
+from research_town.dbs import ResearchInsight  # Trend
+from research_town.dbs import ResearchMetaReviewForPaperSubmission  # Meta Review
+from research_town.dbs import ResearchPaperSubmission  # Paper
+from research_town.dbs import ResearchRebuttalForPaperSubmission  # Rebuttal
+from research_town.dbs import ResearchReviewForPaperSubmission  # Review
+from research_town.evaluators import (
+    IdeaQualityEvaluator,
+    PaperQualityEvaluator,
+    ReviewQualityEvaluator,
 )
 
 
@@ -41,10 +38,10 @@ def run_sync_evaluation(
         'abstract': paper.abstract,
         'conference': paper.conference,
     }
-    review_serialize = (
-        f'score: {review.score}\ncontent: {review.content}'
+    review_serialize = f'score: {review.score}\ncontent: {review.content}'
+    meta_review_serialize = (
+        f'decision: {meta_review.decision}\nmeta review:{meta_review.content}'
     )
-    meta_review_serialize = f'decision: {meta_review.decision}\nmeta review:{meta_review.content}'
     # Create Evaluators
     idea_quality_evaluator = IdeaQualityEvaluator(model_name=model_name)
     paper_quality_evaluator = PaperQualityEvaluator(model_name=model_name)

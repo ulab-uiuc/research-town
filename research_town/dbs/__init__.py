@@ -10,11 +10,11 @@ from .paper_db import PaperProfile, PaperProfileDB
 from .progress_db import (
     ResearchIdea,
     ResearchInsight,
-    ResearchPaperSubmission,
-    ResearchReviewForPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
     ResearchMetaReviewForPaperSubmission,
+    ResearchPaperSubmission,
     ResearchProgressDB,
+    ResearchRebuttalForPaperSubmission,
+    ResearchReviewForPaperSubmission,
 )
 
 __all__ = [
