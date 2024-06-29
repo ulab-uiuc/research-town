@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing to ResearchTown! We welcome and appreciate contributions. 
+Thanks for your interest in contributing to ResearchTown! We welcome and appreciate contributions.
 
 ## How Can I Contribute?
 
