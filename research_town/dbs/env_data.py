@@ -1,6 +1,8 @@
-from typing import List, Optional
 import uuid
+from typing import Optional
+
 from pydantic import BaseModel, Field
+
 
 class AgentPaperReviewLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))

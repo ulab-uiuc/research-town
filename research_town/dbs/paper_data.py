@@ -1,6 +1,8 @@
-from typing import List, Optional, Dict
 import uuid
+from typing import Dict, List, Optional
+
 from pydantic import BaseModel, Field
+
 
 class PaperProfile(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))

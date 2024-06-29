@@ -10,12 +10,12 @@ from .env_db import EnvLogDB
 from .paper_data import PaperProfile
 from .paper_db import PaperProfileDB
 from .progress_data import (
-    ResearchIdea, 
-    ResearchInsight, 
-    ResearchPaperSubmission,
-    ResearchReviewForPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
+    ResearchIdea,
+    ResearchInsight,
     ResearchMetaReviewForPaperSubmission,
+    ResearchPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchReviewForPaperSubmission,
 )
 from .progress_db import ResearchProgressDB
 

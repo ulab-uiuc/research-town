@@ -1,10 +1,9 @@
 import json
+
 from beartype.typing import Any, Dict, List, Type, TypeVar
 from pydantic import BaseModel
 
 T = TypeVar('T', bound=BaseModel)
-
-
 
 
 class EnvLogDB:

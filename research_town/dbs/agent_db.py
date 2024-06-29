@@ -1,7 +1,10 @@
 import json
+
 from beartype.typing import Any, Dict, List, Optional
+
 from ..utils.paper_collector import get_bert_embedding, neiborhood_search
 from .agent_data import AgentProfile
+
 
 class AgentProfileDB(object):
     def __init__(self) -> None:

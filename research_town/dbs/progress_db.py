@@ -2,27 +2,40 @@ import json
 
 from beartype.typing import Any, Dict, List, Type, TypeVar, Union
 from pydantic import BaseModel
-from .progress_data import ResearchInsight, ResearchIdea, ResearchPaperSubmission, ReviewForPaperSubmission, RebuttalForPaperSubmission, MetaReviewForPaperSubmission
+
+from .progress_data import (
+    ResearchMetaReviewForPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchIdea,
+    ResearchInsight,
+    ResearchPaperSubmission,
+    ResearchReviewForPaperSubmission,
+)
 
 T = TypeVar('T', bound=BaseModel)
 
 
 class ResearchProgressDB:
     def __init__(self) -> None:
-        self.data: Dict[str, List[Union[
-            ResearchInsight,
-            ResearchIdea,
-            ResearchPaperSubmission,
-            ReviewForPaperSubmission,
-            RebuttalForPaperSubmission,
-            MetaReviewForPaperSubmission,
-        ]]] = {
+        self.data: Dict[
+            str,
+            List[
+                Union[
+                    ResearchInsight,
+                    ResearchIdea,
+                    ResearchPaperSubmission,
+                    ResearchReviewForPaperSubmission,
+                    ResearchRebuttalForPaperSubmission,
+                    ResearchMetaReviewForPaperSubmission,
+                ]
+            ],
+        ] = {
             'ResearchInsight': [],
             'ResearchIdea': [],
             'ResearchPaperSubmission': [],
-            'ReviewForPaperSubmission': [],
-            'RebuttalForPaperSubmission': [],
-            'MetaReviewForPaperSubmission': [],
+            'ResearchReviewForPaperSubmission': [],
+            'ResearchRebuttalForPaperSubmission': [],
+            'ResearchMetaReviewForPaperSubmission': [],
         }
 
     def add(self, obj: T) -> None:
