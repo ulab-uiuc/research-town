@@ -41,7 +41,7 @@ class ResearchProgressDB:
     def add(self, obj: T) -> None:
         class_name = obj.__class__.__name__
         if class_name in self.data:
-            self.data[class_name].append(obj.model_dump())
+            self.data[class_name].append(obj)
         else:
             raise ValueError(f'Unsupported type: {class_name}')
 
