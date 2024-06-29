@@ -272,5 +272,3 @@ def test_researchprogressdb_basic() -> None:
     new_db.load_from_file(file_name)
 
     assert len(new_db.data['ResearchIdea']) == 2
-
-

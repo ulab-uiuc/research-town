@@ -10,22 +10,27 @@ T = TypeVar('T', bound=BaseModel)
 class ResearchInsight(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content: Optional[str] = Field(default=None)
+
     class Config:
-        extra = "allow"
+        extra = 'allow'
+
 
 class ResearchIdea(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content: Optional[str] = Field(default=None)
+
     class Config:
-        extra = "allow"
+        extra = 'allow'
+
 
 class ResearchPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: Optional[str] = Field(default=None)
     abstract: Optional[str] = Field(default=None)
     conference: Optional[str] = Field(default=None)
+
     class Config:
-        extra = "allow"
+        extra = 'allow'
 
 
 class ResearchReviewForPaperSubmission(BaseModel):
@@ -34,8 +39,9 @@ class ResearchReviewForPaperSubmission(BaseModel):
     reviewer_pk: Optional[str] = Field(default=None)
     content: Optional[str] = Field(default=None)
     score: Optional[int] = Field(default=None)
+
     class Config:
-        extra = "allow"
+        extra = 'allow'
 
 
 class ResearchRebuttalForPaperSubmission(BaseModel):
@@ -44,8 +50,9 @@ class ResearchRebuttalForPaperSubmission(BaseModel):
     reviewer_pk: Optional[str] = Field(default=None)
     author_pk: Optional[str] = Field(default=None)
     content: Optional[str] = Field(default=None)
+
     class Config:
-        extra = "allow"
+        extra = 'allow'
 
 
 class ResearchMetaReviewForPaperSubmission(BaseModel):
@@ -56,8 +63,9 @@ class ResearchMetaReviewForPaperSubmission(BaseModel):
     author_pk: Optional[str] = Field(default=None)
     content: Optional[str] = Field(default=None)
     decision: bool = Field(default=False)
+
     class Config:
-        extra = "allow"
+        extra = 'allow'
 
 
 class ResearchProgressDB:
