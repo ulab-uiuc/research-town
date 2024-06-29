@@ -1,19 +1,19 @@
-name: 🧹Codebase Reorg
-description: Reorg, clean, format the codebase
+name: 🧹Codebase Refactor
+description: Refactor, clean, format the codebase
 title: "[ORG]: "
-labels: ["reorg"]
+labels: ["refactor"]
 assignees: [""]
 body:
   - type: markdown
     attributes:
       value: |
-        Please make sure this codebase reorg request hasn't been already submitted by someone by looking through other open/closed issues
+        Please make sure this codebase refactor request hasn't been already submitted by someone by looking through other open/closed issues
 
   - type: textarea
     id: description
     attributes:
       label: Description
-      description: Give us a brief description of the codebase reorg task you would like
+      description: Give us a brief description of the codebase refactor task you would like
     validations:
       required: true
 
@@ -21,4 +21,4 @@ body:
     id: additional-information
     attributes:
       label: Additional Information
-      description: Give us some additional reason on why codebase reorg is necessary to do
+      description: Give us some additional reason on why codebase refactor is necessary to do
