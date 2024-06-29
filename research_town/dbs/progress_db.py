@@ -4,11 +4,11 @@ from beartype.typing import Any, Dict, List, Type, TypeVar, Union
 from pydantic import BaseModel
 
 from .progress_data import (
-    ResearchMetaReviewForPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
     ResearchIdea,
     ResearchInsight,
+    ResearchMetaReviewForPaperSubmission,
     ResearchPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
 
