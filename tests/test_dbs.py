@@ -3,12 +3,12 @@ from tempfile import NamedTemporaryFile
 from beartype.typing import Any, Dict, Optional
 
 from research_town.dbs import (
-    AgentProfile, 
-    AgentProfileDB,
     AgentAgentDiscussionLog,
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
+    AgentProfile,
+    AgentProfileDB,
     EnvLogDB,
     PaperProfile,
     PaperProfileDB,
