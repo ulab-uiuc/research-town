@@ -1,16 +1,7 @@
 import json
 
-from beartype.typing import Any, Dict, List, Type, TypeVar, Union
+from beartype.typing import Any, Dict, List, Type, TypeVar
 from pydantic import BaseModel
-
-from .progress_data import (
-    ResearchIdea,
-    ResearchInsight,
-    ResearchMetaReviewForPaperSubmission,
-    ResearchPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
-    ResearchReviewForPaperSubmission,
-)
 
 T = TypeVar('T', bound=BaseModel)
 
