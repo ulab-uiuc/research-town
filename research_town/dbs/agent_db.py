@@ -1,19 +1,7 @@
 import json
-import uuid
-
 from beartype.typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field
-
 from ..utils.paper_collector import get_bert_embedding, neiborhood_search
-
-
-class AgentProfile(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    name: Optional[str] = Field(default=None)
-    bio: Optional[str] = Field(default=None)
-    collaborators: Optional[List[str]] = Field(default=[])
-    institute: Optional[str] = Field(default=None)
-
+from .agent_data import AgentProfile
 
 class AgentProfileDB(object):
     def __init__(self) -> None:
