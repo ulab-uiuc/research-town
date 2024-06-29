@@ -11,6 +11,9 @@ from .progress_db import (
     ResearchIdea,
     ResearchInsight,
     ResearchPaperSubmission,
+    ResearchReviewForPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchMetaReviewForPaperSubmission,
     ResearchProgressDB,
 )
 
@@ -24,6 +27,9 @@ __all__ = [
     'ResearchIdea',
     'ResearchInsight',
     'ResearchPaperSubmission',
+    'ResearchReviewForPaperSubmission',
+    'ResearchRebuttalForPaperSubmission',
+    'ResearchMetaReviewForPaperSubmission',
     'EnvLogDB',
     'PaperProfileDB',
     'AgentProfileDB',
