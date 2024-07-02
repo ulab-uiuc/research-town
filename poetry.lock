@@ -1104,13 +1104,13 @@ test = ["ipykernel", "pre-commit", "pytest (<8)", "pytest-cov", "pytest-timeout"
 
 [[package]]
 name = "litellm"
-version = "1.23.16"
+version = "1.41.3"
 description = "Library to easily interface with LLM API providers"
 optional = false
-python-versions = ">=3.8, !=2.7.*, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*, !=3.7.*"
+python-versions = "!=2.7.*,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,!=3.7.*,>=3.8"
 files = [
-    {file = "litellm-1.23.16-py3-none-any.whl", hash = "sha256:c1d7183edc74dad7d140cb7c9ac0c23e550d4126549eb302c75b46380724a3ad"},
-    {file = "litellm-1.23.16.tar.gz", hash = "sha256:7d477c8560743cc762f1e61fc2c209ffa9d733879da198daeb5d0effbb62a1c1"},
+    {file = "litellm-1.41.3-py3-none-any.whl", hash = "sha256:50b20805e6892ef57ee5833764ae77bc2021042814b4bdbd89b3744d4b84bb02"},
+    {file = "litellm-1.41.3.tar.gz", hash = "sha256:2178f4a9b605603295f6aebf623e0a4dd45c3b595090fa37c606f1c1e04d2121"},
 ]
 
 [package.dependencies]
@@ -1118,15 +1118,17 @@ aiohttp = "*"
 click = "*"
 importlib-metadata = ">=6.8.0"
 jinja2 = ">=3.1.2,<4.0.0"
-openai = ">=1.0.0"
+jsonschema = ">=4.22.0,<5.0.0"
+openai = ">=1.27.0"
+pydantic = ">=2.0.0,<3.0.0"
 python-dotenv = ">=0.2.0"
 requests = ">=2.31.0,<3.0.0"
-tiktoken = ">=0.4.0"
+tiktoken = ">=0.7.0"
 tokenizers = "*"
 
 [package.extras]
-extra-proxy = ["streamlit (>=1.29.0,<2.0.0)"]
-proxy = ["PyJWT (>=2.8.0,<3.0.0)", "apscheduler (>=3.10.4,<4.0.0)", "backoff", "fastapi (>=0.104.1,<0.105.0)", "fastapi-sso (>=0.10.0,<0.11.0)", "gunicorn (>=21.2.0,<22.0.0)", "orjson (>=3.9.7,<4.0.0)", "python-multipart (>=0.0.6,<0.0.7)", "pyyaml (>=6.0.1,<7.0.0)", "rq", "uvicorn (>=0.22.0,<0.23.0)"]
+extra-proxy = ["azure-identity (>=1.15.0,<2.0.0)", "azure-keyvault-secrets (>=4.8.0,<5.0.0)", "google-cloud-kms (>=2.21.3,<3.0.0)", "prisma (==0.11.0)", "resend (>=0.8.0,<0.9.0)"]
+proxy = ["PyJWT (>=2.8.0,<3.0.0)", "apscheduler (>=3.10.4,<4.0.0)", "backoff", "cryptography (>=42.0.5,<43.0.0)", "fastapi (>=0.111.0,<0.112.0)", "fastapi-sso (>=0.10.0,<0.11.0)", "gunicorn (>=22.0.0,<23.0.0)", "orjson (>=3.9.7,<4.0.0)", "python-multipart (>=0.0.9,<0.0.10)", "pyyaml (>=6.0.1,<7.0.0)", "rq", "uvicorn (>=0.22.0,<0.23.0)"]
 
 [[package]]
 name = "markupsafe"
@@ -3471,4 +3473,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9, <3.12"
-content-hash = "91fdfd80b501f9ba828979201e55b5316b81065d8ec6a109450e135be64fd625"
+content-hash = "90c48cbc95bbb59e0687433d1e9ff8f0768ef5cc3ab9cf564a4380b1b705dc84"
