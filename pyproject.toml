@@ -33,6 +33,7 @@ types-setuptools = "*"
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"
+pytest-cov = "*"
 pytest-asyncio = "*"
 
 
