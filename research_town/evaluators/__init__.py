@@ -1,4 +1,4 @@
-from .output_format import (
+from .evaluator_output import (
     IdeaEvalOutput,
     OutputFormatError,
     PaperEvalOutput,
