@@ -74,6 +74,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         new_agent_obj = BaseResearchAgent(
                             agent_profile=researcher_profile,
                             model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+                            role='collaborator',
                         )
                         collaborator_agents.append(new_agent_obj)
                         agent_names_to_objs[researcher_profile.name] = new_agent_obj
