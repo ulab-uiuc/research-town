@@ -1,5 +1,5 @@
 from research_town.dbs import (
-    AgentAgentDiscussionLog,
+    AgentAgentIdeaDiscussionLog,
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
@@ -81,7 +81,7 @@ agent_paper_rebuttal_log = AgentPaperRebuttalLog(
     rebuttal_content='I have revised the paper.',
 )
 
-agent_agent_discussion_log = AgentAgentDiscussionLog(
+agent_agent_discussion_log = AgentAgentIdeaDiscussionLog(
     timestep=0,
     agent_from_pk=agent_profile_A.pk,
     agent_from_name=agent_profile_A.name,

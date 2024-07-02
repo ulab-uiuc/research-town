@@ -3,7 +3,7 @@ from tempfile import NamedTemporaryFile
 from beartype.typing import Any, Dict, Optional
 
 from research_town.dbs import (
-    AgentAgentDiscussionLog,
+    AgentAgentIdeaDiscussionLog,
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
@@ -33,7 +33,7 @@ def test_envlogdb_basic() -> None:
     meta_review_log = AgentPaperMetaReviewLog(
         paper_pk='paper1', agent_pk='agent1', decision=True, meta_review='Accept'
     )
-    discussion_log = AgentAgentDiscussionLog(
+    discussion_log = AgentAgentIdeaDiscussionLog(
         agent_from_pk='agent1',
         agent_from_name='Rex Ying',
         agent_to_pk='agent2',
@@ -84,7 +84,7 @@ def test_envlogdb_basic() -> None:
     assert len(new_db.data['AgentPaperReviewLog']) == 1
     assert len(new_db.data['AgentPaperRebuttalLog']) == 1
     assert len(new_db.data['AgentPaperMetaReviewLog']) == 1
-    assert len(new_db.data['AgentAgentDiscussionLog']) == 1
+    assert len(new_db.data['AgentAgentIdeaDiscussionLog']) == 1
     assert (
         new_db.data['AgentPaperReviewLog'][0]['review_content'] == 'Interesting paper'
     )

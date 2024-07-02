@@ -5,7 +5,7 @@ from beartype.typing import Any, Dict, List, Tuple
 
 from ..configs import Config
 from ..dbs import (
-    AgentAgentDiscussionLog,
+    AgentAgentIdeaDiscussionLog,
     AgentPaperMetaReviewLog,
     AgentPaperRebuttalLog,
     AgentPaperReviewLog,
@@ -235,15 +235,15 @@ class BaseResearchAgent(object):
 
     @beartype
     def discuss(
-        self, message: AgentAgentDiscussionLog, config: Config
-    ) -> AgentAgentDiscussionLog:
+        self, message: AgentAgentIdeaDiscussionLog, config: Config
+    ) -> AgentAgentIdeaDiscussionLog:
         serialized_message = self.serializer.serialize(message)
         message_content = discuss_prompting(
             message=serialized_message,
             model_name=self.model_name,
             prompt_template=config.prompt_template.discuss,
         )[0]
-        return AgentAgentDiscussionLog(
+        return AgentAgentIdeaDiscussionLog(
             timestep=(int)(datetime.now().timestamp()),
             agent_from_pk=message.agent_from_pk,
             agent_from_name=message.agent_from_name,
