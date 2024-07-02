@@ -41,7 +41,7 @@ Role = Literal['reviewer', 'leader', 'collaborator', 'chair']
 
 class BaseResearchAgent(object):
     def __init__(
-        self, agent_profile: AgentProfile, model_name: str, role: Role = 'leader'
+        self, agent_profile: AgentProfile, model_name: str, role: Role
     ) -> None:
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
