@@ -21,7 +21,6 @@ class BaseMultiAgentEnv(object):
                 BaseResearchAgent(
                     agent_profile=agent_profile,
                     model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-                    role='leader',
                 )
             )
 

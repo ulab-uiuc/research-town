@@ -1,58 +1,57 @@
 from functools import wraps
-from typing import Literal
+from typing import Any, Callable, Literal, TypeVar, cast
 
-Role = Literal['reviewer', 'leader', 'collaborator', 'chair']
+Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair']
+F = TypeVar('F', bound=Callable[..., Any])
 
 
-def leader_required(method):
+def proj_leader_required(method: F) -> F:
     @wraps(method)
-    def wrapper(self, *args, **kwargs):
-        if self.role != 'leader':
-            raise PermissionError("This operation is allowed only for 'leader' role.")
+    def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
+        if self.role is None:
+            raise PermissionError('Roles are not assigned for research agent.')
+        if self.role != 'proj_leader':
+            raise PermissionError(
+                "This operation is allowed only for 'proj_leader' role."
+            )
         return method(self, *args, **kwargs)
 
-    return wrapper
+    return cast(F, wrapper)
 
 
-def reviewer_required(method):
+def reviewer_required(method: F) -> F:
     @wraps(method)
-    def wrapper(self, *args, **kwargs):
+    def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
+        if self.role is None:
+            raise PermissionError('Roles are not assigned for research agent.')
         if self.role != 'reviewer':
             raise PermissionError("This operation is allowed only for 'reviewer' role.")
         return method(self, *args, **kwargs)
 
-    return wrapper
+    return cast(F, wrapper)
 
 
-def collaborator_required(method):
+def proj_participant_required(method: F) -> F:
     @wraps(method)
-    def wrapper(self, *args, **kwargs):
-        if self.role != 'collaborator':
+    def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
+        if self.role is None:
+            raise PermissionError('Roles are not assigned for research agent.')
+        if self.role != 'proj_participant' and self.role != 'proj_leader':
             raise PermissionError(
-                "This operation is allowed only for 'collaborator' role."
+                "This operation is allowed only for 'proj_participant' role."
             )
         return method(self, *args, **kwargs)
 
-    return wrapper
+    return cast(F, wrapper)
 
 
-def collaborator_or_leader_required(method):
+def chair_required(method: F) -> F:
     @wraps(method)
-    def wrapper(self, *args, **kwargs):
-        if self.role != 'collaborator' or self.role != 'leader':
-            raise PermissionError(
-                "This operation is allowed only for 'collaborator' role."
-            )
-        return method(self, *args, **kwargs)
-
-    return wrapper
-
-
-def chair_required(method):
-    @wraps(method)
-    def wrapper(self, *args, **kwargs):
+    def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
+        if self.role is None:
+            raise PermissionError('Roles are not assigned for research agent.')
         if self.role != 'chair':
             raise PermissionError("This operation is allowed only for 'chair' role.")
         return method(self, *args, **kwargs)
 
-    return wrapper
+    return cast(F, wrapper)
