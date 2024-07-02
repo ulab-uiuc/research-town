@@ -1,8 +1,9 @@
 import argparse
 import json
 import os
-import uuid
 import re
+import uuid
+
 from beartype.typing import Dict, List, Optional
 from pydantic import BaseModel, Field, validator
 from scipy.stats import kendalltau, spearmanr
@@ -13,10 +14,13 @@ from research_town.configs import Config
 from research_town.dbs.agent_db import AgentProfile, AgentProfileDB
 from research_town.dbs.env_db import AgentPaperReviewLog
 from research_town.dbs.paper_db import PaperProfile
+
+
 # Function to sanitize the model name
 def sanitize_filename(filename: str) -> str:
     # Replace any character that is not a letter, digit, hyphen, or underscore with an underscore
     return re.sub(r'[^a-zA-Z0-9-_]', '_', filename)
+
 
 class RealPaperWithReview(BaseModel):  # paper review from real reviewers
     paper_pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -27,7 +31,7 @@ class RealPaperWithReview(BaseModel):  # paper review from real reviewers
 
     real_avg_scores: float = Field(default=-1)
     real_all_scores: List[int] = Field(default=[])
-    
+
     real_confidences: List[int] = Field(default=[])
     real_contents: List[str] = Field(default=[])
     real_rank: int = Field(default=0)
@@ -35,13 +39,13 @@ class RealPaperWithReview(BaseModel):  # paper review from real reviewers
 
     sim_avg_scores: float = Field(default=-1)  # from the simulation
     sim_all_scores: List[int] = Field(default=[])
-    
+
     sim_contents: List[str] = Field(default=[])
     sim_rank: int = Field(default=-1)
     sim_decision: str = Field(default='None')
 
     @validator('paper_pk', pre=True, always=True)
-    def set_paper_pk(cls, v)->str:
+    def set_paper_pk(cls, v) -> str:
         return v or str(uuid.uuid4())
 
 
@@ -56,8 +60,9 @@ class RealPaperWithReviewDB(object):
         self.absolute_rank_consistency: float = 0.0
         self.spearman_rank_consistency: float = 0.0
         self.kendall_rank_consistency: float = 0.0
-        self.real_avg_score_variance:float = 0.0
-        self.sim_avg_score_variance:float = 0.0
+        self.real_avg_score_variance: float = 0.0
+        self.sim_avg_score_variance: float = 0.0
+
     def add(self, real_paper: RealPaperWithReview) -> None:
         self.data[real_paper.title] = real_paper
 
@@ -132,8 +137,28 @@ class RealPaperWithReviewDB(object):
             )
         # calculate the variance of the average scores
         real_papers = list(self.selected_papers.values())
-        self.real_avg_score_variance = sum([(real_paper.real_avg_scores - sum([paper.real_avg_scores for paper in real_papers])/len(real_papers))**2 for real_paper in real_papers])/len(real_papers)
-        self.sim_avg_score_variance = sum([(real_paper.sim_avg_scores - sum([paper.sim_avg_scores for paper in real_papers])/len(real_papers))**2 for real_paper in real_papers])/len(real_papers)
+        self.real_avg_score_variance = sum(
+            [
+                (
+                    real_paper.real_avg_scores
+                    - sum([paper.real_avg_scores for paper in real_papers])
+                    / len(real_papers)
+                )
+                ** 2
+                for real_paper in real_papers
+            ]
+        ) / len(real_papers)
+        self.sim_avg_score_variance = sum(
+            [
+                (
+                    real_paper.sim_avg_scores
+                    - sum([paper.sim_avg_scores for paper in real_papers])
+                    / len(real_papers)
+                )
+                ** 2
+                for real_paper in real_papers
+            ]
+        ) / len(real_papers)
 
         # calculate the rank of the papers
         real_papers.sort(key=lambda x: x.sim_avg_scores, reverse=True)
@@ -144,8 +169,6 @@ class RealPaperWithReviewDB(object):
         real_papers.sort(key=lambda x: x.real_avg_scores, reverse=True)
         for i, real_paper in enumerate(real_papers):
             real_paper.real_rank = i + 1
-
-
 
     def calculate_rank_consistency(self) -> None:
         rank_consistency_float = 0.0
@@ -230,7 +253,7 @@ def main(
     print(f'kendall_rank_consistency = {real_paper_db.kendall_rank_consistency}\n')
 
     # Step 4: save the RealPaperWithReviewDB
-    sanitized_modelname=sanitize_filename(model_name)
+    sanitized_modelname = sanitize_filename(model_name)
     # Construct the output file path
     output_file = os.path.join(
         data_path,

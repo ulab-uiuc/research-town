@@ -6,7 +6,7 @@ evaluator_model_options=("together_ai/meta-llama/Llama-3-70b-chat-hf" "together_
 agent_model_options=("llama3_70b" "mixtral_8_7b" "qwen_32" "llama3_8b")
 eval_log_num=10
 
-# 
+#
 for domain_option in "${domain_options[@]}"; do
     for evaluator_model_option in "${evaluator_model_options[@]}"; do
         for agent_model_option in "${agent_model_options[@]}"; do
