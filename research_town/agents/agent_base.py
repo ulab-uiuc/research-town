@@ -1,18 +1,16 @@
-from datetime import datetime
-
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Literal, Optional, Tuple
 
 from ..configs import Config
 from ..dbs import (
-    AgentPaperMetaReviewWritingLog,
-    AgentPaperRebuttalWritingLog,
-    AgentPaperReviewWritingLog,
     AgentProfile,
     PaperProfile,
     ResearchIdea,
     ResearchInsight,
+    ResearchMetaReviewForPaperSubmission,
     ResearchPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchReviewForPaperSubmission,
 )
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
@@ -187,7 +185,7 @@ class BaseResearchAgent(object):
     @reviewer_required
     def write_paper_review(
         self, paper: PaperProfile, config: Config
-    ) -> AgentPaperReviewWritingLog:
+    ) -> ResearchReviewForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
         paper_review = review_paper_prompting(
             paper=serialized_paper,
@@ -199,12 +197,11 @@ class BaseResearchAgent(object):
             model_name=self.model_name,
             prompt_template=config.prompt_template.review_score,
         )
-        return AgentPaperReviewWritingLog(
-            timestep=(int)(datetime.now().timestamp()),
+        return ResearchReviewForPaperSubmission(
             paper_pk=paper.pk,
-            agent_pk=self.profile.pk,
-            review_content=paper_review,
-            review_score=review_score,
+            reviewer_pk=self.profile.pk,
+            content=paper_review,
+            score=review_score,
         )
 
     @beartype
@@ -212,9 +209,9 @@ class BaseResearchAgent(object):
     def write_meta_review(
         self,
         paper: PaperProfile,
-        reviews: List[AgentPaperReviewWritingLog],
+        reviews: List[ResearchReviewForPaperSubmission],
         config: Config,
-    ) -> AgentPaperMetaReviewWritingLog:
+    ) -> ResearchMetaReviewForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
         serialized_reviews = self.serializer.serialize(reviews)
 
@@ -226,19 +223,23 @@ class BaseResearchAgent(object):
         )
         review_decision = 'accept' in meta_review[0].lower()
 
-        return AgentPaperMetaReviewWritingLog(
-            timestep=(int)(datetime.now().timestamp()),
+        return ResearchMetaReviewForPaperSubmission(
             paper_pk=paper.pk,
-            agent_pk=self.profile.pk,
+            area_chair_pk=self.profile.pk,
+            reviewer_pks=[review.reviewer_pk for review in reviews],
+            author_pk=paper.author_pk,
+            content=meta_review[0],
             decision=review_decision,
-            meta_review=meta_review[0],
         )
 
     @beartype
     @proj_leader_required
     def write_rebuttal(
-        self, paper: PaperProfile, review: AgentPaperReviewWritingLog, config: Config
-    ) -> AgentPaperRebuttalWritingLog:
+        self,
+        paper: PaperProfile,
+        review: ResearchReviewForPaperSubmission,
+        config: Config,
+    ) -> ResearchRebuttalForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
         serialized_review = self.serializer.serialize(review)
 
@@ -249,9 +250,9 @@ class BaseResearchAgent(object):
             prompt_template=config.prompt_template.write_rebuttal,
         )[0]
 
-        return AgentPaperRebuttalWritingLog(
-            timestep=(int)(datetime.now().timestamp()),
+        return ResearchRebuttalForPaperSubmission(
             paper_pk=paper.pk,
-            agent_pk=self.profile.pk,
-            rebuttal_content=rebuttal_content,
+            reviewer_pk=review.reviewer_pk,
+            author_pk=paper.author_pk,
+            content=rebuttal_content,
         )
