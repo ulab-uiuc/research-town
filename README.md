@@ -49,7 +49,7 @@ OpenAI key is required to run the code. Please set the environment variable `OPE
 conda env config vars set OPENAI_API_KEY=your_key
 ```
 
-For some experiments, TogetherAI key is required to run the code. Please set the environment variable `TOGETHER_API_KEY` to your key. The recommend way is to add the key to the conda environment:
+For some experiments, TogetherAI key is required to run the code. Please set the environment variable `TOGETHERAI_API_KEY` to your key (notice: not `TOGETHER_API_KEY`). The recommend way is to add the key to the conda environment:
 
 ```
 conda env config vars set TOGETHER_API_KEY=your_key
