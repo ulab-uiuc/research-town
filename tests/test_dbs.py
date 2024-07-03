@@ -3,37 +3,37 @@ from tempfile import NamedTemporaryFile
 from beartype.typing import Any, Dict, Optional
 
 from research_town.dbs import (
-    AgentAgentDiscussionLog,
-    AgentPaperMetaReviewLog,
-    AgentPaperRebuttalLog,
-    AgentPaperReviewLog,
+    AgentAgentIdeaDiscussionLog,
+    AgentPaperMetaReviewWritingLog,
+    AgentPaperRebuttalWritingLog,
+    AgentPaperReviewWritingLog,
     AgentProfile,
     AgentProfileDB,
     EnvLogDB,
     PaperProfile,
     PaperProfileDB,
+    ProgressDB,
     ResearchIdea,
-    ResearchProgressDB,
 )
 
 
 def test_envlogdb_basic() -> None:
     db = EnvLogDB()
-    review_log = AgentPaperReviewLog(
+    review_log = AgentPaperReviewWritingLog(
         paper_pk='paper1',
         agent_pk='agent1',
         review_score=5,
         review_content='Good paper',
     )
-    rebuttal_log = AgentPaperRebuttalLog(
+    rebuttal_log = AgentPaperRebuttalWritingLog(
         paper_pk='paper1',
         agent_pk='agent1',
         rebuttal_content='I disagree with the review',
     )
-    meta_review_log = AgentPaperMetaReviewLog(
+    meta_review_log = AgentPaperMetaReviewWritingLog(
         paper_pk='paper1', agent_pk='agent1', decision=True, meta_review='Accept'
     )
-    discussion_log = AgentAgentDiscussionLog(
+    discussion_log = AgentAgentIdeaDiscussionLog(
         agent_from_pk='agent1',
         agent_from_name='Rex Ying',
         agent_to_pk='agent2',
@@ -46,32 +46,34 @@ def test_envlogdb_basic() -> None:
     db.add(meta_review_log)
     db.add(discussion_log)
 
-    new_log = AgentPaperReviewLog(
+    new_log = AgentPaperReviewWritingLog(
         paper_pk='paper2',
         agent_pk='agent2',
         review_score=4,
         review_content='Interesting paper',
     )
     db.add(new_log)
-    assert new_log.model_dump() in db.data['AgentPaperReviewLog']
+    assert new_log.model_dump() in db.data['AgentPaperReviewWritingLog']
 
     conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
-    results = db.get(AgentPaperReviewLog, **conditions)
+    results = db.get(AgentPaperReviewWritingLog, **conditions)
     assert len(results) == 1
     assert results[0].review_content == 'Good paper'
 
     updates = {'review_score': 3, 'review_content': 'Decent paper'}
-    updated_count = db.update(AgentPaperReviewLog, {'paper_pk': 'paper1'}, updates)
+    updated_count = db.update(
+        AgentPaperReviewWritingLog, {'paper_pk': 'paper1'}, updates
+    )
     assert updated_count == 2
 
-    updated_log = db.get(AgentPaperReviewLog, **conditions)[0]
+    updated_log = db.get(AgentPaperReviewWritingLog, **conditions)[0]
 
     assert updated_log.review_score == 3
     assert updated_log.review_content == 'Decent paper'
 
-    deleted_count = db.delete(AgentPaperReviewLog, **conditions)
+    deleted_count = db.delete(AgentPaperReviewWritingLog, **conditions)
     assert deleted_count == 1
-    results = db.get(AgentPaperReviewLog, **conditions)
+    results = db.get(AgentPaperReviewWritingLog, **conditions)
     assert len(results) == 0
 
     with NamedTemporaryFile(delete=False) as temp_file:
@@ -81,12 +83,13 @@ def test_envlogdb_basic() -> None:
     new_db = EnvLogDB()
     new_db.load_from_file(file_name)
 
-    assert len(new_db.data['AgentPaperReviewLog']) == 1
-    assert len(new_db.data['AgentPaperRebuttalLog']) == 1
-    assert len(new_db.data['AgentPaperMetaReviewLog']) == 1
-    assert len(new_db.data['AgentAgentDiscussionLog']) == 1
+    assert len(new_db.data['AgentPaperReviewWritingLog']) == 1
+    assert len(new_db.data['AgentPaperRebuttalWritingLog']) == 1
+    assert len(new_db.data['AgentPaperMetaReviewWritingLog']) == 1
+    assert len(new_db.data['AgentAgentIdeaDiscussionLog']) == 1
     assert (
-        new_db.data['AgentPaperReviewLog'][0]['review_content'] == 'Interesting paper'
+        new_db.data['AgentPaperReviewWritingLog'][0]['review_content']
+        == 'Interesting paper'
     )
 
 
@@ -234,8 +237,8 @@ def test_paperprofiledb_basic() -> None:
     assert new_db.data[paper1.pk].title == 'Updated Sample Paper 1'
 
 
-def test_researchprogressdb_basic() -> None:
-    db = ResearchProgressDB()
+def test_progressdb_basic() -> None:
+    db = ProgressDB()
     idea1 = ResearchIdea(content='Idea for a new AI algorithm')
     idea2 = ResearchIdea(content='Quantum computing research plan')
 
@@ -271,7 +274,7 @@ def test_researchprogressdb_basic() -> None:
         file_name = temp_file.name
     db.save_to_file(file_name)
 
-    new_db = ResearchProgressDB()
+    new_db = ProgressDB()
     new_db.load_from_file(file_name)
 
     assert len(new_db.data['ResearchIdea']) == 2

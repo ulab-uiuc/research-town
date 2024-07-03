@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, Generator, List, Union
+from beartype.typing import Dict, Generator, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
@@ -9,29 +9,34 @@ from ..dbs import (
     EnvLogDB,
     PaperProfile,
     PaperProfileDB,
+    ProgressDB,
     ResearchPaperSubmission,
 )
 from .env_base import BaseMultiAgentEnv
 
 LogType = Union[List[Dict[str, str]], None]
+Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
 class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def __init__(
         self,
         agent_profiles: List[AgentProfile],
+        agent_roles: List[Role],
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
+        progress_db: ProgressDB,
         config: Config,
         task: Dict[str, str],
     ) -> None:
-        super().__init__(agent_profiles)
+        super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
         self.task = task
         self.paper = PaperProfile()
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
+        self.progress_db = progress_db
         self.config = config
 
     def _step(
@@ -74,6 +79,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         new_agent_obj = BaseResearchAgent(
                             agent_profile=researcher_profile,
                             model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+                            agent_role='proj_participant',
                         )
                         collaborator_agents.append(new_agent_obj)
                         agent_names_to_objs[researcher_profile.name] = new_agent_obj
@@ -85,7 +91,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         f'Agent {agent.profile.name} found {researcher_profile.name} as collaborator'
                     )
 
-            insights = agent.read_paper(
+            insights = agent.review_literature(
                 papers=papers,
                 domains=['machine learning'],
                 config=self.config,
@@ -95,20 +101,20 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             )
 
             ideas = []
-            idea = agent.think_idea(insights=insights, config=self.config)
+            idea = agent.brainstorm_idea(insights=insights, config=self.config)
             ideas.append(idea)
             yield from self.log(
                 f'Agent {agent.profile.name} generated idea: {str(idea)}'
             )
             for collaborator_agent in collaborator_agents:
-                idea = collaborator_agent.think_idea(
+                idea = collaborator_agent.brainstorm_idea(
                     insights=insights, config=self.config
                 )
                 ideas.append(idea)
                 yield from self.log(
                     f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(idea)}"
                 )
-            summarized_idea = agent.summarize_ideas(ideas=ideas, config=self.config)
+            summarized_idea = agent.discuss_idea(ideas=ideas, config=self.config)
             paper: ResearchPaperSubmission = agent.write_paper(
                 idea=summarized_idea, papers=papers, config=self.config
             )

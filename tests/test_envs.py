@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.configs import Config
-from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB
+from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB, ProgressDB
 from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
     PaperSubmissionMultiAgentEnvironment,
@@ -16,18 +16,20 @@ def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
     agent_db = AgentProfileDB()
     paper_db = PaperProfileDB()
     env_db = EnvLogDB()
+    progress_db = ProgressDB()
     config = Config()
     env = PaperRebuttalMultiAgentEnv(
         agent_profiles=[agent_profile_A, agent_profile_B],
+        agent_roles=['proj_leader', 'reviewer'],
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
+        progress_db=progress_db,
         config=config,
     )
 
     submission = paper_profile_A
     env.initialize_submission(submission)
-    env.assign_roles({agent_profile_A.pk: 'author', agent_profile_B.pk: 'reviewer'})
 
     while not env.terminated:
         env.step()
@@ -51,15 +53,18 @@ def test_paper_submission_env(
     agent_db = AgentProfileDB()
     paper_db = PaperProfileDB()
     env_db = EnvLogDB()
+    progress_db = ProgressDB()
     config = Config()
     env = PaperSubmissionMultiAgentEnvironment(
         agent_profiles=[agent_profile_A],
+        agent_roles=['proj_leader'],
         task={
             'Survey on Machine Learning': 'This paper surveys the field of machine learning.'
         },
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
+        progress_db=progress_db,
         config=config,
     )
     while not env.terminated:

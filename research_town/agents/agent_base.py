@@ -1,23 +1,19 @@
-from datetime import datetime
-
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Tuple
+from beartype.typing import Any, Dict, List, Literal, Optional, Tuple
 
 from ..configs import Config
 from ..dbs import (
-    AgentAgentDiscussionLog,
-    AgentPaperMetaReviewLog,
-    AgentPaperRebuttalLog,
-    AgentPaperReviewLog,
     AgentProfile,
     PaperProfile,
     ResearchIdea,
     ResearchInsight,
+    ResearchMetaReviewForPaperSubmission,
     ResearchPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchReviewForPaperSubmission,
 )
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
-    discuss_prompting,
     find_collaborators_prompting,
     read_paper_prompting,
     review_paper_prompting,
@@ -28,13 +24,27 @@ from ..utils.agent_prompter import (
     write_paper_prompting,
     write_rebuttal_prompting,
 )
+from ..utils.agent_role_verifier import (
+    chair_required,
+    proj_leader_required,
+    proj_participant_required,
+    reviewer_required,
+)
 from ..utils.serializer import Serializer
+
+Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair']
 
 
 class BaseResearchAgent(object):
-    def __init__(self, agent_profile: AgentProfile, model_name: str) -> None:
+    def __init__(
+        self,
+        agent_profile: AgentProfile,
+        model_name: str,
+        agent_role: Optional[Role] = None,
+    ) -> None:
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
+        self.role: Role | None = agent_role
         self.model_name: str = model_name
         self.serializer = Serializer()
 
@@ -109,8 +119,12 @@ class BaseResearchAgent(object):
 
     # =======================================
 
+    def assign_role(self, role: Role) -> None:
+        self.role = role
+
     @beartype
-    def read_paper(
+    @proj_participant_required
+    def review_literature(
         self, papers: List[PaperProfile], domains: List[str], config: Config
     ) -> List[ResearchInsight]:
         serialized_papers = self.serializer.serialize(papers)
@@ -129,7 +143,8 @@ class BaseResearchAgent(object):
         return insights
 
     @beartype
-    def think_idea(
+    @proj_participant_required
+    def brainstorm_idea(
         self, insights: List[ResearchInsight], config: Config
     ) -> ResearchIdea:
         serialized_insights = self.serializer.serialize(insights)
@@ -141,9 +156,8 @@ class BaseResearchAgent(object):
         return ResearchIdea(content=idea_content)
 
     @beartype
-    def summarize_ideas(
-        self, ideas: List[ResearchIdea], config: Config
-    ) -> ResearchIdea:
+    @proj_participant_required
+    def discuss_idea(self, ideas: List[ResearchIdea], config: Config) -> ResearchIdea:
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized = summarize_ideas_prompting(
             ideas=serialized_ideas,
@@ -153,6 +167,7 @@ class BaseResearchAgent(object):
         return ResearchIdea(content=idea_summarized)
 
     @beartype
+    @proj_leader_required
     def write_paper(
         self, idea: ResearchIdea, papers: List[PaperProfile], config: Config
     ) -> ResearchPaperSubmission:
@@ -167,9 +182,10 @@ class BaseResearchAgent(object):
         return ResearchPaperSubmission(abstract=paper_abstract)
 
     @beartype
+    @reviewer_required
     def write_paper_review(
         self, paper: PaperProfile, config: Config
-    ) -> AgentPaperReviewLog:
+    ) -> ResearchReviewForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
         paper_review = review_paper_prompting(
             paper=serialized_paper,
@@ -181,18 +197,21 @@ class BaseResearchAgent(object):
             model_name=self.model_name,
             prompt_template=config.prompt_template.review_score,
         )
-        return AgentPaperReviewLog(
-            timestep=(int)(datetime.now().timestamp()),
+        return ResearchReviewForPaperSubmission(
             paper_pk=paper.pk,
-            agent_pk=self.profile.pk,
-            review_content=paper_review,
-            review_score=review_score,
+            reviewer_pk=self.profile.pk,
+            content=paper_review,
+            score=review_score,
         )
 
     @beartype
-    def write_paper_meta_review(
-        self, paper: PaperProfile, reviews: List[AgentPaperReviewLog], config: Config
-    ) -> AgentPaperMetaReviewLog:
+    @chair_required
+    def write_meta_review(
+        self,
+        paper: PaperProfile,
+        reviews: List[ResearchReviewForPaperSubmission],
+        config: Config,
+    ) -> ResearchMetaReviewForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
         serialized_reviews = self.serializer.serialize(reviews)
 
@@ -204,18 +223,23 @@ class BaseResearchAgent(object):
         )
         review_decision = 'accept' in meta_review[0].lower()
 
-        return AgentPaperMetaReviewLog(
-            timestep=(int)(datetime.now().timestamp()),
+        return ResearchMetaReviewForPaperSubmission(
             paper_pk=paper.pk,
-            agent_pk=self.profile.pk,
+            area_chair_pk=self.profile.pk,
+            reviewer_pks=[review.reviewer_pk for review in reviews],
+            author_pk=self.profile.pk,
+            content=meta_review[0],
             decision=review_decision,
-            meta_review=meta_review[0],
         )
 
     @beartype
+    @proj_leader_required
     def write_rebuttal(
-        self, paper: PaperProfile, review: AgentPaperReviewLog, config: Config
-    ) -> AgentPaperRebuttalLog:
+        self,
+        paper: PaperProfile,
+        review: ResearchReviewForPaperSubmission,
+        config: Config,
+    ) -> ResearchRebuttalForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
         serialized_review = self.serializer.serialize(review)
 
@@ -226,28 +250,9 @@ class BaseResearchAgent(object):
             prompt_template=config.prompt_template.write_rebuttal,
         )[0]
 
-        return AgentPaperRebuttalLog(
-            timestep=(int)(datetime.now().timestamp()),
+        return ResearchRebuttalForPaperSubmission(
             paper_pk=paper.pk,
-            agent_pk=self.profile.pk,
-            rebuttal_content=rebuttal_content,
-        )
-
-    @beartype
-    def discuss(
-        self, message: AgentAgentDiscussionLog, config: Config
-    ) -> AgentAgentDiscussionLog:
-        serialized_message = self.serializer.serialize(message)
-        message_content = discuss_prompting(
-            message=serialized_message,
-            model_name=self.model_name,
-            prompt_template=config.prompt_template.discuss,
-        )[0]
-        return AgentAgentDiscussionLog(
-            timestep=(int)(datetime.now().timestamp()),
-            agent_from_pk=message.agent_from_pk,
-            agent_from_name=message.agent_from_name,
-            agent_to_pk=message.agent_to_pk,
-            agent_to_name=message.agent_to_name,
-            message=message_content,
+            reviewer_pk=review.reviewer_pk,
+            author_pk=self.profile.pk,
+            content=rebuttal_content,
         )

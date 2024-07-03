@@ -11,10 +11,14 @@ class EnvLogDB:
         self.data: Dict[str, List[Any]] = {
             'PaperProfile': [],
             'ResearchPaperSubmission': [],
-            'AgentPaperReviewLog': [],
-            'AgentPaperRebuttalLog': [],
-            'AgentPaperMetaReviewLog': [],
-            'AgentAgentDiscussionLog': [],
+            'AgentPaperLiteratureReviewLog': [],
+            'AgentIdeaBrainstormingLog': [],
+            'AgentAgentCollaborationFindingLog': [],
+            'AgentAgentIdeaDiscussionLog': [],
+            'AgentPaperWritingLog': [],
+            'AgentPaperReviewWritingLog': [],
+            'AgentPaperRebuttalWritingLog': [],
+            'AgentPaperMetaReviewWritingLog': [],
         }
 
     def add(self, obj: T) -> None:

@@ -2,9 +2,15 @@ from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
 from research_town.configs import Config
-from research_town.dbs import AgentPaperRebuttalLog
+from research_town.dbs import (
+    ResearchIdea,
+    ResearchInsight,
+    ResearchMetaReviewForPaperSubmission,
+    ResearchPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchReviewForPaperSubmission,
+)
 from tests.db_constants import (
-    agent_agent_discussion_log,
     agent_profile_A,
     agent_profile_B,
     paper_profile_A,
@@ -20,6 +26,7 @@ def test_get_profile() -> None:
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        agent_role='proj_leader',
     )
     assert research_agent.profile.name == 'Jiaxuan You'
     assert (
@@ -36,6 +43,7 @@ def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        agent_role='proj_leader',
     )
     collaborators = research_agent.find_collaborators(
         paper=paper_profile_A, parameter=0.5, max_number=3, config=Config()
@@ -46,7 +54,7 @@ def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 @patch('research_town.utils.agent_prompter.get_related_papers')
-def test_read_paper(
+def test_review_literature(
     mock_get_related_papers: MagicMock,
     mock_model_prompting: MagicMock,
 ) -> None:
@@ -55,20 +63,22 @@ def test_read_paper(
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        agent_role='proj_leader',
     )
-    research_insight = research_agent.read_paper(
+    research_insight = research_agent.review_literature(
         papers=[paper_profile_A, paper_profile_B],
         domains=['machine learning', 'graph neural network'],
         config=Config(),
     )
     assert len(research_insight) == 1
+    assert isinstance(research_insight[0], ResearchInsight)
     assert research_insight[0].pk is not None
     assert research_insight[0].content == 'Graph Neural Network'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 @patch('research_town.utils.agent_prompter.get_related_papers')
-def test_think_idea(
+def test_brainstorm_idea(
     mock_get_related_papers: MagicMock,
     mock_model_prompting: MagicMock,
 ) -> None:
@@ -78,11 +88,13 @@ def test_think_idea(
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        agent_role='proj_leader',
     )
-    research_idea = research_agent.think_idea(
+    research_idea = research_agent.brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
         config=Config(),
     )
+    assert isinstance(research_idea, ResearchIdea)
     assert research_idea.pk is not None
     assert research_idea.content == 'This is a research idea.'
 
@@ -94,52 +106,62 @@ def test_write_paper(mock_model_prompting: MagicMock) -> None:
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_B,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        agent_role='proj_leader',
     )
     paper = research_agent.write_paper(
         idea=research_idea_A,
         papers=[paper_profile_A, paper_profile_B],
         config=Config(),
     )
+    assert isinstance(paper, ResearchPaperSubmission)
     assert paper.abstract == 'This is a paper abstract.'
     assert paper.pk is not None
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_write_paper_review(mock_model_prompting: MagicMock) -> None:
+def test_write_review(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        agent_role='reviewer',
     )
     review = research_agent.write_paper_review(
         paper=paper_profile_A,
         config=Config(),
     )
-    assert review.review_score == 2
-    assert review.review_content == 'This is a paper review for MambaOut.'
+    assert isinstance(review, ResearchReviewForPaperSubmission)
+    assert review.score == 2
+    assert review.content == 'This is a paper review for MambaOut.'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_write_paper_meta_review(mock_model_prompting: MagicMock) -> None:
+def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.return_value = ['Accept. This is a good paper.']
 
-    research_agent = BaseResearchAgent(
+    research_agent_reviewer = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        agent_role='reviewer',
     )
-    reviews = research_agent.write_paper_review(
+    research_agent_chair = BaseResearchAgent(
+        agent_profile=agent_profile_A,
+        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        agent_role='chair',
+    )
+    reviews = research_agent_reviewer.write_paper_review(
         paper=paper_profile_A,
         config=Config(),
     )
-    meta_review = research_agent.write_paper_meta_review(
+    meta_review = research_agent_chair.write_meta_review(
         paper=paper_profile_A,
         reviews=[reviews],
         config=Config(),
     )
+    assert isinstance(meta_review, ResearchMetaReviewForPaperSubmission)
     assert meta_review.decision is True
-    assert meta_review.meta_review == 'Accept. This is a good paper.'
-    assert meta_review.timestep >= 0
+    assert meta_review.content == 'Accept. This is a good paper.'
     assert meta_review.pk is not None
 
 
@@ -147,44 +169,26 @@ def test_write_paper_meta_review(mock_model_prompting: MagicMock) -> None:
 def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.return_value = ['This is a paper rebuttal.']
 
-    research_agent = BaseResearchAgent(
+    research_agent_reviewer = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        agent_role='reviewer',
     )
-    review = research_agent.write_paper_review(
+    research_agent_proj_leader = BaseResearchAgent(
+        agent_profile=agent_profile_A,
+        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        agent_role='proj_leader',
+    )
+    review = research_agent_reviewer.write_paper_review(
         paper=paper_profile_A,
         config=Config(),
     )
-    rebuttal = research_agent.write_rebuttal(
+    rebuttal = research_agent_proj_leader.write_rebuttal(
         paper=paper_profile_A,
         review=review,
         config=Config(),
     )
-    assert isinstance(rebuttal, AgentPaperRebuttalLog)
-    if rebuttal.rebuttal_content is not None:
-        assert len(rebuttal.rebuttal_content) > 0
-    assert rebuttal.rebuttal_content == 'This is a paper rebuttal.'
-
-
-@patch('research_town.utils.agent_prompter.model_prompting')
-def test_discuss(mock_model_prompting: MagicMock) -> None:
-    mock_model_prompting.return_value = [
-        'I believe in the potential of using automous agents to simulate the current research pipeline.'
-    ]
-
-    research_agent = BaseResearchAgent(
-        agent_profile=agent_profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-    )
-    response = research_agent.discuss(
-        message=agent_agent_discussion_log,
-        config=Config(),
-    )
-    assert (
-        response.message
-        == 'I believe in the potential of using automous agents to simulate the current research pipeline.'
-    )
-    assert response.agent_to_pk is not None
-    assert response.agent_from_pk is not None
-    assert response.timestep >= 0
-    assert response.pk is not None
+    assert isinstance(rebuttal, ResearchRebuttalForPaperSubmission)
+    if rebuttal.content is not None:
+        assert len(rebuttal.content) > 0
+    assert rebuttal.content == 'This is a paper rebuttal.'
