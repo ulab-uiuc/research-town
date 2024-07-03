@@ -76,7 +76,7 @@ The installation of pre-commit would avoid formatting error and large file injec
 
 #### Before committing
 
-Run `pytest` to make sure all tests pass (this will ensure dynamic typing passed with beartype) and `mypy --strict .` to check static typing. (You can also run `pre-commit run --all-files` to run all checks)
+Run `poetry run pytest` to make sure all tests pass (this will ensure dynamic typing passed with beartype) and `poetry run mypy --config-file pyproject.toml .` to check static typing. (You can also run `pre-commit run --all-files` to run all checks)
 
 #### Check github action result
 
