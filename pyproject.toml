@@ -7,17 +7,18 @@ license = "Apache 2.0 License"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.9, <3.12"
-openai = "^1.35.7"
-scikit_learn = "^1.5.0"
+python = ">=3.10, <3.12"
 pydantic = "^2.8.0"
-arxiv = "^2.1.0"
-torch = ">=2.1.0 <2.3.0"
-transformers = "^4.41.2"
+openai = "^1.35.7"
 litellm = "~1.41.3"
 beartype = "^0.18.5"
-termcolor = "^2.4.0"
-numpy = "<2.0.0"
+
+torch = { version = ">=2.1.0 <2.3.0", optional = true }
+transformers = { version = "^4.41.2", optional = true }
+termcolor = { version = "^2.4.0", optional = true }
+arxiv = { version = "^2.1.0", optional = true }
+scikit_learn = { version = "^1.5.0", optional = true }
+numpy = { version = "<2.0.0", optional = true }
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "*"
@@ -32,6 +33,9 @@ pytest = "*"
 pytest-cov = "*"
 pytest-asyncio = "*"
 mypy = "^1.8.0"
+
+[tool.poetry.extras]
+examples = ["torch", "transformers", "termcolor", "arxiv", "scikit_learn", "numpy"]
 
 [build-system]
 requires = ["poetry-core"]
