@@ -12,8 +12,8 @@ from research_town.dbs import (
     EnvLogDB,
     PaperProfile,
     PaperProfileDB,
+    ProgressDB,
     ResearchIdea,
-    ResearchProgressDB,
 )
 
 
@@ -237,8 +237,8 @@ def test_paperprofiledb_basic() -> None:
     assert new_db.data[paper1.pk].title == 'Updated Sample Paper 1'
 
 
-def test_researchprogressdb_basic() -> None:
-    db = ResearchProgressDB()
+def test_progressdb_basic() -> None:
+    db = ProgressDB()
     idea1 = ResearchIdea(content='Idea for a new AI algorithm')
     idea2 = ResearchIdea(content='Quantum computing research plan')
 
@@ -274,7 +274,7 @@ def test_researchprogressdb_basic() -> None:
         file_name = temp_file.name
     db.save_to_file(file_name)
 
-    new_db = ResearchProgressDB()
+    new_db = ProgressDB()
     new_db.load_from_file(file_name)
 
     assert len(new_db.data['ResearchIdea']) == 2

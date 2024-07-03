@@ -1,7 +1,13 @@
 from beartype.typing import Dict, List, Literal
 
 from research_town.configs import Config
-from research_town.dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfileDB
+from research_town.dbs import (
+    AgentProfile,
+    AgentProfileDB,
+    EnvLogDB,
+    PaperProfileDB,
+    ProgressDB,
+)
 from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
     PaperSubmissionMultiAgentEnvironment,
@@ -24,6 +30,7 @@ def run_sync_experiment(
     agent_db = AgentProfileDB()
     paper_db = PaperProfileDB()
     env_db = EnvLogDB()
+    progress_db = ProgressDB()
     config = Config(config_file_path)
     paper_submission_env = PaperSubmissionMultiAgentEnvironment(
         agent_profiles=agent_profiles,
@@ -32,6 +39,7 @@ def run_sync_experiment(
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
+        progress_db=progress_db,
         config=config,
     )
     paper_rebuttal_env = PaperRebuttalMultiAgentEnv(
@@ -40,6 +48,7 @@ def run_sync_experiment(
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
+        progress_db=progress_db,
         config=config,
     )
 
