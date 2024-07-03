@@ -5,7 +5,7 @@ from ..dbs import AgentProfile, EnvLogDB
 from ..utils.logger import logging_decorator
 
 LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'chair', 'proj_collaborator', 'proj_leader']
+Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
 class BaseMultiAgentEnv(object):
