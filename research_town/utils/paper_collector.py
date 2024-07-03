@@ -31,7 +31,7 @@ def neiborhood_search(
     similarity = torch.mm(xq, xb.t())
 
     _, indices = torch.topk(similarity, num, dim=1, largest=True)
-    list_of_list_indices = indices.tolist()
+    list_of_list_indices: List[List[int]] = indices.tolist()
     return list_of_list_indices
 
 
