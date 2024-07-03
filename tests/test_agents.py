@@ -4,7 +4,6 @@ from research_town.agents.agent_base import BaseResearchAgent
 from research_town.configs import Config
 from research_town.dbs import AgentPaperRebuttalLog
 from tests.db_constants import (
-    agent_agent_discussion_log,
     agent_profile_A,
     agent_profile_B,
     paper_profile_A,
@@ -164,27 +163,3 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     if rebuttal.rebuttal_content is not None:
         assert len(rebuttal.rebuttal_content) > 0
     assert rebuttal.rebuttal_content == 'This is a paper rebuttal.'
-
-
-@patch('research_town.utils.agent_prompter.model_prompting')
-def test_discuss(mock_model_prompting: MagicMock) -> None:
-    mock_model_prompting.return_value = [
-        'I believe in the potential of using automous agents to simulate the current research pipeline.'
-    ]
-
-    research_agent = BaseResearchAgent(
-        agent_profile=agent_profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-    )
-    response = research_agent.discuss(
-        message=agent_agent_discussion_log,
-        config=Config(),
-    )
-    assert (
-        response.message
-        == 'I believe in the potential of using automous agents to simulate the current research pipeline.'
-    )
-    assert response.agent_to_pk is not None
-    assert response.agent_from_pk is not None
-    assert response.timestep >= 0
-    assert response.pk is not None
