@@ -15,10 +15,10 @@ class EnvLogDB:
             'AgentIdeaBrainstormingLog': [],
             'AgentAgentCollaborationFindingLog': [],
             'AgentAgentIdeaDiscussionLog': [],
-            'AgentPaperSubmissionLog': [],
-            'AgentPaperReviewLog': [],
-            'AgentPaperRebuttalLog': [],
-            'AgentPaperMetaReviewLog': [],
+            'AgentPaperWritingLog': [],
+            'AgentPaperReviewWritingLog': [],
+            'AgentPaperRebuttalWritingLog': [],
+            'AgentPaperMetaReviewWritingLog': [],
         }
 
     def add(self, obj: T) -> None:

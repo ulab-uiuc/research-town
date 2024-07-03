@@ -1,8 +1,8 @@
 from research_town.dbs import (
     AgentAgentIdeaDiscussionLog,
-    AgentPaperMetaReviewLog,
-    AgentPaperRebuttalLog,
-    AgentPaperReviewLog,
+    AgentPaperMetaReviewWritingLog,
+    AgentPaperRebuttalWritingLog,
+    AgentPaperReviewWritingLog,
     AgentProfile,
     PaperProfile,
     ResearchIdea,
@@ -58,7 +58,7 @@ research_paper_submission_B = ResearchPaperSubmission(
 )
 
 
-agent_paper_review_log = AgentPaperReviewLog(
+agent_paper_review_log = AgentPaperReviewWritingLog(
     timestep=0,
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
@@ -66,7 +66,7 @@ agent_paper_review_log = AgentPaperReviewLog(
     review_content='This paper is well-written.',
 )
 
-agent_paper_meta_review_log = AgentPaperMetaReviewLog(
+agent_paper_meta_review_log = AgentPaperMetaReviewWritingLog(
     timestep=0,
     paper_pk=paper_profile_B.pk,
     agent_pk=agent_profile_B.pk,
@@ -74,7 +74,7 @@ agent_paper_meta_review_log = AgentPaperMetaReviewLog(
     meta_review='This paper is well-written.',
 )
 
-agent_paper_rebuttal_log = AgentPaperRebuttalLog(
+agent_paper_rebuttal_log = AgentPaperRebuttalWritingLog(
     timestep=0,
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,

@@ -38,7 +38,7 @@ class AgentAgentIdeaDiscussionLog(BaseModel):
     message: Optional[str] = Field(default=None)
 
 
-class AgentPaperSubmissionLog(BaseModel):
+class AgentPaperWritingLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
     paper_pk: str
@@ -46,7 +46,7 @@ class AgentPaperSubmissionLog(BaseModel):
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
-class AgentPaperReviewLog(BaseModel):
+class AgentPaperReviewWritingLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
     paper_pk: str
@@ -56,7 +56,7 @@ class AgentPaperReviewLog(BaseModel):
     review_content: Optional[str] = Field(default=None)
 
 
-class AgentPaperRebuttalLog(BaseModel):
+class AgentPaperRebuttalWritingLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
     paper_pk: str
@@ -65,7 +65,7 @@ class AgentPaperRebuttalLog(BaseModel):
     rebuttal_content: Optional[str] = Field(default=None)
 
 
-class AgentPaperMetaReviewLog(BaseModel):
+class AgentPaperMetaReviewWritingLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
     paper_pk: str

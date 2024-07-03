@@ -3,9 +3,9 @@ from beartype.typing import Dict, Generator, List, Tuple, Union
 
 from ..configs import Config
 from ..dbs import (
-    AgentPaperMetaReviewLog,
-    AgentPaperRebuttalLog,
-    AgentPaperReviewLog,
+    AgentPaperMetaReviewWritingLog,
+    AgentPaperRebuttalWritingLog,
+    AgentPaperReviewWritingLog,
     AgentProfile,
     AgentProfileDB,
     EnvLogDB,
@@ -30,9 +30,9 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.decision = 'reject'
         self.submission = PaperProfile()
         self.reviewer_mask = [False] * len(agent_profiles)
-        self.reviews: List[AgentPaperReviewLog] = []
-        self.rebuttals: List[AgentPaperRebuttalLog] = []
-        self.meta_reviews: List[AgentPaperMetaReviewLog] = []
+        self.reviews: List[AgentPaperReviewWritingLog] = []
+        self.rebuttals: List[AgentPaperRebuttalWritingLog] = []
+        self.meta_reviews: List[AgentPaperMetaReviewWritingLog] = []
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db

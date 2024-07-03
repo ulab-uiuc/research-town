@@ -5,9 +5,9 @@ from beartype.typing import Any, Dict, List, Tuple
 
 from ..configs import Config
 from ..dbs import (
-    AgentPaperMetaReviewLog,
-    AgentPaperRebuttalLog,
-    AgentPaperReviewLog,
+    AgentPaperMetaReviewWritingLog,
+    AgentPaperRebuttalWritingLog,
+    AgentPaperReviewWritingLog,
     AgentProfile,
     PaperProfile,
     ResearchIdea,
@@ -165,7 +165,7 @@ class BaseResearchAgent(object):
     @beartype
     def write_paper_review(
         self, paper: PaperProfile, config: Config
-    ) -> AgentPaperReviewLog:
+    ) -> AgentPaperReviewWritingLog:
         serialized_paper = self.serializer.serialize(paper)
         paper_review = review_paper_prompting(
             paper=serialized_paper,
@@ -177,7 +177,7 @@ class BaseResearchAgent(object):
             model_name=self.model_name,
             prompt_template=config.prompt_template.review_score,
         )
-        return AgentPaperReviewLog(
+        return AgentPaperReviewWritingLog(
             timestep=(int)(datetime.now().timestamp()),
             paper_pk=paper.pk,
             agent_pk=self.profile.pk,
@@ -187,8 +187,11 @@ class BaseResearchAgent(object):
 
     @beartype
     def write_meta_review(
-        self, paper: PaperProfile, reviews: List[AgentPaperReviewLog], config: Config
-    ) -> AgentPaperMetaReviewLog:
+        self,
+        paper: PaperProfile,
+        reviews: List[AgentPaperReviewWritingLog],
+        config: Config,
+    ) -> AgentPaperMetaReviewWritingLog:
         serialized_paper = self.serializer.serialize(paper)
         serialized_reviews = self.serializer.serialize(reviews)
 
@@ -200,7 +203,7 @@ class BaseResearchAgent(object):
         )
         review_decision = 'accept' in meta_review[0].lower()
 
-        return AgentPaperMetaReviewLog(
+        return AgentPaperMetaReviewWritingLog(
             timestep=(int)(datetime.now().timestamp()),
             paper_pk=paper.pk,
             agent_pk=self.profile.pk,
@@ -210,8 +213,8 @@ class BaseResearchAgent(object):
 
     @beartype
     def write_rebuttal(
-        self, paper: PaperProfile, review: AgentPaperReviewLog, config: Config
-    ) -> AgentPaperRebuttalLog:
+        self, paper: PaperProfile, review: AgentPaperReviewWritingLog, config: Config
+    ) -> AgentPaperRebuttalWritingLog:
         serialized_paper = self.serializer.serialize(paper)
         serialized_review = self.serializer.serialize(review)
 
@@ -222,7 +225,7 @@ class BaseResearchAgent(object):
             prompt_template=config.prompt_template.write_rebuttal,
         )[0]
 
-        return AgentPaperRebuttalLog(
+        return AgentPaperRebuttalWritingLog(
             timestep=(int)(datetime.now().timestamp()),
             paper_pk=paper.pk,
             agent_pk=self.profile.pk,
