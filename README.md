@@ -5,24 +5,14 @@
 <h1 align="center">Research Town: Simulator of Human Research</h1>
 
 <div align="center">
-  <a href="https://www.python.org/downloads/release/python-3109/">
-    <img src="https://img.shields.io/badge/python-3.10-blue.svg" alt="Python 3.10">
-  </a>
-  <a href="https://pre-commit.com/">
-    <img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white" alt="pre-commit">
-  </a>
-  <a href="https://github.com/psf/black">
-    <img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black">
-  </a>
-  <a href="https://mypy-lang.org/">
-    <img src="https://www.mypy-lang.org/static/mypy_badge.svg" alt="Checked with mypy">
-  </a>
-  <a href="https://beartype.readthedocs.io">
-    <img src="https://raw.githubusercontent.com/beartype/beartype-assets/main/badge/bear-ified.svg" alt="bear-ified">
-  </a>
-  <a href="https://github.com/ulab-uiuc/research-town/actions/workflows/pytest.yml/badge.svg?branch=main">
-    <img src="https://github.com/ulab-uiuc/research-town/actions/workflows/pytest.yml/badge.svg?branch=main" alt="Github Action">
-  </a>
+
+[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3109/)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
+[![bear-ified](https://raw.githubusercontent.com/beartype/beartype-assets/main/badge/bear-ified.svg)](https://beartype.readthedocs.io)
+[![Github Action](https://github.com/ulab-uiuc/research-town/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/ulab-uiuc/research-town/actions/workflows/pytest.yml/badge.svg?branch=main)
+
 </div>
 
 ## Get started
