@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, Generator, List, Tuple, Union
+from beartype.typing import Dict, Generator, List, Literal, Tuple, Union
 
 from ..configs import Config
 from ..dbs import (
@@ -15,18 +15,20 @@ from ..dbs import (
 from .env_base import BaseMultiAgentEnv
 
 LogType = Union[List[Dict[str, str]], None]
+Role = Literal['reviewer', 'chair', 'proj_collaborator', 'proj_leader']
 
 
 class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
     def __init__(
         self,
         agent_profiles: List[AgentProfile],
+        agent_roles: List[Role],
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
         config: Config,
     ) -> None:
-        super().__init__(agent_profiles)
+        super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
         self.decision = 'reject'
         self.submission = PaperProfile()
         self.reviewer_mask = [False] * len(agent_profiles)
@@ -37,12 +39,6 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.paper_db = paper_db
         self.env_db = env_db
         self.config = config
-
-    @beartype
-    def assign_roles(self, role_dict: Dict[str, str]) -> None:
-        for index, agent_profile in enumerate(self.agent_profiles):
-            if role_dict[agent_profile.pk] == 'reviewer':
-                self.reviewer_mask[index] = True
 
     @beartype
     def initialize_submission(self, paper_profile: PaperProfile) -> None:
@@ -67,8 +63,8 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
     ) -> Generator[LogType, None, None]:
         yield from self.log('Paper Reviewing started')
         # Paper Reviewing
-        for index, agent in enumerate(self.agents):
-            if self.reviewer_mask[index]:
+        for agent in self.agents:
+            if agent.role == 'reviewer':
                 review = agent.write_paper_review(
                     paper=self.submission,
                     config=self.config,
@@ -80,8 +76,8 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
 
         yield from self.log('Paper Meta Reviewing started')
         # Paper Meta Reviewing
-        for index, agent in enumerate(self.agents):
-            if self.reviewer_mask[index]:
+        for agent in self.agents:
+            if agent.role == 'chair':
                 meta_review = agent.write_paper_meta_review(
                     paper=self.submission,
                     reviews=self.reviews,
@@ -94,9 +90,9 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
 
         yield from self.log('Rebuttal Submitting started')
         # Rebuttal Submitting
-        for index, agent in enumerate(self.agents):
+        for agent in self.agents:
             for review in self.reviews:
-                if self.reviewer_mask[index]:
+                if agent.role == 'proj_leader':
                     rebuttal = agent.write_rebuttal(
                         paper=self.submission,
                         review=review,

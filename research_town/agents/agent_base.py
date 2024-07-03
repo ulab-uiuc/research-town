@@ -41,11 +41,14 @@ Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair']
 
 class BaseResearchAgent(object):
     def __init__(
-        self, agent_profile: AgentProfile, model_name: str, role: Optional[Role] = None
+        self,
+        agent_profile: AgentProfile,
+        model_name: str,
+        agent_role: Optional[Role] = None,
     ) -> None:
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
-        self.role: Role | None = role
+        self.role: Role | None = agent_role
         self.model_name: str = model_name
         self.serializer = Serializer()
 
