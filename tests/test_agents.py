@@ -2,7 +2,14 @@ from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
 from research_town.configs import Config
-from research_town.dbs import AgentPaperRebuttalWritingLog
+from research_town.dbs import (
+    ResearchIdea,
+    ResearchInsight,
+    ResearchMetaReviewForPaperSubmission,
+    ResearchPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchReviewForPaperSubmission,
+)
 from tests.db_constants import (
     agent_profile_A,
     agent_profile_B,
@@ -64,6 +71,7 @@ def test_review_literature(
         config=Config(),
     )
     assert len(research_insight) == 1
+    assert isinstance(research_insight[0], ResearchInsight)
     assert research_insight[0].pk is not None
     assert research_insight[0].content == 'Graph Neural Network'
 
@@ -86,6 +94,7 @@ def test_brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
         config=Config(),
     )
+    assert isinstance(research_idea, ResearchIdea)
     assert research_idea.pk is not None
     assert research_idea.content == 'This is a research idea.'
 
@@ -104,12 +113,13 @@ def test_write_paper(mock_model_prompting: MagicMock) -> None:
         papers=[paper_profile_A, paper_profile_B],
         config=Config(),
     )
+    assert isinstance(paper, ResearchPaperSubmission)
     assert paper.abstract == 'This is a paper abstract.'
     assert paper.pk is not None
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_write_paper_review(mock_model_prompting: MagicMock) -> None:
+def test_write_review(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     research_agent = BaseResearchAgent(
@@ -121,6 +131,7 @@ def test_write_paper_review(mock_model_prompting: MagicMock) -> None:
         paper=paper_profile_A,
         config=Config(),
     )
+    assert isinstance(review, ResearchReviewForPaperSubmission)
     assert review.score == 2
     assert review.content == 'This is a paper review for MambaOut.'
 
@@ -148,6 +159,7 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
         reviews=[reviews],
         config=Config(),
     )
+    assert isinstance(meta_review, ResearchMetaReviewForPaperSubmission)
     assert meta_review.decision is True
     assert meta_review.content == 'Accept. This is a good paper.'
     assert meta_review.pk is not None
@@ -176,7 +188,7 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         review=review,
         config=Config(),
     )
-    assert isinstance(rebuttal, AgentPaperRebuttalWritingLog)
-    if rebuttal.rebuttal_content is not None:
-        assert len(rebuttal.rebuttal_content) > 0
-    assert rebuttal.rebuttal_content == 'This is a paper rebuttal.'
+    assert isinstance(rebuttal, ResearchRebuttalForPaperSubmission)
+    if rebuttal.content is not None:
+        assert len(rebuttal.content) > 0
+    assert rebuttal.content == 'This is a paper rebuttal.'

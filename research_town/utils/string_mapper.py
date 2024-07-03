@@ -31,12 +31,12 @@ def map_paper_to_str(paper: Dict[str, str]) -> str:
 
 
 def map_rebuttal_to_str(paper: Dict[str, str]) -> str:
-    return f"Rebuttal: {paper['rebuttal_content']}"
+    return f"Rebuttal: {paper['content']}"
 
 
 def map_review_to_str(review: Dict[str, Union[int, str]]) -> str:
-    score = review['review_score']
-    content = review['review_content']
+    score = review['score']
+    content = review['content']
     return f'Score: {score}\nContent: {content}'
 
 
