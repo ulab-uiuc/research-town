@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Tuple
+from beartype.typing import Any, Dict, List, Literal, Optional, Tuple
 
 from ..configs import Config
 from ..dbs import (
@@ -28,13 +28,27 @@ from ..utils.agent_prompter import (
     write_paper_prompting,
     write_rebuttal_prompting,
 )
+from ..utils.agent_role_verifier import (
+    chair_required,
+    proj_leader_required,
+    proj_participant_required,
+    reviewer_required,
+)
 from ..utils.serializer import Serializer
+
+Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair']
 
 
 class BaseResearchAgent(object):
-    def __init__(self, agent_profile: AgentProfile, model_name: str) -> None:
+    def __init__(
+        self,
+        agent_profile: AgentProfile,
+        model_name: str,
+        agent_role: Optional[Role] = None,
+    ) -> None:
         self.profile: AgentProfile = agent_profile
         self.memory: Dict[str, str] = {}
+        self.role: Role | None = agent_role
         self.model_name: str = model_name
         self.serializer = Serializer()
 
@@ -110,6 +124,11 @@ class BaseResearchAgent(object):
     # =======================================
 
     @beartype
+    def assign_role(self, role: Role) -> None:
+        self.role = role
+
+    @beartype
+    @proj_participant_required
     def read_paper(
         self, papers: List[PaperProfile], domains: List[str], config: Config
     ) -> List[ResearchInsight]:
@@ -129,6 +148,7 @@ class BaseResearchAgent(object):
         return insights
 
     @beartype
+    @proj_participant_required
     def think_idea(
         self, insights: List[ResearchInsight], config: Config
     ) -> ResearchIdea:
@@ -141,6 +161,7 @@ class BaseResearchAgent(object):
         return ResearchIdea(content=idea_content)
 
     @beartype
+    @proj_participant_required
     def summarize_ideas(
         self, ideas: List[ResearchIdea], config: Config
     ) -> ResearchIdea:
@@ -153,6 +174,7 @@ class BaseResearchAgent(object):
         return ResearchIdea(content=idea_summarized)
 
     @beartype
+    @proj_leader_required
     def write_paper(
         self, idea: ResearchIdea, papers: List[PaperProfile], config: Config
     ) -> ResearchPaperSubmission:
@@ -167,6 +189,7 @@ class BaseResearchAgent(object):
         return ResearchPaperSubmission(abstract=paper_abstract)
 
     @beartype
+    @reviewer_required
     def write_paper_review(
         self, paper: PaperProfile, config: Config
     ) -> AgentPaperReviewLog:
@@ -190,6 +213,7 @@ class BaseResearchAgent(object):
         )
 
     @beartype
+    @chair_required
     def write_paper_meta_review(
         self, paper: PaperProfile, reviews: List[AgentPaperReviewLog], config: Config
     ) -> AgentPaperMetaReviewLog:
@@ -213,6 +237,7 @@ class BaseResearchAgent(object):
         )
 
     @beartype
+    @proj_leader_required
     def write_rebuttal(
         self, paper: PaperProfile, review: AgentPaperReviewLog, config: Config
     ) -> AgentPaperRebuttalLog:
@@ -234,6 +259,7 @@ class BaseResearchAgent(object):
         )
 
     @beartype
+    @proj_participant_required
     def discuss(
         self, message: AgentAgentDiscussionLog, config: Config
     ) -> AgentAgentDiscussionLog:
