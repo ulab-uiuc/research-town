@@ -8,7 +8,7 @@ from research_town.evaluators.quality_evaluator import (
     PaperQualityEvaluator,
     ReviewQualityEvaluator,
 )
-from tests.eval_constants import (
+from tests.evaluators.eval_constants import (
     idea_constant_A,
     paper_abstract_constant_A,
     paper_title_constant_A,

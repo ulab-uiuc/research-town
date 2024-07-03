@@ -6,7 +6,7 @@ from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
     PaperSubmissionMultiAgentEnvironment,
 )
-from tests.db_constants import agent_profile_A, agent_profile_B, paper_profile_A
+from tests.dbs.db_constants import agent_profile_A, agent_profile_B, paper_profile_A
 from tests.utils import mock_papers
 
 
