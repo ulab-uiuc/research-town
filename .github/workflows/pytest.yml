@@ -27,7 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         curl -sSL https://install.python-poetry.org | python3
-        poetry install --with test --extras "retriever logger"
+        poetry install --with test --extras "retriever collector logger"
     - name: Test with pytest
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
