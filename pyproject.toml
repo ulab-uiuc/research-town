@@ -9,7 +9,6 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.10, <3.12"
 pydantic = "^2.8.0"
-openai = "^1.35.7"
 litellm = "~1.41.3"
 beartype = "^0.18.5"
 
