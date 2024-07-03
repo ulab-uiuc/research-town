@@ -46,7 +46,7 @@ def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 @patch('research_town.utils.agent_prompter.get_related_papers')
-def test_read_paper(
+def test_review_literature(
     mock_get_related_papers: MagicMock,
     mock_model_prompting: MagicMock,
 ) -> None:
@@ -56,7 +56,7 @@ def test_read_paper(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     )
-    research_insight = research_agent.read_paper(
+    research_insight = research_agent.review_literature(
         papers=[paper_profile_A, paper_profile_B],
         domains=['machine learning', 'graph neural network'],
         config=Config(),
@@ -68,7 +68,7 @@ def test_read_paper(
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 @patch('research_town.utils.agent_prompter.get_related_papers')
-def test_think_idea(
+def test_brainstorm_idea(
     mock_get_related_papers: MagicMock,
     mock_model_prompting: MagicMock,
 ) -> None:
@@ -79,7 +79,7 @@ def test_think_idea(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     )
-    research_idea = research_agent.think_idea(
+    research_idea = research_agent.brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
         config=Config(),
     )
@@ -121,7 +121,7 @@ def test_write_paper_review(mock_model_prompting: MagicMock) -> None:
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_write_paper_meta_review(mock_model_prompting: MagicMock) -> None:
+def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.return_value = ['Accept. This is a good paper.']
 
     research_agent = BaseResearchAgent(
@@ -132,7 +132,7 @@ def test_write_paper_meta_review(mock_model_prompting: MagicMock) -> None:
         paper=paper_profile_A,
         config=Config(),
     )
-    meta_review = research_agent.write_paper_meta_review(
+    meta_review = research_agent.write_meta_review(
         paper=paper_profile_A,
         reviews=[reviews],
         config=Config(),

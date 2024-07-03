@@ -85,7 +85,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         f'Agent {agent.profile.name} found {researcher_profile.name} as collaborator'
                     )
 
-            insights = agent.read_paper(
+            insights = agent.review_literature(
                 papers=papers,
                 domains=['machine learning'],
                 config=self.config,
@@ -95,20 +95,20 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             )
 
             ideas = []
-            idea = agent.think_idea(insights=insights, config=self.config)
+            idea = agent.brainstorm_idea(insights=insights, config=self.config)
             ideas.append(idea)
             yield from self.log(
                 f'Agent {agent.profile.name} generated idea: {str(idea)}'
             )
             for collaborator_agent in collaborator_agents:
-                idea = collaborator_agent.think_idea(
+                idea = collaborator_agent.brainstorm_idea(
                     insights=insights, config=self.config
                 )
                 ideas.append(idea)
                 yield from self.log(
                     f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(idea)}"
                 )
-            summarized_idea = agent.summarize_ideas(ideas=ideas, config=self.config)
+            summarized_idea = agent.discuss_idea(ideas=ideas, config=self.config)
             paper: ResearchPaperSubmission = agent.write_paper(
                 idea=summarized_idea, papers=papers, config=self.config
             )

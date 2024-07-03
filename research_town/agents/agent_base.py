@@ -110,7 +110,7 @@ class BaseResearchAgent(object):
     # =======================================
 
     @beartype
-    def read_paper(
+    def review_literature(
         self, papers: List[PaperProfile], domains: List[str], config: Config
     ) -> List[ResearchInsight]:
         serialized_papers = self.serializer.serialize(papers)
@@ -129,7 +129,7 @@ class BaseResearchAgent(object):
         return insights
 
     @beartype
-    def think_idea(
+    def brainstorm_idea(
         self, insights: List[ResearchInsight], config: Config
     ) -> ResearchIdea:
         serialized_insights = self.serializer.serialize(insights)
@@ -141,9 +141,7 @@ class BaseResearchAgent(object):
         return ResearchIdea(content=idea_content)
 
     @beartype
-    def summarize_ideas(
-        self, ideas: List[ResearchIdea], config: Config
-    ) -> ResearchIdea:
+    def discuss_idea(self, ideas: List[ResearchIdea], config: Config) -> ResearchIdea:
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized = summarize_ideas_prompting(
             ideas=serialized_ideas,
@@ -190,7 +188,7 @@ class BaseResearchAgent(object):
         )
 
     @beartype
-    def write_paper_meta_review(
+    def write_meta_review(
         self, paper: PaperProfile, reviews: List[AgentPaperReviewLog], config: Config
     ) -> AgentPaperMetaReviewLog:
         serialized_paper = self.serializer.serialize(paper)
