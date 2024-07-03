@@ -14,12 +14,12 @@ ATOM_NAMESPACE = '{http://www.w3.org/2005/Atom}'
 def get_related_papers(corpus: List[str], query: str, num: int) -> List[str]:
     corpus_embedding = get_bert_embedding(corpus)
     query_embedding = get_bert_embedding([query])
-    indices = neiborhood_search(corpus_embedding, query_embedding, num)
+    indices = neighborhood_search(corpus_embedding, query_embedding, num)
     related_papers = [corpus[idx] for idx in indices[0]]
     return related_papers
 
 
-def neiborhood_search(
+def neighborhood_search(
     query_data: List[torch.Tensor], corpus_data: List[torch.Tensor], num: int
 ) -> List[List[int]]:
     xq = torch.cat(query_data, 0)

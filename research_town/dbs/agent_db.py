@@ -3,7 +3,7 @@ import json
 from beartype.typing import Any, Dict, List, Optional
 from transformers import BertModel, BertTokenizer
 
-from ..utils.paper_collector import neiborhood_search
+from ..utils.paper_collector import neighborhood_search
 from ..utils.retriever import get_bert_embedding
 from .agent_data import AgentProfile
 
@@ -61,7 +61,7 @@ class AgentProfileDB(object):
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
-        index_l = neiborhood_search(idea_embed, profile_embed, num)
+        index_l = neighborhood_search(idea_embed, profile_embed, num)
         index_all = [index for index_list in index_l for index in index_list]
         match_pk = []
         for index in index_all:
