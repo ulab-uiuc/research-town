@@ -6,25 +6,16 @@ authors = ["Haofei Yu <yuhaofei44@gmail.com>"]
 license = "Apache 2.0 License"
 readme = "README.md"
 
-
 [tool.poetry.dependencies]
-python = ">=3.9, <3.12"
-huggingface_hub = "0.23.4"
-openai = "^1.35.7"
-scikit_learn = "^1.5.0"
-mypy = "^1.8.0"
+python = ">=3.10, <3.12"
 pydantic = "^2.8.0"
-arxiv = "^2.1.0"
-types-requests = "^2.31.0"
-torch = ">=2.1.0 <2.3.0"
-transformers = "^4.41.2"
 litellm = "~1.41.3"
 beartype = "^0.18.5"
-termcolor = "^2.4.0"
-types-PyYAML = "^6.0.0"
-pandas = "^2.0.0"
-numpy = "<2.0.0"
 
+torch = { version = ">=2.1.0 <2.3.0", optional = true }
+transformers = { version = "^4.41.2", optional = true }
+termcolor = { version = "^2.4.0", optional = true }
+arxiv = { version = "^2.1.0", optional = true }
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "*"
@@ -32,6 +23,7 @@ nbmake = "*"
 types-setuptools = "*"
 types-requests = "*"
 types-tqdm = "*"
+types-PyYAML = "*"
 ruff = "*"
 
 [tool.poetry.group.test.dependencies]
@@ -40,6 +32,10 @@ pytest-cov = "*"
 pytest-asyncio = "*"
 mypy = "^1.8.0"
 
+[tool.poetry.extras]
+retriever = ["torch", "transformers"]
+collector = ["arxiv"]
+logger = ["termcolor"]
 
 [build-system]
 requires = ["poetry-core"]
