@@ -1,10 +1,14 @@
 from .agent_data import AgentProfile
 from .agent_db import AgentProfileDB
 from .env_data import (
-    AgentAgentDiscussionLog,
-    AgentPaperMetaReviewLog,
-    AgentPaperRebuttalLog,
-    AgentPaperReviewLog,
+    AgentAgentCollaborationFindingLog,
+    AgentAgentIdeaDiscussionLog,
+    AgentIdeaBrainstormingLog,
+    AgentPaperLiteratureReviewLog,
+    AgentPaperMetaReviewWritingLog,
+    AgentPaperRebuttalWritingLog,
+    AgentPaperReviewWritingLog,
+    AgentPaperWritingLog,
 )
 from .env_db import EnvLogDB
 from .paper_data import PaperProfile
@@ -17,13 +21,17 @@ from .progress_data import (
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
-from .progress_db import ResearchProgressDB
+from .progress_db import ProgressDB
 
 __all__ = [
-    'AgentAgentDiscussionLog',
-    'AgentPaperMetaReviewLog',
-    'AgentPaperRebuttalLog',
-    'AgentPaperReviewLog',
+    'AgentAgentCollaborationFindingLog',
+    'AgentAgentIdeaDiscussionLog',
+    'AgentIdeaBrainstormingLog',
+    'AgentPaperLiteratureReviewLog',
+    'AgentPaperWritingLog',
+    'AgentPaperMetaReviewWritingLog',
+    'AgentPaperRebuttalWritingLog',
+    'AgentPaperReviewWritingLog',
     'PaperProfile',
     'AgentProfile',
     'ResearchIdea',
@@ -35,5 +43,5 @@ __all__ = [
     'EnvLogDB',
     'PaperProfileDB',
     'AgentProfileDB',
-    'ResearchProgressDB',
+    'ProgressDB',
 ]

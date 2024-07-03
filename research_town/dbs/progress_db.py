@@ -6,7 +6,7 @@ from pydantic import BaseModel
 T = TypeVar('T', bound=BaseModel)
 
 
-class ResearchProgressDB:
+class ProgressDB:
     def __init__(self) -> None:
         self.data: Dict[
             str,

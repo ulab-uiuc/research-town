@@ -3,14 +3,15 @@ from beartype.typing import Dict, Generator, List, Literal, Tuple, Union
 
 from ..configs import Config
 from ..dbs import (
-    AgentPaperMetaReviewLog,
-    AgentPaperRebuttalLog,
-    AgentPaperReviewLog,
     AgentProfile,
     AgentProfileDB,
     EnvLogDB,
     PaperProfile,
     PaperProfileDB,
+    ProgressDB,
+    ResearchMetaReviewForPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchReviewForPaperSubmission,
 )
 from .env_base import BaseMultiAgentEnv
 
@@ -26,18 +27,20 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
+        progress_db: ProgressDB,
         config: Config,
     ) -> None:
         super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
         self.decision = 'reject'
         self.submission = PaperProfile()
         self.reviewer_mask = [False] * len(agent_profiles)
-        self.reviews: List[AgentPaperReviewLog] = []
-        self.rebuttals: List[AgentPaperRebuttalLog] = []
-        self.meta_reviews: List[AgentPaperMetaReviewLog] = []
+        self.reviews: List[ResearchReviewForPaperSubmission] = []
+        self.rebuttals: List[ResearchRebuttalForPaperSubmission] = []
+        self.meta_reviews: List[ResearchMetaReviewForPaperSubmission] = []
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
+        self.progress_db = progress_db
         self.config = config
 
     @beartype
@@ -78,7 +81,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         # Paper Meta Reviewing
         for agent in self.agents:
             if agent.role == 'chair':
-                meta_review = agent.write_paper_meta_review(
+                meta_review = agent.write_meta_review(
                     paper=self.submission,
                     reviews=self.reviews,
                     config=self.config,
