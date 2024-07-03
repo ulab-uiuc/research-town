@@ -2,7 +2,6 @@ import datetime
 from xml.etree import ElementTree
 
 import arxiv
-import faiss
 import requests
 import torch
 from beartype.typing import Any, Dict, List, Tuple
@@ -15,18 +14,16 @@ def get_related_papers(corpus: List[str], query: str, num: int) -> List[str]:
     corpus_embedding = get_bert_embedding(corpus)
     query_embedding = get_bert_embedding([query])
     indices = neiborhood_search(corpus_embedding, query_embedding, num)
-    related_papers = [corpus[idx] for idx in indices[0].tolist()]
+    related_papers = [corpus[idx] for idx in indices[0]]
     return related_papers
 
 
 def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:
     tokenizer = BertTokenizer.from_pretrained('facebook/contriever')
-    model = BertModel.from_pretrained('facebook/contriever').to(torch.device('cpu'))
+    model = BertModel.from_pretrained('facebook/contriever')
 
     encoded_input_all = [
-        tokenizer(text, return_tensors='pt', truncation=True, max_length=512).to(
-            torch.device('cpu')
-        )
+        tokenizer(text, return_tensors='pt', truncation=True, max_length=512)
         for text in instructions
     ]
 
@@ -40,19 +37,17 @@ def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:
 
 def neiborhood_search(
     query_data: List[torch.Tensor], corpus_data: List[torch.Tensor], num: int
-) -> Any:
-    d = 768
-    neiborhood_num = num
-    xq = torch.cat(query_data, 0).cpu().numpy()
-    xb = torch.cat(corpus_data, 0).cpu().numpy()
-    index = faiss.IndexFlatIP(d)
-    xq = xq.astype('float32')
-    xb = xb.astype('float32')
-    faiss.normalize_L2(xq)
-    faiss.normalize_L2(xb)
-    index.add(xb)  # add vectors to the index
-    data, index = index.search(xq, neiborhood_num)
-    return index
+) -> List[List[int]]:
+    xq = torch.cat(query_data, 0)
+    xb = torch.cat(corpus_data, 0)
+
+    xq = torch.nn.functional.normalize(xq, p=2, dim=1)
+    xb = torch.nn.functional.normalize(xb, p=2, dim=1)
+
+    similarity = torch.mm(xq, xb.t())
+
+    _, indices = torch.topk(similarity, num, dim=1, largest=True)
+    return indices.tolist()
 
 
 def find_text(element: ElementTree.Element, path: str) -> str:

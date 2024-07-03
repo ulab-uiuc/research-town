@@ -1,6 +1,6 @@
 from research_town.agents.agent_base import BaseResearchAgent
 from research_town.utils.serializer import Serializer
-from tests.db_constants import agent_profile_A
+from tests.constants.db_constants import agent_profile_A
 
 
 def test_serializer() -> None:

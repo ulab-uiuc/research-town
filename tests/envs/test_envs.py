@@ -6,8 +6,12 @@ from research_town.envs import (
     PaperRebuttalMultiAgentEnv,
     PaperSubmissionMultiAgentEnvironment,
 )
-from tests.dbs.db_constants import agent_profile_A, agent_profile_B, paper_profile_A
-from tests.utils import mock_papers
+from tests.constants.db_constants import (
+    agent_profile_A,
+    agent_profile_B,
+    paper_profile_A,
+)
+from tests.mocks.mocking_func import mock_papers
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
