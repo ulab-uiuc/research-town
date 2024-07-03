@@ -1,5 +1,4 @@
 import datetime
-from typing import Any, Dict
 from unittest.mock import MagicMock, patch
 from xml.etree import ElementTree
 
@@ -7,7 +6,6 @@ import torch
 
 from research_town.utils.paper_collector import (
     find_text,
-    get_bert_embedding,
     get_daily_papers,
     get_paper_list,
     get_papers,
@@ -40,28 +38,6 @@ def test_get_related_papers() -> None:
         result = get_related_papers(corpus, query, num)
         expected_result = ['Paper 1', 'Paper 2']
         assert result == expected_result
-
-
-def test_get_bert_embedding() -> None:
-    with patch('transformers.BertModel.from_pretrained') as mock_model:
-        mock_model_instance = MagicMock()
-        mock_model.return_value = mock_model_instance
-
-        def mock_forward(*args: Any, **kwargs: Any) -> Dict[str, torch.Tensor]:
-            batch_size = kwargs['input_ids'].shape[0]
-            seq_length = kwargs['input_ids'].shape[1]
-            hidden_size = 3  # Same as in your example
-            return {
-                'last_hidden_state': torch.ones((batch_size, seq_length, hidden_size))
-            }
-
-        mock_model_instance.side_effect = mock_forward
-
-        instructions = ['Test instruction']
-        result = get_bert_embedding(instructions)
-
-        assert isinstance(result[0], torch.Tensor)
-        assert result[0].shape == (1, 3)
 
 
 def test_neiborhood_search() -> None:

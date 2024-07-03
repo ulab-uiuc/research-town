@@ -1,6 +1,7 @@
 import json
 
 from beartype.typing import Any, Dict, List, Optional
+from transformers import BertModel, BertTokenizer
 
 from ..utils.paper_collector import get_bert_embedding, neiborhood_search
 from .agent_data import AgentProfile
@@ -9,6 +10,12 @@ from .agent_data import AgentProfile
 class AgentProfileDB(object):
     def __init__(self) -> None:
         self.data: Dict[str, AgentProfile] = {}
+        self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
+            'facebook/contriever'
+        )
+        self.retriever_model: BertModel = BertModel.from_pretrained(
+            'facebook/contriever'
+        )
 
     def add(self, agent: AgentProfile) -> None:
         self.data[agent.pk] = agent
@@ -37,14 +44,22 @@ class AgentProfileDB(object):
     def match(
         self, idea: str, agent_profiles: List[AgentProfile], num: int = 1
     ) -> List[str]:
-        idea_embed = get_bert_embedding([idea])
+        idea_embed = get_bert_embedding(
+            instructions=[idea],
+            retriever_tokenizer=self.retriever_tokenizer,
+            retriever_model=self.retriever_model,
+        )
         bio_list = []
         for agent_profile in agent_profiles:
             if agent_profile.bio is not None:
                 bio_list.append(agent_profile.bio)
             else:
                 bio_list.append('')
-        profile_embed = get_bert_embedding(bio_list)
+        profile_embed = get_bert_embedding(
+            instructions=bio_list,
+            retriever_tokenizer=self.retriever_tokenizer,
+            retriever_model=self.retriever_model,
+        )
         index_l = neiborhood_search(idea_embed, profile_embed, num)
         index_all = [index for index_list in index_l for index in index_list]
         match_pk = []
