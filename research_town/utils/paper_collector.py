@@ -5,7 +5,8 @@ import arxiv
 import requests
 import torch
 from beartype.typing import Any, Dict, List, Tuple
-from transformers import BertModel, BertTokenizer
+
+from .retriever import get_bert_embedding
 
 ATOM_NAMESPACE = '{http://www.w3.org/2005/Atom}'
 
@@ -16,23 +17,6 @@ def get_related_papers(corpus: List[str], query: str, num: int) -> List[str]:
     indices = neiborhood_search(corpus_embedding, query_embedding, num)
     related_papers = [corpus[idx] for idx in indices[0]]
     return related_papers
-
-
-def get_bert_embedding(instructions: List[str]) -> List[torch.Tensor]:
-    tokenizer = BertTokenizer.from_pretrained('facebook/contriever')
-    model = BertModel.from_pretrained('facebook/contriever')
-
-    encoded_input_all = [
-        tokenizer(text, return_tensors='pt', truncation=True, max_length=512)
-        for text in instructions
-    ]
-
-    with torch.no_grad():
-        emb_list = []
-        for inter in encoded_input_all:
-            emb = model(**inter)
-            emb_list.append(emb['last_hidden_state'].mean(1))
-    return emb_list
 
 
 def neiborhood_search(
