@@ -227,7 +227,7 @@ class BaseResearchAgent(object):
             paper_pk=paper.pk,
             area_chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
-            author_pk=paper.author_pk,
+            author_pk=self.profile.pk,
             content=meta_review[0],
             decision=review_decision,
         )
@@ -253,6 +253,6 @@ class BaseResearchAgent(object):
         return ResearchRebuttalForPaperSubmission(
             paper_pk=paper.pk,
             reviewer_pk=review.reviewer_pk,
-            author_pk=paper.author_pk,
+            author_pk=self.profile.pk,
             content=rebuttal_content,
         )

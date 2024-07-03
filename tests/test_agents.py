@@ -121,8 +121,8 @@ def test_write_paper_review(mock_model_prompting: MagicMock) -> None:
         paper=paper_profile_A,
         config=Config(),
     )
-    assert review.review_score == 2
-    assert review.review_content == 'This is a paper review for MambaOut.'
+    assert review.score == 2
+    assert review.content == 'This is a paper review for MambaOut.'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -149,8 +149,7 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
         config=Config(),
     )
     assert meta_review.decision is True
-    assert meta_review.meta_review == 'Accept. This is a good paper.'
-    assert meta_review.timestep >= 0
+    assert meta_review.content == 'Accept. This is a good paper.'
     assert meta_review.pk is not None
 
 

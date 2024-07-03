@@ -6,9 +6,9 @@ from pydantic import BaseModel, Field
 
 class PaperProfile(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    author_pks: Optional[List[str]] = Field(default=[])
     title: Optional[str] = Field(default=None)
     abstract: Optional[str] = Field(default=None)
-    authors: Optional[List[str]] = Field(default=[])
     url: Optional[str] = Field(default=None)
     timestamp: Optional[int] = Field(default=None)
     section_contents: Optional[Dict[str, str]] = Field(default=None)
