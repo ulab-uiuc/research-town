@@ -8,6 +8,7 @@ from ..dbs import (
     EnvLogDB,
     PaperProfile,
     PaperProfileDB,
+    ProgressDB,
     ResearchMetaReviewForPaperSubmission,
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
@@ -26,6 +27,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
+        progress_db: ProgressDB,
         config: Config,
     ) -> None:
         super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
@@ -38,6 +40,7 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
+        self.progress_db = progress_db
         self.config = config
 
     @beartype

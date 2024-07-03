@@ -21,7 +21,7 @@ from .progress_data import (
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
-from .progress_db import ResearchProgressDB
+from .progress_db import ProgressDB
 
 __all__ = [
     'AgentAgentCollaborationFindingLog',
@@ -43,5 +43,5 @@ __all__ = [
     'EnvLogDB',
     'PaperProfileDB',
     'AgentProfileDB',
-    'ResearchProgressDB',
+    'ProgressDB',
 ]

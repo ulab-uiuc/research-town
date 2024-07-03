@@ -9,6 +9,7 @@ from ..dbs import (
     EnvLogDB,
     PaperProfile,
     PaperProfileDB,
+    ProgressDB,
     ResearchPaperSubmission,
 )
 from .env_base import BaseMultiAgentEnv
@@ -25,6 +26,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
+        progress_db: ProgressDB,
         config: Config,
         task: Dict[str, str],
     ) -> None:
@@ -34,6 +36,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
+        self.progress_db = progress_db
         self.config = config
 
     def _step(
