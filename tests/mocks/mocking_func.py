@@ -1,4 +1,5 @@
-from beartype.typing import List, Optional
+from beartype.typing import Any, List, Optional
+from pydantic import BaseModel
 
 
 def mock_papers(corpus: List[str], query: str, num: int) -> List[str]:
@@ -25,3 +26,15 @@ def mock_prompting(
     elif 'Given a list of research ideas, please summarize them' in prompt:
         return ['This is a summarized idea.']
     return ['Default response']
+
+
+class MockModel(BaseModel):
+    data: str
+
+
+def mock_api_call_success(*args: Any, **kwargs: Any) -> Optional[List[str]]:
+    return ['Success']
+
+
+def mock_api_call_failure(*args: Any, **kwargs: Any) -> Optional[List[str]]:
+    raise Exception('API call failed')

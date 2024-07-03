@@ -45,8 +45,8 @@ class AgentProfileDB(object):
             else:
                 bio_list.append('')
         profile_embed = get_bert_embedding(bio_list)
-        index_l = neiborhood_search(idea_embed, profile_embed, num).reshape(-1)
-        index_all = list(index_l)
+        index_l = neiborhood_search(idea_embed, profile_embed, num)
+        index_all = [index for index_list in index_l for index in index_list]
         match_pk = []
         for index in index_all:
             match_pk.append(agent_profiles[index].pk)

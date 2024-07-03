@@ -10,7 +10,7 @@ from research_town.dbs import (
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
-from tests.db_constants import (
+from tests.constants.db_constants import (
     agent_profile_A,
     agent_profile_B,
     paper_profile_A,
@@ -19,7 +19,7 @@ from tests.db_constants import (
     research_insight_A,
     research_insight_B,
 )
-from tests.utils import mock_papers, mock_prompting
+from tests.mocks.mocking_func import mock_papers, mock_prompting
 
 
 def test_get_profile() -> None:
