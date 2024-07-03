@@ -3,7 +3,8 @@ import json
 from beartype.typing import Any, Dict, List, Optional
 from transformers import BertModel, BertTokenizer
 
-from ..utils.paper_collector import get_bert_embedding, neiborhood_search
+from ..utils.paper_collector import neiborhood_search
+from ..utils.retriever import get_bert_embedding
 from .agent_data import AgentProfile
 
 
