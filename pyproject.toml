@@ -31,11 +31,15 @@ numpy = "<2.0.0"
 pre-commit = "*"
 nbmake = "*"
 types-setuptools = "*"
+types-requests = "*"
+types-tqdm = "*"
+ruff = "*"
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"
 pytest-cov = "*"
 pytest-asyncio = "*"
+mypy = "^1.8.0"
 
 
 [build-system]
