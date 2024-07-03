@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, Generator, List, Union
+from beartype.typing import Dict, Generator, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
@@ -14,19 +14,21 @@ from ..dbs import (
 from .env_base import BaseMultiAgentEnv
 
 LogType = Union[List[Dict[str, str]], None]
+Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
 class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def __init__(
         self,
         agent_profiles: List[AgentProfile],
+        agent_roles: List[Role],
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         env_db: EnvLogDB,
         config: Config,
         task: Dict[str, str],
     ) -> None:
-        super().__init__(agent_profiles)
+        super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
         self.task = task
         self.paper = PaperProfile()
         self.agent_db = agent_db
@@ -74,6 +76,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         new_agent_obj = BaseResearchAgent(
                             agent_profile=researcher_profile,
                             model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+                            agent_role='proj_participant',
                         )
                         collaborator_agents.append(new_agent_obj)
                         agent_names_to_objs[researcher_profile.name] = new_agent_obj

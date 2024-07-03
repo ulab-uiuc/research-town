@@ -1,4 +1,4 @@
-from beartype.typing import Dict, List
+from beartype.typing import Dict, List, Literal
 
 from research_town.configs import Config
 from research_town.dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfileDB
@@ -7,10 +7,12 @@ from research_town.envs import (
     PaperSubmissionMultiAgentEnvironment,
 )
 
+Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
+
 
 def run_sync_experiment(
     agent_list: List[str],
-    role_list: List[str],
+    role_list: List[Role],
     task: Dict[str, str],
     config_file_path: str,
 ) -> None:
@@ -25,6 +27,7 @@ def run_sync_experiment(
     config = Config(config_file_path)
     paper_submission_env = PaperSubmissionMultiAgentEnvironment(
         agent_profiles=agent_profiles,
+        agent_roles=role_list,
         task=task,
         agent_db=agent_db,
         paper_db=paper_db,
@@ -33,6 +36,7 @@ def run_sync_experiment(
     )
     paper_rebuttal_env = PaperRebuttalMultiAgentEnv(
         agent_profiles=agent_profiles,
+        agent_roles=role_list,
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
@@ -48,10 +52,6 @@ def run_sync_experiment(
 
     # Paper Review
     paper_rebuttal_env.initialize_submission(paper)
-    role_dict = {}
-    for agent_profile, role in zip(agent_profiles, role_list):
-        role_dict[agent_profile.pk] = role
-    paper_rebuttal_env.assign_roles(role_dict=role_dict)
     rebuttal_done = False
     while not rebuttal_done:
         paper_rebuttal_env.step()
@@ -61,7 +61,7 @@ def run_sync_experiment(
 def main() -> None:
     run_sync_experiment(
         agent_list=['Jiaxuan You', 'Jure Leskovec'],
-        role_list=['author', 'reviewer'],
+        role_list=['proj_leader', 'reviewer'],
         task={},
         config_file_path='./configs/default_config.yaml',
     )

@@ -19,6 +19,7 @@ def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
     config = Config()
     env = PaperRebuttalMultiAgentEnv(
         agent_profiles=[agent_profile_A, agent_profile_B],
+        agent_roles=['proj_leader', 'reviewer'],
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
@@ -27,7 +28,6 @@ def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
 
     submission = paper_profile_A
     env.initialize_submission(submission)
-    env.assign_roles({agent_profile_A.pk: 'author', agent_profile_B.pk: 'reviewer'})
 
     while not env.terminated:
         env.step()
@@ -54,6 +54,7 @@ def test_paper_submission_env(
     config = Config()
     env = PaperSubmissionMultiAgentEnvironment(
         agent_profiles=[agent_profile_A],
+        agent_roles=['proj_leader'],
         task={
             'Survey on Machine Learning': 'This paper surveys the field of machine learning.'
         },

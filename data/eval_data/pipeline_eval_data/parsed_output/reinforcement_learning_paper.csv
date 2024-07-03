@@ -1,0 +1,16 @@
+domain,agent_model_name,evaluator_model_name,paper_avg_overall_score,paper_variance_overall_score,paper_sum_variance_dimension_scores
+reinforcement_learning,llama3_70b,together_ai/meta-llama/Llama-3-70b-chat-hf,89.9,10.290000000000003,1.21
+reinforcement_learning,llama3_70b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,85.0,0.0,0.08999999999999998
+reinforcement_learning,llama3_70b,gpt-4o,84.4,6.24,1.88
+reinforcement_learning,mixtral_8_7b,together_ai/meta-llama/Llama-3-70b-chat-hf,89.9,10.290000000000003,1.47
+reinforcement_learning,mixtral_8_7b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,84.0,9.0,0.63
+reinforcement_learning,mixtral_8_7b,gpt-4o,82.7,11.010000000000002,2.96
+reinforcement_learning,qwen_32,together_ai/meta-llama/Llama-3-70b-chat-hf,91.3,4.409999999999998,0.43
+reinforcement_learning,qwen_32,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,84.0,9.0,0.63
+reinforcement_learning,qwen_32,gpt-4o,84.5,10.85,2.78
+reinforcement_learning,llama3_8b,together_ai/meta-llama/Llama-3-70b-chat-hf,89.9,10.290000000000003,0.8999999999999998
+reinforcement_learning,llama3_8b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,84.5,2.25,0.26999999999999996
+reinforcement_learning,llama3_8b,gpt-4o,83.2,4.76,2.11
+reinforcement_learning,gpt_4o,together_ai/meta-llama/Llama-3-70b-chat-hf,92.0,0.0,0.0
+reinforcement_learning,gpt_4o,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,85.0,0.0,0.6799999999999999
+reinforcement_learning,gpt_4o,gpt-4o,85.6,6.639999999999999,2.1899999999999995
