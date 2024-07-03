@@ -36,7 +36,7 @@ mypy = "^1.8.0"
 [tool.poetry.extras]
 retriever = ["torch", "transformers"]
 collector = ["arxiv"]
-logger = ["termcolor]
+logger = ["termcolor"]
 
 [build-system]
 requires = ["poetry-core"]
