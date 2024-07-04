@@ -46,7 +46,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     ) -> Tuple[List[AgentProfile], List[Role]]:
         assert len(agent_profiles) == len(agent_roles)
         if 'proj_leader' not in agent_roles:
-            raise ValueError('At least one proj_leader is required.')
+            raise ValueError('At least one proj_leader is required to submit paper.')
 
         valid_agent_profiles: List[AgentProfile] = []
         valid_agent_roles: List[Role] = []

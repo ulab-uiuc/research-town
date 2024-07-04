@@ -51,15 +51,17 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         self, agent_profiles: List[AgentProfile], agent_roles: List[Role]
     ) -> Tuple[List[AgentProfile], List[Role]]:
         assert len(agent_profiles) == len(agent_roles)
+        if 'proj_leader' not in agent_roles:
+            raise ValueError('At least one proj_leader is required to write rebuttal.')
         if 'reviewer' not in agent_roles:
-            raise ValueError('At least one reviewer is required.')
+            raise ValueError('At least one reviewer is required to write review.')
         if 'chair' not in agent_roles:
-            raise ValueError('At least one chair is required.')
+            raise ValueError('At least one chair is required to write meta-review.')
 
         valid_agent_profiles: List[AgentProfile] = []
         valid_agent_roles: List[Role] = []
         for profile, role in zip(agent_profiles, agent_roles):
-            if role == 'reviewer' or role == 'chair':
+            if role == 'reviewer' or role == 'chair' or role == 'proj_leader':
                 valid_agent_profiles.append(profile)
                 valid_agent_roles.append(role)
         return valid_agent_profiles, valid_agent_roles
