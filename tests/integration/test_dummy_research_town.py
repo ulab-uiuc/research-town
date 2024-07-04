@@ -1,5 +1,3 @@
-from unittest.mock import MagicMock, patch
-
 from beartype.typing import List, Literal
 
 from research_town.configs import Config
@@ -14,20 +12,11 @@ from research_town.envs import (
     PaperSubmissionMultiAgentEnvironment,
     PeerReviewMultiAgentEnv,
 )
-from tests.mocks.mocking_func import mock_papers, mock_prompting
 
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
-@patch('research_town.utils.agent_prompter.model_prompting')
-@patch('research_town.utils.agent_prompter.get_related_papers')
-def test_dummy_research_town(
-    mock_get_related_papers: MagicMock,
-    mock_model_prompting: MagicMock,
-) -> None:
-    mock_get_related_papers.side_effect = mock_papers
-    mock_model_prompting.side_effect = mock_prompting
-
+def test_dummy_research_town() -> None:
     agent_list: List[str] = ['Jiaxuan You', 'Jure Leskovec', 'Geoffrey Hinton']
     role_list: List[Role] = ['proj_leader', 'reviewer', 'chair']
 

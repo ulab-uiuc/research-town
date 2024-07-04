@@ -23,8 +23,8 @@ def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
     progress_db = ProgressDB()
     config = Config()
     env = PeerReviewMultiAgentEnv(
-        agent_profiles=[agent_profile_A, agent_profile_B],
-        agent_roles=['proj_leader', 'reviewer'],
+        agent_profiles=[agent_profile_A, agent_profile_B, agent_profile_B],
+        agent_roles=['proj_leader', 'reviewer', 'chair'],
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
