@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, Generator, List, Literal, Union
+from beartype.typing import Dict, Generator, List, Literal, Tuple, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
@@ -28,16 +28,33 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         env_db: EnvLogDB,
         progress_db: ProgressDB,
         config: Config,
-        task: Dict[str, str],
     ) -> None:
+        agent_profiles, agent_roles = self.filter_agents(
+            agent_profiles=agent_profiles, agent_roles=agent_roles
+        )
         super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
-        self.task = task
         self.paper = PaperProfile()
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
         self.progress_db = progress_db
         self.config = config
+
+    @beartype
+    def filter_agents(
+        self, agent_profiles: List[AgentProfile], agent_roles: List[Role]
+    ) -> Tuple[List[AgentProfile], List[Role]]:
+        assert len(agent_profiles) == len(agent_roles)
+        if 'proj_leader' not in agent_roles:
+            raise ValueError('At least one proj_leader is required to submit paper.')
+
+        valid_agent_profiles: List[AgentProfile] = []
+        valid_agent_roles: List[Role] = []
+        for profile, role in zip(agent_profiles, agent_roles):
+            if role == 'proj_leader' or role == 'proj_participant':
+                valid_agent_profiles.append(profile)
+                valid_agent_roles.append(role)
+        return valid_agent_profiles, valid_agent_roles
 
     def _step(
         self,

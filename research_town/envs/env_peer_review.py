@@ -19,7 +19,7 @@ LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
-class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
+class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
     def __init__(
         self,
         agent_profiles: List[AgentProfile],
@@ -30,6 +30,9 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         progress_db: ProgressDB,
         config: Config,
     ) -> None:
+        agent_profiles, agent_roles = self.filter_agents(
+            agent_profiles=agent_profiles, agent_roles=agent_roles
+        )
         super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
         self.decision = 'reject'
         self.submission = PaperProfile()
@@ -42,6 +45,26 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
         self.env_db = env_db
         self.progress_db = progress_db
         self.config = config
+
+    @beartype
+    def filter_agents(
+        self, agent_profiles: List[AgentProfile], agent_roles: List[Role]
+    ) -> Tuple[List[AgentProfile], List[Role]]:
+        assert len(agent_profiles) == len(agent_roles)
+        if 'proj_leader' not in agent_roles:
+            raise ValueError('At least one proj_leader is required to write rebuttal.')
+        if 'reviewer' not in agent_roles:
+            raise ValueError('At least one reviewer is required to write review.')
+        if 'chair' not in agent_roles:
+            raise ValueError('At least one chair is required to write meta-review.')
+
+        valid_agent_profiles: List[AgentProfile] = []
+        valid_agent_roles: List[Role] = []
+        for profile, role in zip(agent_profiles, agent_roles):
+            if role == 'reviewer' or role == 'chair' or role == 'proj_leader':
+                valid_agent_profiles.append(profile)
+                valid_agent_roles.append(role)
+        return valid_agent_profiles, valid_agent_roles
 
     @beartype
     def initialize_submission(self, paper_profile: PaperProfile) -> None:
@@ -106,4 +129,4 @@ class PaperRebuttalMultiAgentEnv(BaseMultiAgentEnv):
                         f'Agent {agent.profile.name} gave rebuttal {str(rebuttal)}'
                     )
 
-        yield from self.log('PaperRebuttalMultiAgentEnv completed')
+        yield from self.log('PeerReviewMultiAgentEnv completed')
