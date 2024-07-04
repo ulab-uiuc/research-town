@@ -4,32 +4,29 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
+    title: 'Realistic',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Each agent in Research Town operates based on a generated persona that mirrors real human researchers.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Comprehensive',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Research Town is not limited to specific research tasks (e.g. peer review or paper writing). Instead, the simulation encompasses the whole research lifecycle.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Interactive',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Research progress, including agent-generated ideas and agent-written papers, can be revised and enhanced by human participants.
       </>
     ),
   },
