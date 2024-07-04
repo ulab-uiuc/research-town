@@ -1,6 +1,6 @@
 # Research Town Docs
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator. Make sure you are running `yarn` commands in `\research-town\docs` folder.
+This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator. Make sure you are running `yarn` commands in `/research-town/docs` folder.
 
 ### Installation
 
