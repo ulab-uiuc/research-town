@@ -51,7 +51,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         valid_agent_profiles: List[AgentProfile] = []
         valid_agent_roles: List[Role] = []
         for profile, role in zip(agent_profiles, agent_roles):
-            if role == 'proj_leader':
+            if role == 'proj_leader' or role == 'proj_participant':
                 valid_agent_profiles.append(profile)
                 valid_agent_roles.append(role)
         return valid_agent_profiles, valid_agent_roles
