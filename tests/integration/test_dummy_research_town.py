@@ -50,7 +50,7 @@ def test_dummy_research_town(
         progress_db=progress_db,
         config=config,
     )
-    paper_rebuttal_env = PeerReviewMultiAgentEnv(
+    peer_review_env = PeerReviewMultiAgentEnv(
         agent_profiles=agent_profiles,
         agent_roles=role_list,
         agent_db=agent_db,
@@ -68,8 +68,8 @@ def test_dummy_research_town(
     paper = paper_submission_env.paper
 
     # Peer Review
-    paper_rebuttal_env.initialize_submission(paper)
+    peer_review_env.initialize_submission(paper)
     rebuttal_done = False
     while not rebuttal_done:
-        paper_rebuttal_env.step()
-        rebuttal_done = paper_rebuttal_env.terminated
+        peer_review_env.step()
+        rebuttal_done = peer_review_env.terminated
