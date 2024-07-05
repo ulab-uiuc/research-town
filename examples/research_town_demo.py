@@ -59,10 +59,7 @@ def run_sync_experiment(
 
     # Paper Review
     peer_review_env.initialize_submission(paper)
-    rebuttal_done = False
-    while not rebuttal_done:
-        paper_rebuttal_env.run()
-        rebuttal_done = paper_rebuttal_env.terminated
+    peer_review_env.run()
 
 
 def main() -> None:
