@@ -26,6 +26,13 @@ def map_review_list_to_str(reviews: List[Dict[str, Union[int, str]]]) -> str:
     return result
 
 
+def map_rebuttal_list_to_str(rebuttals: List[Dict[str, str]]) -> str:
+    result = ''
+    for rebuttal in rebuttals:
+        result += map_rebuttal_to_str(rebuttal)
+    return result
+
+
 def map_paper_to_str(paper: Dict[str, str]) -> str:
     return f"Paper: {paper['abstract']}"
 

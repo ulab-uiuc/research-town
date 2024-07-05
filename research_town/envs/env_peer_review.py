@@ -1,8 +1,11 @@
 from beartype import beartype
-from beartype.typing import Dict, Generator, List, Literal, Tuple, Union
+from beartype.typing import Dict, List, Literal, Tuple, Union
 
 from ..configs import Config
 from ..dbs import (
+    AgentPaperMetaReviewWritingLog,
+    AgentPaperRebuttalWritingLog,
+    AgentPaperReviewWritingLog,
     AgentProfile,
     AgentProfileDB,
     EnvLogDB,
@@ -84,10 +87,10 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                 count_max = count
                 self.decision = d
 
-    def _step(
+    def step(
         self,
-    ) -> Generator[LogType, None, None]:
-        yield from self.log('Paper Reviewing started')
+    ) -> None:
+        # yield from self.log('Paper Reviewing started')
         # Paper Reviewing
         for agent in self.agents:
             if agent.role == 'reviewer':
@@ -96,25 +99,17 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                     config=self.config,
                 )
                 self.reviews.append(review)
-                yield from self.log(
-                    f'Agent {agent.profile.name} gave review {str(review)}'
+                # yield from self.log(
+                #     f'Agent {agent.profile.name} gave review {str(review)}'
+                # )
+                self.progress_db.add(review)
+                self.env_db.add(
+                    AgentPaperReviewWritingLog(
+                        agent_pk=agent.profile.pk, paper_pk=self.submission.pk
+                    )
                 )
 
-        yield from self.log('Paper Meta Reviewing started')
-        # Paper Meta Reviewing
-        for agent in self.agents:
-            if agent.role == 'chair':
-                meta_review = agent.write_meta_review(
-                    paper=self.submission,
-                    reviews=self.reviews,
-                    config=self.config,
-                )
-                self.meta_reviews.append(meta_review)
-                yield from self.log(
-                    f'Agent {agent.profile.name} gave meta-review {str(meta_review)}'
-                )
-
-        yield from self.log('Rebuttal Submitting started')
+        # yield from self.log('Rebuttal Submitting started')
         # Rebuttal Submitting
         for agent in self.agents:
             for review in self.reviews:
@@ -125,8 +120,43 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                         config=self.config,
                     )
                     self.rebuttals.append(rebuttal)
-                    yield from self.log(
-                        f'Agent {agent.profile.name} gave rebuttal {str(rebuttal)}'
+                    # yield from self.log(
+                    #     f'Agent {agent.profile.name} gave rebuttal {str(rebuttal)}'
+                    # )
+                    self.progress_db.add(rebuttal)
+                    self.env_db.add(
+                        AgentPaperRebuttalWritingLog(
+                            paper_pk=rebuttal.paper_pk,
+                            agent_pk=agent.profile.pk,
+                            rebuttal_content=rebuttal.content,
+                        )
                     )
 
-        yield from self.log('PeerReviewMultiAgentEnv completed')
+        # yield from self.log('PeerReviewMultiAgentEnv completed')
+
+        # yield from self.log('Paper Meta Reviewing started')
+        # Paper Meta Reviewing
+        for agent in self.agents:
+            if agent.role == 'chair':
+                meta_review = agent.write_meta_review(
+                    paper=self.submission,
+                    reviews=self.reviews,
+                    rebuttals=self.rebuttals,
+                    config=self.config,
+                )
+                self.meta_reviews.append(meta_review)
+                # yield from self.log(
+                #     f'Agent {agent.profile.name} gave meta-review {str(meta_review)}'
+                # )
+                self.progress_db.add(meta_review)
+                self.env_db.add(
+                    AgentPaperMetaReviewWritingLog(
+                        paper_pk=meta_review.paper_pk,
+                        agent_pk=agent.profile.pk,
+                        decision=meta_review.decision,
+                        meta_review=meta_review.content,
+                    )
+                )
+
+        self.env_run_number = 1
+        self.terminated = True

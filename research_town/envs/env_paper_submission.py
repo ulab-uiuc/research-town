@@ -1,9 +1,13 @@
 from beartype import beartype
-from beartype.typing import Dict, Generator, List, Literal, Tuple, Union
+from beartype.typing import Dict, List, Literal, Tuple, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
+    AgentAgentCollaborationFindingLog,
+    AgentIdeaBrainstormingLog,
+    AgentPaperLiteratureReviewLog,
+    AgentPaperWritingLog,
     AgentProfile,
     AgentProfileDB,
     EnvLogDB,
@@ -56,12 +60,12 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 valid_agent_roles.append(role)
         return valid_agent_profiles, valid_agent_roles
 
-    def _step(
+    def step(
         self,
-    ) -> Generator[LogType, None, None]:
+    ) -> None:
         # TODO: support retrieval from database
-        # external_data = self.db.get(cls=PaperProfile, conditions={})
-        yield from self.log('PaperSubmissionMultiAgentEnvironment started')
+        # external_data = self.env_db.get(cls=PaperProfile, conditions={})
+        # yield from self.log('PaperSubmissionMultiAgentEnvironment started')
         papers = [
             PaperProfile(
                 title='A Survey on Machine Learning',
@@ -78,9 +82,9 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 agent_names_to_objs[iter_agent.profile.name] = iter_agent
         submissions: Dict[str, ResearchPaperSubmission] = {}
         for agent in self.agents:
-            yield from self.log(
-                f'Agent {agent.profile.name} started finding collaborators'
-            )
+            # yield from self.log(
+            #     f'Agent {agent.profile.name} started finding collaborators'
+            # )
             # TODO: update find collaborator functions with initial task
             collaborators = agent.find_collaborators(
                 paper=PaperProfile(
@@ -104,45 +108,83 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         collaborator_agents.append(
                             agent_names_to_objs[researcher_profile.name]
                         )
-                    yield from self.log(
-                        f'Agent {agent.profile.name} found {researcher_profile.name} as collaborator'
+                    # yield from self.log(
+                    #     f'Agent {agent.profile.name} found {researcher_profile.name} as collaborator'
+                    # )
+            if collaborator_agents:
+                self.env_db.add(
+                    AgentAgentCollaborationFindingLog(
+                        agent_pk=agent.profile.pk,
+                        other_agent_pks=[
+                            other_agent.profile.pk
+                            for other_agent in collaborator_agents
+                        ],
                     )
+                )
 
             insights = agent.review_literature(
                 papers=papers,
                 domains=['machine learning'],
                 config=self.config,
             )
-            yield from self.log(
-                f'Agent {agent.profile.name} generated insights: {str(insights)}'
+            # yield from self.log(
+            #     f'Agent {agent.profile.name} generated insights: {str(insights)}'
+            # )
+            for insight in insights:
+                self.progress_db.add(insight)
+            self.env_db.add(
+                AgentPaperLiteratureReviewLog(
+                    paper_pk=papers[0].pk,  # ISSUE
+                    agent_pk=agent.profile.pk,
+                    insight_pks=[insight.pk for insight in insights],
+                )
             )
 
             ideas = []
             idea = agent.brainstorm_idea(insights=insights, config=self.config)
             ideas.append(idea)
-            yield from self.log(
-                f'Agent {agent.profile.name} generated idea: {str(idea)}'
+            # yield from self.log(
+            #     f'Agent {agent.profile.name} generated idea: {str(idea)}'
+            # )
+            self.progress_db.add(idea)
+            self.env_db.add(
+                AgentIdeaBrainstormingLog(idea_pk=idea.pk, agent_pk=agent.profile.pk)
             )
             for collaborator_agent in collaborator_agents:
                 idea = collaborator_agent.brainstorm_idea(
                     insights=insights, config=self.config
                 )
                 ideas.append(idea)
-                yield from self.log(
-                    f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(idea)}"
+                # yield from self.log(
+                #     f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(idea)}"
+                # )
+                self.progress_db.add(idea)
+                self.env_db.add(
+                    AgentIdeaBrainstormingLog(
+                        idea_pk=idea.pk, agent_pk=collaborator_agent.profile.pk
+                    )
                 )
             summarized_idea = agent.discuss_idea(ideas=ideas, config=self.config)
             paper: ResearchPaperSubmission = agent.write_paper(
                 idea=summarized_idea, papers=papers, config=self.config
             )
-            yield from self.log(f'Agent {agent.profile.name} wrote paper: {str(paper)}')
-            yield from self.log(f'Agent {agent.profile.name} started paper submission')
+            # yield from self.log(f'Agent {agent.profile.name} wrote paper: {str(paper)}')
+            self.progress_db.add(paper)
+            self.env_db.add(
+                AgentPaperWritingLog(paper_pk=paper.pk, agent_pk=agent.profile.pk)
+            )
+            # yield from self.log(f'Agent {agent.profile.name} started paper submission')
 
             if agent.profile.name is not None:
                 submissions[agent.profile.name] = paper
-        self.db.update(cls=ResearchPaperSubmission, conditions={}, updates=submissions)
+        self.env_db.update(
+            cls=ResearchPaperSubmission, conditions={}, updates=submissions
+        )
         self.submit_paper(submissions)
-        yield from self.log('PaperSubmissionMultiAgentEnvironment completed')
+        # yield from self.log('PaperSubmissionMultiAgentEnvironment completed')
+
+        self.env_run_number = 1
+        self.terminated = True
 
     @beartype
     def submit_paper(self, paper_dict: Dict[str, ResearchPaperSubmission]) -> None:

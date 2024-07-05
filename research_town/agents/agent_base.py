@@ -210,14 +210,17 @@ class BaseResearchAgent(object):
         self,
         paper: PaperProfile,
         reviews: List[ResearchReviewForPaperSubmission],
+        rebuttals: List[ResearchRebuttalForPaperSubmission],
         config: Config,
     ) -> ResearchMetaReviewForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
         serialized_reviews = self.serializer.serialize(reviews)
+        serialized_rebuttals = self.serializer.serialize(rebuttals)
 
         meta_review = write_meta_review_prompting(
             paper=serialized_paper,
             reviews=serialized_reviews,
+            rebuttals=serialized_rebuttals,
             model_name=self.model_name,
             prompt_template=config.prompt_template.write_meta_review,
         )

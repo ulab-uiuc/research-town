@@ -10,6 +10,7 @@ from .string_mapper import (
     map_message_to_str,
     map_paper_list_to_str,
     map_paper_to_str,
+    map_rebuttal_list_to_str,
     map_review_list_to_str,
     map_review_to_str,
 )
@@ -169,12 +170,17 @@ def review_paper_prompting(
 def write_meta_review_prompting(
     paper: Dict[str, str],
     reviews: List[Dict[str, Union[int, str]]],
+    rebuttals: List[Dict[str, str]],
     model_name: str,
     prompt_template: str,
 ) -> List[str]:
     paper_str = map_paper_to_str(paper)
     reviews_str = map_review_list_to_str(reviews)
-    prompt = prompt_template.format_map({'paper': paper_str, 'reviews': reviews_str})
+    rebuttals_str = map_rebuttal_list_to_str(rebuttals)
+    prompt = prompt_template.format_map(
+        {'paper': paper_str, 'reviews': reviews_str, 'rebuttals': rebuttals_str}
+    )
+
     return model_prompting(model_name, prompt)
 
 
