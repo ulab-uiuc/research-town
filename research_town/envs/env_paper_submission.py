@@ -134,7 +134,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 self.progress_db.add(insight)
             self.env_db.add(
                 AgentPaperLiteratureReviewLog(
-                    paper_pk=papers[0].pk,  # ISSUE
+                    paper_pks=[paper.pk for paper in papers],
                     agent_pk=agent.profile.pk,
                     insight_pks=[insight.pk for insight in insights],
                 )
