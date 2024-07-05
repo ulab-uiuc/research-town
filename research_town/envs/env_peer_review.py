@@ -115,9 +115,6 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                         config=self.config,
                     )
                     self.rebuttals.append(rebuttal)
-                    # yield from self.log(
-                    #     f'Agent {agent.profile.name} gave rebuttal {str(rebuttal)}'
-                    # )
                     self.progress_db.add(rebuttal)
                     self.env_db.add(
                         AgentPaperRebuttalWritingLog(
