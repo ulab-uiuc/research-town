@@ -21,7 +21,7 @@ Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
-    mock_model_prompting.return_value = mock_prompting
+    mock_model_prompting.side_effect = mock_prompting
     agent_list: List[str] = ['Jiaxuan You', 'Jure Leskovec', 'Geoffrey Hinton']
     role_list: List[Role] = ['proj_leader', 'reviewer', 'chair']
 

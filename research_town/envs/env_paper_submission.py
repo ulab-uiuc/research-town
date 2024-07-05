@@ -85,8 +85,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 paper=PaperProfile(
                     title='A Survey on Machine Learning',
                     abstract='This paper surveys the field of machine learning.',
-                ),
-                config=self.config,
+                )
             )
             collaborator_agents: List[BaseResearchAgent] = []
             for researcher_profile in collaborators:

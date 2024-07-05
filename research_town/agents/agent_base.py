@@ -62,7 +62,6 @@ class BaseResearchAgent(object):
     def find_collaborators(
         self,
         paper: PaperProfile,
-        config: Config,
         parameter: float = 0.5,
         max_number: int = 3,
     ) -> List[AgentProfile]:
@@ -96,6 +95,7 @@ class BaseResearchAgent(object):
             parameter=parameter,
             max_number=max_number,
         )
+        print(result)
         collaborators_list = []
         for collaborator in collaborators:
             if collaborator in result:
