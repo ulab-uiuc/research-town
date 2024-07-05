@@ -1,13 +1,10 @@
 import json
-
-from beartype.typing import Any, Dict, List, Type, TypeVar
-from pydantic import BaseModel
 import logging
 from logging import StreamHandler
 
-from beartype.typing import Any, Callable, Dict, List, Literal, Mapping, Union, Type
-from termcolor import colored
+from beartype.typing import Any, Dict, List, Literal, Mapping, Type, TypeVar, Union
 from pydantic import BaseModel
+from termcolor import colored
 
 LogType = Union[List[Dict[str, str]], None]
 
@@ -101,7 +98,9 @@ class EnvLogDB:
         class_name = obj.__class__.__name__
         if class_name in self.data:
             self.data[class_name].append(obj.model_dump())
-            app_logger.info(f"Creating instance of '{obj.__class__.__name__}': '{obj.dict()}'")
+            app_logger.info(
+                f"Creating instance of '{obj.__class__.__name__}': '{obj.dict()}'"
+            )
         else:
             raise ValueError(f'Unsupported log type: {class_name}')
 
