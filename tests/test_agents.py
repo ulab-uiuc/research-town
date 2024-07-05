@@ -10,7 +10,7 @@ from research_town.dbs import (
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
-from tests.constants.db_constants import (
+from tests.db_constants import (
     agent_profile_A,
     agent_profile_B,
     paper_profile_A,
@@ -19,7 +19,7 @@ from tests.constants.db_constants import (
     research_insight_A,
     research_insight_B,
 )
-from tests.mocks.mocking_func import mock_papers, mock_prompting
+from tests.utils import mock_papers, mock_prompting
 
 
 def test_get_profile() -> None:
@@ -46,7 +46,7 @@ def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
         agent_role='proj_leader',
     )
     collaborators = research_agent.find_collaborators(
-        paper=paper_profile_A, parameter=0.5, max_number=3
+        paper=paper_profile_A, parameter=0.5, max_number=3, config=Config()
     )
     assert isinstance(collaborators, list)
     assert len(collaborators) <= 3
@@ -150,24 +150,13 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='chair',
     )
-    research_agent_proj_leader = BaseResearchAgent(
-        agent_profile=agent_profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='proj_leader',
-    )
-    review = research_agent_reviewer.write_review(
+    reviews = research_agent_reviewer.write_review(
         paper=paper_profile_A,
-        config=Config(),
-    )
-    rebuttal = research_agent_proj_leader.write_rebuttal(
-        paper=paper_profile_A,
-        review=review,
         config=Config(),
     )
     meta_review = research_agent_chair.write_meta_review(
         paper=paper_profile_A,
-        reviews=[review],
-        rebuttals=[rebuttal],
+        reviews=[reviews],
         config=Config(),
     )
     assert isinstance(meta_review, ResearchMetaReviewForPaperSubmission)

@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, List, Union
+from beartype.typing import Dict, List, Tuple, Union
 
 from .model_prompting import model_prompting
 from .paper_collector import get_related_papers
@@ -141,29 +141,38 @@ def write_paper_prompting(
 
 
 @beartype
-def review_score_prompting(
-    paper_review: str,
-    model_name: str,
-    prompt_template: str,
-) -> int:
-    prompt = prompt_template.format_map(
-        {
-            'paper_review': paper_review,
-        }
-    )
-    score_str = model_prompting(model_name, prompt)[0]
-    return int(score_str[0]) if score_str[0].isdigit() else 0
-
-
-@beartype
-def review_paper_prompting(
+def write_review_prompting(
     paper: Dict[str, str],
     model_name: str,
-    prompt_template: str,
-) -> List[str]:
-    papers_str = map_paper_to_str(paper)
-    prompt = prompt_template.format_map({'papers': papers_str})
-    return model_prompting(model_name, prompt)
+    summary_prompt_template: str,
+    strength_prompt_template: str,
+    weakness_prompt_template: str,
+    score_prompt_template: str,
+) -> Tuple[List[str], List[str], List[str], List[str]]:
+    paper_str = map_paper_to_str(paper)
+    summary_prompt = summary_prompt_template.format_map({'paper': paper_str})
+    summary = model_prompting(model_name, summary_prompt)
+
+    strength_prompt = strength_prompt_template.format_map(
+        {'paper': paper_str, 'summary': summary[0]}
+    )
+    weakness_prompt = weakness_prompt_template.format_map(
+        {'paper': paper_str, 'summary': summary[0]}
+    )
+    strength = model_prompting(model_name, strength_prompt)
+    weakness = model_prompting(model_name, weakness_prompt)
+
+    score_prompt = score_prompt_template.format_map(
+        {
+            'paper': paper_str,
+            'summary': summary[0],
+            'strength': strength[0],
+            'weakness': weakness[0],
+        }
+    )
+    score = model_prompting(model_name, score_prompt)
+
+    return summary, strength, weakness, score
 
 
 @beartype
@@ -172,16 +181,51 @@ def write_meta_review_prompting(
     reviews: List[Dict[str, Union[int, str]]],
     rebuttals: List[Dict[str, str]],
     model_name: str,
-    prompt_template: str,
-) -> List[str]:
+    summary_prompt_template: str,
+    strength_prompt_template: str,
+    weakness_prompt_template: str,
+    decision_prompt_template: str,
+) -> Tuple[List[str], List[str], List[str], List[str]]:
     paper_str = map_paper_to_str(paper)
     reviews_str = map_review_list_to_str(reviews)
     rebuttals_str = map_rebuttal_list_to_str(rebuttals)
-    prompt = prompt_template.format_map(
+    summary_prompt = summary_prompt_template.format_map(
         {'paper': paper_str, 'reviews': reviews_str, 'rebuttals': rebuttals_str}
     )
+    summary = model_prompting(model_name, summary_prompt)
 
-    return model_prompting(model_name, prompt)
+    strength_prompt = strength_prompt_template.format_map(
+        {
+            'paper': paper_str,
+            'reviews': reviews_str,
+            'rebuttals': rebuttals_str,
+            'summary': summary[0],
+        }
+    )
+    weakness_prompt = weakness_prompt_template.format_map(
+        {
+            'paper': paper_str,
+            'reviews': reviews_str,
+            'rebuttals': rebuttals_str,
+            'summary': summary[0],
+        }
+    )
+    strength = model_prompting(model_name, strength_prompt)
+    weakness = model_prompting(model_name, weakness_prompt)
+
+    decision_prompt = decision_prompt_template.format_map(
+        {
+            'paper': paper_str,
+            'reviews': reviews_str,
+            'rebuttals': rebuttals_str,
+            'summary': summary[0],
+            'strength': strength[0],
+            'weakness': weakness[0],
+        }
+    )
+    decision = model_prompting(model_name, decision_prompt)
+
+    return summary, strength, weakness, decision
 
 
 @beartype

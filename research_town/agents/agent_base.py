@@ -16,13 +16,12 @@ from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
     find_collaborators_prompting,
     read_paper_prompting,
-    review_paper_prompting,
-    review_score_prompting,
     summarize_ideas_prompting,
     think_idea_prompting,
     write_meta_review_prompting,
     write_paper_prompting,
     write_rebuttal_prompting,
+    write_review_prompting,
 )
 from ..utils.agent_role_verifier import (
     chair_required,
@@ -182,25 +181,26 @@ class BaseResearchAgent(object):
 
     @beartype
     @reviewer_required
-    def write_paper_review(
+    def write_review(
         self, paper: PaperProfile, config: Config
     ) -> ResearchReviewForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
-        paper_review = review_paper_prompting(
+
+        summary, strength, weakness, score = write_review_prompting(
             paper=serialized_paper,
             model_name=self.model_name,
-            prompt_template=config.prompt_template.review_paper,
-        )[0]
-        review_score = review_score_prompting(
-            paper_review=paper_review,
-            model_name=self.model_name,
-            prompt_template=config.prompt_template.review_score,
+            summary_prompt_template=config.prompt_template.write_review_summary,
+            strength_prompt_template=config.prompt_template.write_review_strength,
+            weakness_prompt_template=config.prompt_template.write_review_weakness,
+            decision_prompt_template=config.prompt_template.write_review_decision,
         )
         return ResearchReviewForPaperSubmission(
             paper_pk=paper.pk,
             reviewer_pk=self.profile.pk,
-            content=paper_review,
-            score=review_score,
+            summary=summary[0],
+            strength=strength[0],
+            weakness=weakness[0],
+            score=score[0],
         )
 
     @beartype
@@ -216,21 +216,26 @@ class BaseResearchAgent(object):
         serialized_reviews = self.serializer.serialize(reviews)
         serialized_rebuttals = self.serializer.serialize(rebuttals)
 
-        meta_review = write_meta_review_prompting(
+        summary, strength, weakness, decision = write_meta_review_prompting(
             paper=serialized_paper,
             reviews=serialized_reviews,
             rebuttals=serialized_rebuttals,
             model_name=self.model_name,
-            prompt_template=config.prompt_template.write_meta_review,
+            summary_prompt_template=config.prompt_template.write_meta_review_summary,
+            strength_prompt_template=config.prompt_template.write_meta_review_strength,
+            weakness_prompt_template=config.prompt_template.write_meta_review_weakness,
+            decision_prompt_template=config.prompt_template.write_meta_review_decision,
         )
-        review_decision = 'accept' in meta_review[0].lower()
+        review_decision = 'accept' in decision[0].lower()
 
         return ResearchMetaReviewForPaperSubmission(
             paper_pk=paper.pk,
             area_chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
             author_pk=self.profile.pk,
-            content=meta_review[0],
+            summary=summary[0],
+            strength=strength[0],
+            weakness=weakness[0],
             decision=review_decision,
         )
 

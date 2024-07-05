@@ -93,7 +93,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         # Paper Reviewing
         for agent in self.agents:
             if agent.role == 'reviewer':
-                review = agent.write_paper_review(
+                review = agent.write_review(
                     paper=self.submission,
                     config=self.config,
                 )
