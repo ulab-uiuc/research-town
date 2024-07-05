@@ -68,7 +68,7 @@ class AgentProfileDB(object):
             )
 
     def load_from_file(self, file_name: str) -> None:
-        with open(file_name + '.json', 'r') as f:
+        with open(file_name, 'r') as f:
             self.data = json.load(f)
 
     def update_db(self, data: Dict[str, List[Dict[str, Any]]]) -> None:

@@ -46,18 +46,20 @@ class PaperProfileDB:
             )
 
     def transfer_to_embedding(self, file_name: str) -> None:
-        with open(file_name + '.json', 'r') as f:
+        pickle_file_name = file_name.replace(".json", ".pkl")
+        with open(file_name, 'r') as f:
             data = json.load(f)
         paper_dict = {}
         for pk in data.keys():
             paper_dict[pk] = get_bert_embedding([data[pk]['abstract']])
-        with open(file_name + '.pkl', 'wb') as pkl_file:
+        with open(pickle_file_name, 'wb') as pkl_file:
             pickle.dump(paper_dict, pkl_file)
 
     def load_from_file(self, file_name: str) -> None:
-        with open(file_name + '.pkl', 'rb') as pkl_file:
+        pickle_file_name = file_name.replace(".json", ".pkl")
+        with open(pickle_file_name, 'rb') as pkl_file:
             self.data_embed = pickle.load(pkl_file)
-        with open(file_name + '.json', 'r') as f:
+        with open(file_name, 'r') as f:
             data = json.load(f)
             for name in data.keys():
                 data[name]['embed'] = self.data_embed[name][0]
@@ -72,11 +74,12 @@ class PaperProfileDB:
                 self.add_paper(paper)
 
     def fetch_and_add_papers(self, num: int, domain: str) -> None:
-        data, _ = get_daily_papers(domain, query=domain, max_results=num)
+        data, _ = get_daily_papers(query="ti:" + domain, max_results=num)
         transformed_data = {}
         for date, value in data.items():
             papers = []
-            papers.append({'abstract': value['abstract']})
-            papers.append({'info': value['info']})
+            for title, abstract, authors, url, domain, timestamp in zip(value["title"], value["abstract"], value["authors"], value["url"], value["domain"], value["timestamp"]):
+                papers.append(
+                    {"title": title, "abstract": abstract, "authors": authors, "url": url, "domain": domain, "timestamp": timestamp})
             transformed_data[date] = papers
         self.update_db(transformed_data)

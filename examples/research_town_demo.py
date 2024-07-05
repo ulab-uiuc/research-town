@@ -14,10 +14,15 @@ def run_sync_experiment(
     # Create Environment and Agents
     config = Config(config_file_path)
     agent_db = AgentProfileDB(config)
-    agent_db.fetch_and_add_agents(
-        initial_list=['Jiaxuan You', 'Jure Leskovec'])
-    agent_db.save_to_file('agent_gnn.json')
-    # paper_db = PaperProfileDB(config)
+    # agent_db.fetch_and_add_agents(
+    #     initial_list=['Jiaxuan You', 'Jure Leskovec'])
+    # agent_db.save_to_file('agent_gnn.json')
+    agent_db.load_from_file("agent_gnn.json")
+    paper_db = PaperProfileDB(config)
+    # paper_db.fetch_and_add_papers(num=10, domain="graph neural networks")
+    # paper_db.save_to_file("paper_gnn.json")
+    # paper_db.transfer_to_embedding("paper_gnn.json")
+    paper_db.load_from_file("paper_gnn.json")
     # env_db = EnvLogDB()
     # progress_db = ProgressDB()
     # paper_submission_env = PaperSubmissionMultiAgentEnvironment(
