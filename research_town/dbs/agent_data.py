@@ -1,5 +1,5 @@
 import uuid
-from typing import List, Optional
+from typing import List, Optional, Any
 
 from pydantic import BaseModel, Field
 
@@ -10,3 +10,4 @@ class AgentProfile(BaseModel):
     bio: Optional[str] = Field(default=None)
     collaborators: Optional[List[str]] = Field(default=[])
     institute: Optional[str] = Field(default=None)
+    embed: Optional[Any] = Field(default=None)

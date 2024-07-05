@@ -49,16 +49,6 @@ class BaseResearchAgent(object):
         self.serializer = Serializer()
 
     @beartype
-    def get_profile(self, author_name: str) -> AgentProfile:
-        # TODO: db get based on name
-        # TODO: need rebuild
-        agent_profile = AgentProfile(
-            name='Geoffrey Hinton',
-            bio='A researcher in the field of neural network.',
-        )
-        return agent_profile
-
-    @beartype
     def find_collaborators(
         self,
         paper: PaperProfile,
@@ -114,7 +104,8 @@ class BaseResearchAgent(object):
         start_author: List[str] = (
             [self.profile.name] if self.profile.name is not None else []
         )
-        graph, node_feat, edge_feat = bfs(author_list=start_author, node_limit=max_node)
+        graph, node_feat, edge_feat = bfs(
+            author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat
 
     # =======================================

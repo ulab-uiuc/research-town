@@ -1,5 +1,5 @@
 import uuid
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 
 from pydantic import BaseModel, Field
 
@@ -20,3 +20,4 @@ class PaperProfile(BaseModel):
     references: Optional[List[Dict[str, str]]] = Field(default=None)
     citation_count: Optional[int] = Field(default=0)
     award: Optional[str] = Field(default=None)
+    embed: Optional[Any] = Field(default=None)
