@@ -1,15 +1,16 @@
 import json
-import uuid
 import pickle
+
 from beartype.typing import Any, Dict, List, Optional
+
+from ..utils.paper_collector import get_bert_embedding, get_daily_papers
 from .paper_data import PaperProfile
-from ..utils.paper_collector import get_daily_papers
-from ..utils.paper_collector import get_bert_embedding
 
 
 class PaperProfileDB:
-    def __init__(self) -> None:
+    def __init__(self, config) -> None:
         self.data: Dict[str, PaperProfile] = {}
+        self.config = config
 
     def add_paper(self, paper: PaperProfile) -> None:
         self.data[paper.pk] = paper
@@ -45,7 +46,7 @@ class PaperProfileDB:
             )
 
     def transfer_to_embedding(self, file_name: str) -> None:
-        with open(file_name + ".json", 'r') as f:
+        with open(file_name + '.json', 'r') as f:
             data = json.load(f)
         paper_dict = {}
         for pk in data.keys():
@@ -56,7 +57,7 @@ class PaperProfileDB:
     def load_from_file(self, file_name: str) -> None:
         with open(file_name + '.pkl', 'rb') as pkl_file:
             self.data_embed = pickle.load(pkl_file)
-        with open(file_name + ".json", 'r') as f:
+        with open(file_name + '.json', 'r') as f:
             data = json.load(f)
             for name in data.keys():
                 data[name]['embed'] = self.data_embed[name][0]

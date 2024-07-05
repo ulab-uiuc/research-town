@@ -1,17 +1,7 @@
 from beartype.typing import List, Literal
 
 from research_town.configs import Config
-from research_town.dbs import (
-    AgentProfile,
-    AgentProfileDB,
-    EnvLogDB,
-    PaperProfileDB,
-    ProgressDB,
-)
-from research_town.envs import (
-    PaperSubmissionMultiAgentEnvironment,
-    PeerReviewMultiAgentEnv,
-)
+from research_town.dbs import AgentProfileDB, PaperProfileDB
 
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
@@ -22,14 +12,14 @@ def run_sync_experiment(
     config_file_path: str,
 ) -> None:
     # Create Environment and Agents
-    agent_db = AgentProfileDB()
+    config = Config(config_file_path)
+    agent_db = AgentProfileDB(config)
     agent_db.fetch_and_add_agents(
-        initial_list=["Jiaxuan You", "Jure Leskovec"])
-    agent_db.save_to_file("./trial/agent_gnn.json")
-    # paper_db = PaperProfileDB()
+        initial_list=['Jiaxuan You', 'Jure Leskovec'])
+    agent_db.save_to_file('agent_gnn.json')
+    # paper_db = PaperProfileDB(config)
     # env_db = EnvLogDB()
     # progress_db = ProgressDB()
-    # config = Config(config_file_path)
     # paper_submission_env = PaperSubmissionMultiAgentEnvironment(
     #     agent_profiles=agent_profiles,
     #     agent_roles=role_list,

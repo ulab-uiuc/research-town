@@ -20,13 +20,13 @@ from .string_mapper import (
 @beartype
 def summarize_research_direction_prompting(
     personal_info: str,
-    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     prompt_template: str,
+    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
 ) -> List[str]:
     """
     Summarize research direction based on personal research history
     """
-    template_input = {'personalinfo': personal_info}
+    template_input = {'personal_info': personal_info}
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
 

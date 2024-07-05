@@ -104,8 +104,7 @@ class BaseResearchAgent(object):
         start_author: List[str] = (
             [self.profile.name] if self.profile.name is not None else []
         )
-        graph, node_feat, edge_feat = bfs(
-            author_list=start_author, node_limit=max_node)
+        graph, node_feat, edge_feat = bfs(author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat
 
     # =======================================
