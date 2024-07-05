@@ -64,8 +64,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         self,
     ) -> None:
         # TODO: support retrieval from database
-        # external_data = self.env_db.get(cls=PaperProfile, conditions={})
-        # yield from self.log('PaperSubmissionMultiAgentEnvironment started')
         papers = [
             PaperProfile(
                 title='A Survey on Machine Learning',
@@ -82,9 +80,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 agent_names_to_objs[iter_agent.profile.name] = iter_agent
         submissions: Dict[str, ResearchPaperSubmission] = {}
         for agent in self.agents:
-            # yield from self.log(
-            #     f'Agent {agent.profile.name} started finding collaborators'
-            # )
             # TODO: update find collaborator functions with initial task
             collaborators = agent.find_collaborators(
                 paper=PaperProfile(
@@ -108,9 +103,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                         collaborator_agents.append(
                             agent_names_to_objs[researcher_profile.name]
                         )
-                    # yield from self.log(
-                    #     f'Agent {agent.profile.name} found {researcher_profile.name} as collaborator'
-                    # )
             if collaborator_agents:
                 self.env_db.add(
                     AgentAgentCollaborationFindingLog(
@@ -127,9 +119,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 domains=['machine learning'],
                 config=self.config,
             )
-            # yield from self.log(
-            #     f'Agent {agent.profile.name} generated insights: {str(insights)}'
-            # )
             for insight in insights:
                 self.progress_db.add(insight)
             self.env_db.add(
@@ -143,9 +132,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             ideas = []
             idea = agent.brainstorm_idea(insights=insights, config=self.config)
             ideas.append(idea)
-            # yield from self.log(
-            #     f'Agent {agent.profile.name} generated idea: {str(idea)}'
-            # )
             self.progress_db.add(idea)
             self.env_db.add(
                 AgentIdeaBrainstormingLog(idea_pk=idea.pk, agent_pk=agent.profile.pk)
@@ -155,9 +141,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                     insights=insights, config=self.config
                 )
                 ideas.append(idea)
-                # yield from self.log(
-                #     f"Agent {agent.profile.name}'s collaborator {collaborator_agent.profile.name} generated ideas: {str(idea)}"
-                # )
                 self.progress_db.add(idea)
                 self.env_db.add(
                     AgentIdeaBrainstormingLog(
@@ -168,12 +151,10 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             paper: ResearchPaperSubmission = agent.write_paper(
                 idea=summarized_idea, papers=papers, config=self.config
             )
-            # yield from self.log(f'Agent {agent.profile.name} wrote paper: {str(paper)}')
             self.progress_db.add(paper)
             self.env_db.add(
                 AgentPaperWritingLog(paper_pk=paper.pk, agent_pk=agent.profile.pk)
             )
-            # yield from self.log(f'Agent {agent.profile.name} started paper submission')
 
             if agent.profile.name is not None:
                 submissions[agent.profile.name] = paper
@@ -181,7 +162,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             cls=ResearchPaperSubmission, conditions={}, updates=submissions
         )
         self.submit_paper(submissions)
-        # yield from self.log('PaperSubmissionMultiAgentEnvironment completed')
 
         self.env_run_number = 1
         self.terminated = True

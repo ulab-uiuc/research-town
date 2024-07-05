@@ -20,7 +20,6 @@ class BaseMultiAgentEnv(object):
         self.env_db = EnvLogDB()
         self.progress_db = ProgressDB()
         self.agents: List[BaseResearchAgent] = []
-        # self.step_obj: Generator[LogType, None, None] = self._step()
         assert len(agent_profiles) == len(agent_roles)
         for agent_profile, agent_role in zip(agent_profiles, agent_roles):
             self.agents.append(
@@ -38,23 +37,3 @@ class BaseMultiAgentEnv(object):
         self,
     ) -> None:
         raise NotImplementedError
-
-    # @logging_decorator
-    # def step(self) -> LogType:
-    #     if not self.terminated:
-    #         try:
-    #             return next(self.step_obj)
-    #         except Exception:
-    #             if self.env_run_number < self.max_env_run_number:
-    #                 self.env_run_number += 1
-    #             else:
-    #                 self.terminated = True
-    #             self.step_obj = self._step()
-    #             return next(self.step_obj)
-    #     else:
-    #         return next(
-    #             self.log(
-    #                 f"Call 'step()' on a environment that has terminated ({self.env_run_number} / {self.max_env_run_number}).",
-    #                 'ERROR',
-    #             )
-    #         )
