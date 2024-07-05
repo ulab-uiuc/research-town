@@ -135,8 +135,7 @@ def write_paper_prompting(
 ) -> List[str]:
     idea_str = map_idea_to_str(idea)
     papers_str = map_paper_list_to_str(papers)
-    prompt = prompt_template.format_map(
-        {'idea': idea_str, 'papers': papers_str})
+    prompt = prompt_template.format_map({'idea': idea_str, 'papers': papers_str})
     return model_prompting(model_name, prompt)
 
 
@@ -175,8 +174,7 @@ def write_meta_review_prompting(
 ) -> List[str]:
     paper_str = map_paper_to_str(paper)
     reviews_str = map_review_list_to_str(reviews)
-    prompt = prompt_template.format_map(
-        {'paper': paper_str, 'reviews': reviews_str})
+    prompt = prompt_template.format_map({'paper': paper_str, 'reviews': reviews_str})
     return model_prompting(model_name, prompt)
 
 
@@ -189,8 +187,7 @@ def write_rebuttal_prompting(
 ) -> List[str]:
     paper_str = map_paper_to_str(paper)
     review_str = map_review_to_str(review)
-    prompt = prompt_template.format_map(
-        {'paper': paper_str, 'review': review_str})
+    prompt = prompt_template.format_map({'paper': paper_str, 'review': review_str})
     return model_prompting(model_name, prompt)
 
 

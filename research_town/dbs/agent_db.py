@@ -6,9 +6,9 @@ import requests
 from beartype.typing import Any, Dict, List, Optional
 
 from ..utils.agent_collector import fetch_author_info
+from ..utils.agent_prompter import summarize_research_direction_prompting
 from ..utils.paper_collector import get_bert_embedding, neighborhood_search
 from .agent_data import AgentProfile
-from ..utils.agent_prompter import summarize_research_direction_prompting
 
 
 class AgentProfileDB(object):
@@ -51,8 +51,7 @@ class AgentProfileDB(object):
             else:
                 bio_list.append('')
         profile_embed = [embed_.embed for embed_ in agent_profiles]
-        index_l = neighborhood_search(
-            idea_embed, profile_embed, num).reshape(-1)
+        index_l = neighborhood_search(idea_embed, profile_embed, num).reshape(-1)
         index_all = list(index_l)
         match_pk = []
         for index in index_all:
@@ -102,29 +101,25 @@ class AgentProfileDB(object):
             papers_by_year = {}
 
             for entry in entries:
-                title = entry.find(
-                    '{http://www.w3.org/2005/Atom}title').text.strip()
+                title = entry.find('{http://www.w3.org/2005/Atom}title').text.strip()
                 published = entry.find(
                     '{http://www.w3.org/2005/Atom}published'
                 ).text.strip()
                 abstract = entry.find(
                     '{http://www.w3.org/2005/Atom}summary'
                 ).text.strip()
-                authors_elements = entry.findall(
-                    '{http://www.w3.org/2005/Atom}author')
+                authors_elements = entry.findall('{http://www.w3.org/2005/Atom}author')
                 authors = [
                     author.find('{http://www.w3.org/2005/Atom}name').text
                     for author in authors_elements
                 ]
                 # Get the paper link
-                link = entry.find(
-                    '{http://www.w3.org/2005/Atom}id').text.strip()
+                link = entry.find('{http://www.w3.org/2005/Atom}id').text.strip()
 
                 # Check if the specified author is exactly in the authors list
                 if author_name in authors:
                     # Remove the specified author from the coauthors list for display
-                    coauthors = [
-                        author for author in authors if author != author_name]
+                    coauthors = [author for author in authors if author != author_name]
                     coauthors_str = ', '.join(coauthors)
 
                     papers_list.append(
@@ -135,8 +130,7 @@ class AgentProfileDB(object):
                             'link': link,  # Add the paper link to the dictionary
                         }
                     )
-                authors_elements = entry.findall(
-                    '{http://www.w3.org/2005/Atom}author')
+                authors_elements = entry.findall('{http://www.w3.org/2005/Atom}author')
                 authors = [
                     author.find('{http://www.w3.org/2005/Atom}name').text
                     for author in authors_elements

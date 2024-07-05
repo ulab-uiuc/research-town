@@ -46,7 +46,7 @@ class PaperProfileDB:
             )
 
     def transfer_to_embedding(self, file_name: str) -> None:
-        pickle_file_name = file_name.replace(".json", ".pkl")
+        pickle_file_name = file_name.replace('.json', '.pkl')
         with open(file_name, 'r') as f:
             data = json.load(f)
         paper_dict = {}
@@ -56,7 +56,7 @@ class PaperProfileDB:
             pickle.dump(paper_dict, pkl_file)
 
     def load_from_file(self, file_name: str) -> None:
-        pickle_file_name = file_name.replace(".json", ".pkl")
+        pickle_file_name = file_name.replace('.json', '.pkl')
         with open(pickle_file_name, 'rb') as pkl_file:
             self.data_embed = pickle.load(pkl_file)
         with open(file_name, 'r') as f:
@@ -74,12 +74,27 @@ class PaperProfileDB:
                 self.add_paper(paper)
 
     def fetch_and_add_papers(self, num: int, domain: str) -> None:
-        data, _ = get_daily_papers(query="ti:" + domain, max_results=num)
+        data, _ = get_daily_papers(query='ti:' + domain, max_results=num)
         transformed_data = {}
         for date, value in data.items():
             papers = []
-            for title, abstract, authors, url, domain, timestamp in zip(value["title"], value["abstract"], value["authors"], value["url"], value["domain"], value["timestamp"]):
+            for title, abstract, authors, url, domain, timestamp in zip(
+                value['title'],
+                value['abstract'],
+                value['authors'],
+                value['url'],
+                value['domain'],
+                value['timestamp'],
+            ):
                 papers.append(
-                    {"title": title, "abstract": abstract, "authors": authors, "url": url, "domain": domain, "timestamp": timestamp})
+                    {
+                        'title': title,
+                        'abstract': abstract,
+                        'authors': authors,
+                        'url': url,
+                        'domain': domain,
+                        'timestamp': timestamp,
+                    }
+                )
             transformed_data[date] = papers
         self.update_db(transformed_data)
