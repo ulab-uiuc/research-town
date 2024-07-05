@@ -46,7 +46,7 @@ def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
         agent_role='proj_leader',
     )
     collaborators = research_agent.find_collaborators(
-        paper=paper_profile_A, parameter=0.5, max_number=3, config=Config()
+        paper=paper_profile_A, parameter=0.5, max_number=3
     )
     assert isinstance(collaborators, list)
     assert len(collaborators) <= 3
