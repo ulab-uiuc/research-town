@@ -1,4 +1,4 @@
-from beartype.typing import Dict, Generator, List, Literal, Union
+from beartype.typing import Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..dbs import AgentProfile, EnvLogDB, ProgressDB
@@ -30,10 +30,7 @@ class BaseMultiAgentEnv(object):
                 )
             )
 
-    def log(self, message: str, level: str = 'INFO') -> Generator[LogType, None, None]:
-        yield [{'text': message, 'level': level}]
-
-    def step(
+    def run(
         self,
     ) -> None:
         raise NotImplementedError

@@ -55,15 +55,9 @@ def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
     )
 
     # Paper Submission
-    submission_done = False
-    while not submission_done:
-        paper_submission_env.step()
-        submission_done = paper_submission_env.terminated
+    paper_submission_env.run()
     paper = paper_submission_env.paper
 
     # Peer Review
     peer_review_env.initialize_submission(paper)
-    rebuttal_done = False
-    while not rebuttal_done:
-        peer_review_env.step()
-        rebuttal_done = peer_review_env.terminated
+    peer_review_env.run()

@@ -60,7 +60,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 valid_agent_roles.append(role)
         return valid_agent_profiles, valid_agent_roles
 
-    def step(
+    def run(
         self,
     ) -> None:
         # TODO: support retrieval from database
@@ -162,7 +162,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         )
         self.submit_paper(submissions)
 
-        self.env_run_number = 1
+        self.env_run_number += 1
         self.terminated = True
 
     @beartype

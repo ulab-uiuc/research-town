@@ -53,7 +53,7 @@ def run_sync_experiment(
     # Paper Submission
     submission_done = False
     while not submission_done:
-        paper_submission_env.step()
+        paper_submission_env.run()
         submission_done = paper_submission_env.terminated
     paper = paper_submission_env.paper
 
@@ -61,7 +61,7 @@ def run_sync_experiment(
     paper_rebuttal_env.initialize_submission(paper)
     rebuttal_done = False
     while not rebuttal_done:
-        paper_rebuttal_env.step()
+        paper_rebuttal_env.run()
         rebuttal_done = paper_rebuttal_env.terminated
 
 

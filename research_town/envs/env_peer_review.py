@@ -87,7 +87,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                 count_max = count
                 self.decision = d
 
-    def step(
+    def run(
         self,
     ) -> None:
         # Paper Reviewing
@@ -144,5 +144,5 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                     )
                 )
 
-        self.env_run_number = 1
+        self.env_run_number += 1
         self.terminated = True
