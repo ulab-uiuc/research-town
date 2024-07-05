@@ -90,7 +90,6 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
     def step(
         self,
     ) -> None:
-        # yield from self.log('Paper Reviewing started')
         # Paper Reviewing
         for agent in self.agents:
             if agent.role == 'reviewer':
@@ -99,9 +98,6 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                     config=self.config,
                 )
                 self.reviews.append(review)
-                # yield from self.log(
-                #     f'Agent {agent.profile.name} gave review {str(review)}'
-                # )
                 self.progress_db.add(review)
                 self.env_db.add(
                     AgentPaperReviewWritingLog(
@@ -109,7 +105,6 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                     )
                 )
 
-        # yield from self.log('Rebuttal Submitting started')
         # Rebuttal Submitting
         for agent in self.agents:
             for review in self.reviews:
@@ -132,9 +127,6 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                         )
                     )
 
-        # yield from self.log('PeerReviewMultiAgentEnv completed')
-
-        # yield from self.log('Paper Meta Reviewing started')
         # Paper Meta Reviewing
         for agent in self.agents:
             if agent.role == 'chair':
@@ -145,9 +137,6 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                     config=self.config,
                 )
                 self.meta_reviews.append(meta_review)
-                # yield from self.log(
-                #     f'Agent {agent.profile.name} gave meta-review {str(meta_review)}'
-                # )
                 self.progress_db.add(meta_review)
                 self.env_db.add(
                     AgentPaperMetaReviewWritingLog(
