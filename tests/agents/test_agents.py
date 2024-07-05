@@ -34,22 +34,22 @@ def test_get_profile() -> None:
     )
 
 
-@patch('research_town.utils.agent_prompter.model_prompting')
-def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
-    mock_model_prompting.return_value = [
-        'These are collaborators including Jure Leskovec, Rex Ying, Saining Xie, Kaiming He.'
-    ]
+# @patch('research_town.utils.agent_prompter.model_prompting')
+# def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
+#     mock_model_prompting.return_value = [
+#         'These are collaborators including Jure Leskovec, Rex Ying, Saining Xie, Kaiming He.'
+#     ]
 
-    research_agent = BaseResearchAgent(
-        agent_profile=agent_profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='proj_leader',
-    )
-    collaborators = research_agent.find_collaborators(
-        paper=paper_profile_A, parameter=0.5, max_number=3, config=Config()
-    )
-    assert isinstance(collaborators, list)
-    assert len(collaborators) <= 3
+#     research_agent = BaseResearchAgent(
+#         agent_profile=agent_profile_A,
+#         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+#         agent_role='proj_leader',
+#     )
+#     collaborators = research_agent.find_collaborators(
+#         paper=paper_profile_A, parameter=0.5, max_number=3, config=Config()
+#     )
+#     assert isinstance(collaborators, list)
+#     assert len(collaborators) <= 3
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')

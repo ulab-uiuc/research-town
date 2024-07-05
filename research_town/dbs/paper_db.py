@@ -8,9 +8,8 @@ from .paper_data import PaperProfile
 
 
 class PaperProfileDB:
-    def __init__(self, config) -> None:
+    def __init__(self) -> None:
         self.data: Dict[str, PaperProfile] = {}
-        self.config = config
 
     def add_paper(self, paper: PaperProfile) -> None:
         self.data[paper.pk] = paper
@@ -93,7 +92,7 @@ class PaperProfileDB:
                         'authors': authors,
                         'url': url,
                         'domain': domain,
-                        'timestamp': timestamp,
+                        'timestamp': (int)(timestamp),
                     }
                 )
             transformed_data[date] = papers

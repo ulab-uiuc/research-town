@@ -50,7 +50,7 @@ def get_daily_papers(
         query=query, max_results=max_results, sort_by=arxiv.SortCriterion.SubmittedDate
     )
     results = client.results(search)
-    content: Dict[str, Dict[str, List[str]]] = {}
+    content: Dict[str, Dict[str, Any]] = {}
     newest_day = ''
     for result in results:
         paper_title = result.title
@@ -113,7 +113,8 @@ def get_papers(
             )
 
             published_date = published
-            date_obj = datetime.datetime.strptime(published_date, '%Y-%m-%dT%H:%M:%SZ')
+            date_obj = datetime.datetime.strptime(
+                published_date, '%Y-%m-%dT%H:%M:%SZ')
             year = date_obj.year
             if year not in papers_by_year:
                 papers_by_year[year] = []

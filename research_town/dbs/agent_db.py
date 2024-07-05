@@ -12,9 +12,8 @@ from .agent_data import AgentProfile
 
 
 class AgentProfileDB(object):
-    def __init__(self, config) -> None:
+    def __init__(self) -> None:
         self.data: Dict[str, AgentProfile] = {}
-        self.config = config
 
     def add(self, agent: AgentProfile) -> None:
         self.data[agent.pk] = agent
@@ -51,7 +50,8 @@ class AgentProfileDB(object):
             else:
                 bio_list.append('')
         profile_embed = [embed_.embed for embed_ in agent_profiles]
-        index_l = neighborhood_search(idea_embed, profile_embed, num).reshape(-1)
+        index_l = neighborhood_search(
+            idea_embed, profile_embed, num).reshape(-1)
         index_all = list(index_l)
         match_pk = []
         for index in index_all:
@@ -76,17 +76,18 @@ class AgentProfileDB(object):
                 agent = AgentProfile(**agent_data)
                 self.add(agent)
 
-    def fetch_and_add_agents(self, initial_list: List[str]) -> None:
+    def fetch_and_add_agents(self, initial_list: List[str], config) -> None:
         for name in initial_list:
             print(name)
             agent_profile = AgentProfile(name=name)
-            agent_profile.bio = self.get_user_profile(author_name=name)
+            agent_profile.bio = self.get_user_profile(
+                author_name=name, config=config)
             papers, collaborators = fetch_author_info(author=name)
             print(collaborators)
             agent_profile.collaborators = collaborators
             self.data[agent_profile.pk] = agent_profile
 
-    def get_user_profile(self, author_name):
+    def get_user_profile(self, author_name, config):
         author_query = author_name.replace(' ', '+')
         url = f'http://export.arxiv.org/api/query?search_query=au:{author_query}&start=0&max_results=300'
 
@@ -101,25 +102,29 @@ class AgentProfileDB(object):
             papers_by_year = {}
 
             for entry in entries:
-                title = entry.find('{http://www.w3.org/2005/Atom}title').text.strip()
+                title = entry.find(
+                    '{http://www.w3.org/2005/Atom}title').text.strip()
                 published = entry.find(
                     '{http://www.w3.org/2005/Atom}published'
                 ).text.strip()
                 abstract = entry.find(
                     '{http://www.w3.org/2005/Atom}summary'
                 ).text.strip()
-                authors_elements = entry.findall('{http://www.w3.org/2005/Atom}author')
+                authors_elements = entry.findall(
+                    '{http://www.w3.org/2005/Atom}author')
                 authors = [
                     author.find('{http://www.w3.org/2005/Atom}name').text
                     for author in authors_elements
                 ]
                 # Get the paper link
-                link = entry.find('{http://www.w3.org/2005/Atom}id').text.strip()
+                link = entry.find(
+                    '{http://www.w3.org/2005/Atom}id').text.strip()
 
                 # Check if the specified author is exactly in the authors list
                 if author_name in authors:
                     # Remove the specified author from the coauthors list for display
-                    coauthors = [author for author in authors if author != author_name]
+                    coauthors = [
+                        author for author in authors if author != author_name]
                     coauthors_str = ', '.join(coauthors)
 
                     papers_list.append(
@@ -130,7 +135,8 @@ class AgentProfileDB(object):
                             'link': link,  # Add the paper link to the dictionary
                         }
                     )
-                authors_elements = entry.findall('{http://www.w3.org/2005/Atom}author')
+                authors_elements = entry.findall(
+                    '{http://www.w3.org/2005/Atom}author')
                 authors = [
                     author.find('{http://www.w3.org/2005/Atom}name').text
                     for author in authors_elements
@@ -195,7 +201,7 @@ class AgentProfileDB(object):
             )
             info = summarize_research_direction_prompting(
                 personal_info=personal_info,
-                prompt_template=self.config.prompt_template.summarize_research_direction,
+                prompt_template=config.prompt_template.summarize_research_direction,
             )
             return info
         else:
