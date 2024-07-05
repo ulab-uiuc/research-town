@@ -95,7 +95,6 @@ class BaseResearchAgent(object):
             parameter=parameter,
             max_number=max_number,
         )
-        print(result)
         collaborators_list = []
         for collaborator in collaborators:
             if collaborator in result:
