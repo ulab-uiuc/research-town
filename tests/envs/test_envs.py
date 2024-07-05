@@ -35,8 +35,7 @@ def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
     submission = paper_profile_A
     env.initialize_submission(submission)
 
-    while not env.terminated:
-        env.step()
+    env.run()
 
     assert isinstance(env.reviews, list)
     assert len(env.reviews) > 0
@@ -68,7 +67,6 @@ def test_paper_submission_env(
         progress_db=progress_db,
         config=config,
     )
-    while not env.terminated:
-        env.step()
+    env.run()
     assert env.paper.abstract is not None
     assert env.paper.abstract == 'This is a paper.'

@@ -21,7 +21,7 @@ Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
-    mock_model_prompting.return_value = mock_prompting
+    mock_model_prompting.side_effect = mock_prompting
     agent_list: List[str] = ['Jiaxuan You', 'Jure Leskovec', 'Geoffrey Hinton']
     role_list: List[Role] = ['proj_leader', 'reviewer', 'chair']
 
@@ -55,15 +55,9 @@ def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
     )
 
     # Paper Submission
-    submission_done = False
-    while not submission_done:
-        paper_submission_env.step()
-        submission_done = paper_submission_env.terminated
+    paper_submission_env.run()
     paper = paper_submission_env.paper
 
     # Peer Review
     peer_review_env.initialize_submission(paper)
-    rebuttal_done = False
-    while not rebuttal_done:
-        peer_review_env.step()
-        rebuttal_done = peer_review_env.terminated
+    peer_review_env.run()
