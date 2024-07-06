@@ -51,15 +51,10 @@ def run_sync_experiment(
     )
 
     # Paper Submission
-    submission_done = False
-    while not submission_done:
-        paper_submission_env.run()
-        submission_done = paper_submission_env.terminated
-    paper = paper_submission_env.paper
+    paper = paper_submission_env.run()
 
     # Paper Review
-    peer_review_env.initialize_submission(paper)
-    peer_review_env.run()
+    peer_review_env.run(paper)
 
 
 def main() -> None:

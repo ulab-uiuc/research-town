@@ -1,7 +1,15 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.configs import Config
-from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB, ProgressDB
+from research_town.dbs import (
+    AgentProfileDB,
+    EnvLogDB,
+    PaperProfileDB,
+    ProgressDB,
+    ResearchMetaReviewForPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchReviewForPaperSubmission,
+)
 from research_town.envs import (
     PaperSubmissionMultiAgentEnvironment,
     PeerReviewMultiAgentEnv,
@@ -9,40 +17,42 @@ from research_town.envs import (
 from tests.constants.db_constants import (
     agent_profile_A,
     agent_profile_B,
-    paper_profile_A,
+    research_paper_submission_A,
 )
-from tests.mocks.mocking_func import mock_papers
+from tests.mocks.mocking_func import mock_papers, mock_prompting
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
-    mock_model_prompting.return_value = ['Paper Rebuttal Environment.']
-    agent_db = AgentProfileDB()
-    paper_db = PaperProfileDB()
-    env_db = EnvLogDB()
-    progress_db = ProgressDB()
-    config = Config()
+    mock_model_prompting.side_effect = mock_prompting
+
     env = PeerReviewMultiAgentEnv(
-        agent_profiles=[agent_profile_A, agent_profile_B, agent_profile_B],
-        agent_roles=['proj_leader', 'reviewer', 'chair'],
-        agent_db=agent_db,
-        paper_db=paper_db,
-        env_db=env_db,
-        progress_db=progress_db,
-        config=config,
+        agent_profiles=[
+            agent_profile_A,
+            agent_profile_B,
+            agent_profile_B,
+            agent_profile_A,
+        ],
+        agent_roles=['proj_leader', 'reviewer', 'reviewer', 'chair'],
+        agent_db=AgentProfileDB(),
+        paper_db=PaperProfileDB(),
+        env_db=EnvLogDB(),
+        progress_db=ProgressDB(),
+        config=Config(),
     )
 
-    submission = paper_profile_A
-    env.initialize_submission(submission)
+    meta_review, rebuttals, reviews = env.run(research_paper_submission_A)
 
-    env.run()
+    assert isinstance(reviews, list)
+    assert len(reviews) == 2
+    assert isinstance(reviews[0], ResearchReviewForPaperSubmission)
 
-    assert isinstance(env.reviews, list)
-    assert len(env.reviews) > 0
-    assert isinstance(env.decision, str)
-    assert env.decision in ['accept', 'reject', 'boarderline']
-    assert isinstance(env.rebuttals, list)
-    assert len(env.rebuttals) > 0
+    assert isinstance(rebuttals, list)
+    assert len(rebuttals) == 2
+    assert isinstance(rebuttals[0], ResearchRebuttalForPaperSubmission)
+
+    assert isinstance(meta_review, ResearchMetaReviewForPaperSubmission)
+    assert isinstance(meta_review.decision, bool)
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -52,21 +62,17 @@ def test_paper_submission_env(
     mock_model_prompting: MagicMock,
 ) -> None:
     mock_get_related_papers.side_effect = mock_papers
-    mock_model_prompting.return_value = ['This is a paper.']
-    agent_db = AgentProfileDB()
-    paper_db = PaperProfileDB()
-    env_db = EnvLogDB()
-    progress_db = ProgressDB()
-    config = Config()
+    mock_model_prompting.side_effect = mock_prompting
+
     env = PaperSubmissionMultiAgentEnvironment(
         agent_profiles=[agent_profile_A],
         agent_roles=['proj_leader'],
-        agent_db=agent_db,
-        paper_db=paper_db,
-        env_db=env_db,
-        progress_db=progress_db,
-        config=config,
+        agent_db=AgentProfileDB(),
+        paper_db=PaperProfileDB(),
+        env_db=EnvLogDB(),
+        progress_db=ProgressDB(),
+        config=Config(),
     )
-    env.run()
-    assert env.paper.abstract is not None
-    assert env.paper.abstract == 'This is a paper.'
+    paper = env.run()
+    assert paper.abstract is not None
+    assert paper.abstract == 'Paper abstract'
