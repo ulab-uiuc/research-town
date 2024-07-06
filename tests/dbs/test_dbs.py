@@ -67,9 +67,16 @@ def test_envlogdb_basic() -> None:
     conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
     results = db.get(AgentPaperReviewWritingLog, **conditions)
     assert len(results) == 1
-    assert results[0].review_content == 'Good paper'
+    assert results[0].summary == 'Good paper'
+    assert results[0].strength == 'Interesting'
+    assert results[0].weakness == 'None'
 
-    updates = {'review_score': 3, 'review_content': 'Decent paper'}
+    updates = {
+        'score': 3,
+        'summary': 'Decent paper',
+        'strength': 'None',
+        'weakness': 'Really?',
+    }
     updated_count = db.update(
         AgentPaperReviewWritingLog, {'paper_pk': 'paper1'}, updates
     )
@@ -77,8 +84,10 @@ def test_envlogdb_basic() -> None:
 
     updated_log = db.get(AgentPaperReviewWritingLog, **conditions)[0]
 
-    assert updated_log.review_score == 3
-    assert updated_log.review_content == 'Decent paper'
+    assert updated_log.score == 3
+    assert updated_log.summary == 'Decent paper'
+    assert updated_log.strength == 'None'
+    assert updated_log.weakness == 'Really?'
 
     deleted_count = db.delete(AgentPaperReviewWritingLog, **conditions)
     assert deleted_count == 1
