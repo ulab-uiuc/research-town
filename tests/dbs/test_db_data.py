@@ -9,34 +9,36 @@ from research_town.dbs import (
 
 
 def test_researchprogress_class_extra_args() -> None:
-    idea = ResearchIdea(content='Idea for a new AI algorithm', extra='extra')
-    assert hasattr(idea, 'extra')
-    assert idea.extra == 'extra'
+    idea = ResearchIdea(content='Idea for a new AI algorithm', additional_attr='extra')
+    assert hasattr(idea, 'additional_attr')
+    assert idea.additional_attr == 'extra'
 
-    insight = ResearchInsight(content='Insight for a new AI algorithm', extra='extra')
-    assert hasattr(insight, 'extra')
-    assert insight.extra == 'extra'
+    insight = ResearchInsight(
+        content='Insight for a new AI algorithm', additional_attr='extra'
+    )
+    assert hasattr(insight, 'additional_attr')
+    assert insight.additional_attr == 'extra'
 
     paper = ResearchPaperSubmission(
-        content='Paper for a new AI algorithm', extra='extra'
+        content='Paper for a new AI algorithm', additional_attr='extra'
     )
-    assert hasattr(paper, 'extra')
-    assert paper.extra == 'extra'
+    assert hasattr(paper, 'additional_attr')
+    assert paper.additional_attr == 'extra'
 
     review = ResearchReviewForPaperSubmission(
-        content='Review for a new AI algorithm', extra='extra'
+        content='Review for a new AI algorithm', additional_attr='extra'
     )
-    assert hasattr(review, 'extra')
-    assert review.extra == 'extra'
+    assert hasattr(review, 'additional_attr')
+    assert review.additional_attr == 'extra'
 
     rebuttal = ResearchRebuttalForPaperSubmission(
-        content='Rebuttal for a new AI algorithm', extra='extra'
+        content='Rebuttal for a new AI algorithm', additional_attr='extra'
     )
-    assert hasattr(rebuttal, 'extra')
-    assert rebuttal.extra == 'extra'
+    assert hasattr(rebuttal, 'additional_attr')
+    assert rebuttal.additional_attr == 'extra'
 
     meta_review = ResearchMetaReviewForPaperSubmission(
-        content='Meta Review for a new AI algorithm', extra='extra'
+        content='Meta Review for a new AI algorithm', additional_attr='extra'
     )
-    assert hasattr(meta_review, 'extra')
-    assert meta_review.extra == 'extra'
+    assert hasattr(meta_review, 'additional_attr')
+    assert meta_review.additional_attr == 'extra'
