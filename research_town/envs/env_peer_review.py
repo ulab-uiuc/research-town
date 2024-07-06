@@ -139,10 +139,10 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                     AgentPaperMetaReviewWritingLog(
                         paper_pk=meta_review.paper_pk,
                         agent_pk=agent.profile.pk,
-                        meta_review_summary=meta_review.summary,
-                        meta_review_strength=meta_review.strength,
-                        meta_review_weakness=meta_review.weakness,
-                        meta_review_decision=meta_review.decision,
+                        summary=meta_review.summary,
+                        strength=meta_review.strength,
+                        weakness=meta_review.weakness,
+                        decision=meta_review.decision,
                     )
                 )
 
