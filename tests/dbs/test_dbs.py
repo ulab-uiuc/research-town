@@ -73,7 +73,7 @@ def test_envlogdb_basic() -> None:
 
     updates = {
         'score': 3,
-        'summary': 'Decent paper',
+        'summary': 'Bad paper',
         'strength': 'None',
         'weakness': 'Really?',
     }
@@ -85,7 +85,7 @@ def test_envlogdb_basic() -> None:
     updated_log = db.get(AgentPaperReviewWritingLog, **conditions)[0]
 
     assert updated_log.score == 3
-    assert updated_log.summary == 'Decent paper'
+    assert updated_log.summary == 'Bad paper'
     assert updated_log.strength == 'None'
     assert updated_log.weakness == 'Really?'
 
@@ -106,8 +106,7 @@ def test_envlogdb_basic() -> None:
     assert len(new_db.data['AgentPaperMetaReviewWritingLog']) == 1
     assert len(new_db.data['AgentAgentIdeaDiscussionLog']) == 1
     assert (
-        new_db.data['AgentPaperReviewWritingLog'][0]['review_content']
-        == 'Interesting paper'
+        new_db.data['AgentPaperReviewWritingLog'][0]['summary'] == 'Interesting paper'
     )
 
 
