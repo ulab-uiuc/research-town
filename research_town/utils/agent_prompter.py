@@ -80,7 +80,7 @@ def find_collaborators_prompting(
 
 
 @beartype
-def read_paper_prompting(
+def review_literature_prompting(
     profile: Dict[str, str],
     papers: List[Dict[str, str]],
     domains: List[str],
@@ -106,7 +106,7 @@ def read_paper_prompting(
 
 
 @beartype
-def think_idea_prompting(
+def brainstorm_idea_prompting(
     insights: List[Dict[str, str]],
     model_name: str,
     prompt_template: str,
@@ -117,7 +117,7 @@ def think_idea_prompting(
 
 
 @beartype
-def summarize_ideas_prompting(
+def discuss_idea_prompting(
     ideas: List[Dict[str, str]],
     model_name: str,
     prompt_template: str,

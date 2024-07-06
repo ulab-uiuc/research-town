@@ -99,10 +99,8 @@ def run_sync_evaluation(
         'abstract': paper.abstract,
         'conference': paper.conference,
     }
-    review_serialize = f'score: {review.score}\ncontent: {review.content}'
-    meta_review_serialize = (
-        f'decision: {meta_review.decision}\nmeta review:{meta_review.content}'
-    )
+    review_serialize = f'score: {review.score}\nreview summary: {review.summary}\nreview strength: {review.strength}\nreview weakness: {review.weakness}'
+    meta_review_serialize = f'decision: {meta_review.decision}\nmeta review summary: {meta_review.summary}\nmeta review strength: {meta_review.strength}\nmeta review weakness: {meta_review.weakness}'
     # Create Evaluators
     idea_quality_evaluator = IdeaQualityEvaluator(model_name=model_name)
     paper_quality_evaluator = PaperQualityEvaluator(model_name=model_name)

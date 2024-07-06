@@ -14,10 +14,10 @@ from ..dbs import (
 )
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
+    brainstorm_idea_prompting,
+    discuss_idea_prompting,
     find_collaborators_prompting,
-    read_paper_prompting,
-    summarize_ideas_prompting,
-    think_idea_prompting,
+    review_literature_prompting,
     write_meta_review_prompting,
     write_paper_prompting,
     write_rebuttal_prompting,
@@ -127,13 +127,13 @@ class BaseResearchAgent(object):
     ) -> List[ResearchInsight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
-        insight_contents = read_paper_prompting(
+        insight_contents = review_literature_prompting(
             profile=serialized_profile,
             papers=serialized_papers,
             domains=domains,
             model_name=self.model_name,
             prompt_template_query=config.prompt_template.query_paper,
-            prompt_template_read=config.prompt_template.read_paper,
+            prompt_template_read=config.prompt_template.review_literature,
         )
         insights: List[ResearchInsight] = []
         for content in insight_contents:
@@ -146,10 +146,10 @@ class BaseResearchAgent(object):
         self, insights: List[ResearchInsight], config: Config
     ) -> ResearchIdea:
         serialized_insights = self.serializer.serialize(insights)
-        idea_content = think_idea_prompting(
+        idea_content = brainstorm_idea_prompting(
             insights=serialized_insights,
             model_name=self.model_name,
-            prompt_template=config.prompt_template.think_idea,
+            prompt_template=config.prompt_template.brainstorm_idea,
         )[0]
         return ResearchIdea(content=idea_content)
 
@@ -157,10 +157,10 @@ class BaseResearchAgent(object):
     @proj_participant_required
     def discuss_idea(self, ideas: List[ResearchIdea], config: Config) -> ResearchIdea:
         serialized_ideas = self.serializer.serialize(ideas)
-        idea_summarized = summarize_ideas_prompting(
+        idea_summarized = discuss_idea_prompting(
             ideas=serialized_ideas,
             model_name=self.model_name,
-            prompt_template=config.prompt_template.summarize_ideas,
+            prompt_template=config.prompt_template.discuss_idea,
         )[0]
         return ResearchIdea(content=idea_summarized)
 
@@ -192,7 +192,7 @@ class BaseResearchAgent(object):
             summary_prompt_template=config.prompt_template.write_review_summary,
             strength_prompt_template=config.prompt_template.write_review_strength,
             weakness_prompt_template=config.prompt_template.write_review_weakness,
-            decision_prompt_template=config.prompt_template.write_review_decision,
+            score_prompt_template=config.prompt_template.write_review_score,
         )
         return ResearchReviewForPaperSubmission(
             paper_pk=paper.pk,

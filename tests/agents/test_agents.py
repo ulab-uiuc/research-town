@@ -73,7 +73,7 @@ def test_review_literature(
     assert len(research_insight) == 1
     assert isinstance(research_insight[0], ResearchInsight)
     assert research_insight[0].pk is not None
-    assert research_insight[0].content == 'Graph Neural Network'
+    assert research_insight[0].content == 'Insight 1'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -96,7 +96,7 @@ def test_brainstorm_idea(
     )
     assert isinstance(research_idea, ResearchIdea)
     assert research_idea.pk is not None
-    assert research_idea.content == 'This is a research idea.'
+    assert research_idea.content == 'Idea 1'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -114,7 +114,7 @@ def test_write_paper(mock_model_prompting: MagicMock) -> None:
         config=Config(),
     )
     assert isinstance(paper, ResearchPaperSubmission)
-    assert paper.abstract == 'This is a paper abstract.'
+    assert paper.abstract == 'Paper abstract'
     assert paper.pk is not None
 
 
@@ -132,8 +132,10 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
         config=Config(),
     )
     assert isinstance(review, ResearchReviewForPaperSubmission)
-    assert review.score == 2
-    assert review.content == 'This is a paper review for MambaOut.'
+    assert review.summary == 'Summary of the paper'
+    assert review.strength == 'Strength of the paper'
+    assert review.weakness == 'Weakness of the paper'
+    assert review.score == 8
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -171,8 +173,10 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
         config=Config(),
     )
     assert isinstance(meta_review, ResearchMetaReviewForPaperSubmission)
+    assert meta_review.summary == 'Meta review summary'
+    assert meta_review.strength == 'Meta review strength'
+    assert meta_review.weakness == 'Meta review weakness'
     assert meta_review.decision is True
-    assert meta_review.content == 'Accept. This is a good paper.'
     assert meta_review.pk is not None
 
 
@@ -202,4 +206,4 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     assert isinstance(rebuttal, ResearchRebuttalForPaperSubmission)
     if rebuttal.content is not None:
         assert len(rebuttal.content) > 0
-    assert rebuttal.content == 'This is a paper rebuttal.'
+    assert rebuttal.content == 'Rebuttal text'
