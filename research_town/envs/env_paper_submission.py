@@ -1,12 +1,12 @@
 from collections import Counter
 
 from beartype import beartype
-from beartype.typing import Dict, List, Literal, Union
+from beartype.typing import Dict, List, Literal, Tuple, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
-    AgentAgentCollaborationFindingLog,
+    AgentAgentIdeaDiscussionLog,
     AgentIdeaBrainstormingLog,
     AgentPaperLiteratureReviewLog,
     AgentPaperWritingLog,
@@ -16,6 +16,7 @@ from ..dbs import (
     PaperProfile,
     PaperProfileDB,
     ProgressDB,
+    ResearchIdea,
     ResearchPaperSubmission,
 )
 from .env_base import BaseMultiAgentEnv
@@ -35,9 +36,10 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         progress_db: ProgressDB,
         config: Config,
     ) -> None:
-        self.check_roles(agent_profiles=agent_profiles, agent_roles=agent_roles)
         super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
-        self.paper = PaperProfile()
+        self.proj_leader, self.proj_participants = self.check_roles(
+            agent_profiles=agent_profiles, agent_roles=agent_roles
+        )
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
@@ -47,7 +49,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     @beartype
     def check_roles(
         self, agent_profiles: List[AgentProfile], agent_roles: List[Role]
-    ) -> None:
+    ) -> Tuple[BaseResearchAgent, List[BaseResearchAgent]]:
         assert len(agent_profiles) == len(agent_roles)
         if 'proj_leader' not in agent_roles:
             raise ValueError('At least one proj_leader is required to submit paper.')
@@ -60,9 +62,15 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         if counter['proj_leader'] != 1:
             raise ValueError('Exactly one proj_leader is required to submit paper.')
 
+        proj_leader = [agent for agent in self.agents if agent.role == 'proj_leader'][0]
+        proj_participants = [
+            agent for agent in self.agents if agent.role == 'proj_participant'
+        ]
+        return proj_leader, proj_participants
+
     def run(
         self,
-    ) -> None:
+    ) -> ResearchPaperSubmission:
         # TODO: support retrieval from database
         papers = [
             PaperProfile(
@@ -74,99 +82,72 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 abstract='This paper surveys the field of natural language processing.',
             ),
         ]
-        agent_names_to_objs: Dict[str, BaseResearchAgent] = {}
-        for iter_agent in self.agents:
-            if iter_agent.profile.name is not None:
-                agent_names_to_objs[iter_agent.profile.name] = iter_agent
-        submissions: Dict[str, ResearchPaperSubmission] = {}
-        for agent in self.agents:
-            # TODO: update find collaborator functions with initial task
-            collaborators = agent.find_collaborators(
-                paper=PaperProfile(
-                    title='A Survey on Machine Learning',
-                    abstract='This paper surveys the field of machine learning.',
-                )
-            )
-            collaborator_agents: List[BaseResearchAgent] = []
-            for researcher_profile in collaborators:
-                if researcher_profile.name:
-                    if researcher_profile.name not in agent_names_to_objs:
-                        new_agent_obj = BaseResearchAgent(
-                            agent_profile=researcher_profile,
-                            model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-                            agent_role='proj_participant',
-                        )
-                        collaborator_agents.append(new_agent_obj)
-                        agent_names_to_objs[researcher_profile.name] = new_agent_obj
-                    else:
-                        collaborator_agents.append(
-                            agent_names_to_objs[researcher_profile.name]
-                        )
-            if collaborator_agents:
-                self.env_db.add(
-                    AgentAgentCollaborationFindingLog(
-                        agent_pk=agent.profile.pk,
-                        other_agent_pks=[
-                            other_agent.profile.pk
-                            for other_agent in collaborator_agents
-                        ],
-                    )
-                )
 
-            insights = agent.review_literature(
-                papers=papers,
-                domains=['machine learning'],
-                config=self.config,
-            )
-            for insight in insights:
-                self.progress_db.add(insight)
-            self.env_db.add(
-                AgentPaperLiteratureReviewLog(
-                    paper_pks=[paper.pk for paper in papers],
-                    agent_pk=agent.profile.pk,
-                    insight_pks=[insight.pk for insight in insights],
-                )
-            )
+        # TODO: update find collaborator functions with initial task
+        self.proj_participants: List[BaseResearchAgent] = []
 
-            ideas = []
-            idea = agent.brainstorm_idea(insights=insights, config=self.config)
+        # leader review literature
+        insights = self.proj_leader.review_literature(
+            papers=papers,
+            domains=['machine learning'],
+            config=self.config,
+        )
+        import pdb
+
+        pdb.set_trace()
+        for insight in insights:
+            self.progress_db.add(insight)
+        self.env_db.add(
+            AgentPaperLiteratureReviewLog(
+                paper_pks=[paper.pk for paper in papers],
+                agent_pk=self.proj_leader.profile.pk,
+                insight_pks=[insight.pk for insight in insights],
+            )
+        )
+
+        # leader brainstorm idea
+        ideas: List[ResearchIdea] = []
+        idea = self.proj_leader.brainstorm_idea(insights=insights, config=self.config)
+        ideas.append(idea)
+        self.progress_db.add(idea)
+        self.env_db.add(
+            AgentIdeaBrainstormingLog(
+                idea_pk=idea.pk, agent_pk=self.proj_leader.profile.pk
+            )
+        )
+
+        # collaborator brainstorm idea
+        for participant in self.proj_participants:
+            idea = participant.brainstorm_idea(insights=insights, config=self.config)
             ideas.append(idea)
             self.progress_db.add(idea)
             self.env_db.add(
-                AgentIdeaBrainstormingLog(idea_pk=idea.pk, agent_pk=agent.profile.pk)
-            )
-            for collaborator_agent in collaborator_agents:
-                idea = collaborator_agent.brainstorm_idea(
-                    insights=insights, config=self.config
+                AgentIdeaBrainstormingLog(
+                    idea_pk=idea.pk, agent_pk=participant.profile.pk
                 )
-                ideas.append(idea)
-                self.progress_db.add(idea)
-                self.env_db.add(
-                    AgentIdeaBrainstormingLog(
-                        idea_pk=idea.pk, agent_pk=collaborator_agent.profile.pk
-                    )
-                )
-            summarized_idea = agent.discuss_idea(ideas=ideas, config=self.config)
-            paper: ResearchPaperSubmission = agent.write_paper(
-                idea=summarized_idea, papers=papers, config=self.config
-            )
-            self.progress_db.add(paper)
-            self.env_db.add(
-                AgentPaperWritingLog(paper_pk=paper.pk, agent_pk=agent.profile.pk)
             )
 
-            if agent.profile.name is not None:
-                submissions[agent.profile.name] = paper
-        self.env_db.update(
-            cls=ResearchPaperSubmission, conditions={}, updates=submissions
+        # leader discuss idea
+        summarized_idea = self.proj_leader.discuss_idea(ideas=ideas, config=self.config)
+        self.progress_db.add(summarized_idea)
+        self.env_db.add(
+            AgentAgentIdeaDiscussionLog(
+                idea_pk=summarized_idea.pk, agent_pk=self.proj_leader.profile.pk
+            )
         )
-        self.submit_paper(submissions)
+
+        # write paper
+        paper = self.proj_leader.write_paper(
+            idea=summarized_idea, papers=papers, config=self.config
+        )
+        self.progress_db.add(paper)
+        self.env_db.add(
+            AgentPaperWritingLog(
+                paper_pk=paper.pk, agent_pk=self.proj_leader.profile.pk
+            )
+        )
 
         self.env_run_number += 1
         self.terminated = True
 
-    @beartype
-    def submit_paper(self, paper_dict: Dict[str, ResearchPaperSubmission]) -> None:
-        for _, paper in paper_dict.items():
-            self.paper = PaperProfile(title=paper.title, abstract=paper.abstract)
-            break
+        return paper

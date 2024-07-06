@@ -136,6 +136,9 @@ class BaseResearchAgent(object):
             prompt_template_query_paper=config.prompt_template.query_paper,
             prompt_template_review_literature=config.prompt_template.review_literature,
         )
+        import pdb
+
+        pdb.set_trace()
         insights: List[ResearchInsight] = []
         for content in insight_contents:
             insights.append(ResearchInsight(content=content))
