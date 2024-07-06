@@ -183,7 +183,7 @@ class BaseResearchAgent(object):
     @beartype
     @reviewer_required
     def write_review(
-        self, paper: PaperProfile, config: Config
+        self, paper: ResearchPaperSubmission, config: Config
     ) -> ResearchReviewForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
 
@@ -208,7 +208,7 @@ class BaseResearchAgent(object):
     @chair_required
     def write_meta_review(
         self,
-        paper: PaperProfile,
+        paper: ResearchPaperSubmission,
         reviews: List[ResearchReviewForPaperSubmission],
         rebuttals: List[ResearchRebuttalForPaperSubmission],
         config: Config,
@@ -243,7 +243,7 @@ class BaseResearchAgent(object):
     @proj_leader_required
     def write_rebuttal(
         self,
-        paper: PaperProfile,
+        paper: ResearchPaperSubmission,
         review: ResearchReviewForPaperSubmission,
         config: Config,
     ) -> ResearchRebuttalForPaperSubmission:
