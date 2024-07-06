@@ -34,7 +34,9 @@ class ResearchReviewForPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     paper_pk: Optional[str] = Field(default=None)
     reviewer_pk: Optional[str] = Field(default=None)
-    content: Optional[str] = Field(default=None)
+    summary: Optional[str] = Field(default=None)
+    strength: Optional[str] = Field(default=None)
+    weakness: Optional[str] = Field(default=None)
     score: Optional[int] = Field(default=None)
 
     class Config:
@@ -55,10 +57,12 @@ class ResearchRebuttalForPaperSubmission(BaseModel):
 class ResearchMetaReviewForPaperSubmission(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     paper_pk: Optional[str] = Field(default=None)
-    area_chair_pk: Optional[str] = Field(default=None)
+    chair_pk: Optional[str] = Field(default=None)
     reviewer_pks: List[str] = Field(default=[])
     author_pk: Optional[str] = Field(default=None)
-    content: Optional[str] = Field(default=None)
+    summary: Optional[str] = Field(default=None)
+    strength: Optional[str] = Field(default=None)
+    weakness: Optional[str] = Field(default=None)
     decision: bool = Field(default=False)
 
     class Config:

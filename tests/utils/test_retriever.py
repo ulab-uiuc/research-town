@@ -23,6 +23,7 @@ def test_get_bert_embedding() -> None:
 
         mock_tokenizer_instance.side_effect = mock_tokenize
 
+        # Mock model instance
         mock_model_instance = MagicMock()
         mock_model.return_value = mock_model_instance
 

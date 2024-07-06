@@ -16,16 +16,16 @@ prompt_template:
     Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).
     Here is my profile biology: {profile_bio}
     Here are the domains: {domains}
-  read_paper: |
+  review_literature: |
     Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).
     Here is my profile biology: {profile_bio}
     Here are the research domains: {domains}
     Here are some recent paper titles and abstracts: {papers}
-  think_idea: |
+  brainstorm_idea: |
     Here is a high-level summarized insight of a research field {insights}.
     How do you view this field? Do you have any novel ideas or insights?
     Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.
-  summarize_ideas: |
+  discuss_idea: |
     Given a list of research ideas, please summarize them by removing duplicates
     and resolving any contradictory ideas by selecting the more reasonable one.
     Here are the research ideas:

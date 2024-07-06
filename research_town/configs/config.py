@@ -37,22 +37,22 @@ class PromptTemplateConfig(BaseModel):
         "Generate the collaborator in a list separated by '-' for each collaborator"
     )
     query_paper: str = (
-        'Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).'
+        'Given the profile of me, keywords, some recent paper titles and abstracts. Could you query paper in this field (related to my profile if possible).'
         'Here is my profile biology: {profile_bio}'
         'Here are the domains: {domains}'
     )
-    read_paper: str = (
+    review_literature: str = (
         'Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).'
         'Here is my profile biology: {profile_bio}'
         'Here are the research domains: {domains}'
         'Here are some recent paper titles and abstracts: {papers}'
     )
-    think_idea: str = (
+    brainstorm_idea: str = (
         'Here is a high-level summarized insight of a research field {insights}. '
         'How do you view this field? Do you have any novel ideas or insights? '
         'Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.'
     )
-    summarize_ideas: str = (
+    discuss_idea: str = (
         'Given a list of research ideas, please summarize them by removing duplicates '
         'and resolving any contradictory ideas by selecting the more reasonable one. '
         'Here are the research ideas:\n{ideas}\n'
@@ -63,19 +63,55 @@ class PromptTemplateConfig(BaseModel):
         'Here is the idea: {idea}'
         'Here are the external data, which is a list abstracts of related papers: {papers}'
     )
-    review_score: str = (
-        'Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only returns one number score.'
-        'Here are the reviews: {paper_review}'
+    write_review_summary: str = (
+        'Please write a summary of the paper for the following submission you have made to an academic conference.'
+        'Here is the submission: {paper}'
     )
-    review_paper: str = (
-        'Please give some reviews based on the following inputs and external data.'
-        'You might use two or more of these titles if they are related and works well together.'
-        'Here are the external data, which is a list of related papers: {papers}'
+    write_review_strength: str = (
+        'Please write the strength of the paper for the following submission you have made to an academic conference.'
+        'Here is the submission: {paper}'
+        'Here is the summary of the paper: {summary}'
     )
-    write_meta_review: str = (
+    write_review_weakness: str = (
+        'Please write the weakness of the paper for the following submission you have made to an academic conference.'
+        'Here is the submission: {paper}'
+        'Here is the summary of the paper: {summary}'
+    )
+    write_review_score: str = (
+        'Please provide a score for the following submission you have made to an academic conference. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest.'
+        'Here is the submission: {paper}'
+        'Here is the summary of the paper: {summary}'
+        'Here is the strength of the paper: {strength}'
+        'Here is the weakness of the paper: {weakness}'
+    )
+    write_meta_review_summary: str = (
+        'Please write a summary of the reviews for the following submission you have made to an academic conference. Here are the reviews from the reviewers. Your summary should summarize the reviews and decisions to help the reviewers to make a decision.'
+        'Here is the submission: {paper}'
+        'Here are the reviews: {reviews}'
+        'Here are the rebuttals: {rebuttals}'
+    )
+    write_meta_review_strength: str = (
+        'Please write the strength of the submission for the following submission you have made to an academic conference. Here are the reviews from the reviewers. Your strength should summarize the reviews and decisions to help the reviewers to make a decision.'
+        'Here is the submission: {paper}'
+        'Here are the reviews: {reviews}'
+        'Here are the rebuttals: {rebuttals}'
+        'Here is the summary of the reviews: {summary}'
+    )
+    write_meta_review_weakness: str = (
+        'Please write the weakness of the submission for the following submission you have made to an academic conference. Here are the reviews from the reviewers. Your weakness should summarize the reviews and decisions to help the reviewers to make a decision.'
+        'Here is the submission: {paper}'
+        'Here are the reviews: {reviews}'
+        'Here are the rebuttals: {rebuttals}'
+        'Here is the summary of the reviews: {summary}'
+    )
+    write_meta_review_decision: str = (
         'Please make an review decision to decide whether the following submission should be accepted or rejected by an academic conference. Here are several reviews from reviewers for this submission. Please indicate your review decision as accept or reject.'
         'Here is the submission: {paper}'
         'Here are the reviews: {reviews}'
+        'Here are the rebuttals: {rebuttals}'
+        'Here is the summary of the reviews: {summary}'
+        'Here is the strength of the submission: {strength}'
+        'Here is the weakness of the submission: {weakness}'
     )
     write_rebuttal: str = (
         'Please write a rebuttal for the following submission you have made to an academic conference. Here are the reviews and decisions from the reviewers. Your rebuttal should rebut the reviews to convince the reviewers to accept your submission.'
@@ -124,15 +160,36 @@ class Config(BaseModel):
                 '{collaborators_serialize_all}',
             ],
             'query_paper': ['{profile_bio}', '{domains}'],
-            'read_paper': ['{profile_bio}', '{domains}', '{papers}'],
-            'think_idea': ['{insights}'],
-            'summarize_ideas': ['{ideas}'],
+            'review_literature': ['{profile_bio}', '{domains}', '{papers}'],
+            'brainstorm_idea': ['{insights}'],
+            'discuss_idea': ['{ideas}'],
             'write_paper': ['{idea}', '{papers}'],
-            'review_score': ['{paper_review}'],
-            'review_paper': ['{papers}'],
-            'write_meta_review': ['{paper}', '{reviews}'],
+            'write_review_summary': ['{paper}'],
+            'write_review_strength': ['{paper}', '{summary}'],
+            'write_review_weakness': ['{paper}', '{summary}'],
+            'write_review_score': ['{paper}', '{summary}', '{strength}', '{weakness}'],
+            'write_meta_review_summary': ['{paper}', '{reviews}', '{rebuttals}'],
+            'write_meta_review_strength': [
+                '{paper}',
+                '{reviews}',
+                '{rebuttals}',
+                '{summary}',
+            ],
+            'write_meta_review_weakness': [
+                '{paper}',
+                '{reviews}',
+                '{rebuttals}',
+                '{summary}',
+            ],
+            'write_meta_review_decision': [
+                '{paper}',
+                '{reviews}',
+                '{rebuttals}',
+                '{summary}',
+                '{strength}',
+                '{weakness}',
+            ],
             'write_rebuttal': ['{paper}', '{review}'],
-            'discuss': ['{message}'],
         }
 
         for template_name, placeholders in required_placeholders.items():
