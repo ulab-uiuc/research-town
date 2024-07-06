@@ -41,9 +41,6 @@ class PipelineEval(BaseModel):
     review_overall_score: int = Field(default=-1)
     review_dimension_scores: List[int] = Field(default=[])
 
-    class Config:
-        extra = 'ignore'
-
 
 class pipeline_eval_db(object):
     def __init__(self) -> None:
@@ -185,7 +182,7 @@ class pipeline_eval_db(object):
             # add sum of dimension score variance
             'review_sum_variance_dimension_scores': self.review_sum_variance_dimension_scores,
             'pipeline evaluation logs': {
-                author: eval_log.dict()
+                author: eval_log.model_dump()
                 for author, eval_log in self.selected_logs.items()
             },
         }

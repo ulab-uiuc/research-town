@@ -28,7 +28,7 @@ class EnvLogDB:
         if class_name in self.data:
             self.data[class_name].append(obj.model_dump())
             logger.info(
-                f"Creating instance of '{obj.__class__.__name__}': '{obj.dict()}'"
+                f"Creating instance of '{obj.__class__.__name__}': '{obj.model_dump()}'"
             )
         else:
             raise ValueError(f'Unsupported log type: {class_name}')
