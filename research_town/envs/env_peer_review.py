@@ -1,3 +1,5 @@
+from collections import Counter
+
 from beartype import beartype
 from beartype.typing import Dict, List, Literal, Tuple, Union
 
@@ -33,9 +35,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         progress_db: ProgressDB,
         config: Config,
     ) -> None:
-        agent_profiles, agent_roles = self.filter_agents(
-            agent_profiles=agent_profiles, agent_roles=agent_roles
-        )
+        self.check_roles(agent_profiles=agent_profiles, agent_roles=agent_roles)
         super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
         self.decision = 'reject'
         self.submission = PaperProfile()
@@ -50,9 +50,9 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         self.config = config
 
     @beartype
-    def filter_agents(
+    def check_roles(
         self, agent_profiles: List[AgentProfile], agent_roles: List[Role]
-    ) -> Tuple[List[AgentProfile], List[Role]]:
+    ) -> None:
         assert len(agent_profiles) == len(agent_roles)
         if 'proj_leader' not in agent_roles:
             raise ValueError('At least one proj_leader is required to write rebuttal.')
@@ -60,14 +60,14 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
             raise ValueError('At least one reviewer is required to write review.')
         if 'chair' not in agent_roles:
             raise ValueError('At least one chair is required to write meta-review.')
+        if 'proj_participant' in agent_roles:
+            raise ValueError('Proj_participant role is not allowed in peer review.')
 
-        valid_agent_profiles: List[AgentProfile] = []
-        valid_agent_roles: List[Role] = []
-        for profile, role in zip(agent_profiles, agent_roles):
-            if role == 'reviewer' or role == 'chair' or role == 'proj_leader':
-                valid_agent_profiles.append(profile)
-                valid_agent_roles.append(role)
-        return valid_agent_profiles, valid_agent_roles
+        counter = Counter(agent_roles)
+        if counter['proj_leader'] != 1:
+            raise ValueError('Exactly one proj_leader is required to write rebuttal.')
+        if counter['chair'] != 1:
+            raise ValueError('Exactly one chair is required to write meta-review.')
 
     @beartype
     def initialize_submission(self, paper_profile: PaperProfile) -> None:
