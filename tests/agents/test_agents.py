@@ -21,6 +21,8 @@ from tests.constants.db_constants import (
 )
 from tests.mocks.mocking_func import mock_papers, mock_prompting
 
+# ==============================================================
+
 
 def test_get_profile() -> None:
     research_agent = BaseResearchAgent(
@@ -50,6 +52,9 @@ def test_find_collaborators(mock_model_prompting: MagicMock) -> None:
     )
     assert isinstance(collaborators, list)
     assert len(collaborators) <= 3
+
+
+# ==============================================================
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')

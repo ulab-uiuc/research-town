@@ -15,7 +15,7 @@ from tests.mocks.mocking_func import mock_papers
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_paper_rebuttal_env(mock_model_prompting: MagicMock) -> None:
+def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.return_value = ['Paper Rebuttal Environment.']
     agent_db = AgentProfileDB()
     paper_db = PaperProfileDB()

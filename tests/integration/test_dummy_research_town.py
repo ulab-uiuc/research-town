@@ -22,14 +22,13 @@ Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
-    agent_list: List[str] = ['Jiaxuan You', 'Jure Leskovec', 'Geoffrey Hinton']
-    role_list: List[Role] = ['proj_leader', 'reviewer', 'chair']
-
-    # Create Environment and Agents
+    agent_list: List[str] = ['Jiaxuan You']
+    role_list: List[Role] = ['proj_leader']
     agent_profiles = [
         AgentProfile(name=agent, bio='A researcher in machine learning.')
         for agent in agent_list
     ]
+
     agent_db = AgentProfileDB()
     paper_db = PaperProfileDB()
     env_db = EnvLogDB()
@@ -44,6 +43,13 @@ def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
         progress_db=progress_db,
         config=config,
     )
+
+    agent_list: List[str] = ['Jiaxuan You', 'Jure Leskovec', 'Geoffrey Hinton']
+    role_list: List[Role] = ['proj_leader', 'reviewer', 'chair']
+    agent_profiles = [
+        AgentProfile(name=agent, bio='A researcher in machine learning.')
+        for agent in agent_list
+    ]
     peer_review_env = PeerReviewMultiAgentEnv(
         agent_profiles=agent_profiles,
         agent_roles=role_list,
