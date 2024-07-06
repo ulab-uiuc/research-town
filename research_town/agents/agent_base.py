@@ -197,10 +197,10 @@ class BaseResearchAgent(object):
         return ResearchReviewForPaperSubmission(
             paper_pk=paper.pk,
             reviewer_pk=self.profile.pk,
-            summary=summary[0],
-            strength=strength[0],
-            weakness=weakness[0],
-            score=score[0],
+            summary=summary,
+            strength=strength,
+            weakness=weakness,
+            score=score,
         )
 
     @beartype
@@ -226,17 +226,16 @@ class BaseResearchAgent(object):
             weakness_prompt_template=config.prompt_template.write_meta_review_weakness,
             decision_prompt_template=config.prompt_template.write_meta_review_decision,
         )
-        review_decision = 'accept' in decision[0].lower()
 
         return ResearchMetaReviewForPaperSubmission(
             paper_pk=paper.pk,
             area_chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
             author_pk=self.profile.pk,
-            summary=summary[0],
-            strength=strength[0],
-            weakness=weakness[0],
-            decision=review_decision,
+            summary=summary,
+            strength=strength,
+            weakness=weakness,
+            decision=decision,
         )
 
     @beartype

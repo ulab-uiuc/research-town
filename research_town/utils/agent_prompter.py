@@ -148,29 +148,30 @@ def write_review_prompting(
     strength_prompt_template: str,
     weakness_prompt_template: str,
     score_prompt_template: str,
-) -> Tuple[List[str], List[str], List[str], List[str]]:
+) -> Tuple[str, str, str, int]:
     paper_str = map_paper_to_str(paper)
     summary_prompt = summary_prompt_template.format_map({'paper': paper_str})
-    summary = model_prompting(model_name, summary_prompt)
+    summary = model_prompting(model_name, summary_prompt)[0]
 
     strength_prompt = strength_prompt_template.format_map(
-        {'paper': paper_str, 'summary': summary[0]}
+        {'paper': paper_str, 'summary': summary}
     )
     weakness_prompt = weakness_prompt_template.format_map(
-        {'paper': paper_str, 'summary': summary[0]}
+        {'paper': paper_str, 'summary': summary}
     )
-    strength = model_prompting(model_name, strength_prompt)
-    weakness = model_prompting(model_name, weakness_prompt)
+    strength = model_prompting(model_name, strength_prompt)[0]
+    weakness = model_prompting(model_name, weakness_prompt)[0]
 
     score_prompt = score_prompt_template.format_map(
         {
             'paper': paper_str,
-            'summary': summary[0],
-            'strength': strength[0],
-            'weakness': weakness[0],
+            'summary': summary,
+            'strength': strength,
+            'weakness': weakness,
         }
     )
-    score = model_prompting(model_name, score_prompt)
+    score_str = model_prompting(model_name, score_prompt)[0]
+    score = int(score_str[0]) if score_str[0].isdigit() else 0
 
     return summary, strength, weakness, score
 
@@ -185,21 +186,21 @@ def write_meta_review_prompting(
     strength_prompt_template: str,
     weakness_prompt_template: str,
     decision_prompt_template: str,
-) -> Tuple[List[str], List[str], List[str], List[str]]:
+) -> Tuple[str, str, str, bool]:
     paper_str = map_paper_to_str(paper)
     reviews_str = map_review_list_to_str(reviews)
     rebuttals_str = map_rebuttal_list_to_str(rebuttals)
     summary_prompt = summary_prompt_template.format_map(
         {'paper': paper_str, 'reviews': reviews_str, 'rebuttals': rebuttals_str}
     )
-    summary = model_prompting(model_name, summary_prompt)
+    summary = model_prompting(model_name, summary_prompt)[0]
 
     strength_prompt = strength_prompt_template.format_map(
         {
             'paper': paper_str,
             'reviews': reviews_str,
             'rebuttals': rebuttals_str,
-            'summary': summary[0],
+            'summary': summary,
         }
     )
     weakness_prompt = weakness_prompt_template.format_map(
@@ -207,23 +208,24 @@ def write_meta_review_prompting(
             'paper': paper_str,
             'reviews': reviews_str,
             'rebuttals': rebuttals_str,
-            'summary': summary[0],
+            'summary': summary,
         }
     )
-    strength = model_prompting(model_name, strength_prompt)
-    weakness = model_prompting(model_name, weakness_prompt)
+    strength = model_prompting(model_name, strength_prompt)[0]
+    weakness = model_prompting(model_name, weakness_prompt)[0]
 
     decision_prompt = decision_prompt_template.format_map(
         {
             'paper': paper_str,
             'reviews': reviews_str,
             'rebuttals': rebuttals_str,
-            'summary': summary[0],
-            'strength': strength[0],
-            'weakness': weakness[0],
+            'summary': summary,
+            'strength': strength,
+            'weakness': weakness,
         }
     )
-    decision = model_prompting(model_name, decision_prompt)
+    decision_str = model_prompting(model_name, decision_prompt)
+    decision = 'accept' in decision_str[0].lower()
 
     return summary, strength, weakness, decision
 
