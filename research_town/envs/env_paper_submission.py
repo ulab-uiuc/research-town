@@ -6,7 +6,6 @@ from beartype.typing import Dict, List, Literal, Tuple, Union
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
-    AgentAgentIdeaDiscussionLog,
     AgentIdeaBrainstormingLog,
     AgentPaperLiteratureReviewLog,
     AgentPaperWritingLog,
@@ -84,7 +83,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         ]
 
         # TODO: update find collaborator functions with initial task
-        self.proj_participants: List[BaseResearchAgent] = []
+        # self.proj_participants: List[BaseResearchAgent] = []
 
         # leader review literature
         insights = self.proj_leader.review_literature(
@@ -92,9 +91,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
             domains=['machine learning'],
             config=self.config,
         )
-        import pdb
-
-        pdb.set_trace()
         for insight in insights:
             self.progress_db.add(insight)
         self.env_db.add(
@@ -130,11 +126,6 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         # leader discuss idea
         summarized_idea = self.proj_leader.discuss_idea(ideas=ideas, config=self.config)
         self.progress_db.add(summarized_idea)
-        self.env_db.add(
-            AgentAgentIdeaDiscussionLog(
-                idea_pk=summarized_idea.pk, agent_pk=self.proj_leader.profile.pk
-            )
-        )
 
         # write paper
         paper = self.proj_leader.write_paper(

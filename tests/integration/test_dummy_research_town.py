@@ -65,10 +65,5 @@ def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
         config=config,
     )
 
-    # Paper Submission
-    paper_submission_env.run()
-    paper = paper_submission_env.paper
-
-    # Peer Review
-    peer_review_env.initialize_submission(paper)
-    peer_review_env.run()
+    paper = paper_submission_env.run()
+    meta_review, reviews, rebuttals = peer_review_env.run(paper)

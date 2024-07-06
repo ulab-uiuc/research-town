@@ -136,9 +136,6 @@ class BaseResearchAgent(object):
             prompt_template_query_paper=config.prompt_template.query_paper,
             prompt_template_review_literature=config.prompt_template.review_literature,
         )
-        import pdb
-
-        pdb.set_trace()
         insights: List[ResearchInsight] = []
         for content in insight_contents:
             insights.append(ResearchInsight(content=content))
@@ -186,7 +183,7 @@ class BaseResearchAgent(object):
     @beartype
     @reviewer_required
     def write_review(
-        self, paper: PaperProfile, config: Config
+        self, paper: ResearchPaperSubmission, config: Config
     ) -> ResearchReviewForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
 
@@ -211,7 +208,7 @@ class BaseResearchAgent(object):
     @chair_required
     def write_meta_review(
         self,
-        paper: PaperProfile,
+        paper: ResearchPaperSubmission,
         reviews: List[ResearchReviewForPaperSubmission],
         rebuttals: List[ResearchRebuttalForPaperSubmission],
         config: Config,
@@ -246,7 +243,7 @@ class BaseResearchAgent(object):
     @proj_leader_required
     def write_rebuttal(
         self,
-        paper: PaperProfile,
+        paper: ResearchPaperSubmission,
         review: ResearchReviewForPaperSubmission,
         config: Config,
     ) -> ResearchRebuttalForPaperSubmission:

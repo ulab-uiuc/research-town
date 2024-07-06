@@ -62,7 +62,7 @@ def test_paper_submission_env(
     mock_model_prompting: MagicMock,
 ) -> None:
     mock_get_related_papers.side_effect = mock_papers
-    mock_model_prompting.side_effect = mock_model_prompting
+    mock_model_prompting.side_effect = mock_prompting
 
     env = PaperSubmissionMultiAgentEnvironment(
         agent_profiles=[agent_profile_A],
@@ -75,4 +75,4 @@ def test_paper_submission_env(
     )
     paper = env.run()
     assert paper.abstract is not None
-    assert paper.abstract == 'This is a paper.'
+    assert paper.abstract == 'Paper abstract'
