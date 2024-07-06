@@ -22,8 +22,10 @@ def test_envlogdb_basic() -> None:
     review_log = AgentPaperReviewWritingLog(
         paper_pk='paper1',
         agent_pk='agent1',
-        review_score=5,
-        review_content='Good paper',
+        score=5,
+        summary='Good paper',
+        strength='Interesting',
+        weakness='None',
     )
     rebuttal_log = AgentPaperRebuttalWritingLog(
         paper_pk='paper1',
@@ -31,7 +33,12 @@ def test_envlogdb_basic() -> None:
         rebuttal_content='I disagree with the review',
     )
     meta_review_log = AgentPaperMetaReviewWritingLog(
-        paper_pk='paper1', agent_pk='agent1', decision=True, meta_review='Accept'
+        paper_pk='paper1',
+        agent_pk='agent1',
+        decision=True,
+        summary='Good paper',
+        strength='Interesting',
+        weakness='None',
     )
     discussion_log = AgentAgentIdeaDiscussionLog(
         agent_from_pk='agent1',
@@ -49,8 +56,10 @@ def test_envlogdb_basic() -> None:
     new_log = AgentPaperReviewWritingLog(
         paper_pk='paper2',
         agent_pk='agent2',
-        review_score=4,
-        review_content='Interesting paper',
+        score=4,
+        summary='Interesting paper',
+        strength='Good',
+        weakness='None',
     )
     db.add(new_log)
     assert new_log.model_dump() in db.data['AgentPaperReviewWritingLog']
