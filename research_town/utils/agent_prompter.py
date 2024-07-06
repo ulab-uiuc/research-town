@@ -85,24 +85,24 @@ def review_literature_prompting(
     papers: List[Dict[str, str]],
     domains: List[str],
     model_name: str,
-    prompt_template_query: str,
-    prompt_template_read: str,
+    prompt_template_query_paper: str,
+    prompt_template_review_literature: str,
 ) -> List[str]:
-    query_prompt = prompt_template_query.format_map(
+    query_paper_prompt = prompt_template_query_paper.format_map(
         {'profile_bio': profile['bio'], 'domains': '; '.join(domains)}
     )
 
     corpus = [paper['abstract'] for paper in papers]
-    related_papers = get_related_papers(corpus, query_prompt, num=1)
+    related_papers = get_related_papers(corpus, query_paper_prompt, num=1)
 
-    read_prompt = prompt_template_read.format_map(
+    review_literature_prompt = prompt_template_review_literature.format_map(
         {
             'profile_bio': profile['bio'],
             'domains': '; '.join(domains),
             'papers': '; '.join(related_papers),
         }
     )
-    return model_prompting(model_name, read_prompt)
+    return model_prompting(model_name, review_literature_prompt)
 
 
 @beartype

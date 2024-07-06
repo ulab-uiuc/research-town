@@ -70,10 +70,13 @@ def test_review_literature(
         domains=['machine learning', 'graph neural network'],
         config=Config(),
     )
-    assert len(research_insight) == 1
+    assert len(research_insight) == 2
     assert isinstance(research_insight[0], ResearchInsight)
     assert research_insight[0].pk is not None
     assert research_insight[0].content == 'Insight 1'
+    assert isinstance(research_insight[1], ResearchInsight)
+    assert research_insight[1].pk is not None
+    assert research_insight[1].content == 'Insight 2'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -101,7 +104,7 @@ def test_brainstorm_idea(
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_paper(mock_model_prompting: MagicMock) -> None:
-    mock_model_prompting.return_value = ['This is a paper abstract.']
+    mock_model_prompting.side_effect = mock_prompting
 
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_B,
@@ -140,7 +143,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
-    mock_model_prompting.return_value = ['Accept. This is a good paper.']
+    mock_model_prompting.side_effect = mock_prompting
 
     research_agent_reviewer = BaseResearchAgent(
         agent_profile=agent_profile_A,
@@ -182,7 +185,7 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
-    mock_model_prompting.return_value = ['This is a paper rebuttal.']
+    mock_model_prompting.side_effect = mock_prompting
 
     research_agent_reviewer = BaseResearchAgent(
         agent_profile=agent_profile_A,

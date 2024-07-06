@@ -66,7 +66,7 @@ def set_constants() -> (
 
     paper_meta_review_A = ResearchMetaReviewForPaperSubmission(
         paper_pk=paper_A.pk,
-        area_chair_pk=agent_A.pk,
+        chair_pk=agent_A.pk,
         review_pks=[paper_review_A.pk],
         author_pk=agent_A.pk,
         content='This paper tries to address one important problem on how to assess the of the LLM, particularly on the instruction following. It provides a carefully curated dataset that is potentially useful for "stress-testing" the LLM evaluators.',

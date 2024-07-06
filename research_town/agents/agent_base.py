@@ -117,6 +117,7 @@ class BaseResearchAgent(object):
 
     # =======================================
 
+    @beartype
     def assign_role(self, role: Role) -> None:
         self.role = role
 
@@ -132,8 +133,8 @@ class BaseResearchAgent(object):
             papers=serialized_papers,
             domains=domains,
             model_name=self.model_name,
-            prompt_template_query=config.prompt_template.query_paper,
-            prompt_template_read=config.prompt_template.review_literature,
+            prompt_template_query_paper=config.prompt_template.query_paper,
+            prompt_template_review_literature=config.prompt_template.review_literature,
         )
         insights: List[ResearchInsight] = []
         for content in insight_contents:
@@ -229,7 +230,7 @@ class BaseResearchAgent(object):
 
         return ResearchMetaReviewForPaperSubmission(
             paper_pk=paper.pk,
-            area_chair_pk=self.profile.pk,
+            chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
             author_pk=self.profile.pk,
             summary=summary,
