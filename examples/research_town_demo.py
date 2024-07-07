@@ -15,7 +15,8 @@ def run_sync_experiment(
     config = Config(config_file_path)
     agent_db = AgentProfileDB()
     agent_db.fetch_and_add_agents(
-        initial_list=['Jiaxuan You', 'Jure Leskovec'], config=config)
+        initial_list=['Jiaxuan You', 'Jure Leskovec'], config=config
+    )
     # agent_db.save_to_file('agent_gnn.json')
     agent_db.load_from_file('agent_gnn.json')
     paper_db = PaperProfileDB()

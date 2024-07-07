@@ -3,7 +3,8 @@ import pickle
 
 from beartype.typing import Any, Dict, List, Optional
 
-from ..utils.paper_collector import get_bert_embedding, get_daily_papers
+from ..utils.paper_collector import get_daily_papers
+from ..utils.retriever import get_bert_embedding
 from .paper_data import PaperProfile
 
 

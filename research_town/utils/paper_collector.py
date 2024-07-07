@@ -113,8 +113,7 @@ def get_papers(
             )
 
             published_date = published
-            date_obj = datetime.datetime.strptime(
-                published_date, '%Y-%m-%dT%H:%M:%SZ')
+            date_obj = datetime.datetime.strptime(published_date, '%Y-%m-%dT%H:%M:%SZ')
             year = date_obj.year
             if year not in papers_by_year:
                 papers_by_year[year] = []
