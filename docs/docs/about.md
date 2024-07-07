@@ -16,7 +16,7 @@ Moreover, we introduce **ResearchEval** that can
 
 ## Research Town Tasks
 
-![Docs Version Dropdown](./img/intro.jpg)
+![Docs Version Dropdown](../static/img/intro.jpg)
 
 ### Literature Review
 
@@ -52,7 +52,7 @@ A pre-defined chair analyzes the reviews and rebuttal to make a final decision o
 
 ## Research Town Engine
 
-![Docs Version Dropdown](./img/intro_2.jpg)
+![Docs Version Dropdown](../static/img/intro_2.jpg)
 
 ### Orchestration of Workflow
 
