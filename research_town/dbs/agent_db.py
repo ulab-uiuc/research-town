@@ -2,10 +2,9 @@ import datetime
 import json
 from xml.etree import ElementTree
 
-import numpy as np
 import requests
-import torch
 from beartype.typing import Any, Dict, List, Optional
+from transformers import BertModel, BertTokenizer
 
 from ..configs import Config
 from ..utils.agent_collector import fetch_author_info
@@ -18,6 +17,12 @@ from .agent_data import AgentProfile
 class AgentProfileDB(object):
     def __init__(self) -> None:
         self.data: Dict[str, AgentProfile] = {}
+        self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
+            'facebook/contriever'
+        )
+        self.retriever_model: BertModel = BertModel.from_pretrained(
+            'facebook/contriever'
+        )
 
     def add(self, agent: AgentProfile) -> None:
         self.data[agent.pk] = agent
@@ -46,18 +51,24 @@ class AgentProfileDB(object):
     def match(
         self, idea: str, agent_profiles: List[AgentProfile], num: int = 1
     ) -> List[str]:
-        idea_embed = get_bert_embedding([idea])
+        idea_embed = get_bert_embedding(
+            instructions=[idea],
+            retriever_tokenizer=self.retriever_tokenizer,
+            retriever_model=self.retriever_model,
+        )
         bio_list = []
         for agent_profile in agent_profiles:
             if agent_profile.bio is not None:
                 bio_list.append(agent_profile.bio)
             else:
                 bio_list.append('')
-        profile_embed = [torch.Tensor(embed_.embed) for embed_ in agent_profiles]
-        index_l = np.array(neighborhood_search(idea_embed, profile_embed, num)).reshape(
-            -1
+        profile_embed = get_bert_embedding(
+            instructions=bio_list,
+            retriever_tokenizer=self.retriever_tokenizer,
+            retriever_model=self.retriever_model,
         )
-        index_all = list(index_l)
+        index_l = neighborhood_search(idea_embed, profile_embed, num)
+        index_all = [index for index_list in index_l for index in index_list]
         match_pk = []
         for index in index_all:
             match_pk.append(agent_profiles[index].pk)
