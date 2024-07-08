@@ -22,13 +22,8 @@ def run_sync_experiment(
     agent_profiles = []
     for _, agent_profile in agent_db.data.items():
         agent_profiles.append(agent_profile)
-    # agent_db.save_to_file('agent_gnn.json')
-    # agent_db.load_from_file('agent_gnn.json')
     paper_db = PaperProfileDB()
     paper_db.fetch_and_add_papers(num=10, domain='graph neural networks')
-    # paper_db.save_to_file("paper_gnn.json")
-    # paper_db.transfer_to_embedding("paper_gnn.json")
-    # paper_db.load_from_file('paper_gnn.json')
     env_db = EnvLogDB()
     progress_db = ProgressDB()
     config = Config(config_file_path)
