@@ -40,7 +40,7 @@ def run_sync_experiment(
         progress_db=progress_db,
         config=config,
     )
-    paper_rebuttal_env = PeerReviewMultiAgentEnv(
+    peer_review_env = PeerReviewMultiAgentEnv(
         agent_profiles=agent_profiles,
         agent_roles=role_list,
         agent_db=agent_db,
@@ -51,18 +51,10 @@ def run_sync_experiment(
     )
 
     # Paper Submission
-    submission_done = False
-    while not submission_done:
-        paper_submission_env.step()
-        submission_done = paper_submission_env.terminated
-    paper = paper_submission_env.paper
+    paper = paper_submission_env.run()
 
     # Paper Review
-    paper_rebuttal_env.initialize_submission(paper)
-    rebuttal_done = False
-    while not rebuttal_done:
-        paper_rebuttal_env.step()
-        rebuttal_done = paper_rebuttal_env.terminated
+    peer_review_env.run(paper)
 
 
 def main() -> None:

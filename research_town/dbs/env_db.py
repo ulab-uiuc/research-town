@@ -3,6 +3,8 @@ import json
 from beartype.typing import Any, Dict, List, Type, TypeVar
 from pydantic import BaseModel
 
+from ..utils.logger import logger
+
 T = TypeVar('T', bound=BaseModel)
 
 
@@ -25,6 +27,9 @@ class EnvLogDB:
         class_name = obj.__class__.__name__
         if class_name in self.data:
             self.data[class_name].append(obj.model_dump())
+            logger.info(
+                f"Creating instance of '{obj.__class__.__name__}': '{obj.model_dump()}'"
+            )
         else:
             raise ValueError(f'Unsupported log type: {class_name}')
 
