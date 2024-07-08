@@ -74,9 +74,21 @@ const config = {
         items: [
           {
             type: 'docSidebar',
+            sidebarId: 'aboutSidebar',
+            position: 'left',
+            label: 'About',
+          },
+          {
+            type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Documentation',
+            label: 'Tutorial',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'gallerySidebar',
+            position: 'left',
+            label: 'Gallery',
           },
           {
             href: 'https://github.com/ulab-uiuc/research-town',
