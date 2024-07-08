@@ -55,14 +55,16 @@ class PaperProfileDB:
         with open(pickle_file_name, 'wb') as pkl_file:
             pickle.dump(paper_dict, pkl_file)
 
-    def load_from_file(self, file_name: str) -> None:
-        pickle_file_name = file_name.replace('.json', '.pkl')
-        with open(pickle_file_name, 'rb') as pkl_file:
-            self.data_embed = pickle.load(pkl_file)
+    def load_from_file(self, file_name: str, with_embedding: bool = False) -> None:
+        if with_embedding:
+            pickle_file_name = file_name.replace('.json', '.pkl')
+            with open(pickle_file_name, 'rb') as pkl_file:
+                self.data_embed = pickle.load(pkl_file)
         with open(file_name, 'r') as f:
             data = json.load(f)
-            for name in data.keys():
-                data[name]['embed'] = self.data_embed[name][0]
+            if with_embedding:
+                for name in data.keys():
+                    data[name]['embed'] = self.data_embed[name][0]
             self.data = {
                 pk: PaperProfile(**paper_data) for pk, paper_data in data.items()
             }

@@ -115,7 +115,8 @@ def test_agentprofiledb_basic() -> None:
     agent1 = AgentProfile(
         name='John Doe', bio='Researcher in AI', institute='AI Institute'
     )
-    agent2 = AgentProfile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    agent2 = AgentProfile(
+        name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     db.add(agent1)
     db.add(agent2)
 
@@ -127,7 +128,8 @@ def test_agentprofiledb_basic() -> None:
     assert db.data[agent3.pk].name == 'Alice Johnson'
 
     updates = {'bio': 'Senior Researcher in AI'}
-    updates_with_optional: Dict[str, Optional[str]] = {k: v for k, v in updates.items()}
+    updates_with_optional: Dict[str, Optional[str]] = {
+        k: v for k, v in updates.items()}
     success = db.update(agent1.pk, updates_with_optional)
 
     assert success
@@ -223,7 +225,8 @@ def test_paperprofiledb_basic() -> None:
     assert paper is not None
     assert paper.title == 'Sample Paper 1'
 
-    updates: Dict[str, Any] = {'title': 'Updated Sample Paper 1', 'citation_count': 15}
+    updates: Dict[str, Any] = {
+        'title': 'Updated Sample Paper 1', 'citation_count': 15}
 
     result = db.update_paper(paper1.pk, updates)
     assert result
