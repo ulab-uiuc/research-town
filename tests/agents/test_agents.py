@@ -22,8 +22,6 @@ from tests.constants.db_constants import (
 )
 from tests.mocks.mocking_func import mock_papers, mock_prompting
 
-# ==============================================================
-
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 @patch('research_town.utils.agent_prompter.get_related_papers')
