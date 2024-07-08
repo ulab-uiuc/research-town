@@ -1,13 +1,7 @@
 from beartype.typing import List, Literal
 
 from research_town.configs import Config
-from research_town.dbs import (
-    AgentProfile,
-    AgentProfileDB,
-    EnvLogDB,
-    PaperProfileDB,
-    ProgressDB,
-)
+from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB, ProgressDB
 from research_town.envs import (
     PaperSubmissionMultiAgentEnvironment,
     PeerReviewMultiAgentEnv,
@@ -22,12 +16,14 @@ def run_sync_experiment(
     config_file_path: str,
 ) -> None:
     # Create Environment and Agents
-    agent_profiles = [
-        AgentProfile(name=agent, bio='A researcher in machine learning.')
-        for agent in agent_list
-    ]
+    config = Config(config_file_path)
     agent_db = AgentProfileDB()
+    agent_db.fetch_and_add_agents(initial_list=agent_list, config=config)
+    agent_profiles = []
+    for _, agent_profile in agent_db.data.items():
+        agent_profiles.append(agent_profile)
     paper_db = PaperProfileDB()
+    paper_db.fetch_and_add_papers(num=10, domain='graph neural networks')
     env_db = EnvLogDB()
     progress_db = ProgressDB()
     config = Config(config_file_path)

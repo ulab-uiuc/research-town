@@ -1,8 +1,10 @@
 import json
+import pickle
 
 from beartype.typing import Any, Dict, List, Optional
 
 from ..utils.paper_collector import get_daily_papers
+from ..utils.retriever import get_bert_embedding
 from .paper_data import PaperProfile
 
 
@@ -43,9 +45,26 @@ class PaperProfileDB:
                 {pk: paper.model_dump() for pk, paper in self.data.items()}, f, indent=2
             )
 
-    def load_from_file(self, file_name: str) -> None:
+    def transfer_to_embedding(self, file_name: str) -> None:
+        pickle_file_name = file_name.replace('.json', '.pkl')
         with open(file_name, 'r') as f:
             data = json.load(f)
+        paper_dict = {}
+        for pk in data.keys():
+            paper_dict[pk] = get_bert_embedding([data[pk]['abstract']])
+        with open(pickle_file_name, 'wb') as pkl_file:
+            pickle.dump(paper_dict, pkl_file)
+
+    def load_from_file(self, file_name: str, with_embedding: bool = False) -> None:
+        if with_embedding:
+            pickle_file_name = file_name.replace('.json', '.pkl')
+            with open(pickle_file_name, 'rb') as pkl_file:
+                self.data_embed = pickle.load(pkl_file)
+        with open(file_name, 'r') as f:
+            data = json.load(f)
+            if with_embedding:
+                for name in data.keys():
+                    data[name]['embed'] = self.data_embed[name][0]
             self.data = {
                 pk: PaperProfile(**paper_data) for pk, paper_data in data.items()
             }
@@ -57,11 +76,27 @@ class PaperProfileDB:
                 self.add_paper(paper)
 
     def fetch_and_add_papers(self, num: int, domain: str) -> None:
-        data, _ = get_daily_papers(domain, query=domain, max_results=num)
+        data, _ = get_daily_papers(query='ti:' + domain, max_results=num)
         transformed_data = {}
         for date, value in data.items():
             papers = []
-            papers.append({'abstract': value['abstract']})
-            papers.append({'info': value['info']})
+            for title, abstract, authors, url, domain, timestamp in zip(
+                value['title'],
+                value['abstract'],
+                value['authors'],
+                value['url'],
+                value['domain'],
+                value['timestamp'],
+            ):
+                papers.append(
+                    {
+                        'title': title,
+                        'abstract': abstract,
+                        'authors': authors,
+                        'url': url,
+                        'domain': domain,
+                        'timestamp': (int)(timestamp),
+                    }
+                )
             transformed_data[date] = papers
         self.update_db(transformed_data)

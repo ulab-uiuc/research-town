@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Literal, Optional, Tuple
+from beartype.typing import Dict, List, Literal, Optional
 
 from ..configs import Config
 from ..dbs import (
@@ -12,11 +12,9 @@ from ..dbs import (
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
-from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
-    find_collaborators_prompting,
     review_literature_prompting,
     write_meta_review_prompting,
     write_paper_prompting,
@@ -46,76 +44,6 @@ class BaseResearchAgent(object):
         self.role: Role | None = agent_role
         self.model_name: str = model_name
         self.serializer = Serializer()
-
-    @beartype
-    def get_profile(self, author_name: str) -> AgentProfile:
-        # TODO: db get based on name
-        # TODO: need rebuild
-        agent_profile = AgentProfile(
-            name='Geoffrey Hinton',
-            bio='A researcher in the field of neural network.',
-        )
-        return agent_profile
-
-    @beartype
-    def find_collaborators(
-        self,
-        paper: PaperProfile,
-        parameter: float = 0.5,
-        max_number: int = 3,
-    ) -> List[AgentProfile]:
-        # TODO: need rebuild
-        start_author: List[str] = (
-            [self.profile.name] if self.profile.name is not None else []
-        )
-        graph, _, _ = bfs(author_list=start_author, node_limit=max_number)
-        collaborators = list(
-            {name for pair in graph for name in pair if name != self.profile.name}
-        )
-        self_profile: Dict[str, str] = (
-            {self.profile.name: self.profile.bio}
-            if self.profile.name is not None and self.profile.bio is not None
-            else {}
-        )
-        collaborator_profiles: Dict[str, str] = {}
-        for author in collaborators:
-            author_bio = self.get_profile(author).bio
-            if author_bio is not None:
-                collaborator_profiles[author] = author_bio
-        paper_serialize: Dict[str, str] = (
-            {paper.title: paper.abstract}
-            if paper.title is not None and paper.abstract is not None
-            else {}
-        )
-        result = find_collaborators_prompting(
-            input=paper_serialize,
-            self_profile=self_profile,
-            collaborator_profiles=collaborator_profiles,
-            parameter=parameter,
-            max_number=max_number,
-        )
-        collaborators_list = []
-        for collaborator in collaborators:
-            if collaborator in result:
-                collaborators_list.append(self.get_profile(collaborator))
-        return collaborators_list
-
-    @beartype
-    def get_co_author_relationships(
-        self, agent_profile: AgentProfile, max_node: int
-    ) -> Tuple[
-        List[Tuple[str, str]],
-        Dict[str, List[Dict[str, Any]]],
-        Dict[str, List[Dict[str, Any]]],
-    ]:
-        # TODO: need rebuild
-        start_author: List[str] = (
-            [self.profile.name] if self.profile.name is not None else []
-        )
-        graph, node_feat, edge_feat = bfs(author_list=start_author, node_limit=max_node)
-        return graph, node_feat, edge_feat
-
-    # =======================================
 
     @beartype
     def assign_role(self, role: Role) -> None:

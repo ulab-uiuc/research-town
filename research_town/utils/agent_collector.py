@@ -58,12 +58,12 @@ def fetch_author_info(author: str) -> Tuple[List[Dict[str, Any]], List[str]]:
             'cats': result.categories,
         }
         papers_info.append(paper_info)
-    co_author_names = co_author_filter(co_authors, limit=5)
+    co_author_names = co_author_filter(co_authors, limit=10)
     return papers_info, co_author_names
 
 
 def bfs(
-    author_list: List[str], node_limit: int = 20
+    author_list: List[str], node_limit: int = 3
 ) -> Tuple[
     List[Tuple[str, str]],
     Dict[str, List[Dict[str, Any]]],
