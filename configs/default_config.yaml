@@ -16,19 +16,19 @@ prompt_template:
     Here are a full list of the names and profiles of potential collaborators: {collaborators_serialize_all}
     Generate the collaborator in a list separated by '-' for each collaborator.
   query_paper: |
-    Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).
+    Given the profile of me, keywords, some recent paper titles and abstracts. Could you query paper in this field (related to my profile if possible).
     Here is my profile biology: {profile_bio}
     Here are the domains: {domains}
-  read_paper: |
+  review_literature: |
     Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).
     Here is my profile biology: {profile_bio}
     Here are the research domains: {domains}
     Here are some recent paper titles and abstracts: {papers}
-  think_idea: |
+  brainstorm_idea: |
     Here is a high-level summarized insight of a research field {insights}.
     How do you view this field? Do you have any novel ideas or insights?
     Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.
-  summarize_ideas: |
+  discuss_idea: |
     Given a list of research ideas, please summarize them by removing duplicates
     and resolving any contradictory ideas by selecting the more reasonable one.
     Here are the research ideas:
@@ -38,30 +38,6 @@ prompt_template:
     You might use two or more of these ideas if they are related and work well together.
     Here is the idea: {idea}
     Here are the external data, which is a list of abstracts of related papers: {papers}
-  review_score: |
-    Please provide a score for the following reviews. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest. Only return one number score. The more you think a paper should be accepted, the closer to 10 the score should be; conversely, the more you think a paper should be rejected, the closer to 1 the score should be. The paper's borderline acceptance score is 5.
-    <Examples>
-    <Exapmle Score of 5>
-    <Paper title>--Your Neighbors Are Communicating: Towards Powerful and Scalable Graph Neural Networks.
-    <Paper abstract>--Message passing graph neural networks (GNNs) are known to have their expressiveness upper-bounded by 1-dimensional Weisfeiler-Lehman (1-WL) algorithm. To achieve more powerful GNNs, existing attempts either require ad hoc features, or involve operations that incur high time and space complexities. In this work, we propose a general and provably powerful GNN framework that preserves the scalability of message passing scheme. In particular, we first propose to empower 1-WL for graph isomorphism test by considering edges among neighbors, giving rise to NC-1-WL. The expressiveness of NC-1-WL is shown to be strictly above 1-WL and below 3-WL theoretically. Further, we propose the NC-GNN framework as a differentiable neural version of NC-1-WL. Our simple implementation of NC-GNN is provably as powerful as NC-1-WL. Experiments demonstrate that our NC-GNN achieves remarkable performance on various benchmarks.
-    </Exapmle Score of 5>
-
-    <Exapmle Score of 8>
-    <Paper title>-- Confidence-Based Feature Imputation for Graphs with Partially Known Features
-    <Paper abstract>--This paper investigates a missing feature imputation problem for graph learning tasks. Several methods have previously addressed learning tasks on graphs with missing features. However, in cases of high rates of missing features, they were unable to avoid significant performance degradation. To overcome this limitation, we introduce a novel concept of channel-wise confidence in a node feature, which is assigned to each imputed channel feature of a node for reflecting the certainty of the imputation. We then design pseudo-confidence using the channel-wise shortest path distance between a missing-feature node and its nearest known-feature node to replace unavailable true confidence in an actual learning process. Based on the pseudo-confidence, we propose a novel feature imputation scheme that performs channel-wise inter-node diffusion and node-wise inter-channel propagation. The scheme can endure even at an exceedingly high missing rate (e.g., 99.5\\%) and it achieves state-of-the-art accuracy for both semi-supervised node classification and link prediction on various datasets containing a high rate of missing features. Codes are available at https://github.com/daehoum1/pcfi .
-    </Exapmle Score of 8>
-
-    <Exapmle Score of 3>
-    <Paper title>-- MEGAN: Multi Explanation Graph Attention Network.
-    <Paper abstract>-- Explainable artificial intelligence (XAI) methods are expected to improve trust during human-AI interactions, provide tools for model analysis and extend human understanding of complex problems. Attention-based models are an important subclass of XAI methods, partly due to their full differentiability and the potential to improve explanations by means of explanation-supervised training. We propose the novel multi-explanation graph attention network (MEGAN). Our graph regression and classification model features multiple explanation channels, which can be chosen independently of the task specifications. We first validate our model on a synthetic graph regression dataset, where our model produces single-channel explanations with quality similar to GNNExplainer. Furthermore, we demonstrate the advantages of multi-channel explanations on one synthetic and two real-world datasets: The prediction of water solubility of molecular graphs and sentiment classification of movie reviews. We find that our model produces explanations consistent with human intuition, opening the way to learning from our model in less well-understood tasks.
-    </Exapmle Score of 3>
-    </Examples>
-    Here are the reviews: {paper_review}
-  review_paper: |
-    As a reviewer, please provide detailed reviews for the following papers.
-    Evaluate the paper by highlighting its strengths and weaknesses.
-    Consider using two or more of these titles together if they are related and complement each other effectively.
-    Here are the papers: {papers}
   write_meta_review: |
     Please make a review decision to decide whether the following submission should be accepted or rejected by an academic conference. Here are several reviews from reviewers and rebuttals from the author for this submission. Please indicate your review decision as accept or reject.
     Here is the submission: {paper}

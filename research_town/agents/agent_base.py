@@ -14,15 +14,14 @@ from ..dbs import (
 )
 from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
+    brainstorm_idea_prompting,
+    discuss_idea_prompting,
     find_collaborators_prompting,
-    read_paper_prompting,
-    review_paper_prompting,
-    review_score_prompting,
-    summarize_ideas_prompting,
-    think_idea_prompting,
+    review_literature_prompting,
     write_meta_review_prompting,
     write_paper_prompting,
     write_rebuttal_prompting,
+    write_review_prompting,
 )
 from ..utils.agent_role_verifier import (
     chair_required,
@@ -62,7 +61,6 @@ class BaseResearchAgent(object):
     def find_collaborators(
         self,
         paper: PaperProfile,
-        config: Config,
         parameter: float = 0.5,
         max_number: int = 3,
     ) -> List[AgentProfile]:
@@ -119,6 +117,7 @@ class BaseResearchAgent(object):
 
     # =======================================
 
+    @beartype
     def assign_role(self, role: Role) -> None:
         self.role = role
 
@@ -129,13 +128,13 @@ class BaseResearchAgent(object):
     ) -> List[ResearchInsight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
-        insight_contents = read_paper_prompting(
+        insight_contents = review_literature_prompting(
             profile=serialized_profile,
             papers=serialized_papers,
             domains=domains,
             model_name=self.model_name,
-            prompt_template_query=config.prompt_template.query_paper,
-            prompt_template_read=config.prompt_template.read_paper,
+            prompt_template_query_paper=config.prompt_template.query_paper,
+            prompt_template_review_literature=config.prompt_template.review_literature,
         )
         insights: List[ResearchInsight] = []
         for content in insight_contents:
@@ -148,10 +147,10 @@ class BaseResearchAgent(object):
         self, insights: List[ResearchInsight], config: Config
     ) -> ResearchIdea:
         serialized_insights = self.serializer.serialize(insights)
-        idea_content = think_idea_prompting(
+        idea_content = brainstorm_idea_prompting(
             insights=serialized_insights,
             model_name=self.model_name,
-            prompt_template=config.prompt_template.think_idea,
+            prompt_template=config.prompt_template.brainstorm_idea,
         )[0]
         return ResearchIdea(content=idea_content)
 
@@ -159,10 +158,10 @@ class BaseResearchAgent(object):
     @proj_participant_required
     def discuss_idea(self, ideas: List[ResearchIdea], config: Config) -> ResearchIdea:
         serialized_ideas = self.serializer.serialize(ideas)
-        idea_summarized = summarize_ideas_prompting(
+        idea_summarized = discuss_idea_prompting(
             ideas=serialized_ideas,
             model_name=self.model_name,
-            prompt_template=config.prompt_template.summarize_ideas,
+            prompt_template=config.prompt_template.discuss_idea,
         )[0]
         return ResearchIdea(content=idea_summarized)
 
@@ -183,60 +182,68 @@ class BaseResearchAgent(object):
 
     @beartype
     @reviewer_required
-    def write_paper_review(
-        self, paper: PaperProfile, config: Config
+    def write_review(
+        self, paper: ResearchPaperSubmission, config: Config
     ) -> ResearchReviewForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
-        paper_review = review_paper_prompting(
+
+        summary, strength, weakness, score = write_review_prompting(
             paper=serialized_paper,
             model_name=self.model_name,
-            prompt_template=config.prompt_template.review_paper,
-        )[0]
-        review_score = review_score_prompting(
-            paper_review=paper_review,
-            model_name=self.model_name,
-            prompt_template=config.prompt_template.review_score,
+            summary_prompt_template=config.prompt_template.write_review_summary,
+            strength_prompt_template=config.prompt_template.write_review_strength,
+            weakness_prompt_template=config.prompt_template.write_review_weakness,
+            score_prompt_template=config.prompt_template.write_review_score,
         )
         return ResearchReviewForPaperSubmission(
             paper_pk=paper.pk,
             reviewer_pk=self.profile.pk,
-            content=paper_review,
-            score=review_score,
+            summary=summary,
+            strength=strength,
+            weakness=weakness,
+            score=score,
         )
 
     @beartype
     @chair_required
     def write_meta_review(
         self,
-        paper: PaperProfile,
+        paper: ResearchPaperSubmission,
         reviews: List[ResearchReviewForPaperSubmission],
+        rebuttals: List[ResearchRebuttalForPaperSubmission],
         config: Config,
     ) -> ResearchMetaReviewForPaperSubmission:
         serialized_paper = self.serializer.serialize(paper)
         serialized_reviews = self.serializer.serialize(reviews)
+        serialized_rebuttals = self.serializer.serialize(rebuttals)
 
-        meta_review = write_meta_review_prompting(
+        summary, strength, weakness, decision = write_meta_review_prompting(
             paper=serialized_paper,
             reviews=serialized_reviews,
+            rebuttals=serialized_rebuttals,
             model_name=self.model_name,
-            prompt_template=config.prompt_template.write_meta_review,
+            summary_prompt_template=config.prompt_template.write_meta_review_summary,
+            strength_prompt_template=config.prompt_template.write_meta_review_strength,
+            weakness_prompt_template=config.prompt_template.write_meta_review_weakness,
+            decision_prompt_template=config.prompt_template.write_meta_review_decision,
         )
-        review_decision = 'accept' in meta_review[0].lower()
 
         return ResearchMetaReviewForPaperSubmission(
             paper_pk=paper.pk,
-            area_chair_pk=self.profile.pk,
+            chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
             author_pk=self.profile.pk,
-            content=meta_review[0],
-            decision=review_decision,
+            summary=summary,
+            strength=strength,
+            weakness=weakness,
+            decision=decision,
         )
 
     @beartype
     @proj_leader_required
     def write_rebuttal(
         self,
-        paper: PaperProfile,
+        paper: ResearchPaperSubmission,
         review: ResearchReviewForPaperSubmission,
         config: Config,
     ) -> ResearchRebuttalForPaperSubmission:

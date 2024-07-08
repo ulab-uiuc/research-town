@@ -84,6 +84,6 @@ def test_placeholder_check() -> None:
     config = Config()
     config.check_prompt_template_placeholder()
 
-    config.prompt_template.discuss = 'missing {test}'
+    config.prompt_template.write_rebuttal = 'missing {test}'
     with pytest.raises(AssertionError):
         config.check_prompt_template_placeholder()

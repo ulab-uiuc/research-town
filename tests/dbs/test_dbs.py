@@ -22,8 +22,10 @@ def test_envlogdb_basic() -> None:
     review_log = AgentPaperReviewWritingLog(
         paper_pk='paper1',
         agent_pk='agent1',
-        review_score=5,
-        review_content='Good paper',
+        score=5,
+        summary='Good paper',
+        strength='Interesting',
+        weakness='None',
     )
     rebuttal_log = AgentPaperRebuttalWritingLog(
         paper_pk='paper1',
@@ -31,7 +33,12 @@ def test_envlogdb_basic() -> None:
         rebuttal_content='I disagree with the review',
     )
     meta_review_log = AgentPaperMetaReviewWritingLog(
-        paper_pk='paper1', agent_pk='agent1', decision=True, meta_review='Accept'
+        paper_pk='paper1',
+        agent_pk='agent1',
+        decision=True,
+        summary='Good paper',
+        strength='Interesting',
+        weakness='None',
     )
     discussion_log = AgentAgentIdeaDiscussionLog(
         agent_from_pk='agent1',
@@ -49,8 +56,10 @@ def test_envlogdb_basic() -> None:
     new_log = AgentPaperReviewWritingLog(
         paper_pk='paper2',
         agent_pk='agent2',
-        review_score=4,
-        review_content='Interesting paper',
+        score=4,
+        summary='Interesting paper',
+        strength='Good',
+        weakness='None',
     )
     db.add(new_log)
     assert new_log.model_dump() in db.data['AgentPaperReviewWritingLog']
@@ -58,9 +67,16 @@ def test_envlogdb_basic() -> None:
     conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
     results = db.get(AgentPaperReviewWritingLog, **conditions)
     assert len(results) == 1
-    assert results[0].review_content == 'Good paper'
+    assert results[0].summary == 'Good paper'
+    assert results[0].strength == 'Interesting'
+    assert results[0].weakness == 'None'
 
-    updates = {'review_score': 3, 'review_content': 'Decent paper'}
+    updates = {
+        'score': 3,
+        'summary': 'Bad paper',
+        'strength': 'None',
+        'weakness': 'Really?',
+    }
     updated_count = db.update(
         AgentPaperReviewWritingLog, {'paper_pk': 'paper1'}, updates
     )
@@ -68,8 +84,10 @@ def test_envlogdb_basic() -> None:
 
     updated_log = db.get(AgentPaperReviewWritingLog, **conditions)[0]
 
-    assert updated_log.review_score == 3
-    assert updated_log.review_content == 'Decent paper'
+    assert updated_log.score == 3
+    assert updated_log.summary == 'Bad paper'
+    assert updated_log.strength == 'None'
+    assert updated_log.weakness == 'Really?'
 
     deleted_count = db.delete(AgentPaperReviewWritingLog, **conditions)
     assert deleted_count == 1
@@ -88,8 +106,7 @@ def test_envlogdb_basic() -> None:
     assert len(new_db.data['AgentPaperMetaReviewWritingLog']) == 1
     assert len(new_db.data['AgentAgentIdeaDiscussionLog']) == 1
     assert (
-        new_db.data['AgentPaperReviewWritingLog'][0]['review_content']
-        == 'Interesting paper'
+        new_db.data['AgentPaperReviewWritingLog'][0]['summary'] == 'Interesting paper'
     )
 
 

@@ -1,7 +1,7 @@
 import logging
 from logging import StreamHandler
 
-from beartype.typing import Any, Callable, Dict, List, Literal, Mapping, Union
+from beartype.typing import Any, Dict, List, Literal, Mapping, Union
 from termcolor import colored
 
 LogType = Union[List[Dict[str, str]], None]
@@ -70,33 +70,6 @@ def get_console_handler() -> Any:
     return console_handler
 
 
-app_logger = logging.getLogger('research_town')
-app_logger.setLevel(logging.DEBUG)
-app_logger.addHandler(get_console_handler())
-
-
-def logging_decorator(
-    func: Callable[..., LogType],
-) -> Callable[..., LogType]:
-    def wrapper(*args: List[Any], **kwargs: Dict[str, Any]) -> None:
-        messages = func(*args, **kwargs)
-        if not messages:
-            return
-        for message in messages:
-            text = message.get('text', '')
-            level = str(message.get('level', 'INFO')).upper()
-
-            if level == 'DEBUG':
-                app_logger.debug(text)
-            elif level == 'INFO':
-                app_logger.info(text)
-            elif level == 'WARNING':
-                app_logger.warning(text)
-            elif level == 'ERROR':
-                app_logger.error(text)
-            elif level == 'CRITICAL':
-                app_logger.critical(text)
-            else:
-                app_logger.info(text)  # Default to INFO if the level is not recognized
-
-    return wrapper
+logger = logging.getLogger('research_town')
+logger.setLevel(logging.DEBUG)
+logger.addHandler(get_console_handler())

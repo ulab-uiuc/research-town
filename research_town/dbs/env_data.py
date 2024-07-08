@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 class AgentPaperLiteratureReviewLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
-    paper_pk: str
+    paper_pks: List[str]
     agent_pk: str
     insight_pks: Optional[List[str]] = Field(default=[])
     other_agent_pks: Optional[List[str]] = Field(default=[])
@@ -52,8 +52,10 @@ class AgentPaperReviewWritingLog(BaseModel):
     paper_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
-    review_score: Optional[int] = Field(default=0)
-    review_content: Optional[str] = Field(default=None)
+    score: Optional[int] = Field(default=0)
+    summary: Optional[str] = Field(default=None)
+    strength: Optional[str] = Field(default=None)
+    weakness: Optional[str] = Field(default=None)
 
 
 class AgentPaperRebuttalWritingLog(BaseModel):
@@ -72,4 +74,6 @@ class AgentPaperMetaReviewWritingLog(BaseModel):
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
     decision: Optional[bool] = Field(default=False)
-    meta_review: Optional[str] = Field(default=None)
+    summary: Optional[str] = Field(default=None)
+    strength: Optional[str] = Field(default=None)
+    weakness: Optional[str] = Field(default=None)

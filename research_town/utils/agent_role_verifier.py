@@ -1,5 +1,6 @@
 from functools import wraps
-from typing import Any, Callable, Literal, TypeVar, cast
+
+from beartype.typing import Any, Callable, Literal, TypeVar, cast
 
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair']
 F = TypeVar('F', bound=Callable[..., Any])

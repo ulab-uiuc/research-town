@@ -26,6 +26,13 @@ def map_review_list_to_str(reviews: List[Dict[str, Union[int, str]]]) -> str:
     return result
 
 
+def map_rebuttal_list_to_str(rebuttals: List[Dict[str, str]]) -> str:
+    result = ''
+    for rebuttal in rebuttals:
+        result += map_rebuttal_to_str(rebuttal)
+    return result
+
+
 def map_paper_to_str(paper: Dict[str, str]) -> str:
     return f"Paper: {paper['abstract']}"
 
@@ -36,8 +43,25 @@ def map_rebuttal_to_str(paper: Dict[str, str]) -> str:
 
 def map_review_to_str(review: Dict[str, Union[int, str]]) -> str:
     score = review['score']
-    content = review['content']
-    return f'Score: {score}\nContent: {content}'
+    summary = review['summary']
+    strength = review['strength']
+    weakness = review['weakness']
+    return f'Score: {score}\nSummary: {summary}\nStrength: {strength}\nWeakness: {weakness}'
+
+
+def map_meta_review_to_str(meta_review: Dict[str, str]) -> str:
+    decision = meta_review['decision']
+    summary = meta_review['summary']
+    strength = meta_review['strength']
+    weakness = meta_review['weakness']
+    return f'Summary: {summary}\nStrength: {strength}\nWeakness: {weakness}\nDecision: {decision}'
+
+
+def map_meta_review_list_to_str(meta_reviews: List[Dict[str, str]]) -> str:
+    result = ''
+    for meta_review in meta_reviews:
+        result += map_meta_review_to_str(meta_review)
+    return result
 
 
 def map_message_to_str(message: Dict[str, str]) -> str:

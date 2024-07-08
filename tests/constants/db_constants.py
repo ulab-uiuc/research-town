@@ -62,8 +62,10 @@ agent_paper_review_log = AgentPaperReviewWritingLog(
     timestep=0,
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
-    review_score=5,
-    review_content='This paper is well-written.',
+    score=5,
+    summary='This paper is well-written.',
+    strength='Interesting',
+    weakness='None',
 )
 
 agent_paper_meta_review_log = AgentPaperMetaReviewWritingLog(
@@ -71,7 +73,9 @@ agent_paper_meta_review_log = AgentPaperMetaReviewWritingLog(
     paper_pk=paper_profile_B.pk,
     agent_pk=agent_profile_B.pk,
     decision=True,
-    meta_review='This paper is well-written.',
+    summary='This paper is well-written.',
+    strength='Interesting',
+    weakness='None',
 )
 
 agent_paper_rebuttal_log = AgentPaperRebuttalWritingLog(
