@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Literal, Optional, Tuple
+from beartype.typing import Dict, List, Literal, Optional
 
 from ..configs import Config
 from ..dbs import (
@@ -12,7 +12,6 @@ from ..dbs import (
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
-from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
@@ -45,23 +44,6 @@ class BaseResearchAgent(object):
         self.role: Role | None = agent_role
         self.model_name: str = model_name
         self.serializer = Serializer()
-
-    @beartype
-    def get_co_author_relationships(
-        self, agent_profile: AgentProfile, max_node: int
-    ) -> Tuple[
-        List[Tuple[str, str]],
-        Dict[str, List[Dict[str, Any]]],
-        Dict[str, List[Dict[str, Any]]],
-    ]:
-        # TODO: need rebuild
-        start_author: List[str] = (
-            [self.profile.name] if self.profile.name is not None else []
-        )
-        graph, node_feat, edge_feat = bfs(author_list=start_author, node_limit=max_node)
-        return graph, node_feat, edge_feat
-
-    # =======================================
 
     @beartype
     def assign_role(self, role: Role) -> None:
