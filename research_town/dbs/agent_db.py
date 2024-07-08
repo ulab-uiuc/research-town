@@ -124,27 +124,23 @@ class AgentProfileDB(object):
                 if title_element is not None and title_element.text is not None
                 else None
             )
-            published_element = entry.find(
-                '{http://www.w3.org/2005/Atom}published')
+            published_element = entry.find('{http://www.w3.org/2005/Atom}published')
             published = (
                 published_element.text.strip()
                 if published_element is not None and published_element.text is not None
                 else None
             )
-            abstract_element = entry.find(
-                '{http://www.w3.org/2005/Atom}summary')
+            abstract_element = entry.find('{http://www.w3.org/2005/Atom}summary')
             abstract = (
                 abstract_element.text.strip()
                 if abstract_element is not None and abstract_element.text is not None
                 else None
             )
 
-            authors_elements = entry.findall(
-                '{http://www.w3.org/2005/Atom}author')
+            authors_elements = entry.findall('{http://www.w3.org/2005/Atom}author')
             authors = []
             for author in authors_elements:
-                author_element = author.find(
-                    '{http://www.w3.org/2005/Atom}name')
+                author_element = author.find('{http://www.w3.org/2005/Atom}name')
                 if author_element is not None:
                     authors.append(author_element.text)
             link_element = entry.find('{http://www.w3.org/2005/Atom}id')
@@ -170,12 +166,10 @@ class AgentProfileDB(object):
                         'link': link,  # Add the paper link to the dictionary
                     }
                 )
-            authors_elements = entry.findall(
-                '{http://www.w3.org/2005/Atom}author')
+            authors_elements = entry.findall('{http://www.w3.org/2005/Atom}author')
             authors = []
             for author in authors_elements:
-                author_element = author.find(
-                    '{http://www.w3.org/2005/Atom}name')
+                author_element = author.find('{http://www.w3.org/2005/Atom}name')
                 if author_element is not None:
                     authors.append(author_element.text)
             if author_name in authors:
@@ -190,8 +184,7 @@ class AgentProfileDB(object):
                     else None
                 )
                 date_obj = (
-                    datetime.datetime.strptime(
-                        published_date, '%Y-%m-%dT%H:%M:%SZ')
+                    datetime.datetime.strptime(published_date, '%Y-%m-%dT%H:%M:%SZ')
                     if published_date is not None
                     else None
                 )

@@ -16,7 +16,6 @@ from ..utils.agent_collector import bfs
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
-    find_collaborators_prompting,
     review_literature_prompting,
     write_meta_review_prompting,
     write_paper_prompting,
@@ -59,8 +58,7 @@ class BaseResearchAgent(object):
         start_author: List[str] = (
             [self.profile.name] if self.profile.name is not None else []
         )
-        graph, node_feat, edge_feat = bfs(
-            author_list=start_author, node_limit=max_node)
+        graph, node_feat, edge_feat = bfs(author_list=start_author, node_limit=max_node)
         return graph, node_feat, edge_feat
 
     # =======================================

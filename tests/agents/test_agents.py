@@ -22,7 +22,6 @@ from tests.constants.db_constants import (
 )
 from tests.mocks.mocking_func import mock_papers, mock_prompting
 
-
 # ==============================================================
 
 
