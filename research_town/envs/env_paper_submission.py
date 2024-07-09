@@ -24,7 +24,7 @@ LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
-class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
+class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
     def __init__(
         self,
         agent_profiles: List[AgentProfile],
