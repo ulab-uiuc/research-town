@@ -2,10 +2,7 @@ from beartype.typing import List, Literal
 
 from research_town.configs import Config
 from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB, ProgressDB
-from research_town.envs import (
-    PaperSubmissionMultiAgentEnvironment,
-    PeerReviewMultiAgentEnv,
-)
+from research_town.envs import PaperSubmissionMultiAgentEnv, PeerReviewMultiAgentEnv
 
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
@@ -27,7 +24,7 @@ def run_sync_experiment(
     env_db = EnvLogDB()
     progress_db = ProgressDB()
     config = Config(config_file_path)
-    paper_submission_env = PaperSubmissionMultiAgentEnvironment(
+    paper_submission_env = PaperSubmissionMultiAgentEnv(
         agent_profiles=agent_profiles,
         agent_roles=role_list,
         agent_db=agent_db,
