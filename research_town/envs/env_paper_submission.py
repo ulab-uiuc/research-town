@@ -1,7 +1,7 @@
 from collections import Counter
 
 from beartype import beartype
-from beartype.typing import Dict, List, Literal, Tuple, Union
+from beartype.typing import Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
@@ -41,7 +41,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         stop_flag: bool,
         agent_profiles: List[AgentProfile],
         agent_roles: List[Role],
-    ) -> Tuple[BaseResearchAgent, List[BaseResearchAgent]]:
+    ) -> None:
         self.time_step = time_step
         self.stop_flag = stop_flag
 
@@ -67,11 +67,12 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         if counter['proj_leader'] != 1:
             raise ValueError('Exactly one proj_leader is required to submit paper.')
 
-        proj_leader = [agent for agent in self.agents if agent.role == 'proj_leader'][0]
-        proj_participants = [
+        self.proj_leader = [
+            agent for agent in self.agents if agent.role == 'proj_leader'
+        ][0]
+        self.proj_participants = [
             agent for agent in self.agents if agent.role == 'proj_participant'
         ]
-        return proj_leader, proj_participants
 
     @beartype
     def on_exit(
