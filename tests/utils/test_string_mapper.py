@@ -5,7 +5,6 @@ from research_town.utils.string_mapper import (
     map_idea_to_str,
     map_insight_to_str,
     map_insights_to_str,
-    map_message_to_str,
     map_meta_review_list_to_str,
     map_meta_review_to_str,
     map_paper_list_to_str,
@@ -122,12 +121,6 @@ def test_map_meta_review_list_to_str() -> None:
     ]
     expected_result = 'Summary: Meta review 1\nStrength: Strength 1\nWeakness: Weakness 1\nDecision: acceptSummary: Meta review 2\nStrength: Strength 2\nWeakness: Weakness 2\nDecision: rejectSummary: Meta review 3\nStrength: Strength 3\nWeakness: Weakness 3\nDecision: accept'
     assert map_meta_review_list_to_str(meta_reviews) == expected_result
-
-
-def test_map_message_to_str() -> None:
-    message = {'agent_from_name': 'Alice', 'agent_to_name': 'Bob'}
-    expected_result = 'Message from Alice to Bob\n'
-    assert map_message_to_str(message) == expected_result
 
 
 def test_map_insights_to_str() -> None:
