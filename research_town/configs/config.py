@@ -29,6 +29,10 @@ class ParamConfig(BaseModel):
 
 
 class PromptTemplateConfig(BaseModel):
+    summarize_research_direction: str = (
+        "Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. Focus more on more rescent personas. Be concise and clear (around 300 words)."
+        'Here are the personas from different times: {personal_info}'
+    )
     find_collaborators: str = (
         'Given the name and profile of me, could you find {max_number} collaborators for the following collaboration task?'
         'Here is my profile: {self_serialize_all}'
@@ -153,6 +157,9 @@ class Config(BaseModel):
     def check_prompt_template_placeholder(self) -> None:
         templates = self.prompt_template.model_dump()
         required_placeholders = {
+            'summarize_research_direction': [
+                '{personal_info}',
+            ],
             'find_collaborators': [
                 '{max_number}',
                 '{self_serialize_all}',

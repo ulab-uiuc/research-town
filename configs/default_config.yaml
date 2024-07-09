@@ -6,6 +6,9 @@ param:
   reviewer_num: 3
   result_path: 'Mixtral-8x7B'
 prompt_template:
+  summarize_research_direction: |
+    Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. Focus more on more rescent personas. Be concise and clear (around 300 words).
+    Here are the personas from different times: {personal_info}
   find_collaborators: |
     Given the name and profile of me, could you find {max_number} collaborators for the following collaboration task?
     Here is my profile: {self_serialize_all}
