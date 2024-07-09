@@ -37,7 +37,7 @@ mypy = "^1.8.0"
 retriever = ["torch", "transformers"]
 collector = ["arxiv"]
 logger = ["termcolor"]
-analyzer = {"pandas"}
+humaneval = ["pandas"]
 
 [build-system]
 requires = ["poetry-core"]
