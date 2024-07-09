@@ -1,8 +1,8 @@
 from research_town.dbs import (
-    AgentAgentDiscussionLog,
-    AgentPaperMetaReviewLog,
-    AgentPaperRebuttalLog,
-    AgentPaperReviewLog,
+    AgentAgentIdeaDiscussionLog,
+    AgentPaperMetaReviewWritingLog,
+    AgentPaperRebuttalWritingLog,
+    AgentPaperReviewWritingLog,
     AgentProfile,
     PaperProfile,
     ResearchIdea,
@@ -58,30 +58,34 @@ research_paper_submission_B = ResearchPaperSubmission(
 )
 
 
-agent_paper_review_log = AgentPaperReviewLog(
+agent_paper_review_log = AgentPaperReviewWritingLog(
     timestep=0,
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
-    review_score=5,
-    review_content='This paper is well-written.',
+    score=5,
+    summary='This paper is well-written.',
+    strength='Interesting',
+    weakness='None',
 )
 
-agent_paper_meta_review_log = AgentPaperMetaReviewLog(
+agent_paper_meta_review_log = AgentPaperMetaReviewWritingLog(
     timestep=0,
     paper_pk=paper_profile_B.pk,
     agent_pk=agent_profile_B.pk,
     decision=True,
-    meta_review='This paper is well-written.',
+    summary='This paper is well-written.',
+    strength='Interesting',
+    weakness='None',
 )
 
-agent_paper_rebuttal_log = AgentPaperRebuttalLog(
+agent_paper_rebuttal_log = AgentPaperRebuttalWritingLog(
     timestep=0,
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
     rebuttal_content='I have revised the paper.',
 )
 
-agent_agent_discussion_log = AgentAgentDiscussionLog(
+agent_agent_discussion_log = AgentAgentIdeaDiscussionLog(
     timestep=0,
     agent_from_pk=agent_profile_A.pk,
     agent_from_name=agent_profile_A.name,
