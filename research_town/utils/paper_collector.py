@@ -6,14 +6,14 @@ import requests
 import torch
 from beartype.typing import Any, Dict, List, Tuple
 
-from .retriever import get_bert_embedding
+from .retriever import get_embedding
 
 ATOM_NAMESPACE = '{http://www.w3.org/2005/Atom}'
 
 
 def get_related_papers(corpus: List[str], query: str, num: int) -> List[str]:
-    corpus_embedding = get_bert_embedding(corpus)
-    query_embedding = get_bert_embedding([query])
+    corpus_embedding = get_embedding(corpus)
+    query_embedding = get_embedding([query])
     indices = neighborhood_search(corpus_embedding, query_embedding, num)
     related_papers = [corpus[idx] for idx in indices[0]]
     return related_papers

@@ -14,10 +14,7 @@ from research_town.dbs import (
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
-from research_town.envs import (
-    PaperSubmissionMultiAgentEnvironment,
-    PeerReviewMultiAgentEnv,
-)
+from research_town.envs import PaperSubmissionMultiAgentEnv, PeerReviewMultiAgentEnv
 from tests.mocks.mocking_func import mock_prompting
 
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
@@ -39,7 +36,7 @@ def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
     env_db = EnvLogDB()
     progress_db = ProgressDB()
     config = Config()
-    paper_submission_env = PaperSubmissionMultiAgentEnvironment(
+    paper_submission_env = PaperSubmissionMultiAgentEnv(
         agent_profiles=paper_submission_agent_profiles,
         agent_roles=paper_submission_role_list,
         agent_db=agent_db,

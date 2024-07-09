@@ -64,10 +64,6 @@ def map_meta_review_list_to_str(meta_reviews: List[Dict[str, str]]) -> str:
     return result
 
 
-def map_message_to_str(message: Dict[str, str]) -> str:
-    return f"Message from {message['agent_from_name']} to {message['agent_to_name']}\n"
-
-
 def map_insights_to_str(insights: List[Dict[str, str]]) -> str:
     result = ''
     for insight in insights:

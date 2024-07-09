@@ -7,7 +7,6 @@ from .string_mapper import (
     map_idea_list_to_str,
     map_idea_to_str,
     map_insights_to_str,
-    map_message_to_str,
     map_paper_list_to_str,
     map_paper_to_str,
     map_rebuttal_list_to_str,
@@ -30,53 +29,6 @@ def summarize_research_direction_prompting(
     template_input = {'personal_info': personal_info}
     prompt = prompt_template.format_map(template_input)
     return model_prompting(model_name, prompt)
-
-
-@beartype
-def find_collaborators_prompting(
-    input: Dict[str, str],
-    self_profile: Dict[str, str],
-    collaborator_profiles: Dict[str, str],
-    parameter: float = 0.5,
-    max_number: int = 3,
-    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-) -> List[str]:
-    self_serialize = [
-        f'Name: {name}\nProfile: {self_profile[name]}'
-        for _, name in enumerate(self_profile.keys())
-    ]
-    self_serialize_all = '\n\n'.join(self_serialize)
-
-    task_serialize = [
-        f'Time: {timestamp}\nAbstract: {input[timestamp]}\n'
-        for _, timestamp in enumerate(input.keys())
-    ]
-    task_serialize_all = '\n\n'.join(task_serialize)
-
-    collaborator_serialize = [
-        f'Name: {name}\nProfile: {collaborator_profiles[name]}'
-        for _, name in enumerate(collaborator_profiles.keys())
-    ]
-    collaborator_serialize_all = '\n\n'.join(collaborator_serialize)
-
-    prompt_template = (
-        'Given the name and profile of me, could you find {max_number} collaborators for the following collaboration task?'
-        'Here is my profile: {self_serialize_all}'
-        'The collaboration task include: {task_serialize_all}'
-        'Here are a full list of the names and profiles of potential collaborators: {collaborators_serialize_all}'
-        "Generate the collaborator in a list separated by '-' for each collaborator"
-    )
-    input = {
-        'max_number': str(max_number),
-        'self_serialize_all': self_serialize_all,
-        'task_serialize_all': task_serialize_all,
-        'collaborators_serialize_all': collaborator_serialize_all,
-    }
-    prompt = prompt_template.format_map(input)
-    return model_prompting(model_name, prompt)
-
-
-# =======================================
 
 
 @beartype
@@ -240,15 +192,4 @@ def write_rebuttal_prompting(
     paper_str = map_paper_to_str(paper)
     review_str = map_review_to_str(review)
     prompt = prompt_template.format_map({'paper': paper_str, 'review': review_str})
-    return model_prompting(model_name, prompt)
-
-
-@beartype
-def discuss_prompting(
-    message: Dict[str, str],
-    model_name: str,
-    prompt_template: str,
-) -> List[str]:
-    message_str = map_message_to_str(message)
-    prompt = prompt_template.format_map({'message': message_str})
     return model_prompting(model_name, prompt)
