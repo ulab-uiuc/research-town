@@ -2,6 +2,22 @@ from arxiv import Client, Search
 from beartype.typing import Any, Dict, List, Tuple
 from tqdm import tqdm
 
+import requests
+import os
+import json
+import datetime
+from xml.etree import ElementTree
+import requests
+import openai
+import time
+import faiss
+from transformers import BertTokenizer, BertModel
+import torch
+import copy
+import datetime
+import json
+
+
 
 def get_authors(authors: List[str], first_author: bool = False) -> str:
     if first_author:
@@ -58,12 +74,12 @@ def fetch_author_info(author: str) -> Tuple[List[Dict[str, Any]], List[str]]:
             'cats': result.categories,
         }
         papers_info.append(paper_info)
-    co_author_names = co_author_filter(co_authors, limit=10)
+    co_author_names = co_author_filter(co_authors, limit=5)
     return papers_info, co_author_names
 
 
 def bfs(
-    author_list: List[str], node_limit: int = 3
+    author_list: List[str], node_limit: int = 20
 ) -> Tuple[
     List[Tuple[str, str]],
     Dict[str, List[Dict[str, Any]]],
@@ -86,3 +102,6 @@ def bfs(
         visit.append(author)
         node_feat[author] = papers_info
     return graph, node_feat, edge_feat
+
+
+        
