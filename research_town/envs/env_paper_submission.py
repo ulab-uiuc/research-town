@@ -10,13 +10,10 @@ from ..dbs import (
     AgentPaperLiteratureReviewLog,
     AgentPaperWritingLog,
     AgentProfile,
-    AgentProfileDB,
     EnvLogDB,
     PaperProfile,
-    PaperProfileDB,
     ProgressDB,
     ResearchIdea,
-    ResearchPaperSubmission,
 )
 from .env_base import BaseMultiAgentEnv
 
@@ -27,29 +24,38 @@ Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     def __init__(
         self,
-        agent_profiles: List[AgentProfile],
-        agent_roles: List[Role],
-        agent_db: AgentProfileDB,
-        paper_db: PaperProfileDB,
         env_db: EnvLogDB,
         progress_db: ProgressDB,
         config: Config,
     ) -> None:
-        super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
-        self.agent_db = agent_db
-        self.paper_db = paper_db
-        self.env_db = env_db
-        self.progress_db = progress_db
-        self.config = config
-        self.proj_leader, self.proj_participants = self.on_enter(
-            agent_profiles=agent_profiles, agent_roles=agent_roles
+        super().__init__(
+            env_db=env_db,
+            progress_db=progress_db,
+            config=config,
         )
 
     @beartype
     def on_enter(
-        self, agent_profiles: List[AgentProfile], agent_roles: List[Role]
+        self,
+        time_step: int,
+        stop_flag: bool,
+        agent_profiles: List[AgentProfile],
+        agent_roles: List[Role],
     ) -> Tuple[BaseResearchAgent, List[BaseResearchAgent]]:
+        self.time_step = time_step
+        self.stop_flag = stop_flag
+
         assert len(agent_profiles) == len(agent_roles)
+
+        for agent_profile, agent_role in zip(agent_profiles, agent_roles):
+            self.agents.append(
+                BaseResearchAgent(
+                    agent_profile=agent_profile,
+                    agent_role=agent_role,
+                    model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+                )
+            )
+
         if 'proj_leader' not in agent_roles:
             raise ValueError('At least one proj_leader is required to submit paper.')
         if 'reviewer' in agent_roles:
@@ -70,15 +76,16 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
     @beartype
     def on_exit(
         self,
-        paper: ResearchPaperSubmission,
     ) -> bool:
-        self.progress_db.update(paper)
+        self.progress_db.update(self.insights)
+        self.progress_db.update(self.ideas)
+        self.progress_db.update(self.paper)
         return True
 
     @beartype
     def update(
         self,
-    ) -> ResearchPaperSubmission:
+    ) -> None:
         # TODO: support retrieval from database
         papers = [
             PaperProfile(
@@ -95,59 +102,69 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         # self.proj_participants: List[BaseResearchAgent] = []
 
         # leader review literature
-        insights = self.proj_leader.review_literature(
+        self.insights = self.proj_leader.review_literature(
             papers=papers,
             domains=['machine learning'],
             config=self.config,
         )
-        for insight in insights:
-            self.progress_db.add(insight)
+        for insight in self.insights:
+            self.progress_db.add(self.insight)
         self.env_db.add(
             AgentPaperLiteratureReviewLog(
+                time_step=self.time_step,
                 paper_pks=[paper.pk for paper in papers],
                 agent_pk=self.proj_leader.profile.pk,
-                insight_pks=[insight.pk for insight in insights],
+                insight_pks=[insight.pk for insight in self.insights],
             )
         )
 
         # leader brainstorm idea
-        ideas: List[ResearchIdea] = []
-        idea = self.proj_leader.brainstorm_idea(insights=insights, config=self.config)
-        ideas.append(idea)
+        self.ideas: List[ResearchIdea] = []
+        idea = self.proj_leader.brainstorm_idea(
+            insights=self.insights, config=self.config
+        )
+        self.ideas.append(idea)
         self.progress_db.add(idea)
         self.env_db.add(
             AgentIdeaBrainstormingLog(
-                idea_pk=idea.pk, agent_pk=self.proj_leader.profile.pk
+                time_step=self.time_step,
+                idea_pk=idea.pk,
+                agent_pk=self.proj_leader.profile.pk,
             )
         )
 
         # collaborator brainstorm idea
         for participant in self.proj_participants:
-            idea = participant.brainstorm_idea(insights=insights, config=self.config)
-            ideas.append(idea)
+            idea = participant.brainstorm_idea(
+                insights=self.insights, config=self.config
+            )
+            self.ideas.append(idea)
             self.progress_db.add(idea)
             self.env_db.add(
                 AgentIdeaBrainstormingLog(
-                    idea_pk=idea.pk, agent_pk=participant.profile.pk
+                    time_step=self.time_step,
+                    idea_pk=idea.pk,
+                    agent_pk=participant.profile.pk,
                 )
             )
 
         # leader discuss idea
-        summarized_idea = self.proj_leader.discuss_idea(ideas=ideas, config=self.config)
+        summarized_idea = self.proj_leader.discuss_idea(
+            ideas=self.ideas, config=self.config
+        )
         self.progress_db.add(summarized_idea)
 
         # write paper
-        paper = self.proj_leader.write_paper(
+        self.paper = self.proj_leader.write_paper(
             idea=summarized_idea, papers=papers, config=self.config
         )
-        self.progress_db.add(paper)
+        self.progress_db.add(self.paper)
         self.env_db.add(
             AgentPaperWritingLog(
-                paper_pk=paper.pk, agent_pk=self.proj_leader.profile.pk
+                time_step=self.time_step,
+                paper_pk=self.paper.pk,
+                agent_pk=self.proj_leader.profile.pk,
             )
         )
 
         self.env_run_number += 1
-        self.terminated = True
-
-        return paper

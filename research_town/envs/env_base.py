@@ -1,29 +1,41 @@
+from abc import ABC, abstractmethod
+
 from beartype.typing import Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
-from ..dbs import AgentProfile
+from ..configs import Config
+from ..dbs import EnvLogDB, ProgressDB
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
-class BaseMultiAgentEnv(object):
+class BaseMultiAgentEnv(ABC):
     def __init__(
         self,
-        agent_profiles: List[AgentProfile],
+        env_db: EnvLogDB,
+        progress_db: ProgressDB,
+        config: Config,
+    ) -> None:
+        self.env_run_num = 0
+        self.env_db = env_db
+        self.progress_db = progress_db
+        self.config = config
+
+    @abstractmethod
+    def on_enter(
+        self,
+        time_step: int,
+        stop_flag: bool,
+        agents: List[BaseResearchAgent],
         agent_roles: List[Role],
     ) -> None:
-        self.env_run_number = 0
-        self.max_env_run_number = 1
-        self.terminated = False
-        self.agent_profiles: List[AgentProfile] = agent_profiles
-        self.agents: List[BaseResearchAgent] = []
-        assert len(agent_profiles) == len(agent_roles)
-        for agent_profile, agent_role in zip(agent_profiles, agent_roles):
-            self.agents.append(
-                BaseResearchAgent(
-                    agent_profile=agent_profile,
-                    agent_role=agent_role,
-                    model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-                )
-            )
+        pass
+
+    @abstractmethod
+    def update(self) -> None:
+        pass
+
+    @abstractmethod
+    def on_exit(self) -> bool:
+        pass

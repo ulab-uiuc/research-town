@@ -59,7 +59,7 @@ research_paper_submission_B = ResearchPaperSubmission(
 
 
 agent_paper_review_log = AgentPaperReviewWritingLog(
-    timestep=0,
+    time_step=0,
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
     score=5,
@@ -69,7 +69,7 @@ agent_paper_review_log = AgentPaperReviewWritingLog(
 )
 
 agent_paper_meta_review_log = AgentPaperMetaReviewWritingLog(
-    timestep=0,
+    time_step=0,
     paper_pk=paper_profile_B.pk,
     agent_pk=agent_profile_B.pk,
     decision=True,
@@ -79,14 +79,14 @@ agent_paper_meta_review_log = AgentPaperMetaReviewWritingLog(
 )
 
 agent_paper_rebuttal_log = AgentPaperRebuttalWritingLog(
-    timestep=0,
+    time_step=0,
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
     rebuttal_content='I have revised the paper.',
 )
 
 agent_agent_discussion_log = AgentAgentIdeaDiscussionLog(
-    timestep=0,
+    time_step=0,
     agent_from_pk=agent_profile_A.pk,
     agent_from_name=agent_profile_A.name,
     agent_to_pk=agent_profile_B.pk,

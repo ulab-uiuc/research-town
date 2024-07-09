@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 
 class AgentPaperLiteratureReviewLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+    time_step: int = Field(default=0)
     paper_pks: List[str]
     agent_pk: str
     insight_pks: Optional[List[str]] = Field(default=[])
@@ -15,7 +15,7 @@ class AgentPaperLiteratureReviewLog(BaseModel):
 
 class AgentIdeaBrainstormingLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+    time_step: int = Field(default=0)
     idea_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
@@ -23,14 +23,14 @@ class AgentIdeaBrainstormingLog(BaseModel):
 
 class AgentAgentCollaborationFindingLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+    time_step: int = Field(default=0)
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
 class AgentAgentIdeaDiscussionLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+    time_step: int = Field(default=0)
     agent_from_pk: str
     agent_from_name: str
     agent_to_pk: str
@@ -40,7 +40,7 @@ class AgentAgentIdeaDiscussionLog(BaseModel):
 
 class AgentPaperWritingLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+    time_step: int = Field(default=0)
     paper_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
@@ -48,7 +48,7 @@ class AgentPaperWritingLog(BaseModel):
 
 class AgentPaperReviewWritingLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+    time_step: int = Field(default=0)
     paper_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
@@ -60,7 +60,7 @@ class AgentPaperReviewWritingLog(BaseModel):
 
 class AgentPaperRebuttalWritingLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+    time_step: int = Field(default=0)
     paper_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
@@ -69,7 +69,7 @@ class AgentPaperRebuttalWritingLog(BaseModel):
 
 class AgentPaperMetaReviewWritingLog(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+    time_step: int = Field(default=0)
     paper_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
