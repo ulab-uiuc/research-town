@@ -33,12 +33,12 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         config: Config,
     ) -> None:
         super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
-        self.chair, self.proj_leader, self.reviewers = self.on_enter(
-            agent_profiles=agent_profiles, agent_roles=agent_roles
-        )
         self.env_db = env_db
         self.progress_db = progress_db
         self.config = config
+        self.chair, self.proj_leader, self.reviewers = self.on_enter(
+            agent_profiles=agent_profiles, agent_roles=agent_roles
+        )
 
     @beartype
     def on_enter(

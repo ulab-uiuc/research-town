@@ -10,10 +10,8 @@ from ..dbs import (
     AgentPaperLiteratureReviewLog,
     AgentPaperWritingLog,
     AgentProfile,
-    AgentProfileDB,
     EnvLogDB,
     PaperProfile,
-    PaperProfileDB,
     ProgressDB,
     ResearchIdea,
     ResearchPaperSubmission,
@@ -29,15 +27,11 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         self,
         agent_profiles: List[AgentProfile],
         agent_roles: List[Role],
-        agent_db: AgentProfileDB,
-        paper_db: PaperProfileDB,
         env_db: EnvLogDB,
         progress_db: ProgressDB,
         config: Config,
     ) -> None:
         super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
-        self.agent_db = agent_db
-        self.paper_db = paper_db
         self.env_db = env_db
         self.progress_db = progress_db
         self.config = config
