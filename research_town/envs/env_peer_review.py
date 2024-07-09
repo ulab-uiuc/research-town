@@ -87,6 +87,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
             self.progress_db.update(rebuttal)
         for review in self.reviews:
             self.progress_db.update(review)
+        self.env_run_num += 1
         return True
 
     @beartype
@@ -146,5 +147,3 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
                 decision=meta_review.decision,
             )
         )
-
-        self.env_run_number += 1

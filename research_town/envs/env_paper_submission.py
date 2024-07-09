@@ -80,6 +80,7 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         self.progress_db.update(self.insights)
         self.progress_db.update(self.ideas)
         self.progress_db.update(self.paper)
+        self.env_run_num += 1
         return True
 
     @beartype
@@ -166,5 +167,3 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
                 agent_pk=self.proj_leader.profile.pk,
             )
         )
-
-        self.env_run_number += 1
