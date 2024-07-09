@@ -36,17 +36,17 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         config: Config,
     ) -> None:
         super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
-        self.proj_leader, self.proj_participants = self.check_roles(
-            agent_profiles=agent_profiles, agent_roles=agent_roles
-        )
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.env_db = env_db
         self.progress_db = progress_db
         self.config = config
+        self.proj_leader, self.proj_participants = self.on_enter(
+            agent_profiles=agent_profiles, agent_roles=agent_roles
+        )
 
     @beartype
-    def check_roles(
+    def on_enter(
         self, agent_profiles: List[AgentProfile], agent_roles: List[Role]
     ) -> Tuple[BaseResearchAgent, List[BaseResearchAgent]]:
         assert len(agent_profiles) == len(agent_roles)
@@ -67,7 +67,16 @@ class PaperSubmissionMultiAgentEnvironment(BaseMultiAgentEnv):
         ]
         return proj_leader, proj_participants
 
-    def run(
+    @beartype
+    def on_exit(
+        self,
+        paper: ResearchPaperSubmission,
+    ) -> bool:
+        self.progress_db.update(paper)
+        return True
+
+    @beartype
+    def update(
         self,
     ) -> ResearchPaperSubmission:
         # TODO: support retrieval from database

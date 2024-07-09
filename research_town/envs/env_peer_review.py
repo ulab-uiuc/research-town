@@ -10,9 +10,7 @@ from ..dbs import (
     AgentPaperRebuttalWritingLog,
     AgentPaperReviewWritingLog,
     AgentProfile,
-    AgentProfileDB,
     EnvLogDB,
-    PaperProfileDB,
     ProgressDB,
     ResearchMetaReviewForPaperSubmission,
     ResearchPaperSubmission,
@@ -30,24 +28,20 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         self,
         agent_profiles: List[AgentProfile],
         agent_roles: List[Role],
-        agent_db: AgentProfileDB,
-        paper_db: PaperProfileDB,
         env_db: EnvLogDB,
         progress_db: ProgressDB,
         config: Config,
     ) -> None:
         super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
-        self.chair, self.proj_leader, self.reviewers = self.check_roles(
+        self.chair, self.proj_leader, self.reviewers = self.on_enter(
             agent_profiles=agent_profiles, agent_roles=agent_roles
         )
-        self.agent_db = agent_db
-        self.paper_db = paper_db
         self.env_db = env_db
         self.progress_db = progress_db
         self.config = config
 
     @beartype
-    def check_roles(
+    def on_enter(
         self, agent_profiles: List[AgentProfile], agent_roles: List[Role]
     ) -> Tuple[BaseResearchAgent, BaseResearchAgent, List[BaseResearchAgent]]:
         assert len(agent_profiles) == len(agent_roles)
@@ -71,7 +65,22 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         reviewers = [agent for agent in self.agents if agent.role == 'reviewer']
         return chair, proj_leader, reviewers
 
-    def run(
+    @beartype
+    def on_exit(
+        self,
+        meta_review: ResearchMetaReviewForPaperSubmission,
+        rebuttals: List[ResearchRebuttalForPaperSubmission],
+        reviews: List[ResearchReviewForPaperSubmission],
+    ) -> bool:
+        self.progress_db.update(meta_review)
+        for rebuttal in rebuttals:
+            self.progress_db.update(rebuttal)
+        for review in reviews:
+            self.progress_db.update(review)
+        return True
+
+    @beartype
+    def update(
         self,
         paper: ResearchPaperSubmission,
     ) -> Tuple[
