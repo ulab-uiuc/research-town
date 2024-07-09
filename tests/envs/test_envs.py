@@ -10,10 +10,7 @@ from research_town.dbs import (
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
-from research_town.envs import (
-    PaperSubmissionMultiAgentEnvironment,
-    PeerReviewMultiAgentEnv,
-)
+from research_town.envs import PaperSubmissionMultiAgentEnv, PeerReviewMultiAgentEnv
 from tests.constants.db_constants import (
     agent_profile_A,
     agent_profile_B,
@@ -64,7 +61,7 @@ def test_paper_submission_env(
     mock_get_related_papers.side_effect = mock_papers
     mock_model_prompting.side_effect = mock_prompting
 
-    env = PaperSubmissionMultiAgentEnvironment(
+    env = PaperSubmissionMultiAgentEnv(
         agent_profiles=[agent_profile_A],
         agent_roles=['proj_leader'],
         agent_db=AgentProfileDB(),
