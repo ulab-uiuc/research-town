@@ -3,10 +3,10 @@ from unittest.mock import MagicMock, patch
 import torch
 from beartype.typing import Any, Dict
 
-from research_town.utils.retriever import get_bert_embedding
+from research_town.utils.retriever import get_embedding
 
 
-def test_get_bert_embedding() -> None:
+def test_get_embedding() -> None:
     with (
         patch('transformers.BertTokenizer.from_pretrained') as mock_tokenizer,
         patch('transformers.BertModel.from_pretrained') as mock_model,
@@ -38,7 +38,7 @@ def test_get_bert_embedding() -> None:
         mock_model_instance.side_effect = mock_forward
 
         instructions = ['Test instruction']
-        result = get_bert_embedding(
+        result = get_embedding(
             instructions,
             retriever_tokenizer=mock_tokenizer_instance,
             retriever_model=mock_model_instance,

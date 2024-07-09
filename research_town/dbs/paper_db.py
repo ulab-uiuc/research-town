@@ -2,15 +2,22 @@ import json
 import pickle
 
 from beartype.typing import Any, Dict, List, Optional
+from transformers import BertModel, BertTokenizer
 
 from ..utils.paper_collector import get_daily_papers
-from ..utils.retriever import get_bert_embedding
+from ..utils.retriever import get_embedding
 from .paper_data import PaperProfile
 
 
 class PaperProfileDB:
     def __init__(self) -> None:
         self.data: Dict[str, PaperProfile] = {}
+        self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
+            'facebook/contriever'
+        )
+        self.retriever_model: BertModel = BertModel.from_pretrained(
+            'facebook/contriever'
+        )
 
     def add_paper(self, paper: PaperProfile) -> None:
         self.data[paper.pk] = paper
@@ -45,13 +52,17 @@ class PaperProfileDB:
                 {pk: paper.model_dump() for pk, paper in self.data.items()}, f, indent=2
             )
 
-    def transfer_to_embedding(self, file_name: str) -> None:
+    def transform_to_embedding(self, file_name: str) -> None:
         pickle_file_name = file_name.replace('.json', '.pkl')
         with open(file_name, 'r') as f:
             data = json.load(f)
         paper_dict = {}
         for pk in data.keys():
-            paper_dict[pk] = get_bert_embedding([data[pk]['abstract']])
+            paper_dict[pk] = get_embedding(
+                [data[pk]['abstract']],
+                self.retriever_tokenizer,
+                self.retriever_model,
+            )
         with open(pickle_file_name, 'wb') as pkl_file:
             pickle.dump(paper_dict, pkl_file)
 
