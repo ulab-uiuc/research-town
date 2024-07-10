@@ -16,7 +16,7 @@ from tests.constants.db_constants import (
     agent_profile_B,
     research_paper_submission_A,
 )
-from tests.mocks.mocking_func import mock_papers, mock_prompting
+from tests.mocks.mocking_func import mock_prompting
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -53,12 +53,9 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-@patch('research_town.utils.agent_prompter.get_related_papers')
 def test_paper_submission_env(
-    mock_get_related_papers: MagicMock,
     mock_model_prompting: MagicMock,
 ) -> None:
-    mock_get_related_papers.side_effect = mock_papers
     mock_model_prompting.side_effect = mock_prompting
 
     env = PaperSubmissionMultiAgentEnv(

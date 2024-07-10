@@ -19,8 +19,6 @@ def mock_prompting(
     # Check which template the prompt matches
     if prompt.startswith(template_config.find_collaborators.split('{')[0]):
         return ['Collaborator 1', 'Collaborator 2', 'Collaborator 3']
-    elif prompt.startswith(template_config.query_paper.split('{')[0]):
-        return ['Keyword 1', 'Keyword 2']
     elif prompt.startswith(template_config.review_literature.split('{')[0]):
         return ['Insight 1', 'Insight 2']
     elif prompt.startswith(template_config.brainstorm_idea.split('{')[0]):

@@ -20,16 +20,13 @@ from tests.constants.db_constants import (
     research_insight_B,
     research_paper_submission_A,
 )
-from tests.mocks.mocking_func import mock_papers, mock_prompting
+from tests.mocks.mocking_func import mock_prompting
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-@patch('research_town.utils.agent_prompter.get_related_papers')
 def test_review_literature(
-    mock_get_related_papers: MagicMock,
     mock_model_prompting: MagicMock,
 ) -> None:
-    mock_get_related_papers.side_effect = mock_papers
     mock_model_prompting.side_effect = mock_prompting
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_A,
@@ -51,12 +48,9 @@ def test_review_literature(
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-@patch('research_town.utils.agent_prompter.get_related_papers')
 def test_brainstorm_idea(
-    mock_get_related_papers: MagicMock,
     mock_model_prompting: MagicMock,
 ) -> None:
-    mock_get_related_papers.side_effect = mock_papers
     mock_model_prompting.side_effect = mock_prompting
 
     research_agent = BaseResearchAgent(
