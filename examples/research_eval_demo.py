@@ -10,9 +10,9 @@ from research_town.dbs import ResearchPaperSubmission  # Paper
 from research_town.dbs import ResearchRebuttalForPaperSubmission  # Rebuttal
 from research_town.dbs import ResearchReviewForPaperSubmission  # Review
 from research_town.evaluators import (
-    IdeaQualityEvaluator,
-    PaperQualityEvaluator,
-    ReviewQualityEvaluator,
+    ResearchIdeaQualityEvaluator,
+    ResearchPaperSubmissionQualityEvaluator,
+    ResearchReviewForPaperSubmissionQualityEvaluator,
 )
 
 
@@ -102,9 +102,13 @@ def run_sync_evaluation(
     review_serialize = f'score: {review.score}\nreview summary: {review.summary}\nreview strength: {review.strength}\nreview weakness: {review.weakness}'
     meta_review_serialize = f'decision: {meta_review.decision}\nmeta review summary: {meta_review.summary}\nmeta review strength: {meta_review.strength}\nmeta review weakness: {meta_review.weakness}'
     # Create Evaluators
-    idea_quality_evaluator = IdeaQualityEvaluator(model_name=model_name)
-    paper_quality_evaluator = PaperQualityEvaluator(model_name=model_name)
-    review_quality_evaluator = ReviewQualityEvaluator(model_name=model_name)
+    idea_quality_evaluator = ResearchIdeaQualityEvaluator(model_name=model_name)
+    paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(
+        model_name=model_name
+    )
+    review_quality_evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
+        model_name=model_name
+    )
     # Generate Evaluation
     idea_quality = idea_quality_evaluator.eval(
         **{'idea': idea_serialize, 'trend': insight_serialize}
