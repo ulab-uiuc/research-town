@@ -3,8 +3,6 @@ import datetime
 import arxiv
 from beartype.typing import Any, Dict, List, Tuple
 
-ATOM_NAMESPACE = '{http://www.w3.org/2005/Atom}'
-
 
 def get_daily_papers(
     query: str, max_results: int = 2
