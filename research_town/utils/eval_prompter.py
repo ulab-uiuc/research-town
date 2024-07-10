@@ -144,7 +144,7 @@ def research_paper_submission_quality_eval_prompting(
 ) -> str:
     # refer to idea eval, but replace those not needed, and paraphrase those have overlaps.
     paper_prompt = """
-    <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft. .
+    <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft.
     <Instruction>
 
     <Input>
@@ -219,7 +219,7 @@ def research_review_for_paper_submission_quality_eval_prompting(
 ) -> str:
     review_prompt = """
     <Instruction>
-    Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.
+    Please evaluate the review based on the following dimensions. You only need to give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. For these components are left blank(for example: rebutal, meta_review, etc), please provide your common knowledge to assess the review. You must give a overall score with dimension scores. No detailed anaylsis is needed.
     </Instruction>
 
     <Input>

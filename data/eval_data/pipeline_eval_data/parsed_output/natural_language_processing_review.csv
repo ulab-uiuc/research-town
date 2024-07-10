@@ -1,0 +1,16 @@
+domain,agent_model_name,evaluator_model_name,review_avg_overall_score,review_variance_overall_score,review_sum_variance_dimension_scores
+natural_language_processing,llama3_70b,together_ai/meta-llama/Llama-3-70b-chat-hf,89.9,24.49,3.82
+natural_language_processing,llama3_70b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,83.0,31.0,3.35
+natural_language_processing,llama3_70b,gpt-4o,74.4,76.03999999999999,6.89
+natural_language_processing,mixtral_8_7b,together_ai/meta-llama/Llama-3-70b-chat-hf,90.0,16.0,2.38
+natural_language_processing,mixtral_8_7b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,80.0,45.0,5.429999999999999
+natural_language_processing,mixtral_8_7b,gpt-4o,73.0,125.0,9.94
+natural_language_processing,qwen_32,together_ai/meta-llama/Llama-3-70b-chat-hf,88.2,25.360000000000003,4.459999999999999
+natural_language_processing,qwen_32,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,79.5,52.25,4.0600000000000005
+natural_language_processing,qwen_32,gpt-4o,72.7,92.41,8.15
+natural_language_processing,llama3_8b,together_ai/meta-llama/Llama-3-70b-chat-hf,91.5,15.05,2.12
+natural_language_processing,llama3_8b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,83.3,18.010000000000005,3.1299999999999994
+natural_language_processing,llama3_8b,gpt-4o,79.3,37.809999999999995,6.109999999999999
+natural_language_processing,gpt_4o,together_ai/meta-llama/Llama-3-70b-chat-hf,93.1,7.890000000000005,1.6199999999999999
+natural_language_processing,gpt_4o,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,84.5,47.25,4.58
+natural_language_processing,gpt_4o,gpt-4o,82.8,44.360000000000014,4.370000000000001

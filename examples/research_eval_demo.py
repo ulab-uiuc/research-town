@@ -66,7 +66,7 @@ def set_constants() -> (
 
     paper_meta_review_A = ResearchMetaReviewForPaperSubmission(
         paper_pk=paper_A.pk,
-        area_chair_pk=agent_A.pk,
+        chair_pk=agent_A.pk,
         review_pks=[paper_review_A.pk],
         author_pk=agent_A.pk,
         content='This paper tries to address one important problem on how to assess the of the LLM, particularly on the instruction following. It provides a carefully curated dataset that is potentially useful for "stress-testing" the LLM evaluators.',
@@ -99,10 +99,8 @@ def run_sync_evaluation(
         'abstract': paper.abstract,
         'conference': paper.conference,
     }
-    review_serialize = f'score: {review.score}\ncontent: {review.content}'
-    meta_review_serialize = (
-        f'decision: {meta_review.decision}\nmeta review:{meta_review.content}'
-    )
+    review_serialize = f'score: {review.score}\nreview summary: {review.summary}\nreview strength: {review.strength}\nreview weakness: {review.weakness}'
+    meta_review_serialize = f'decision: {meta_review.decision}\nmeta review summary: {meta_review.summary}\nmeta review strength: {meta_review.strength}\nmeta review weakness: {meta_review.weakness}'
     # Create Evaluators
     idea_quality_evaluator = ResearchIdeaQualityEvaluator(model_name=model_name)
     paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(

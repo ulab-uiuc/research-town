@@ -3,24 +3,10 @@ from beartype.typing import Any, Dict, List, Tuple
 from tqdm import tqdm
 
 
-def get_authors(authors: List[str], first_author: bool = False) -> str:
-    if first_author:
-        return authors[0]
-    return ', '.join(authors)
-
-
-def author_position(author: str, author_list: List[str]) -> int:
-    for ind, i in enumerate(author_list):
-        if author.lower() == i.lower():
-            return ind + 1
-
-    return -1
-
-
 def co_author_frequency(
     author: str, author_list: List[str], co_authors: Dict[str, int]
 ) -> Dict[str, int]:
-    for ind, i in enumerate(author_list):
+    for i in author_list:
         if author.lower() == i.lower():
             continue
         if i in co_authors:
@@ -58,31 +44,5 @@ def fetch_author_info(author: str) -> Tuple[List[Dict[str, Any]], List[str]]:
             'cats': result.categories,
         }
         papers_info.append(paper_info)
-    co_author_names = co_author_filter(co_authors, limit=5)
+    co_author_names = co_author_filter(co_authors, limit=10)
     return papers_info, co_author_names
-
-
-def bfs(
-    author_list: List[str], node_limit: int = 20
-) -> Tuple[
-    List[Tuple[str, str]],
-    Dict[str, List[Dict[str, Any]]],
-    Dict[str, List[Dict[str, Any]]],
-]:
-    graph = []
-    node_feat: Dict[str, List[Dict[str, Any]]] = dict()
-    edge_feat: Dict[str, List[Dict[str, Any]]] = dict()
-    visit = []
-    for author in author_list:
-        if author in visit:
-            continue
-        papers_info, co_authors = fetch_author_info(author)
-        if len(node_feat) <= node_limit:
-            author_list.extend(co_authors)
-            for co_au in co_authors:
-                if (author, co_au) in graph or (co_au, author) in graph:
-                    continue
-                graph.append((author, co_au))
-        visit.append(author)
-        node_feat[author] = papers_info
-    return graph, node_feat, edge_feat

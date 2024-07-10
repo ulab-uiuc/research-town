@@ -27,10 +27,14 @@ jobs:
     - name: Install dependencies
       run: |
         curl -sSL https://install.python-poetry.org | python3
-        poetry install --all-extras
+        poetry install --with test --extras "retriever collector logger"
     - name: Test with pytest
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         TOGETHERAI_API_KEY: ${{ secrets.TOGETHERAI_API_KEY }}
       run: |
-        poetry run pytest
+        poetry run pytest --cov=. --cov-report=xml
+    - name: Upload coverage report to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
