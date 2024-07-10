@@ -1,7 +1,8 @@
 import datetime
 import json
-from xml.etree import ElementTree
 import pickle
+from xml.etree import ElementTree
+
 import requests
 from beartype.typing import Any, Dict, List, Optional
 from transformers import BertModel, BertTokenizer
@@ -48,12 +49,13 @@ class AgentProfileDB(object):
                 result.append(agent)
         return result
 
-    def transfer_to_embedding(self,file_name: str)-> None:
-        with open(file_name+ ".json", 'r') as f:
+    def transform_to_embedding(self, file_name: str) -> None:
+        with open(file_name, 'r') as f:
             data = json.load(f)
         agent_dict = {}
         for pk in data.keys():
             agent_dict[pk] = get_embedding([data[pk]['bio']])
+        file_name = file_name.replace('.json', '')
         with open(file_name + '.pkl', 'wb') as pkl_file:
             pickle.dump(agent_dict, pkl_file)
 
@@ -78,10 +80,10 @@ class AgentProfileDB(object):
         )
         index_l = neighborhood_search(idea_embed, profile_embed, num)
         index_all = [index for index_list in index_l for index in index_list]
-        match_pk = []
+        matched_agent_pk = []
         for index in index_all:
-            match_pk.append(agent_profiles[index].pk)
-        return match_pk
+            matched_agent_pk.append(agent_profiles[index].pk)
+        return matched_agent_pk
 
     def save_to_file(self, file_name: str) -> None:
         with open(file_name, 'w') as f:
@@ -91,7 +93,10 @@ class AgentProfileDB(object):
                 indent=2,
             )
 
-    def load_from_file(self, file_name: str) -> None:
+    def load_from_file(self, file_name: str, with_embedding: bool = False) -> None:
+        if with_embedding:
+            with open(file_name, 'rb') as pkl_file:
+                self.data_embed = pickle.load(pkl_file)
         with open(file_name, 'r') as f:
             data = json.load(f)
             self.data = {

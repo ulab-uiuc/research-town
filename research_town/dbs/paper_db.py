@@ -1,7 +1,7 @@
 import json
 import pickle
 
-from beartype.typing import Any, Dict, List, Optional
+from beartype.typing import Any, Dict, List
 from transformers import BertModel, BertTokenizer
 
 from ..utils.paper_collector import get_daily_papers
@@ -19,10 +19,10 @@ class PaperProfileDB:
             'facebook/contriever'
         )
 
-    def add_paper(self, paper: PaperProfile) -> None:
+    def add(self, paper: PaperProfile) -> None:
         self.data[paper.pk] = paper
 
-    def update_paper(self, paper_pk: str, updates: Dict[str, Any]) -> bool:
+    def update(self, paper_pk: str, updates: Dict[str, Any]) -> bool:
         if paper_pk in self.data:
             for key, value in updates.items():
                 if value is not None:
@@ -30,30 +30,20 @@ class PaperProfileDB:
             return True
         return False
 
-    def get_paper(self, paper_pk: str) -> Optional[PaperProfile]:
-        return self.data.get(paper_pk)
-
-    def delete_paper(self, paper_pk: str) -> bool:
+    def delete(self, paper_pk: str) -> bool:
         if paper_pk in self.data:
             del self.data[paper_pk]
             return True
         return False
 
-    def query_papers(self, **conditions: Dict[str, Any]) -> List[PaperProfile]:
+    def get(self, **conditions: Dict[str, Any]) -> List[PaperProfile]:
         result = []
         for paper in self.data.values():
             if all(getattr(paper, key) == value for key, value in conditions.items()):
                 result.append(paper)
         return result
 
-    def save_to_file(self, file_name: str) -> None:
-        with open(file_name, 'w') as f:
-            json.dump(
-                {pk: paper.model_dump() for pk, paper in self.data.items()}, f, indent=2
-            )
-
     def transform_to_embedding(self, file_name: str) -> None:
-        pickle_file_name = file_name.replace('.json', '.pkl')
         with open(file_name, 'r') as f:
             data = json.load(f)
         paper_dict = {}
@@ -63,8 +53,15 @@ class PaperProfileDB:
                 self.retriever_tokenizer,
                 self.retriever_model,
             )
-        with open(pickle_file_name, 'wb') as pkl_file:
+        file_name = file_name.replace('.json', '')
+        with open(file_name + '.pkl', 'wb') as pkl_file:
             pickle.dump(paper_dict, pkl_file)
+
+    def save_to_file(self, file_name: str) -> None:
+        with open(file_name, 'w') as f:
+            json.dump(
+                {pk: paper.model_dump() for pk, paper in self.data.items()}, f, indent=2
+            )
 
     def load_from_file(self, file_name: str, with_embedding: bool = False) -> None:
         if with_embedding:
@@ -84,7 +81,7 @@ class PaperProfileDB:
         for date, papers in data.items():
             for paper_data in papers:
                 paper = PaperProfile(**paper_data)
-                self.add_paper(paper)
+                self.add(paper)
 
     def fetch_and_add_papers(self, num: int, domain: str) -> None:
         data, _ = get_daily_papers(query='ti:' + domain, max_results=num)
