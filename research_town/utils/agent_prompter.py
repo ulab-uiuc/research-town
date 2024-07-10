@@ -6,7 +6,7 @@ from .paper_collector import get_related_papers
 from .string_mapper import (
     map_idea_list_to_str,
     map_idea_to_str,
-    map_insights_to_str,
+    map_insight_list_to_str,
     map_paper_list_to_str,
     map_paper_to_str,
     map_rebuttal_list_to_str,
@@ -61,7 +61,7 @@ def brainstorm_idea_prompting(
     model_name: str,
     prompt_template: str,
 ) -> List[str]:
-    insights_str = map_insights_to_str(insights)
+    insights_str = map_insight_list_to_str(insights)
     prompt = prompt_template.format_map({'insights': insights_str})
     return model_prompting(model_name, prompt)
 
