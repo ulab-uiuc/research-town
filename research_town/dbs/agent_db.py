@@ -9,7 +9,7 @@ from transformers import BertModel, BertTokenizer
 from ..configs import Config
 from ..utils.agent_collector import fetch_author_info
 from ..utils.agent_prompter import summarize_research_direction_prompting
-from ..utils.paper_collector import neighborhood_search
+from ..utils.paper_collector import rank_topk
 from ..utils.retriever import get_embedding
 from .agent_data import AgentProfile
 
@@ -67,7 +67,7 @@ class AgentProfileDB(object):
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
-        index_l = neighborhood_search(idea_embed, profile_embed, num)
+        index_l = rank_topk(idea_embed, profile_embed, num)
         index_all = [index for index_list in index_l for index in index_list]
         match_pk = []
         for index in index_all:

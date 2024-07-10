@@ -10,7 +10,7 @@ from research_town.utils.paper_collector import (
     get_paper_list,
     get_papers,
     get_related_papers,
-    neighborhood_search,
+    rank_topk,
     select_papers,
 )
 
@@ -22,9 +22,7 @@ def test_get_related_papers() -> None:
         patch(
             'research_town.utils.paper_collector.get_embedding'
         ) as mock_get_embedding,
-        patch(
-            'research_town.utils.paper_collector.neighborhood_search'
-        ) as mock_neighborhood_search,
+        patch('research_town.utils.paper_collector.rank_topk') as mock_rank_topk,
     ):
         corpus = ['Paper 1', 'Paper 2', 'Paper 3']
         query = 'Interesting query'
@@ -33,18 +31,18 @@ def test_get_related_papers() -> None:
             [torch.tensor([1, 2, 3]) for _ in corpus],
             [torch.tensor([1, 2, 3])],
         ]
-        mock_neighborhood_search.return_value = torch.tensor([[0, 1]])
+        mock_rank_topk.return_value = torch.tensor([[0, 1]])
 
         result = get_related_papers(corpus, query, num)
         expected_result = ['Paper 1', 'Paper 2']
         assert result == expected_result
 
 
-def test_neighborhood_search() -> None:
+def test_rank_topk() -> None:
     query_data = [torch.tensor([[1.0, 2.0, 3.0]])]
     corpus_data = [torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])]
     num = 1
-    result = neighborhood_search(query_data, corpus_data, num)
+    result = rank_topk(query_data, corpus_data, num)
     assert result == [[0]]
 
 
