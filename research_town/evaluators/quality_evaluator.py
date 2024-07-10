@@ -1,32 +1,42 @@
 import re
 
 from beartype.typing import Any, Type, TypeVar
-from pydantic import BaseModel
 
 from ..utils.error_handler import parsing_error_exponential_backoff
 from ..utils.eval_prompter import (
-    idea_quality_eval_prompting,
-    paper_quality_eval_prompting,
-    review_quality_eval_prompting,
+    research_idea_quality_eval_prompting,
+    research_insight_quality_eval_prompting,
+    research_meta_review_for_paper_submission_quality_eval_prompting,
+    research_paper_submission_quality_eval_prompting,
+    research_rebuttal_for_paper_submission_quality_eval_prompting,
+    research_review_for_paper_submission_quality_eval_prompting,
 )
 from .evaluator_output import (
+    BaseEvalOutput,
     ResearchIdeaEvalOutput,
+    ResearchInsightEvalOutput,
+    ResearchMetaReviewForPaperSubmissionEvalOutput,
     ResearchPaperSubmissionEvalOutput,
+    ResearchRebuttalForPaperSubmissionEvalOutput,
     ResearchReviewForPaperSubmissionEvalOutput,
 )
 from .evaluator_output_format import OutputFormatError
 
-T = TypeVar('T', bound=BaseModel)
+T = TypeVar('T', bound=BaseEvalOutput)
 
 
 class BaseQualityEvaluator:
     def __init__(
-        self, model_name: str, output_model: Type[T], *args: Any, **kwargs: Any
+        self,
+        model_name: str,
+        output_model: Type[BaseEvalOutput],
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         self.model_name = model_name
         self.parsed_output = output_model()
 
-    def eval(self, *args: Any, **kwargs: Any) -> T:
+    def eval(self, *args: Any, **kwargs: Any) -> BaseEvalOutput:
         raise NotImplementedError('Subclasses should implement this method')
 
     def parse(self, raw_output: str, output_model: Type[T]) -> T:
@@ -70,7 +80,7 @@ class ResearchIdeaQualityEvaluator(BaseQualityEvaluator):
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ResearchIdeaEvalOutput:
-        raw_output = idea_quality_eval_prompting(
+        raw_output = research_idea_quality_eval_prompting(
             idea=kwargs['idea'], trend=kwargs['trend'], model_name=self.model_name
         )
         self.parsed_output = self.parse(raw_output, ResearchIdeaEvalOutput)
@@ -86,7 +96,7 @@ class ResearchPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ResearchPaperSubmissionEvalOutput:
-        raw_output = paper_quality_eval_prompting(
+        raw_output = research_paper_submission_quality_eval_prompting(
             idea=kwargs['idea'],
             paper=kwargs['paper'],
             model_name=self.model_name,
@@ -109,18 +119,87 @@ class ResearchReviewForPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
     def eval(
         self, *args: Any, **kwargs: Any
     ) -> ResearchReviewForPaperSubmissionEvalOutput:
-        raw_output = review_quality_eval_prompting(
+        raw_output = research_review_for_paper_submission_quality_eval_prompting(
             idea=kwargs['idea'],  # idea: str,
             trend=kwargs['trend'],  # trend: str,
             paper=kwargs['paper'],  # paper: Dict[str,str],
-            review=kwargs['review'],  # review: List[str],
-            decision=kwargs['decision'],  # decision: str,
+            review=kwargs['review'],
             model_name=self.model_name,
-            rebuttal=kwargs.get('rebuttal'),  # rebuttal: str,
-            meta_review=kwargs.get('meta_review'),  # meta_review: str,
         )
         self.parsed_output = self.parse(
             raw_output, ResearchReviewForPaperSubmissionEvalOutput
+        )
+
+        for key, value in kwargs.items():
+            setattr(self.parsed_output, key, value)
+        return self.parsed_output
+
+
+class ResearchInsightQualityEvaluator(BaseQualityEvaluator):
+    def __init__(self, model_name: str, *args: Any, **kwargs: Any) -> None:
+        super().__init__(model_name, ResearchInsightEvalOutput, *args, **kwargs)
+
+    @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
+    def eval(self, *args: Any, **kwargs: Any) -> ResearchInsightEvalOutput:
+        raw_output = research_insight_quality_eval_prompting(
+            insight=kwargs['insight'], trend=kwargs['trend'], model_name=self.model_name
+        )
+        self.parsed_output = self.parse(raw_output, ResearchInsightEvalOutput)
+
+        for key, value in kwargs.items():
+            setattr(self.parsed_output, key, value)
+        return self.parsed_output
+
+
+class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
+    def __init__(self, model_name: str, *args: Any, **kwargs: Any) -> None:
+        super().__init__(
+            model_name, ResearchRebuttalForPaperSubmissionEvalOutput, *args, **kwargs
+        )
+
+    @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
+    def eval(
+        self, *args: Any, **kwargs: Any
+    ) -> ResearchRebuttalForPaperSubmissionEvalOutput:
+        raw_output = research_rebuttal_for_paper_submission_quality_eval_prompting(
+            idea=kwargs['idea'],
+            trend=kwargs['trend'],
+            paper=kwargs['paper'],
+            review=kwargs['review'],
+            model_name=self.model_name,
+            rebuttal=kwargs.get('rebuttal'),
+        )
+        self.parsed_output = self.parse(
+            raw_output, ResearchRebuttalForPaperSubmissionEvalOutput
+        )
+
+        for key, value in kwargs.items():
+            setattr(self.parsed_output, key, value)
+        return self.parsed_output
+
+
+class ResearchMetaReviewQualityEvaluator(BaseQualityEvaluator):
+    def __init__(self, model_name: str, *args: Any, **kwargs: Any) -> None:
+        super().__init__(
+            model_name, ResearchMetaReviewForPaperSubmissionEvalOutput, *args, **kwargs
+        )
+
+    @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
+    def eval(
+        self, *args: Any, **kwargs: Any
+    ) -> ResearchMetaReviewForPaperSubmissionEvalOutput:
+        raw_output = research_meta_review_for_paper_submission_quality_eval_prompting(
+            idea=kwargs['idea'],
+            trend=kwargs['trend'],
+            paper=kwargs['paper'],
+            review=kwargs['review'],
+            decision=kwargs['decision'],
+            model_name=self.model_name,
+            rebuttal=kwargs.get('rebuttal'),
+            meta_review=kwargs.get('meta_review'),
+        )
+        self.parsed_output = self.parse(
+            raw_output, ResearchMetaReviewForPaperSubmissionEvalOutput
         )
 
         for key, value in kwargs.items():
