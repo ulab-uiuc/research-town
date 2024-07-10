@@ -1,7 +1,7 @@
 import datetime
 import json
 from xml.etree import ElementTree
-
+import pickle
 import requests
 from beartype.typing import Any, Dict, List, Optional
 from transformers import BertModel, BertTokenizer
@@ -48,11 +48,20 @@ class AgentProfileDB(object):
                 result.append(agent)
         return result
 
+    def transfer_to_embedding(self,file_name: str)-> None:
+        with open(file_name+ ".json", 'r') as f:
+            data = json.load(f)
+        agent_dict = {}
+        for pk in data.keys():
+            agent_dict[pk] = get_bert_embedding([data[pk]['bio']])
+        with open(file_name + '.pkl', 'wb') as pkl_file:
+            pickle.dump(agent_dict, pkl_file)
+
     def match(
-        self, idea: str, agent_profiles: List[AgentProfile], num: int = 1
+        self, query: str, agent_profiles: List[AgentProfile], num: int = 1
     ) -> List[str]:
         idea_embed = get_bert_embedding(
-            instructions=[idea],
+            instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )

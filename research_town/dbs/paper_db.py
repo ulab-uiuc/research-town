@@ -6,11 +6,18 @@ from beartype.typing import Any, Dict, List, Optional
 from ..utils.paper_collector import get_daily_papers
 from ..utils.retriever import get_bert_embedding
 from .paper_data import PaperProfile
-
+from ..utils.paper_collector import neighborhood_search
+from transformers import BertModel, BertTokenizer
 
 class PaperProfileDB:
     def __init__(self) -> None:
         self.data: Dict[str, PaperProfile] = {}
+        self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
+            'facebook/contriever'
+        )
+        self.retriever_model: BertModel = BertModel.from_pretrained(
+            'facebook/contriever'
+        )
 
     def add_paper(self, paper: PaperProfile) -> None:
         self.data[paper.pk] = paper
@@ -54,6 +61,32 @@ class PaperProfileDB:
             paper_dict[pk] = get_bert_embedding([data[pk]['abstract']])
         with open(pickle_file_name, 'wb') as pkl_file:
             pickle.dump(paper_dict, pkl_file)
+
+    def match(
+        self, query: str, paper_profiles: List[PaperProfile], num: int = 1
+    ) -> List[str]:
+        idea_embed = get_bert_embedding(
+            instructions=[query],
+            retriever_tokenizer=self.retriever_tokenizer,
+            retriever_model=self.retriever_model,
+        )
+        abstract_list = []
+        for paper_profile in paper_profiles:
+            if paper_profile.bio is not None:
+                abstract_list.append(paper_profile.abstract)
+            else:
+                abstract_list.append('')
+        profile_embed = get_bert_embedding(
+            instructions=abstract_list,
+            retriever_tokenizer=self.retriever_tokenizer,
+            retriever_model=self.retriever_model,
+        )
+        index_l = neighborhood_search(idea_embed, profile_embed, num)
+        index_all = [index for index_list in index_l for index in index_list]
+        match_pk = []
+        for index in index_all:
+            match_pk.append(paper_profiles[index].pk)
+        return match_pk
 
     def load_from_file(self, file_name: str, with_embedding: bool = False) -> None:
         if with_embedding:
