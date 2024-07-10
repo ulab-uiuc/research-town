@@ -57,9 +57,14 @@ class BaseResearchEngine:
         return self.reviewers_pks
 
 
-    def find_chairs(self) -> Tuple[str,List[str]]:
-        self.chair_pk = random.choice(self.reviewers_pks)
-        self.other_reviewer_pks = [reviewer for reviewer in self.reviewers_pks if reviewer != self.chair_pk]
+    def find_chairs(self,paper_submission:ResearchPaperSubmission,potential_chairs_profiles:List[AgentProfile]) -> Tuple[List[str],List[str]]:
+        paper_abstract = paper_submission.abstract
+        self.chair_pk = self.agent_db.match(query=paper_abstract,
+                                                    agent_profiles=potential_chairs_profiles)
+        if self.chair_pk in self.reviewers_pks:
+            self.other_reviewer_pks = [reviewer for reviewer in self.reviewers_pks if reviewer != self.chair_pk]
+        else:
+            self.other_reviewer_pks=self.reviewers_pks
 
         return self.chair_pk,self.other_reviewer_pks
 
