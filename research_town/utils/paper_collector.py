@@ -3,17 +3,7 @@ import datetime
 import arxiv
 from beartype.typing import Any, Dict, List, Tuple
 
-from .retriever import get_embedding, rank_topk
-
 ATOM_NAMESPACE = '{http://www.w3.org/2005/Atom}'
-
-
-def get_related_papers(corpus: List[str], query: str, num: int) -> List[str]:
-    corpus_embedding = get_embedding(corpus)
-    query_embedding = get_embedding([query])
-    indices = rank_topk(corpus_embedding, query_embedding, num)
-    related_papers = [corpus[idx] for idx in indices[0]]
-    return related_papers
 
 
 def get_daily_papers(

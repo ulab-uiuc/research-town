@@ -1,30 +1,7 @@
 import datetime
 from unittest.mock import MagicMock, patch
 
-import torch
-
-from research_town.utils.paper_collector import get_daily_papers, get_related_papers
-
-
-def test_get_related_papers() -> None:
-    with (
-        patch(
-            'research_town.utils.paper_collector.get_embedding'
-        ) as mock_get_embedding,
-        patch('research_town.utils.paper_collector.rank_topk') as mock_rank_topk,
-    ):
-        corpus = ['Paper 1', 'Paper 2', 'Paper 3']
-        query = 'Interesting query'
-        num = 2
-        mock_get_embedding.side_effect = [
-            [torch.tensor([1, 2, 3]) for _ in corpus],
-            [torch.tensor([1, 2, 3])],
-        ]
-        mock_rank_topk.return_value = torch.tensor([[0, 1]])
-
-        result = get_related_papers(corpus, query, num)
-        expected_result = ['Paper 1', 'Paper 2']
-        assert result == expected_result
+from research_town.utils.paper_collector import get_daily_papers
 
 
 def test_get_daily_papers() -> None:
