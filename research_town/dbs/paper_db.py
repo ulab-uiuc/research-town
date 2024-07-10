@@ -1,13 +1,12 @@
 import json
 import pickle
 
-from beartype.typing import Any, Dict, List
+from beartype.typing import Any, Dict, List, Optional
 from transformers import BertModel, BertTokenizer
 
-from ..utils.paper_collector import get_daily_papers
+from ..utils.paper_collector import get_daily_papers,neighborhood_search
 from ..utils.retriever import get_embedding
 from .paper_data import PaperProfile
-
 
 class PaperProfileDB:
     def __init__(self) -> None:
@@ -19,10 +18,10 @@ class PaperProfileDB:
             'facebook/contriever'
         )
 
-    def add(self, paper: PaperProfile) -> None:
+    def add_paper(self, paper: PaperProfile) -> None:
         self.data[paper.pk] = paper
 
-    def update(self, paper_pk: str, updates: Dict[str, Any]) -> bool:
+    def update_paper(self, paper_pk: str, updates: Dict[str, Any]) -> bool:
         if paper_pk in self.data:
             for key, value in updates.items():
                 if value is not None:
@@ -30,20 +29,30 @@ class PaperProfileDB:
             return True
         return False
 
-    def delete(self, paper_pk: str) -> bool:
+    def get_paper(self, paper_pk: str) -> Optional[PaperProfile]:
+        return self.data.get(paper_pk)
+
+    def delete_paper(self, paper_pk: str) -> bool:
         if paper_pk in self.data:
             del self.data[paper_pk]
             return True
         return False
 
-    def get(self, **conditions: Dict[str, Any]) -> List[PaperProfile]:
+    def query_papers(self, **conditions: Dict[str, Any]) -> List[PaperProfile]:
         result = []
         for paper in self.data.values():
             if all(getattr(paper, key) == value for key, value in conditions.items()):
                 result.append(paper)
         return result
 
+    def save_to_file(self, file_name: str) -> None:
+        with open(file_name, 'w') as f:
+            json.dump(
+                {pk: paper.model_dump() for pk, paper in self.data.items()}, f, indent=2
+            )
+
     def transform_to_embedding(self, file_name: str) -> None:
+        pickle_file_name = file_name.replace('.json', '.pkl')
         with open(file_name, 'r') as f:
             data = json.load(f)
         paper_dict = {}
@@ -53,15 +62,34 @@ class PaperProfileDB:
                 self.retriever_tokenizer,
                 self.retriever_model,
             )
-        file_name = file_name.replace('.json', '')
-        with open(file_name + '.pkl', 'wb') as pkl_file:
+        with open(pickle_file_name, 'wb') as pkl_file:
             pickle.dump(paper_dict, pkl_file)
 
-    def save_to_file(self, file_name: str) -> None:
-        with open(file_name, 'w') as f:
-            json.dump(
-                {pk: paper.model_dump() for pk, paper in self.data.items()}, f, indent=2
-            )
+    def match(
+        self, query: str, paper_profiles: List[PaperProfile], num: int = 1
+    ) -> List[str]:
+        idea_embed = get_embedding(
+            instructions=[query],
+            retriever_tokenizer=self.retriever_tokenizer,
+            retriever_model=self.retriever_model,
+        )
+        abstract_list = []
+        for paper_profile in paper_profiles:
+            if paper_profile.bio is not None:
+                abstract_list.append(paper_profile.abstract)
+            else:
+                abstract_list.append('')
+        profile_embed = get_embedding(
+            instructions=abstract_list,
+            retriever_tokenizer=self.retriever_tokenizer,
+            retriever_model=self.retriever_model,
+        )
+        index_l = neighborhood_search(idea_embed, profile_embed, num)
+        index_all = [index for index_list in index_l for index in index_list]
+        match_pk = []
+        for index in index_all:
+            match_pk.append(paper_profiles[index].pk)
+        return match_pk
 
     def load_from_file(self, file_name: str, with_embedding: bool = False) -> None:
         if with_embedding:
@@ -81,7 +109,7 @@ class PaperProfileDB:
         for date, papers in data.items():
             for paper_data in papers:
                 paper = PaperProfile(**paper_data)
-                self.add(paper)
+                self.add_paper(paper)
 
     def fetch_and_add_papers(self, num: int, domain: str) -> None:
         data, _ = get_daily_papers(query='ti:' + domain, max_results=num)
