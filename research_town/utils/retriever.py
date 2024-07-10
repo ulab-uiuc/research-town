@@ -21,3 +21,19 @@ def get_embedding(
             emb = retriever_model(**inter)
             emb_list.append(emb['last_hidden_state'].mean(1))
     return emb_list
+
+
+def rank_topk(
+    query_data: List[torch.Tensor], corpus_data: List[torch.Tensor], num: int
+) -> List[List[int]]:
+    xq = torch.cat(query_data, 0)
+    xb = torch.cat(corpus_data, 0)
+
+    xq = torch.nn.functional.normalize(xq, p=2, dim=1)
+    xb = torch.nn.functional.normalize(xb, p=2, dim=1)
+
+    similarity = torch.mm(xq, xb.t())
+
+    _, indices = torch.topk(similarity, num, dim=1, largest=True)
+    list_of_list_indices: List[List[int]] = indices.tolist()
+    return list_of_list_indices

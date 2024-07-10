@@ -61,7 +61,6 @@ class BaseResearchAgent(object):
             papers=serialized_papers,
             domains=domains,
             model_name=self.model_name,
-            prompt_template_query_paper=config.prompt_template.query_paper,
             prompt_template_review_literature=config.prompt_template.review_literature,
         )
         insights: List[ResearchInsight] = []

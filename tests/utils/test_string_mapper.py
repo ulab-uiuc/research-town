@@ -3,8 +3,8 @@ from beartype.typing import Dict, List, Union
 from research_town.utils.string_mapper import (
     map_idea_list_to_str,
     map_idea_to_str,
+    map_insight_list_to_str,
     map_insight_to_str,
-    map_insights_to_str,
     map_meta_review_list_to_str,
     map_meta_review_to_str,
     map_paper_list_to_str,
@@ -123,14 +123,14 @@ def test_map_meta_review_list_to_str() -> None:
     assert map_meta_review_list_to_str(meta_reviews) == expected_result
 
 
-def test_map_insights_to_str() -> None:
+def test_map_insight_list_to_str() -> None:
     insights = [
         {'content': 'Insight 1'},
         {'content': 'Insight 2'},
         {'content': 'Insight 3'},
     ]
     expected_result = 'Insight 1Insight 2Insight 3'
-    assert map_insights_to_str(insights) == expected_result
+    assert map_insight_list_to_str(insights) == expected_result
 
 
 def test_map_insight_to_str() -> None:

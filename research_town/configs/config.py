@@ -40,11 +40,6 @@ class PromptTemplateConfig(BaseModel):
         'Here are a full list of the names and profiles of potential collaborators: {collaborators_serialize_all}'
         "Generate the collaborator in a list separated by '-' for each collaborator"
     )
-    query_paper: str = (
-        'Given the profile of me, keywords, some recent paper titles and abstracts. Could you query paper in this field (related to my profile if possible).'
-        'Here is my profile biology: {profile_bio}'
-        'Here are the domains: {domains}'
-    )
     review_literature: str = (
         'Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).'
         'Here is my profile biology: {profile_bio}'
@@ -166,7 +161,6 @@ class Config(BaseModel):
                 '{task_serialize_all}',
                 '{collaborators_serialize_all}',
             ],
-            'query_paper': ['{profile_bio}', '{domains}'],
             'review_literature': ['{profile_bio}', '{domains}', '{papers}'],
             'brainstorm_idea': ['{insights}'],
             'discuss_idea': ['{ideas}'],

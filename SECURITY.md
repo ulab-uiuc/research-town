@@ -20,4 +20,3 @@ If you find a vulnerability, please follow these steps to report it:
    - Any potential fixes or suggestions.
 3. **We will acknowledge your report within 48 hours**. We will keep you updated on our progress and may ask for additional information.
 4. **Once the vulnerability is fixed**, we will notify you and give you credit for your discovery, if you wish.
-
