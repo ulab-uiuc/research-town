@@ -2,7 +2,6 @@ from beartype import beartype
 from beartype.typing import Dict, List, Tuple, Union
 
 from .model_prompting import model_prompting
-from .paper_collector import get_related_papers
 from .string_mapper import (
     map_idea_list_to_str,
     map_idea_to_str,
@@ -35,21 +34,15 @@ def review_literature_prompting(
     papers: List[Dict[str, str]],
     domains: List[str],
     model_name: str,
-    prompt_template_query_paper: str,
     prompt_template_review_literature: str,
 ) -> List[str]:
-    query_paper_prompt = prompt_template_query_paper.format_map(
-        {'profile_bio': profile['bio'], 'domains': '; '.join(domains)}
-    )
-
-    corpus = [paper['abstract'] for paper in papers]
-    related_papers = get_related_papers(corpus, query_paper_prompt, num=1)
+    abstracts = [paper['abstract'] for paper in papers]
 
     review_literature_prompt = prompt_template_review_literature.format_map(
         {
             'profile_bio': profile['bio'],
             'domains': '; '.join(domains),
-            'papers': '; '.join(related_papers),
+            'papers': '; '.join(abstracts),
         }
     )
     return model_prompting(model_name, review_literature_prompt)

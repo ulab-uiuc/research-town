@@ -1,20 +1,9 @@
 import datetime
 from unittest.mock import MagicMock, patch
-from xml.etree import ElementTree
 
 import torch
 
-from research_town.utils.paper_collector import (
-    find_text,
-    get_daily_papers,
-    get_paper_list,
-    get_papers,
-    get_related_papers,
-    rank_topk,
-    select_papers,
-)
-
-ATOM_NAMESPACE = '{http://www.w3.org/2005/Atom}'
+from research_town.utils.paper_collector import get_daily_papers, get_related_papers
 
 
 def test_get_related_papers() -> None:
@@ -36,22 +25,6 @@ def test_get_related_papers() -> None:
         result = get_related_papers(corpus, query, num)
         expected_result = ['Paper 1', 'Paper 2']
         assert result == expected_result
-
-
-def test_rank_topk() -> None:
-    query_data = [torch.tensor([[1.0, 2.0, 3.0]])]
-    corpus_data = [torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])]
-    num = 1
-    result = rank_topk(query_data, corpus_data, num)
-    assert result == [[0]]
-
-
-def test_find_text() -> None:
-    element = ElementTree.Element('root')
-    child = ElementTree.SubElement(element, 'child')
-    child.text = 'test text'
-    result = find_text(element, 'child')
-    assert result == 'test text'
 
 
 def test_get_daily_papers() -> None:
@@ -77,90 +50,3 @@ def test_get_daily_papers() -> None:
 
         assert len(result) == 2
         assert newest_day == datetime.date(2023, 7, 2)  # Compare to the date part only
-
-
-def test_get_papers() -> None:
-    xml_str = """
-    <root xmlns="http://www.w3.org/2005/Atom">
-        <entry>
-            <title>Test Paper 1</title>
-            <published>2023-07-01T00:00:00Z</published>
-            <summary>Abstract 1</summary>
-            <author><name>Author 1</name></author>
-            <author><name>Coauthor 1</name></author>
-            <id>http://example.com/1</id>
-        </entry>
-        <entry>
-            <title>Test Paper 2</title>
-            <published>2023-07-02T00:00:00Z</published>
-            <summary>Abstract 2</summary>
-            <author><name>Author 2</name></author>
-            <author><name>Coauthor 2</name></author>
-            <id>http://example.com/2</id>
-        </entry>
-    </root>
-    """
-    root = ElementTree.fromstring(xml_str)
-    entries = root.findall(f'{ATOM_NAMESPACE}entry')
-    result, papers_by_year = get_papers(entries, 'Author 1')
-    assert len(result) == 1
-    assert len(papers_by_year) == 1
-
-
-def test_select_papers() -> None:
-    xml_str = """
-    <root xmlns="http://www.w3.org/2005/Atom">
-        <entry>
-            <title>Test Paper 1</title>
-            <published>2023-07-01T00:00:00Z</published>
-            <summary>Abstract 1</summary>
-            <author><name>Author 1</name></author>
-            <author><name>Coauthor 1</name></author>
-            <id>http://example.com/1</id>
-        </entry>
-        <entry>
-            <title>Test Paper 2</title>
-            <published>2023-07-02T00:00:00Z</published>
-            <summary>Abstract 2</summary>
-            <author><name>Author 1</name></author>
-            <author><name>Coauthor 2</name></author>
-            <id>http://example.com/2</id>
-        </entry>
-    </root>
-    """
-    root = ElementTree.fromstring(xml_str)
-    entries = root.findall(f'{ATOM_NAMESPACE}entry')
-    papers_by_year = {2023: entries}
-    result = select_papers(papers_by_year, 'Author 1')
-    assert len(result) == 2
-
-
-def test_get_paper_list() -> None:
-    with patch('research_town.utils.paper_collector.requests.get') as mock_get:
-        xml_str = """
-        <root xmlns="http://www.w3.org/2005/Atom">
-            <entry>
-                <title>Test Paper 1</title>
-                <published>2023-07-01T00:00:00Z</published>
-                <summary>Abstract 1</summary>
-                <author><name>Author 1</name></author>
-                <author><name>Coauthor 1</name></author>
-                <id>http://example.com/1</id>
-            </entry>
-            <entry>
-                <title>Test Paper 2</title>
-                <published>2023-07-02T00:00:00Z</published>
-                <summary>Abstract 2</summary>
-                <author><name>Author 1</name></author>
-                <author><name>Coauthor 2</name></author>
-                <id>http://example.com/2</id>
-            </entry>
-        </root>
-        """
-        mock_response = MagicMock()
-        mock_response.status_code = 200
-        mock_response.content.decode.return_value = xml_str
-        mock_get.return_value = mock_response
-
-        result = get_paper_list('Author 1')
-        assert len(result) == 2
