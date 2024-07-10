@@ -14,8 +14,6 @@ from .string_mapper import (
     map_review_to_str,
 )
 
-# =======================================
-
 
 @beartype
 def summarize_research_direction_prompting(
