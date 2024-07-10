@@ -10,7 +10,7 @@ from ..configs import Config
 from ..utils.agent_collector import fetch_author_info
 from ..utils.agent_prompter import summarize_research_direction_prompting
 from ..utils.paper_collector import neighborhood_search
-from ..utils.retriever import get_bert_embedding
+from ..utils.retriever import get_embedding
 from .agent_data import AgentProfile
 
 
@@ -53,14 +53,14 @@ class AgentProfileDB(object):
             data = json.load(f)
         agent_dict = {}
         for pk in data.keys():
-            agent_dict[pk] = get_bert_embedding([data[pk]['bio']])
+            agent_dict[pk] = get_embedding([data[pk]['bio']])
         with open(file_name + '.pkl', 'wb') as pkl_file:
             pickle.dump(agent_dict, pkl_file)
 
     def match(
         self, idea: str, agent_profiles: List[AgentProfile], num: int = 1
     ) -> List[str]:
-        idea_embed = get_bert_embedding(
+        idea_embed = get_embedding(
             instructions=[idea],
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
@@ -71,7 +71,7 @@ class AgentProfileDB(object):
                 bio_list.append(agent_profile.bio)
             else:
                 bio_list.append('')
-        profile_embed = get_bert_embedding(
+        profile_embed = get_embedding(
             instructions=bio_list,
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
