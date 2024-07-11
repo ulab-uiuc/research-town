@@ -7,7 +7,7 @@ param:
   result_path: 'Mixtral-8x7B'
   return_num: 1
   max_token_num: 512
-  temperature: null
+  temperature: 0
   top_p: null
   stream: null
 prompt_template:

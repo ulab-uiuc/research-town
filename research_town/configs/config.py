@@ -24,7 +24,7 @@ class ParamConfig(BaseModel):
     result_path: str = 'Mixtral-8x7B'
     return_num: Optional[int] = 1
     max_token_num: Optional[int] = 512
-    temperature: Optional[float] = None
+    temperature: Optional[float] = 0
     top_p: Optional[float] = None
     stream: Optional[bool] = None
 
