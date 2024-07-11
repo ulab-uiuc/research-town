@@ -11,7 +11,7 @@ def research_insight_quality_eval_prompting(
     model_name: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> str:
@@ -91,7 +91,7 @@ def research_idea_quality_eval_prompting(
     model_name: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> str:
@@ -172,7 +172,7 @@ def research_paper_submission_quality_eval_prompting(
     trend: Optional[str] = None,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> str:
@@ -264,7 +264,7 @@ def research_review_for_paper_submission_quality_eval_prompting(
     model_name: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> str:
@@ -401,7 +401,7 @@ def research_rebuttal_for_paper_submission_quality_eval_prompting(
     rebuttal: Optional[str] = None,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> str:
@@ -527,7 +527,7 @@ def research_meta_review_for_paper_submission_quality_eval_prompting(
     meta_review: Optional[str] = None,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> str:

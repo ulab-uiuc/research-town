@@ -21,8 +21,8 @@ def summarize_research_direction_prompting(
     model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
-    top_p: Optional[float] = None,
+    temperature: Optional[float] = 0,
+    top_p: Optional[float] = 0,
     stream: Optional[bool] = None,
 ) -> List[str]:
     """
@@ -50,7 +50,7 @@ def review_literature_prompting(
     prompt_template_review_literature: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> List[str]:
@@ -81,7 +81,7 @@ def brainstorm_idea_prompting(
     prompt_template: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> List[str]:
@@ -105,7 +105,7 @@ def discuss_idea_prompting(
     prompt_template: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> List[str]:
@@ -130,7 +130,7 @@ def write_paper_prompting(
     prompt_template: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> List[str]:
@@ -158,7 +158,7 @@ def write_review_prompting(
     score_prompt_template: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> Tuple[str, str, str, int]:
@@ -227,7 +227,7 @@ def write_meta_review_prompting(
     decision_prompt_template: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> Tuple[str, str, str, bool]:
@@ -314,7 +314,7 @@ def write_rebuttal_prompting(
     prompt_template: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = None,
+    temperature: Optional[float] = 0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> List[str]:
