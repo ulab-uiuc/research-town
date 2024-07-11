@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from beartype.typing import Any
 
+from research_town.configs import Config
 from research_town.evaluators.quality_evaluator import (
     ResearchIdeaQualityEvaluator,
     ResearchInsightQualityEvaluator,
@@ -22,6 +23,8 @@ from tests.constants.eval_constants import (
     trend_constant_A,
 )
 
+config_file_path = './configs/default_config.yaml'
+
 
 @pytest.fixture(params=['gpt-4o', 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1'])
 def model_name(request: pytest.FixtureRequest) -> Any:
@@ -30,7 +33,8 @@ def model_name(request: pytest.FixtureRequest) -> Any:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_idea(use_mock: bool, model_name: str) -> None:
-    evaluator = ResearchIdeaQualityEvaluator(model_name=model_name)
+    config = Config(config_file_path)
+    evaluator = ResearchIdeaQualityEvaluator(model_name=model_name, config=config)
     input_dict = {'idea': idea_constant_A, 'trend': trend_constant_A, 'pk': 0}
     if use_mock:
         with patch(
@@ -54,10 +58,13 @@ def test_evaluator_eval_idea(use_mock: bool, model_name: str) -> None:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
+    config = Config(config_file_path)
     paper = {'title': paper_title_constant_A, 'abstract': paper_abstract_constant_A}
 
     input_dict = {'idea': idea_constant_A, 'paper': paper, 'pk': 0}
-    evaluator = ResearchPaperSubmissionQualityEvaluator(model_name=model_name)
+    evaluator = ResearchPaperSubmissionQualityEvaluator(
+        model_name=model_name, config=config
+    )
     if use_mock:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
@@ -80,6 +87,7 @@ def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
+    config = Config(config_file_path)
     paper = {'title': paper_title_constant_A, 'abstract': paper_abstract_constant_A}
     reviews = [
         review_constant_A,
@@ -95,7 +103,9 @@ def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
         'review': reviews,
         'decision': 'Reject',
     }
-    evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(model_name=model_name)
+    evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
+        model_name=model_name, config=config
+    )
     if use_mock:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
@@ -120,7 +130,8 @@ def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_insight(use_mock: bool, model_name: str) -> None:
-    evaluator = ResearchInsightQualityEvaluator(model_name=model_name)
+    config = Config(config_file_path)
+    evaluator = ResearchInsightQualityEvaluator(model_name=model_name, config=config)
     input_dict = {
         'insight': 'This is a research insight',
         'trend': trend_constant_A,
@@ -148,6 +159,7 @@ def test_evaluator_eval_insight(use_mock: bool, model_name: str) -> None:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
+    config = Config(config_file_path)
     paper = {'title': paper_title_constant_A, 'abstract': paper_abstract_constant_A}
     reviews = [
         review_constant_A,
@@ -164,7 +176,7 @@ def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
         'rebuttal': rebuttal,
         'pk': 0,
     }
-    evaluator = ResearchRebuttalQualityEvaluator(model_name=model_name)
+    evaluator = ResearchRebuttalQualityEvaluator(model_name=model_name, config=config)
     if use_mock:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
@@ -189,6 +201,7 @@ def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_meta_review(use_mock: bool, model_name: str) -> None:
+    config = Config(config_file_path)
     paper = {'title': paper_title_constant_A, 'abstract': paper_abstract_constant_A}
     reviews = [
         review_constant_A,
@@ -206,7 +219,7 @@ def test_evaluator_eval_meta_review(use_mock: bool, model_name: str) -> None:
         'decision': 'Reject',
         'pk': 0,
     }
-    evaluator = ResearchMetaReviewQualityEvaluator(model_name=model_name)
+    evaluator = ResearchMetaReviewQualityEvaluator(model_name=model_name, config=config)
     if use_mock:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',

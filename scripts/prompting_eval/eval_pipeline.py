@@ -8,11 +8,14 @@ from beartype.typing import Dict, List
 from pydantic import BaseModel, Field
 from tqdm import tqdm
 
+from research_town.configs import Config
 from research_town.evaluators import (
     ResearchIdeaQualityEvaluator,
     ResearchPaperSubmissionQualityEvaluator,
     ResearchReviewForPaperSubmissionQualityEvaluator,
 )
+
+config_file_path = './configs/default_config.yaml'
 
 
 # Function to sanitize the model name
@@ -101,12 +104,15 @@ class pipeline_eval_db(object):
         model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     ) -> None:
         # Create Evaluators
-        idea_quality_evaluator = ResearchIdeaQualityEvaluator(model_name=model_name)
+        config = Config(config_file_path)
+        idea_quality_evaluator = ResearchIdeaQualityEvaluator(
+            model_name=model_name, config=config
+        )
         paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(
-            model_name=model_name
+            model_name=model_name, config=config
         )
         review_quality_evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
-            model_name=model_name
+            model_name=model_name, config=config
         )
         # Generate Evaluation
 

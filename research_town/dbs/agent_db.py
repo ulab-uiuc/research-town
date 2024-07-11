@@ -254,5 +254,10 @@ class AgentProfileDB(object):
         info = summarize_research_direction_prompting(
             personal_info=personal_info,
             prompt_template=config.prompt_template.summarize_research_direction,
+            return_num=config.param.return_num,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
+            top_p=config.param.top_p,
+            stream=config.param.stream,
         )
         return info

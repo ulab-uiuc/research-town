@@ -1,6 +1,7 @@
 import json
 from typing import Tuple
 
+from research_town.configs import Config
 from research_town.dbs import AgentProfile  # Agent
 from research_town.dbs import PaperProfile  # Paper
 from research_town.dbs import ResearchIdea  # Idea
@@ -14,6 +15,8 @@ from research_town.evaluators import (
     ResearchPaperSubmissionQualityEvaluator,
     ResearchReviewForPaperSubmissionQualityEvaluator,
 )
+
+config_file_path = './configs/default_config.yaml'
 
 
 def set_constants() -> (
@@ -102,12 +105,15 @@ def run_sync_evaluation(
     review_serialize = f'score: {review.score}\nreview summary: {review.summary}\nreview strength: {review.strength}\nreview weakness: {review.weakness}'
     meta_review_serialize = f'decision: {meta_review.decision}\nmeta review summary: {meta_review.summary}\nmeta review strength: {meta_review.strength}\nmeta review weakness: {meta_review.weakness}'
     # Create Evaluators
-    idea_quality_evaluator = ResearchIdeaQualityEvaluator(model_name=model_name)
+    config = Config(config_file_path)
+    idea_quality_evaluator = ResearchIdeaQualityEvaluator(
+        model_name=model_name, config=config
+    )
     paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(
-        model_name=model_name
+        model_name=model_name, config=config
     )
     review_quality_evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
-        model_name=model_name
+        model_name=model_name, config=config
     )
     # Generate Evaluation
     idea_quality = idea_quality_evaluator.eval(
