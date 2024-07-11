@@ -9,9 +9,9 @@ from pydantic import BaseModel, Field
 from tqdm import tqdm
 
 from research_town.evaluators import (
-    IdeaQualityEvaluator,
-    PaperQualityEvaluator,
-    ReviewQualityEvaluator,
+    ResearchIdeaQualityEvaluator,
+    ResearchPaperSubmissionQualityEvaluator,
+    ResearchReviewForPaperSubmissionQualityEvaluator,
 )
 
 
@@ -101,9 +101,13 @@ class pipeline_eval_db(object):
         model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     ) -> None:
         # Create Evaluators
-        idea_quality_evaluator = IdeaQualityEvaluator(model_name=model_name)
-        paper_quality_evaluator = PaperQualityEvaluator(model_name=model_name)
-        review_quality_evaluator = ReviewQualityEvaluator(model_name=model_name)
+        idea_quality_evaluator = ResearchIdeaQualityEvaluator(model_name=model_name)
+        paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(
+            model_name=model_name
+        )
+        review_quality_evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
+            model_name=model_name
+        )
         # Generate Evaluation
 
         # parse the paper content with title

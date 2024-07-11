@@ -36,9 +36,7 @@ def test_evaluator_eval_idea(use_mock: bool, model_name: str) -> None:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
             MagicMock(
-                return_value=[
-                    'Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8].'
-                ]
+                return_value=['Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8].']
             ),
         ):
             evals_output = evaluator.eval(**input_dict)
@@ -64,9 +62,7 @@ def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
             MagicMock(
-                return_value=[
-                    'Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8].'
-                ]
+                return_value=['Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8].']
             ),
         ):
             evals_output = evaluator.eval(**input_dict)
@@ -134,9 +130,7 @@ def test_evaluator_eval_insight(use_mock: bool, model_name: str) -> None:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
             MagicMock(
-                return_value=[
-                    'Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8, 8, 9, 8, 8].'
-                ]
+                return_value=['Overall Score=86. Dimension Scores=[9, 8, 9, 9, 8, 8].']
             ),
         ):
             evals_output = evaluator.eval(**input_dict)
