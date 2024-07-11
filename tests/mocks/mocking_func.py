@@ -11,8 +11,12 @@ def mock_papers(corpus: List[str], query: str, num: int) -> List[str]:
 def mock_prompting(
     llm_model: str,
     prompt: str,
-    return_num: Optional[int] = 2,
-    max_tokens: Optional[int] = 512,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = None,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
+    mode: Optional[str] = None,
 ) -> List[str]:
     template_config = PromptTemplateConfig()
 

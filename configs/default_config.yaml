@@ -5,6 +5,11 @@ param:
   domain: 'computer_vision'
   reviewer_num: 3
   result_path: 'Mixtral-8x7B'
+  return_num: 1
+  max_token_num: 512
+  temperature: null
+  top_p: null
+  stream: null
 prompt_template:
   summarize_research_direction: |
     Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. Focus more on more rescent personas. Be concise and clear (around 300 words).

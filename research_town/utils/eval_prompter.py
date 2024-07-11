@@ -9,6 +9,11 @@ def research_insight_quality_eval_prompting(
     insight: str,
     trend: str,
     model_name: str,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = None,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
 ) -> str:
     prompt_insight = """
     <Instruction> Please evaluate the insight based on the following dimensions, considering the current research trend within the research community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the insight. <Instruction>
@@ -64,7 +69,15 @@ def research_insight_quality_eval_prompting(
 
     input_data = {'insight': insight, 'trend': trend}
     prompt = prompt_insight.format_map(input_data)
-    evaluation_result = model_prompting(model_name, prompt)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
     # merge results from List[Str] to Str
     combined_result = '\n'.join(evaluation_result)
 
@@ -76,6 +89,11 @@ def research_idea_quality_eval_prompting(
     idea: str,
     trend: str,
     model_name: str,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = None,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
 ) -> str:
     prompt_idea = """
     <Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the research community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea. <Instruction>
@@ -131,7 +149,15 @@ def research_idea_quality_eval_prompting(
 
     input_data = {'idea': idea, 'trend': trend}
     prompt = prompt_idea.format_map(input_data)
-    evaluation_result = model_prompting(model_name, prompt)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
     # merge results from List[Str] to Str
     combined_result = '\n'.join(evaluation_result)
 
@@ -140,7 +166,15 @@ def research_idea_quality_eval_prompting(
 
 @beartype
 def research_paper_submission_quality_eval_prompting(
-    idea: str, paper: Dict[str, str], model_name: str, trend: Optional[str] = None
+    idea: str,
+    paper: Dict[str, str],
+    model_name: str,
+    trend: Optional[str] = None,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = None,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
 ) -> str:
     # refer to idea eval, but replace those not needed, and paraphrase those have overlaps.
     paper_prompt = """
@@ -207,7 +241,15 @@ def research_paper_submission_quality_eval_prompting(
         'trend': trend if trend is not None else '',  # Provide default value if None
     }
     prompt = paper_prompt.format_map(input_data)
-    evaluation_result = model_prompting(model_name, prompt)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
     # merge results from List[Str] to Str
     combined_result = '\n'.join(evaluation_result)
 
@@ -215,7 +257,16 @@ def research_paper_submission_quality_eval_prompting(
 
 
 def research_review_for_paper_submission_quality_eval_prompting(
-    idea: str, trend: str, paper: Dict[str, str], review: List[str], model_name: str
+    idea: str,
+    trend: str,
+    paper: Dict[str, str],
+    review: List[str],
+    model_name: str,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = None,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
 ) -> str:
     review_prompt = """
     <Instruction>
@@ -326,7 +377,15 @@ def research_review_for_paper_submission_quality_eval_prompting(
         'review': organized_reviews,
     }
     prompt = review_prompt.format_map(input_data)
-    evaluation_result = model_prompting(model_name, prompt)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
     # merge results from List[Str] to Str
     combined_result = '\n'.join(evaluation_result)
 
@@ -340,6 +399,11 @@ def research_rebuttal_for_paper_submission_quality_eval_prompting(
     review: List[str],
     model_name: str,
     rebuttal: Optional[str] = None,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = None,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
 ) -> str:
     rebuttal_prompt = """
     <Instruction>
@@ -437,7 +501,15 @@ def research_rebuttal_for_paper_submission_quality_eval_prompting(
         'rebuttal': rebuttal if rebuttal is not None else '',
     }
     prompt = rebuttal_prompt.format_map(input_data)
-    evaluation_result = model_prompting(model_name, prompt)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
     # merge results from List[Str] to Str
     combined_result = '\n'.join(evaluation_result)
 
@@ -453,6 +525,11 @@ def research_meta_review_for_paper_submission_quality_eval_prompting(
     model_name: str,
     rebuttal: Optional[str] = None,
     meta_review: Optional[str] = None,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = None,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
 ) -> str:
     meta_review_prompt = """
     <Instruction>
@@ -563,7 +640,15 @@ def research_meta_review_for_paper_submission_quality_eval_prompting(
         'final_decision': decision,
     }
     prompt = meta_review_prompt.format_map(input_data)
-    evaluation_result = model_prompting(model_name, prompt)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
     # merge results from List[Str] to Str
     combined_result = '\n'.join(evaluation_result)
 

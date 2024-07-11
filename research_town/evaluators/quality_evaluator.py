@@ -1,7 +1,8 @@
 import re
 
-from beartype.typing import Any, Type, TypeVar
+from beartype.typing import Any, Optional, Type, TypeVar
 
+from ..configs import Config
 from ..utils.error_handler import parsing_error_exponential_backoff
 from ..utils.eval_prompter import (
     research_idea_quality_eval_prompting,
@@ -30,11 +31,13 @@ class BaseQualityEvaluator:
         self,
         model_name: str,
         output_model: Type[BaseEvalOutput],
+        config: Optional[Config] = None,
         *args: Any,
         **kwargs: Any,
     ) -> None:
         self.model_name = model_name
         self.parsed_output = output_model()
+        self.config = config
 
     def eval(self, *args: Any, **kwargs: Any) -> BaseEvalOutput:
         raise NotImplementedError('Subclasses should implement this method')
@@ -75,13 +78,26 @@ class BaseQualityEvaluator:
 
 
 class ResearchIdeaQualityEvaluator(BaseQualityEvaluator):
-    def __init__(self, model_name: str, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        model_name: str,
+        config: Optional[Config] = None,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         super().__init__(model_name, ResearchIdeaEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ResearchIdeaEvalOutput:
         raw_output = research_idea_quality_eval_prompting(
-            idea=kwargs['idea'], trend=kwargs['trend'], model_name=self.model_name
+            idea=kwargs['idea'],
+            trend=kwargs['trend'],
+            model_name=self.model_name,
+            return_num=self.config.param.return_num if self.config else 1,
+            max_token_num=self.config.param.max_token_num if self.config else 512,
+            temperature=self.config.param.temperature if self.config else None,
+            top_p=self.config.param.top_p if self.config else None,
+            stream=self.config.param.stream if self.config else None,
         )
         self.parsed_output = self.parse(raw_output, ResearchIdeaEvalOutput)
 
@@ -91,7 +107,13 @@ class ResearchIdeaQualityEvaluator(BaseQualityEvaluator):
 
 
 class ResearchPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
-    def __init__(self, model_name: str, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        model_name: str,
+        config: Optional[Config] = None,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         super().__init__(model_name, ResearchPaperSubmissionEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
@@ -101,6 +123,11 @@ class ResearchPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
             paper=kwargs['paper'],
             model_name=self.model_name,
             trend=kwargs.get('trend'),
+            return_num=self.config.param.return_num if self.config else 1,
+            max_token_num=self.config.param.max_token_num if self.config else 512,
+            temperature=self.config.param.temperature if self.config else None,
+            top_p=self.config.param.top_p if self.config else None,
+            stream=self.config.param.stream if self.config else None,
         )
         self.parsed_output = self.parse(raw_output, ResearchPaperSubmissionEvalOutput)
 
@@ -110,7 +137,13 @@ class ResearchPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
 
 
 class ResearchReviewForPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
-    def __init__(self, model_name: str, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        model_name: str,
+        config: Optional[Config] = None,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         super().__init__(
             model_name, ResearchReviewForPaperSubmissionEvalOutput, *args, **kwargs
         )
@@ -125,6 +158,11 @@ class ResearchReviewForPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
             paper=kwargs['paper'],  # paper: Dict[str,str],
             review=kwargs['review'],
             model_name=self.model_name,
+            return_num=self.config.param.return_num if self.config else 1,
+            max_token_num=self.config.param.max_token_num if self.config else 512,
+            temperature=self.config.param.temperature if self.config else None,
+            top_p=self.config.param.top_p if self.config else None,
+            stream=self.config.param.stream if self.config else None,
         )
         self.parsed_output = self.parse(
             raw_output, ResearchReviewForPaperSubmissionEvalOutput
@@ -136,13 +174,26 @@ class ResearchReviewForPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
 
 
 class ResearchInsightQualityEvaluator(BaseQualityEvaluator):
-    def __init__(self, model_name: str, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        model_name: str,
+        config: Optional[Config] = None,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         super().__init__(model_name, ResearchInsightEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ResearchInsightEvalOutput:
         raw_output = research_insight_quality_eval_prompting(
-            insight=kwargs['insight'], trend=kwargs['trend'], model_name=self.model_name
+            insight=kwargs['insight'],
+            trend=kwargs['trend'],
+            model_name=self.model_name,
+            return_num=self.config.param.return_num if self.config else 1,
+            max_token_num=self.config.param.max_token_num if self.config else 512,
+            temperature=self.config.param.temperature if self.config else None,
+            top_p=self.config.param.top_p if self.config else None,
+            stream=self.config.param.stream if self.config else None,
         )
         self.parsed_output = self.parse(raw_output, ResearchInsightEvalOutput)
 
@@ -152,7 +203,13 @@ class ResearchInsightQualityEvaluator(BaseQualityEvaluator):
 
 
 class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
-    def __init__(self, model_name: str, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        model_name: str,
+        config: Optional[Config] = None,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         super().__init__(
             model_name, ResearchRebuttalForPaperSubmissionEvalOutput, *args, **kwargs
         )
@@ -168,6 +225,11 @@ class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
             review=kwargs['review'],
             model_name=self.model_name,
             rebuttal=kwargs.get('rebuttal'),
+            return_num=self.config.param.return_num if self.config else 1,
+            max_token_num=self.config.param.max_token_num if self.config else 512,
+            temperature=self.config.param.temperature if self.config else None,
+            top_p=self.config.param.top_p if self.config else None,
+            stream=self.config.param.stream if self.config else None,
         )
         self.parsed_output = self.parse(
             raw_output, ResearchRebuttalForPaperSubmissionEvalOutput
@@ -179,7 +241,13 @@ class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
 
 
 class ResearchMetaReviewQualityEvaluator(BaseQualityEvaluator):
-    def __init__(self, model_name: str, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        model_name: str,
+        config: Optional[Config] = None,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         super().__init__(
             model_name, ResearchMetaReviewForPaperSubmissionEvalOutput, *args, **kwargs
         )
@@ -197,6 +265,11 @@ class ResearchMetaReviewQualityEvaluator(BaseQualityEvaluator):
             model_name=self.model_name,
             rebuttal=kwargs.get('rebuttal'),
             meta_review=kwargs.get('meta_review'),
+            return_num=self.config.param.return_num if self.config else 1,
+            max_token_num=self.config.param.max_token_num if self.config else 512,
+            temperature=self.config.param.temperature if self.config else None,
+            top_p=self.config.param.top_p if self.config else None,
+            stream=self.config.param.stream if self.config else None,
         )
         self.parsed_output = self.parse(
             raw_output, ResearchMetaReviewForPaperSubmissionEvalOutput
