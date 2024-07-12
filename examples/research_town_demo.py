@@ -20,7 +20,7 @@ def run_sync_experiment(
     for _, agent_profile in agent_db.data.items():
         agent_profiles.append(agent_profile)
     paper_db = PaperProfileDB()
-    paper_db.fetch_and_add_papers(num=10, domain='graph neural networks')
+    paper_db.pull_papers(num=10, domain='graph neural networks')
     env_db = EnvLogDB()
     progress_db = ProgressDB()
     config = Config(config_file_path)

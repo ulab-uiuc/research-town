@@ -19,9 +19,7 @@ ATOM_NAMESPACE = '{http://www.w3.org/2005/Atom}'
 
 def test_get_related_papers() -> None:
     with (
-        patch(
-            'research_town.utils.paper_collector.get_embedding'
-        ) as mock_get_embedding,
+        patch('research_town.utils.paper_collector.get_embed') as mock_get_embed,
         patch(
             'research_town.utils.paper_collector.neighborhood_search'
         ) as mock_neighborhood_search,
@@ -29,7 +27,7 @@ def test_get_related_papers() -> None:
         corpus = ['Paper 1', 'Paper 2', 'Paper 3']
         query = 'Interesting query'
         num = 2
-        mock_get_embedding.side_effect = [
+        mock_get_embed.side_effect = [
             [torch.tensor([1, 2, 3]) for _ in corpus],
             [torch.tensor([1, 2, 3])],
         ]
