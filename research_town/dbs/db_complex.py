@@ -10,14 +10,14 @@ class ComplexDB:
     def __init__(self) -> None:
         self.dbs: Dict[str, BaseDB[Any]] = {}
 
-    def register_class(self, data_class: Type[T]) -> None:
+    def register_class(self, data_class: Any) -> None:
         class_name = data_class.__name__
         self.dbs[class_name] = BaseDB(data_class)
 
-    def add(self, profile: T) -> None:
-        class_name = profile.__class__.__name__
+    def add(self, data: T) -> None:
+        class_name = data.__class__.__name__
         if class_name in self.dbs:
-            self.dbs[class_name].add(profile)
+            self.dbs[class_name].add(data)
         else:
             raise ValueError(f'Unsupported type: {class_name}')
 
@@ -30,9 +30,9 @@ class ComplexDB:
         update_count = 0
         class_name = data_class.__name__
         if class_name in self.dbs:
-            profile_pks = [profile.pk for profile in self.get(data_class, **conditions)]
-            for profile_pk in profile_pks:
-                if self.dbs[class_name].update(profile_pk, updates):
+            pks = [data.pk for data in self.get(data_class, **conditions)]
+            for pk in pks:
+                if self.dbs[class_name].update(pk, updates):
                     update_count += 1
             return update_count
         else:
@@ -42,9 +42,9 @@ class ComplexDB:
         delete_count = 0
         class_name = data_class.__name__
         if class_name in self.dbs:
-            profile_pks = [profile.pk for profile in self.get(data_class, **conditions)]
-            for profile_pk in profile_pks:
-                if self.dbs[class_name].delete(profile_pk):
+            pks = [data.pk for data in self.get(data_class, **conditions)]
+            for pk in pks:
+                if self.dbs[class_name].delete(pk):
                     delete_count += 1
             return delete_count
         else:
