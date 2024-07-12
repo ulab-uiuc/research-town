@@ -5,10 +5,10 @@ from typing import Dict, List, Optional
 from transformers import BertModel, BertTokenizer
 
 from ..configs import Config
-from ..utils.agent_collector import fetch_paper_abstracts_and_coauthors
+from ..utils.agent_collector import collect_paper_abstracts_and_coauthors
 from ..utils.agent_prompter import summarize_research_direction_prompting
 from ..utils.paper_collector import get_daily_papers
-from ..utils.retriever import get_embed, neighborhood_search
+from ..utils.retriever import get_embed, rank_topk
 from .profile_data import AgentProfile, BaseProfile, PaperProfile
 
 
@@ -62,7 +62,9 @@ class BaseProfileDB:
         with open(pickle_file_name, 'wb') as pkl_file:
             pickle.dump(profile_dict, pkl_file)
 
-    def match(self, query: str, profiles: List[BaseProfile], num: int = 1) -> List[str]:
+    def match(
+        self, query: str, profiles: List['BaseProfile'], num: int = 1
+    ) -> List[str]:
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,
@@ -76,9 +78,7 @@ class BaseProfileDB:
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
-        index_l = neighborhood_search(
-            query_data=query_embed, corpus_data=corpus_embed, num=num
-        )
+        index_l = rank_topk(query_data=query_embed, corpus_data=corpus_embed, num=num)
         index_all = [index for index_list in index_l for index in index_list]
         match_pk = [profiles[index].pk for index in index_all]
         return match_pk
@@ -147,7 +147,7 @@ class AgentProfileDB(BaseProfileDB):
 
     def pull_agents(self, agent_names: List[str], config: Config) -> None:
         for name in agent_names:
-            paper_abstracts, collaborators = fetch_paper_abstracts_and_coauthors(
+            paper_abstracts, collaborators = collect_paper_abstracts_and_coauthors(
                 author=name, paper_max_num=10
             )
             personal_info = '; '.join(

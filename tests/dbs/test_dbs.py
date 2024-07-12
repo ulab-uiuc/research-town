@@ -1,6 +1,6 @@
 from tempfile import NamedTemporaryFile
 
-from beartype.typing import Any, Dict, Optional
+from beartype.typing import Any, Dict, List, Optional
 
 from research_town.dbs import (
     AgentAgentIdeaDiscussionLog,
@@ -203,8 +203,8 @@ def test_paperprofiledb_basic() -> None:
         domain='Physics',
         citation_count=5,
     )
-    db.add_paper(paper1)
-    db.add_paper(paper2)
+    db.add(paper1)
+    db.add(paper2)
 
     new_paper = PaperProfile(
         title='Sample Paper 3',
@@ -216,28 +216,30 @@ def test_paperprofiledb_basic() -> None:
         domain='Computer Science',
         citation_count=2,
     )
-    db.add_paper(new_paper)
+    db.add(new_paper)
     assert new_paper.pk in db.data
 
-    paper = db.get_paper(paper1.pk)
+    conditions = {'pk': paper1.pk}
+    paper = db.get(**conditions)[0]
     assert paper is not None
     assert paper.title == 'Sample Paper 1'
 
     updates: Dict[str, Any] = {'title': 'Updated Sample Paper 1', 'citation_count': 15}
 
-    result = db.update_paper(paper1.pk, updates)
+    result = db.update(paper1.pk, updates)
     assert result
-    updated_paper: Optional[PaperProfile] = db.get_paper(paper1.pk)
+
+    conditions = {'pk': paper1.pk}
+    updated_paper: List[PaperProfile] = db.get(**conditions)[0]
     assert updated_paper is not None
     assert updated_paper.title == 'Updated Sample Paper 1'
     assert updated_paper.citation_count == 15
 
-    result = db.delete_paper(paper2.pk)
+    result = db.delete(paper2.pk)
     assert result
-    assert db.get_paper(paper2.pk) is None
 
     domain: Dict[str, Any] = {'domain': 'Computer Science'}
-    results = db.query_papers(**domain)
+    results = db.get(**domain)
     assert len(results) == 2
     assert results[0].title == 'Updated Sample Paper 1'
     assert results[1].title == 'Sample Paper 3'

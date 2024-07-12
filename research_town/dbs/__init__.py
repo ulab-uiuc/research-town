@@ -1,5 +1,3 @@
-from .agent_profile_data import AgentProfile
-from .agent_profile_db import AgentProfileDB
 from .env_data import (
     AgentAgentCollaborationFindingLog,
     AgentAgentIdeaDiscussionLog,
@@ -11,8 +9,8 @@ from .env_data import (
     AgentPaperWritingLog,
 )
 from .env_db import EnvLogDB
-from .paper_profile_db import PaperProfileDB
-from .profile_data import PaperProfile
+from .profile_data import AgentProfile, PaperProfile
+from .profile_db import AgentProfileDB, PaperProfileDB
 from .progress_data import (
     ResearchIdea,
     ResearchInsight,

@@ -13,7 +13,7 @@ def mock_prompting(
     prompt: str,
     return_num: Optional[int] = 3,
     max_token_num: Optional[int] = 512,
-    temperature: Optional[float] = 0,
+    temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
     mode: Optional[str] = None,
