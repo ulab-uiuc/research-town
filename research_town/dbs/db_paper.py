@@ -60,7 +60,7 @@ class PaperProfileDB(BaseDB[PaperProfile]):
             retriever_model=self.retriever_model,
         )
         topk_indexes = rank_topk(
-            query_data=query_embed, corpus_data=corpus_embed, num=num
+            query_embed=query_embed, corpus_embed=corpus_embed, num=num
         )
         indexes = [index for topk_index in topk_indexes for index in topk_index]
         match_pk = [profiles[index].pk for index in indexes]

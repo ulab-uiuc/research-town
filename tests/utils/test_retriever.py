@@ -49,8 +49,8 @@ def test_get_embed() -> None:
 
 
 def test_rank_topk() -> None:
-    query_data = [torch.tensor([[1.0, 2.0, 3.0]])]
-    corpus_data = [torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])]
+    query_embed = [torch.tensor([[1.0, 2.0, 3.0]])]
+    corpus_embed = [torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])]
     num = 1
-    result = rank_topk(query_data, corpus_data, num)
+    result = rank_topk(query_embed, corpus_embed, num)
     assert result == [[0]]
