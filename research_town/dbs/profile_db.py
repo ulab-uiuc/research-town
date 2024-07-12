@@ -1,6 +1,6 @@
 import json
 import pickle
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from transformers import BertModel, BertTokenizer
 
@@ -21,6 +21,7 @@ class BaseProfileDB:
         self.retriever_model: BertModel = BertModel.from_pretrained(
             'facebook/contriever'
         )
+        self.profile_class = BaseProfile
 
     def add(self, profile: BaseProfile) -> None:
         self.data[profile.pk] = profile
@@ -41,7 +42,7 @@ class BaseProfileDB:
             return True
         return False
 
-    def get(self, **conditions: Dict[str, BaseProfile]) -> List[BaseProfile]:
+    def get(self, **conditions: Dict[str, Union[str, int, float]]) -> List[BaseProfile]:
         result = []
         for profile in self.data.values():
             if all(getattr(profile, key) == value for key, value in conditions.items()):
@@ -106,12 +107,6 @@ class BaseProfileDB:
                 for pk, profile_data in data.items()
             }
 
-    def update_db(self, data: Dict[str, List[Dict[str, BaseProfile]]]) -> None:
-        for profiles in data.values():
-            for profile_data in profiles:
-                profile = self.profile_class(**profile_data)
-                self.add(profile)
-
 
 class PaperProfileDB(BaseProfileDB):
     def __init__(self) -> None:
@@ -120,7 +115,7 @@ class PaperProfileDB(BaseProfileDB):
 
     def pull_papers(self, num: int, domain: str) -> None:
         data, _ = get_daily_papers(query='ti:' + domain, max_results=num)
-        for value in data.items():
+        for value in data.values():
             for title, abstract, authors, url, domain, timestamp in zip(
                 value['title'],
                 value['abstract'],
