@@ -14,7 +14,7 @@
 [![Github Action](https://github.com/ulab-uiuc/research-town/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/ulab-uiuc/research-town/actions/workflows/pytest.yml/badge.svg?branch=main)
 [![Checked with mypy](https://github.com/ulab-uiuc/research-town/actions/workflows/mypy.yml/badge.svg?branch=main)](https://github.com/ulab-uiuc/research-town/actions/workflows/mypy.yml/badge.svg?branch=main)
 
-[![Arxiv Paper](https://img.shields.io/badge/arXiv-Coming soon-b31b1b.svg)](https://arxiv-coming-soon)
+[![Arxiv](https://img.shields.io/badge/arXiv-Coming soon-b31b1b.svg)](https://arxiv-coming-soon)
 
 </div>
 
