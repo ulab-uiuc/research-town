@@ -48,7 +48,7 @@ def test_merging_configurations() -> None:
     }
     new_config = {
         'param': {'related_paper_num': 5},
-        'prompt_template': {'query_paper': 'template2 {profile_bio} {domains}'},
+        'prompt_template': {'find_collaborators': 'template2 {profile_bio} {domains}'},
     }
 
     config = Config()
@@ -63,7 +63,9 @@ def test_merging_configurations() -> None:
     assert config.param.related_paper_num == 5
     assert config.param.max_collaborators_num == 10
     assert config.prompt_template.test == 'template1'  # type: ignore
-    assert config.prompt_template.query_paper == 'template2 {profile_bio} {domains}'
+    assert (
+        config.prompt_template.find_collaborators == 'template2 {profile_bio} {domains}'
+    )
 
 
 def test_yaml_serialization() -> None:

@@ -5,13 +5,98 @@ from .model_prompting import model_prompting
 
 
 @beartype
-def idea_quality_eval_prompting(
+def research_insight_quality_eval_prompting(
+    insight: str,
+    trend: str,
+    model_name: str,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = 0,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
+) -> str:
+    prompt_insight = """
+    <Instruction> Please evaluate the insight based on the following dimensions, considering the current research trend within the research community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the insight. <Instruction>
+
+    <Input>
+    Here is the insight to evaluate: {insight}.
+    Here is the research trend: {trend}.
+    </Input>
+
+    <Output>
+    The output format should follow these rules: Overall Score of an insight (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where di is the score of the i-th dimension. An example of output is: Overall Score=89 Dimension Scores=[8,9,9,9,9,9].'
+    </Output>
+
+    <Approach> The details of rating are as follow:
+    1. Novelty
+    Rating (1-10):
+    Comments:
+    How original and unique is the insight?
+    Does it introduce a new perspective or significant advancement compared to existing methods?
+    How does it align with or diverge from the innovations highlighted in the trend?
+    2. Validity
+    Rating (1-10):
+    Comments:
+    Does it include solid theoretical foundations, robust algorithms, and detailed methodologies?
+    Is the method in line with the state-of-the-art techniques noted in the trend?
+    Are the underlying principles well-defined and logically consistent?
+    Does the insight demonstrate a deep understanding of relevant theories and concepts?
+    3. Significance
+    Rating (1-10):
+    Comments:
+    Evaluate the potential impact of the insight on the specific domain of research community that the insight belongs to and beyond.
+    How significant is its contribution to advancing the field?
+    Does it address high-impact problems or gaps identified in the trend?
+    How applicable is it in practical settings and industry contexts?
+    4. Feasibility
+    Rating (1-10):
+    Comments:
+    Assess the feasibility of implementing the insight.
+    Is it practically applicable in real-world scenarios?
+    Does it consider efficiency and scalability, in line with the practical application focus of the trend?
+    5. Clarity
+    Rating (1-10):
+    Comments:
+    Assess the clarity, organization, and presentation quality of the insight.
+    Is the insight communicated effectively, adhering to high presentation standards seen in top-tier conferences?
+    6. Ethical Considerations
+    Rating (1-10):
+    Comments:
+    Consider the ethical implications and societal impact of the insight.
+    Does it adhere to the growing emphasis on ethical research practices as highlighted in the trend?
+    </Approach>
+    """
+
+    input_data = {'insight': insight, 'trend': trend}
+    prompt = prompt_insight.format_map(input_data)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
+    # merge results from List[Str] to Str
+    combined_result = '\n'.join(evaluation_result)
+
+    return combined_result
+
+
+@beartype
+def research_idea_quality_eval_prompting(
     idea: str,
     trend: str,
     model_name: str,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = 0,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
 ) -> str:
     prompt_idea = """
-    <Instruction> Please evaluate the paper draft based on the following dimensions.  You only need to give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. For these components are left blank(for example: Research Trend, Title, etc), please provide your common knowledge to assess the review. You must give a overall score with dimension scores. No detailed anaylsis is needed. <Instruction>
+    <Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the research community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea. <Instruction>
 
     <Input>
     Here is the idea to evaluate: {idea}.
@@ -64,7 +149,15 @@ def idea_quality_eval_prompting(
 
     input_data = {'idea': idea, 'trend': trend}
     prompt = prompt_idea.format_map(input_data)
-    evaluation_result = model_prompting(model_name, prompt)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
     # merge results from List[Str] to Str
     combined_result = '\n'.join(evaluation_result)
 
@@ -72,12 +165,20 @@ def idea_quality_eval_prompting(
 
 
 @beartype
-def paper_quality_eval_prompting(
-    idea: str, paper: Dict[str, str], model_name: str, trend: Optional[str] = None
+def research_paper_submission_quality_eval_prompting(
+    idea: str,
+    paper: Dict[str, str],
+    model_name: str,
+    trend: Optional[str] = None,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = 0,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
 ) -> str:
     # refer to idea eval, but replace those not needed, and paraphrase those have overlaps.
     paper_prompt = """
-    <Instruction> Please evaluate the paper draft based on the following dimensions.  You only need to give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. For these components are left blank(for example: Research Trend, Title, etc), please provide your common knowledge to assess the review. You must give a overall score with dimension scores. No detailed anaylsis is needed.
+    <Instruction> Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft.
     <Instruction>
 
     <Input>
@@ -140,22 +241,32 @@ def paper_quality_eval_prompting(
         'trend': trend if trend is not None else '',  # Provide default value if None
     }
     prompt = paper_prompt.format_map(input_data)
-    evaluation_result = model_prompting(model_name, prompt)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
     # merge results from List[Str] to Str
     combined_result = '\n'.join(evaluation_result)
 
     return combined_result
 
 
-def review_quality_eval_prompting(
+def research_review_for_paper_submission_quality_eval_prompting(
     idea: str,
     trend: str,
     paper: Dict[str, str],
     review: List[str],
-    decision: str,
     model_name: str,
-    rebuttal: Optional[str] = None,
-    meta_review: Optional[str] = None,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = 0,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
 ) -> str:
     review_prompt = """
     <Instruction>
@@ -168,9 +279,6 @@ def review_quality_eval_prompting(
     research trend: {trend}
     paper: title-- {title}; abstract-- {abstract}.
     reviews: {review}
-    rebutal: {rebuttal}
-    meta_review: {meta_review}
-    final_decision:{final_decision}
     </Input>
 
     <Output>
@@ -267,12 +375,280 @@ def review_quality_eval_prompting(
         'title': paper['title'],
         'abstract': paper['abstract'],
         'review': organized_reviews,
+    }
+    prompt = review_prompt.format_map(input_data)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
+    # merge results from List[Str] to Str
+    combined_result = '\n'.join(evaluation_result)
+
+    return combined_result
+
+
+def research_rebuttal_for_paper_submission_quality_eval_prompting(
+    idea: str,
+    trend: str,
+    paper: Dict[str, str],
+    review: List[str],
+    model_name: str,
+    rebuttal: Optional[str] = None,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = 0,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
+) -> str:
+    rebuttal_prompt = """
+    <Instruction>
+    Please evaluate the rebuttal based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.
+    </Instruction>
+
+    <Input>
+    Here is the review to evaluate:
+    idea: {idea}
+    research trend: {trend}
+    paper: title-- {title}; abstract-- {abstract}.
+    reviews: {review}
+    rebutal: {rebuttal}
+    </Input>
+
+    <Output>
+    Output format:
+    The output format should follow these rules: Overall Score of a review (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: Overall Score=91. Dimension Scores=[9,9,9,9,9,9,9,9,9,10].
+    </Output>
+
+    <Approach> The details of rating are as follows:
+    {regulations}
+    </Approach>
+    """
+
+    regulations = """
+    1. Clarity of Response
+        - Rating (1-10):
+        - Comments:
+        - Is the rebuttal clear in addressing the criticisms raised in the reviews?
+        - Are the responses to each criticism well-structured and understandable?
+
+    2. Accuracy and Justification
+        - Rating (1-10):
+        - Comments:
+        - Are the rebuttal claims and justifications adequately supported by evidence?
+        - Are any disagreements or discrepancies with the reviews addressed convincingly?
+
+    3. Responsiveness
+        - Rating (1-10):
+        - Comments:
+        - Does the rebuttal address all major concerns and critiques raised in the reviews?
+        - Are the rebuttal responses thorough and comprehensive?
+
+    4. Persuasiveness
+        - Rating (1-10):
+        - Comments:
+        - How persuasive are the arguments and explanations provided in the rebuttal?
+        - Are the rebuttal responses effective in mitigating concerns and defending the paper?
+
+    5. Professionalism
+        - Rating (1-10):
+        - Comments:
+        - Is the tone and language of the rebuttal professional and respectful?
+        - Are there any instances of defensive or dismissive language that need improvement?
+
+    6. Insightfulness
+        - Rating (1-10):
+        - Comments:
+        - Does the rebuttal provide new insights or perspectives that were not fully addressed in the original paper or reviews?
+
+    7. Overall Improvement
+        - Rating (1-10):
+        - Comments:
+        - How much does the rebuttal improve the overall perception and understanding of the paper's strengths and weaknesses?
+
+    8. Clarity of Contributions
+        - Rating (1-10):
+        - Comments:
+        - Are the contributions of the paper clarified and emphasized in the rebuttal?
+
+    9. Ethical Considerations
+        - Rating (1-10):
+        - Comments:
+        - Are there any ethical implications or considerations raised in the rebuttal?
+
+    10. Balance and Fairness
+        - Rating (1-10):
+        - Comments:
+        - Does the rebuttal acknowledge both strengths and weaknesses of the paper in a balanced manner?
+        - Is there fairness in addressing criticisms without bias?
+    """
+
+    # Organize the reviews
+    organized_reviews = '\n'.join(
+        [f"Reviewer {i+1}'s comment: {review[i]}" for i in range(len(review))]
+    )
+    input_data = {
+        'regulations': regulations,
+        'idea': idea,
+        'trend': trend,
+        'title': paper['title'],
+        'abstract': paper['abstract'],
+        'review': organized_reviews,
+        'rebuttal': rebuttal if rebuttal is not None else '',
+    }
+    prompt = rebuttal_prompt.format_map(input_data)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
+    # merge results from List[Str] to Str
+    combined_result = '\n'.join(evaluation_result)
+
+    return combined_result
+
+
+def research_meta_review_for_paper_submission_quality_eval_prompting(
+    idea: str,
+    trend: str,
+    paper: Dict[str, str],
+    review: List[str],
+    decision: str,
+    model_name: str,
+    rebuttal: Optional[str] = None,
+    meta_review: Optional[str] = None,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = 0,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
+) -> str:
+    meta_review_prompt = """
+    <Instruction>
+    Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.
+    </Instruction>
+
+    <Input>
+    Here is the review to evaluate:
+    idea: {idea}
+    research trend: {trend}
+    paper: title-- {title}; abstract-- {abstract}.
+    reviews: {review}
+    rebutal: {rebuttal}
+    meta_review: {meta_review}
+    final_decision:{final_decision}
+    </Input>
+
+    <Output>
+    Output format:
+    The output format should follow these rules: Overall Score of a review (0-100), with 10 Dimension Scores: [d1, d2, d3, ..., d10], where di is the score of the i-th dimension. An example of output is: Overall Score=91. Dimension Scores=[9,9,9,9,9,9,9,9,9,10].
+    </Output>
+
+    <Approach> The details of rating are as follows:
+    {regulations}
+    </Approach>
+    """
+
+    regulations = """
+    1. Summarization
+        - Rating (1-10):
+        - Comments:
+        - Does the meta-review accurately summarize the strengths and weaknesses of the original reviews?
+        - Are the key points of each review clearly and succinctly summarized?
+        - Are any discrepancies or misunderstandings among the reviews identified and addressed?
+
+    2. Quality
+        - Rating (1-10):
+        - Comments:
+        - Are the strengths and weaknesses of the reviewed paper clearly identified and appropriately critiqued?
+        - Do the critiques show a deep understanding of the paper's content and contributions?
+        - Are the assessments fair and balanced?
+
+    3. Consistency and Fairness
+        - Rating (1-10):
+        - Comments:
+        - Is there consistency in evaluating different aspects of the reviewed paper across the reviews?
+        - Are the assessments fair, avoiding significant bias towards any particular aspect of the paper?
+        - Are any conflicting opinions among the reviews reconciled appropriately?
+
+    4. Constructiveness
+        - Rating (1-10):
+        - Comments:
+        - Are the critiques and suggestions provided in the meta-review constructive and actionable?
+        - Do they offer meaningful insights for improving the reviewed paper or future revisions?
+        - Are the recommendations clear and well-supported by evidence from the reviews?
+
+    5. Clarity
+        - Rating (1-10):
+        - Comments:
+        - Is the meta-review well-written and logically organized?
+        - Are the points expressed clearly and effectively?
+        - Is the language appropriate and professional?
+
+    6. Insightfulness
+        - Rating (1-10):
+        - Comments:
+        - Does the meta-review provide insightful commentary beyond summarizing individual reviews?
+        - Are there novel observations or perspectives that enrich the understanding of the reviewed paper?
+
+    7. Alignment with Review Criteria
+        - Rating (1-10):
+        - Comments:
+        - Does the meta-review align with the evaluation criteria provided by the submission guidelines?
+        - Are all relevant aspects of the reviewed paper adequately covered in the meta-review?
+
+    8. Justification of Final Decision
+        - Rating (1-10):
+        - Comments:
+        - Is the final decision or recommendation based on a thorough analysis of the reviews?
+        - Are the reasons for the recommendation clearly articulated and justified?
+
+    9. Ethical Considerations
+        - Rating (1-10):
+        - Comments:
+        - Are there any ethical considerations raised in the meta-review regarding the reviewed paper or its reviews?
+        - Are potential biases or conflicts of interest addressed appropriately?
+
+    10. Overall Impression
+        - Rating (1-10):
+        - Comments:
+        - What is your overall impression of the meta-review?
+        - Does it meet the standards expected for a meta-review in terms of thoroughness, insightfulness, and clarity?
+    """
+
+    # Organize the reviews
+    organized_reviews = '\n'.join(
+        [f"Reviewer {i+1}'s comment: {review[i]}" for i in range(len(review))]
+    )
+    input_data = {
+        'regulations': regulations,
+        'idea': idea,
+        'trend': trend,
+        'title': paper['title'],
+        'abstract': paper['abstract'],
+        'review': organized_reviews,
         'rebuttal': rebuttal if rebuttal is not None else '',
         'meta_review': meta_review if meta_review is not None else '',
         'final_decision': decision,
     }
-    prompt = review_prompt.format_map(input_data)
-    evaluation_result = model_prompting(model_name, prompt)
+    prompt = meta_review_prompt.format_map(input_data)
+    evaluation_result = model_prompting(
+        model_name,
+        prompt,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )
     # merge results from List[Str] to Str
     combined_result = '\n'.join(evaluation_result)
 

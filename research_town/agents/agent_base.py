@@ -61,8 +61,12 @@ class BaseResearchAgent(object):
             papers=serialized_papers,
             domains=domains,
             model_name=self.model_name,
-            prompt_template_query_paper=config.prompt_template.query_paper,
             prompt_template_review_literature=config.prompt_template.review_literature,
+            return_num=config.param.return_num,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
+            top_p=config.param.top_p,
+            stream=config.param.stream,
         )
         insights: List[ResearchInsight] = []
         for content in insight_contents:
@@ -79,6 +83,11 @@ class BaseResearchAgent(object):
             insights=serialized_insights,
             model_name=self.model_name,
             prompt_template=config.prompt_template.brainstorm_idea,
+            return_num=config.param.return_num,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
+            top_p=config.param.top_p,
+            stream=config.param.stream,
         )[0]
         return ResearchIdea(content=idea_content)
 
@@ -90,6 +99,11 @@ class BaseResearchAgent(object):
             ideas=serialized_ideas,
             model_name=self.model_name,
             prompt_template=config.prompt_template.discuss_idea,
+            return_num=config.param.return_num,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
+            top_p=config.param.top_p,
+            stream=config.param.stream,
         )[0]
         return ResearchIdea(content=idea_summarized)
 
@@ -105,6 +119,11 @@ class BaseResearchAgent(object):
             papers=serialized_papers,
             model_name=self.model_name,
             prompt_template=config.prompt_template.write_paper,
+            return_num=config.param.return_num,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
+            top_p=config.param.top_p,
+            stream=config.param.stream,
         )[0]
         return ResearchPaperSubmission(abstract=paper_abstract)
 
@@ -122,6 +141,11 @@ class BaseResearchAgent(object):
             strength_prompt_template=config.prompt_template.write_review_strength,
             weakness_prompt_template=config.prompt_template.write_review_weakness,
             score_prompt_template=config.prompt_template.write_review_score,
+            return_num=config.param.return_num,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
+            top_p=config.param.top_p,
+            stream=config.param.stream,
         )
         return ResearchReviewForPaperSubmission(
             paper_pk=paper.pk,
@@ -154,6 +178,11 @@ class BaseResearchAgent(object):
             strength_prompt_template=config.prompt_template.write_meta_review_strength,
             weakness_prompt_template=config.prompt_template.write_meta_review_weakness,
             decision_prompt_template=config.prompt_template.write_meta_review_decision,
+            return_num=config.param.return_num,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
+            top_p=config.param.top_p,
+            stream=config.param.stream,
         )
 
         return ResearchMetaReviewForPaperSubmission(
@@ -183,6 +212,11 @@ class BaseResearchAgent(object):
             review=serialized_review,
             model_name=self.model_name,
             prompt_template=config.prompt_template.write_rebuttal,
+            return_num=config.param.return_num,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
+            top_p=config.param.top_p,
+            stream=config.param.stream,
         )[0]
 
         return ResearchRebuttalForPaperSubmission(

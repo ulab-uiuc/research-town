@@ -3,24 +3,10 @@ from beartype.typing import Any, Dict, List, Tuple
 from tqdm import tqdm
 
 
-def get_authors(authors: List[str], first_author: bool = False) -> str:
-    if first_author:
-        return authors[0]
-    return ', '.join(authors)
-
-
-def author_position(author: str, author_list: List[str]) -> int:
-    for ind, i in enumerate(author_list):
-        if author.lower() == i.lower():
-            return ind + 1
-
-    return -1
-
-
 def coauthor_frequency(
     author: str, author_list: List[str], co_authors: Dict[str, int]
 ) -> Dict[str, int]:
-    for ind, i in enumerate(author_list):
+    for i in author_list:
         if author.lower() == i.lower():
             continue
         if i in co_authors:

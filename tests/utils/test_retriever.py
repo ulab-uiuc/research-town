@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 import torch
 from beartype.typing import Any, Dict
 
-from research_town.utils.retriever import get_embed
+from research_town.utils.retriever import get_embed, rank_topk
 
 
 def test_get_embed() -> None:
@@ -46,3 +46,11 @@ def test_get_embed() -> None:
 
         assert isinstance(result[0], torch.Tensor)
         assert result[0].shape == (1, 3)
+
+
+def test_rank_topk() -> None:
+    query_data = [torch.tensor([[1.0, 2.0, 3.0]])]
+    corpus_data = [torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])]
+    num = 1
+    result = rank_topk(query_data, corpus_data, num)
+    assert result == [[0]]
