@@ -1,4 +1,4 @@
-from typing import Dict, List, Mapping, Optional, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 from .data import BaseDBData
 from .db_base import BaseDB
@@ -8,11 +8,11 @@ T = TypeVar('T', bound=BaseDBData)
 
 class ComplexDB:
     def __init__(self) -> None:
-        self.dbs: Dict[str, BaseDB] = {}
+        self.dbs: Dict[str, BaseDB[Any]] = {}
 
-    def register_class(self, profile_class: Type[T]) -> None:
-        class_name = profile_class.__name__
-        self.dbs[class_name] = BaseDB(profile_class)
+    def register_class(self, data_class: Type[T]) -> None:
+        class_name = data_class.__name__
+        self.dbs[class_name] = BaseDB(data_class)
 
     def add(self, profile: T) -> None:
         class_name = profile.__class__.__name__
@@ -23,16 +23,14 @@ class ComplexDB:
 
     def update(
         self,
-        profile_class: Type[T],
-        updates: Mapping[str, Optional[Union[str, int, float]]],
+        data_class: Type[T],
+        updates: Dict[str, Any],
         **conditions: Union[str, int, float],
     ) -> int:
         update_count = 0
-        class_name = profile_class.__name__
+        class_name = data_class.__name__
         if class_name in self.dbs:
-            profile_pks = [
-                profile.pk for profile in self.get(profile_class, **conditions)
-            ]
+            profile_pks = [profile.pk for profile in self.get(data_class, **conditions)]
             for profile_pk in profile_pks:
                 if self.dbs[class_name].update(profile_pk, updates):
                     update_count += 1
@@ -40,15 +38,11 @@ class ComplexDB:
         else:
             raise ValueError(f'Unsupported type: {class_name}')
 
-    def delete(
-        self, profile_class: Type[T], **conditions: Union[str, int, float]
-    ) -> int:
+    def delete(self, data_class: Type[T], **conditions: Union[str, int, float]) -> int:
         delete_count = 0
-        class_name = profile_class.__name__
+        class_name = data_class.__name__
         if class_name in self.dbs:
-            profile_pks = [
-                profile.pk for profile in self.get(profile_class, **conditions)
-            ]
+            profile_pks = [profile.pk for profile in self.get(data_class, **conditions)]
             for profile_pk in profile_pks:
                 if self.dbs[class_name].delete(profile_pk):
                     delete_count += 1
@@ -56,10 +50,8 @@ class ComplexDB:
         else:
             raise ValueError(f'Unsupported type: {class_name}')
 
-    def get(
-        self, profile_class: Type[T], **conditions: Union[str, int, float]
-    ) -> List[T]:
-        class_name = profile_class.__name__
+    def get(self, data_class: Type[T], **conditions: Union[str, int, float]) -> List[T]:
+        class_name = data_class.__name__
         if class_name in self.dbs:
             return self.dbs[class_name].get(**conditions)
         else:
