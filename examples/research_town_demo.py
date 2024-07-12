@@ -8,14 +8,14 @@ Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
 def run_sync_experiment(
-    agent_list: List[str],
-    role_list: List[Role],
+    agent_names: List[str],
+    agent_roles: List[Role],
     config_file_path: str,
 ) -> None:
     # Create Environment and Agents
     config = Config(config_file_path)
     agent_db = AgentProfileDB()
-    agent_db.fetch_and_add_agents(initial_list=agent_list, config=config)
+    agent_db.pull_agents(agent_names=agent_names, config=config)
     agent_profiles = []
     for _, agent_profile in agent_db.data.items():
         agent_profiles.append(agent_profile)
@@ -26,7 +26,7 @@ def run_sync_experiment(
     config = Config(config_file_path)
     paper_submission_env = PaperSubmissionMultiAgentEnv(
         agent_profiles=agent_profiles,
-        agent_roles=role_list,
+        agent_roles=agent_roles,
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
@@ -35,7 +35,7 @@ def run_sync_experiment(
     )
     peer_review_env = PeerReviewMultiAgentEnv(
         agent_profiles=agent_profiles,
-        agent_roles=role_list,
+        agent_roles=agent_roles,
         agent_db=agent_db,
         paper_db=paper_db,
         env_db=env_db,
@@ -52,8 +52,8 @@ def run_sync_experiment(
 
 def main() -> None:
     run_sync_experiment(
-        agent_list=['Jiaxuan You', 'Jure Leskovec'],
-        role_list=['proj_leader', 'reviewer'],
+        agent_names=['Jiaxuan You', 'Jure Leskovec'],
+        agent_roles=['proj_leader', 'reviewer'],
         config_file_path='./configs/default_config.yaml',
     )
 

@@ -1,6 +1,6 @@
 from tempfile import NamedTemporaryFile
 
-from beartype.typing import Any, Dict, List, Optional
+from beartype.typing import Any, Dict, Optional
 
 from research_town.dbs import (
     AgentAgentIdeaDiscussionLog,
@@ -230,7 +230,7 @@ def test_paperprofiledb_basic() -> None:
     assert result
 
     conditions = {'pk': paper1.pk}
-    updated_paper: List[PaperProfile] = db.get(**conditions)[0]
+    updated_paper: PaperProfile = db.get(**conditions)[0]
     assert updated_paper is not None
     assert updated_paper.title == 'Updated Sample Paper 1'
     assert updated_paper.citation_count == 15
