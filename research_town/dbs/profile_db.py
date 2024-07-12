@@ -84,12 +84,14 @@ class BaseProfileDB(Generic[T]):
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
-        index_l = rank_topk(query_data=query_embed, corpus_data=corpus_embed, num=num)
-        index_all = [index for index_list in index_l for index in index_list]
-        match_pk = [profiles[index].pk for index in index_all]
+        topk_indexes = rank_topk(
+            query_data=query_embed, corpus_data=corpus_embed, num=num
+        )
+        indexes = [index for topk_index in topk_indexes for index in topk_index]
+        match_pk = [profiles[index].pk for index in indexes]
         return match_pk
 
-    def save_to_file(self, file_name: str) -> None:
+    def save_to_json(self, file_name: str) -> None:
         with open(file_name, 'w') as f:
             json.dump(
                 {pk: profile.model_dump() for pk, profile in self.data.items()},
@@ -97,20 +99,28 @@ class BaseProfileDB(Generic[T]):
                 indent=2,
             )
 
-    def load_from_file(self, file_name: str, with_embed: bool = False) -> None:
+    def save_to_pkl(self, file_name: str) -> None:
+        with open(file_name, 'wb') as pkl_file:
+            pickle.dump(self.data_embed, pkl_file)
+
+    def load_from_json(self, file_name: str, with_embed: bool = False) -> None:
         if with_embed:
-            pickle_file_name = file_name.replace('.json', '.pkl')
-            with open(pickle_file_name, 'rb') as pkl_file:
-                self.data_embed = pickle.load(pkl_file)
+            self.load_from_pkl(file_name.replace('.json', '.pkl'))
+
         with open(file_name, 'r') as f:
             data = json.load(f)
             if with_embed:
                 for name in data.keys():
-                    data[name]['embed'] = self.data_embed[name][0]
+                    if name in self.data_embed:
+                        data[name]['embed'] = self.data_embed[name][0]
             self.data = {
                 pk: self.profile_class(**profile_data)
                 for pk, profile_data in data.items()
             }
+
+    def load_from_pkl(self, file_name: str) -> None:
+        with open(file_name, 'rb') as pkl_file:
+            self.data_embed = pickle.load(pkl_file)
 
 
 class PaperProfileDB(BaseProfileDB[PaperProfile]):
