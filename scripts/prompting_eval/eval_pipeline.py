@@ -69,7 +69,7 @@ class pipeline_eval_db(object):
         self.review_variance_dimension_scores: List[float] = []
         self.review_sum_variance_dimension_scores: float = 0.0
 
-    def load_from_file(self, file_name: str) -> None:
+    def load_from_json(self, file_name: str) -> None:
         with open(file_name, 'r') as f:
             raw_data_papers = json.load(f)
             for agent, details in raw_data_papers.items():
@@ -317,7 +317,7 @@ def main(
 
     # select logs to be evaluated
     pipeline_eval = pipeline_eval_db()
-    pipeline_eval.load_from_file(log_file)
+    pipeline_eval.load_from_json(log_file)
     logs2eval = pipeline_eval.select_logs(eval_log_num)
     # start evaluation for the pipeline logs
 

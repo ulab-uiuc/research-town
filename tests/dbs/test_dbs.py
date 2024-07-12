@@ -53,20 +53,21 @@ def test_envlogdb_basic() -> None:
     db.add(meta_review_log)
     db.add(discussion_log)
 
-    new_log = AgentPaperReviewWritingLog(
-        paper_pk='paper2',
+    new_review_log = AgentPaperReviewWritingLog(
+        paper_pk='paper1',
         agent_pk='agent2',
         score=4,
         summary='Interesting paper',
         strength='Good',
         weakness='None',
     )
-    db.add(new_log)
-    assert new_log.model_dump() in db.data['AgentPaperReviewWritingLog']
+    db.add(new_review_log)
+    assert new_review_log.pk in db.dbs['AgentPaperReviewWritingLog'].data
+    assert len(db.dbs['AgentPaperReviewWritingLog'].data) == 2
 
     conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
     results = db.get(AgentPaperReviewWritingLog, **conditions)
-    assert len(results) == 1
+    assert len(results) == 2
     assert results[0].summary == 'Good paper'
     assert results[0].strength == 'Interesting'
     assert results[0].weakness == 'None'
@@ -77,9 +78,8 @@ def test_envlogdb_basic() -> None:
         'strength': 'None',
         'weakness': 'Really?',
     }
-    updated_count = db.update(
-        AgentPaperReviewWritingLog, {'paper_pk': 'paper1'}, updates
-    )
+    updated_conditions = {'paper_pk': 'paper1'}
+    updated_count = db.update(AgentPaperReviewWritingLog, updates, **updated_conditions)
     assert updated_count == 2
 
     updated_log = db.get(AgentPaperReviewWritingLog, **conditions)[0]
@@ -89,25 +89,70 @@ def test_envlogdb_basic() -> None:
     assert updated_log.strength == 'None'
     assert updated_log.weakness == 'Really?'
 
-    deleted_count = db.delete(AgentPaperReviewWritingLog, **conditions)
+    delete_conditions = {'paper_pk': 'paper1', 'agent_pk': 'agent1'}
+    deleted_count = db.delete(AgentPaperReviewWritingLog, **delete_conditions)
     assert deleted_count == 1
+
     results = db.get(AgentPaperReviewWritingLog, **conditions)
-    assert len(results) == 0
+    assert len(results) == 1
 
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
-    db.save_to_file(file_name)
+    db.save_to_json(file_name)
 
     new_db = EnvLogDB()
-    new_db.load_from_file(file_name)
+    new_db.load_from_json(file_name)
 
-    assert len(new_db.data['AgentPaperReviewWritingLog']) == 1
-    assert len(new_db.data['AgentPaperRebuttalWritingLog']) == 1
-    assert len(new_db.data['AgentPaperMetaReviewWritingLog']) == 1
-    assert len(new_db.data['AgentAgentIdeaDiscussionLog']) == 1
+    assert len(new_db.dbs['AgentPaperReviewWritingLog'].data) == 1
+    assert len(new_db.dbs['AgentPaperRebuttalWritingLog'].data) == 1
+    assert len(new_db.dbs['AgentPaperMetaReviewWritingLog'].data) == 1
+    assert len(new_db.dbs['AgentAgentIdeaDiscussionLog'].data) == 1
     assert (
-        new_db.data['AgentPaperReviewWritingLog'][0]['summary'] == 'Interesting paper'
+        new_db.dbs['AgentPaperReviewWritingLog'].data[new_review_log.pk].summary
+        == 'Bad paper'
     )
+
+
+def test_progressdb_basic() -> None:
+    db = ProgressDB()
+    idea1 = ResearchIdea(content='Idea for a new AI algorithm')
+    idea2 = ResearchIdea(content='Quantum computing research plan')
+
+    db.add(idea1)
+    db.add(idea2)
+
+    new_idea = ResearchIdea(content='Blockchain research proposal')
+    db.add(new_idea)
+    assert new_idea.pk in db.dbs['ResearchIdea'].data
+
+    content: Dict[str, Any] = {'content': 'Idea for a new AI algorithm'}
+    results = db.get(ResearchIdea, **content)
+    assert len(results) == 1
+    assert results[0].content == 'Idea for a new AI algorithm'
+
+    updates = {'content': 'Updated idea content'}
+    conditions = {'content': 'Idea for a new AI algorithm'}
+    updated_count = db.update(ResearchIdea, updates, **conditions)
+    assert updated_count == 1
+    content2: Dict[str, Any] = {'content': 'Updated idea content'}
+    updated_results = db.get(ResearchIdea, **content2)
+    assert len(updated_results) == 1
+    assert updated_results[0].content == 'Updated idea content'
+
+    content3: Dict[str, Any] = {'content': 'Quantum computing research plan'}
+    deleted_count = db.delete(ResearchIdea, **content3)
+    assert deleted_count == 1
+    remaining_results = db.get(ResearchIdea, **content3)
+    assert len(remaining_results) == 0
+
+    with NamedTemporaryFile(delete=False) as temp_file:
+        file_name = temp_file.name
+    db.save_to_json(file_name)
+
+    new_db = ProgressDB()
+    new_db.load_from_json(file_name)
+
+    assert len(new_db.dbs['ResearchIdea'].data) == 2
 
 
 def test_agentprofiledb_basic() -> None:
@@ -151,7 +196,7 @@ def test_agentprofiledb_basic() -> None:
 
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
-    db.save_to_file(file_name)
+    db.save_to_json(file_name)
 
 
 def test_paperprofiledb_basic() -> None:
@@ -219,54 +264,11 @@ def test_paperprofiledb_basic() -> None:
 
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
-    db.save_to_file(file_name)
+    db.save_to_json(file_name)
 
     new_db = PaperProfileDB()
-    new_db.load_from_file(file_name)
+    new_db.load_from_json(file_name)
 
     assert len(new_db.data) == 2
     assert paper1.pk in new_db.data
     assert new_db.data[paper1.pk].title == 'Updated Sample Paper 1'
-
-
-def test_progressdb_basic() -> None:
-    db = ProgressDB()
-    idea1 = ResearchIdea(content='Idea for a new AI algorithm')
-    idea2 = ResearchIdea(content='Quantum computing research plan')
-
-    db.add(idea1)
-    db.add(idea2)
-
-    new_idea = ResearchIdea(content='Blockchain research proposal')
-    db.add(new_idea)
-    assert new_idea.model_dump() in db.data['ResearchIdea']
-
-    content: Dict[str, Any] = {'content': 'Idea for a new AI algorithm'}
-    results = db.get(ResearchIdea, **content)
-    assert len(results) == 1
-    assert results[0].content == 'Idea for a new AI algorithm'
-
-    updates = {'content': 'Updated idea content'}
-    updated_count = db.update(
-        ResearchIdea, {'content': 'Idea for a new AI algorithm'}, updates
-    )
-    assert updated_count == 1
-    content2: Dict[str, Any] = {'content': 'Updated idea content'}
-    updated_results = db.get(ResearchIdea, **content2)
-    assert len(updated_results) == 1
-    assert updated_results[0].content == 'Updated idea content'
-
-    content3: Dict[str, Any] = {'content': 'Quantum computing research plan'}
-    deleted_count = db.delete(ResearchIdea, **content3)
-    assert deleted_count == 1
-    remaining_results = db.get(ResearchIdea, **content3)
-    assert len(remaining_results) == 0
-
-    with NamedTemporaryFile(delete=False) as temp_file:
-        file_name = temp_file.name
-    db.save_to_file(file_name)
-
-    new_db = ProgressDB()
-    new_db.load_from_file(file_name)
-
-    assert len(new_db.data['ResearchIdea']) == 2
