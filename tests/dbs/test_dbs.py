@@ -96,7 +96,7 @@ def test_envlogdb_basic() -> None:
 
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
-    db.save_to_file(file_name)
+    db.save_to_json(file_name)
 
     new_db = EnvLogDB()
     new_db.load_from_file(file_name)
@@ -151,7 +151,7 @@ def test_agentprofiledb_basic() -> None:
 
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
-    db.save_to_file(file_name)
+    db.save_to_json(file_name)
 
 
 def test_paperprofiledb_basic() -> None:
@@ -219,7 +219,7 @@ def test_paperprofiledb_basic() -> None:
 
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
-    db.save_to_file(file_name)
+    db.save_to_json(file_name)
 
     new_db = PaperProfileDB()
     new_db.load_from_file(file_name)
@@ -264,7 +264,7 @@ def test_progressdb_basic() -> None:
 
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
-    db.save_to_file(file_name)
+    db.save_to_json(file_name)
 
     new_db = ProgressDB()
     new_db.load_from_file(file_name)

@@ -1,6 +1,7 @@
 import json
 from typing import Any, Dict, List, Type, TypeVar
 
+from ..utils.logger import logger
 from .progress_data import BaseProgressData
 
 T = TypeVar('T', bound=BaseProgressData)
@@ -21,6 +22,9 @@ class ProgressDB:
         class_name = obj.__class__.__name__
         if class_name in self.data:
             self.data[class_name].append(obj)
+            logger.info(
+                f"Creating instance of '{obj.__class__.__name__}': \n'{obj.dict()}'"
+            )
         else:
             raise ValueError(f'Unsupported type: {class_name}')
 
