@@ -34,7 +34,7 @@ class ParamConfig(BaseModel):
 
 
 class PromptTemplateConfig(BaseModel):
-    write_bio_prompting: str = (
+    write_bio: str = (
         "Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. Focus more on more rescent personas. Be concise and clear (around 300 words)."
         'Here are the personas from different times: {publication_info}'
     )
@@ -157,7 +157,7 @@ class Config(BaseModel):
     def check_prompt_template_placeholder(self) -> None:
         templates = self.prompt_template.model_dump()
         required_placeholders = {
-            'write_bio_prompting': [
+            'write_bio': [
                 '{publication_info}',
             ],
             'find_collaborators': [
