@@ -41,18 +41,21 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
         stop_flag: bool,
         agent_profiles: List[AgentProfile],
         agent_roles: List[Role],
+        agent_models: List[str],
     ) -> None:
         self.time_step = time_step
         self.stop_flag = stop_flag
 
         assert len(agent_profiles) == len(agent_roles)
 
-        for agent_profile, agent_role in zip(agent_profiles, agent_roles):
+        for agent_profile, agent_role, agent_model in zip(
+            agent_profiles, agent_roles, agent_models
+        ):
             self.agents.append(
                 BaseResearchAgent(
                     agent_profile=agent_profile,
                     agent_role=agent_role,
-                    model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+                    model_name=agent_model,
                 )
             )
 
