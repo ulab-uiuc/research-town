@@ -71,9 +71,14 @@ class BaseProfileDB:
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
-        corpus = [
-            profile.abstract for profile in profiles if profile.abstract is not None
-        ]
+        corpus = []
+        for profile in profiles:
+            if isinstance(profile, PaperProfile):
+                corpus.append(profile.abstract if profile.abstract is not None else '')
+            elif isinstance(profile, AgentProfile):
+                corpus.append(profile.bio if profile.bio is not None else '')
+            else:
+                raise ValueError('Invalid profile type')
         corpus_embed = get_embed(
             instructions=corpus,
             retriever_tokenizer=self.retriever_tokenizer,
