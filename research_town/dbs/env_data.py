@@ -1,36 +1,36 @@
 import uuid
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
-class AgentPaperLiteratureReviewLog(BaseModel):
+class BaseEnvLogData(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     timestep: int = Field(default=0)
+    model_config = ConfigDict(
+        extra='allow',
+    )
+
+
+class AgentPaperLiteratureReviewLog(BaseEnvLogData):
     paper_pks: List[str]
     agent_pk: str
     insight_pks: Optional[List[str]] = Field(default=[])
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
-class AgentIdeaBrainstormingLog(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+class AgentIdeaBrainstormingLog(BaseEnvLogData):
     idea_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
-class AgentAgentCollaborationFindingLog(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+class AgentAgentCollaborationFindingLog(BaseEnvLogData):
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
-class AgentAgentIdeaDiscussionLog(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+class AgentAgentIdeaDiscussionLog(BaseEnvLogData):
     agent_from_pk: str
     agent_from_name: str
     agent_to_pk: str
@@ -38,17 +38,13 @@ class AgentAgentIdeaDiscussionLog(BaseModel):
     message: Optional[str] = Field(default=None)
 
 
-class AgentPaperWritingLog(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+class AgentPaperWritingLog(BaseEnvLogData):
     paper_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
-class AgentPaperReviewWritingLog(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+class AgentPaperReviewWritingLog(BaseEnvLogData):
     paper_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
@@ -58,18 +54,14 @@ class AgentPaperReviewWritingLog(BaseModel):
     weakness: Optional[str] = Field(default=None)
 
 
-class AgentPaperRebuttalWritingLog(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+class AgentPaperRebuttalWritingLog(BaseEnvLogData):
     paper_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
     rebuttal_content: Optional[str] = Field(default=None)
 
 
-class AgentPaperMetaReviewWritingLog(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    timestep: int = Field(default=0)
+class AgentPaperMetaReviewWritingLog(BaseEnvLogData):
     paper_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
