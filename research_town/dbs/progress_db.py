@@ -1,22 +1,40 @@
 import json
 from typing import Any, Dict, List, Type, TypeVar
 
-from ..utils.logger import logger
-from .progress_data import BaseProgressData
+from pydantic import BaseModel
 
-T = TypeVar('T', bound=BaseProgressData)
+from ..utils.logger import logger
+from .progress_data import (
+    BaseProgressData,
+    ResearchIdea,
+    ResearchInsight,
+    ResearchMetaReviewForPaperSubmission,
+    ResearchPaperSubmission,
+    ResearchRebuttalForPaperSubmission,
+    ResearchReviewForPaperSubmission,
+)
+
+T = TypeVar('T', bound=BaseModel)
 
 
 class ProgressDB:
     def __init__(self) -> None:
-        self.data: Dict[str, List[BaseProgressData]] = {
-            'ResearchInsight': [],
-            'ResearchIdea': [],
-            'ResearchPaperSubmission': [],
-            'ResearchReviewForPaperSubmission': [],
-            'ResearchRebuttalForPaperSubmission': [],
-            'ResearchMetaReviewForPaperSubmission': [],
-        }
+        self.data: Dict[str, List[Any]] = {}
+        self.model_classes: Dict[str, Type[BaseProgressData]] = {}
+        for model_class in [
+            ResearchInsight,
+            ResearchIdea,
+            ResearchPaperSubmission,
+            ResearchReviewForPaperSubmission,
+            ResearchRebuttalForPaperSubmission,
+            ResearchMetaReviewForPaperSubmission,
+        ]:
+            self.register_model(model_class)
+
+    def register_model(self, cls: Type[T]) -> None:
+        class_name = cls.__name__
+        self.data[class_name] = []
+        self.model_classes[class_name] = cls
 
     def add(self, obj: T) -> None:
         class_name = obj.__class__.__name__
@@ -78,11 +96,10 @@ class ProgressDB:
                 indent=2,
             )
 
-    def load_from_json(
-        self, file_name: str, model_classes: Dict[str, Type[BaseProgressData]]
-    ) -> None:
+    def load_from_json(self, file_name: str) -> None:
         with open(file_name, 'r') as f:
             raw_data = json.load(f)
             self.data = {
-                k: [model_classes[k](**item) for item in v] for k, v in raw_data.items()
+                k: [self.model_classes[k](**item) for item in v]
+                for k, v in raw_data.items()
             }

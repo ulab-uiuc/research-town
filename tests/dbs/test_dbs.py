@@ -62,7 +62,7 @@ def test_envlogdb_basic() -> None:
         weakness='None',
     )
     db.add(new_log)
-    assert new_log.model_dump() in db.data['AgentPaperReviewWritingLog']
+    assert new_log in db.data['AgentPaperReviewWritingLog']
 
     conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
     results = db.get(AgentPaperReviewWritingLog, **conditions)
@@ -99,7 +99,7 @@ def test_envlogdb_basic() -> None:
     db.save_to_json(file_name)
 
     new_db = EnvLogDB()
-    new_db.load_from_file(file_name)
+    new_db.load_from_json(file_name)
 
     assert len(new_db.data['AgentPaperReviewWritingLog']) == 1
     assert len(new_db.data['AgentPaperRebuttalWritingLog']) == 1
@@ -222,7 +222,7 @@ def test_paperprofiledb_basic() -> None:
     db.save_to_json(file_name)
 
     new_db = PaperProfileDB()
-    new_db.load_from_file(file_name)
+    new_db.load_from_json(file_name)
 
     assert len(new_db.data) == 2
     assert paper1.pk in new_db.data
@@ -239,7 +239,7 @@ def test_progressdb_basic() -> None:
 
     new_idea = ResearchIdea(content='Blockchain research proposal')
     db.add(new_idea)
-    assert new_idea.model_dump() in db.data['ResearchIdea']
+    assert new_idea in db.data['ResearchIdea']
 
     content: Dict[str, Any] = {'content': 'Idea for a new AI algorithm'}
     results = db.get(ResearchIdea, **content)
@@ -267,6 +267,6 @@ def test_progressdb_basic() -> None:
     db.save_to_json(file_name)
 
     new_db = ProgressDB()
-    new_db.load_from_file(file_name)
+    new_db.load_from_json(file_name)
 
     assert len(new_db.data['ResearchIdea']) == 2

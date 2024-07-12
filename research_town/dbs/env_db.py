@@ -4,24 +4,41 @@ from typing import Any, Dict, List, Type, TypeVar
 from pydantic import BaseModel
 
 from ..utils.logger import logger
+from .env_data import (
+    AgentAgentCollaborationFindingLog,
+    AgentAgentIdeaDiscussionLog,
+    AgentIdeaBrainstormingLog,
+    AgentPaperLiteratureReviewLog,
+    AgentPaperMetaReviewWritingLog,
+    AgentPaperRebuttalWritingLog,
+    AgentPaperReviewWritingLog,
+    AgentPaperWritingLog,
+    BaseEnvLogData,
+)
 
 T = TypeVar('T', bound=BaseModel)
 
 
 class EnvLogDB:
     def __init__(self) -> None:
-        self.data: Dict[str, List[T]] = {
-            'PaperProfile': [],
-            'ResearchPaperSubmission': [],
-            'AgentPaperLiteratureReviewLog': [],
-            'AgentIdeaBrainstormingLog': [],
-            'AgentAgentCollaborationFindingLog': [],
-            'AgentAgentIdeaDiscussionLog': [],
-            'AgentPaperWritingLog': [],
-            'AgentPaperReviewWritingLog': [],
-            'AgentPaperRebuttalWritingLog': [],
-            'AgentPaperMetaReviewWritingLog': [],
-        }
+        self.data: Dict[str, List[Any]] = {}
+        self.data_classes: Dict[str, Type[BaseEnvLogData]] = {}
+        for data_class in [
+            AgentPaperLiteratureReviewLog,
+            AgentIdeaBrainstormingLog,
+            AgentAgentCollaborationFindingLog,
+            AgentAgentIdeaDiscussionLog,
+            AgentPaperWritingLog,
+            AgentPaperReviewWritingLog,
+            AgentPaperRebuttalWritingLog,
+            AgentPaperMetaReviewWritingLog,
+        ]:
+            self.register_class(data_class)
+
+    def register_class(self, cls: Type[T]) -> None:
+        class_name = cls.__name__
+        self.data[class_name] = []
+        self.data_classes[class_name] = cls
 
     def add(self, obj: T) -> None:
         class_name = obj.__class__.__name__
@@ -77,17 +94,12 @@ class EnvLogDB:
 
     def save_to_json(self, file_name: str) -> None:
         with open(file_name, 'w') as f:
-            json.dump(
-                {k: [item.dict() for item in v] for k, v in self.data.items()},
-                f,
-                indent=2,
-            )
+            json.dump(self.data.model_dump(), f, indent=2)
 
-    def load_from_json(
-        self, file_name: str, model_classes: Dict[str, Type[BaseModel]]
-    ) -> None:
+    def load_from_json(self, file_name: str) -> None:
         with open(file_name, 'r') as f:
             raw_data = json.load(f)
             self.data = {
-                k: [model_classes[k](**item) for item in v] for k, v in raw_data.items()
+                k: [self.model_classes[k](**item) for item in v]
+                for k, v in raw_data.items()
             }
