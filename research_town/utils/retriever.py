@@ -4,7 +4,7 @@ import torch
 from transformers import BertModel, BertTokenizer
 
 
-def get_embedding(
+def get_embed(
     instructions: List[str],
     retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
         'facebook/contriever'

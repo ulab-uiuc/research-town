@@ -1,31 +1,29 @@
 from research_town.utils.agent_collector import (
-    co_author_filter,
-    co_author_frequency,
-    fetch_author_info,
+    coauthor_filter,
+    coauthor_frequency,
+    collect_paper_abstracts_and_coauthors,
 )
 
 
-def test_co_author_frequency() -> None:
+def test_coauthor_frequency() -> None:
     author = 'Alice'
     author_list = ['Alice', 'Bob', 'Charlie', 'Alice']
     co_authors = {'Bob': 1, 'Charlie': 1}
     expected_co_authors = {'Bob': 2, 'Charlie': 2}
-    assert co_author_frequency(author, author_list, co_authors) == expected_co_authors
+    assert coauthor_frequency(author, author_list, co_authors) == expected_co_authors
 
 
-def test_co_author_filter() -> None:
+def test_coauthor_filter() -> None:
     co_authors = {'Bob': 5, 'Charlie': 3, 'David': 2, 'Eve': 4}
-    assert co_author_filter(co_authors, limit=3) == ['Bob', 'Eve', 'Charlie']
+    assert coauthor_filter(co_authors, limit=3) == ['Bob', 'Eve', 'Charlie']
 
 
-def test_fetch_author_info() -> None:
-    papers_info, co_author_names = fetch_author_info('Alice')
+def test_collect_paper_abstracts_and_coauthors() -> None:
+    paper_abstracts, co_author_names = collect_paper_abstracts_and_coauthors('Alice')
 
-    assert len(papers_info) > 0
-    assert len(papers_info) <= 10
-    print(f'Fetched {len(papers_info)} papers.')
-    print(f'Co-authors: {co_author_names}')
+    assert len(paper_abstracts) > 0
+    assert len(paper_abstracts) <= 10
+    for paper_abstract in paper_abstracts:
+        assert paper_abstract is not None
 
-    assert papers_info[0]['title'] is not None
-    assert papers_info[0]['abstract'] is not None
     assert len(co_author_names) > 0

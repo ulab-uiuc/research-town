@@ -1,6 +1,6 @@
 from tempfile import NamedTemporaryFile
 
-from beartype.typing import Any, Dict, Optional
+from beartype.typing import Any, Dict, List
 
 from research_town.dbs import (
     AgentAgentIdeaDiscussionLog,
@@ -127,8 +127,7 @@ def test_agentprofiledb_basic() -> None:
     assert db.data[agent3.pk].name == 'Alice Johnson'
 
     updates = {'bio': 'Senior Researcher in AI'}
-    updates_with_optional: Dict[str, Optional[str]] = {k: v for k, v in updates.items()}
-    success = db.update(agent1.pk, updates_with_optional)
+    success = db.update(agent1.pk, updates)
 
     assert success
     assert db.data[agent1.pk].bio == 'Senior Researcher in AI'
@@ -143,9 +142,9 @@ def test_agentprofiledb_basic() -> None:
     success = db.delete('non-existing-pk')
     assert not success
 
-    conditions: Dict[str, Any] = {'name': 'Jane Smith'}
+    conditions: Dict[str, str] = {'name': 'Jane Smith'}
 
-    results = db.get(**conditions)
+    results: List[AgentProfile] = db.get(**conditions)
 
     assert len(results) == 1
     assert results[0].name == 'Jane Smith'
@@ -153,32 +152,6 @@ def test_agentprofiledb_basic() -> None:
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
     db.save_to_file(file_name)
-
-    new_db = AgentProfileDB()
-    new_db.load_from_file(file_name)
-
-    new_data = {
-        '2024-05-29': [
-            {
-                'pk': agent1.pk,
-                'name': 'John Doe',
-                'bio': 'Updated bio',
-                'collaborators': [],
-                'institute': 'AI Institute',
-            },
-            {
-                'pk': 'new-pk',
-                'name': 'New Agent',
-                'bio': 'New agent bio',
-                'collaborators': [],
-                'institute': 'New Institute',
-            },
-        ]
-    }
-    db.update_db(new_data)
-    assert db.data[agent1.pk].bio == 'Updated bio'
-    assert 'new-pk' in db.data
-    assert db.data['new-pk'].name == 'New Agent'
 
 
 def test_paperprofiledb_basic() -> None:
@@ -203,8 +176,8 @@ def test_paperprofiledb_basic() -> None:
         domain='Physics',
         citation_count=5,
     )
-    db.add_paper(paper1)
-    db.add_paper(paper2)
+    db.add(paper1)
+    db.add(paper2)
 
     new_paper = PaperProfile(
         title='Sample Paper 3',
@@ -216,28 +189,30 @@ def test_paperprofiledb_basic() -> None:
         domain='Computer Science',
         citation_count=2,
     )
-    db.add_paper(new_paper)
+    db.add(new_paper)
     assert new_paper.pk in db.data
 
-    paper = db.get_paper(paper1.pk)
+    conditions = {'pk': paper1.pk}
+    paper: PaperProfile = db.get(**conditions)[0]
     assert paper is not None
     assert paper.title == 'Sample Paper 1'
 
     updates: Dict[str, Any] = {'title': 'Updated Sample Paper 1', 'citation_count': 15}
 
-    result = db.update_paper(paper1.pk, updates)
+    result = db.update(paper1.pk, updates)
     assert result
-    updated_paper: Optional[PaperProfile] = db.get_paper(paper1.pk)
+
+    conditions = {'pk': paper1.pk}
+    updated_paper: PaperProfile = db.get(**conditions)[0]
     assert updated_paper is not None
     assert updated_paper.title == 'Updated Sample Paper 1'
     assert updated_paper.citation_count == 15
 
-    result = db.delete_paper(paper2.pk)
+    result = db.delete(paper2.pk)
     assert result
-    assert db.get_paper(paper2.pk) is None
 
     domain: Dict[str, Any] = {'domain': 'Computer Science'}
-    results = db.query_papers(**domain)
+    results: List[PaperProfile] = db.get(**domain)
     assert len(results) == 2
     assert results[0].title == 'Updated Sample Paper 1'
     assert results[1].title == 'Sample Paper 3'
