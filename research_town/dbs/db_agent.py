@@ -6,7 +6,7 @@ from transformers import BertModel, BertTokenizer
 
 from ..configs import Config
 from ..utils.agent_collector import collect_paper_abstracts_and_coauthors
-from ..utils.agent_prompter import summarize_research_direction_prompting
+from ..utils.agent_prompter import write_bio_prompting_prompting
 from ..utils.retriever import get_embed, rank_topk
 from .data import AgentProfile, BaseDBData
 from .db_base import BaseDB
@@ -29,12 +29,12 @@ class AgentProfileDB(BaseDB[AgentProfile]):
             paper_abstracts, collaborators = collect_paper_abstracts_and_coauthors(
                 author=name, paper_max_num=10
             )
-            personal_info = '; '.join(
+            publication_info = '; '.join(
                 [f"{details['abstract']}" for details in paper_abstracts]
             )
-            bio = summarize_research_direction_prompting(
-                personal_info=personal_info,
-                prompt_template=config.prompt_template.summarize_research_direction,
+            bio = write_bio_prompting_prompting(
+                publication_info=publication_info,
+                prompt_template=config.prompt_template.write_bio_prompting,
             )
             agent_profile = AgentProfile(
                 name=name,
