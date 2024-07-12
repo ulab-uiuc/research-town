@@ -20,16 +20,13 @@ from tests.constants.db_constants import (
     research_insight_B,
     research_paper_submission_A,
 )
-from tests.mocks.mocking_func import mock_papers, mock_prompting
+from tests.mocks.mocking_func import mock_prompting
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-@patch('research_town.utils.agent_prompter.get_related_papers')
 def test_review_literature(
-    mock_get_related_papers: MagicMock,
     mock_model_prompting: MagicMock,
 ) -> None:
-    mock_get_related_papers.side_effect = mock_papers
     mock_model_prompting.side_effect = mock_prompting
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_A,
@@ -41,22 +38,22 @@ def test_review_literature(
         domains=['machine learning', 'graph neural network'],
         config=Config(),
     )
-    assert len(research_insight) == 2
+    assert len(research_insight) == 3
     assert isinstance(research_insight[0], ResearchInsight)
     assert research_insight[0].pk is not None
-    assert research_insight[0].content == 'Insight 1'
+    assert research_insight[0].content == 'Insight1'
     assert isinstance(research_insight[1], ResearchInsight)
     assert research_insight[1].pk is not None
-    assert research_insight[1].content == 'Insight 2'
+    assert research_insight[1].content == 'Insight2'
+    assert isinstance(research_insight[2], ResearchInsight)
+    assert research_insight[2].pk is not None
+    assert research_insight[2].content == 'Insight3'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-@patch('research_town.utils.agent_prompter.get_related_papers')
 def test_brainstorm_idea(
-    mock_get_related_papers: MagicMock,
     mock_model_prompting: MagicMock,
 ) -> None:
-    mock_get_related_papers.side_effect = mock_papers
     mock_model_prompting.side_effect = mock_prompting
 
     research_agent = BaseResearchAgent(
@@ -70,7 +67,7 @@ def test_brainstorm_idea(
     )
     assert isinstance(research_idea, ResearchIdea)
     assert research_idea.pk is not None
-    assert research_idea.content == 'Idea 1'
+    assert research_idea.content == 'Idea1'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -88,7 +85,7 @@ def test_write_paper(mock_model_prompting: MagicMock) -> None:
         config=Config(),
     )
     assert isinstance(paper, ResearchPaperSubmission)
-    assert paper.abstract == 'Paper abstract'
+    assert paper.abstract == 'Paper abstract1'
     assert paper.pk is not None
 
 
@@ -106,9 +103,9 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
         config=Config(),
     )
     assert isinstance(review, ResearchReviewForPaperSubmission)
-    assert review.summary == 'Summary of the paper'
-    assert review.strength == 'Strength of the paper'
-    assert review.weakness == 'Weakness of the paper'
+    assert review.summary == 'Summary of the paper1'
+    assert review.strength == 'Strength of the paper1'
+    assert review.weakness == 'Weakness of the paper1'
     assert review.score == 8
 
 
@@ -147,9 +144,9 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
         config=Config(),
     )
     assert isinstance(meta_review, ResearchMetaReviewForPaperSubmission)
-    assert meta_review.summary == 'Meta review summary'
-    assert meta_review.strength == 'Meta review strength'
-    assert meta_review.weakness == 'Meta review weakness'
+    assert meta_review.summary == 'Meta review summary1'
+    assert meta_review.strength == 'Meta review strength1'
+    assert meta_review.weakness == 'Meta review weakness1'
     assert meta_review.decision is True
     assert meta_review.pk is not None
 
@@ -180,4 +177,4 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     assert isinstance(rebuttal, ResearchRebuttalForPaperSubmission)
     if rebuttal.content is not None:
         assert len(rebuttal.content) > 0
-    assert rebuttal.content == 'Rebuttal text'
+    assert rebuttal.content == 'Rebuttal text1'

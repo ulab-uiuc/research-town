@@ -8,11 +8,14 @@ from beartype.typing import Dict, List
 from pydantic import BaseModel, Field
 from tqdm import tqdm
 
+from research_town.configs import Config
 from research_town.evaluators import (
-    IdeaQualityEvaluator,
-    PaperQualityEvaluator,
-    ReviewQualityEvaluator,
+    ResearchIdeaQualityEvaluator,
+    ResearchPaperSubmissionQualityEvaluator,
+    ResearchReviewForPaperSubmissionQualityEvaluator,
 )
+
+config_file_path = './configs/default_config.yaml'
 
 
 # Function to sanitize the model name
@@ -66,7 +69,7 @@ class pipeline_eval_db(object):
         self.review_variance_dimension_scores: List[float] = []
         self.review_sum_variance_dimension_scores: float = 0.0
 
-    def load_from_file(self, file_name: str) -> None:
+    def load_from_json(self, file_name: str) -> None:
         with open(file_name, 'r') as f:
             raw_data_papers = json.load(f)
             for agent, details in raw_data_papers.items():
@@ -101,9 +104,16 @@ class pipeline_eval_db(object):
         model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     ) -> None:
         # Create Evaluators
-        idea_quality_evaluator = IdeaQualityEvaluator(model_name=model_name)
-        paper_quality_evaluator = PaperQualityEvaluator(model_name=model_name)
-        review_quality_evaluator = ReviewQualityEvaluator(model_name=model_name)
+        config = Config(config_file_path)
+        idea_quality_evaluator = ResearchIdeaQualityEvaluator(
+            model_name=model_name, config=config
+        )
+        paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(
+            model_name=model_name, config=config
+        )
+        review_quality_evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
+            model_name=model_name, config=config
+        )
         # Generate Evaluation
 
         # parse the paper content with title
@@ -307,7 +317,7 @@ def main(
 
     # select logs to be evaluated
     pipeline_eval = pipeline_eval_db()
-    pipeline_eval.load_from_file(log_file)
+    pipeline_eval.load_from_json(log_file)
     logs2eval = pipeline_eval.select_logs(eval_log_num)
     # start evaluation for the pipeline logs
 

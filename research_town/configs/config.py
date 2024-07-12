@@ -22,6 +22,11 @@ class ParamConfig(BaseModel):
     domain: str = 'computer_vision'
     reviewer_num: int = 3
     result_path: str = 'Mixtral-8x7B'
+    return_num: Optional[int] = 1
+    max_token_num: Optional[int] = 512
+    temperature: Optional[float] = 0.0
+    top_p: Optional[float] = None
+    stream: Optional[bool] = None
 
     model_config = ConfigDict(
         extra='allow',
@@ -29,9 +34,9 @@ class ParamConfig(BaseModel):
 
 
 class PromptTemplateConfig(BaseModel):
-    summarize_research_direction: str = (
+    write_bio_prompting: str = (
         "Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. Focus more on more rescent personas. Be concise and clear (around 300 words)."
-        'Here are the personas from different times: {personal_info}'
+        'Here are the personas from different times: {publication_info}'
     )
     find_collaborators: str = (
         'Given the name and profile of me, could you find {max_number} collaborators for the following collaboration task?'
@@ -39,11 +44,6 @@ class PromptTemplateConfig(BaseModel):
         'The collaboration task include: {task_serialize_all}'
         'Here are a full list of the names and profiles of potential collaborators: {collaborators_serialize_all}'
         "Generate the collaborator in a list separated by '-' for each collaborator"
-    )
-    query_paper: str = (
-        'Given the profile of me, keywords, some recent paper titles and abstracts. Could you query paper in this field (related to my profile if possible).'
-        'Here is my profile biology: {profile_bio}'
-        'Here are the domains: {domains}'
     )
     review_literature: str = (
         'Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).'
@@ -157,8 +157,8 @@ class Config(BaseModel):
     def check_prompt_template_placeholder(self) -> None:
         templates = self.prompt_template.model_dump()
         required_placeholders = {
-            'summarize_research_direction': [
-                '{personal_info}',
+            'write_bio_prompting': [
+                '{publication_info}',
             ],
             'find_collaborators': [
                 '{max_number}',
@@ -166,7 +166,6 @@ class Config(BaseModel):
                 '{task_serialize_all}',
                 '{collaborators_serialize_all}',
             ],
-            'query_paper': ['{profile_bio}', '{domains}'],
             'review_literature': ['{profile_bio}', '{domains}', '{papers}'],
             'brainstorm_idea': ['{insights}'],
             'discuss_idea': ['{ideas}'],

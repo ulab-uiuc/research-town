@@ -10,16 +10,13 @@ from research_town.dbs import (
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
-from research_town.envs import (
-    PaperSubmissionMultiAgentEnvironment,
-    PeerReviewMultiAgentEnv,
-)
+from research_town.envs import PaperSubmissionMultiAgentEnv, PeerReviewMultiAgentEnv
 from tests.constants.db_constants import (
     agent_profile_A,
     agent_profile_B,
     research_paper_submission_A,
 )
-from tests.mocks.mocking_func import mock_papers, mock_prompting
+from tests.mocks.mocking_func import mock_prompting
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -56,15 +53,12 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-@patch('research_town.utils.agent_prompter.get_related_papers')
 def test_paper_submission_env(
-    mock_get_related_papers: MagicMock,
     mock_model_prompting: MagicMock,
 ) -> None:
-    mock_get_related_papers.side_effect = mock_papers
     mock_model_prompting.side_effect = mock_prompting
 
-    env = PaperSubmissionMultiAgentEnvironment(
+    env = PaperSubmissionMultiAgentEnv(
         agent_profiles=[agent_profile_A],
         agent_roles=['proj_leader'],
         agent_db=AgentProfileDB(),
@@ -75,4 +69,4 @@ def test_paper_submission_env(
     )
     paper = env.run()
     assert paper.abstract is not None
-    assert paper.abstract == 'Paper abstract'
+    assert paper.abstract == 'Paper abstract1'
