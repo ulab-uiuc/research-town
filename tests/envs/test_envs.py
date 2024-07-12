@@ -69,4 +69,4 @@ def test_paper_submission_env(
     )
     paper = env.run()
     assert paper.abstract is not None
-    assert paper.abstract == 'Paper abstract'
+    assert paper.abstract == 'Paper abstract1'

@@ -69,28 +69,28 @@ def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
     paper = paper_submission_env.run()
 
     assert isinstance(paper, ResearchPaperSubmission)
-    assert paper.abstract == 'Paper abstract'
+    assert paper.abstract == 'Paper abstract1'
 
     meta_review, rebuttals, reviews = peer_review_env.run(paper)
 
     assert isinstance(meta_review, ResearchMetaReviewForPaperSubmission)
     assert meta_review.paper_pk == paper.pk
     assert meta_review.decision is True
-    assert meta_review.weakness == 'Meta review weakness'
-    assert meta_review.strength == 'Meta review strength'
-    assert meta_review.summary == 'Meta review summary'
+    assert meta_review.weakness == 'Meta review weakness1'
+    assert meta_review.strength == 'Meta review strength1'
+    assert meta_review.summary == 'Meta review summary1'
 
     assert isinstance(reviews, list)
     assert len(reviews) == 1
     assert isinstance(reviews[0], ResearchReviewForPaperSubmission)
     assert reviews[0].paper_pk == paper.pk
     assert reviews[0].score == 8
-    assert reviews[0].weakness == 'Weakness of the paper'
-    assert reviews[0].strength == 'Strength of the paper'
-    assert reviews[0].summary == 'Summary of the paper'
+    assert reviews[0].weakness == 'Weakness of the paper1'
+    assert reviews[0].strength == 'Strength of the paper1'
+    assert reviews[0].summary == 'Summary of the paper1'
 
     assert isinstance(rebuttals, list)
     assert len(rebuttals) == 1
     assert isinstance(rebuttals[0], ResearchRebuttalForPaperSubmission)
-    assert rebuttals[0].content == 'Rebuttal text'
+    assert rebuttals[0].content == 'Rebuttal text1'
     assert rebuttals[0].paper_pk == paper.pk

@@ -4,7 +4,7 @@ import torch
 from transformers import BertModel, BertTokenizer
 
 
-def get_embedding(
+def get_embed(
     instructions: List[str],
     retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
         'facebook/contriever'
@@ -24,10 +24,10 @@ def get_embedding(
 
 
 def rank_topk(
-    query_data: List[torch.Tensor], corpus_data: List[torch.Tensor], num: int
+    query_embed: List[torch.Tensor], corpus_embed: List[torch.Tensor], num: int
 ) -> List[List[int]]:
-    xq = torch.cat(query_data, 0)
-    xb = torch.cat(corpus_data, 0)
+    xq = torch.cat(query_embed, 0)
+    xb = torch.cat(corpus_embed, 0)
 
     xq = torch.nn.functional.normalize(xq, p=2, dim=1)
     xb = torch.nn.functional.normalize(xb, p=2, dim=1)
