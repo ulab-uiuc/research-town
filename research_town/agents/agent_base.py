@@ -21,7 +21,7 @@ from ..utils.agent_prompter import (
     write_rebuttal_prompting,
     write_review_prompting,
 )
-from ..utils.agent_role_verifier import (
+from ..utils.role_verifier import (
     chair_required,
     proj_leader_required,
     proj_participant_required,
