@@ -15,6 +15,7 @@
 [![Checked with mypy](https://github.com/ulab-uiuc/research-town/actions/workflows/mypy.yml/badge.svg?branch=main)](https://github.com/ulab-uiuc/research-town/actions/workflows/mypy.yml/badge.svg?branch=main)
 
 [![Arxiv](https://img.shields.io/badge/arXiv-Coming%20soon-b31b1b)](https://github.com/ulab-uiuc/research-town)
+[![Discord](https://img.shields.io/badge/discord-Join%20Us-7289da?logo=discord&logoColor=white)](https://discord.gg/TwXxGhMB)
 
 </div>
 
