@@ -1,6 +1,6 @@
 from tempfile import NamedTemporaryFile
 
-from beartype.typing import Any, Dict
+from beartype.typing import Any, Dict, List
 
 from research_town.dbs import (
     AgentAgentIdeaDiscussionLog,
@@ -142,9 +142,9 @@ def test_agentprofiledb_basic() -> None:
     success = db.delete('non-existing-pk')
     assert not success
 
-    conditions: Dict[str, Any] = {'name': 'Jane Smith'}
+    conditions: Dict[str, str] = {'name': 'Jane Smith'}
 
-    results = db.get(**conditions)
+    results: List[AgentProfile] = db.get(**conditions)
 
     assert len(results) == 1
     assert results[0].name == 'Jane Smith'
@@ -193,7 +193,7 @@ def test_paperprofiledb_basic() -> None:
     assert new_paper.pk in db.data
 
     conditions = {'pk': paper1.pk}
-    paper = db.get(**conditions)[0]
+    paper: PaperProfile = db.get(**conditions)[0]
     assert paper is not None
     assert paper.title == 'Sample Paper 1'
 
@@ -212,7 +212,7 @@ def test_paperprofiledb_basic() -> None:
     assert result
 
     domain: Dict[str, Any] = {'domain': 'Computer Science'}
-    results = db.get(**domain)
+    results: List[PaperProfile] = db.get(**domain)
     assert len(results) == 2
     assert results[0].title == 'Updated Sample Paper 1'
     assert results[1].title == 'Sample Paper 3'

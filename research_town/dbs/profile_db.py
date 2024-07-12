@@ -1,6 +1,6 @@
 import json
 import pickle
-from typing import Dict, List, Optional, Union
+from typing import Dict, Generic, List, Mapping, Optional, Type, TypeVar, Union
 
 from transformers import BertModel, BertTokenizer
 
@@ -11,23 +11,25 @@ from ..utils.paper_collector import get_daily_papers
 from ..utils.retriever import get_embed, rank_topk
 from .profile_data import AgentProfile, BaseProfile, PaperProfile
 
+T = TypeVar('T', bound=BaseProfile)
 
-class BaseProfileDB:
-    def __init__(self) -> None:
-        self.data: Dict[str, BaseProfile] = {}
+
+class BaseProfileDB(Generic[T]):
+    def __init__(self, profile_class: Type[T]) -> None:
+        self.data: Dict[str, T] = {}
         self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
             'facebook/contriever'
         )
         self.retriever_model: BertModel = BertModel.from_pretrained(
             'facebook/contriever'
         )
-        self.profile_class = BaseProfile
+        self.profile_class = profile_class
 
-    def add(self, profile: BaseProfile) -> None:
+    def add(self, profile: T) -> None:
         self.data[profile.pk] = profile
 
     def update(
-        self, profile_pk: str, updates: Dict[str, Optional[BaseProfile]]
+        self, profile_pk: str, updates: Mapping[str, Optional[Union[str, int, float]]]
     ) -> bool:
         if profile_pk in self.data:
             for key, value in updates.items():
@@ -42,7 +44,7 @@ class BaseProfileDB:
             return True
         return False
 
-    def get(self, **conditions: Dict[str, Union[str, int, float]]) -> List[BaseProfile]:
+    def get(self, **conditions: Union[str, int, float]) -> List[T]:
         result = []
         for profile in self.data.values():
             if all(getattr(profile, key) == value for key, value in conditions.items()):
@@ -63,9 +65,7 @@ class BaseProfileDB:
         with open(pickle_file_name, 'wb') as pkl_file:
             pickle.dump(profile_dict, pkl_file)
 
-    def match(
-        self, query: str, profiles: List['BaseProfile'], num: int = 1
-    ) -> List[str]:
+    def match(self, query: str, profiles: List[T], num: int = 1) -> List[str]:
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,
@@ -113,10 +113,9 @@ class BaseProfileDB:
             }
 
 
-class PaperProfileDB(BaseProfileDB):
+class PaperProfileDB(BaseProfileDB[PaperProfile]):
     def __init__(self) -> None:
-        super().__init__()
-        self.profile_class = PaperProfile
+        super().__init__(PaperProfile)
 
     def pull_papers(self, num: int, domain: str) -> None:
         data, _ = get_daily_papers(query='ti:' + domain, max_results=num)
@@ -140,10 +139,9 @@ class PaperProfileDB(BaseProfileDB):
                 self.add(paper)
 
 
-class AgentProfileDB(BaseProfileDB):
+class AgentProfileDB(BaseProfileDB[AgentProfile]):
     def __init__(self) -> None:
-        super().__init__()
-        self.profile_class = AgentProfile
+        super().__init__(AgentProfile)
 
     def pull_agents(self, agent_names: List[str], config: Config) -> None:
         for name in agent_names:
