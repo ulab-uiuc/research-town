@@ -41,6 +41,8 @@ class BaseResearchEngine:
         self.transition_matrix[from_name] = {True: pass_name, False: fail_name}
 
     def set_init_env(self, name: str):
+        # start a new round of the research project
+        self.agent_db.reset_role_avaialbility()
         if name not in self.envs:
             raise ValueError(f'Env {name} not found')
 
