@@ -9,7 +9,7 @@ from ..envs import (
 from .engine_base import BaseResearchEngine
 
 
-class TwoStageResearchEngine(BaseResearchEngine):
+class LifecycleResearchEngine(BaseResearchEngine):
     def set_envs(self) -> None:
         self.add_env(
             'start',
