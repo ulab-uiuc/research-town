@@ -10,7 +10,7 @@ from ..constants.db_constants import (
 )
 
 
-def test_engine_fine_proj_participants():
+def test_engine_fine_proj_participants() -> None:
     example_agent_db.reset_role_avaialbility()
     engine = BaseResearchEngine(
         agent_db=example_agent_db,
@@ -27,7 +27,7 @@ def test_engine_fine_proj_participants():
     assert len(proj_participants) == 2
 
 
-def test_engine_find_proj_reviewers():
+def test_engine_find_proj_reviewers() -> None:
     example_agent_db.reset_role_avaialbility()
     engine = BaseResearchEngine(
         agent_db=example_agent_db,
@@ -44,7 +44,7 @@ def test_engine_find_proj_reviewers():
     assert len(reviewers) == 2
 
 
-def test_engine_find_chair():
+def test_engine_find_chair() -> None:
     example_agent_db.reset_role_avaialbility()
     engine = BaseResearchEngine(
         agent_db=example_agent_db,

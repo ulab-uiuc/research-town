@@ -26,21 +26,19 @@ class BaseResearchEngine:
         self.time_step = 0
         self.envs: Dict[str, BaseMultiAgentEnv] = {}
         self.transition_matrix: Dict[str, Dict[bool, str]] = {}
-        self.curr_env_name: str = ''
-        self.curr_env: BaseMultiAgentEnv = None
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.progress_db = progress_db
         self.env_db = env_db
         self.config = config
 
-    def add_env(self, name: str, env: BaseMultiAgentEnv):
+    def add_env(self, name: str, env: BaseMultiAgentEnv) -> None:
         self.envs[name] = env
 
-    def set_transition(self, from_name: str, pass_name: str, fail_name: str):
+    def set_transition(self, from_name: str, pass_name: str, fail_name: str) -> None:
         self.transition_matrix[from_name] = {True: pass_name, False: fail_name}
 
-    def set_init_env(self, name: str):
+    def set_init_env(self, name: str) -> None:
         # start a new round of the research project
         self.agent_db.reset_role_avaialbility()
         if name not in self.envs:
@@ -50,12 +48,12 @@ class BaseResearchEngine:
         self.curr_env = self.envs[name]
         self.curr_env.on_enter()
 
-    def update(self):
+    def update(self) -> None:
         if self.curr_env_name:
             self.curr_env.update()
             self.time_step += 1
 
-    def transition(self):
+    def transition(self) -> None:
         if self.curr_env:
             result = self.curr_env.on_exit()
             next_env_name = self.transition_matrix[self.curr_env_name][result]
