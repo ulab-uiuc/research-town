@@ -2,9 +2,6 @@ from unittest.mock import MagicMock, patch
 
 from research_town.configs import Config
 from research_town.dbs import (
-    EnvLogDB,
-    PaperProfileDB,
-    ProgressDB,
     ResearchMetaReviewForPaperSubmission,
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
@@ -15,6 +12,11 @@ from tests.constants.data_constants import (
     agent_profile_B,
     research_paper_submission_A,
 )
+from tests.constants.db_constants import (
+    example_env_db,
+    example_paper_db,
+    example_progress_db,
+)
 from tests.mocks.mocking_func import mock_prompting
 
 
@@ -23,9 +25,9 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     env = PeerReviewMultiAgentEnv(
-        paper_db=PaperProfileDB(),
-        env_db=EnvLogDB(),
-        progress_db=ProgressDB(),
+        env_db=example_env_db,
+        progress_db=example_progress_db,
+        paper_db=example_paper_db,
         config=Config(),
     )
 
@@ -71,9 +73,9 @@ def test_paper_submission_env(
     mock_model_prompting.side_effect = mock_prompting
 
     env = PaperSubmissionMultiAgentEnv(
-        paper_db=PaperProfileDB(),
-        env_db=EnvLogDB(),
-        progress_db=ProgressDB(),
+        env_db=example_env_db,
+        progress_db=example_progress_db,
+        paper_db=example_paper_db,
         config=Config(),
     )
     env.on_enter(

@@ -11,7 +11,6 @@ from ..dbs import (
     AgentPaperWritingLog,
     AgentProfile,
     EnvLogDB,
-    PaperProfile,
     PaperProfileDB,
     ProgressDB,
     ResearchIdea,
@@ -99,20 +98,16 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
         self,
     ) -> None:
         # TODO: support retrieval from database
-        papers = [
-            PaperProfile(
-                title='A Survey on Machine Learning',
-                abstract='This paper surveys the field of machine learning.',
-            ),
-            PaperProfile(
-                title='A Survey on Natural Language Processing',
-                abstract='This paper surveys the field of natural language processing.',
-            ),
-        ]
+        available_papers = list(self.paper_db.data.values())
+        related_papers = self.paper_db.match(
+            query=self.proj_leader.profile.bio,
+            paper_profiles=available_papers,
+            num=2,
+        )
 
         # leader review literature
         self.insights = self.proj_leader.review_literature(
-            papers=papers,
+            papers=related_papers,
             domains=['machine learning'],
             config=self.config,
         )
@@ -121,7 +116,7 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
         self.env_db.add(
             AgentPaperLiteratureReviewLog(
                 time_step=self.time_step,
-                paper_pks=[paper.pk for paper in papers],
+                paper_pks=[paper.pk for paper in related_papers],
                 agent_pk=self.proj_leader.profile.pk,
                 insight_pks=[insight.pk for insight in self.insights],
             )
@@ -165,7 +160,7 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
 
         # write paper
         self.paper = self.proj_leader.write_paper(
-            idea=summarized_idea, papers=papers, config=self.config
+            idea=summarized_idea, papers=related_papers, config=self.config
         )
         self.progress_db.add(self.paper)
         self.env_db.add(

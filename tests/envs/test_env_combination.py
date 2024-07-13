@@ -5,22 +5,24 @@ from beartype.typing import List, Literal
 from research_town.configs import Config
 from research_town.dbs import (
     AgentProfile,
-    EnvLogDB,
-    PaperProfileDB,
-    ProgressDB,
     ResearchMetaReviewForPaperSubmission,
     ResearchPaperSubmission,
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
 from research_town.envs import PaperSubmissionMultiAgentEnv, PeerReviewMultiAgentEnv
+from tests.constants.db_constants import (
+    example_env_db,
+    example_paper_db,
+    example_progress_db,
+)
 from tests.mocks.mocking_func import mock_prompting
 
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
+def test_env_combo(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     # Agent profiles and roles for paper submission environment
@@ -37,18 +39,12 @@ def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
         AgentProfile(name='Rex Zhu', bio='A researcher in computer vision.'),
     ]
 
-    # Initialize databases and configuration
-    paper_db = PaperProfileDB()
-    env_db = EnvLogDB()
-    progress_db = ProgressDB()
-    config = Config()
-
     # Create and run the paper submission environment
     paper_submission_env = PaperSubmissionMultiAgentEnv(
-        paper_db=paper_db,
-        env_db=env_db,
-        progress_db=progress_db,
-        config=config,
+        paper_db=example_paper_db,
+        env_db=example_env_db,
+        progress_db=example_progress_db,
+        config=Config(),
     )
     paper_submission_env.on_enter(
         time_step=0,
@@ -77,10 +73,10 @@ def test_dummy_research_town(mock_model_prompting: MagicMock) -> None:
 
     # Create and run the peer review environment
     peer_review_env = PeerReviewMultiAgentEnv(
-        paper_db=paper_db,
-        env_db=env_db,
-        progress_db=progress_db,
-        config=config,
+        paper_db=example_paper_db,
+        env_db=example_env_db,
+        progress_db=example_progress_db,
+        config=Config(),
     )
     peer_review_env.on_enter(
         time_step=0,
