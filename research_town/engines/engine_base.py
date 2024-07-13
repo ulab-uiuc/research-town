@@ -55,10 +55,6 @@ class BaseResearchEngine:
     def set_transitions(self) -> None:
         pass
 
-    def run(self) -> None:
-        self.curr_env.run()
-        self.time_step += 1
-
     def transition(self) -> None:
         pass_or_fail = self.curr_env.on_exit()
         next_env_name = self.transitions[self.curr_env_name][pass_or_fail]
@@ -168,3 +164,9 @@ class BaseResearchEngine:
 
     def recover(self) -> None:
         pass
+
+    def run(self) -> None:
+        while self.curr_env_name != 'end':
+            self.curr_env.run()
+            self.time_step += 1
+            self.transition()
