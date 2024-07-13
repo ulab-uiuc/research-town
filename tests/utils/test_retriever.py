@@ -3,10 +3,10 @@ from unittest.mock import MagicMock, patch
 import torch
 from beartype.typing import Any, Dict
 
-from research_town.utils.retriever import get_embedding
+from research_town.utils.retriever import get_embed, rank_topk
 
 
-def test_get_embedding() -> None:
+def test_get_embed() -> None:
     with (
         patch('transformers.BertTokenizer.from_pretrained') as mock_tokenizer,
         patch('transformers.BertModel.from_pretrained') as mock_model,
@@ -38,7 +38,7 @@ def test_get_embedding() -> None:
         mock_model_instance.side_effect = mock_forward
 
         instructions = ['Test instruction']
-        result = get_embedding(
+        result = get_embed(
             instructions,
             retriever_tokenizer=mock_tokenizer_instance,
             retriever_model=mock_model_instance,
@@ -46,3 +46,11 @@ def test_get_embedding() -> None:
 
         assert isinstance(result[0], torch.Tensor)
         assert result[0].shape == (1, 3)
+
+
+def test_rank_topk() -> None:
+    query_embed = [torch.tensor([[1.0, 2.0, 3.0]])]
+    corpus_embed = [torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])]
+    num = 1
+    result = rank_topk(query_embed, corpus_embed, num)
+    assert result == [[0]]

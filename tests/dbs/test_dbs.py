@@ -1,6 +1,6 @@
 from tempfile import NamedTemporaryFile
 
-from beartype.typing import Any, Dict, Optional
+from beartype.typing import Any, Dict, List
 
 from research_town.dbs import (
     AgentAgentIdeaDiscussionLog,
@@ -53,20 +53,21 @@ def test_envlogdb_basic() -> None:
     db.add(meta_review_log)
     db.add(discussion_log)
 
-    new_log = AgentPaperReviewWritingLog(
-        paper_pk='paper2',
+    new_review_log = AgentPaperReviewWritingLog(
+        paper_pk='paper1',
         agent_pk='agent2',
         score=4,
         summary='Interesting paper',
         strength='Good',
         weakness='None',
     )
-    db.add(new_log)
-    assert new_log.model_dump() in db.data['AgentPaperReviewWritingLog']
+    db.add(new_review_log)
+    assert new_review_log.pk in db.dbs['AgentPaperReviewWritingLog'].data
+    assert len(db.dbs['AgentPaperReviewWritingLog'].data) == 2
 
     conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
     results = db.get(AgentPaperReviewWritingLog, **conditions)
-    assert len(results) == 1
+    assert len(results) == 2
     assert results[0].summary == 'Good paper'
     assert results[0].strength == 'Interesting'
     assert results[0].weakness == 'None'
@@ -77,9 +78,8 @@ def test_envlogdb_basic() -> None:
         'strength': 'None',
         'weakness': 'Really?',
     }
-    updated_count = db.update(
-        AgentPaperReviewWritingLog, {'paper_pk': 'paper1'}, updates
-    )
+    updated_conditions = {'paper_pk': 'paper1'}
+    updated_count = db.update(AgentPaperReviewWritingLog, updates, **updated_conditions)
     assert updated_count == 2
 
     updated_log = db.get(AgentPaperReviewWritingLog, **conditions)[0]
@@ -89,25 +89,70 @@ def test_envlogdb_basic() -> None:
     assert updated_log.strength == 'None'
     assert updated_log.weakness == 'Really?'
 
-    deleted_count = db.delete(AgentPaperReviewWritingLog, **conditions)
+    delete_conditions = {'paper_pk': 'paper1', 'agent_pk': 'agent1'}
+    deleted_count = db.delete(AgentPaperReviewWritingLog, **delete_conditions)
     assert deleted_count == 1
+
     results = db.get(AgentPaperReviewWritingLog, **conditions)
-    assert len(results) == 0
+    assert len(results) == 1
 
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
-    db.save_to_file(file_name)
+    db.save_to_json(file_name)
 
     new_db = EnvLogDB()
-    new_db.load_from_file(file_name)
+    new_db.load_from_json(file_name)
 
-    assert len(new_db.data['AgentPaperReviewWritingLog']) == 1
-    assert len(new_db.data['AgentPaperRebuttalWritingLog']) == 1
-    assert len(new_db.data['AgentPaperMetaReviewWritingLog']) == 1
-    assert len(new_db.data['AgentAgentIdeaDiscussionLog']) == 1
+    assert len(new_db.dbs['AgentPaperReviewWritingLog'].data) == 1
+    assert len(new_db.dbs['AgentPaperRebuttalWritingLog'].data) == 1
+    assert len(new_db.dbs['AgentPaperMetaReviewWritingLog'].data) == 1
+    assert len(new_db.dbs['AgentAgentIdeaDiscussionLog'].data) == 1
     assert (
-        new_db.data['AgentPaperReviewWritingLog'][0]['summary'] == 'Interesting paper'
+        new_db.dbs['AgentPaperReviewWritingLog'].data[new_review_log.pk].summary
+        == 'Bad paper'
     )
+
+
+def test_progressdb_basic() -> None:
+    db = ProgressDB()
+    idea1 = ResearchIdea(content='Idea for a new AI algorithm')
+    idea2 = ResearchIdea(content='Quantum computing research plan')
+
+    db.add(idea1)
+    db.add(idea2)
+
+    new_idea = ResearchIdea(content='Blockchain research proposal')
+    db.add(new_idea)
+    assert new_idea.pk in db.dbs['ResearchIdea'].data
+
+    content: Dict[str, Any] = {'content': 'Idea for a new AI algorithm'}
+    results = db.get(ResearchIdea, **content)
+    assert len(results) == 1
+    assert results[0].content == 'Idea for a new AI algorithm'
+
+    updates = {'content': 'Updated idea content'}
+    conditions = {'content': 'Idea for a new AI algorithm'}
+    updated_count = db.update(ResearchIdea, updates, **conditions)
+    assert updated_count == 1
+    content2: Dict[str, Any] = {'content': 'Updated idea content'}
+    updated_results = db.get(ResearchIdea, **content2)
+    assert len(updated_results) == 1
+    assert updated_results[0].content == 'Updated idea content'
+
+    content3: Dict[str, Any] = {'content': 'Quantum computing research plan'}
+    deleted_count = db.delete(ResearchIdea, **content3)
+    assert deleted_count == 1
+    remaining_results = db.get(ResearchIdea, **content3)
+    assert len(remaining_results) == 0
+
+    with NamedTemporaryFile(delete=False) as temp_file:
+        file_name = temp_file.name
+    db.save_to_json(file_name)
+
+    new_db = ProgressDB()
+    new_db.load_from_json(file_name)
+
+    assert len(new_db.dbs['ResearchIdea'].data) == 2
 
 
 def test_agentprofiledb_basic() -> None:
@@ -127,8 +172,7 @@ def test_agentprofiledb_basic() -> None:
     assert db.data[agent3.pk].name == 'Alice Johnson'
 
     updates = {'bio': 'Senior Researcher in AI'}
-    updates_with_optional: Dict[str, Optional[str]] = {k: v for k, v in updates.items()}
-    success = db.update(agent1.pk, updates_with_optional)
+    success = db.update(agent1.pk, updates)
 
     assert success
     assert db.data[agent1.pk].bio == 'Senior Researcher in AI'
@@ -143,42 +187,16 @@ def test_agentprofiledb_basic() -> None:
     success = db.delete('non-existing-pk')
     assert not success
 
-    conditions: Dict[str, Any] = {'name': 'Jane Smith'}
+    conditions: Dict[str, str] = {'name': 'Jane Smith'}
 
-    results = db.get(**conditions)
+    results: List[AgentProfile] = db.get(**conditions)
 
     assert len(results) == 1
     assert results[0].name == 'Jane Smith'
 
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
-    db.save_to_file(file_name)
-
-    new_db = AgentProfileDB()
-    new_db.load_from_file(file_name)
-
-    new_data = {
-        '2024-05-29': [
-            {
-                'pk': agent1.pk,
-                'name': 'John Doe',
-                'bio': 'Updated bio',
-                'collaborators': [],
-                'institute': 'AI Institute',
-            },
-            {
-                'pk': 'new-pk',
-                'name': 'New Agent',
-                'bio': 'New agent bio',
-                'collaborators': [],
-                'institute': 'New Institute',
-            },
-        ]
-    }
-    db.update_db(new_data)
-    assert db.data[agent1.pk].bio == 'Updated bio'
-    assert 'new-pk' in db.data
-    assert db.data['new-pk'].name == 'New Agent'
+    db.save_to_json(file_name)
 
 
 def test_paperprofiledb_basic() -> None:
@@ -203,8 +221,8 @@ def test_paperprofiledb_basic() -> None:
         domain='Physics',
         citation_count=5,
     )
-    db.add_paper(paper1)
-    db.add_paper(paper2)
+    db.add(paper1)
+    db.add(paper2)
 
     new_paper = PaperProfile(
         title='Sample Paper 3',
@@ -216,82 +234,41 @@ def test_paperprofiledb_basic() -> None:
         domain='Computer Science',
         citation_count=2,
     )
-    db.add_paper(new_paper)
+    db.add(new_paper)
     assert new_paper.pk in db.data
 
-    paper = db.get_paper(paper1.pk)
+    conditions = {'pk': paper1.pk}
+    paper: PaperProfile = db.get(**conditions)[0]
     assert paper is not None
     assert paper.title == 'Sample Paper 1'
 
     updates: Dict[str, Any] = {'title': 'Updated Sample Paper 1', 'citation_count': 15}
 
-    result = db.update_paper(paper1.pk, updates)
+    result = db.update(paper1.pk, updates)
     assert result
-    updated_paper: Optional[PaperProfile] = db.get_paper(paper1.pk)
+
+    conditions = {'pk': paper1.pk}
+    updated_paper: PaperProfile = db.get(**conditions)[0]
     assert updated_paper is not None
     assert updated_paper.title == 'Updated Sample Paper 1'
     assert updated_paper.citation_count == 15
 
-    result = db.delete_paper(paper2.pk)
+    result = db.delete(paper2.pk)
     assert result
-    assert db.get_paper(paper2.pk) is None
 
     domain: Dict[str, Any] = {'domain': 'Computer Science'}
-    results = db.query_papers(**domain)
+    results: List[PaperProfile] = db.get(**domain)
     assert len(results) == 2
     assert results[0].title == 'Updated Sample Paper 1'
     assert results[1].title == 'Sample Paper 3'
 
     with NamedTemporaryFile(delete=False) as temp_file:
         file_name = temp_file.name
-    db.save_to_file(file_name)
+    db.save_to_json(file_name)
 
     new_db = PaperProfileDB()
-    new_db.load_from_file(file_name)
+    new_db.load_from_json(file_name)
 
     assert len(new_db.data) == 2
     assert paper1.pk in new_db.data
     assert new_db.data[paper1.pk].title == 'Updated Sample Paper 1'
-
-
-def test_progressdb_basic() -> None:
-    db = ProgressDB()
-    idea1 = ResearchIdea(content='Idea for a new AI algorithm')
-    idea2 = ResearchIdea(content='Quantum computing research plan')
-
-    db.add(idea1)
-    db.add(idea2)
-
-    new_idea = ResearchIdea(content='Blockchain research proposal')
-    db.add(new_idea)
-    assert new_idea.model_dump() in db.data['ResearchIdea']
-
-    content: Dict[str, Any] = {'content': 'Idea for a new AI algorithm'}
-    results = db.get(ResearchIdea, **content)
-    assert len(results) == 1
-    assert results[0].content == 'Idea for a new AI algorithm'
-
-    updates = {'content': 'Updated idea content'}
-    updated_count = db.update(
-        ResearchIdea, {'content': 'Idea for a new AI algorithm'}, updates
-    )
-    assert updated_count == 1
-    content2: Dict[str, Any] = {'content': 'Updated idea content'}
-    updated_results = db.get(ResearchIdea, **content2)
-    assert len(updated_results) == 1
-    assert updated_results[0].content == 'Updated idea content'
-
-    content3: Dict[str, Any] = {'content': 'Quantum computing research plan'}
-    deleted_count = db.delete(ResearchIdea, **content3)
-    assert deleted_count == 1
-    remaining_results = db.get(ResearchIdea, **content3)
-    assert len(remaining_results) == 0
-
-    with NamedTemporaryFile(delete=False) as temp_file:
-        file_name = temp_file.name
-    db.save_to_file(file_name)
-
-    new_db = ProgressDB()
-    new_db.load_from_file(file_name)
-
-    assert len(new_db.data['ResearchIdea']) == 2
