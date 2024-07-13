@@ -4,7 +4,7 @@ from beartype.typing import Any, Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
-from ..dbs import EnvLogDB, PaperProfileDB, ProgressDB
+from ..dbs import AgentProfile, EnvLogDB, PaperProfileDB, ProgressDB
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
@@ -26,7 +26,16 @@ class BaseMultiAgentEnv(ABC):
         self.agents: List[BaseResearchAgent] = []
 
     @abstractmethod
-    def on_enter(self, *args: Any, **kwargs: Any) -> None:
+    def on_enter(
+        self,
+        time_step: int,
+        stop_flag: bool,
+        agent_profiles: List[AgentProfile],
+        agent_roles: List[Role],
+        agent_models: List[str],
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         pass
 
     @abstractmethod
