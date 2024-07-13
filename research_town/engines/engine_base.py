@@ -66,9 +66,7 @@ class BaseResearchEngine:
         pass_or_fail, progress = self.curr_env.on_exit()
         next_env_name = self.transitions[self.curr_env_name][pass_or_fail]
         if (self.curr_env_name, next_env_name) in self.transition_funcs:
-            preparation_data = self.transition_funcs[
-                (self.curr_env_name, next_env_name)
-            ]()
+            agent_data = self.transition_funcs[(self.curr_env_name, next_env_name)]()
         else:
             raise ValueError(
                 f'no transition function from {self.curr_env_name} to {next_env_name}'
@@ -78,7 +76,7 @@ class BaseResearchEngine:
         self.envs[self.curr_env_name].on_enter(
             time_step=self.time_step,
             stop_flag=self.stop_flag,
-            **preparation_data,
+            **agent_data,
             **progress,
         )
 
