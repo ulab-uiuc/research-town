@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Callable, Dict, Tuple
+from typing import Any, Callable, Dict, Tuple
 
 from beartype.typing import List
 
@@ -34,13 +34,15 @@ class BaseResearchEngine:
         self.time_step = time_step
         self.stop_flag = stop_flag
         self.envs: Dict[str, BaseMultiAgentEnv] = {}
-        self.transition_funcs: Dict[Tuple[str, str], Callable] = {}
+        self.transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {}
         self.transitions: Dict[str, Dict[bool, str]] = defaultdict(dict)
 
     def add_env(self, name: str, env: BaseMultiAgentEnv) -> None:
         self.envs[name] = env
 
-    def add_transition_func(self, from_env: str, func: Callable, to_env: str) -> None:
+    def add_transition_func(
+        self, from_env: str, func: Callable[..., Any], to_env: str
+    ) -> None:
         self.transition_funcs[(from_env, to_env)] = func
 
     def add_transition(self, from_env: str, pass_or_fail: bool, to_env: str) -> None:
@@ -54,6 +56,20 @@ class BaseResearchEngine:
 
     def set_transitions(self) -> None:
         pass
+
+    def enter_env(self, env_name: str, proj_leader: AgentProfile) -> None:
+        if env_name not in self.envs:
+            raise ValueError(f'env {env_name} not found')
+
+        self.curr_env_name = env_name
+        self.curr_env = self.envs[env_name]
+        self.curr_env.on_enter(
+            time_step=self.time_step,
+            stop_flag=self.stop_flag,
+            agent_profiles=[proj_leader],
+            agent_roles=['proj_leader'],
+            agent_models=['gpt-4o'],
+        )
 
     def transition(self) -> None:
         pass_or_fail = self.curr_env.on_exit()

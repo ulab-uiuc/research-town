@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from beartype.typing import Any, Dict, List, Literal, Optional, Union
+from beartype.typing import Any, Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
@@ -30,9 +30,9 @@ class BaseMultiAgentEnv(ABC):
         self,
         time_step: int,
         stop_flag: bool,
-        agent_profiles: Optional[List[AgentProfile]] = None,
-        agent_roles: Optional[List[Role]] = None,
-        agent_models: Optional[List[str]] = None,
+        agent_profiles: List[AgentProfile],
+        agent_roles: List[Role],
+        agent_models: List[str],
         *args: Any,
         **kwargs: Any,
     ) -> None:
