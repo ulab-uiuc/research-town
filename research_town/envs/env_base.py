@@ -41,5 +41,7 @@ class BaseMultiAgentEnv(ABC):
         pass
 
     @abstractmethod
-    def on_exit(self) -> bool:
-        pass
+    def on_exit(self, stop_signal: bool = False) -> bool:
+        if stop_signal:
+            raise NotImplementedError('Stop signal is not implemented yet.')
+        return False

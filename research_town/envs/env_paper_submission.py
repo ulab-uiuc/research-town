@@ -81,9 +81,9 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
         ]
 
     @beartype
-    def on_exit(
-        self,
-    ) -> bool:
+    def on_exit(self, stop_signal: bool = False) -> bool:
+        if stop_signal:
+            raise NotImplementedError('Stop signal is not implemented yet.')
         for insight in self.insights:
             self.progress_db.add(insight)
         for idea in self.ideas:

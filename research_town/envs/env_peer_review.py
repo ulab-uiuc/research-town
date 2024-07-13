@@ -87,7 +87,9 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         self.reviewers = [agent for agent in self.agents if agent.role == 'reviewer']
 
     @beartype
-    def on_exit(self) -> bool:
+    def on_exit(self, stop_signal: bool = False) -> bool:
+        if stop_signal:
+            raise NotImplementedError('Stop signal is not implemented yet.')
         self.progress_db.add(self.meta_review)
         for rebuttal in self.rebuttals:
             self.progress_db.add(rebuttal)

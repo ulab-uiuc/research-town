@@ -36,5 +36,7 @@ class EndMultiAgentEnv(BaseMultiAgentEnv):
     def run(self) -> None:
         return
 
-    def on_exit(self) -> bool:
+    def on_exit(self, stop_signal: bool = False) -> bool:
+        if stop_signal:
+            raise NotImplementedError('Stop signal is not implemented yet.')
         return False

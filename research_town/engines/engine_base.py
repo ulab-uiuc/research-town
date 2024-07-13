@@ -53,6 +53,7 @@ class BaseResearchEngine:
     def update(self):
         if self.curr_env_name:
             self.curr_env.update()
+            self.time_step += 1
 
     def transition(self):
         if self.curr_env:
