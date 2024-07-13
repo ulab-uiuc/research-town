@@ -1,7 +1,7 @@
 from beartype.typing import Any, Dict
 
 from ..configs import Config
-from ..dbs import AgentProfileDB, EnvLogDB, PaperProfileDB, ProgressDB
+from ..dbs import AgentProfile, AgentProfileDB, EnvLogDB, PaperProfileDB, ProgressDB
 from ..envs import (
     EndMultiAgentEnv,
     PaperSubmissionMultiAgentEnv,
@@ -34,6 +34,7 @@ class TwoStageResearchEngine(BaseResearchEngine):
         self.set_dbs()
         self.set_envs()
         self.set_transitions()
+        self.set_transition_funcs()
 
     def set_envs(self) -> None:
         self.add_env(
@@ -73,14 +74,19 @@ class TwoStageResearchEngine(BaseResearchEngine):
             ),
         )
 
-    def set_initial_env(self, name: str) -> None:
-        self.agent_db.reset_role_availability()
-        if name not in self.envs:
-            raise ValueError(f'env {name} not found')
+    def enter_env(self, env_name: str, proj_leader: AgentProfile) -> None:
+        if env_name not in self.envs:
+            raise ValueError(f'env {env_name} not found')
 
-        self.curr_env_name = name
-        self.curr_env = self.envs[name]
-        self.curr_env.on_enter()
+        self.curr_env_name = env_name
+        self.curr_env = self.envs[env_name]
+        self.curr_env.on_enter(
+            time_step=self.time_step,
+            stop_flag=self.stop_flag,
+            agent_profiles=[proj_leader],
+            agent_roles=['proj_leader'],
+            agent_models=['gpt-4o'],
+        )
 
     def set_transitions(self) -> None:
         self.add_transition('start', True, 'paper_submission')
@@ -117,9 +123,9 @@ class TwoStageResearchEngine(BaseResearchEngine):
     def from_start_to_paper_submission(
         self,
         env: StartMultiAgentEnv,
-        proj_participant_num: int = 2,
+        proj_participant_num: int = 1,
     ) -> Dict[str, Any]:
-        proj_leader = env.proj_leader
+        proj_leader = env.proj_leader.profile
         proj_participants = self.find_proj_participants(
             proj_leader,
             proj_participant_num=proj_participant_num,
@@ -135,9 +141,9 @@ class TwoStageResearchEngine(BaseResearchEngine):
     def from_paper_submission_to_peer_review(
         self,
         env: PaperSubmissionMultiAgentEnv,
-        reviewer_num: int = 2,
+        reviewer_num: int = 1,
     ) -> Dict[str, Any]:
-        proj_leader = env.proj_leader
+        proj_leader = env.proj_leader.profile
         reviewers = self.find_reviewers(env.paper, reviewer_num)
         chair = self.find_chair(env.paper)
         return {
@@ -152,7 +158,7 @@ class TwoStageResearchEngine(BaseResearchEngine):
         env: PaperSubmissionMultiAgentEnv,
         proj_participant_num: int = 2,
     ) -> Dict[str, Any]:
-        proj_leader = env.proj_leader
+        proj_leader = env.proj_leader.profile
         proj_participants = self.find_proj_participants(
             proj_leader,
             proj_participant_num=proj_participant_num,
@@ -171,7 +177,7 @@ class TwoStageResearchEngine(BaseResearchEngine):
     def from_peer_review_to_peer_review(
         self, env: PeerReviewMultiAgentEnv
     ) -> Dict[str, Any]:
-        proj_leader = env.proj_leader
+        proj_leader = env.proj_leader.profile
         reviewers = self.find_reviewers(env.paper, 2)
         chair = self.find_chair(env.paper)
         return {

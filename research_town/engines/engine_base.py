@@ -68,7 +68,8 @@ class BaseResearchEngine:
             )
 
         self.curr_env_name = next_env_name
-        self.envs[self.curr_env_name].on_enter(
+        self.curr_env = self.envs[self.curr_env_name]
+        self.curr_env.on_enter(
             time_step=self.time_step,
             stop_flag=self.stop_flag,
             **input_data,
