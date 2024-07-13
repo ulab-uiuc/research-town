@@ -44,15 +44,15 @@ class PaperProfileDB(BaseDB[PaperProfile]):
                 self.add(paper)
 
     def match(
-        self, query: str, profiles: List[PaperProfile], num: int = 1
-    ) -> List[str]:
+        self, query: str, paper_profiles: List[PaperProfile], num: int = 1
+    ) -> List[PaperProfile]:
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
         corpus = []
-        for profile in profiles:
+        for profile in paper_profiles:
             corpus.append(profile.abstract if profile.abstract is not None else '')
         corpus_embed = get_embed(
             instructions=corpus,
@@ -63,8 +63,8 @@ class PaperProfileDB(BaseDB[PaperProfile]):
             query_embed=query_embed, corpus_embed=corpus_embed, num=num
         )
         indexes = [index for topk_index in topk_indexes for index in topk_index]
-        match_pk = [profiles[index].pk for index in indexes]
-        return match_pk
+        match_paper_profiles = [paper_profiles[index] for index in indexes]
+        return match_paper_profiles
 
     def transform_to_embed(self, file_name: str) -> None:
         pickle_file_name = file_name.replace('.json', '.pkl')

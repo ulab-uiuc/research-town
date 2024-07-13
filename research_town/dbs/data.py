@@ -9,17 +9,21 @@ class BaseDBData(BaseModel):
 
 
 class AgentProfile(BaseDBData):
-    name: Optional[str] = Field(default=None)
-    bio: Optional[str] = Field(default=None)
+    name: str
+    bio: str
     collaborators: Optional[List[str]] = Field(default=[])
     institute: Optional[str] = Field(default=None)
     embed: Optional[Any] = Field(default=None)
+    is_proj_leader_candidate: Optional[bool] = Field(default=True)
+    is_proj_participant_candidate: Optional[bool] = Field(default=True)
+    is_reviewer_candidate: Optional[bool] = Field(default=True)
+    is_chair_candidate: Optional[bool] = Field(default=True)
 
 
 class PaperProfile(BaseDBData):
-    authors: Optional[List[str]] = Field(default=[])
-    title: Optional[str] = Field(default=None)
-    abstract: Optional[str] = Field(default=None)
+    authors: List[str] = Field(default=[])
+    title: str
+    abstract: str
     url: Optional[str] = Field(default=None)
     timestamp: Optional[int] = Field(default=None)
     section_contents: Optional[Dict[str, str]] = Field(default=None)
@@ -116,8 +120,9 @@ class ResearchIdea(BaseProgressData):
 
 
 class ResearchPaperSubmission(BaseProgressData):
+    abstract: str
     title: Optional[str] = Field(default=None)
-    abstract: Optional[str] = Field(default=None)
+    content: Optional[str] = Field(default=None)
     conference: Optional[str] = Field(default=None)
 
 

@@ -10,7 +10,7 @@ from research_town.dbs import (
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
-from tests.constants.db_constants import (
+from tests.constants.data_constants import (
     agent_profile_A,
     agent_profile_B,
     paper_profile_A,

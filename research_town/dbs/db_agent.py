@@ -34,7 +34,7 @@ class AgentProfileDB(BaseDB[AgentProfile]):
             )
             bio = write_bio_prompting(
                 publication_info=publication_info,
-                prompt_template=config.prompt_template.write_bio_prompting,
+                prompt_template=config.prompt_template.write_bio,
             )
             agent_profile = AgentProfile(
                 name=name,
@@ -44,15 +44,15 @@ class AgentProfileDB(BaseDB[AgentProfile]):
             self.add(agent_profile)
 
     def match(
-        self, query: str, profiles: List[AgentProfile], num: int = 1
-    ) -> List[str]:
+        self, query: str, agent_profiles: List[AgentProfile], num: int = 1
+    ) -> List[AgentProfile]:
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
         corpus = []
-        for profile in profiles:
+        for profile in agent_profiles:
             corpus.append(profile.bio if profile.bio is not None else '')
 
         corpus_embed = get_embed(
@@ -64,8 +64,8 @@ class AgentProfileDB(BaseDB[AgentProfile]):
             query_embed=query_embed, corpus_embed=corpus_embed, num=num
         )
         indexes = [index for topk_index in topk_indexes for index in topk_index]
-        match_pk = [profiles[index].pk for index in indexes]
-        return match_pk
+        match_agent_profiles = [agent_profiles[index] for index in indexes]
+        return match_agent_profiles
 
     def transform_to_embed(self, file_name: str) -> None:
         pickle_file_name = file_name.replace('.json', '.pkl')
@@ -80,3 +80,11 @@ class AgentProfileDB(BaseDB[AgentProfile]):
             )
         with open(pickle_file_name, 'wb') as pkl_file:
             pickle.dump(profile_dict, pkl_file)
+
+    def reset_role_avaialbility(self) -> None:
+        for profile in self.data.values():
+            profile.is_proj_leader_candidate = True
+            profile.is_proj_participant_candidate = True
+            profile.is_reviewer_candidate = True
+            profile.is_chair_candidate = True
+            self.update(pk=profile.pk, updates=profile.model_dump())

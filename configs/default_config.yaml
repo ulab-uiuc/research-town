@@ -11,7 +11,7 @@ param:
   top_p: null
   stream: null
 prompt_template:
-  write_bio_prompting: |
+  write_bio: |
     Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. Focus more on more rescent personas. Be concise and clear (around 300 words).
     Here are the personas from different times: {publication_info}
   find_collaborators: |

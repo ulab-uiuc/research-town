@@ -1,7 +1,7 @@
 from collections import Counter
 
 from beartype import beartype
-from beartype.typing import Dict, List, Literal, Tuple, Union
+from beartype.typing import Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
@@ -10,11 +10,9 @@ from ..dbs import (
     AgentPaperRebuttalWritingLog,
     AgentPaperReviewWritingLog,
     AgentProfile,
-    AgentProfileDB,
     EnvLogDB,
     PaperProfileDB,
     ProgressDB,
-    ResearchMetaReviewForPaperSubmission,
     ResearchPaperSubmission,
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
@@ -28,29 +26,45 @@ Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
     def __init__(
         self,
-        agent_profiles: List[AgentProfile],
-        agent_roles: List[Role],
-        agent_db: AgentProfileDB,
-        paper_db: PaperProfileDB,
         env_db: EnvLogDB,
         progress_db: ProgressDB,
+        paper_db: PaperProfileDB,
         config: Config,
     ) -> None:
-        super().__init__(agent_profiles=agent_profiles, agent_roles=agent_roles)
-        self.chair, self.proj_leader, self.reviewers = self.check_roles(
-            agent_profiles=agent_profiles, agent_roles=agent_roles
+        super().__init__(
+            env_db=env_db,
+            progress_db=progress_db,
+            paper_db=paper_db,
+            config=config,
         )
-        self.agent_db = agent_db
-        self.paper_db = paper_db
-        self.env_db = env_db
-        self.progress_db = progress_db
-        self.config = config
 
     @beartype
-    def check_roles(
-        self, agent_profiles: List[AgentProfile], agent_roles: List[Role]
-    ) -> Tuple[BaseResearchAgent, BaseResearchAgent, List[BaseResearchAgent]]:
+    def on_enter(
+        self,
+        time_step: int,
+        stop_flag: bool,
+        agent_profiles: List[AgentProfile],
+        agent_roles: List[Role],
+        agent_models: List[str],
+        paper: ResearchPaperSubmission,
+    ) -> None:
+        self.time_step = time_step
+        self.stop_flag = stop_flag
+        self.paper = paper
+
         assert len(agent_profiles) == len(agent_roles)
+
+        for agent_profile, agent_role, agent_model in zip(
+            agent_profiles, agent_roles, agent_models
+        ):
+            self.agents.append(
+                BaseResearchAgent(
+                    agent_profile=agent_profile,
+                    agent_role=agent_role,
+                    model_name=agent_model,
+                )
+            )
+
         if 'proj_leader' not in agent_roles:
             raise ValueError('At least one proj_leader is required to write rebuttal.')
         if 'reviewer' not in agent_roles:
@@ -66,46 +80,56 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         if counter['chair'] != 1:
             raise ValueError('Exactly one chair is required to write meta-review.')
 
-        chair = [agent for agent in self.agents if agent.role == 'chair'][0]
-        proj_leader = [agent for agent in self.agents if agent.role == 'proj_leader'][0]
-        reviewers = [agent for agent in self.agents if agent.role == 'reviewer']
-        return chair, proj_leader, reviewers
+        self.chair = [agent for agent in self.agents if agent.role == 'chair'][0]
+        self.proj_leader = [
+            agent for agent in self.agents if agent.role == 'proj_leader'
+        ][0]
+        self.reviewers = [agent for agent in self.agents if agent.role == 'reviewer']
 
-    def run(
-        self,
-        paper: ResearchPaperSubmission,
-    ) -> Tuple[
-        ResearchMetaReviewForPaperSubmission,
-        List[ResearchRebuttalForPaperSubmission],
-        List[ResearchReviewForPaperSubmission],
-    ]:
+    @beartype
+    def on_exit(self, stop_signal: bool = False) -> bool:
+        if stop_signal:
+            raise NotImplementedError('Stop signal is not implemented yet.')
+        self.progress_db.add(self.meta_review)
+        for rebuttal in self.rebuttals:
+            self.progress_db.add(rebuttal)
+        for review in self.reviews:
+            self.progress_db.add(review)
+        self.env_run_num += 1
+        return True
+
+    @beartype
+    def run(self) -> None:
         # Paper Reviewing
-        reviews: List[ResearchReviewForPaperSubmission] = []
+        self.reviews: List[ResearchReviewForPaperSubmission] = []
         for reviewer in self.reviewers:
             review = reviewer.write_review(
-                paper=paper,
+                paper=self.paper,
                 config=self.config,
             )
-            reviews.append(review)
+            self.reviews.append(review)
             self.progress_db.add(review)
             self.env_db.add(
                 AgentPaperReviewWritingLog(
-                    agent_pk=reviewer.profile.pk, paper_pk=paper.pk
+                    time_step=self.time_step,
+                    agent_pk=reviewer.profile.pk,
+                    paper_pk=self.paper.pk,
                 )
             )
 
         # Rebuttal Submitting
-        rebuttals: List[ResearchRebuttalForPaperSubmission] = []
-        for review in reviews:
+        self.rebuttals: List[ResearchRebuttalForPaperSubmission] = []
+        for review in self.reviews:
             rebuttal = self.proj_leader.write_rebuttal(
-                paper=paper,
+                paper=self.paper,
                 review=review,
                 config=self.config,
             )
-            rebuttals.append(rebuttal)
+            self.rebuttals.append(rebuttal)
             self.progress_db.add(rebuttal)
             self.env_db.add(
                 AgentPaperRebuttalWritingLog(
+                    time_step=self.time_step,
                     paper_pk=rebuttal.paper_pk,
                     agent_pk=self.proj_leader.profile.pk,
                     rebuttal_content=rebuttal.content,
@@ -113,25 +137,21 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
             )
 
         # Paper Meta Reviewing
-        meta_review = self.chair.write_meta_review(
-            paper=paper,
-            reviews=reviews,
-            rebuttals=rebuttals,
+        self.meta_review = self.chair.write_meta_review(
+            paper=self.paper,
+            reviews=self.reviews,
+            rebuttals=self.rebuttals,
             config=self.config,
         )
-        self.progress_db.add(meta_review)
+        self.progress_db.add(self.meta_review)
         self.env_db.add(
             AgentPaperMetaReviewWritingLog(
-                paper_pk=meta_review.paper_pk,
+                time_step=self.time_step,
+                paper_pk=self.meta_review.paper_pk,
                 agent_pk=self.chair.profile.pk,
-                summary=meta_review.summary,
-                strength=meta_review.strength,
-                weakness=meta_review.weakness,
-                decision=meta_review.decision,
+                summary=self.meta_review.summary,
+                strength=self.meta_review.strength,
+                weakness=self.meta_review.weakness,
+                decision=self.meta_review.decision,
             )
         )
-
-        self.env_run_number += 1
-        self.terminated = True
-
-        return meta_review, rebuttals, reviews
