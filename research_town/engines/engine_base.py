@@ -48,9 +48,9 @@ class BaseResearchEngine:
         self.curr_env = self.envs[name]
         self.curr_env.on_enter()
 
-    def update(self) -> None:
+    def run(self) -> None:
         if self.curr_env_name:
-            self.curr_env.update()
+            self.curr_env.run()
             self.time_step += 1
 
     def transition(self) -> None:
@@ -64,7 +64,7 @@ class BaseResearchEngine:
     def set_proj_leader(
         self,
         proj_leader: AgentProfile,
-    ) -> None:
+    ) -> AgentProfile:
         proj_leader.is_proj_leader_candidate = True
         proj_leader.is_proj_participant_candidate = False
         proj_leader.is_reviewer_candidate = False
@@ -84,7 +84,7 @@ class BaseResearchEngine:
         # Find most suitable project participants
         proj_leader_bio = proj_leader.bio
         proj_participants = self.agent_db.match(
-            query=[proj_leader_bio],
+            query=proj_leader_bio,
             agent_profiles=proj_participant_candidates,
             num=proj_participant_num,
         )
@@ -113,7 +113,7 @@ class BaseResearchEngine:
         # Find most suitable reviewers
         paper_abstract = paper_submission.abstract
         reviewers = self.agent_db.match(
-            query=[paper_abstract], agent_profiles=reviewer_candidates, num=reviewer_num
+            query=paper_abstract, agent_profiles=reviewer_candidates, num=reviewer_num
         )
 
         # update the db to does allow reviewers to be selected as chairs
@@ -137,7 +137,7 @@ class BaseResearchEngine:
         # Find most suitable chairs
         paper_abstract = paper_submission.abstract
         chair = self.agent_db.match(
-            query=[paper_abstract], agent_profiles=chair_candidates
+            query=paper_abstract, agent_profiles=chair_candidates
         )[0]
 
         # update the db to does allow chairs to be selected as reviewers

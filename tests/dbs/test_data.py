@@ -20,7 +20,7 @@ def test_researchprogress_class_extra_args() -> None:
     assert insight.additional_attr == 'extra'
 
     paper = ResearchPaperSubmission(
-        content='Paper for a new AI algorithm', additional_attr='extra'
+        title='title', abstract='Paper for a new AI algorithm', additional_attr='extra'
     )
     assert hasattr(paper, 'additional_attr')
     assert paper.additional_attr == 'extra'

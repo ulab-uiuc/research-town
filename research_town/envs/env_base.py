@@ -1,6 +1,6 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
-from beartype.typing import Dict, List, Literal, Union
+from beartype.typing import Any, Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
@@ -24,3 +24,15 @@ class BaseMultiAgentEnv(ABC):
         self.paper_db = paper_db
         self.config = config
         self.agents: List[BaseResearchAgent] = []
+
+    @abstractmethod
+    def on_enter(self, *args: Any, **kwargs: Any) -> None:
+        pass
+
+    @abstractmethod
+    def run(self, *args: Any, **kwargs: Any) -> None:
+        pass
+
+    @abstractmethod
+    def on_exit(self, *args: Any, **kwargs: Any) -> bool:
+        pass
