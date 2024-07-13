@@ -1,4 +1,5 @@
-from typing import Dict
+from collections import defaultdict
+from typing import Callable, Dict, Tuple
 
 from beartype.typing import List
 
@@ -22,44 +23,64 @@ class BaseResearchEngine:
         progress_db: ProgressDB,
         env_db: EnvLogDB,
         config: Config,
+        time_step: int = 0,
+        stop_flag: bool = False,
     ) -> None:
-        self.time_step = 0
-        self.envs: Dict[str, BaseMultiAgentEnv] = {}
-        self.transition_matrix: Dict[str, Dict[bool, str]] = {}
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.progress_db = progress_db
         self.env_db = env_db
         self.config = config
+        self.time_step = time_step
+        self.stop_flag = stop_flag
+        self.envs: Dict[str, BaseMultiAgentEnv] = {}
+        self.transition_funcs: Dict[Tuple[str, str], Callable] = {}
+        self.transitions: Dict[str, Dict[bool, str]] = defaultdict(dict)
 
     def add_env(self, name: str, env: BaseMultiAgentEnv) -> None:
         self.envs[name] = env
 
-    def set_transition(self, from_name: str, pass_name: str, fail_name: str) -> None:
-        self.transition_matrix[from_name] = {True: pass_name, False: fail_name}
+    def add_transition_func(self, from_env: str, func: Callable, to_env: str) -> None:
+        self.transition_funcs[(from_env, to_env)] = func
 
-    def set_init_env(self, name: str) -> None:
-        # start a new round of the research project
-        self.agent_db.reset_role_avaialbility()
+    def add_transition(self, from_env: str, pass_or_fail: bool, to_env: str) -> None:
+        self.transitions[from_env][pass_or_fail] = to_env
+
+    def set_transitions(self, transitions: Dict[str, Dict[bool, str]]) -> None:
+        self.transitions = transitions
+
+    def set_initial_env(self, name: str) -> None:
+        self.agent_db.reset_role_availability()
         if name not in self.envs:
-            raise ValueError(f'Env {name} not found')
+            raise ValueError(f'env {name} not found')
 
         self.curr_env_name = name
         self.curr_env = self.envs[name]
         self.curr_env.on_enter()
 
     def run(self) -> None:
-        if self.curr_env_name:
-            self.curr_env.run()
-            self.time_step += 1
+        self.curr_env.run()
+        self.time_step += 1
 
     def transition(self) -> None:
-        if self.curr_env:
-            result = self.curr_env.on_exit()
-            next_env_name = self.transition_matrix[self.curr_env_name][result]
-            self.curr_env_name = next_env_name
-            self.curr_env = self.envs[next_env_name]
-            self.curr_env.on_enter()
+        pass_or_fail, progress = self.curr_env.on_exit()
+        next_env_name = self.transitions[self.curr_env_name][pass_or_fail]
+        if (self.curr_env_name, next_env_name) in self.transition_funcs:
+            preparation_data = self.transition_funcs[
+                (self.curr_env_name, next_env_name)
+            ]()
+        else:
+            raise ValueError(
+                f'no transition function from {self.curr_env_name} to {next_env_name}'
+            )
+
+        self.curr_env_name = next_env_name
+        self.envs[self.curr_env_name].on_enter(
+            time_step=self.time_step,
+            stop_flag=self.stop_flag,
+            **preparation_data,
+            **progress,
+        )
 
     def set_proj_leader(
         self,

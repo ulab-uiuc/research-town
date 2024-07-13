@@ -1,4 +1,4 @@
-from beartype.typing import Dict, List, Literal, Optional, Union
+from beartype.typing import Any, Dict, List, Literal, Optional, Union
 
 from ..configs import Config
 from ..dbs import AgentProfile, EnvLogDB, PaperProfileDB, ProgressDB
@@ -30,13 +30,17 @@ class StartMultiAgentEnv(BaseMultiAgentEnv):
         agent_profiles: Optional[List[AgentProfile]] = None,
         agent_roles: Optional[List[Role]] = None,
         agent_models: Optional[List[str]] = None,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
+        self.time_step = time_step
+        self.stop_flag = stop_flag
         return
 
     def run(self) -> None:
         return
 
-    def on_exit(self, stop_signal: bool = False) -> bool:
-        if stop_signal:
+    def on_exit(self) -> bool:
+        if self.stop_flag:
             raise NotImplementedError('Stop signal is not implemented yet.')
         return True
