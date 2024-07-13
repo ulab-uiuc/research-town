@@ -1,7 +1,5 @@
 from collections import defaultdict
-from typing import Any, Callable, Dict, Tuple
-
-from beartype.typing import List
+from typing import Any, Callable, Dict, List, Tuple
 
 from ..configs import Config
 from ..dbs import (
@@ -36,6 +34,22 @@ class BaseResearchEngine:
         self.envs: Dict[str, BaseMultiAgentEnv] = {}
         self.transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {}
         self.transitions: Dict[str, Dict[bool, str]] = defaultdict(dict)
+        self.set_dbs()
+        self.set_envs()
+        self.set_transitions()
+        self.set_transition_funcs()
+
+    def set_dbs(self) -> None:
+        self.agent_db.reset_role_avaialbility()
+
+    def set_envs(self) -> None:
+        pass
+
+    def set_transitions(self) -> None:
+        pass
+
+    def set_transition_funcs(self) -> None:
+        pass
 
     def add_env(self, name: str, env: BaseMultiAgentEnv) -> None:
         self.envs[name] = env
@@ -47,15 +61,6 @@ class BaseResearchEngine:
 
     def add_transition(self, from_env: str, pass_or_fail: bool, to_env: str) -> None:
         self.transitions[from_env][pass_or_fail] = to_env
-
-    def set_dbs(self) -> None:
-        self.agent_db.reset_role_avaialbility()
-
-    def set_envs(self) -> None:
-        pass
-
-    def set_transitions(self) -> None:
-        pass
 
     def enter_env(self, env_name: str, proj_leader: AgentProfile) -> None:
         if env_name not in self.envs:
@@ -91,93 +96,80 @@ class BaseResearchEngine:
             **input_data,
         )
 
-    def set_proj_leader(
+    def find_agents(
         self,
-        proj_leader: AgentProfile,
-    ) -> AgentProfile:
-        proj_leader.is_proj_leader_candidate = True
-        proj_leader.is_proj_participant_candidate = False
-        proj_leader.is_reviewer_candidate = False
-        proj_leader.is_chair_candidate = False
-        self.agent_db.update(pk=proj_leader.pk, updates=proj_leader.model_dump())
-        return proj_leader
-
-    def find_proj_participants(
-        self,
-        proj_leader: AgentProfile,
-        proj_participant_num: int,
+        condition: Dict[str, Any],
+        query: str,
+        num: int,
+        update_fields: Dict[str, bool],
     ) -> List[AgentProfile]:
-        # Find available project participants
-        conditions = {'is_proj_participant_candidate': True}
-        proj_participant_candidates = self.agent_db.get(**conditions)
-
-        # Find most suitable project participants
-        proj_leader_bio = proj_leader.bio
-        proj_participants = self.agent_db.match(
-            query=proj_leader_bio,
-            agent_profiles=proj_participant_candidates,
-            num=proj_participant_num,
+        candidates = self.agent_db.get(**condition)
+        selected_agents = self.agent_db.match(
+            query=query, agent_profiles=candidates, num=num
         )
 
-        # update the db to does allow participants to be selected as reviewers or chairs
-        for proj_participant in proj_participants:
-            proj_participant.is_proj_leader_candidate = False
-            proj_participant.is_proj_participant_candidate = True
-            proj_participant.is_reviewer_candidate = False
-            proj_participant.is_chair_candidate = False
-            self.agent_db.update(
-                pk=proj_participant.pk, updates=proj_participant.model_dump()
-            )
+        for agent in selected_agents:
+            for field, value in update_fields.items():
+                setattr(agent, field, value)
+            self.agent_db.update(pk=agent.pk, updates=agent.model_dump())
 
-        return proj_participants
+        return selected_agents
 
-    def find_reviewers(
-        self,
-        paper_submission: ResearchPaperSubmission,
-        reviewer_num: int,
-    ) -> List[AgentProfile]:
-        # Find potential reviewers
-        conditions = {'is_reviewer_candidate': True}
-        reviewer_candidates = self.agent_db.get(**conditions)
-
-        # Find most suitable reviewers
-        paper_abstract = paper_submission.abstract
-        reviewers = self.agent_db.match(
-            query=paper_abstract, agent_profiles=reviewer_candidates, num=reviewer_num
-        )
-
-        # update the db to does allow reviewers to be selected as chairs
-        for reviewer in reviewers:
-            reviewer.is_proj_leader_candidate = False
-            reviewer.is_proj_participant_candidate = False
-            reviewer.is_reviewer_candidate = True
-            reviewer.is_chair_candidate = False
-            self.agent_db.update(pk=reviewer.pk, updates=reviewer.model_dump())
-
-        return reviewers
-
-    def find_chair(
-        self,
-        paper_submission: ResearchPaperSubmission,
-    ) -> AgentProfile:
-        # Find potential chairs
-        conditions = {'is_chair_candidate': True}
-        chair_candidates = self.agent_db.get(**conditions)
-
-        # Find most suitable chairs
-        paper_abstract = paper_submission.abstract
-        chair = self.agent_db.match(
-            query=paper_abstract, agent_profiles=chair_candidates
+    def set_proj_leader(self, proj_leader: AgentProfile) -> AgentProfile:
+        return self.find_agents(
+            condition={'pk': proj_leader.pk},
+            query=proj_leader.bio,
+            num=1,
+            update_fields={
+                'is_proj_leader_candidate': True,
+                'is_proj_participant_candidate': False,
+                'is_reviewer_candidate': False,
+                'is_chair_candidate': False,
+            },
         )[0]
 
-        # update the db to does allow chairs to be selected as reviewers
-        chair.is_proj_leader_candidate = False
-        chair.is_proj_participant_candidate = False
-        chair.is_reviewer_candidate = False
-        chair.is_chair_candidate = True
-        self.agent_db.update(pk=chair.pk, updates=chair.model_dump())
+    def find_proj_participants(
+        self, proj_leader: AgentProfile, proj_participant_num: int
+    ) -> List[AgentProfile]:
+        return self.find_agents(
+            condition={'is_proj_participant_candidate': True},
+            query=proj_leader.bio,
+            num=proj_participant_num,
+            update_fields={
+                'is_proj_leader_candidate': False,
+                'is_proj_participant_candidate': True,
+                'is_reviewer_candidate': False,
+                'is_chair_candidate': False,
+            },
+        )
 
-        return chair
+    def find_reviewers(
+        self, paper_submission: ResearchPaperSubmission, reviewer_num: int
+    ) -> List[AgentProfile]:
+        return self.find_agents(
+            condition={'is_reviewer_candidate': True},
+            query=paper_submission.abstract,
+            num=reviewer_num,
+            update_fields={
+                'is_proj_leader_candidate': False,
+                'is_proj_participant_candidate': False,
+                'is_reviewer_candidate': True,
+                'is_chair_candidate': False,
+            },
+        )
+
+    def find_chair(self, paper_submission: ResearchPaperSubmission) -> AgentProfile:
+        return self.find_agents(
+            condition={'is_chair_candidate': True},
+            query=paper_submission.abstract,
+            num=1,
+            update_fields={
+                'is_proj_leader_candidate': False,
+                'is_proj_participant_candidate': False,
+                'is_reviewer_candidate': False,
+                'is_chair_candidate': True,
+            },
+        )[0]
 
     def recover(self) -> None:
         pass

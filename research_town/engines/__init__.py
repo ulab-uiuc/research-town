@@ -1,5 +1,5 @@
 from .engine_base import BaseResearchEngine
-from .engine_two_envs import TwoStageResearchEngine
+from .engine_lifecycle import TwoStageResearchEngine
 
 __all__ = [
     'BaseResearchEngine',
