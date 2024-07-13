@@ -1,7 +1,7 @@
 from collections import Counter
 
 from beartype import beartype
-from beartype.typing import Dict, List, Literal, Union
+from beartype.typing import Any, Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
@@ -13,7 +13,6 @@ from ..dbs import (
     EnvLogDB,
     PaperProfileDB,
     ProgressDB,
-    ResearchPaperSubmission,
     ResearchRebuttalForPaperSubmission,
     ResearchReviewForPaperSubmission,
 )
@@ -46,11 +45,12 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         agent_profiles: List[AgentProfile],
         agent_roles: List[Role],
         agent_models: List[str],
-        paper: ResearchPaperSubmission,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         self.time_step = time_step
         self.stop_flag = stop_flag
-        self.paper = paper
+        self.paper = kwargs['paper']
 
         assert len(agent_profiles) == len(agent_roles)
 
@@ -87,8 +87,8 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         self.reviewers = [agent for agent in self.agents if agent.role == 'reviewer']
 
     @beartype
-    def on_exit(self, stop_signal: bool = False) -> bool:
-        if stop_signal:
+    def on_exit(self) -> bool:
+        if self.stop_flag:
             raise NotImplementedError('Stop signal is not implemented yet.')
         self.progress_db.add(self.meta_review)
         for rebuttal in self.rebuttals:
