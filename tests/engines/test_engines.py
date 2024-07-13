@@ -11,6 +11,7 @@ from ..constants.db_constants import (
 
 
 def test_engine_fine_proj_participants():
+    example_agent_db.reset_role_avaialbility()
     engine = BaseResearchEngine(
         agent_db=example_agent_db,
         paper_db=example_paper_db,
@@ -27,6 +28,7 @@ def test_engine_fine_proj_participants():
 
 
 def test_engine_find_proj_reviewers():
+    example_agent_db.reset_role_avaialbility()
     engine = BaseResearchEngine(
         agent_db=example_agent_db,
         paper_db=example_paper_db,
@@ -43,6 +45,7 @@ def test_engine_find_proj_reviewers():
 
 
 def test_engine_find_chair():
+    example_agent_db.reset_role_avaialbility()
     engine = BaseResearchEngine(
         agent_db=example_agent_db,
         paper_db=example_paper_db,

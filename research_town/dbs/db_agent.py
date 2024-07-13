@@ -80,3 +80,11 @@ class AgentProfileDB(BaseDB[AgentProfile]):
             )
         with open(pickle_file_name, 'wb') as pkl_file:
             pickle.dump(profile_dict, pkl_file)
+
+    def reset_role_avaialbility(self) -> None:
+        for profile in self.data.values():
+            profile.is_proj_leader_candidate = True
+            profile.is_proj_participant_candidate = True
+            profile.is_reviewer_candidate = True
+            profile.is_chair_candidate = True
+            self.update(pk=profile.pk, updates=profile.model_dump())
