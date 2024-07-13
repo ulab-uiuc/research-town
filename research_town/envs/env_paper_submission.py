@@ -12,6 +12,7 @@ from ..dbs import (
     AgentProfile,
     EnvLogDB,
     PaperProfile,
+    PaperProfileDB,
     ProgressDB,
     ResearchIdea,
 )
@@ -26,11 +27,13 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
         self,
         env_db: EnvLogDB,
         progress_db: ProgressDB,
+        paper_db: PaperProfileDB,
         config: Config,
     ) -> None:
         super().__init__(
             env_db=env_db,
             progress_db=progress_db,
+            paper_db=paper_db,
             config=config,
         )
 

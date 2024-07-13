@@ -1,95 +1,44 @@
-from research_town.dbs import (
-    AgentAgentIdeaDiscussionLog,
-    AgentPaperMetaReviewWritingLog,
-    AgentPaperRebuttalWritingLog,
-    AgentPaperReviewWritingLog,
-    AgentProfile,
-    PaperProfile,
-    ResearchIdea,
-    ResearchInsight,
-    ResearchPaperSubmission,
+from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB, ProgressDB
+
+from .data_constants import (
+    agent_agent_idea_discussion_log,
+    agent_paper_meta_review_log,
+    agent_paper_rebuttal_log,
+    agent_paper_review_log,
+    agent_profile_A,
+    agent_profile_B,
+    agent_profile_C,
+    paper_profile_A,
+    paper_profile_B,
+    paper_profile_C,
+    research_idea_A,
+    research_idea_B,
+    research_insight_A,
+    research_insight_B,
+    research_paper_submission_A,
+    research_paper_submission_B,
 )
 
-paper_profile_A = PaperProfile(
-    title='A Survey on Machine Learning',
-    abstract='This paper surveys the field of machine learning.',
-)
+example_agent_db = AgentProfileDB()
+example_agent_db.add(agent_profile_A)
+example_agent_db.add(agent_profile_B)
+example_agent_db.add(agent_profile_C)
 
-paper_profile_B = PaperProfile(
-    title='A Survey on Graph Neural Networks',
-    abstract='This paper surveys the field of graph neural networks.',
-)
+example_paper_db = PaperProfileDB()
+example_paper_db.add(paper_profile_A)
+example_paper_db.add(paper_profile_B)
+example_paper_db.add(paper_profile_C)
 
+example_progress_db = ProgressDB()
+example_progress_db.add(research_idea_A)
+example_progress_db.add(research_idea_B)
+example_progress_db.add(research_insight_A)
+example_progress_db.add(research_insight_B)
+example_progress_db.add(research_paper_submission_A)
+example_progress_db.add(research_paper_submission_B)
 
-agent_profile_A = AgentProfile(
-    name='Jiaxuan You',
-    bio='A researcher in the field of machine learning.',
-)
-
-agent_profile_B = AgentProfile(
-    name='Rex Ying',
-    bio='A researcher in the field of GNN.',
-)
-
-research_idea_A = ResearchIdea(
-    content='A new idea',
-)
-
-research_idea_B = ResearchIdea(
-    content='Another idea',
-)
-
-research_insight_A = ResearchInsight(
-    content='A new insight',
-)
-
-research_insight_B = ResearchInsight(
-    content='Another insight',
-)
-
-research_paper_submission_A = ResearchPaperSubmission(
-    title='A Survey on Machine Learning',
-    abstract='This paper surveys the field of machine learning.',
-)
-
-research_paper_submission_B = ResearchPaperSubmission(
-    title='A Survey on Graph Neural Networks',
-    abstract='This paper surveys the field of graph neural networks.',
-)
-
-
-agent_paper_review_log = AgentPaperReviewWritingLog(
-    time_step=0,
-    paper_pk=paper_profile_A.pk,
-    agent_pk=agent_profile_A.pk,
-    score=5,
-    summary='This paper is well-written.',
-    strength='Interesting',
-    weakness='None',
-)
-
-agent_paper_meta_review_log = AgentPaperMetaReviewWritingLog(
-    time_step=0,
-    paper_pk=paper_profile_B.pk,
-    agent_pk=agent_profile_B.pk,
-    decision=True,
-    summary='This paper is well-written.',
-    strength='Interesting',
-    weakness='None',
-)
-
-agent_paper_rebuttal_log = AgentPaperRebuttalWritingLog(
-    time_step=0,
-    paper_pk=paper_profile_A.pk,
-    agent_pk=agent_profile_A.pk,
-    rebuttal_content='I have revised the paper.',
-)
-
-agent_agent_discussion_log = AgentAgentIdeaDiscussionLog(
-    time_step=0,
-    agent_from_pk=agent_profile_A.pk,
-    agent_from_name=agent_profile_A.name,
-    agent_to_pk=agent_profile_B.pk,
-    agent_to_name=agent_profile_B.name,
-    message='How about the idea of building a research town with language agents?',
-)
+example_env_db = EnvLogDB()
+example_env_db.add(agent_paper_review_log)
+example_env_db.add(agent_paper_rebuttal_log)
+example_env_db.add(agent_paper_meta_review_log)
+example_env_db.add(agent_agent_idea_discussion_log)

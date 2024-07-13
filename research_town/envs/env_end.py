@@ -1,15 +1,14 @@
-from abc import ABC, abstractmethod
-
 from beartype.typing import Dict, List, Literal, Optional, Union
 
 from ..configs import Config
 from ..dbs import AgentProfile, EnvLogDB, PaperProfileDB, ProgressDB
+from .env_base import BaseMultiAgentEnv
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
-class BaseMultiAgentEnv(ABC):
+class EndMultiAgentEnv(BaseMultiAgentEnv):
     def __init__(
         self,
         env_db: EnvLogDB,
@@ -17,13 +16,13 @@ class BaseMultiAgentEnv(ABC):
         paper_db: PaperProfileDB,
         config: Config,
     ) -> None:
-        self.env_run_num = 0
-        self.env_db = env_db
-        self.progress_db = progress_db
-        self.paper_db = paper_db
-        self.config = config
+        super().__init__(
+            env_db=env_db,
+            progress_db=progress_db,
+            paper_db=paper_db,
+            config=config,
+        )
 
-    @abstractmethod
     def on_enter(
         self,
         time_step: int,
@@ -32,12 +31,10 @@ class BaseMultiAgentEnv(ABC):
         agent_roles: Optional[List[Role]] = None,
         agent_models: Optional[List[str]] = None,
     ) -> None:
-        pass
+        return
 
-    @abstractmethod
     def update(self) -> None:
-        pass
+        return
 
-    @abstractmethod
     def on_exit(self) -> bool:
-        pass
+        return False

@@ -11,7 +11,7 @@ from research_town.dbs import (
     ResearchReviewForPaperSubmission,
 )
 from research_town.envs import PaperSubmissionMultiAgentEnv, PeerReviewMultiAgentEnv
-from tests.constants.db_constants import (
+from tests.constants.data_constants import (
     agent_profile_A,
     agent_profile_B,
     research_paper_submission_A,
