@@ -46,9 +46,6 @@ class BaseResearchEngine:
     def add_transition(self, from_env: str, pass_or_fail: bool, to_env: str) -> None:
         self.transitions[from_env][pass_or_fail] = to_env
 
-    def set_transitions(self, transitions: Dict[str, Dict[bool, str]]) -> None:
-        self.transitions = transitions
-
     def set_initial_env(self, name: str) -> None:
         self.agent_db.reset_role_availability()
         if name not in self.envs:
