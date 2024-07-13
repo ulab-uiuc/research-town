@@ -88,16 +88,16 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
 
     @beartype
     def on_exit(self) -> bool:
-        self.progress_db.update(self.meta_review)
+        self.progress_db.add(self.meta_review)
         for rebuttal in self.rebuttals:
-            self.progress_db.update(rebuttal)
+            self.progress_db.add(rebuttal)
         for review in self.reviews:
-            self.progress_db.update(review)
+            self.progress_db.add(review)
         self.env_run_num += 1
         return True
 
     @beartype
-    def update(self) -> None:
+    def run(self) -> None:
         # Paper Reviewing
         self.reviews: List[ResearchReviewForPaperSubmission] = []
         for reviewer in self.reviewers:
@@ -135,21 +135,21 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
             )
 
         # Paper Meta Reviewing
-        meta_review = self.chair.write_meta_review(
+        self.meta_review = self.chair.write_meta_review(
             paper=self.paper,
             reviews=self.reviews,
             rebuttals=self.rebuttals,
             config=self.config,
         )
-        self.progress_db.add(meta_review)
+        self.progress_db.add(self.meta_review)
         self.env_db.add(
             AgentPaperMetaReviewWritingLog(
                 time_step=self.time_step,
-                paper_pk=meta_review.paper_pk,
+                paper_pk=self.meta_review.paper_pk,
                 agent_pk=self.chair.profile.pk,
-                summary=meta_review.summary,
-                strength=meta_review.strength,
-                weakness=meta_review.weakness,
-                decision=meta_review.decision,
+                summary=self.meta_review.summary,
+                strength=self.meta_review.strength,
+                weakness=self.meta_review.weakness,
+                decision=self.meta_review.decision,
             )
         )

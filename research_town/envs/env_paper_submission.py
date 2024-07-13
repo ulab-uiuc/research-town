@@ -84,14 +84,16 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
     def on_exit(
         self,
     ) -> bool:
-        self.progress_db.update(self.insights)
-        self.progress_db.update(self.ideas)
-        self.progress_db.update(self.paper)
+        for insight in self.insights:
+            self.progress_db.add(insight)
+        for idea in self.ideas:
+            self.progress_db.add(idea)
+        self.progress_db.add(self.paper)
         self.env_run_num += 1
         return True
 
     @beartype
-    def update(
+    def run(
         self,
     ) -> None:
         # TODO: support retrieval from database
@@ -106,9 +108,6 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
             ),
         ]
 
-        # TODO: update find collaborator functions with initial task
-        # self.proj_participants: List[BaseResearchAgent] = []
-
         # leader review literature
         self.insights = self.proj_leader.review_literature(
             papers=papers,
@@ -116,7 +115,7 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
             config=self.config,
         )
         for insight in self.insights:
-            self.progress_db.add(self.insight)
+            self.progress_db.add(insight)
         self.env_db.add(
             AgentPaperLiteratureReviewLog(
                 time_step=self.time_step,

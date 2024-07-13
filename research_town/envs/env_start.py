@@ -33,7 +33,7 @@ class StartMultiAgentEnv(BaseMultiAgentEnv):
     ) -> None:
         return
 
-    def update(self) -> None:
+    def run(self) -> None:
         return
 
     def on_exit(self) -> bool:
