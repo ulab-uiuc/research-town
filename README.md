@@ -28,6 +28,8 @@
 2. 🚪 *Environments*: Multi-agent environments, similar to virtual study rooms, where research agents collaborate on tasks like idea discussion, rebuttal writing, or paper writing.
 3. ⚙️ *Engines*: Finite-state machines that manage agent involvement in environments and determine the next steps after task completion. For instance, engines guide agents coming out of idea discussion environment to paper writing environment and help select suitable agents to work together.
 
+## Key features
+
 Different from previous work, **research town** is a comprehensive, interactive, and realistic simulator for research community:
 
 1. ⭕️ *Comprehensive*: It simulates the overall reserach lifecycle from literature review and idea generation, to review writing and meta review decision release.
