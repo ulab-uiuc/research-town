@@ -24,15 +24,15 @@
 
 **Research Town** is a multi-agent platform designed for language agent researchers to study automatic research. It includes three main components:
 
-1. **Agents**: LLM-driven research agents capable of tasks such as reading papers, writing papers, discussing ideas, rebutting arguments, and writing reviews.
-2. **Environments**: Multi-agent environments, similar to virtual study rooms, where research agents collaborate on tasks like idea discussion, rebuttal, or paper writing.
-3. **Engines**: Finite-state machines that manage agent involvement in environments and determine the next steps after task completion. For instance, engines guide agents coming out of idea discussion environment to paper writing environment and help select suitable agents to work together.
+1. 🤖️**Agents**: LLM-driven research agents capable of tasks such as reading papers, writing papers, discussing ideas, rebutting arguments, and writing reviews.
+2. 🏠**Environments**: Multi-agent environments, similar to virtual study rooms, where research agents collaborate on tasks like idea discussion, rebuttal, or paper writing.
+3. ⚙**Engines**: Finite-state machines that manage agent involvement in environments and determine the next steps after task completion. For instance, engines guide agents coming out of idea discussion environment to paper writing environment and help select suitable agents to work together.
 
 Different from previous work, **research town** is a comprehensive, interactive, and realistic simulator for research community:
 
-1. **Comprehensive**: It simulates the overall reserach lifecycle from literature review, idea generation, to paper submission, review writing, until meta review decision release.
-2. **Interactive**: LLM generated research progress like generated idea, paper, and review can be checked and modified by human researchers.
-3. **Realistic**: Each research agent in the town is role-playing a famous human researcher conditioned on their previous research experience.
+1. ⭕**Comprehensive**: It simulates the overall reserach lifecycle from literature review, idea generation, to paper submission, review writing, until meta review decision release.
+2. ⏯️**Interactive**: LLM generated research progress like generated idea, paper, and review can be checked and modified by human researchers.
+3. 👩🏽‍🔬**Realistic**: Each research agent in the town is role-playing a famous human researcher conditioned on their previous research experience.
 
 ## Get started
 
