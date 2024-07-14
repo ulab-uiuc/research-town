@@ -65,10 +65,10 @@ class ComplexDB:
         for class_name, db in self.dbs.items():
             db.save_to_pkl(save_path, class_name=class_name)
 
-    def load_from_json(self, file_name: str) -> None:
+    def load_from_json(self, save_path: str, with_embed: bool = False) -> None:
         for class_name, db in self.dbs.items():
-            db.load_from_json(f'{file_name}_{class_name}.json')
+            db.load_from_json(save_path, with_embed=with_embed, class_name=class_name)
 
-    def load_from_pkl(self, file_name: str) -> None:
+    def load_from_pkl(self, save_path: str, with_embed: bool = False) -> None:
         for class_name, db in self.dbs.items():
-            db.load_from_pkl(f'{file_name}_{class_name}.pkl')
+            db.load_from_pkl(save_path, class_name=class_name)
