@@ -1,4 +1,4 @@
-from tempfile import NamedTemporaryFile
+from tempfile import TemporaryDirectory
 
 from beartype.typing import Any, Dict, List
 
@@ -96,21 +96,20 @@ def test_envlogdb_basic() -> None:
     results = db.get(AgentPaperReviewWritingLog, **conditions)
     assert len(results) == 1
 
-    with NamedTemporaryFile(delete=False) as temp_file:
-        file_name = temp_file.name
-    db.save_to_json(file_name)
+    with TemporaryDirectory() as temp_dir:
+        db.save_to_json(temp_dir)
 
-    new_db = EnvLogDB()
-    new_db.load_from_json(file_name)
+        new_db = EnvLogDB()
+        new_db.load_from_json(temp_dir)
 
-    assert len(new_db.dbs['AgentPaperReviewWritingLog'].data) == 1
-    assert len(new_db.dbs['AgentPaperRebuttalWritingLog'].data) == 1
-    assert len(new_db.dbs['AgentPaperMetaReviewWritingLog'].data) == 1
-    assert len(new_db.dbs['AgentAgentIdeaDiscussionLog'].data) == 1
-    assert (
-        new_db.dbs['AgentPaperReviewWritingLog'].data[new_review_log.pk].summary
-        == 'Bad paper'
-    )
+        assert len(new_db.dbs['AgentPaperReviewWritingLog'].data) == 1
+        assert len(new_db.dbs['AgentPaperRebuttalWritingLog'].data) == 1
+        assert len(new_db.dbs['AgentPaperMetaReviewWritingLog'].data) == 1
+        assert len(new_db.dbs['AgentAgentIdeaDiscussionLog'].data) == 1
+        assert (
+            new_db.dbs['AgentPaperReviewWritingLog'].data[new_review_log.pk].summary
+            == 'Bad paper'
+        )
 
 
 def test_progressdb_basic() -> None:
@@ -145,14 +144,13 @@ def test_progressdb_basic() -> None:
     remaining_results = db.get(ResearchIdea, **content3)
     assert len(remaining_results) == 0
 
-    with NamedTemporaryFile(delete=False) as temp_file:
-        file_name = temp_file.name
-    db.save_to_json(file_name)
+    with TemporaryDirectory() as temp_dir:
+        db.save_to_json(temp_dir)
 
-    new_db = ProgressDB()
-    new_db.load_from_json(file_name)
+        new_db = ProgressDB()
+        new_db.load_from_json(temp_dir)
 
-    assert len(new_db.dbs['ResearchIdea'].data) == 2
+        assert len(new_db.dbs['ResearchIdea'].data) == 2
 
 
 def test_agentprofiledb_basic() -> None:
@@ -194,9 +192,8 @@ def test_agentprofiledb_basic() -> None:
     assert len(results) == 1
     assert results[0].name == 'Jane Smith'
 
-    with NamedTemporaryFile(delete=False) as temp_file:
-        file_name = temp_file.name
-    db.save_to_json(file_name)
+    with TemporaryDirectory() as temp_dir:
+        db.save_to_json(temp_dir)
 
 
 def test_paperprofiledb_basic() -> None:
@@ -262,13 +259,12 @@ def test_paperprofiledb_basic() -> None:
     assert results[0].title == 'Updated Sample Paper 1'
     assert results[1].title == 'Sample Paper 3'
 
-    with NamedTemporaryFile(delete=False) as temp_file:
-        file_name = temp_file.name
-    db.save_to_json(file_name)
+    with TemporaryDirectory() as temp_dir:
+        db.save_to_json(temp_dir)
 
-    new_db = PaperProfileDB()
-    new_db.load_from_json(file_name)
+        new_db = PaperProfileDB()
+        new_db.load_from_json(temp_dir)
 
-    assert len(new_db.data) == 2
-    assert paper1.pk in new_db.data
-    assert new_db.data[paper1.pk].title == 'Updated Sample Paper 1'
+        assert len(new_db.data) == 2
+        assert paper1.pk in new_db.data
+        assert new_db.data[paper1.pk].title == 'Updated Sample Paper 1'

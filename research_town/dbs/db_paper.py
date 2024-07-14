@@ -4,6 +4,7 @@ from typing import List, TypeVar
 
 from transformers import BertModel, BertTokenizer
 
+from ..utils.logger import logger
 from ..utils.paper_collector import get_daily_papers
 from ..utils.retriever import get_embed, rank_topk
 from .data import BaseDBData, PaperProfile
@@ -64,6 +65,7 @@ class PaperProfileDB(BaseDB[PaperProfile]):
         )
         indexes = [index for topk_index in topk_indexes for index in topk_index]
         match_paper_profiles = [paper_profiles[index] for index in indexes]
+        logger.info(f'Matched papers: {match_paper_profiles}')
         return match_paper_profiles
 
     def transform_to_embed(self, file_name: str) -> None:
