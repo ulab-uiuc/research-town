@@ -30,12 +30,12 @@ class AgentProfileDB(BaseDB[AgentProfile]):
                 author=name, paper_max_num=10
             )
             publication_info = '; '.join(
-                [f"{details['abstract']}" for details in paper_abstracts]
+                [f'{abstract}' for abstract in paper_abstracts]
             )
             bio = write_bio_prompting(
                 publication_info=publication_info,
                 prompt_template=config.prompt_template.write_bio,
-            )
+            )[0]
             agent_profile = AgentProfile(
                 name=name,
                 bio=bio,

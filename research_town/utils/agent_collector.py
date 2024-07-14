@@ -29,7 +29,7 @@ def collect_paper_abstracts_and_coauthors(
     co_authors: Dict[str, int] = {}
     search = Search(query=f'au:{author}', max_results=10)
     for result in tqdm(
-        client.results(search), desc='Processing Author Papers', unit='Paper'
+        client.results(search), desc=f"Collecting {author}'s papers", unit='Paper'
     ):
         if author not in ', '.join(author.name for author in result.authors):
             continue

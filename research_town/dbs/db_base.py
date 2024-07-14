@@ -2,6 +2,7 @@ import json
 import pickle
 from typing import Any, Dict, Generic, List, Type, TypeVar, Union
 
+from ..utils.logger import logger
 from .data import BaseDBData
 
 T = TypeVar('T', bound=BaseDBData)
@@ -14,6 +15,9 @@ class BaseDB(Generic[T]):
 
     def add(self, data: T) -> None:
         self.data[data.pk] = data
+        logger.info(
+            f"Creating instance of '{data.__class__.__name__}': '{data.model_dump()}'"
+        )
 
     def update(self, pk: str, updates: Dict[str, Any]) -> bool:
         if pk in self.data:

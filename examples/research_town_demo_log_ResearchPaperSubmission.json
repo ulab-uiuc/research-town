@@ -1,0 +1,9 @@
+{
+  "2538cdd7-cfa1-4df9-afa9-a75644b5f0bf": {
+    "pk": "2538cdd7-cfa1-4df9-afa9-a75644b5f0bf",
+    "abstract": "**Abstract:**\n\nIn this paper, we propose a novel hybrid Graph Neural Network (GNN) architecture that integrates Position-aware GNNs (P-GNNs) and Identity-aware GNNs (ID-GNNs) to enhance the expressiveness and performance of GNNs in diverse graph-based tasks. By leveraging both positional and identity information, our hybrid framework captures more complex graph structures and relationships, leading to improved predictive accuracy in applications such as molecular property prediction and social network analysis. Additionally, we incorporate Topological Data Analysis (TDA) techniques to capture higher-order topological features, which are not easily represented by traditional graph metrics. This integration enhances the GNN's ability to understand complex structures in data, such as biological networks and 3D point clouds, and helps quantify the generalization gap in GNNs. Our experimental results demonstrate that the proposed hybrid GNN architecture, augmented with TDA, significantly outperforms existing models across various datasets and tasks. Furthermore, we explore the potential of AutoML-driven GNN customization for edge computing environments, optimizing the trade-off between computational efficiency and predictive performance. This makes our approach practical for real-time applications on resource-constrained devices, such as those found in NextG (5G and beyond) networks. Our findings highlight the practical relevance and effectiveness of our hybrid GNN framework, paving the way for more robust and adaptable graph-based learning models.",
+    "title": null,
+    "content": null,
+    "conference": null
+  }
+}

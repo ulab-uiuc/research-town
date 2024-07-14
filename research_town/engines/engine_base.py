@@ -1,3 +1,4 @@
+import os
 from collections import defaultdict
 from typing import Any, Callable, Dict, List, Tuple
 
@@ -179,3 +180,12 @@ class BaseResearchEngine:
             self.curr_env.run()
             self.time_step += 1
             self.transition()
+
+    def save(self, save_file_path: str) -> None:
+        if not os.path.exists(os.path.dirname(save_file_path)):
+            os.makedirs(os.path.dirname(save_file_path))
+
+        self.agent_db.save_to_json(save_file_path)
+        self.paper_db.save_to_json(save_file_path)
+        self.progress_db.save_to_json(save_file_path)
+        self.env_db.save_to_json(save_file_path)
