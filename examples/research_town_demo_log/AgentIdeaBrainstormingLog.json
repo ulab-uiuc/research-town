@@ -1,0 +1,16 @@
+{
+  "af27601e-d00b-44bb-99e7-15e4adde7637": {
+    "pk": "af27601e-d00b-44bb-99e7-15e4adde7637",
+    "timestep": 0,
+    "idea_pk": "1a093c9c-2504-4f53-91fb-7abfbc33c73f",
+    "agent_pk": "92d38108-c048-4133-8d27-09bef7c21d3d",
+    "other_agent_pks": []
+  },
+  "6bf906a0-0793-4fc9-9ab3-ddf776e14e4e": {
+    "pk": "6bf906a0-0793-4fc9-9ab3-ddf776e14e4e",
+    "timestep": 0,
+    "idea_pk": "42725525-ca67-4dfb-9a3c-c3496e159c65",
+    "agent_pk": "92d38108-c048-4133-8d27-09bef7c21d3d",
+    "other_agent_pks": []
+  }
+}

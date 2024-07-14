@@ -7,6 +7,7 @@ from transformers import BertModel, BertTokenizer
 from ..configs import Config
 from ..utils.agent_collector import collect_paper_abstracts_and_coauthors
 from ..utils.agent_prompter import write_bio_prompting
+from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
 from .data import AgentProfile, BaseDBData
 from .db_base import BaseDB
@@ -65,6 +66,7 @@ class AgentProfileDB(BaseDB[AgentProfile]):
         )
         indexes = [index for topk_index in topk_indexes for index in topk_index]
         match_agent_profiles = [agent_profiles[index] for index in indexes]
+        logger.info(f'Matched agents: {match_agent_profiles}')
         return match_agent_profiles
 
     def transform_to_embed(self, file_name: str) -> None:

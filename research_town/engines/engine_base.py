@@ -172,9 +172,6 @@ class BaseResearchEngine:
             },
         )[0]
 
-    def recover(self) -> None:
-        pass
-
     def run(self) -> None:
         while self.curr_env_name != 'end':
             self.curr_env.run()
@@ -182,10 +179,13 @@ class BaseResearchEngine:
             self.transition()
 
     def save(self, save_file_path: str) -> None:
-        if not os.path.exists(os.path.dirname(save_file_path)):
-            os.makedirs(os.path.dirname(save_file_path))
+        if not os.path.exists(save_file_path):
+            os.makedirs(save_file_path)
 
         self.agent_db.save_to_json(save_file_path)
         self.paper_db.save_to_json(save_file_path)
         self.progress_db.save_to_json(save_file_path)
         self.env_db.save_to_json(save_file_path)
+
+    def load(self) -> None:
+        pass

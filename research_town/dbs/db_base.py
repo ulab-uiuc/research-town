@@ -1,6 +1,7 @@
 import json
+import os
 import pickle
-from typing import Any, Dict, Generic, List, Type, TypeVar, Union
+from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from ..utils.logger import logger
 from .data import BaseDBData
@@ -40,16 +41,24 @@ class BaseDB(Generic[T]):
                 result.append(data)
         return result
 
-    def save_to_json(self, file_name: str) -> None:
-        with open(file_name, 'w') as f:
+    def save_to_json(self, save_path: str, class_name: Optional[str] = None) -> None:
+        if class_name is None:
+            file_name = f'{self.__class__.__name__}.json'
+        else:
+            file_name = f'{class_name}.json'
+        with open(os.path.join(save_path, file_name), 'w') as f:
             json.dump(
                 {pk: data.model_dump() for pk, data in self.data.items()},
                 f,
                 indent=2,
             )
 
-    def save_to_pkl(self, file_name: str) -> None:
-        with open(file_name, 'wb') as pkl_file:
+    def save_to_pkl(self, save_path: str, class_name: Optional[str] = None) -> None:
+        if class_name is None:
+            file_name = f'{self.__class__.__name__}.json'
+        else:
+            file_name = f'{class_name}.json'
+        with open(os.join(save_path, file_name), 'wb') as pkl_file:
             pickle.dump(self.data_embed, pkl_file)
 
     def load_from_json(self, file_name: str, with_embed: bool = False) -> None:

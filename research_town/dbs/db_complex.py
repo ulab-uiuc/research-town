@@ -57,13 +57,13 @@ class ComplexDB:
         else:
             raise ValueError(f'Unsupported type: {class_name}')
 
-    def save_to_json(self, file_name: str) -> None:
+    def save_to_json(self, save_path: str) -> None:
         for class_name, db in self.dbs.items():
-            db.save_to_json(f'{file_name}_{class_name}.json')
+            db.save_to_json(save_path, class_name=class_name)
 
-    def save_to_pkl(self, file_name: str) -> None:
+    def save_to_pkl(self, save_path: str) -> None:
         for class_name, db in self.dbs.items():
-            db.save_to_pkl(f'{file_name}_{class_name}.pkl')
+            db.save_to_pkl(save_path, class_name=class_name)
 
     def load_from_json(self, file_name: str) -> None:
         for class_name, db in self.dbs.items():

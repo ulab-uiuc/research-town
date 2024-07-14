@@ -1,0 +1,15 @@
+{
+  "9d42aad8-04fc-467a-ad28-e54ab5e8db1d": {
+    "pk": "9d42aad8-04fc-467a-ad28-e54ab5e8db1d",
+    "timestep": 0,
+    "paper_pks": [
+      "084a06d0-20fb-4454-a315-9112f3f55f83",
+      "40521cf1-a09e-4540-9c01-eeb7fc17656d"
+    ],
+    "agent_pk": "92d38108-c048-4133-8d27-09bef7c21d3d",
+    "insight_pks": [
+      "e2bf8c89-8a72-4889-b621-39f52cb13c9c"
+    ],
+    "other_agent_pks": []
+  }
+}
