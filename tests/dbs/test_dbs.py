@@ -268,3 +268,72 @@ def test_paperprofiledb_basic() -> None:
         assert len(new_db.data) == 2
         assert paper1.pk in new_db.data
         assert new_db.data[paper1.pk].title == 'Updated Sample Paper 1'
+
+def test_agent_match() -> None:
+    db = AgentProfileDB()
+    agent1 = AgentProfile(
+        name='John Doe', bio='Researcher in AI', institute='AI Institute'
+    )
+    agent2 = AgentProfile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    agent3 = AgentProfile(name='Jane kid', bio='Expert in RL', institute='RL Lab')
+    agent_profile_l=[agent1,agent2,agent3]
+    lead_agent_profile='Researcher in CV'
+    match_agent_profiles=db.match(query=lead_agent_profile, agent_profiles=agent_profile_l, num= 2)
+    assert match_agent_profiles
+    assert len(match_agent_profiles)==2
+
+def test_paper_match() -> None:
+    db = PaperProfileDB()
+    paper1 = PaperProfile(
+        title='Sample Paper 1',
+        abstract='This is the abstract for paper 1',
+        authors=['Author A', 'Author B'],
+        url='http://example.com/paper1',
+        timestamp=1617181723,
+        keywords=['AI', 'ML'],
+        domain='Computer Science',
+        citation_count=10,
+    )
+    paper2 = PaperProfile(
+        title='Sample Paper 2',
+        abstract='This is the abstract for paper 2',
+        authors=['Author C'],
+        url='http://example.com/paper2',
+        timestamp=1617181756,
+        keywords=['Quantum Computing'],
+        domain='Physics',
+        citation_count=5,
+    )
+    paper_3 = PaperProfile(
+        title='Sample Paper 3',
+        abstract='This is the abstract for paper 3',
+        authors=['Author D'],
+        url='http://example.com/paper3',
+        timestamp=1617181789,
+        keywords=['Blockchain'],
+        domain='Computer Science',
+        citation_count=2,
+    )
+    agent_profile_l=[paper1,paper2,paper_3]
+    lead_agent_profile='Researcher in CV'
+    match_paper_profiles=db.match(query=lead_agent_profile, paper_profiles=agent_profile_l, num= 2)
+    assert match_paper_profiles
+    assert len(match_paper_profiles)==2
+
+def test_pull_agents() -> None:
+    db = AgentProfileDB()
+    agent_names = [
+        'Jiaxuan You',
+        'Jure Leskovec'
+    ]
+    db.pull_agents(agent_names=agent_names)
+    assert db.data.keys()
+    assert len(db.data.keys())==2
+    assert db.data.values()
+
+def test_pull_papers() -> None:
+    db = PaperProfileDB()
+    db.pull_papers(num=2, domain='Data Mining')
+    assert db.data.keys()
+    assert len(db.data.keys())==2
+    assert db.data.values()
