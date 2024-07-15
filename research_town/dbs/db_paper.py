@@ -24,17 +24,11 @@ class PaperProfileDB(BaseDB[PaperProfile]):
         )
 
     def pull_papers(self, num: int, domain: str) -> None:
-        data, _ = get_daily_papers(query='ti:' + domain, max_results=num)
-        for value in data.values():
-            for title, abstract, authors, url, domain, timestamp in zip(
-                value['title'],
-                value['abstract'],
-                value['authors'],
-                value['url'],
-                value['domain'],
-                value['timestamp'],
-            ):
-                paper = PaperProfile(
+        data, _ = get_daily_papers(query=f'ti:{domain}', max_results=num)
+
+        for paper_data in data.values():
+            papers = [
+                PaperProfile(
                     title=title,
                     abstract=abstract,
                     authors=authors,
@@ -42,6 +36,17 @@ class PaperProfileDB(BaseDB[PaperProfile]):
                     domain=domain,
                     timestamp=int(timestamp),
                 )
+                for title, abstract, authors, url, domain, timestamp in zip(
+                    paper_data['title'],
+                    paper_data['abstract'],
+                    paper_data['authors'],
+                    paper_data['url'],
+                    paper_data['domain'],
+                    paper_data['timestamp'],
+                )
+            ]
+
+            for paper in papers:
                 self.add(paper)
 
     def match(
