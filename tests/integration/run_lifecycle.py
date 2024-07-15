@@ -17,7 +17,6 @@ from ..constants.db_constants import (
 def test_research_lifecycle_two_stage(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    example_agent_db.reset_role_avaialbility()
     engine = LifecycleResearchEngine(
         agent_db=example_agent_db,
         paper_db=example_paper_db,

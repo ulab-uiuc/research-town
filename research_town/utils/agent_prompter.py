@@ -22,7 +22,7 @@ def write_bio_prompting(
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
-    top_p: Optional[float] = 0,
+    top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> List[str]:
     """

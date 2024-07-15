@@ -1,0 +1,9 @@
+{
+  "8e4c1c61-26d4-4d37-9f2e-b405426cf921": {
+    "pk": "8e4c1c61-26d4-4d37-9f2e-b405426cf921",
+    "abstract": "**Abstract:**\n\nIn this paper, we propose a novel approach that integrates Topology-Aware AutoML with Edge Computing-Enhanced Graph Neural Networks (GNNs) to address the challenges of real-time data processing and analysis in NextG networks. By leveraging topological data analysis (TDA) within AutoML frameworks, we guide the search process for optimal GNN architectures using topological features of the graph, thereby improving the efficiency and effectiveness of model discovery. Concurrently, we explore the deployment of these optimized GNNs in cloud/edge computing environments to handle large-scale, real-time graph data, enhancing the scalability and responsiveness of network services. Our approach is particularly suited for applications in network security, real-time recommendation systems, and industrial automation, where the graph structure is dynamic and computational resources are distributed. Experimental results demonstrate that our topology-aware AutoML framework significantly outperforms traditional methods in discovering GNN architectures that generalize well across diverse datasets and tasks. Furthermore, the integration with edge computing environments ensures that these models can be deployed efficiently, providing robust and scalable solutions for NextG networks. This dual innovation not only advances the state-of-the-art in GNN optimization but also paves the way for practical, real-time applications in highly distributed and resource-intensive network environments.",
+    "title": null,
+    "content": null,
+    "conference": null
+  }
+}
