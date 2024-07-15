@@ -1,7 +1,9 @@
 from tempfile import TemporaryDirectory
+from unittest.mock import MagicMock, patch
 
 from beartype.typing import Any, Dict, List
 
+from research_town.configs import Config
 from research_town.dbs import (
     AgentAgentIdeaDiscussionLog,
     AgentPaperMetaReviewWritingLog,
@@ -15,6 +17,7 @@ from research_town.dbs import (
     ProgressDB,
     ResearchIdea,
 )
+from tests.mocks.mocking_func import mock_prompting
 
 
 def test_envlogdb_basic() -> None:
@@ -269,6 +272,7 @@ def test_paperprofiledb_basic() -> None:
         assert paper1.pk in new_db.data
         assert new_db.data[paper1.pk].title == 'Updated Sample Paper 1'
 
+
 def test_agent_match() -> None:
     db = AgentProfileDB()
     agent1 = AgentProfile(
@@ -276,11 +280,14 @@ def test_agent_match() -> None:
     )
     agent2 = AgentProfile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     agent3 = AgentProfile(name='Jane kid', bio='Expert in RL', institute='RL Lab')
-    agent_profile_l=[agent1,agent2,agent3]
-    lead_agent_profile='Researcher in CV'
-    match_agent_profiles=db.match(query=lead_agent_profile, agent_profiles=agent_profile_l, num= 2)
+    agent_profile_l = [agent1, agent2, agent3]
+    lead_agent_profile = 'Researcher in CV'
+    match_agent_profiles = db.match(
+        query=lead_agent_profile, agent_profiles=agent_profile_l, num=2
+    )
     assert match_agent_profiles
-    assert len(match_agent_profiles)==2
+    assert len(match_agent_profiles) == 2
+
 
 def test_paper_match() -> None:
     db = PaperProfileDB()
@@ -314,26 +321,30 @@ def test_paper_match() -> None:
         domain='Computer Science',
         citation_count=2,
     )
-    agent_profile_l=[paper1,paper2,paper_3]
-    lead_agent_profile='Researcher in CV'
-    match_paper_profiles=db.match(query=lead_agent_profile, paper_profiles=agent_profile_l, num= 2)
+    agent_profile_l = [paper1, paper2, paper_3]
+    lead_agent_profile = 'Researcher in CV'
+    match_paper_profiles = db.match(
+        query=lead_agent_profile, paper_profiles=agent_profile_l, num=2
+    )
     assert match_paper_profiles
-    assert len(match_paper_profiles)==2
+    assert len(match_paper_profiles) == 2
 
-def test_pull_agents() -> None:
+
+@patch('research_town.utils.agent_prompter.model_prompting')
+def test_pull_agents(mock_model_prompting: MagicMock) -> None:
+    mock_model_prompting.side_effect = mock_prompting
+
     db = AgentProfileDB()
-    agent_names = [
-        'Jiaxuan You',
-        'Jure Leskovec'
-    ]
-    db.pull_agents(agent_names=agent_names)
+    agent_names = ['Jiaxuan You', 'Jure Leskovec']
+    db.pull_agents(agent_names=agent_names, config=Config())
     assert db.data.keys()
-    assert len(db.data.keys())==2
+    assert len(db.data.keys()) == 2
     assert db.data.values()
+
 
 def test_pull_papers() -> None:
     db = PaperProfileDB()
     db.pull_papers(num=2, domain='Data Mining')
     assert db.data.keys()
-    assert len(db.data.keys())==2
+    assert len(db.data.keys()) == 2
     assert db.data.values()
