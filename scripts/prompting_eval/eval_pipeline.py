@@ -14,9 +14,18 @@ from research_town.evaluators import (
     ResearchPaperSubmissionQualityEvaluator,
     ResearchReviewForPaperSubmissionQualityEvaluator,
 )
-
+from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB, ProgressDB
+from research_town.engines import LifecycleResearchEngine
+from research_town.dbs import AgentProfile  # Agent
+from research_town.dbs import PaperProfile  # Paper
+from research_town.dbs import ResearchIdea  # Idea
+from research_town.dbs import ResearchInsight  # Trend
+from research_town.dbs import ResearchMetaReviewForPaperSubmission  # Meta Review
+from research_town.dbs import ResearchPaperSubmission  # Paper
+from research_town.dbs import ResearchRebuttalForPaperSubmission  # Rebuttal
+from research_town.dbs import ResearchReviewForPaperSubmission  # Review
 config_file_path = './configs/default_config.yaml'
-
+save_file_path='./research_town_demo_log'
 
 # Function to sanitize the model name
 def sanitize_filename(filename: str) -> str:
@@ -299,6 +308,70 @@ class pipeline_eval_db(object):
         )
 
 
+def pipeline_eval(
+    insight: ResearchInsight,
+    idea: ResearchIdea,
+    paper: ResearchPaperSubmission,
+    reviews: List[ResearchReviewForPaperSubmission],
+    rebuttal: ResearchRebuttalForPaperSubmission,
+    meta_review: ResearchMetaReviewForPaperSubmission,
+    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+) -> None: # interface for pipeline evaluation
+
+    # Serialize Logs
+    insight_serialize = f'content: {insight.content}'
+    idea_serialize = f'content: {idea.content}'
+    paper_serialize = {
+        'title': paper.title,
+        'abstract': paper.abstract,
+        'conference': paper.conference,
+    }
+    review_serialize = f'score: {reviews.score}\nreview summary: {reviews.summary}\nreview strength: {reviews.strength}\nreview weakness: {reviews.weakness}'
+    meta_review_serialize = f'decision: {meta_review.decision}\nmeta review summary: {meta_review.summary}\nmeta review strength: {meta_review.strength}\nmeta review weakness: {meta_review.weakness}'
+
+    # Create Evaluators
+    # Todo(jinwei): add more evaluators for the whole pipeline
+    config = Config(config_file_path)
+    idea_quality_evaluator = ResearchIdeaQualityEvaluator(
+        model_name=model_name, config=config
+    )
+    paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(
+        model_name=model_name, config=config
+    )
+    review_quality_evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
+        model_name=model_name, config=config
+    )
+    # Generate Evaluation
+    idea_quality = idea_quality_evaluator.eval(
+        **{'idea': idea_serialize, 'trend': insight_serialize}
+    )
+    paper_quality = paper_quality_evaluator.eval(
+        **{
+            'idea': idea_serialize,
+            'trend': insight_serialize,
+            'paper': paper_serialize,
+        }
+    )
+    review_quality = review_quality_evaluator.eval(
+        **{
+            'idea': idea_serialize,
+            'trend': insight_serialize,
+            'paper': paper_serialize,
+            'review': review_serialize,
+            'decision': meta_review_serialize,
+        }
+    )
+
+    # Save Logs back to dbs
+    # with open('examples/research_eval_demo_log/idea_quality.json', 'w') as file:
+    #     json.dump(idea_quality.model_dump(), file)
+    # with open('examples/research_eval_demo_log/paper_quality.json', 'w') as file:
+    #     json.dump(paper_quality.model_dump(), file)
+    # with open('examples/research_eval_demo_log/review_quality.json', 'w') as file:
+    #     json.dump(review_quality.model_dump(), file)
+
+    
+
 def main(
     data_path: str,
     domain: str,
@@ -306,50 +379,63 @@ def main(
     agent_model_name: str,
     eval_log_num: int,
 ) -> None:
-    # log file to load
-    log_file = os.path.join(
-        data_path,
-        'eval_data',
-        'pipeline_eval_data',
-        f'{agent_model_name}',
-        f'{domain}.json',
-    )
+    # step 1: load the log from file
 
-    # select logs to be evaluated
-    pipeline_eval = pipeline_eval_db()
-    pipeline_eval.load_from_json(log_file)
-    logs2eval = pipeline_eval.select_logs(eval_log_num)
-    # start evaluation for the pipeline logs
+    # step 2: build databases
 
-    for idx, paper_review in enumerate(
-        tqdm(
-            logs2eval,
-            desc='Evaluate pipeline logs',
-            unit='pipeline logs of research town',
-        )
-    ):
-        if idx >= eval_log_num:
-            break
-        pipeline_eval.eval_research_pipeline(
-            research_log=paper_review, model_name=evaluator_model_name
-        )
+    # step 3: evaluations
 
-    # calculate the average scores
-    pipeline_eval.calculate_avg_scores()
-    # calculate the variance scores
-    pipeline_eval.calculate_variance_scores()
-    # save the evaluation results
-    # Sanitize the model name to avoid file path issues
-    sanitized_model_name = sanitize_filename(evaluator_model_name)
-    output_file = os.path.join(
-        data_path,
-        'eval_data',
-        'pipeline_eval_data',
-        f'{agent_model_name}',
-        'output',
-        f'output_pipeline_eval_{domain}_agent-model-{agent_model_name}_p{eval_log_num}_eval_by_{sanitized_model_name}.json',
-    )
-    pipeline_eval.save_to_file(output_file)
+    # step 4: store the evaluation results to database
+
+    # step 5: save the database logs with evaluation results to file
+
+    pass
+
+
+    # # log file to load
+    # log_file = os.path.join(
+    #     data_path,
+    #     'eval_data',
+    #     'pipeline_eval_data',
+    #     f'{agent_model_name}',
+    #     f'{domain}.json',
+    # )
+
+    # # select logs to be evaluated
+    # pipeline_eval = pipeline_eval_db()
+    # pipeline_eval.load_from_json(log_file)
+    # logs2eval = pipeline_eval.select_logs(eval_log_num)
+    # # start evaluation for the pipeline logs
+
+    # for idx, paper_review in enumerate(
+    #     tqdm(
+    #         logs2eval,
+    #         desc='Evaluate pipeline logs',
+    #         unit='pipeline logs of research town',
+    #     )
+    # ):
+    #     if idx >= eval_log_num:
+    #         break
+    #     pipeline_eval.eval_research_pipeline(
+    #         research_log=paper_review, model_name=evaluator_model_name
+    #     )
+
+    # # calculate the average scores
+    # pipeline_eval.calculate_avg_scores()
+    # # calculate the variance scores
+    # pipeline_eval.calculate_variance_scores()
+    # # save the evaluation results
+    # # Sanitize the model name to avoid file path issues
+    # sanitized_model_name = sanitize_filename(evaluator_model_name)
+    # output_file = os.path.join(
+    #     data_path,
+    #     'eval_data',
+    #     'pipeline_eval_data',
+    #     f'{agent_model_name}',
+    #     'output',
+    #     f'output_pipeline_eval_{domain}_agent-model-{agent_model_name}_p{eval_log_num}_eval_by_{sanitized_model_name}.json',
+    # )
+    # pipeline_eval.save_to_file(output_file)
 
 
 if __name__ == '__main__':
