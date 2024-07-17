@@ -39,13 +39,13 @@ class ResearchPaperSubmissionEvalOutput(BaseEvalOutput):
     pass
 
 
-class ResearchReviewForPaperSubmissionEvalOutput(BaseEvalOutput):
+class ResearchReviewEvalOutput(BaseEvalOutput):
     pass
 
 
-class ResearchRebuttalForPaperSubmissionEvalOutput(BaseEvalOutput):
+class ResearchRebuttalEvalOutput(BaseEvalOutput):
     pass
 
 
-class ResearchMetaReviewForPaperSubmissionEvalOutput(BaseEvalOutput):
+class ResearchMetaReviewEvalOutput(BaseEvalOutput):
     pass

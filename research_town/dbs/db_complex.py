@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Optional, Type, TypeVar, Union
 
 from .data import BaseDBData
 from .db_base import BaseDB
@@ -7,8 +7,14 @@ T = TypeVar('T', bound=BaseDBData)
 
 
 class ComplexDB:
-    def __init__(self) -> None:
+    def __init__(
+        self, classes_to_register: List[Any], load_file_path: Optional[str] = None
+    ) -> None:
         self.dbs: Dict[str, BaseDB[Any]] = {}
+        for data_class in classes_to_register:
+            self.register_class(data_class)
+        if load_file_path is not None:
+            self.load_from_json(load_file_path)
 
     def register_class(self, data_class: Any) -> None:
         class_name = data_class.__name__
@@ -65,10 +71,10 @@ class ComplexDB:
         for class_name, db in self.dbs.items():
             db.save_to_pkl(save_path, class_name=class_name)
 
-    def load_from_json(self, save_path: str, with_embed: bool = False) -> None:
+    def load_from_json(self, load_path: str, with_embed: bool = False) -> None:
         for class_name, db in self.dbs.items():
-            db.load_from_json(save_path, with_embed=with_embed, class_name=class_name)
+            db.load_from_json(load_path, with_embed=with_embed, class_name=class_name)
 
-    def load_from_pkl(self, save_path: str, with_embed: bool = False) -> None:
+    def load_from_pkl(self, load_path: str, with_embed: bool = False) -> None:
         for class_name, db in self.dbs.items():
-            db.load_from_pkl(save_path, class_name=class_name)
+            db.load_from_pkl(load_path, class_name=class_name)

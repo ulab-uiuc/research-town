@@ -1,3 +1,5 @@
+from typing import Optional
+
 from .data import (
     AgentAgentCollaborationFindingLog,
     AgentAgentIdeaDiscussionLog,
@@ -12,16 +14,17 @@ from .db_complex import ComplexDB
 
 
 class EnvLogDB(ComplexDB):
-    def __init__(self) -> None:
-        super().__init__()
-        for data_class in [
-            AgentPaperLiteratureReviewLog,
-            AgentIdeaBrainstormingLog,
-            AgentAgentCollaborationFindingLog,
-            AgentAgentIdeaDiscussionLog,
-            AgentPaperWritingLog,
-            AgentPaperReviewWritingLog,
-            AgentPaperRebuttalWritingLog,
-            AgentPaperMetaReviewWritingLog,
-        ]:
-            self.register_class(data_class)
+    def __init__(self, load_file_path: Optional[str] = None) -> None:
+        super().__init__(
+            classes_to_register=[
+                AgentPaperLiteratureReviewLog,
+                AgentIdeaBrainstormingLog,
+                AgentAgentCollaborationFindingLog,
+                AgentAgentIdeaDiscussionLog,
+                AgentPaperWritingLog,
+                AgentPaperReviewWritingLog,
+                AgentPaperRebuttalWritingLog,
+                AgentPaperMetaReviewWritingLog,
+            ],
+            load_file_path=load_file_path,
+        )

@@ -1,10 +1,10 @@
 from research_town.dbs import (
     ResearchIdea,
     ResearchInsight,
-    ResearchMetaReviewForPaperSubmission,
+    ResearchMetaReview,
     ResearchPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
-    ResearchReviewForPaperSubmission,
+    ResearchRebuttal,
+    ResearchReview,
 )
 
 
@@ -25,19 +25,19 @@ def test_researchprogress_class_extra_args() -> None:
     assert hasattr(paper, 'additional_attr')
     assert paper.additional_attr == 'extra'
 
-    review = ResearchReviewForPaperSubmission(
+    review = ResearchReview(
         content='Review for a new AI algorithm', additional_attr='extra'
     )
     assert hasattr(review, 'additional_attr')
     assert review.additional_attr == 'extra'
 
-    rebuttal = ResearchRebuttalForPaperSubmission(
+    rebuttal = ResearchRebuttal(
         content='Rebuttal for a new AI algorithm', additional_attr='extra'
     )
     assert hasattr(rebuttal, 'additional_attr')
     assert rebuttal.additional_attr == 'extra'
 
-    meta_review = ResearchMetaReviewForPaperSubmission(
+    meta_review = ResearchMetaReview(
         content='Meta Review for a new AI algorithm', additional_attr='extra'
     )
     assert hasattr(meta_review, 'additional_attr')

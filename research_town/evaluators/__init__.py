@@ -1,10 +1,10 @@
 from .evaluator_output import (
     ResearchIdeaEvalOutput,
     ResearchInsightEvalOutput,
-    ResearchMetaReviewForPaperSubmissionEvalOutput,
+    ResearchMetaReviewEvalOutput,
     ResearchPaperSubmissionEvalOutput,
-    ResearchRebuttalForPaperSubmissionEvalOutput,
-    ResearchReviewForPaperSubmissionEvalOutput,
+    ResearchRebuttalEvalOutput,
+    ResearchReviewEvalOutput,
 )
 from .evaluator_output_format import OutputFormatError
 from .quality_evaluator import (
@@ -13,7 +13,7 @@ from .quality_evaluator import (
     ResearchMetaReviewQualityEvaluator,
     ResearchPaperSubmissionQualityEvaluator,
     ResearchRebuttalQualityEvaluator,
-    ResearchReviewForPaperSubmissionQualityEvaluator,
+    ResearchReviewQualityEvaluator,
 )
 
 __all__ = [
@@ -21,12 +21,12 @@ __all__ = [
     'ResearchInsightEvalOutput',
     'ResearchIdeaEvalOutput',
     'ResearchPaperSubmissionEvalOutput',
-    'ResearchReviewForPaperSubmissionEvalOutput',
-    'ResearchRebuttalForPaperSubmissionEvalOutput',
-    'ResearchMetaReviewForPaperSubmissionEvalOutput',
+    'ResearchReviewEvalOutput',
+    'ResearchRebuttalEvalOutput',
+    'ResearchMetaReviewEvalOutput',
     'ResearchIdeaQualityEvaluator',
     'ResearchPaperSubmissionQualityEvaluator',
-    'ResearchReviewForPaperSubmissionQualityEvaluator',
+    'ResearchReviewQualityEvaluator',
     'ResearchInsightQualityEvaluator',
     'ResearchRebuttalQualityEvaluator',
     'ResearchMetaReviewQualityEvaluator',

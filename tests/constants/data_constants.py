@@ -7,7 +7,10 @@ from research_town.dbs import (
     PaperProfile,
     ResearchIdea,
     ResearchInsight,
+    ResearchMetaReview,
     ResearchPaperSubmission,
+    ResearchRebuttal,
+    ResearchReview,
 )
 
 paper_profile_A = PaperProfile(
@@ -57,6 +60,7 @@ research_insight_B = ResearchInsight(
     content='Another insight',
 )
 
+
 research_paper_submission_A = ResearchPaperSubmission(
     title='A Survey on Machine Learning',
     abstract='This paper surveys the field of machine learning.',
@@ -67,6 +71,62 @@ research_paper_submission_B = ResearchPaperSubmission(
     abstract='This paper surveys the field of graph neural networks.',
 )
 
+research_review_A = ResearchReview(
+    paper_pk=paper_profile_A.pk,
+    reviewer_pk=agent_profile_A.pk,
+    summary='This paper is well-written.',
+    strength='Interesting',
+    weakness='None',
+    score=5,
+)
+
+research_review_B = ResearchReview(
+    paper_pk=paper_profile_A.pk,
+    reviewer_pk=agent_profile_B.pk,
+    summary='This paper is well-written.',
+    strength='Interesting',
+    weakness='None',
+    score=5,
+)
+
+research_review_C = ResearchReview(
+    paper_pk=paper_profile_A.pk,
+    reviewer_pk=agent_profile_C.pk,
+    summary='This paper is well-written.',
+    strength='Interesting',
+    weakness='None',
+    score=5,
+)
+
+research_rebuttal_A = ResearchRebuttal(
+    paper_pk=paper_profile_A.pk,
+    agent_pk=agent_profile_A.pk,
+    content='I have revised the paper.',
+)
+
+research_rebuttal_B = ResearchRebuttal(
+    paper_pk=paper_profile_A.pk,
+    agent_pk=agent_profile_B.pk,
+    content='I have revised the paper.',
+)
+
+research_meta_review_A = ResearchMetaReview(
+    paper_pk=paper_profile_A.pk,
+    agent_pk=agent_profile_A.pk,
+    decision=True,
+    summary='This paper is well-written.',
+    strength='Interesting',
+    weakness='None',
+)
+
+research_meta_review_B = ResearchMetaReview(
+    paper_pk=paper_profile_A.pk,
+    agent_pk=agent_profile_B.pk,
+    decision=True,
+    summary='This paper is well-written.',
+    strength='Interesting',
+    weakness='None',
+)
 
 agent_paper_review_log = AgentPaperReviewWritingLog(
     time_step=0,

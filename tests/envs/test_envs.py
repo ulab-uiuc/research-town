@@ -1,11 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.configs import Config
-from research_town.dbs import (
-    ResearchMetaReviewForPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
-    ResearchReviewForPaperSubmission,
-)
+from research_town.dbs import ResearchMetaReview, ResearchRebuttal, ResearchReview
 from research_town.envs import PaperSubmissionMultiAgentEnv, PeerReviewMultiAgentEnv
 from tests.constants.data_constants import (
     agent_profile_A,
@@ -56,13 +52,13 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
 
     assert isinstance(env.reviews, list)
     assert len(env.reviews) == 2
-    assert isinstance(env.reviews[0], ResearchReviewForPaperSubmission)
+    assert isinstance(env.reviews[0], ResearchReview)
 
     assert isinstance(env.rebuttals, list)
     assert len(env.rebuttals) == 2
-    assert isinstance(env.rebuttals[0], ResearchRebuttalForPaperSubmission)
+    assert isinstance(env.rebuttals[0], ResearchRebuttal)
 
-    assert isinstance(env.meta_review, ResearchMetaReviewForPaperSubmission)
+    assert isinstance(env.meta_review, ResearchMetaReview)
     assert isinstance(env.meta_review.decision, bool)
 
 

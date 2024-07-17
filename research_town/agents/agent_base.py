@@ -7,10 +7,10 @@ from ..dbs import (
     PaperProfile,
     ResearchIdea,
     ResearchInsight,
-    ResearchMetaReviewForPaperSubmission,
+    ResearchMetaReview,
     ResearchPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
-    ResearchReviewForPaperSubmission,
+    ResearchRebuttal,
+    ResearchReview,
 )
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
@@ -131,7 +131,7 @@ class BaseResearchAgent(object):
     @reviewer_required
     def write_review(
         self, paper: ResearchPaperSubmission, config: Config
-    ) -> ResearchReviewForPaperSubmission:
+    ) -> ResearchReview:
         serialized_paper = self.serializer.serialize(paper)
 
         summary, strength, weakness, score = write_review_prompting(
@@ -147,7 +147,7 @@ class BaseResearchAgent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )
-        return ResearchReviewForPaperSubmission(
+        return ResearchReview(
             paper_pk=paper.pk,
             reviewer_pk=self.profile.pk,
             summary=summary,
@@ -161,10 +161,10 @@ class BaseResearchAgent(object):
     def write_meta_review(
         self,
         paper: ResearchPaperSubmission,
-        reviews: List[ResearchReviewForPaperSubmission],
-        rebuttals: List[ResearchRebuttalForPaperSubmission],
+        reviews: List[ResearchReview],
+        rebuttals: List[ResearchRebuttal],
         config: Config,
-    ) -> ResearchMetaReviewForPaperSubmission:
+    ) -> ResearchMetaReview:
         serialized_paper = self.serializer.serialize(paper)
         serialized_reviews = self.serializer.serialize(reviews)
         serialized_rebuttals = self.serializer.serialize(rebuttals)
@@ -185,7 +185,7 @@ class BaseResearchAgent(object):
             stream=config.param.stream,
         )
 
-        return ResearchMetaReviewForPaperSubmission(
+        return ResearchMetaReview(
             paper_pk=paper.pk,
             chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
@@ -201,9 +201,9 @@ class BaseResearchAgent(object):
     def write_rebuttal(
         self,
         paper: ResearchPaperSubmission,
-        review: ResearchReviewForPaperSubmission,
+        review: ResearchReview,
         config: Config,
-    ) -> ResearchRebuttalForPaperSubmission:
+    ) -> ResearchRebuttal:
         serialized_paper = self.serializer.serialize(paper)
         serialized_review = self.serializer.serialize(review)
 
@@ -219,7 +219,7 @@ class BaseResearchAgent(object):
             stream=config.param.stream,
         )[0]
 
-        return ResearchRebuttalForPaperSubmission(
+        return ResearchRebuttal(
             paper_pk=paper.pk,
             reviewer_pk=review.reviewer_pk,
             author_pk=self.profile.pk,

@@ -5,10 +5,10 @@ from beartype.typing import List, Literal
 from research_town.configs import Config
 from research_town.dbs import (
     AgentProfile,
-    ResearchMetaReviewForPaperSubmission,
+    ResearchMetaReview,
     ResearchPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
-    ResearchReviewForPaperSubmission,
+    ResearchRebuttal,
+    ResearchReview,
 )
 from research_town.envs import PaperSubmissionMultiAgentEnv, PeerReviewMultiAgentEnv
 from tests.constants.db_constants import (
@@ -102,7 +102,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         peer_review_env.reviews,
     )
 
-    assert isinstance(meta_review, ResearchMetaReviewForPaperSubmission)
+    assert isinstance(meta_review, ResearchMetaReview)
     assert meta_review.paper_pk == paper.pk
     assert meta_review.decision is True
     assert meta_review.weakness == 'Meta review weakness1'
@@ -111,7 +111,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
 
     assert isinstance(reviews, list)
     assert len(reviews) == 1
-    assert isinstance(reviews[0], ResearchReviewForPaperSubmission)
+    assert isinstance(reviews[0], ResearchReview)
     assert reviews[0].paper_pk == paper.pk
     assert reviews[0].score == 8
     assert reviews[0].weakness == 'Weakness of the paper1'
@@ -120,6 +120,6 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
 
     assert isinstance(rebuttals, list)
     assert len(rebuttals) == 1
-    assert isinstance(rebuttals[0], ResearchRebuttalForPaperSubmission)
+    assert isinstance(rebuttals[0], ResearchRebuttal)
     assert rebuttals[0].content == 'Rebuttal text1'
     assert rebuttals[0].paper_pk == paper.pk
