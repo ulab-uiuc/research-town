@@ -24,7 +24,6 @@ from research_town.evaluators import (
     ResearchReviewEvalOutput,
     ResearchReviewQualityEvaluator,
 )
-from research_town.utils.string_mapper import map_idea_to_str, map_insight_to_str
 
 
 def evaluate_insight_quality(
@@ -32,23 +31,25 @@ def evaluate_insight_quality(
 ) -> ResearchInsightEvalOutput:
     evaluator = ResearchInsightQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
-        insight=map_insight_to_str(insight.model_dump()),
+        model_name=model_name,
+        insight=insight.model_dump(),
     )
 
 
 def evaluate_idea_quality(
-    idea: ResearchIdea, insight: ResearchInsight, model_name: str, config: Config
+    insights: List[ResearchInsight], idea: ResearchIdea, model_name: str, config: Config
 ) -> ResearchIdeaEvalOutput:
     evaluator = ResearchIdeaQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
-        idea=map_idea_to_str(idea.model_dump()),
-        insights=map_insight_to_str(insight.model_dump()),
+        model_name=model_name,
+        insights=[insight.model_dump() for insight in insights],
+        idea=idea.model_dump(),
     )
 
 
 def evaluate_paper_quality(
+    insights: List[ResearchInsight],
     idea: ResearchIdea,
-    insight: ResearchInsight,
     paper: ResearchPaperSubmission,
     model_name: str,
     config: Config,
@@ -57,34 +58,33 @@ def evaluate_paper_quality(
         model_name=model_name, config=config
     )
     return evaluator.eval(
+        insights=[insight.model_dump() for insight in insights],
         idea=idea.model_dump(),
-        insights=insight.model_dump(),
         paper=paper.model_dump(),
     )
 
 
 def evaluate_review_quality(
+    insights: List[ResearchInsight],
     idea: ResearchIdea,
-    insight: ResearchInsight,
     paper: ResearchPaperSubmission,
     review: ResearchReview,
-    meta_review: ResearchMetaReview,
     model_name: str,
     config: Config,
 ) -> ResearchReviewEvalOutput:
     evaluator = ResearchReviewQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
+        model_name=model_name,
+        insights=[insight.model_dump() for insight in insights],
         idea=idea.model_dump(),
-        insights=insight.model_dump(),
         paper=paper.model_dump(),
         review=review.model_dump(),
-        decision=meta_review.model_dump(),
     )
 
 
 def evaluate_rebuttal_quality(
+    insights: List[ResearchInsight],
     idea: ResearchIdea,
-    insight: ResearchInsight,
     paper: ResearchPaperSubmission,
     review: ResearchReview,
     rebuttal: ResearchRebuttal,
@@ -93,8 +93,9 @@ def evaluate_rebuttal_quality(
 ) -> ResearchRebuttalEvalOutput:
     evaluator = ResearchRebuttalQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
+        model_name=model_name,
+        insights=[insight.model_dump() for insight in insights],
         idea=idea.model_dump(),
-        insights=insight.model_dump(),
         paper=paper.model_dump(),
         review=review.model_dump(),
         rebuttal=rebuttal.model_dump(),
@@ -102,8 +103,8 @@ def evaluate_rebuttal_quality(
 
 
 def evaluate_meta_review_quality(
+    insights: List[ResearchInsight],
     idea: ResearchIdea,
-    insight: ResearchInsight,
     paper: ResearchPaperSubmission,
     reviews: List[ResearchReview],
     rebuttals: List[ResearchRebuttal],
@@ -113,8 +114,8 @@ def evaluate_meta_review_quality(
 ) -> ResearchMetaReviewEvalOutput:
     evaluator = ResearchMetaReviewQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
+        insights=[insight.model_dump() for insight in insights],
         idea=idea.model_dump(),
-        insights=insight.model_dump(),
         paper=paper.model_dump(),
         review=[review.model_dump() for review in reviews],
         rebuttal=[rebuttal.model_dump() for rebuttal in rebuttals],
@@ -123,7 +124,7 @@ def evaluate_meta_review_quality(
 
 
 def pipeline_eval(
-    insight: ResearchInsight,
+    insights: List[ResearchInsight],
     idea: ResearchIdea,
     paper: ResearchPaperSubmission,
     reviews: List[ResearchReview],
@@ -132,34 +133,34 @@ def pipeline_eval(
     model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     config: Config = Config(),
 ) -> Tuple[
-    ResearchInsightEvalOutput,
+    List[ResearchInsightEvalOutput],
     ResearchIdeaEvalOutput,
     ResearchPaperSubmissionEvalOutput,
     List[ResearchReviewEvalOutput],
     List[ResearchRebuttalEvalOutput],
     ResearchMetaReviewEvalOutput,
 ]:
-    insight_quality = evaluate_insight_quality(insight, model_name, config)
-    idea_quality = evaluate_idea_quality(idea, insight, model_name, config)
-    paper_quality = evaluate_paper_quality(idea, insight, paper, model_name, config)
+    insights_quality = [
+        evaluate_insight_quality(insight, model_name, config) for insight in insights
+    ]
+    idea_quality = evaluate_idea_quality(insights, idea, model_name, config)
+    paper_quality = evaluate_paper_quality(insights, idea, paper, model_name, config)
     reviews_quality = [
-        evaluate_review_quality(
-            idea, insight, paper, review, meta_review, model_name, config
-        )
+        evaluate_review_quality(insights, idea, paper, review, model_name, config)
         for review in reviews
     ]
     rebuttals_quality = [
         evaluate_rebuttal_quality(
-            idea, insight, paper, review, rebuttal, model_name, config
+            insights, idea, paper, review, rebuttal, model_name, config
         )
         for review, rebuttal in zip(reviews, rebuttals)
     ]
     meta_review_quality = evaluate_meta_review_quality(
-        idea, insight, paper, reviews, rebuttals, meta_review, model_name, config
+        insights, idea, paper, reviews, rebuttals, meta_review, model_name, config
     )
 
     return (
-        insight_quality,
+        insights_quality,
         idea_quality,
         paper_quality,
         reviews_quality,
@@ -176,7 +177,7 @@ def main(
 ) -> None:
     # step 1: load the log from file
     progress_db = ProgressDB(load_file_path)
-    insight = progress_db.get(ResearchInsight)[0]
+    insights = progress_db.get(ResearchInsight)
     idea = progress_db.get(ResearchIdea)[0]
     paper = progress_db.get(ResearchPaperSubmission)[0]
     reviews = progress_db.get(ResearchReview)
@@ -186,14 +187,14 @@ def main(
 
     # step 3: evaluations
     (
-        insight_quality,
+        insights_quality,
         idea_quality,
         paper_quality,
         reviews_quality,
         rebuttals_quality,
         meta_review_quality,
     ) = pipeline_eval(
-        insight=insight,
+        insights=insights,
         idea=idea,
         paper=paper,
         reviews=reviews,
@@ -204,11 +205,12 @@ def main(
     )
 
     # step 4: store the evaluation results to database
-    progress_db.update(
-        ResearchInsight,
-        updates={'eval_score': insight_quality.dimension_scores},
-        pk=insight.pk,
-    )
+    for insight, insight_quality in zip(insights, insights_quality):
+        progress_db.update(
+            ResearchInsight,
+            updates={'eval_score': insight_quality.dimension_scores},
+            pk=insight.pk,
+        )
     progress_db.update(
         ResearchIdea,
         updates={'eval_score': idea_quality.dimension_scores},
