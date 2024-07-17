@@ -21,6 +21,8 @@ def mock_prompting(
     template_config = PromptTemplateConfig()
 
     # Check which template the prompt matches
+    if prompt.startswith(template_config.write_bio.split('{')[0]):
+        return ['Bio1', 'Bio2', 'Bio3']
     if prompt.startswith(template_config.find_collaborators.split('{')[0]):
         return ['Collaborator1', 'Collaborator2', 'Collaborator3']
     elif prompt.startswith(template_config.review_literature.split('{')[0]):
