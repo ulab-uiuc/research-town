@@ -1,246 +1,166 @@
-from typing import List, Tuple
+import json
+from typing import Tuple
 
 from research_town.configs import Config
-from research_town.dbs import (
-    ProgressDB,
-    ResearchIdea,
-    ResearchInsight,
-    ResearchMetaReview,
-    ResearchPaperSubmission,
-    ResearchRebuttal,
-    ResearchReview,
-)
+from research_town.dbs import AgentProfile  # Agent
+from research_town.dbs import PaperProfile  # Paper
+from research_town.dbs import ResearchIdea  # Idea
+from research_town.dbs import ResearchInsight  # Trend
+from research_town.dbs import ResearchMetaReviewForPaperSubmission  # Meta Review
+from research_town.dbs import ResearchPaperSubmission  # Paper
+from research_town.dbs import ResearchRebuttalForPaperSubmission  # Rebuttal
+from research_town.dbs import ResearchReviewForPaperSubmission  # Review
 from research_town.evaluators import (
-    ResearchIdeaEvalOutput,
     ResearchIdeaQualityEvaluator,
-    ResearchInsightEvalOutput,
-    ResearchInsightQualityEvaluator,
-    ResearchMetaReviewEvalOutput,
-    ResearchMetaReviewQualityEvaluator,
-    ResearchPaperSubmissionEvalOutput,
     ResearchPaperSubmissionQualityEvaluator,
-    ResearchRebuttalEvalOutput,
-    ResearchRebuttalQualityEvaluator,
-    ResearchReviewEvalOutput,
-    ResearchReviewQualityEvaluator,
+    ResearchReviewForPaperSubmissionQualityEvaluator,
 )
 
+config_file_path = './configs/default_config.yaml'
 
-def evaluate_insight_quality(
-    insight: ResearchInsight, model_name: str, config: Config
-) -> ResearchInsightEvalOutput:
-    evaluator = ResearchInsightQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(
-        model_name=model_name,
-        insight=insight.model_dump(),
+
+def set_constants() -> (
+    Tuple[
+        ResearchInsight,
+        ResearchIdea,
+        ResearchPaperSubmission,
+        ResearchReviewForPaperSubmission,
+        ResearchRebuttalForPaperSubmission,
+        ResearchMetaReviewForPaperSubmission,
+    ]
+):
+    agent_A = AgentProfile(
+        name='Danqi Chen',
+        bio='An Assistant Professor at Princeton University specializing on natural language processing and machine learning.',
+    )
+
+    paper_A = PaperProfile(
+        title='Evaluating Large Language Models at Evaluating Instruction Following',
+        abstract='As research in large language models (LLMs) continues to accelerate, LLM-based evaluation has emerged as a scalable and cost-effective alternative to human evaluations for comparing the ever increasing list of models. This paper investigates the efficacy of these “LLM evaluators”, particularly in using them to assess instruction following, a metric that gauges how closely generated text adheres to the given instruction. We introduce a challenging meta-evaluation benchmark, LLMBar, designed to test the ability of an LLM evaluator in discerning instruction-following outputs. The authors manually curated 419 pairs of outputs, one adhering to instructions while the other diverging, yet may possess deceptive qualities that mislead an LLM evaluator, e.g., a more engaging tone. Contrary to existing meta-evaluation, we discover that different evaluators (i.e., combinations of LLMs and prompts) exhibit distinct performance on LLMBar and even the highest-scoring ones have substantial room for improvement. We also present a novel suite of prompting strategies that further close the gap between LLM and human evaluators. With LLMBar, we hope to offer more insight into LLM evaluators and foster future research in developing better instruction-following models.',
+    )
+
+    insight_A = ResearchInsight(
+        content='Different evaluators (i.e., combinations of LLMs and prompts) exhibit distinct performance.'
+    )
+
+    idea_A = ResearchIdea(
+        content='We introduce a challenging meta-evaluation benchmark, LLMBar, designed to test the ability of an LLM evaluator in discerning instruction-following outputs.'
+    )
+
+    paper_submission_A = ResearchPaperSubmission(
+        title='Evaluating Large Language Models at Evaluating Instruction Following',
+        abstract='As research in large language models (LLMs) continues to accelerate, LLM-based evaluation has emerged as a scalable and cost-effective alternative to human evaluations for comparing the ever increasing list of models. This paper investigates the efficacy of these “LLM evaluators”, particularly in using them to assess instruction following, a metric that gauges how closely generated text adheres to the given instruction. We introduce a challenging meta-evaluation benchmark, LLMBar, designed to test the ability of an LLM evaluator in discerning instruction-following outputs. The authors manually curated 419 pairs of outputs, one adhering to instructions while the other diverging, yet may possess deceptive qualities that mislead an LLM evaluator, e.g., a more engaging tone. Contrary to existing meta-evaluation, we discover that different evaluators (i.e., combinations of LLMs and prompts) exhibit distinct performance on LLMBar and even the highest-scoring ones have substantial room for improvement. We also present a novel suite of prompting strategies that further close the gap between LLM and human evaluators. With LLMBar, we hope to offer more insight into LLM evaluators and foster future research in developing better instruction-following models.',
+        conference='ICLR 2024',
+    )
+
+    paper_review_A = ResearchReviewForPaperSubmission(
+        review_pk=agent_A.pk,
+        paper_pk=paper_A.pk,
+        content='This paper proposes a challenge meta-evaluator benchmark, LLMBar, used to assess the quality of the LLM-evaluator (LLM + prompt strategies) for instruction following. The paper addresses an important current problem of scalable evaluation of the LLM-evaluator’s quality, but There is some confusion in how the evaluation set was generated.',
+        score=8,
+    )
+
+    paper_rebuttal_A = ResearchRebuttalForPaperSubmission(
+        paper_pk=paper_A.pk,
+        reviewer_pk=agent_A.pk,
+        author_pk=agent_A.pk,
+        content='We appreciate the reviewer for the feedback. We will provide more details on how the evaluation set was generated in the revised version of the paper.',
+    )
+
+    paper_meta_review_A = ResearchMetaReviewForPaperSubmission(
+        paper_pk=paper_A.pk,
+        chair_pk=agent_A.pk,
+        review_pks=[paper_review_A.pk],
+        author_pk=agent_A.pk,
+        content='This paper tries to address one important problem on how to assess the of the LLM, particularly on the instruction following. It provides a carefully curated dataset that is potentially useful for "stress-testing" the LLM evaluators.',
+        decision=False,
+    )
+    return (
+        insight_A,
+        idea_A,
+        paper_submission_A,
+        paper_review_A,
+        paper_rebuttal_A,
+        paper_meta_review_A,
     )
 
 
-def evaluate_idea_quality(
-    insights: List[ResearchInsight], idea: ResearchIdea, model_name: str, config: Config
-) -> ResearchIdeaEvalOutput:
-    evaluator = ResearchIdeaQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(
-        model_name=model_name,
-        insights=[insight.model_dump() for insight in insights],
-        idea=idea.model_dump(),
-    )
-
-
-def evaluate_paper_quality(
-    insights: List[ResearchInsight],
+def run_sync_evaluation(
+    insight: ResearchInsight,
     idea: ResearchIdea,
     paper: ResearchPaperSubmission,
-    model_name: str,
-    config: Config,
-) -> ResearchPaperSubmissionEvalOutput:
-    evaluator = ResearchPaperSubmissionQualityEvaluator(
+    review: ResearchReviewForPaperSubmission,
+    rebuttal: ResearchRebuttalForPaperSubmission,
+    meta_review: ResearchMetaReviewForPaperSubmission,
+    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+) -> None:
+    # Serialize Logs
+    insight_serialize = f'content: {insight.content}'
+    idea_serialize = f'content: {idea.content}'
+    paper_serialize = {
+        'title': paper.title,
+        'abstract': paper.abstract,
+        'conference': paper.conference,
+    }
+    review_serialize = f'score: {review.score}\nreview summary: {review.summary}\nreview strength: {review.strength}\nreview weakness: {review.weakness}'
+    meta_review_serialize = f'decision: {meta_review.decision}\nmeta review summary: {meta_review.summary}\nmeta review strength: {meta_review.strength}\nmeta review weakness: {meta_review.weakness}'
+    # Create Evaluators
+    config = Config(config_file_path)
+    idea_quality_evaluator = ResearchIdeaQualityEvaluator(
         model_name=model_name, config=config
     )
-    return evaluator.eval(
-        insights=[insight.model_dump() for insight in insights],
-        idea=idea.model_dump(),
-        paper=paper.model_dump(),
+    paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(
+        model_name=model_name, config=config
     )
-
-
-def evaluate_review_quality(
-    insights: List[ResearchInsight],
-    idea: ResearchIdea,
-    paper: ResearchPaperSubmission,
-    review: ResearchReview,
-    model_name: str,
-    config: Config,
-) -> ResearchReviewEvalOutput:
-    evaluator = ResearchReviewQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(
-        model_name=model_name,
-        insights=[insight.model_dump() for insight in insights],
-        idea=idea.model_dump(),
-        paper=paper.model_dump(),
-        review=review.model_dump(),
+    review_quality_evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
+        model_name=model_name, config=config
     )
-
-
-def evaluate_rebuttal_quality(
-    insights: List[ResearchInsight],
-    idea: ResearchIdea,
-    paper: ResearchPaperSubmission,
-    review: ResearchReview,
-    rebuttal: ResearchRebuttal,
-    model_name: str,
-    config: Config,
-) -> ResearchRebuttalEvalOutput:
-    evaluator = ResearchRebuttalQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(
-        model_name=model_name,
-        insights=[insight.model_dump() for insight in insights],
-        idea=idea.model_dump(),
-        paper=paper.model_dump(),
-        review=review.model_dump(),
-        rebuttal=rebuttal.model_dump(),
+    # Generate Evaluation
+    idea_quality = idea_quality_evaluator.eval(
+        **{'idea': idea_serialize, 'trend': insight_serialize}
     )
-
-
-def evaluate_meta_review_quality(
-    insights: List[ResearchInsight],
-    idea: ResearchIdea,
-    paper: ResearchPaperSubmission,
-    reviews: List[ResearchReview],
-    rebuttals: List[ResearchRebuttal],
-    meta_review: ResearchMetaReview,
-    model_name: str,
-    config: Config,
-) -> ResearchMetaReviewEvalOutput:
-    evaluator = ResearchMetaReviewQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(
-        insights=[insight.model_dump() for insight in insights],
-        idea=idea.model_dump(),
-        paper=paper.model_dump(),
-        reviews=[review.model_dump() for review in reviews],
-        rebuttals=[rebuttal.model_dump() for rebuttal in rebuttals],
-        meta_review=meta_review.model_dump(),
+    paper_quality = paper_quality_evaluator.eval(
+        **{
+            'idea': idea_serialize,
+            'trend': insight_serialize,
+            'paper': paper_serialize,
+        }
     )
-
-
-def pipeline_eval(
-    insights: List[ResearchInsight],
-    idea: ResearchIdea,
-    paper: ResearchPaperSubmission,
-    reviews: List[ResearchReview],
-    rebuttals: List[ResearchRebuttal],
-    meta_review: ResearchMetaReview,
-    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-    config: Config = Config(),
-) -> Tuple[
-    List[ResearchInsightEvalOutput],
-    ResearchIdeaEvalOutput,
-    ResearchPaperSubmissionEvalOutput,
-    List[ResearchReviewEvalOutput],
-    List[ResearchRebuttalEvalOutput],
-    ResearchMetaReviewEvalOutput,
-]:
-    insights_quality = [
-        evaluate_insight_quality(insight, model_name, config) for insight in insights
-    ]
-    idea_quality = evaluate_idea_quality(insights, idea, model_name, config)
-    paper_quality = evaluate_paper_quality(insights, idea, paper, model_name, config)
-    reviews_quality = [
-        evaluate_review_quality(insights, idea, paper, review, model_name, config)
-        for review in reviews
-    ]
-    rebuttals_quality = [
-        evaluate_rebuttal_quality(
-            insights, idea, paper, review, rebuttal, model_name, config
-        )
-        for review, rebuttal in zip(reviews, rebuttals)
-    ]
-    meta_review_quality = evaluate_meta_review_quality(
-        insights, idea, paper, reviews, rebuttals, meta_review, model_name, config
+    review_quality = review_quality_evaluator.eval(
+        **{
+            'idea': idea_serialize,
+            'trend': insight_serialize,
+            'paper': paper_serialize,
+            'review': review_serialize,
+            'decision': meta_review_serialize,
+        }
     )
-
-    return (
-        insights_quality,
-        idea_quality,
-        paper_quality,
-        reviews_quality,
-        rebuttals_quality,
-        meta_review_quality,
-    )
+    # Save Logs
+    with open('./idea_quality.json', 'w') as file:
+        json.dump(idea_quality.model_dump(), file)
+    with open('./paper_quality.json', 'w') as file:
+        json.dump(paper_quality.model_dump(), file)
+    with open('./review_quality.json', 'w') as file:
+        json.dump(review_quality.model_dump(), file)
 
 
-def main(
-    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-    config_file_path: str = '../../configs/default_config.yaml',
-    load_file_path: str = '../../examples/research_town_demo_log',
-    save_file_path: str = '../../examples/research_town_demo_log',
-) -> None:
-    # step 1: load the log from file
-    progress_db = ProgressDB(load_file_path)
-    insights = progress_db.get(ResearchInsight)
-    idea = progress_db.get(ResearchIdea)[0]
-    paper = progress_db.get(ResearchPaperSubmission)[0]
-    reviews = progress_db.get(ResearchReview)
-    rebuttals = progress_db.get(ResearchRebuttal)
-    meta_review = progress_db.get(ResearchMetaReview)[0]
-    config = Config(config_file_path)
-
-    # step 3: evaluations
+def main() -> None:
     (
-        insights_quality,
-        idea_quality,
-        paper_quality,
-        reviews_quality,
-        rebuttals_quality,
-        meta_review_quality,
-    ) = pipeline_eval(
-        insights=insights,
-        idea=idea,
-        paper=paper,
-        reviews=reviews,
-        rebuttals=rebuttals,
-        meta_review=meta_review,
-        model_name=model_name,
-        config=config,
+        insight_A,
+        idea_A,
+        paper_submission_A,
+        paper_review_A,
+        paper_rebuttal_A,
+        paper_meta_review_A,
+    ) = set_constants()
+    run_sync_evaluation(
+        insight=insight_A,
+        idea=idea_A,
+        paper=paper_submission_A,
+        review=paper_review_A,
+        rebuttal=paper_rebuttal_A,
+        meta_review=paper_meta_review_A,
     )
-
-    # step 4: store the evaluation results to database
-    for insight, insight_quality in zip(insights, insights_quality):
-        progress_db.update(
-            ResearchInsight,
-            updates={'eval_score': insight_quality.dimension_scores},
-            pk=insight.pk,
-        )
-    progress_db.update(
-        ResearchIdea,
-        updates={'eval_score': idea_quality.dimension_scores},
-        pk=insight.pk,
-    )
-    progress_db.update(
-        ResearchPaperSubmission,
-        updates={'eval_score': paper_quality.dimension_scores},
-        pk=insight.pk,
-    )
-    for review, review_quality in zip(reviews, reviews_quality):
-        progress_db.update(
-            ResearchReview,
-            updates={'eval_score': review_quality.dimension_scores},
-            pk=review.pk,
-        )
-    for rebuttal, rebuttal_quality in zip(rebuttals, rebuttals_quality):
-        progress_db.update(
-            ResearchRebuttal,
-            updates={'eval_score': rebuttal_quality.dimension_scores},
-            pk=rebuttal.pk,
-        )
-    progress_db.update(
-        ResearchMetaReview,
-        updates={'eval_score': meta_review_quality.dimension_scores},
-        pk=meta_review.pk,
-    )
-
-    # step 5: save the database logs with evaluation results to file
-    progress_db.save_to_json(save_file_path)
 
 
 if __name__ == '__main__':
