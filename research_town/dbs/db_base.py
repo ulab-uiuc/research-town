@@ -10,9 +10,13 @@ T = TypeVar('T', bound=BaseDBData)
 
 
 class BaseDB(Generic[T]):
-    def __init__(self, data_class: Type[T]) -> None:
+    def __init__(
+        self, data_class: Type[T], load_file_path: Optional[str] = None
+    ) -> None:
         self.data: Dict[str, T] = {}
         self.data_class = data_class
+        if load_file_path is not None:
+            self.load_from_json(load_file_path)
 
     def add(self, data: T) -> None:
         self.data[data.pk] = data
@@ -34,7 +38,9 @@ class BaseDB(Generic[T]):
             return True
         return False
 
-    def get(self, **conditions: Union[str, int, float]) -> List[T]:
+    def get(self, **conditions: Union[str, int, float, List[int]]) -> List[T]:
+        if conditions == {}:
+            return list(self.data.values())
         result = []
         for data in self.data.values():
             if all(getattr(data, key) == value for key, value in conditions.items()):

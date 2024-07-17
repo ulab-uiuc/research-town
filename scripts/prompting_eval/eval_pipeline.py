@@ -1,14 +1,15 @@
-import argparse
 import json
-import os
-import re
-import uuid
-
-from beartype.typing import Dict, List
-from pydantic import BaseModel, Field
-from tqdm import tqdm
+from typing import Tuple
 
 from research_town.configs import Config
+from research_town.dbs import AgentProfile  # Agent
+from research_town.dbs import PaperProfile  # Paper
+from research_town.dbs import ResearchIdea  # Idea
+from research_town.dbs import ResearchInsight  # Trend
+from research_town.dbs import ResearchMetaReviewForPaperSubmission  # Meta Review
+from research_town.dbs import ResearchPaperSubmission  # Paper
+from research_town.dbs import ResearchRebuttalForPaperSubmission  # Rebuttal
+from research_town.dbs import ResearchReviewForPaperSubmission  # Review
 from research_town.evaluators import (
     ResearchIdeaQualityEvaluator,
     ResearchPaperSubmissionQualityEvaluator,
@@ -18,405 +19,149 @@ from research_town.evaluators import (
 config_file_path = './configs/default_config.yaml'
 
 
-# Function to sanitize the model name
-def sanitize_filename(filename: str) -> str:
-    # Replace any character that is not a letter, digit, hyphen, or underscore with an underscore
-    return re.sub(r'[^a-zA-Z0-9-_]', '_', filename)
+def set_constants() -> (
+    Tuple[
+        ResearchInsight,
+        ResearchIdea,
+        ResearchPaperSubmission,
+        ResearchReviewForPaperSubmission,
+        ResearchRebuttalForPaperSubmission,
+        ResearchMetaReviewForPaperSubmission,
+    ]
+):
+    agent_A = AgentProfile(
+        name='Danqi Chen',
+        bio='An Assistant Professor at Princeton University specializing on natural language processing and machine learning.',
+    )
+
+    paper_A = PaperProfile(
+        title='Evaluating Large Language Models at Evaluating Instruction Following',
+        abstract='As research in large language models (LLMs) continues to accelerate, LLM-based evaluation has emerged as a scalable and cost-effective alternative to human evaluations for comparing the ever increasing list of models. This paper investigates the efficacy of these “LLM evaluators”, particularly in using them to assess instruction following, a metric that gauges how closely generated text adheres to the given instruction. We introduce a challenging meta-evaluation benchmark, LLMBar, designed to test the ability of an LLM evaluator in discerning instruction-following outputs. The authors manually curated 419 pairs of outputs, one adhering to instructions while the other diverging, yet may possess deceptive qualities that mislead an LLM evaluator, e.g., a more engaging tone. Contrary to existing meta-evaluation, we discover that different evaluators (i.e., combinations of LLMs and prompts) exhibit distinct performance on LLMBar and even the highest-scoring ones have substantial room for improvement. We also present a novel suite of prompting strategies that further close the gap between LLM and human evaluators. With LLMBar, we hope to offer more insight into LLM evaluators and foster future research in developing better instruction-following models.',
+    )
+
+    insight_A = ResearchInsight(
+        content='Different evaluators (i.e., combinations of LLMs and prompts) exhibit distinct performance.'
+    )
+
+    idea_A = ResearchIdea(
+        content='We introduce a challenging meta-evaluation benchmark, LLMBar, designed to test the ability of an LLM evaluator in discerning instruction-following outputs.'
+    )
+
+    paper_submission_A = ResearchPaperSubmission(
+        title='Evaluating Large Language Models at Evaluating Instruction Following',
+        abstract='As research in large language models (LLMs) continues to accelerate, LLM-based evaluation has emerged as a scalable and cost-effective alternative to human evaluations for comparing the ever increasing list of models. This paper investigates the efficacy of these “LLM evaluators”, particularly in using them to assess instruction following, a metric that gauges how closely generated text adheres to the given instruction. We introduce a challenging meta-evaluation benchmark, LLMBar, designed to test the ability of an LLM evaluator in discerning instruction-following outputs. The authors manually curated 419 pairs of outputs, one adhering to instructions while the other diverging, yet may possess deceptive qualities that mislead an LLM evaluator, e.g., a more engaging tone. Contrary to existing meta-evaluation, we discover that different evaluators (i.e., combinations of LLMs and prompts) exhibit distinct performance on LLMBar and even the highest-scoring ones have substantial room for improvement. We also present a novel suite of prompting strategies that further close the gap between LLM and human evaluators. With LLMBar, we hope to offer more insight into LLM evaluators and foster future research in developing better instruction-following models.',
+        conference='ICLR 2024',
+    )
+
+    paper_review_A = ResearchReviewForPaperSubmission(
+        review_pk=agent_A.pk,
+        paper_pk=paper_A.pk,
+        content='This paper proposes a challenge meta-evaluator benchmark, LLMBar, used to assess the quality of the LLM-evaluator (LLM + prompt strategies) for instruction following. The paper addresses an important current problem of scalable evaluation of the LLM-evaluator’s quality, but There is some confusion in how the evaluation set was generated.',
+        score=8,
+    )
+
+    paper_rebuttal_A = ResearchRebuttalForPaperSubmission(
+        paper_pk=paper_A.pk,
+        reviewer_pk=agent_A.pk,
+        author_pk=agent_A.pk,
+        content='We appreciate the reviewer for the feedback. We will provide more details on how the evaluation set was generated in the revised version of the paper.',
+    )
+
+    paper_meta_review_A = ResearchMetaReviewForPaperSubmission(
+        paper_pk=paper_A.pk,
+        chair_pk=agent_A.pk,
+        review_pks=[paper_review_A.pk],
+        author_pk=agent_A.pk,
+        content='This paper tries to address one important problem on how to assess the of the LLM, particularly on the instruction following. It provides a carefully curated dataset that is potentially useful for "stress-testing" the LLM evaluators.',
+        decision=False,
+    )
+    return (
+        insight_A,
+        idea_A,
+        paper_submission_A,
+        paper_review_A,
+        paper_rebuttal_A,
+        paper_meta_review_A,
+    )
 
 
-class PipelineEval(BaseModel):
-    pipeline_pk: str = Field(
-        default_factory=lambda: str(uuid.uuid4())
-    )  # use agent name as pipeline_pk
-    title: str = Field(default='')
-    idea: str = Field(default='')
-    trend: str = Field(default='')
-    abstract: str = Field(default='')
-    authors: List[str] = Field(default=[])
-    keywords: List[str] = Field(default=[])
-    contents: List[str] = Field(default=[])
-    decision: str = Field(default='None')
-
-    idea_overall_score: int = Field(default=-1)
-    idea_dimension_scores: List[int] = Field(default=[])
-    paper_overall_score: int = Field(default=-1)
-    paper_dimension_scores: List[int] = Field(default=[])
-    review_overall_score: int = Field(default=-1)
-    review_dimension_scores: List[int] = Field(default=[])
-
-
-class pipeline_eval_db(object):
-    def __init__(self) -> None:
-        self.data: Dict[str, PipelineEval] = {}
-        self.selected_logs: Dict[
-            str, PipelineEval
-        ] = {}  # save the logs to be evaluated
-        self.idea_avg_all_scores: float = 0.0
-        self.idea_avg_dimension_scores: List[float] = []
-        self.paper_avg_all_scores: float = 0.0
-        self.paper_avg_dimension_scores: List[float] = []
-        self.review_avg_all_scores: float = 0.0
-        self.review_avg_dimension_scores: List[float] = []
-
-        # add varience of the scores
-        self.idea_variance_all_scores: float = 0.0
-        self.idea_variance_dimension_scores: List[float] = []
-        self.idea_sum_variance_dimension_scores: float = 0.0
-        self.paper_variance_all_scores: float = 0.0
-        self.paper_variance_dimension_scores: List[float] = []
-        self.paper_sum_variance_dimension_scores: float = 0.0
-        self.review_variance_all_scores: float = 0.0
-        self.review_variance_dimension_scores: List[float] = []
-        self.review_sum_variance_dimension_scores: float = 0.0
-
-    def load_from_json(self, file_name: str) -> None:
-        with open(file_name, 'r') as f:
-            raw_data_papers = json.load(f)
-            for agent, details in raw_data_papers.items():
-                reviews = details.pop('reviews', [])
-                if not isinstance(reviews, list):
-                    reviews = [reviews]
-                details['abstract'] = details.pop('paper', '')
-                details['contents'] = reviews  # set 'contents' key from 'reviews'
-                details['decision'] = details.pop(
-                    'meta_reviews', 'None'
-                )  # set 'decision' key from 'meta_reviews'
-                pipeline_eval = PipelineEval(**details)
-                self.data[pipeline_eval.pipeline_pk] = pipeline_eval
-
-    def select_logs(self, log_num: int) -> List[PipelineEval]:
-        logs = []
-        count = 0
-        for log in self.data.values():
-            if count >= log_num:
-                break
-            select = log
-            logs.append(select)
-            count += 1
-            self.selected_logs[select.pipeline_pk] = (
-                select  # save the selected paperreviews
-            )
-        return logs
-
-    def eval_research_pipeline(
-        self,
-        research_log: PipelineEval,
-        model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-    ) -> None:
-        # Create Evaluators
-        config = Config(config_file_path)
-        idea_quality_evaluator = ResearchIdeaQualityEvaluator(
-            model_name=model_name, config=config
-        )
-        paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(
-            model_name=model_name, config=config
-        )
-        review_quality_evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
-            model_name=model_name, config=config
-        )
-        # Generate Evaluation
-
-        # parse the paper content with title
-        paper_serialize = {
-            'title': 'See title in reviews',
-            'abstract': research_log.abstract,
-        }
-
-        # error check
-        assert research_log.idea != '', 'Error: no ideas\n'
-        assert research_log.abstract != '', 'Error: no papers with abstract\n'
-        assert len(research_log.contents) > 0, 'Error: no reviews\n'
-
-        idea_quality = idea_quality_evaluator.eval(
-            **{'idea': research_log.idea, 'trend': ''}
-        )
-        paper_quality = paper_quality_evaluator.eval(
-            **{
-                'idea': research_log.idea,
-                'trend': '',
-                'paper': paper_serialize,
-            }
-        )
-        review_quality = review_quality_evaluator.eval(
-            **{
-                'idea': research_log.idea,
-                'trend': '',
-                'paper': paper_serialize,
-                'review': research_log.contents,
-                'decision': research_log.decision,
-            }
-        )
-
-        # save the evaluation results
-        # idea quality
-        self.selected_logs[
-            research_log.pipeline_pk
-        ].idea_overall_score = idea_quality.overall_score
-        self.selected_logs[
-            research_log.pipeline_pk
-        ].idea_dimension_scores = idea_quality.dimension_scores
-        # paper quality
-        self.selected_logs[
-            research_log.pipeline_pk
-        ].paper_overall_score = paper_quality.overall_score
-        self.selected_logs[
-            research_log.pipeline_pk
-        ].paper_dimension_scores = paper_quality.dimension_scores
-        # review quality
-        self.selected_logs[
-            research_log.pipeline_pk
-        ].review_overall_score = review_quality.overall_score
-        self.selected_logs[
-            research_log.pipeline_pk
-        ].review_dimension_scores = review_quality.dimension_scores
-
-    def save_to_file(self, file_name: str) -> None:
-        # save the
-        combined_data = {
-            'idea_avg_overall_score': self.idea_avg_all_scores,
-            'idea_avg_dimension_scores': self.idea_avg_dimension_scores,
-            'paper_avg_overall_score': self.paper_avg_all_scores,
-            'paper_avg_dimension_scores': self.paper_avg_dimension_scores,
-            'review_avg_overall_score': self.review_avg_all_scores,
-            'review_avg_dimension_scores': self.review_avg_dimension_scores,
-            'idea_variance_overall_score': self.idea_variance_all_scores,
-            'idea_variance_dimension_scores': self.idea_variance_dimension_scores,
-            # add sum of dimension score variance
-            'idea_sum_variance_dimension_scores': self.idea_sum_variance_dimension_scores,
-            'paper_variance_overall_score': self.paper_variance_all_scores,
-            'paper_variance_dimension_scores': self.paper_variance_dimension_scores,
-            # add sum of dimension score variance
-            'paper_sum_variance_dimension_scores': self.paper_sum_variance_dimension_scores,
-            'review_variance_overall_score': self.review_variance_all_scores,
-            'review_variance_dimension_scores': self.review_variance_dimension_scores,
-            # add sum of dimension score variance
-            'review_sum_variance_dimension_scores': self.review_sum_variance_dimension_scores,
-            'pipeline evaluation logs': {
-                author: eval_log.model_dump()
-                for author, eval_log in self.selected_logs.items()
-            },
-        }
-
-        with open(file_name, 'w') as f:
-            json.dump(combined_data, f, indent=2)
-
-    def calculate_avg_scores(self) -> None:
-        # calculate the avg scores of selected logs
-        assert len(self.selected_logs) > 0
-        selected_logs_list = list(self.selected_logs.values())
-        self.idea_avg_all_scores = sum(
-            [log.idea_overall_score for log in selected_logs_list]
-        ) / len(selected_logs_list)
-        self.idea_avg_dimension_scores = [
-            sum([log.idea_dimension_scores[i] for log in selected_logs_list])
-            / len(selected_logs_list)
-            for i in range(len(selected_logs_list[0].idea_dimension_scores))
-        ]
-        self.paper_avg_all_scores = sum(
-            [log.paper_overall_score for log in selected_logs_list]
-        ) / len(selected_logs_list)
-        self.paper_avg_dimension_scores = [
-            sum([log.paper_dimension_scores[i] for log in selected_logs_list])
-            / len(selected_logs_list)
-            for i in range(len(selected_logs_list[0].paper_dimension_scores))
-        ]
-        self.review_avg_all_scores = sum(
-            [log.review_overall_score for log in selected_logs_list]
-        ) / len(selected_logs_list)
-        self.review_avg_dimension_scores = [
-            sum([log.review_dimension_scores[i] for log in selected_logs_list])
-            / len(selected_logs_list)
-            for i in range(len(selected_logs_list[0].review_dimension_scores))
-        ]
-
-    def calculate_variance_scores(self) -> None:
-        # calculate the variance scores of selected logs
-        assert len(self.selected_logs) > 0
-        selected_logs_list = list(self.selected_logs.values())
-        self.idea_variance_all_scores = sum(
-            [
-                (log.idea_overall_score - self.idea_avg_all_scores) ** 2
-                for log in selected_logs_list
-            ]
-        ) / len(selected_logs_list)
-        self.idea_variance_dimension_scores = [
-            sum(
-                [
-                    (log.idea_dimension_scores[i] - self.idea_avg_dimension_scores[i])
-                    ** 2
-                    for log in selected_logs_list
-                ]
-            )
-            / len(selected_logs_list)
-            for i in range(len(selected_logs_list[0].idea_dimension_scores))
-        ]
-        self.paper_variance_all_scores = sum(
-            [
-                (log.paper_overall_score - self.paper_avg_all_scores) ** 2
-                for log in selected_logs_list
-            ]
-        ) / len(selected_logs_list)
-        self.paper_variance_dimension_scores = [
-            sum(
-                [
-                    (log.paper_dimension_scores[i] - self.paper_avg_dimension_scores[i])
-                    ** 2
-                    for log in selected_logs_list
-                ]
-            )
-            / len(selected_logs_list)
-            for i in range(len(selected_logs_list[0].paper_dimension_scores))
-        ]
-        self.review_variance_all_scores = sum(
-            [
-                (log.review_overall_score - self.review_avg_all_scores) ** 2
-                for log in selected_logs_list
-            ]
-        ) / len(selected_logs_list)
-        self.review_variance_dimension_scores = [
-            sum(
-                [
-                    (
-                        log.review_dimension_scores[i]
-                        - self.review_avg_dimension_scores[i]
-                    )
-                    ** 2
-                    for log in selected_logs_list
-                ]
-            )
-            / len(selected_logs_list)
-            for i in range(len(selected_logs_list[0].review_dimension_scores))
-        ]
-        # add sum of dimension score variance
-        self.idea_sum_variance_dimension_scores = sum(
-            self.idea_variance_dimension_scores
-        )
-        self.paper_sum_variance_dimension_scores = sum(
-            self.paper_variance_dimension_scores
-        )
-        self.review_sum_variance_dimension_scores = sum(
-            self.review_variance_dimension_scores
-        )
-
-
-def main(
-    data_path: str,
-    domain: str,
-    evaluator_model_name: str,
-    agent_model_name: str,
-    eval_log_num: int,
+def run_sync_evaluation(
+    insight: ResearchInsight,
+    idea: ResearchIdea,
+    paper: ResearchPaperSubmission,
+    review: ResearchReviewForPaperSubmission,
+    rebuttal: ResearchRebuttalForPaperSubmission,
+    meta_review: ResearchMetaReviewForPaperSubmission,
+    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
 ) -> None:
-    # log file to load
-    log_file = os.path.join(
-        data_path,
-        'eval_data',
-        'pipeline_eval_data',
-        f'{agent_model_name}',
-        f'{domain}.json',
+    # Serialize Logs
+    insight_serialize = f'content: {insight.content}'
+    idea_serialize = f'content: {idea.content}'
+    paper_serialize = {
+        'title': paper.title,
+        'abstract': paper.abstract,
+        'conference': paper.conference,
+    }
+    review_serialize = f'score: {review.score}\nreview summary: {review.summary}\nreview strength: {review.strength}\nreview weakness: {review.weakness}'
+    meta_review_serialize = f'decision: {meta_review.decision}\nmeta review summary: {meta_review.summary}\nmeta review strength: {meta_review.strength}\nmeta review weakness: {meta_review.weakness}'
+    # Create Evaluators
+    config = Config(config_file_path)
+    idea_quality_evaluator = ResearchIdeaQualityEvaluator(
+        model_name=model_name, config=config
     )
-
-    # select logs to be evaluated
-    pipeline_eval = pipeline_eval_db()
-    pipeline_eval.load_from_json(log_file)
-    logs2eval = pipeline_eval.select_logs(eval_log_num)
-    # start evaluation for the pipeline logs
-
-    for idx, paper_review in enumerate(
-        tqdm(
-            logs2eval,
-            desc='Evaluate pipeline logs',
-            unit='pipeline logs of research town',
-        )
-    ):
-        if idx >= eval_log_num:
-            break
-        pipeline_eval.eval_research_pipeline(
-            research_log=paper_review, model_name=evaluator_model_name
-        )
-
-    # calculate the average scores
-    pipeline_eval.calculate_avg_scores()
-    # calculate the variance scores
-    pipeline_eval.calculate_variance_scores()
-    # save the evaluation results
-    # Sanitize the model name to avoid file path issues
-    sanitized_model_name = sanitize_filename(evaluator_model_name)
-    output_file = os.path.join(
-        data_path,
-        'eval_data',
-        'pipeline_eval_data',
-        f'{agent_model_name}',
-        'output',
-        f'output_pipeline_eval_{domain}_agent-model-{agent_model_name}_p{eval_log_num}_eval_by_{sanitized_model_name}.json',
+    paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(
+        model_name=model_name, config=config
     )
-    pipeline_eval.save_to_file(output_file)
+    review_quality_evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
+        model_name=model_name, config=config
+    )
+    # Generate Evaluation
+    idea_quality = idea_quality_evaluator.eval(
+        **{'idea': idea_serialize, 'trend': insight_serialize}
+    )
+    paper_quality = paper_quality_evaluator.eval(
+        **{
+            'idea': idea_serialize,
+            'trend': insight_serialize,
+            'paper': paper_serialize,
+        }
+    )
+    review_quality = review_quality_evaluator.eval(
+        **{
+            'idea': idea_serialize,
+            'trend': insight_serialize,
+            'paper': paper_serialize,
+            'review': review_serialize,
+            'decision': meta_review_serialize,
+        }
+    )
+    # Save Logs
+    with open('./idea_quality.json', 'w') as file:
+        json.dump(idea_quality.model_dump(), file)
+    with open('./paper_quality.json', 'w') as file:
+        json.dump(paper_quality.model_dump(), file)
+    with open('./review_quality.json', 'w') as file:
+        json.dump(review_quality.model_dump(), file)
+
+
+def main() -> None:
+    (
+        insight_A,
+        idea_A,
+        paper_submission_A,
+        paper_review_A,
+        paper_rebuttal_A,
+        paper_meta_review_A,
+    ) = set_constants()
+    run_sync_evaluation(
+        insight=insight_A,
+        idea=idea_A,
+        paper=paper_submission_A,
+        review=paper_review_A,
+        rebuttal=paper_rebuttal_A,
+        meta_review=paper_meta_review_A,
+    )
 
 
 if __name__ == '__main__':
-    # Get the directory of the current script
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Construct the path to data/ directory
-    default_data_path = os.path.abspath(os.path.join(current_dir, '..', '..', 'data'))
-
-    parser = argparse.ArgumentParser(
-        description='Args for research content evaluation.'
-    )
-    parser.add_argument(
-        '--data_path',
-        type=str,
-        default=default_data_path,
-        help='Path to the data directory for microbenchmark.',
-    )
-    # Add argument for domain
-    parser.add_argument(
-        '--domain',
-        type=str,
-        default='graph_neural_networks',
-        choices=[
-            'graph_neural_networks',
-            'computer_vision',
-            'natural_language_processing',
-            'reinforcement_learning',
-            'federated_learning',
-        ],
-        help='Domain of reviewed papers.',
-    )
-
-    # Add argument for models
-    parser.add_argument(
-        '--evaluator_model_name',
-        type=str,
-        default='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        help='Models for LLM evaluators.',
-    )
-
-    # Add agument for paper type
-    parser.add_argument(
-        '--agent_model_name',
-        type=str,
-        default='mixtral_8_7b',
-        choices=[
-            'llama3_70b',
-            'mixtral_8_7b',
-            'qwen_32',
-            'llama3_8b',
-            'gpt_4o',
-        ],  # Add more models as needed
-        help='Model type of research agents to classify different logs.',
-    )
-    # Add argument for papers to review
-    parser.add_argument(
-        '--eval_log_num',
-        type=int,
-        default=10,
-        help='Number of total papers to evaluate.',
-    )
-    args = parser.parse_args()
-    main(
-        args.data_path,
-        args.domain,
-        args.evaluator_model_name,
-        args.agent_model_name,
-        args.eval_log_num,
-    )
+    main()

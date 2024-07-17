@@ -1,6 +1,6 @@
 import json
 import pickle
-from typing import List, TypeVar
+from typing import List, Optional, TypeVar
 
 from transformers import BertModel, BertTokenizer
 
@@ -16,8 +16,8 @@ T = TypeVar('T', bound=BaseDBData)
 
 
 class AgentProfileDB(BaseDB[AgentProfile]):
-    def __init__(self) -> None:
-        super().__init__(AgentProfile)
+    def __init__(self, load_file_path: Optional[str] = None) -> None:
+        super().__init__(AgentProfile, load_file_path)
         self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
             'facebook/contriever'
         )

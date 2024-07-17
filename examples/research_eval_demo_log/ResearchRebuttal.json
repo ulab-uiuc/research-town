@@ -1,0 +1,21 @@
+{
+  "35fa391f-b78d-494f-8c05-a21fe76f3054": {
+    "pk": "35fa391f-b78d-494f-8c05-a21fe76f3054",
+    "paper_pk": "8e4c1c61-26d4-4d37-9f2e-b405426cf921",
+    "reviewer_pk": "297964ca-d935-452a-9324-2ab09407d95f",
+    "author_pk": "a6cc9685-bab5-4341-a82c-bcb06abe9994",
+    "content": "**Rebuttal:**\n\nWe appreciate the reviewers' thorough evaluation of our paper and their constructive feedback. We would like to address the concerns raised and provide clarifications to strengthen our submission.\n\n1. **Complexity and Implementation Challenges:**\n   - **Response:** We acknowledge that integrating Topology-Aware AutoML, Edge Computing, and GNNs introduces complexity. However, our paper includes a detailed methodology section that outlines the integration process. We will enhance this section to provide more explicit step-by-step details and include a supplementary document with code snippets and implementation guidelines to facilitate reproducibility and practical deployment.\n\n2. **Scalability Concerns:**\n   - **Response:** We agree that a thorough analysis of the computational overhead is essential. Our experimental results section includes preliminary benchmarks, but we will expand this to include a detailed analysis of the computational costs associated with incorporating TDA into the AutoML framework. We will also compare these costs with the performance gains to provide a balanced view of the trade-offs involved.\n\n3. **Limited Experimental Scope:**\n   - **Response:** We appreciate the suggestion to broaden our experimental scope. We will include additional experiments comparing our approach with a wider range of state-of-the-art methods across diverse real-world datasets. This will provide a more comprehensive evaluation of our method's generalizability and performance gains.\n\n4. **Edge Computing Deployment Details:**\n   - **Response:** We recognize the need for a more detailed discussion on edge computing deployment. We will expand this section to include specific architectures used, communication overhead considerations, and their impact on system performance. We will also provide case studies to illustrate practical deployment scenarios.\n\n5. **Dynamic Graph Handling:**\n   - **Response:** We agree that handling dynamic graph structures is crucial. Our approach includes mechanisms for adapting to changes in graph topology, but we will provide a more detailed methodology and additional experimental validation to demonstrate how our system handles dynamic environments effectively.\n\n6. **Evaluation Metrics:**\n   - **Response:** We will clarify the evaluation metrics used in our experiments and explain their relevance to the specific applications. This will include a detailed description of metrics such as accuracy, scalability, and computational efficiency, along with their significance in assessing the performance of the discovered GNN architectures.\n\n7. **Theoretical Justification:**\n   - **Response:** We will enhance the theoretical underpinnings section to provide a deeper analysis of how topological features guide the AutoML process. This will include a theoretical justification and mathematical explanations to strengthen the credibility of our approach.\n\n8. **Resource Constraints",
+    "eval_score": [
+      8,
+      9,
+      8,
+      8,
+      9,
+      8,
+      8,
+      8,
+      9,
+      9
+    ]
+  }
+}

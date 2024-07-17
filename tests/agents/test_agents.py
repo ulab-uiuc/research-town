@@ -5,10 +5,10 @@ from research_town.configs import Config
 from research_town.dbs import (
     ResearchIdea,
     ResearchInsight,
-    ResearchMetaReviewForPaperSubmission,
+    ResearchMetaReview,
     ResearchPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
-    ResearchReviewForPaperSubmission,
+    ResearchRebuttal,
+    ResearchReview,
 )
 from tests.constants.data_constants import (
     agent_profile_A,
@@ -102,7 +102,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
         paper=research_paper_submission_A,
         config=Config(),
     )
-    assert isinstance(review, ResearchReviewForPaperSubmission)
+    assert isinstance(review, ResearchReview)
     assert review.summary == 'Summary of the paper1'
     assert review.strength == 'Strength of the paper1'
     assert review.weakness == 'Weakness of the paper1'
@@ -143,7 +143,7 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
         rebuttals=[rebuttal],
         config=Config(),
     )
-    assert isinstance(meta_review, ResearchMetaReviewForPaperSubmission)
+    assert isinstance(meta_review, ResearchMetaReview)
     assert meta_review.summary == 'Meta review summary1'
     assert meta_review.strength == 'Meta review strength1'
     assert meta_review.weakness == 'Meta review weakness1'
@@ -174,7 +174,7 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         review=review,
         config=Config(),
     )
-    assert isinstance(rebuttal, ResearchRebuttalForPaperSubmission)
+    assert isinstance(rebuttal, ResearchRebuttal)
     if rebuttal.content is not None:
         assert len(rebuttal.content) > 0
     assert rebuttal.content == 'Rebuttal text1'
