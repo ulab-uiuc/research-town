@@ -1,3 +1,4 @@
+from .evaluator_base import BaseEvaluator
 from .evaluator_output import (
     ResearchIdeaEvalOutput,
     ResearchInsightEvalOutput,
@@ -7,7 +8,7 @@ from .evaluator_output import (
     ResearchReviewEvalOutput,
 )
 from .evaluator_output_format import OutputFormatError
-from .quality_evaluator import (
+from .evaluator_quality import (
     ResearchIdeaQualityEvaluator,
     ResearchInsightQualityEvaluator,
     ResearchMetaReviewQualityEvaluator,
@@ -30,4 +31,5 @@ __all__ = [
     'ResearchInsightQualityEvaluator',
     'ResearchRebuttalQualityEvaluator',
     'ResearchMetaReviewQualityEvaluator',
+    'BaseEvaluator',
 ]

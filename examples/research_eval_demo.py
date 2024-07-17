@@ -1,5 +1,3 @@
-from typing import List, Tuple
-
 from research_town.configs import Config
 from research_town.dbs import (
     ProgressDB,
@@ -10,163 +8,7 @@ from research_town.dbs import (
     ResearchRebuttal,
     ResearchReview,
 )
-from research_town.evaluators import (
-    ResearchIdeaEvalOutput,
-    ResearchIdeaQualityEvaluator,
-    ResearchInsightEvalOutput,
-    ResearchInsightQualityEvaluator,
-    ResearchMetaReviewEvalOutput,
-    ResearchMetaReviewQualityEvaluator,
-    ResearchPaperSubmissionEvalOutput,
-    ResearchPaperSubmissionQualityEvaluator,
-    ResearchRebuttalEvalOutput,
-    ResearchRebuttalQualityEvaluator,
-    ResearchReviewEvalOutput,
-    ResearchReviewQualityEvaluator,
-)
-
-
-def evaluate_insight_quality(
-    insight: ResearchInsight, model_name: str, config: Config
-) -> ResearchInsightEvalOutput:
-    evaluator = ResearchInsightQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(
-        model_name=model_name,
-        insight=insight.model_dump(),
-    )
-
-
-def evaluate_idea_quality(
-    insights: List[ResearchInsight], idea: ResearchIdea, model_name: str, config: Config
-) -> ResearchIdeaEvalOutput:
-    evaluator = ResearchIdeaQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(
-        model_name=model_name,
-        insights=[insight.model_dump() for insight in insights],
-        idea=idea.model_dump(),
-    )
-
-
-def evaluate_paper_quality(
-    insights: List[ResearchInsight],
-    idea: ResearchIdea,
-    paper: ResearchPaperSubmission,
-    model_name: str,
-    config: Config,
-) -> ResearchPaperSubmissionEvalOutput:
-    evaluator = ResearchPaperSubmissionQualityEvaluator(
-        model_name=model_name, config=config
-    )
-    return evaluator.eval(
-        insights=[insight.model_dump() for insight in insights],
-        idea=idea.model_dump(),
-        paper=paper.model_dump(),
-    )
-
-
-def evaluate_review_quality(
-    insights: List[ResearchInsight],
-    idea: ResearchIdea,
-    paper: ResearchPaperSubmission,
-    review: ResearchReview,
-    model_name: str,
-    config: Config,
-) -> ResearchReviewEvalOutput:
-    evaluator = ResearchReviewQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(
-        model_name=model_name,
-        insights=[insight.model_dump() for insight in insights],
-        idea=idea.model_dump(),
-        paper=paper.model_dump(),
-        review=review.model_dump(),
-    )
-
-
-def evaluate_rebuttal_quality(
-    insights: List[ResearchInsight],
-    idea: ResearchIdea,
-    paper: ResearchPaperSubmission,
-    review: ResearchReview,
-    rebuttal: ResearchRebuttal,
-    model_name: str,
-    config: Config,
-) -> ResearchRebuttalEvalOutput:
-    evaluator = ResearchRebuttalQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(
-        model_name=model_name,
-        insights=[insight.model_dump() for insight in insights],
-        idea=idea.model_dump(),
-        paper=paper.model_dump(),
-        review=review.model_dump(),
-        rebuttal=rebuttal.model_dump(),
-    )
-
-
-def evaluate_meta_review_quality(
-    insights: List[ResearchInsight],
-    idea: ResearchIdea,
-    paper: ResearchPaperSubmission,
-    reviews: List[ResearchReview],
-    rebuttals: List[ResearchRebuttal],
-    meta_review: ResearchMetaReview,
-    model_name: str,
-    config: Config,
-) -> ResearchMetaReviewEvalOutput:
-    evaluator = ResearchMetaReviewQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(
-        insights=[insight.model_dump() for insight in insights],
-        idea=idea.model_dump(),
-        paper=paper.model_dump(),
-        reviews=[review.model_dump() for review in reviews],
-        rebuttals=[rebuttal.model_dump() for rebuttal in rebuttals],
-        meta_review=meta_review.model_dump(),
-    )
-
-
-def pipeline_eval(
-    insights: List[ResearchInsight],
-    idea: ResearchIdea,
-    paper: ResearchPaperSubmission,
-    reviews: List[ResearchReview],
-    rebuttals: List[ResearchRebuttal],
-    meta_review: ResearchMetaReview,
-    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-    config: Config = Config(),
-) -> Tuple[
-    List[ResearchInsightEvalOutput],
-    ResearchIdeaEvalOutput,
-    ResearchPaperSubmissionEvalOutput,
-    List[ResearchReviewEvalOutput],
-    List[ResearchRebuttalEvalOutput],
-    ResearchMetaReviewEvalOutput,
-]:
-    insights_quality = [
-        evaluate_insight_quality(insight, model_name, config) for insight in insights
-    ]
-    idea_quality = evaluate_idea_quality(insights, idea, model_name, config)
-    paper_quality = evaluate_paper_quality(insights, idea, paper, model_name, config)
-    reviews_quality = [
-        evaluate_review_quality(insights, idea, paper, review, model_name, config)
-        for review in reviews
-    ]
-    rebuttals_quality = [
-        evaluate_rebuttal_quality(
-            insights, idea, paper, review, rebuttal, model_name, config
-        )
-        for review, rebuttal in zip(reviews, rebuttals)
-    ]
-    meta_review_quality = evaluate_meta_review_quality(
-        insights, idea, paper, reviews, rebuttals, meta_review, model_name, config
-    )
-
-    return (
-        insights_quality,
-        idea_quality,
-        paper_quality,
-        reviews_quality,
-        rebuttals_quality,
-        meta_review_quality,
-    )
+from research_town.evaluators import BaseEvaluator
 
 
 def main(
@@ -185,6 +27,8 @@ def main(
     meta_review = progress_db.get(ResearchMetaReview)[0]
     config = Config(config_file_path)
 
+    evaluator = BaseEvaluator(model_name=model_name, config=config)
+
     # step 3: evaluations
     (
         insights_quality,
@@ -193,15 +37,13 @@ def main(
         reviews_quality,
         rebuttals_quality,
         meta_review_quality,
-    ) = pipeline_eval(
+    ) = evaluator.pipeline_eval(
         insights=insights,
         idea=idea,
         paper=paper,
         reviews=reviews,
         rebuttals=rebuttals,
         meta_review=meta_review,
-        model_name=model_name,
-        config=config,
     )
 
     # step 4: store the evaluation results to database
@@ -214,12 +56,12 @@ def main(
     progress_db.update(
         ResearchIdea,
         updates={'eval_score': idea_quality.dimension_scores},
-        pk=insight.pk,
+        pk=idea.pk,
     )
     progress_db.update(
         ResearchPaperSubmission,
         updates={'eval_score': paper_quality.dimension_scores},
-        pk=insight.pk,
+        pk=paper.pk,
     )
     for review, review_quality in zip(reviews, reviews_quality):
         progress_db.update(
