@@ -29,7 +29,9 @@ from research_town.utils.string_mapper import (
     map_insight_to_str,
     map_meta_review_to_str,
     map_paper_to_str,
+    map_rebuttal_list_to_str,
     map_rebuttal_to_str,
+    map_review_list_to_str,
     map_review_to_str,
 )
 
@@ -38,14 +40,17 @@ def evaluate_insight_quality(
     insight: ResearchInsight, model_name: str, config: Config
 ) -> ResearchInsightEvalOutput:
     evaluator = ResearchInsightQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(trend=map_insight_to_str(insight))
+    return evaluator.eval(trend=map_insight_to_str(insight.model_dump()))
 
 
 def evaluate_idea_quality(
     idea: ResearchIdea, insight: ResearchInsight, model_name: str, config: Config
 ) -> ResearchIdeaEvalOutput:
     evaluator = ResearchIdeaQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(idea=map_idea_to_str(idea), trend=map_insight_to_str(insight))
+    return evaluator.eval(
+        idea=map_idea_to_str(idea.model_dump()),
+        trend=map_insight_to_str(insight.model_dump()),
+    )
 
 
 def evaluate_paper_quality(
@@ -59,9 +64,9 @@ def evaluate_paper_quality(
         model_name=model_name, config=config
     )
     return evaluator.eval(
-        idea=map_idea_to_str(idea),
-        trend=map_insight_to_str(insight),
-        paper=map_paper_to_str(paper),
+        idea=map_idea_to_str(idea.model_dump()),
+        trend=map_insight_to_str(insight.model_dump()),
+        paper=map_paper_to_str(paper.model_dump()),
     )
 
 
@@ -76,11 +81,11 @@ def evaluate_review_quality(
 ) -> ResearchReviewEvalOutput:
     evaluator = ResearchReviewQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
-        idea=map_idea_to_str(idea),
-        trend=map_insight_to_str(insight),
-        paper=map_paper_to_str(paper),
-        review=map_review_to_str(review),
-        decision=map_meta_review_to_str(meta_review),
+        idea=map_idea_to_str(idea.model_dump()),
+        trend=map_insight_to_str(insight.model_dump()),
+        paper=map_paper_to_str(paper.model_dump()),
+        review=map_review_to_str(review.model_dump()),
+        decision=map_meta_review_to_str(meta_review.model_dump()),
     )
 
 
@@ -95,11 +100,11 @@ def evaluate_rebuttal_quality(
 ) -> ResearchRebuttalEvalOutput:
     evaluator = ResearchRebuttalQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
-        idea=map_idea_to_str(idea),
-        trend=map_insight_to_str(insight),
-        paper=map_paper_to_str(paper),
-        review=map_review_to_str(review),
-        rebuttal=map_rebuttal_to_str(rebuttal),
+        idea=map_idea_to_str(idea.model_dump()),
+        trend=map_insight_to_str(insight.model_dump()),
+        paper=map_paper_to_str(paper.model_dump()),
+        review=map_review_to_str(review.model_dump()),
+        rebuttal=map_rebuttal_to_str(rebuttal.model_dump()),
     )
 
 
@@ -107,20 +112,22 @@ def evaluate_meta_review_quality(
     idea: ResearchIdea,
     insight: ResearchInsight,
     paper: ResearchPaperSubmission,
-    review: ResearchReview,
-    rebuttal: ResearchRebuttal,
+    reviews: List[ResearchReview],
+    rebuttals: List[ResearchRebuttal],
     meta_review: ResearchMetaReview,
     model_name: str,
     config: Config,
 ) -> ResearchMetaReviewEvalOutput:
     evaluator = ResearchMetaReviewQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
-        idea=map_idea_to_str(idea),
-        trend=map_insight_to_str(insight),
-        paper=map_paper_to_str(paper),
-        review=map_review_to_str(review),
-        rebuttal=map_rebuttal_to_str(rebuttal),
-        meta_review=map_meta_review_to_str(meta_review),
+        idea=map_idea_to_str(idea.model_dump()),
+        trend=map_insight_to_str(insight.model_dump()),
+        paper=map_paper_to_str(paper.model_dump()),
+        review=map_review_list_to_str([review.model_dump() for review in reviews]),
+        rebuttal=map_rebuttal_list_to_str(
+            [rebuttal.model_dump() for rebuttal in rebuttals]
+        ),
+        meta_review=map_meta_review_to_str(meta_review.model_dump()),
     )
 
 
@@ -171,7 +178,7 @@ def pipeline_eval(
 
 
 def main(
-    model_name: str,
+    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
     config_file_path: str = '../../configs/default_config.yaml',
     load_file_path: str = '../../examples/research_town_demo_log',
     save_file_path: str = '../../examples/research_town_demo_log',
@@ -208,39 +215,39 @@ def main(
     # step 4: store the evaluation results to database
     progress_db.update(
         ResearchInsight,
-        insight.pk,
-        eval_score=insight_quality.dimension_scores,
+        updates={'eval_score': insight_quality.dimension_scores},
+        pk=insight.pk,
     )
     progress_db.update(
         ResearchIdea,
-        idea.pk,
-        eval_score=idea_quality.dimension_scores,
+        updates={'eval_score': idea_quality.dimension_scores},
+        pk=insight.pk,
     )
     progress_db.update(
         ResearchPaperSubmission,
-        paper.pk,
-        eval_score=paper_quality.dimension_scores,
+        updates={'eval_score': paper_quality.dimension_scores},
+        pk=insight.pk,
     )
     for review, review_quality in zip(reviews, reviews_quality):
         progress_db.update(
             ResearchReview,
-            review.pk,
-            eval_score=review_quality.dimension_scores,
+            updates={'eval_score': review_quality.dimension_scores},
+            pk=review.pk,
         )
     for rebuttal, rebuttal_quality in zip(rebuttals, rebuttals_quality):
         progress_db.update(
             ResearchRebuttal,
-            rebuttal.pk,
-            eval_score=rebuttal_quality.dimension_scores,
+            updates={'eval_score': rebuttal_quality.dimension_scores},
+            pk=rebuttal.pk,
         )
     progress_db.update(
         ResearchMetaReview,
-        meta_review.pk,
-        eval_score=meta_review_quality.dimension_scores,
+        updates={'eval_score': meta_review_quality.dimension_scores},
+        pk=meta_review.pk,
     )
 
     # step 5: save the database logs with evaluation results to file
-    progress_db.save(save_file_path)
+    progress_db.save_to_json(save_file_path)
 
 
 if __name__ == '__main__':
