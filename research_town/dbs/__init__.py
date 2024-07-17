@@ -11,10 +11,10 @@ from .data import (
     PaperProfile,
     ResearchIdea,
     ResearchInsight,
-    ResearchMetaReviewForPaperSubmission,
+    ResearchMetaReview,
     ResearchPaperSubmission,
-    ResearchRebuttalForPaperSubmission,
-    ResearchReviewForPaperSubmission,
+    ResearchRebuttal,
+    ResearchReview,
 )
 from .db_agent import AgentProfileDB
 from .db_env import EnvLogDB
@@ -35,9 +35,9 @@ __all__ = [
     'ResearchIdea',
     'ResearchInsight',
     'ResearchPaperSubmission',
-    'ResearchReviewForPaperSubmission',
-    'ResearchRebuttalForPaperSubmission',
-    'ResearchMetaReviewForPaperSubmission',
+    'ResearchReview',
+    'ResearchRebuttal',
+    'ResearchMetaReview',
     'EnvLogDB',
     'PaperProfileDB',
     'AgentProfileDB',

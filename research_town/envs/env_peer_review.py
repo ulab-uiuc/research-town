@@ -13,8 +13,8 @@ from ..dbs import (
     EnvLogDB,
     PaperProfileDB,
     ProgressDB,
-    ResearchRebuttalForPaperSubmission,
-    ResearchReviewForPaperSubmission,
+    ResearchRebuttal,
+    ResearchReview,
 )
 from .env_base import BaseMultiAgentEnv
 
@@ -101,7 +101,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
     @beartype
     def run(self) -> None:
         # Paper Reviewing
-        self.reviews: List[ResearchReviewForPaperSubmission] = []
+        self.reviews: List[ResearchReview] = []
         for reviewer in self.reviewers:
             review = reviewer.write_review(
                 paper=self.paper,
@@ -118,7 +118,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
             )
 
         # Rebuttal Submitting
-        self.rebuttals: List[ResearchRebuttalForPaperSubmission] = []
+        self.rebuttals: List[ResearchRebuttal] = []
         for review in self.reviews:
             rebuttal = self.proj_leader.write_rebuttal(
                 paper=self.paper,

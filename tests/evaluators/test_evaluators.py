@@ -10,7 +10,7 @@ from research_town.evaluators.quality_evaluator import (
     ResearchMetaReviewQualityEvaluator,
     ResearchPaperSubmissionQualityEvaluator,
     ResearchRebuttalQualityEvaluator,
-    ResearchReviewForPaperSubmissionQualityEvaluator,
+    ResearchReviewQualityEvaluator,
 )
 from tests.constants.eval_constants import (
     idea_constant_A,
@@ -103,9 +103,7 @@ def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
         'review': reviews,
         'decision': 'Reject',
     }
-    evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
-        model_name=model_name, config=config
-    )
+    evaluator = ResearchReviewQualityEvaluator(model_name=model_name, config=config)
     if use_mock:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',

@@ -6,14 +6,14 @@ from research_town.dbs import AgentProfile  # Agent
 from research_town.dbs import PaperProfile  # Paper
 from research_town.dbs import ResearchIdea  # Idea
 from research_town.dbs import ResearchInsight  # Trend
-from research_town.dbs import ResearchMetaReviewForPaperSubmission  # Meta Review
+from research_town.dbs import ResearchMetaReview  # Meta Review
 from research_town.dbs import ResearchPaperSubmission  # Paper
-from research_town.dbs import ResearchRebuttalForPaperSubmission  # Rebuttal
-from research_town.dbs import ResearchReviewForPaperSubmission  # Review
+from research_town.dbs import ResearchRebuttal  # Rebuttal
+from research_town.dbs import ResearchReview  # Review
 from research_town.evaluators import (
     ResearchIdeaQualityEvaluator,
     ResearchPaperSubmissionQualityEvaluator,
-    ResearchReviewForPaperSubmissionQualityEvaluator,
+    ResearchReviewQualityEvaluator,
 )
 
 config_file_path = './configs/default_config.yaml'
@@ -24,9 +24,9 @@ def set_constants() -> (
         ResearchInsight,
         ResearchIdea,
         ResearchPaperSubmission,
-        ResearchReviewForPaperSubmission,
-        ResearchRebuttalForPaperSubmission,
-        ResearchMetaReviewForPaperSubmission,
+        ResearchReview,
+        ResearchRebuttal,
+        ResearchMetaReview,
     ]
 ):
     agent_A = AgentProfile(
@@ -53,21 +53,21 @@ def set_constants() -> (
         conference='ICLR 2024',
     )
 
-    paper_review_A = ResearchReviewForPaperSubmission(
+    paper_review_A = ResearchReview(
         review_pk=agent_A.pk,
         paper_pk=paper_A.pk,
         content='This paper proposes a challenge meta-evaluator benchmark, LLMBar, used to assess the quality of the LLM-evaluator (LLM + prompt strategies) for instruction following. The paper addresses an important current problem of scalable evaluation of the LLM-evaluator’s quality, but There is some confusion in how the evaluation set was generated.',
         score=8,
     )
 
-    paper_rebuttal_A = ResearchRebuttalForPaperSubmission(
+    paper_rebuttal_A = ResearchRebuttal(
         paper_pk=paper_A.pk,
         reviewer_pk=agent_A.pk,
         author_pk=agent_A.pk,
         content='We appreciate the reviewer for the feedback. We will provide more details on how the evaluation set was generated in the revised version of the paper.',
     )
 
-    paper_meta_review_A = ResearchMetaReviewForPaperSubmission(
+    paper_meta_review_A = ResearchMetaReview(
         paper_pk=paper_A.pk,
         chair_pk=agent_A.pk,
         review_pks=[paper_review_A.pk],
@@ -89,9 +89,9 @@ def run_sync_evaluation(
     insight: ResearchInsight,
     idea: ResearchIdea,
     paper: ResearchPaperSubmission,
-    review: ResearchReviewForPaperSubmission,
-    rebuttal: ResearchRebuttalForPaperSubmission,
-    meta_review: ResearchMetaReviewForPaperSubmission,
+    review: ResearchReview,
+    rebuttal: ResearchRebuttal,
+    meta_review: ResearchMetaReview,
     model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
 ) -> None:
     # Serialize Logs
@@ -112,7 +112,7 @@ def run_sync_evaluation(
     paper_quality_evaluator = ResearchPaperSubmissionQualityEvaluator(
         model_name=model_name, config=config
     )
-    review_quality_evaluator = ResearchReviewForPaperSubmissionQualityEvaluator(
+    review_quality_evaluator = ResearchReviewQualityEvaluator(
         model_name=model_name, config=config
     )
     # Generate Evaluation

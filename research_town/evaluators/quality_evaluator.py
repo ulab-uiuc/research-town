@@ -16,10 +16,10 @@ from .evaluator_output import (
     BaseEvalOutput,
     ResearchIdeaEvalOutput,
     ResearchInsightEvalOutput,
-    ResearchMetaReviewForPaperSubmissionEvalOutput,
+    ResearchMetaReviewEvalOutput,
     ResearchPaperSubmissionEvalOutput,
-    ResearchRebuttalForPaperSubmissionEvalOutput,
-    ResearchReviewForPaperSubmissionEvalOutput,
+    ResearchRebuttalEvalOutput,
+    ResearchReviewEvalOutput,
 )
 from .evaluator_output_format import OutputFormatError
 
@@ -75,6 +75,35 @@ class BaseQualityEvaluator:
         return output_model(
             overall_score=overall_score, dimension_scores=dimension_scores
         )
+
+
+class ResearchInsightQualityEvaluator(BaseQualityEvaluator):
+    def __init__(
+        self,
+        model_name: str,
+        config: Optional[Config] = None,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
+        super().__init__(model_name, ResearchInsightEvalOutput, *args, **kwargs)
+
+    @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
+    def eval(self, *args: Any, **kwargs: Any) -> ResearchInsightEvalOutput:
+        raw_output = research_insight_quality_eval_prompting(
+            insight=kwargs['insight'],
+            trend=kwargs['trend'],
+            model_name=self.model_name,
+            return_num=self.config.param.return_num if self.config else 1,
+            max_token_num=self.config.param.max_token_num if self.config else 512,
+            temperature=self.config.param.temperature if self.config else None,
+            top_p=self.config.param.top_p if self.config else None,
+            stream=self.config.param.stream if self.config else None,
+        )
+        self.parsed_output = self.parse(raw_output, ResearchInsightEvalOutput)
+
+        for key, value in kwargs.items():
+            setattr(self.parsed_output, key, value)
+        return self.parsed_output
 
 
 class ResearchIdeaQualityEvaluator(BaseQualityEvaluator):
@@ -136,7 +165,7 @@ class ResearchPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
         return self.parsed_output
 
 
-class ResearchReviewForPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
+class ResearchReviewQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
@@ -144,14 +173,10 @@ class ResearchReviewForPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(
-            model_name, ResearchReviewForPaperSubmissionEvalOutput, *args, **kwargs
-        )
+        super().__init__(model_name, ResearchReviewEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
-    def eval(
-        self, *args: Any, **kwargs: Any
-    ) -> ResearchReviewForPaperSubmissionEvalOutput:
+    def eval(self, *args: Any, **kwargs: Any) -> ResearchReviewEvalOutput:
         raw_output = research_review_for_paper_submission_quality_eval_prompting(
             idea=kwargs['idea'],  # idea: str,
             trend=kwargs['trend'],  # trend: str,
@@ -164,38 +189,7 @@ class ResearchReviewForPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
             top_p=self.config.param.top_p if self.config else None,
             stream=self.config.param.stream if self.config else None,
         )
-        self.parsed_output = self.parse(
-            raw_output, ResearchReviewForPaperSubmissionEvalOutput
-        )
-
-        for key, value in kwargs.items():
-            setattr(self.parsed_output, key, value)
-        return self.parsed_output
-
-
-class ResearchInsightQualityEvaluator(BaseQualityEvaluator):
-    def __init__(
-        self,
-        model_name: str,
-        config: Optional[Config] = None,
-        *args: Any,
-        **kwargs: Any,
-    ) -> None:
-        super().__init__(model_name, ResearchInsightEvalOutput, *args, **kwargs)
-
-    @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
-    def eval(self, *args: Any, **kwargs: Any) -> ResearchInsightEvalOutput:
-        raw_output = research_insight_quality_eval_prompting(
-            insight=kwargs['insight'],
-            trend=kwargs['trend'],
-            model_name=self.model_name,
-            return_num=self.config.param.return_num if self.config else 1,
-            max_token_num=self.config.param.max_token_num if self.config else 512,
-            temperature=self.config.param.temperature if self.config else None,
-            top_p=self.config.param.top_p if self.config else None,
-            stream=self.config.param.stream if self.config else None,
-        )
-        self.parsed_output = self.parse(raw_output, ResearchInsightEvalOutput)
+        self.parsed_output = self.parse(raw_output, ResearchReviewEvalOutput)
 
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
@@ -210,14 +204,10 @@ class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(
-            model_name, ResearchRebuttalForPaperSubmissionEvalOutput, *args, **kwargs
-        )
+        super().__init__(model_name, ResearchRebuttalEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
-    def eval(
-        self, *args: Any, **kwargs: Any
-    ) -> ResearchRebuttalForPaperSubmissionEvalOutput:
+    def eval(self, *args: Any, **kwargs: Any) -> ResearchRebuttalEvalOutput:
         raw_output = research_rebuttal_for_paper_submission_quality_eval_prompting(
             idea=kwargs['idea'],
             trend=kwargs['trend'],
@@ -231,9 +221,7 @@ class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
             top_p=self.config.param.top_p if self.config else None,
             stream=self.config.param.stream if self.config else None,
         )
-        self.parsed_output = self.parse(
-            raw_output, ResearchRebuttalForPaperSubmissionEvalOutput
-        )
+        self.parsed_output = self.parse(raw_output, ResearchRebuttalEvalOutput)
 
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
@@ -248,14 +236,10 @@ class ResearchMetaReviewQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(
-            model_name, ResearchMetaReviewForPaperSubmissionEvalOutput, *args, **kwargs
-        )
+        super().__init__(model_name, ResearchMetaReviewEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
-    def eval(
-        self, *args: Any, **kwargs: Any
-    ) -> ResearchMetaReviewForPaperSubmissionEvalOutput:
+    def eval(self, *args: Any, **kwargs: Any) -> ResearchMetaReviewEvalOutput:
         raw_output = research_meta_review_for_paper_submission_quality_eval_prompting(
             idea=kwargs['idea'],
             trend=kwargs['trend'],
@@ -271,9 +255,7 @@ class ResearchMetaReviewQualityEvaluator(BaseQualityEvaluator):
             top_p=self.config.param.top_p if self.config else None,
             stream=self.config.param.stream if self.config else None,
         )
-        self.parsed_output = self.parse(
-            raw_output, ResearchMetaReviewForPaperSubmissionEvalOutput
-        )
+        self.parsed_output = self.parse(raw_output, ResearchMetaReviewEvalOutput)
 
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
