@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, List, Optional
+from beartype.typing import Dict, List, Optional, Union
 
 from .model_prompting import model_prompting
 from .string_mapper import (
@@ -279,7 +279,7 @@ def research_review_quality_eval_prompting(
     insights: List[Dict[str, str]],
     idea: Dict[str, str],
     paper: Dict[str, str],
-    review: Dict[str, str],
+    review: Dict[str, Union[int, str]],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
@@ -408,7 +408,7 @@ def research_rebuttal_quality_eval_prompting(
     insights: List[Dict[str, str]],
     idea: Dict[str, str],
     paper: Dict[str, str],
-    review: Dict[str, str],
+    review: Dict[str, Union[int, str]],
     rebuttal: Dict[str, str],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
@@ -525,7 +525,7 @@ def research_meta_review_quality_eval_prompting(
     insights: List[Dict[str, str]],
     idea: Dict[str, str],
     paper: Dict[str, str],
-    reviews: List[Dict[str, str]],
+    reviews: List[Dict[str, Union[int, str]]],
     rebuttals: List[Dict[str, str]],
     meta_review: Dict[str, str],
     return_num: Optional[int] = 1,
