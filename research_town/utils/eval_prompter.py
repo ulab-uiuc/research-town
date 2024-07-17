@@ -504,7 +504,7 @@ def research_rebuttal_quality_eval_prompting(
         'idea': map_idea_to_str(idea),
         'insights': map_insight_list_to_str(insights),
         'paper': map_paper_to_str(paper),
-        'review': map_review_list_to_str(review),
+        'review': map_review_to_str(review),
         'rebuttal': map_rebuttal_to_str(rebuttal),
     }
     prompt = rebuttal_prompt.format_map(input_data)

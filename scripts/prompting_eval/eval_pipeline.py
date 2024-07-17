@@ -117,8 +117,8 @@ def evaluate_meta_review_quality(
         insights=[insight.model_dump() for insight in insights],
         idea=idea.model_dump(),
         paper=paper.model_dump(),
-        review=[review.model_dump() for review in reviews],
-        rebuttal=[rebuttal.model_dump() for rebuttal in rebuttals],
+        reviews=[review.model_dump() for review in reviews],
+        rebuttals=[rebuttal.model_dump() for rebuttal in rebuttals],
         meta_review=meta_review.model_dump(),
     )
 
