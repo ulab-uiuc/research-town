@@ -24,7 +24,7 @@ from tests.constants.data_constants import (
     research_review_B,
 )
 
-config_file_path = './configs/default_config.yaml'
+config_file_path = 'tests/constants/constant_config.yaml'
 
 
 @pytest.fixture(params=['gpt-4o', 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1'])

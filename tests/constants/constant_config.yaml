@@ -1,0 +1,53 @@
+param:
+  related_paper_num: 10
+  base_llm: 'gpt-4o'
+  max_collaborators_num: 3
+  domain: 'computer_vision'
+  reviewer_num: 3
+  result_path: 'Mixtral-8x7B'
+  return_num: 1
+  max_token_num: 512
+  temperature: 0
+  top_p: null
+  stream: null
+prompt_template:
+  write_bio: |
+    Based on the list of the researcher's first person persona from different times, please write a comprehensive first person persona. Focus more on more rescent personas. Be concise and clear (around 300 words).
+    Here are the personas from different times: {publication_info}
+  find_collaborators: |
+    Given the name and profile of me, could you find {max_number} collaborators for the following collaboration task?
+    Here is my profile: {self_serialize_all}
+    The collaboration task includes: {task_serialize_all}
+    Here are a full list of the names and profiles of potential collaborators: {collaborators_serialize_all}
+    Generate the collaborator in a list separated by '-' for each collaborator.
+  review_literature: |
+    Given the profile of me, keywords, some recent paper titles and abstracts. Could you summarize the keywords of high level research backgrounds and insights in this field (related to my profile if possible).
+    Here is my profile biology: {profile_bio}
+    Here are the research domains: {domains}
+    Here are some recent paper titles and abstracts: {papers}
+  brainstorm_idea: |
+    Here is a high-level summarized insight of a research field {insights}.
+    How do you view this field? Do you have any novel ideas or insights?
+    Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.
+  discuss_idea: |
+    Given a list of research ideas, please summarize them by removing duplicates
+    and resolving any contradictory ideas by selecting the more reasonable one.
+    Here are the research ideas:
+    {ideas}
+  write_paper: |
+    Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract.
+    You might use two or more of these ideas if they are related and work well together.
+    Here is the idea: {idea}
+    Here are the external data, which is a list of abstracts of related papers: {papers}
+  write_meta_review: |
+    Please make a review decision to decide whether the following submission should be accepted or rejected by an academic conference. Here are several reviews from reviewers and rebuttals from the author for this submission. Please indicate your review decision as accept or reject.
+    Here is the submission: {paper}
+    Here are the reviews: {reviews}
+    Here are the rebuttals: {rebuttals}
+  write_rebuttal: |
+    Please write a rebuttal for the following submission you have made to an academic conference. Here are the reviews and decisions from the reviewers. Your rebuttal should rebut the reviews to convince the reviewers to accept your submission.
+    Here is the submission: {paper}
+    Here are the reviews: {review}
+  discuss: |
+    Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way.
+    Here are the messages from other researchers: {message}
