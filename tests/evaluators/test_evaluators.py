@@ -4,7 +4,7 @@ import pytest
 from beartype.typing import Any
 
 from research_town.configs import Config
-from research_town.evaluators.quality_evaluator import (
+from research_town.evaluators.evaluator_quality import (
     ResearchIdeaQualityEvaluator,
     ResearchInsightQualityEvaluator,
     ResearchMetaReviewQualityEvaluator,
