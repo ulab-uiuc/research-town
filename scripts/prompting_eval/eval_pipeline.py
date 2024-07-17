@@ -174,7 +174,7 @@ def main(
     model_name: str,
     config_file_path: str = '../../configs/default_config.yaml',
     load_file_path: str = '../../examples/research_town_demo_log',
-    save_file_path='../../examples/research_town_demo_log',
+    save_file_path: str = '../../examples/research_town_demo_log',
 ) -> None:
     # step 1: load the log from file
     progress_db = ProgressDB(load_file_path)
