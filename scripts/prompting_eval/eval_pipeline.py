@@ -40,7 +40,10 @@ def evaluate_insight_quality(
     insight: ResearchInsight, model_name: str, config: Config
 ) -> ResearchInsightEvalOutput:
     evaluator = ResearchInsightQualityEvaluator(model_name=model_name, config=config)
-    return evaluator.eval(trend=map_insight_to_str(insight.model_dump()))
+    return evaluator.eval(
+        insight=map_insight_to_str(insight.model_dump()),
+        trend=map_insight_to_str(insight.model_dump()),
+    )
 
 
 def evaluate_idea_quality(
