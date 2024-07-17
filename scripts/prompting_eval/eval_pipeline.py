@@ -1,13 +1,15 @@
 from typing import List, Tuple
 
 from research_town.configs import Config
-from research_town.dbs import ResearchIdea  # Idea
-from research_town.dbs import ResearchInsight  # Trend
-from research_town.dbs import ResearchMetaReview  # Meta Review
-from research_town.dbs import ResearchPaperSubmission  # Paper
-from research_town.dbs import ResearchRebuttal  # Rebuttal
-from research_town.dbs import ResearchReview  # Review
-from research_town.dbs import ProgressDB
+from research_town.dbs import (
+    ProgressDB,
+    ResearchIdea,
+    ResearchInsight,
+    ResearchMetaReview,
+    ResearchPaperSubmission,
+    ResearchRebuttal,
+    ResearchReview,
+)
 from research_town.evaluators import (
     ResearchIdeaEvalOutput,
     ResearchIdeaQualityEvaluator,
