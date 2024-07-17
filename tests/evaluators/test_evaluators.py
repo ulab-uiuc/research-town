@@ -14,13 +14,13 @@ from research_town.evaluators.quality_evaluator import (
 )
 from tests.constants.eval_constants import (
     idea_constant_A,
+    insights_constant_A,
     paper_abstract_constant_A,
     paper_title_constant_A,
     review_constant_A,
     review_constant_B,
     review_constant_C,
     review_constant_D,
-    trend_constant_A,
 )
 
 config_file_path = './configs/default_config.yaml'
@@ -35,7 +35,7 @@ def model_name(request: pytest.FixtureRequest) -> Any:
 def test_evaluator_eval_idea(use_mock: bool, model_name: str) -> None:
     config = Config(config_file_path)
     evaluator = ResearchIdeaQualityEvaluator(model_name=model_name, config=config)
-    input_dict = {'idea': idea_constant_A, 'trend': trend_constant_A, 'pk': 0}
+    input_dict = {'idea': idea_constant_A, 'insights': insights_constant_A, 'pk': 0}
     if use_mock:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
@@ -97,7 +97,7 @@ def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
     ]
     input_dict = {
         'idea': idea_constant_A,
-        'trend': trend_constant_A,
+        'insights': insights_constant_A,
         'paper': paper,
         'pk': 0,
         'review': reviews,
@@ -132,7 +132,7 @@ def test_evaluator_eval_insight(use_mock: bool, model_name: str) -> None:
     evaluator = ResearchInsightQualityEvaluator(model_name=model_name, config=config)
     input_dict = {
         'insight': 'This is a research insight',
-        'trend': trend_constant_A,
+        'insights': insights_constant_A,
         'pk': 0,
     }
     if use_mock:
@@ -168,7 +168,7 @@ def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
     rebuttal = 'This is a rebuttal to the reviews'
     input_dict = {
         'idea': idea_constant_A,
-        'trend': trend_constant_A,
+        'insights': insights_constant_A,
         'paper': paper,
         'review': reviews,
         'rebuttal': rebuttal,
@@ -210,7 +210,7 @@ def test_evaluator_eval_meta_review(use_mock: bool, model_name: str) -> None:
     meta_review = 'This is a meta-review of the paper submission'
     input_dict = {
         'idea': idea_constant_A,
-        'trend': trend_constant_A,
+        'insights': insights_constant_A,
         'paper': paper,
         'review': reviews,
         'meta_review': meta_review,

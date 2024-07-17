@@ -24,16 +24,7 @@ from research_town.evaluators import (
     ResearchReviewEvalOutput,
     ResearchReviewQualityEvaluator,
 )
-from research_town.utils.string_mapper import (
-    map_idea_to_str,
-    map_insight_to_str,
-    map_meta_review_to_str,
-    map_paper_to_str,
-    map_rebuttal_list_to_str,
-    map_rebuttal_to_str,
-    map_review_list_to_str,
-    map_review_to_str,
-)
+from research_town.utils.string_mapper import map_idea_to_str, map_insight_to_str
 
 
 def evaluate_insight_quality(
@@ -42,7 +33,6 @@ def evaluate_insight_quality(
     evaluator = ResearchInsightQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
         insight=map_insight_to_str(insight.model_dump()),
-        trend=map_insight_to_str(insight.model_dump()),
     )
 
 
@@ -52,7 +42,7 @@ def evaluate_idea_quality(
     evaluator = ResearchIdeaQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
         idea=map_idea_to_str(idea.model_dump()),
-        trend=map_insight_to_str(insight.model_dump()),
+        insights=map_insight_to_str(insight.model_dump()),
     )
 
 
@@ -67,9 +57,9 @@ def evaluate_paper_quality(
         model_name=model_name, config=config
     )
     return evaluator.eval(
-        idea=map_idea_to_str(idea.model_dump()),
-        trend=map_insight_to_str(insight.model_dump()),
-        paper=map_paper_to_str(paper.model_dump()),
+        idea=idea.model_dump(),
+        insights=insight.model_dump(),
+        paper=paper.model_dump(),
     )
 
 
@@ -84,11 +74,11 @@ def evaluate_review_quality(
 ) -> ResearchReviewEvalOutput:
     evaluator = ResearchReviewQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
-        idea=map_idea_to_str(idea.model_dump()),
-        trend=map_insight_to_str(insight.model_dump()),
-        paper=map_paper_to_str(paper.model_dump()),
-        review=map_review_to_str(review.model_dump()),
-        decision=map_meta_review_to_str(meta_review.model_dump()),
+        idea=idea.model_dump(),
+        insights=insight.model_dump(),
+        paper=paper.model_dump(),
+        review=review.model_dump(),
+        decision=meta_review.model_dump(),
     )
 
 
@@ -103,11 +93,11 @@ def evaluate_rebuttal_quality(
 ) -> ResearchRebuttalEvalOutput:
     evaluator = ResearchRebuttalQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
-        idea=map_idea_to_str(idea.model_dump()),
-        trend=map_insight_to_str(insight.model_dump()),
-        paper=map_paper_to_str(paper.model_dump()),
-        review=map_review_to_str(review.model_dump()),
-        rebuttal=map_rebuttal_to_str(rebuttal.model_dump()),
+        idea=idea.model_dump(),
+        insights=insight.model_dump(),
+        paper=paper.model_dump(),
+        review=review.model_dump(),
+        rebuttal=rebuttal.model_dump(),
     )
 
 
@@ -123,14 +113,12 @@ def evaluate_meta_review_quality(
 ) -> ResearchMetaReviewEvalOutput:
     evaluator = ResearchMetaReviewQualityEvaluator(model_name=model_name, config=config)
     return evaluator.eval(
-        idea=map_idea_to_str(idea.model_dump()),
-        trend=map_insight_to_str(insight.model_dump()),
-        paper=map_paper_to_str(paper.model_dump()),
-        review=map_review_list_to_str([review.model_dump() for review in reviews]),
-        rebuttal=map_rebuttal_list_to_str(
-            [rebuttal.model_dump() for rebuttal in rebuttals]
-        ),
-        meta_review=map_meta_review_to_str(meta_review.model_dump()),
+        idea=idea.model_dump(),
+        insights=insight.model_dump(),
+        paper=paper.model_dump(),
+        review=[review.model_dump() for review in reviews],
+        rebuttal=[rebuttal.model_dump() for rebuttal in rebuttals],
+        meta_review=meta_review.model_dump(),
     )
 
 

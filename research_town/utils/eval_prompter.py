@@ -2,25 +2,35 @@ from beartype import beartype
 from beartype.typing import Dict, List, Optional
 
 from .model_prompting import model_prompting
+from .string_mapper import (
+    map_idea_to_str,
+    map_insight_list_to_str,
+    map_insight_to_str,
+    map_meta_review_to_str,
+    map_paper_to_str,
+    map_rebuttal_list_to_str,
+    map_rebuttal_to_str,
+    map_review_list_to_str,
+    map_review_to_str,
+)
 
 
 @beartype
 def research_insight_quality_eval_prompting(
-    insight: str,
-    trend: str,
     model_name: str,
+    insight: Dict[str, str],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
+    prompt_template: Optional[str] = None,
 ) -> str:
     prompt_insight = """
-    <Instruction> Please evaluate the insight based on the following dimensions, considering the current research trend within the research community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the insight. <Instruction>
+    <Instruction> Please evaluate the insight based on the following dimensions, considering the current research insights within the research community. If the research insights field is left blank, please use your common knowledge to assess the insights.  Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the insight. <Instruction>
 
     <Input>
     Here is the insight to evaluate: {insight}.
-    Here is the research trend: {trend}.
     </Input>
 
     <Output>
@@ -28,17 +38,22 @@ def research_insight_quality_eval_prompting(
     </Output>
 
     <Approach> The details of rating are as follow:
+    {regulations}
+    </Approach>
+    """
+
+    regulations = """
     1. Novelty
     Rating (1-10):
     Comments:
     How original and unique is the insight?
     Does it introduce a new perspective or significant advancement compared to existing methods?
-    How does it align with or diverge from the innovations highlighted in the trend?
+    How does it align with or diverge from the innovations highlighted in the insights?
     2. Validity
     Rating (1-10):
     Comments:
     Does it include solid theoretical foundations, robust algorithms, and detailed methodologies?
-    Is the method in line with the state-of-the-art techniques noted in the trend?
+    Is the method in line with the state-of-the-art techniques noted in the insights?
     Are the underlying principles well-defined and logically consistent?
     Does the insight demonstrate a deep understanding of relevant theories and concepts?
     3. Significance
@@ -46,14 +61,14 @@ def research_insight_quality_eval_prompting(
     Comments:
     Evaluate the potential impact of the insight on the specific domain of research community that the insight belongs to and beyond.
     How significant is its contribution to advancing the field?
-    Does it address high-impact problems or gaps identified in the trend?
+    Does it address high-impact problems or gaps identified in the insights?
     How applicable is it in practical settings and industry contexts?
     4. Feasibility
     Rating (1-10):
     Comments:
     Assess the feasibility of implementing the insight.
     Is it practically applicable in real-world scenarios?
-    Does it consider efficiency and scalability, in line with the practical application focus of the trend?
+    Does it consider efficiency and scalability, in line with the practical application focus of the insights?
     5. Clarity
     Rating (1-10):
     Comments:
@@ -63,13 +78,12 @@ def research_insight_quality_eval_prompting(
     Rating (1-10):
     Comments:
     Consider the ethical implications and societal impact of the insight.
-    Does it adhere to the growing emphasis on ethical research practices as highlighted in the trend?
-    </Approach>
+    Does it adhere to the growing emphasis on ethical research practices as highlighted in the insights?
     """
 
-    input_data = {'insight': insight, 'trend': trend}
+    input_data = {'regulations': regulations, 'insight': map_insight_to_str(insight)}
     prompt = prompt_insight.format_map(input_data)
-    evaluation_result = model_prompting(
+    insight_eval = model_prompting(
         model_name,
         prompt,
         return_num=return_num,
@@ -77,30 +91,28 @@ def research_insight_quality_eval_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
-    # merge results from List[Str] to Str
-    combined_result = '\n'.join(evaluation_result)
-
-    return combined_result
+    )[0]
+    return insight_eval
 
 
 @beartype
 def research_idea_quality_eval_prompting(
-    idea: str,
-    trend: str,
     model_name: str,
+    insights: List[Dict[str, str]],
+    idea: Dict[str, str],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
+    prompt_template: Optional[str] = None,
 ) -> str:
     prompt_idea = """
-    <Instruction> Please evaluate the idea based on the following dimensions, considering the current research trend within the research community. If the research trend field is left blank, please use your common knowledge to assess the trend.  Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea. <Instruction>
+    <Instruction> Please evaluate the idea based on the following dimensions, considering the current research insights within the research community. If the research insights field is left blank, please use your common knowledge to assess the insights.  Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea. <Instruction>
 
     <Input>
     Here is the idea to evaluate: {idea}.
-    Here is the research trend: {trend}.
+    Here is the research insights: {insights}.
     </Input>
 
     <Output>
@@ -108,17 +120,22 @@ def research_idea_quality_eval_prompting(
     </Output>
 
     <Approach> The details of rating are as follow:
+    {regulations}
+    </Approach>
+    """
+
+    regulations = """
     1. Novelty
     Rating (1-10):
     Comments:
     How original and unique is the idea?
     Does it introduce a new perspective or significant advancement compared to existing methods?
-    How does it align with or diverge from the innovations highlighted in the trend?
+    How does it align with or diverge from the innovations highlighted in the insights?
     2. Validity
     Rating (1-10):
     Comments:
     Does it include solid theoretical foundations, robust algorithms, and detailed methodologies?
-    Is the method in line with the state-of-the-art techniques noted in the trend?
+    Is the method in line with the state-of-the-art techniques noted in the insights?
     Are the underlying principles well-defined and logically consistent?
     Does the idea demonstrate a deep understanding of relevant theories and concepts?
     3. Significance
@@ -126,14 +143,14 @@ def research_idea_quality_eval_prompting(
     Comments:
     Evaluate the potential impact of the idea on the specific domain of research community that the idea belongs to and beyond.
     How significant is its contribution to advancing the field?
-    Does it address high-impact problems or gaps identified in the trend?
+    Does it address high-impact problems or gaps identified in the insights?
     How applicable is it in practical settings and industry contexts?
     4. Feasibility
     Rating (1-10):
     Comments:
     Assess the feasibility of implementing the idea.
     Is it practically applicable in real-world scenarios?
-    Does it consider efficiency and scalability, in line with the practical application focus of the trend?
+    Does it consider efficiency and scalability, in line with the practical application focus of the insights?
     5. Clarity
     Rating (1-10):
     Comments:
@@ -143,13 +160,16 @@ def research_idea_quality_eval_prompting(
     Rating (1-10):
     Comments:
     Consider the ethical implications and societal impact of the idea.
-    Does it adhere to the growing emphasis on ethical research practices as highlighted in the trend?
-    </Approach>
+    Does it adhere to the growing emphasis on ethical research practices as highlighted in the insights?
     """
 
-    input_data = {'idea': idea, 'trend': trend}
+    input_data = {
+        'regulations': regulations,
+        'idea': map_idea_to_str(idea),
+        'insights': map_insight_list_to_str(insights),
+    }
     prompt = prompt_idea.format_map(input_data)
-    evaluation_result = model_prompting(
+    idea_eval = model_prompting(
         model_name,
         prompt,
         return_num=return_num,
@@ -157,24 +177,22 @@ def research_idea_quality_eval_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
-    # merge results from List[Str] to Str
-    combined_result = '\n'.join(evaluation_result)
-
-    return combined_result
+    )[0]
+    return idea_eval
 
 
 @beartype
 def research_paper_submission_quality_eval_prompting(
-    idea: str,
-    paper: Dict[str, str],
     model_name: str,
-    trend: Optional[str] = None,
+    insights: List[Dict[str, str]],
+    idea: Dict[str, str],
+    paper: Dict[str, str],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
+    prompt_template: Optional[str] = None,
 ) -> str:
     # refer to idea eval, but replace those not needed, and paraphrase those have overlaps.
     paper_prompt = """
@@ -183,10 +201,9 @@ def research_paper_submission_quality_eval_prompting(
 
     <Input>
     Here is the paper draft to evaluate:
-    Title: {title}
-    Abstract: {abstract}
+    paper: {paper}
     Idea: {idea}
-    Research Trend: {trend}
+    Insights: {insights}
     </Input>
 
     <Output>
@@ -194,12 +211,17 @@ def research_paper_submission_quality_eval_prompting(
     </Output>
 
     <Approach> The details of rating are as follow:
+    {regulations}
+    </Approach>
+    """
+
+    regulations = """
     1. Novelty
     Rating (1-10):
     Comments:
     Does it paper introduce a novel problem or new perspective that has not been explored before?
     Does it introduce a new techniques or significant advancement compared to existing methods?
-    How does it align with or diverge from the innovations highlighted in the trend?
+    How does it align with or diverge from the innovations highlighted in the insights?
     2. Validity
     Rating (1-10):
     Comments:
@@ -231,17 +253,16 @@ def research_paper_submission_quality_eval_prompting(
     Consider the ethical implications and societal impact of the paper.
     Does it adhere to ethical guidelines and responsible research practices?
     Are potential negative consequences or biases addressed?
-    </Approach>
     """
 
     input_data = {
-        'idea': idea,
-        'title': paper['title'],
-        'abstract': paper['abstract'],
-        'trend': trend if trend is not None else '',  # Provide default value if None
+        'regulations': regulations,
+        'insights': map_insight_list_to_str(insights),
+        'idea': map_idea_to_str(idea),
+        'paper': map_paper_to_str(paper),
     }
     prompt = paper_prompt.format_map(input_data)
-    evaluation_result = model_prompting(
+    paper_eval = model_prompting(
         model_name,
         prompt,
         return_num=return_num,
@@ -249,24 +270,22 @@ def research_paper_submission_quality_eval_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
-    # merge results from List[Str] to Str
-    combined_result = '\n'.join(evaluation_result)
-
-    return combined_result
+    )[0]
+    return paper_eval
 
 
-def research_review_for_paper_submission_quality_eval_prompting(
-    idea: str,
-    trend: str,
-    paper: Dict[str, str],
-    review: List[str],
+def research_review_quality_eval_prompting(
     model_name: str,
+    insights: List[Dict[str, str]],
+    idea: Dict[str, str],
+    paper: Dict[str, str],
+    review: Dict[str, str],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
+    prompt_template: Optional[str] = None,
 ) -> str:
     review_prompt = """
     <Instruction>
@@ -276,9 +295,9 @@ def research_review_for_paper_submission_quality_eval_prompting(
     <Input>
     Here is the review to evaluate:
     idea: {idea}
-    research trend: {trend}
-    paper: title-- {title}; abstract-- {abstract}.
-    reviews: {review}
+    research insights: {insights}
+    paper: {paper}
+    review: {review}
     </Input>
 
     <Output>
@@ -364,20 +383,15 @@ def research_review_for_paper_submission_quality_eval_prompting(
         - Do the scores reflect a reasonable and unbiased assessment of the paper?
     """
 
-    # Organize the reviews
-    organized_reviews = '\n'.join(
-        [f"Reviewer {i+1}'s comment: {review[i]}" for i in range(len(review))]
-    )
     input_data = {
         'regulations': regulations,
-        'idea': idea,
-        'trend': trend,
-        'title': paper['title'],
-        'abstract': paper['abstract'],
-        'review': organized_reviews,
+        'idea': map_idea_to_str(idea),
+        'insights': map_insight_list_to_str(insights),
+        'paper': map_paper_to_str(paper),
+        'review': map_review_to_str(review),
     }
     prompt = review_prompt.format_map(input_data)
-    evaluation_result = model_prompting(
+    review_eval = model_prompting(
         model_name,
         prompt,
         return_num=return_num,
@@ -385,25 +399,23 @@ def research_review_for_paper_submission_quality_eval_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
-    # merge results from List[Str] to Str
-    combined_result = '\n'.join(evaluation_result)
-
-    return combined_result
+    )[0]
+    return review_eval
 
 
-def research_rebuttal_for_paper_submission_quality_eval_prompting(
-    idea: str,
-    trend: str,
-    paper: Dict[str, str],
-    review: List[str],
+def research_rebuttal_quality_eval_prompting(
     model_name: str,
-    rebuttal: Optional[str] = None,
+    insights: List[Dict[str, str]],
+    idea: Dict[str, str],
+    paper: Dict[str, str],
+    review: Dict[str, str],
+    rebuttal: Dict[str, str],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
+    prompt_template: Optional[str] = None,
 ) -> str:
     rebuttal_prompt = """
     <Instruction>
@@ -412,9 +424,9 @@ def research_rebuttal_for_paper_submission_quality_eval_prompting(
 
     <Input>
     Here is the review to evaluate:
+    research insights: {insights}
     idea: {idea}
-    research trend: {trend}
-    paper: title-- {title}; abstract-- {abstract}.
+    paper: {paper}
     reviews: {review}
     rebutal: {rebuttal}
     </Input>
@@ -487,21 +499,16 @@ def research_rebuttal_for_paper_submission_quality_eval_prompting(
         - Is there fairness in addressing criticisms without bias?
     """
 
-    # Organize the reviews
-    organized_reviews = '\n'.join(
-        [f"Reviewer {i+1}'s comment: {review[i]}" for i in range(len(review))]
-    )
     input_data = {
         'regulations': regulations,
-        'idea': idea,
-        'trend': trend,
-        'title': paper['title'],
-        'abstract': paper['abstract'],
-        'review': organized_reviews,
-        'rebuttal': rebuttal if rebuttal is not None else '',
+        'idea': map_idea_to_str(idea),
+        'insights': map_insight_list_to_str(insights),
+        'paper': map_paper_to_str(paper),
+        'review': map_review_list_to_str(review),
+        'rebuttal': map_rebuttal_to_str(rebuttal),
     }
     prompt = rebuttal_prompt.format_map(input_data)
-    evaluation_result = model_prompting(
+    rebuttal_eval = model_prompting(
         model_name,
         prompt,
         return_num=return_num,
@@ -509,27 +516,24 @@ def research_rebuttal_for_paper_submission_quality_eval_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
-    # merge results from List[Str] to Str
-    combined_result = '\n'.join(evaluation_result)
-
-    return combined_result
+    )[0]
+    return rebuttal_eval
 
 
-def research_meta_review_for_paper_submission_quality_eval_prompting(
-    idea: str,
-    trend: str,
-    paper: Dict[str, str],
-    review: List[str],
-    decision: str,
+def research_meta_review_quality_eval_prompting(
     model_name: str,
-    rebuttal: Optional[str] = None,
-    meta_review: Optional[str] = None,
+    insights: List[Dict[str, str]],
+    idea: Dict[str, str],
+    paper: Dict[str, str],
+    reviews: List[Dict[str, str]],
+    rebuttals: List[Dict[str, str]],
+    meta_review: Dict[str, str],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
+    prompt_template: Optional[str] = None,
 ) -> str:
     meta_review_prompt = """
     <Instruction>
@@ -538,13 +542,12 @@ def research_meta_review_for_paper_submission_quality_eval_prompting(
 
     <Input>
     Here is the review to evaluate:
+    research insights: {insights}
     idea: {idea}
-    research trend: {trend}
-    paper: title-- {title}; abstract-- {abstract}.
-    reviews: {review}
-    rebutal: {rebuttal}
+    paper: {paper}
+    reviews: {reviews}
+    rebutals: {rebuttals}
     meta_review: {meta_review}
-    final_decision:{final_decision}
     </Input>
 
     <Output>
@@ -624,23 +627,17 @@ def research_meta_review_for_paper_submission_quality_eval_prompting(
         - Does it meet the standards expected for a meta-review in terms of thoroughness, insightfulness, and clarity?
     """
 
-    # Organize the reviews
-    organized_reviews = '\n'.join(
-        [f"Reviewer {i+1}'s comment: {review[i]}" for i in range(len(review))]
-    )
     input_data = {
         'regulations': regulations,
-        'idea': idea,
-        'trend': trend,
-        'title': paper['title'],
-        'abstract': paper['abstract'],
-        'review': organized_reviews,
-        'rebuttal': rebuttal if rebuttal is not None else '',
-        'meta_review': meta_review if meta_review is not None else '',
-        'final_decision': decision,
+        'insights': map_insight_list_to_str(insights),
+        'idea': map_idea_to_str(idea),
+        'paper': map_paper_to_str(paper),
+        'reviews': map_review_list_to_str(reviews),
+        'rebuttals': map_rebuttal_list_to_str(rebuttals),
+        'meta_review': map_meta_review_to_str(meta_review),
     }
     prompt = meta_review_prompt.format_map(input_data)
-    evaluation_result = model_prompting(
+    meta_review_eval = model_prompting(
         model_name,
         prompt,
         return_num=return_num,
@@ -648,8 +645,5 @@ def research_meta_review_for_paper_submission_quality_eval_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
-    # merge results from List[Str] to Str
-    combined_result = '\n'.join(evaluation_result)
-
-    return combined_result
+    )[0]
+    return meta_review_eval

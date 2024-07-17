@@ -7,10 +7,10 @@ from ..utils.error_handler import parsing_error_exponential_backoff
 from ..utils.eval_prompter import (
     research_idea_quality_eval_prompting,
     research_insight_quality_eval_prompting,
-    research_meta_review_for_paper_submission_quality_eval_prompting,
+    research_meta_review_quality_eval_prompting,
     research_paper_submission_quality_eval_prompting,
-    research_rebuttal_for_paper_submission_quality_eval_prompting,
-    research_review_for_paper_submission_quality_eval_prompting,
+    research_rebuttal_quality_eval_prompting,
+    research_review_quality_eval_prompting,
 )
 from .evaluator_output import (
     BaseEvalOutput,
@@ -90,9 +90,8 @@ class ResearchInsightQualityEvaluator(BaseQualityEvaluator):
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ResearchInsightEvalOutput:
         raw_output = research_insight_quality_eval_prompting(
-            insight=kwargs['insight'],
-            trend=kwargs['trend'],
             model_name=self.model_name,
+            insight=kwargs['insight'],
             return_num=self.config.param.return_num if self.config else 1,
             max_token_num=self.config.param.max_token_num if self.config else 512,
             temperature=self.config.param.temperature if self.config else None,
@@ -119,9 +118,9 @@ class ResearchIdeaQualityEvaluator(BaseQualityEvaluator):
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ResearchIdeaEvalOutput:
         raw_output = research_idea_quality_eval_prompting(
-            idea=kwargs['idea'],
-            trend=kwargs['trend'],
             model_name=self.model_name,
+            insights=kwargs['insights'],
+            idea=kwargs['idea'],
             return_num=self.config.param.return_num if self.config else 1,
             max_token_num=self.config.param.max_token_num if self.config else 512,
             temperature=self.config.param.temperature if self.config else None,
@@ -148,10 +147,10 @@ class ResearchPaperSubmissionQualityEvaluator(BaseQualityEvaluator):
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ResearchPaperSubmissionEvalOutput:
         raw_output = research_paper_submission_quality_eval_prompting(
+            model_name=self.model_name,
+            insights=kwargs['insights'],
             idea=kwargs['idea'],
             paper=kwargs['paper'],
-            model_name=self.model_name,
-            trend=kwargs.get('trend'),
             return_num=self.config.param.return_num if self.config else 1,
             max_token_num=self.config.param.max_token_num if self.config else 512,
             temperature=self.config.param.temperature if self.config else None,
@@ -177,12 +176,12 @@ class ResearchReviewQualityEvaluator(BaseQualityEvaluator):
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ResearchReviewEvalOutput:
-        raw_output = research_review_for_paper_submission_quality_eval_prompting(
-            idea=kwargs['idea'],  # idea: str,
-            trend=kwargs['trend'],  # trend: str,
-            paper=kwargs['paper'],  # paper: Dict[str,str],
-            review=kwargs['review'],
+        raw_output = research_review_quality_eval_prompting(
             model_name=self.model_name,
+            insights=kwargs['insights'],
+            idea=kwargs['idea'],
+            paper=kwargs['paper'],
+            review=kwargs['review'],
             return_num=self.config.param.return_num if self.config else 1,
             max_token_num=self.config.param.max_token_num if self.config else 512,
             temperature=self.config.param.temperature if self.config else None,
@@ -208,13 +207,13 @@ class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ResearchRebuttalEvalOutput:
-        raw_output = research_rebuttal_for_paper_submission_quality_eval_prompting(
+        raw_output = research_rebuttal_quality_eval_prompting(
+            model_name=self.model_name,
+            insights=kwargs['insights'],
             idea=kwargs['idea'],
-            trend=kwargs['trend'],
             paper=kwargs['paper'],
             review=kwargs['review'],
-            model_name=self.model_name,
-            rebuttal=kwargs.get('rebuttal'),
+            rebuttal=kwargs['rebuttal'],
             return_num=self.config.param.return_num if self.config else 1,
             max_token_num=self.config.param.max_token_num if self.config else 512,
             temperature=self.config.param.temperature if self.config else None,
@@ -240,15 +239,14 @@ class ResearchMetaReviewQualityEvaluator(BaseQualityEvaluator):
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ResearchMetaReviewEvalOutput:
-        raw_output = research_meta_review_for_paper_submission_quality_eval_prompting(
-            idea=kwargs['idea'],
-            trend=kwargs['trend'],
-            paper=kwargs['paper'],
-            review=kwargs['review'],
-            decision=kwargs['decision'],
+        raw_output = research_meta_review_quality_eval_prompting(
             model_name=self.model_name,
-            rebuttal=kwargs.get('rebuttal'),
-            meta_review=kwargs.get('meta_review'),
+            insights=kwargs['insights'],
+            idea=kwargs['idea'],
+            paper=kwargs['paper'],
+            reviews=kwargs['reviews'],
+            rebuttals=kwargs['rebuttals'],
+            meta_review=kwargs['meta_review'],
             return_num=self.config.param.return_num if self.config else 1,
             max_token_num=self.config.param.max_token_num if self.config else 512,
             temperature=self.config.param.temperature if self.config else None,
