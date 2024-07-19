@@ -57,9 +57,7 @@ def test_merging_configurations() -> None:
         'agent_prompt_template': {
             'find_collaborators': 'template2 {profile_bio} {domains}'
         },
-        'eval_prompt_template': {
-            'find_collaborators': 'template2 {profile_bio} {domains}'
-        },
+        'eval_prompt_template': {'idea_quality': 'template2 {profile_bio} {domains}'},
     }
 
     config = Config()
@@ -79,8 +77,7 @@ def test_merging_configurations() -> None:
         == 'template2 {profile_bio} {domains}'
     )
     assert (
-        config.eval_prompt_template.find_collaborators
-        == 'template2 {profile_bio} {domains}'
+        config.eval_prompt_template.idea_quality == 'template2 {profile_bio} {domains}'
     )
 
 
