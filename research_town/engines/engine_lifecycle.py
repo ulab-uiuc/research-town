@@ -71,8 +71,10 @@ class LifecycleResearchEngine(BaseResearchEngine):
         return {}
 
     def from_start_to_paper_submission(
-        self, env: StartMultiAgentEnv, proj_participant_num: int = 1
+        self,
+        env: StartMultiAgentEnv,
     ) -> Dict[str, Any]:
+        proj_participant_num = self.config.param.proj_participant_num
         proj_leader = env.proj_leader.profile
         proj_participants = self.find_proj_participants(
             proj_leader, proj_participant_num
@@ -85,8 +87,10 @@ class LifecycleResearchEngine(BaseResearchEngine):
         }
 
     def from_paper_submission_to_peer_review(
-        self, env: PaperSubmissionMultiAgentEnv, reviewer_num: int = 1
+        self,
+        env: PaperSubmissionMultiAgentEnv,
     ) -> Dict[str, Any]:
+        reviewer_num = self.config.param.reviewer_num
         proj_leader = env.proj_leader.profile
         reviewers = self.find_reviewers(env.paper, reviewer_num)
         chair = self.find_chair(env.paper)
@@ -98,8 +102,9 @@ class LifecycleResearchEngine(BaseResearchEngine):
         }
 
     def from_paper_submission_to_paper_submission(
-        self, env: PaperSubmissionMultiAgentEnv, proj_participant_num: int = 2
+        self, env: PaperSubmissionMultiAgentEnv
     ) -> Dict[str, Any]:
+        proj_participant_num = self.config.param.proj_participant_num
         proj_leader = env.proj_leader.profile
         proj_participants = self.find_proj_participants(
             proj_leader, proj_participant_num
