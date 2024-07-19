@@ -88,3 +88,24 @@ ignore_missing_imports = true
 
 [tool.mypy-litellm]
 ignore_missing_imports = true
+
+[tool.pydoc-markdown]
+loaders = [
+  { type = "python", search_path = ["."] }
+]
+
+[[tool.pydoc-markdown.processors]]
+type = "filter"
+skip_empty_modules = true
+
+[[tool.pydoc-markdown.processors]]
+type = "smart"
+
+[[tool.pydoc-markdown.processors]]
+type = "crossref"
+
+[tool.pydoc-markdown.renderer]
+type = "docusaurus"
+docs_base_path = "docs"
+relative_output_path = ""
+sidebar_top_level_label = "Documentation"
