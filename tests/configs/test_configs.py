@@ -10,7 +10,7 @@ def test_default_initialization() -> None:
     config = Config()
     assert config.param.related_paper_num == 10
     assert config.param.base_llm == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
-    assert config.param.max_collaborators_num == 3
+    assert config.param.proj_participant_num == 3
     assert config.param.domain == 'computer_vision'
     assert config.param.reviewer_num == 3
     assert config.agent_prompt_template.discuss == (
@@ -24,7 +24,7 @@ def test_yaml_loading() -> None:
     param:
         related_paper_num: 5
         base_llm: 'some/other-LLM'
-        max_collaborators_num: 2
+        proj_participant_num: 2
     agent_prompt_template:
         test1: 'template1'
         test2: 'template2'
@@ -39,7 +39,7 @@ def test_yaml_loading() -> None:
     config = Config(yaml_config_path=tmpfile_path)
     assert config.param.related_paper_num == 5
     assert config.param.base_llm == 'some/other-LLM'
-    assert config.param.max_collaborators_num == 2
+    assert config.param.proj_participant_num == 2
     assert config.agent_prompt_template.test1 == 'template1'  # type: ignore
     assert config.agent_prompt_template.test2 == 'template2'  # type: ignore
     assert config.eval_prompt_template.test1 == 'template1'  # type: ignore
@@ -48,7 +48,7 @@ def test_yaml_loading() -> None:
 
 def test_merging_configurations() -> None:
     base_config = {
-        'param': {'related_paper_num': 10, 'max_collaborators_num': 10},
+        'param': {'related_paper_num': 10, 'proj_participant_num': 10},
         'agent_prompt_template': {'test': 'template1'},
         'eval_prompt_template': {'test': 'template1'},
     }
@@ -64,13 +64,13 @@ def test_merging_configurations() -> None:
     config.merge_from_other_cfg(base_config)
 
     assert config.param.related_paper_num == 10
-    assert config.param.max_collaborators_num == 10
+    assert config.param.proj_participant_num == 10
     assert config.agent_prompt_template.test == 'template1'  # type: ignore
 
     config.merge_from_other_cfg(new_config)
 
     assert config.param.related_paper_num == 5
-    assert config.param.max_collaborators_num == 10
+    assert config.param.proj_participant_num == 10
     assert config.agent_prompt_template.test == 'template1'  # type: ignore
     assert (
         config.agent_prompt_template.find_collaborators
@@ -92,7 +92,7 @@ def test_yaml_serialization() -> None:
 
     assert loaded_data['param']['related_paper_num'] == 10
     assert loaded_data['param']['base_llm'] == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
-    assert loaded_data['param']['max_collaborators_num'] == 3
+    assert loaded_data['param']['proj_participant_num'] == 3
 
 
 def test_placeholder_check() -> None:
