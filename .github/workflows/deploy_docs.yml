@@ -1,5 +1,5 @@
 
-name: Deploy Docs
+name: deploy docs
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Build Docusaurus
+    name: build docusaurus
     runs-on: ubuntu-latest
     if: github.repository == 'ulab-uiuc/research-town'
     steps:
@@ -23,26 +23,26 @@ jobs:
           node-version: 18
           cache: npm
           cache-dependency-path: docs/package-lock.json
-      - name: Set up Python
+      - name: set up python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Generate Python Docs
+      - name: generate python docs
         run: rm -rf docs/modules/python && pip install pydoc-markdown && pydoc-markdown
-      - name: Install dependencies
+      - name: install dependencies
         run: cd docs && npm ci
       - name: Build website
         run: cd docs && npm run build
 
-      - name: Upload Build Artifact
+      - name: upload build artifact
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/build
 
   deploy:
-    name: Deploy to GitHub Pages
+    name: deploy to gitHub pages
     needs: build
     if: github.ref == 'refs/heads/main' && github.repository == 'ulab-uiuc/research-town'
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
@@ -55,6 +55,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
+      - name: deploy to gitHub pages
         id: deployment
         uses: actions/deploy-pages@v4
