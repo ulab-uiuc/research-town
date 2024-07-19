@@ -106,7 +106,6 @@ type = "crossref"
 
 [tool.pydoc-markdown.renderer]
 type = "docusaurus"
-docs_base_path = "docs/modules"
-relative_output_path = "python"
-relative_sidebar_path = "sidebar.json"
-sidebar_top_level_label = "Backend"
+docs_base_path = "docs"
+relative_output_path = ""
+sidebar_top_level_label = "Documentation"
