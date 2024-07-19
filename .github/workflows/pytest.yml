@@ -11,7 +11,7 @@ on:
     branches: [main]
 
 jobs:
-  Pytest:
+  pytest:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5
