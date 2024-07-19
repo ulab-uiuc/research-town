@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: build docusaurus
+    name: build-docusaurus
     runs-on: ubuntu-latest
     if: github.repository == 'ulab-uiuc/research-town'
     steps:
@@ -42,7 +42,7 @@ jobs:
           path: docs/build
 
   deploy:
-    name: deploy to gitHub pages
+    name: deploy-to-github-pages
     needs: build
     if: github.ref == 'refs/heads/main' && github.repository == 'ulab-uiuc/research-town'
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
