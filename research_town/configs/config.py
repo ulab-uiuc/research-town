@@ -572,14 +572,15 @@ class Config(BaseModel):
         with open(yaml_config_path, 'r') as f:
             yaml_cfg: Dict[str, Any] = yaml.safe_load(f)
         self.merge_from_other_cfg(yaml_cfg)
-        self.check_prompt_template_placeholder()
+        self.check_agent_prompt_template_placeholder()
+        self.check_eval_prompt_template_placeholder()
 
     def save_to_yaml(self, yaml_config_path: str) -> None:
         with open(yaml_config_path, 'w') as f:
             yaml.dump(self.model_dump(), f)
 
-    def check_prompt_template_placeholder(self) -> None:
-        templates = self.prompt_template.model_dump()
+    def check_agent_prompt_template_placeholder(self) -> None:
+        templates = self.agent_prompt_template.model_dump()
         required_placeholders = {
             'write_bio': [
                 '{publication_info}',
@@ -620,6 +621,37 @@ class Config(BaseModel):
                 '{weakness}',
             ],
             'write_rebuttal': ['{paper}', '{review}'],
+        }
+
+        for template_name, placeholders in required_placeholders.items():
+            template = templates.get(template_name, '')
+            for placeholder in placeholders:
+                assert (
+                    placeholder in template
+                ), f"Template '{template_name}' is missing placeholder '{placeholder}'"
+
+    def check_eval_prompt_template_placeholder(self) -> None:
+        templates = self.eval_prompt_template.model_dump()
+        required_placeholders = {
+            'insight_quality': ['{insight}'],
+            'idea_quality': ['{idea}', '{insights}'],
+            'paper_quality': ['{paper}', '{idea}', '{insights}'],
+            'review_quality': ['{idea}', '{insights}', '{paper}', '{review}'],
+            'rebuttal_quality': [
+                '{insights}',
+                '{idea}',
+                '{paper}',
+                '{review}',
+                '{rebuttal}',
+            ],
+            'meta_review_quality': [
+                '{insights}',
+                '{idea}',
+                '{paper}',
+                '{reviews}',
+                '{rebuttals}',
+                '{meta_review}',
+            ],
         }
 
         for template_name, placeholders in required_placeholders.items():
