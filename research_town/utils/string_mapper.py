@@ -9,6 +9,7 @@ def map_idea_list_to_str(ideas: List[Dict[str, str]]) -> str:
 
 
 def map_idea_to_str(idea: Dict[str, str]) -> str:
+    assert 'content' in idea
     return f"{idea['content']}"
 
 
@@ -20,6 +21,7 @@ def map_paper_list_to_str(papers: List[Dict[str, str]]) -> str:
 
 
 def map_paper_to_str(paper: Dict[str, str]) -> str:
+    assert 'abstract' in paper
     return f"Paper: {paper['abstract']}"
 
 
@@ -31,6 +33,10 @@ def map_review_list_to_str(reviews: List[Dict[str, Union[int, str]]]) -> str:
 
 
 def map_review_to_str(review: Dict[str, Union[int, str]]) -> str:
+    assert 'score' in review
+    assert 'summary' in review
+    assert 'strength' in review
+    assert 'weakness' in review
     score = review['score']
     summary = review['summary']
     strength = review['strength']
@@ -46,6 +52,7 @@ def map_rebuttal_list_to_str(rebuttals: List[Dict[str, str]]) -> str:
 
 
 def map_rebuttal_to_str(paper: Dict[str, str]) -> str:
+    assert 'content' in paper
     return f"Rebuttal: {paper['content']}"
 
 
@@ -57,6 +64,10 @@ def map_meta_review_list_to_str(meta_reviews: List[Dict[str, str]]) -> str:
 
 
 def map_meta_review_to_str(meta_review: Dict[str, str]) -> str:
+    assert 'decision' in meta_review
+    assert 'summary' in meta_review
+    assert 'strength' in meta_review
+    assert 'weakness' in meta_review
     decision = meta_review['decision']
     summary = meta_review['summary']
     strength = meta_review['strength']
@@ -72,4 +83,5 @@ def map_insight_list_to_str(insights: List[Dict[str, str]]) -> str:
 
 
 def map_insight_to_str(insight: Dict[str, str]) -> str:
+    assert 'content' in insight
     return f"{insight['content']}"
