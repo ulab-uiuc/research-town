@@ -35,7 +35,7 @@ class AgentProfileDB(BaseDB[AgentProfile]):
             )
             bio = write_bio_prompting(
                 publication_info=publication_info,
-                prompt_template=config.prompt_template.write_bio,
+                prompt_template=config.agent_prompt_template.write_bio,
             )[0]
             agent_profile = AgentProfile(
                 name=name,
