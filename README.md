@@ -38,7 +38,7 @@ Different from previous work, **research town** is a comprehensive, interactive,
 
 ## Get started
 
-### Install from pip
+### Install from pip (WIP)
 
 You can install `research_town` from `pypi` to use it as a package:
 

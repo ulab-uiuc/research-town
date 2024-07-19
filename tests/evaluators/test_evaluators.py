@@ -4,7 +4,7 @@ import pytest
 from beartype.typing import Any
 
 from research_town.configs import Config
-from research_town.evaluators.quality_evaluator import (
+from research_town.evaluators.evaluator_quality import (
     ResearchIdeaQualityEvaluator,
     ResearchInsightQualityEvaluator,
     ResearchMetaReviewQualityEvaluator,
@@ -24,8 +24,6 @@ from tests.constants.data_constants import (
     research_review_B,
 )
 
-config_file_path = './configs/default_config.yaml'
-
 
 @pytest.fixture(params=['gpt-4o', 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1'])
 def model_name(request: pytest.FixtureRequest) -> Any:
@@ -34,13 +32,11 @@ def model_name(request: pytest.FixtureRequest) -> Any:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_insight(use_mock: bool, model_name: str) -> None:
-    config = Config(config_file_path)
+    config = Config()
     evaluator = ResearchInsightQualityEvaluator(model_name=model_name, config=config)
 
     insight = research_insight_A.model_dump()
-    input_dict = {
-        'insight': insight,
-    }
+    input_dict = {'insight': insight}
 
     if use_mock:
         with patch(
@@ -53,25 +49,22 @@ def test_evaluator_eval_insight(use_mock: bool, model_name: str) -> None:
             assert evals_output is not None
             assert (
                 evals_output.overall_score == 86
-            ), f"overall score of insight (mock) should be 86, but it's {evals_output.overall_score}"
+            ), f'Expected 86, got {evals_output.overall_score}'
     else:
         evals_output = evaluator.eval(**input_dict)
         assert evals_output is not None
         assert (
-            evals_output.overall_score >= 0 and evals_output.overall_score <= 100
-        ), f"overall score of insight should be an Int between 0 and 100, but it's {evals_output.overall_score}"
+            0 <= evals_output.overall_score <= 100
+        ), f'Expected score between 0 and 100, got {evals_output.overall_score}'
 
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_idea(use_mock: bool, model_name: str) -> None:
-    config = Config(config_file_path)
+    config = Config()
     evaluator = ResearchIdeaQualityEvaluator(model_name=model_name, config=config)
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
-    input_dict = {
-        'insights': insights,
-        'idea': idea,
-    }
+    input_dict = {'insights': insights, 'idea': idea}
 
     if use_mock:
         with patch(
@@ -84,31 +77,27 @@ def test_evaluator_eval_idea(use_mock: bool, model_name: str) -> None:
             assert evals_output is not None
             assert (
                 evals_output.overall_score == 86
-            ), f"overall score of idea (mock) should be 86, but it's  {evals_output.overall_score}"
+            ), f'Expected 86, got {evals_output.overall_score}'
     else:
         evals_output = evaluator.eval(**input_dict)
         assert evals_output is not None
         assert (
-            evals_output.overall_score >= 0 and evals_output.overall_score <= 100
-        ), f"overall score of idea should be an Int between 0 and 100, but it's  {evals_output.overall_score}"
+            0 <= evals_output.overall_score <= 100
+        ), f'Expected score between 0 and 100, got {evals_output.overall_score}'
 
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
-    config = Config(config_file_path)
+    config = Config()
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
     paper = research_paper_submission_A.model_dump()
-
-    input_dict = {
-        'insights': insights,
-        'idea': idea,
-        'paper': paper,
-    }
+    input_dict = {'insights': insights, 'idea': idea, 'paper': paper}
 
     evaluator = ResearchPaperSubmissionQualityEvaluator(
         model_name=model_name, config=config
     )
+
     if use_mock:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
@@ -120,32 +109,26 @@ def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
             assert evals_output is not None
             assert (
                 evals_output.overall_score == 86
-            ), f"overall score of paper (mock) should be 86, but it's  {evals_output.overall_score}"
+            ), f'Expected 86, got {evals_output.overall_score}'
     else:
         evals_output = evaluator.eval(**input_dict)
         assert evals_output is not None
         assert (
-            evals_output.overall_score >= 0 and evals_output.overall_score <= 100
-        ), f"overall score of paper should be an Int between 0 and 100, but it's  {evals_output.overall_score}"
+            0 <= evals_output.overall_score <= 100
+        ), f'Expected score between 0 and 100, got {evals_output.overall_score}'
 
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
-    config = Config(config_file_path)
-
+    config = Config()
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
     paper = research_paper_submission_A.model_dump()
     review = research_review_A.model_dump()
-
-    input_dict = {
-        'insights': insights,
-        'idea': idea,
-        'paper': paper,
-        'review': review,
-    }
+    input_dict = {'insights': insights, 'idea': idea, 'paper': paper, 'review': review}
 
     evaluator = ResearchReviewQualityEvaluator(model_name=model_name, config=config)
+
     if use_mock:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
@@ -159,25 +142,23 @@ def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
             assert evals_output is not None
             assert (
                 evals_output.overall_score == 86
-            ), f"overall score of paper (mock) should be 86, but it's  {evals_output.overall_score}"
+            ), f'Expected 86, got {evals_output.overall_score}'
     else:
         evals_output = evaluator.eval(**input_dict)
         assert evals_output is not None
         assert (
-            evals_output.overall_score >= 0 and evals_output.overall_score <= 100
-        ), f"overall score of paper should be an Int between 0 and 100, but it's  {evals_output.overall_score}"
+            0 <= evals_output.overall_score <= 100
+        ), f'Expected score between 0 and 100, got {evals_output.overall_score}'
 
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
-    config = Config(config_file_path)
-
+    config = Config()
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
     paper = research_paper_submission_A.model_dump()
     review = research_review_A.model_dump()
     rebuttal = research_rebuttal_A.model_dump()
-
     input_dict = {
         'insights': insights,
         'idea': idea,
@@ -187,6 +168,7 @@ def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
     }
 
     evaluator = ResearchRebuttalQualityEvaluator(model_name=model_name, config=config)
+
     if use_mock:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
@@ -200,26 +182,24 @@ def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
             assert evals_output is not None
             assert (
                 evals_output.overall_score == 86
-            ), f"overall score of rebuttal (mock) should be 86, but it's {evals_output.overall_score}"
+            ), f'Expected 86, got {evals_output.overall_score}'
     else:
         evals_output = evaluator.eval(**input_dict)
         assert evals_output is not None
         assert (
-            evals_output.overall_score >= 0 and evals_output.overall_score <= 100
-        ), f"overall score of rebuttal should be an Int between 0 and 100, but it's {evals_output.overall_score}"
+            0 <= evals_output.overall_score <= 100
+        ), f'Expected score between 0 and 100, got {evals_output.overall_score}'
 
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_meta_review(use_mock: bool, model_name: str) -> None:
-    config = Config(config_file_path)
-
+    config = Config()
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
     paper = research_paper_submission_A.model_dump()
     reviews = [research_review_A.model_dump(), research_review_B.model_dump()]
     rebuttals = [research_rebuttal_A.model_dump(), research_rebuttal_B.model_dump()]
     meta_review = research_meta_review_A.model_dump()
-
     input_dict = {
         'insights': insights,
         'idea': idea,
@@ -230,6 +210,7 @@ def test_evaluator_eval_meta_review(use_mock: bool, model_name: str) -> None:
     }
 
     evaluator = ResearchMetaReviewQualityEvaluator(model_name=model_name, config=config)
+
     if use_mock:
         with patch(
             'research_town.utils.eval_prompter.model_prompting',
@@ -243,10 +224,10 @@ def test_evaluator_eval_meta_review(use_mock: bool, model_name: str) -> None:
             assert evals_output is not None
             assert (
                 evals_output.overall_score == 86
-            ), f"overall score of meta-review (mock) should be 86, but it's {evals_output.overall_score}"
+            ), f'Expected 86, got {evals_output.overall_score}'
     else:
         evals_output = evaluator.eval(**input_dict)
         assert evals_output is not None
         assert (
-            evals_output.overall_score >= 0 and evals_output.overall_score <= 100
-        ), f"overall score of meta-review should be an Int between 0 and 100, but it's {evals_output.overall_score}"
+            0 <= evals_output.overall_score <= 100
+        ), f'Expected score between 0 and 100, got {evals_output.overall_score}'
