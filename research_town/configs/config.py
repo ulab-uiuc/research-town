@@ -566,7 +566,8 @@ class Config(BaseModel):
         super().__init__(**data)
         if yaml_config_path:
             self.load_from_yaml(yaml_config_path)
-        self.check_prompt_template_placeholder()
+        self.check_agent_prompt_template_placeholder()
+        self.check_eval_prompt_template_placeholder()
 
     def load_from_yaml(self, yaml_config_path: str) -> None:
         with open(yaml_config_path, 'r') as f:
@@ -667,10 +668,14 @@ class Config(BaseModel):
             merge_a_into_b(other_cfg['param'], updated_param)
             self.param = ParamConfig(**updated_param)
         if 'agent_prompt_template' in other_cfg:
-            updated_template = self.prompt_template.model_dump()
-            merge_a_into_b(other_cfg['prompt_template'], updated_template)
-            self.prompt_template = AgentPromptTemplateConfig(**updated_template)
+            updated_agent_template = self.agent_prompt_template.model_dump()
+            merge_a_into_b(other_cfg['agent_prompt_template'], updated_agent_template)
+            self.agent_prompt_template = AgentPromptTemplateConfig(
+                **updated_agent_template
+            )
         if 'eval_prompt_template' in other_cfg:
-            updated_template = self.prompt_template.model_dump()
-            merge_a_into_b(other_cfg['prompt_template'], updated_template)
-            self.prompt_template = EvalPromptTemplateConfig(**updated_template)
+            updated_eval_template = self.eval_prompt_template.model_dump()
+            merge_a_into_b(other_cfg['eval_prompt_template'], updated_eval_template)
+            self.eval_prompt_template = EvalPromptTemplateConfig(
+                **updated_eval_template
+            )
