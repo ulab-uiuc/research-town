@@ -6,7 +6,7 @@ We built ResearchEval based on ResearchTown in the current version. In future ve
 
 ResearchEval consists of two important parts:
 
-1. **Prompting-based Evaluations**: 
+1. **Prompting-based Evaluations**:
    1. **Prompting-based Evaluators**: See `research_town/evaluators`.
    2. **Evaluation Prompt Templates**: See `research_town/utils/eval_prompter.py`.
    3. **Evaluation Examples**: See `examples/research_eval_demo.py` for pipeline evaluations.

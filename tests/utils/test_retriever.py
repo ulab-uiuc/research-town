@@ -53,13 +53,16 @@ def test_get_embed() -> None:
         result_1 = get_embed(
             instructions_pair,
             retriever_tokenizer=mock_tokenizer_instance,
-            retriever_model=mock_model_instance
+            retriever_model=mock_model_instance,
         )
-        result_2 = [get_embed(
-            instruction,
-            retriever_tokenizer=mock_tokenizer_instance,
-            retriever_model=mock_model_instance
-        )[0] for instruction in instructions_pair]
+        result_2 = [
+            get_embed(
+                instruction,
+                retriever_tokenizer=mock_tokenizer_instance,
+                retriever_model=mock_model_instance,
+            )[0]
+            for instruction in instructions_pair
+        ]
 
         assert all(torch.equal(t1, t2) for t1, t2 in zip(result_1, result_2))
 

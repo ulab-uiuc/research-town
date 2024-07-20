@@ -48,13 +48,19 @@ class BaseDB(Generic[T]):
                 result.append(data)
         return result
 
-    def save_to_json(self, save_path: str, class_name: Optional[str] = None) -> None:
+    def save_to_json(
+        self, save_path: str, with_embed: bool = False, class_name: Optional[str] = None
+    ) -> None:
         if not os.path.exists(save_path):
             os.makedirs(save_path)
         if class_name is None:
             file_name = f'{self.__class__.__name__}.json'
         else:
             file_name = f'{class_name}.json'
+
+        if with_embed:
+            self.save_to_pkl(save_path, class_name=class_name)
+
         with open(os.path.join(save_path, file_name), 'w') as f:
             json.dump(
                 {pk: data.model_dump() for pk, data in self.data.items()},
@@ -89,8 +95,7 @@ class BaseDB(Generic[T]):
                 for name in data.keys():
                     if name in self.data_embed:
                         data[name]['embed'] = self.data_embed[name][0]
-            self.data = {pk: self.data_class(**data)
-                         for pk, data in data.items()}
+            self.data = {pk: self.data_class(**data) for pk, data in data.items()}
 
     def load_from_pkl(self, save_path: str, class_name: Optional[str] = None) -> None:
         if class_name is None:

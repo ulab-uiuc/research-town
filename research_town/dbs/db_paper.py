@@ -1,5 +1,3 @@
-import json
-import pickle
 from typing import List, Optional, TypeVar
 
 from transformers import BertModel, BertTokenizer
