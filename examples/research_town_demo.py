@@ -17,6 +17,9 @@ def run_sync_experiment(
         'Stefanie Jegelka',
         'Silvio Lattanzi',
         'Rex Ying',
+        'Tim Althoff',
+        'Christos Faloutsos',
+        'Julian McAuley',
     ]
     config = Config(config_file_path)
     agent_db = AgentProfileDB()
@@ -41,7 +44,7 @@ def run_sync_experiment(
 
 def main() -> None:
     run_sync_experiment(
-        config_file_path='../configs/default_config.yaml',
+        config_file_path='./configs/default_config.yaml',
         save_file_path='./research_town_demo_log',
     )
 
