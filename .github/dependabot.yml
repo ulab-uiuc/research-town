@@ -5,12 +5,19 @@
 
 version: 2
 updates:
-  - package-ecosystem: "pip" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "pip"
+    directory: "/"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 20
     commit-message:
       prefix: "fix(deps)"
-      include: scope
+      prefix-development: "chore(deps-dev)"
+  - package-ecosystem: "npm"
+    directory: "/docs"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 20
+    commit-message:
+      prefix: "fix(deps)"
       prefix-development: "chore(deps-dev)"
