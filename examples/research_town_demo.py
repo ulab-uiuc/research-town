@@ -17,6 +17,9 @@ def run_sync_experiment(
         'Stefanie Jegelka',
         'Silvio Lattanzi',
         'Rex Ying',
+        'Tim Althoff',
+        'Christos Faloutsos',
+        'Julian McAuley',
     ]
     config = Config(config_file_path)
     agent_db = AgentProfileDB()
