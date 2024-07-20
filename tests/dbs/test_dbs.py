@@ -1,6 +1,10 @@
+import json
+import pickle
+import shutil
 from tempfile import TemporaryDirectory
 from unittest.mock import MagicMock, patch
 
+import torch
 from beartype.typing import Any, Dict, List
 
 from research_town.configs import Config
@@ -328,6 +332,94 @@ def test_paper_match() -> None:
     )
     assert match_paper_profiles
     assert len(match_paper_profiles) == 2
+
+
+def test_agent_file() -> None:
+    db = AgentProfileDB()
+    agent1 = AgentProfile(
+        name='John Doe', bio='Researcher in AI', institute='AI Institute'
+    )
+    agent2 = AgentProfile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    db.add(agent1)
+    db.add(agent2)
+    # save without embeddings
+    db.save_to_json('data/test')
+    with open('data/test/AgentProfileDB.json', 'r') as f:
+        data_test = json.load(f)
+    assert len(data_test) > 0
+    assert db.data == {pk: AgentProfile(**data) for pk, data in data_test.items()}
+    # load without embeddings
+    db_test = AgentProfileDB()
+    db_test.load_from_json('data/test')
+    assert db.data == db_test.data
+    # save with embeddings
+    db.transform_to_embed()
+    db.save_to_json('data/test', with_embed=True)
+    with open('data/test/AgentProfileDB.pkl', 'rb') as f:
+        data_embed_test = pickle.load(f)
+    assert db.data_embed.keys() == data_embed_test.keys()
+    for agent_pk in db.data_embed:
+        assert torch.equal(db.data_embed[agent_pk], data_embed_test[agent_pk])
+    # load with embeddings
+    db_test = AgentProfileDB()
+    db_test.load_from_json('data/test', with_embed=True)
+    assert db.data_embed.keys() == db_test.data_embed.keys()
+    for agent_pk in db.data_embed:
+        assert torch.equal(db.data_embed[agent_pk], db_test.data_embed[agent_pk])
+    # delete test file
+    shutil.rmtree('data/test')
+
+
+def test_paper_file() -> None:
+    db = PaperProfileDB()
+    paper1 = PaperProfile(
+        title='Sample Paper 1',
+        abstract='This is the abstract for paper 1',
+        authors=['Author A', 'Author B'],
+        url='http://example.com/paper1',
+        timestamp=1617181723,
+        keywords=['AI', 'ML'],
+        domain='Computer Science',
+        citation_count=10,
+    )
+    paper2 = PaperProfile(
+        title='Sample Paper 2',
+        abstract='This is the abstract for paper 2',
+        authors=['Author C'],
+        url='http://example.com/paper2',
+        timestamp=1617181756,
+        keywords=['Quantum Computing'],
+        domain='Physics',
+        citation_count=5,
+    )
+    db.add(paper1)
+    db.add(paper2)
+    # save without embeddings
+    db.save_to_json('data/test')
+    with open('data/test/PaperProfileDB.json', 'r') as f:
+        data_test = json.load(f)
+    assert len(data_test) > 0
+    assert db.data == {pk: PaperProfile(**data) for pk, data in data_test.items()}
+    # load without embeddings
+    db_test = PaperProfileDB()
+    db_test.load_from_json('data/test')
+    assert db.data == db_test.data
+    # save with embeddings
+    db.transform_to_embed()
+    db.save_to_json('data/test', with_embed=True)
+    with open('data/test/PaperProfileDB.pkl', 'rb') as f:
+        data_embed_test = pickle.load(f)
+    assert db.data_embed.keys() == data_embed_test.keys()
+    for paper_pk in db.data_embed:
+        assert torch.equal(db.data_embed[paper_pk], data_embed_test[paper_pk])
+    # load with embeddings
+    db_test = PaperProfileDB()
+    db_test.load_from_json('data/test', with_embed=True)
+    assert db.data_embed.keys() == db_test.data_embed.keys()
+    for paper_pk in db.data_embed:
+        assert torch.equal(db.data_embed[paper_pk], db_test.data_embed[paper_pk])
+    # delete test file
+    shutil.rmtree('data/test')
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')

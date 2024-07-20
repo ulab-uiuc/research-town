@@ -17,7 +17,8 @@ def test_get_embed() -> None:
 
         def mock_tokenize(*args: Any, **kwargs: Any) -> Dict[str, torch.Tensor]:
             return {
-                'input_ids': torch.tensor([[101, 102, 103]]),  # Example token IDs
+                # Example token IDs
+                'input_ids': torch.tensor([[101, 102, 103]]),
                 'attention_mask': torch.tensor([[1, 1, 1]]),
             }
 
@@ -46,6 +47,24 @@ def test_get_embed() -> None:
 
         assert isinstance(result[0], torch.Tensor)
         assert result[0].shape == (1, 3)
+
+        # Test distributive property
+        instructions_pair = ['Test instruction 1', 'Test instruction 2']
+        result_1 = get_embed(
+            instructions_pair,
+            retriever_tokenizer=mock_tokenizer_instance,
+            retriever_model=mock_model_instance,
+        )
+        result_2 = [
+            get_embed(
+                [instruction],
+                retriever_tokenizer=mock_tokenizer_instance,
+                retriever_model=mock_model_instance,
+            )[0]
+            for instruction in instructions_pair
+        ]
+
+        assert all(torch.equal(t1, t2) for t1, t2 in zip(result_1, result_2))
 
 
 def test_rank_topk() -> None:

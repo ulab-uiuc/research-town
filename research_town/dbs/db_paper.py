@@ -1,7 +1,6 @@
-import json
-import pickle
 from typing import List, Optional, TypeVar
 
+import torch
 from transformers import BertModel, BertTokenizer
 
 from ..utils.logger import logger
@@ -57,14 +56,17 @@ class PaperProfileDB(BaseDB[PaperProfile]):
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
-        corpus = []
-        for profile in paper_profiles:
-            corpus.append(profile.abstract if profile.abstract is not None else '')
-        corpus_embed = get_embed(
-            instructions=corpus,
-            retriever_tokenizer=self.retriever_tokenizer,
-            retriever_model=self.retriever_model,
-        )
+        corpus_embed: List[torch.Tensor] = []
+        for paper_profile in paper_profiles:
+            if paper_profile.pk in self.data_embed:
+                corpus_embed.append(self.data_embed[paper_profile.pk])
+            else:
+                paper_embed = get_embed(
+                    instructions=[paper_profile.abstract],
+                    retriever_tokenizer=self.retriever_tokenizer,
+                    retriever_model=self.retriever_model,
+                )[0]
+                corpus_embed.append(paper_embed)
         topk_indexes = rank_topk(
             query_embed=query_embed, corpus_embed=corpus_embed, num=num
         )
@@ -73,16 +75,10 @@ class PaperProfileDB(BaseDB[PaperProfile]):
         logger.info(f'Matched papers: {match_paper_profiles}')
         return match_paper_profiles
 
-    def transform_to_embed(self, file_name: str) -> None:
-        pickle_file_name = file_name.replace('.json', '.pkl')
-        with open(file_name, 'r') as f:
-            data = json.load(f)
-        profile_dict = {}
-        for pk in data.keys():
-            profile_dict[pk] = get_embed(
-                [data[pk]['abstract']],
+    def transform_to_embed(self) -> None:
+        for paper_pk in self.data:
+            self.data_embed[paper_pk] = get_embed(
+                [self.data[paper_pk].abstract],
                 self.retriever_tokenizer,
                 self.retriever_model,
-            )
-        with open(pickle_file_name, 'wb') as pkl_file:
-            pickle.dump(profile_dict, pkl_file)
+            )[0]
