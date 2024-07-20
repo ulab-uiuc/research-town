@@ -9,3 +9,8 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+    open-pull-requests-limit: 20
+    commit-message:
+      prefix: "fix(deps)"
+      include: scope
+      prefix-development: "chore(deps-dev)"
