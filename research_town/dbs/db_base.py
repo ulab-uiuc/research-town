@@ -3,6 +3,8 @@ import os
 import pickle
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
+import torch
+
 from ..utils.logger import logger
 from .data import BaseDBData
 
@@ -15,7 +17,7 @@ class BaseDB(Generic[T]):
     ) -> None:
         self.data_class = data_class
         self.data: Dict[str, T] = {}
-        self.data_embed: Dict[str, T] = {}
+        self.data_embed: Dict[str, torch.Tensor] = {}
         if load_file_path is not None:
             self.load_from_json(load_file_path)
 
@@ -90,11 +92,11 @@ class BaseDB(Generic[T]):
             self.load_from_pkl(save_path, class_name=class_name)
 
         with open(os.path.join(save_path, file_name), 'r') as f:
-            data = json.load(f)
+            data: Dict[str, Any] = json.load(f)
             if with_embed:
-                for name in data.keys():
-                    if name in self.data_embed:
-                        data[name]['embed'] = self.data_embed[name][0]
+                for pk in data.keys():
+                    if pk in self.data_embed:
+                        data[pk]['embed'] = self.data_embed[pk]
             self.data = {pk: self.data_class(**data) for pk, data in data.items()}
 
     def load_from_pkl(self, save_path: str, class_name: Optional[str] = None) -> None:

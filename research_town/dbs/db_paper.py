@@ -1,5 +1,6 @@
 from typing import List, Optional, TypeVar
 
+import torch
 from transformers import BertModel, BertTokenizer
 
 from ..utils.logger import logger
@@ -55,7 +56,7 @@ class PaperProfileDB(BaseDB[PaperProfile]):
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
-        corpus_embed = []
+        corpus_embed: List[torch.Tensor] = []
         for paper_profile in paper_profiles:
             if paper_profile.pk in self.data_embed:
                 corpus_embed.append(self.data_embed[paper_profile.pk])

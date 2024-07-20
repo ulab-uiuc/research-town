@@ -57,7 +57,7 @@ def test_get_embed() -> None:
         )
         result_2 = [
             get_embed(
-                instruction,
+                [instruction],
                 retriever_tokenizer=mock_tokenizer_instance,
                 retriever_model=mock_model_instance,
             )[0]
