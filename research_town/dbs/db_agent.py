@@ -52,15 +52,18 @@ class AgentProfileDB(BaseDB[AgentProfile]):
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
-        corpus = []
-        for profile in agent_profiles:
-            corpus.append(profile.bio if profile.bio is not None else '')
 
-        corpus_embed = get_embed(
-            instructions=corpus,
-            retriever_tokenizer=self.retriever_tokenizer,
-            retriever_model=self.retriever_model,
-        )
+        corpus_embed = []
+        for agent_profile in agent_profiles:
+            if agent_profile.pk in self.data_embed:
+                corpus_embed.append(self.data_embed[agent_profile.pk])
+            else:
+                agent_embed = get_embed(
+                    instructions=[agent_profile.bio],
+                    retriever_tokenizer=self.retriever_tokenizer,
+                    retriever_model=self.retriever_model,
+                )[0]
+                corpus_embed.append(agent_embed)
         topk_indexes = rank_topk(
             query_embed=query_embed, corpus_embed=corpus_embed, num=num
         )
@@ -69,19 +72,13 @@ class AgentProfileDB(BaseDB[AgentProfile]):
         logger.info(f'Matched agents: {match_agent_profiles}')
         return match_agent_profiles
 
-    def transform_to_embed(self, file_name: str) -> None:
-        pickle_file_name = file_name.replace('.json', '.pkl')
-        with open(file_name, 'r') as f:
-            data = json.load(f)
-        profile_dict = {}
-        for pk in data.keys():
-            profile_dict[pk] = get_embed(
-                [data[pk]['bio']],
+    def transform_to_embed(self) -> None:
+        for agent_pk in self.data:
+            self.data_embed[agent_pk] = get_embed(
+                [self.data[agent_pk].bio],
                 self.retriever_tokenizer,
                 self.retriever_model,
-            )
-        with open(pickle_file_name, 'wb') as pkl_file:
-            pickle.dump(profile_dict, pkl_file)
+            )[0]
 
     def reset_role_avaialbility(self) -> None:
         for profile in self.data.values():
