@@ -1,4 +1,4 @@
-from beartype.typing import Any, List, Optional
+from beartype.typing import Any, Dict, List, Optional
 from pydantic import BaseModel
 
 from research_town.configs import AgentPromptTemplateConfig, EvalPromptTemplateConfig
@@ -10,7 +10,7 @@ def mock_papers(corpus: List[str], query: str, num: int) -> List[str]:
 
 def mock_prompting(
     llm_model: str,
-    prompt: str,
+    prompt: List[Dict[str, str]],
     return_num: Optional[int] = 3,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
@@ -20,83 +20,82 @@ def mock_prompting(
 ) -> List[str]:
     agent_template_config = AgentPromptTemplateConfig()
     eval_template_config = EvalPromptTemplateConfig()
-
-    # Check which template the prompt matches
-    if prompt.startswith(agent_template_config.write_bio.split('{')[0]):
+    if prompt[0]['content'] == agent_template_config.write_bio['intro']:
         return ['Bio1', 'Bio2', 'Bio3']
-    if prompt.startswith(agent_template_config.find_collaborators.split('{')[0]):
-        return ['Collaborator1', 'Collaborator2', 'Collaborator3']
-    elif prompt.startswith(agent_template_config.review_literature.split('{')[0]):
+    elif prompt[0]['content'] == agent_template_config.review_literature['intro']:
         return ['Insight1', 'Insight2', 'Insight3']
-    elif prompt.startswith(agent_template_config.brainstorm_idea.split('{')[0]):
+    elif prompt[0]['content'] == agent_template_config.brainstorm_idea['intro']:
         return ['Idea1', 'Idea2', 'Idea3']
-    elif prompt.startswith(agent_template_config.discuss_idea.split('{')[0]):
+    elif prompt[0]['content'] == agent_template_config.discuss_idea['intro']:
         return ['Summarized idea1', 'Summarized idea2', 'Summarized idea3']
-    elif prompt.startswith(agent_template_config.write_paper.split('{')[0]):
+    elif prompt[0]['content'] == agent_template_config.write_paper['intro']:
         return ['Paper abstract1', 'Paper abstract2', 'Paper abstract3']
-    elif prompt.startswith(agent_template_config.write_review_summary.split('{')[0]):
+    elif prompt[0]['content'] == agent_template_config.write_review_summary['intro']:
         return [
             'Summary of the paper1',
             'Summary of the paper2',
             'Summary of the paper3',
         ]
-    elif prompt.startswith(agent_template_config.write_review_strength.split('{')[0]):
+    elif prompt[0]['content'] == agent_template_config.write_review_strength['intro']:
         return [
             'Strength of the paper1',
             'Strength of the paper2',
             'Strength of the paper3',
         ]
-    elif prompt.startswith(agent_template_config.write_review_weakness.split('{')[0]):
+    elif prompt[0]['content'] == agent_template_config.write_review_weakness['intro']:
         return [
             'Weakness of the paper1',
             'Weakness of the paper2',
             'Weakness of the paper3',
         ]
-    elif prompt.startswith(agent_template_config.write_review_score.split('{')[0]):
+    elif prompt[0]['content'] == agent_template_config.write_review_score['intro']:
         return ['8', '7', '6']
-    elif prompt.startswith(
-        agent_template_config.write_meta_review_summary.split('{')[0]
+    elif (
+        prompt[0]['content'] == agent_template_config.write_meta_review_summary['intro']
     ):
         return ['Meta review summary1', 'Meta review summary2', 'Meta review summary3']
-    elif prompt.startswith(
-        agent_template_config.write_meta_review_strength.split('{')[0]
+    elif (
+        prompt[0]['content']
+        == agent_template_config.write_meta_review_strength['intro']
     ):
         return [
             'Meta review strength1',
             'Meta review strength2',
             'Meta review strength3',
         ]
-    elif prompt.startswith(
-        agent_template_config.write_meta_review_weakness.split('{')[0]
+    elif (
+        prompt[0]['content']
+        == agent_template_config.write_meta_review_weakness['intro']
     ):
         return [
             'Meta review weakness1',
             'Meta review weakness2',
             'Meta review weakness3',
         ]
-    elif prompt.startswith(
-        agent_template_config.write_meta_review_decision.split('{')[0]
+    elif (
+        prompt[0]['content']
+        == agent_template_config.write_meta_review_decision['intro']
     ):
         return ['accept', 'accept', 'reject']
-    elif prompt.startswith(agent_template_config.write_rebuttal.split('{')[0]):
+    elif prompt[0]['content'] == agent_template_config.write_rebuttal['intro']:
         return ['Rebuttal text1', 'Rebuttal text2', 'Rebuttal text3']
-    elif prompt.startswith(agent_template_config.discuss.split('{')[0]):
+    elif prompt[0]['content'] == agent_template_config.discuss['intro']:
         return [
             'Continued conversation1',
             'Continued conversation2',
             'Continued conversation3',
         ]
-    elif prompt.startswith(eval_template_config.insight_quality.split('{')[0]):
+    elif prompt[0]['content'] == eval_template_config.insight_quality['intro']:
         return ['Insight quality1', 'Insight quality2', 'Insight quality3']
-    elif prompt.startswith(eval_template_config.idea_quality.split('{')[0]):
+    elif prompt[0]['content'] == eval_template_config.idea_quality['intro']:
         return ['Idea quality1', 'Idea quality2', 'Idea quality3']
-    elif prompt.startswith(eval_template_config.paper_quality.split('{')[0]):
+    elif prompt[0]['content'] == eval_template_config.paper_quality['intro']:
         return ['Paper quality1', 'Paper quality2', 'Paper quality3']
-    elif prompt.startswith(eval_template_config.review_quality.split('{')[0]):
+    elif prompt[0]['content'] == eval_template_config.review_quality['intro']:
         return ['Review quality1', 'Review quality2', 'Review quality3']
-    elif prompt.startswith(eval_template_config.rebuttal_quality.split('{')[0]):
+    elif prompt[0]['content'] == eval_template_config.rebuttal_quality['intro']:
         return ['Rebuttal quality1', 'Rebuttal quality2', 'Rebuttal quality3']
-    elif prompt.startswith(eval_template_config.meta_review_quality.split('{')[0]):
+    elif prompt[0]['content'] == eval_template_config.meta_review_quality['intro']:
         return ['Meta review quality1', 'Meta review quality2', 'Meta review quality3']
 
     return ['Default response1', 'Default response2', 'Default response3']
