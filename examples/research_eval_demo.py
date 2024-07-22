@@ -12,21 +12,21 @@ from research_town.evaluators import BaseEvaluator
 
 
 def main(
-    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+    model_name: str = 'openai/gpt-4o',
     config_file_path: str = '../configs/default_config.yaml',
     load_file_path: str = './research_town_demo_log',
     save_file_path: str = './research_eval_demo_log',
 ) -> None:
     # step 1: load the log from file
+    conditions = {'project_name': 'research_town_demo'}
     progress_db = ProgressDB(load_file_path)
-    insights = progress_db.get(ResearchInsight)
-    idea = progress_db.get(ResearchIdea)[0]
-    paper = progress_db.get(ResearchPaperSubmission)[0]
-    reviews = progress_db.get(ResearchReview)
-    rebuttals = progress_db.get(ResearchRebuttal)
-    meta_review = progress_db.get(ResearchMetaReview)[0]
+    insights = progress_db.get(ResearchInsight, **conditions)
+    idea = progress_db.get(ResearchIdea, **conditions)[0]
+    paper = progress_db.get(ResearchPaperSubmission, **conditions)[0]
+    reviews = progress_db.get(ResearchReview, **conditions)
+    rebuttals = progress_db.get(ResearchRebuttal, **conditions)
+    meta_review = progress_db.get(ResearchMetaReview, **conditions)[0]
     config = Config(config_file_path)
-
     evaluator = BaseEvaluator(model_name=model_name, config=config)
 
     # step 3: evaluations

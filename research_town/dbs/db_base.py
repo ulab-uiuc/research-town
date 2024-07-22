@@ -15,13 +15,19 @@ class BaseDB(Generic[T]):
     def __init__(
         self, data_class: Type[T], load_file_path: Optional[str] = None
     ) -> None:
+        self.project_name: Optional[str] = None
         self.data_class = data_class
         self.data: Dict[str, T] = {}
         self.data_embed: Dict[str, torch.Tensor] = {}
         if load_file_path is not None:
             self.load_from_json(load_file_path)
 
+    def set_project_name(self, project_name: str) -> None:
+        self.project_name = project_name
+
     def add(self, data: T) -> None:
+        if self.project_name is not None:
+            data.project_name = self.project_name
         self.data[data.pk] = data
         logger.info(
             f"Creating instance of '{data.__class__.__name__}': '{data.model_dump()}'"
