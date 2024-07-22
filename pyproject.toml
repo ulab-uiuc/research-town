@@ -17,6 +17,9 @@ transformers = { version = "^4.42.4", optional = true }
 termcolor = { version = "^2.4.0", optional = true }
 arxiv = { version = "^2.1.0", optional = true }
 pandas = { version = "*", optional = true }
+requests = { version = "*", optional = true }
+bs4 = { version = "*", optional = true }
+
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "*"
@@ -35,7 +38,7 @@ mypy = "^1.11.0"
 
 [tool.poetry.extras]
 retriever = ["torch", "transformers"]
-collector = ["arxiv"]
+collector = ["arxiv", "requests", "bs4"]
 logger = ["termcolor"]
 humaneval = ["pandas"]
 
