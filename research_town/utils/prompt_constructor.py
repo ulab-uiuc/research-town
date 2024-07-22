@@ -13,9 +13,9 @@ def openai_format_prompt_construct(
     assert len(examples) % 2 == 0
     for i, example in enumerate(examples):
         if i % 2 == 0:
-            messages.append({'role': 'system', 'content': example})
-        else:
             messages.append({'role': 'user', 'content': example})
+        else:
+            messages.append({'role': 'assistant', 'content': example})
 
     assert isinstance(template['template'], str)
     query = template['template'].format(**input_data)

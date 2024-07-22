@@ -29,6 +29,7 @@ def run_sync_experiment(
     env_db = EnvLogDB()
     progress_db = ProgressDB()
     engine = LifecycleResearchEngine(
+        project_name='research_town_demo',
         agent_db=agent_db,
         paper_db=paper_db,
         progress_db=progress_db,
@@ -44,7 +45,7 @@ def run_sync_experiment(
 
 def main() -> None:
     run_sync_experiment(
-        config_file_path='./configs/default_config.yaml',
+        config_file_path='../configs/default_config.yaml',
         save_file_path='./research_town_demo_log',
     )
 

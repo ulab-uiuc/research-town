@@ -20,6 +20,10 @@ class ComplexDB:
         class_name = data_class.__name__
         self.dbs[class_name] = BaseDB(data_class)
 
+    def set_project_name(self, project_name: str) -> None:
+        for db in self.dbs.values():
+            db.set_project_name(project_name)
+
     def add(self, data: T) -> None:
         class_name = data.__class__.__name__
         if class_name in self.dbs:

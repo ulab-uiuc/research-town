@@ -17,6 +17,7 @@ from ..envs.env_base import BaseMultiAgentEnv
 class BaseResearchEngine:
     def __init__(
         self,
+        project_name: str,
         agent_db: AgentProfileDB,
         paper_db: PaperProfileDB,
         progress_db: ProgressDB,
@@ -25,6 +26,7 @@ class BaseResearchEngine:
         time_step: int = 0,
         stop_flag: bool = False,
     ) -> None:
+        self.project_name = project_name
         self.agent_db = agent_db
         self.paper_db = paper_db
         self.progress_db = progress_db
@@ -42,6 +44,8 @@ class BaseResearchEngine:
 
     def set_dbs(self) -> None:
         self.agent_db.reset_role_avaialbility()
+        self.env_db.set_project_name(self.project_name)
+        self.progress_db.set_project_name(self.project_name)
 
     def set_envs(self) -> None:
         pass
