@@ -35,327 +35,326 @@ class ParamConfig(BaseModel):
 
 class EvalPromptTemplateConfig(BaseModel):
     insight_quality: Dict[str, Union[str, List[str]]] = {
-        'intro': """
-        Please evaluate the insight based on the following dimensions, considering the current research insights within the research community. If the research insights field is left blank, please use your common knowledge to assess the insights. Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the insight.
-
-        The details of rating are as follows:
-        1. Novelty
-            - Rating (1-10):
-            - Comments:
-            - How original and unique is the insight?
-            - Does it introduce a new perspective or significant advancement compared to existing methods?
-            - How does it align with or diverge from the innovations highlighted in the insights?
-        2. Validity
-            - Rating (1-10):
-            - Comments:
-            - Does it include solid theoretical foundations, robust algorithms, and detailed methodologies?
-            - Is the method in line with the state-of-the-art techniques noted in the insights?
-            - Are the underlying principles well-defined and logically consistent?
-            - Does the insight demonstrate a deep understanding of relevant theories and concepts?
-        3. Significance
-            - Rating (1-10):
-            - Comments:
-            - Evaluate the potential impact of the insight on the specific domain of research community that the insight belongs to and beyond.
-            - How significant is its contribution to advancing the field?
-            - Does it address high-impact problems or gaps identified in the insights?
-            - How applicable is it in practical settings and industry contexts?
-        4. Feasibility
-            - Rating (1-10):
-            - Comments:
-            - Assess the feasibility of implementing the insight.
-            - Is it practically applicable in real-world scenarios?
-            - Does it consider efficiency and scalability, in line with the practical application focus of the insights?
-        5. Clarity
-            - Rating (1-10):
-            - Comments:
-            - Assess the clarity, organization, and presentation quality of the insight.
-            - Is the insight communicated effectively, adhering to high presentation standards seen in top-tier conferences?
-        6. Ethical Considerations
-            - Rating (1-10):
-            - Comments:
-            - Consider the ethical implications and societal impact of the insight.
-            - Does it adhere to the growing emphasis on ethical research practices as highlighted in the insights?
-        """,
+        'intro': (
+            'Please evaluate the insight based on the following dimensions, considering the current research insights within the research community. '
+            'If the research insights field is left blank, please use your common knowledge to assess the insights. Finally, give an overall score (0-100) '
+            'and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the insight.\n\n'
+            'The details of rating are as follows:\n'
+            '1. Novelty\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - How original and unique is the insight?\n'
+            '    - Does it introduce a new perspective or significant advancement compared to existing methods?\n'
+            '    - How does it align with or diverge from the innovations highlighted in the insights?\n'
+            '2. Validity\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does it include solid theoretical foundations, robust algorithms, and detailed methodologies?\n'
+            '    - Is the method in line with the state-of-the-art techniques noted in the insights?\n'
+            '    - Are the underlying principles well-defined and logically consistent?\n'
+            '    - Does the insight demonstrate a deep understanding of relevant theories and concepts?\n'
+            '3. Significance\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Evaluate the potential impact of the insight on the specific domain of research community that the insight belongs to and beyond.\n'
+            '    - How significant is its contribution to advancing the field?\n'
+            '    - Does it address high-impact problems or gaps identified in the insights?\n'
+            '    - How applicable is it in practical settings and industry contexts?\n'
+            '4. Feasibility\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Assess the feasibility of implementing the insight.\n'
+            '    - Is it practically applicable in real-world scenarios?\n'
+            '    - Does it consider efficiency and scalability, in line with the practical application focus of the insights?\n'
+            '5. Clarity\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Assess the clarity, organization, and presentation quality of the insight.\n'
+            '    - Is the insight communicated effectively, adhering to high presentation standards seen in top-tier conferences?\n'
+            '6. Ethical Considerations\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Consider the ethical implications and societal impact of the insight.\n'
+            '    - Does it adhere to the growing emphasis on ethical research practices as highlighted in the insights?\n'
+        ),
         'examples': ['', ''],
         'template': 'Here is the insight to evaluate: {insight}.',
     }
     idea_quality: Dict[str, Union[str, List[str]]] = {
-        'intro': """
-        Please evaluate the idea based on the following dimensions, considering the current research insights within the research community. If the research insights field is left blank, please use your common knowledge to assess the insights. Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea.
-
-        The details of rating are as follows:
-        1. Novelty
-            - Rating (1-10):
-            - Comments:
-            - How original and unique is the idea?
-            - Does it introduce a new perspective or significant advancement compared to existing methods?
-            - How does it align with or diverge from the innovations highlighted in the insights?
-        2. Validity
-            - Rating (1-10):
-            - Comments:
-            - Does it include solid theoretical foundations, robust algorithms, and detailed methodologies?
-            - Is the method in line with the state-of-the-art techniques noted in the insights?
-            - Are the underlying principles well-defined and logically consistent?
-            - Does the idea demonstrate a deep understanding of relevant theories and concepts?
-        3. Significance
-            - Rating (1-10):
-            - Comments:
-            - Evaluate the potential impact of the idea on the specific domain of research community that the idea belongs to and beyond.
-            - How significant is its contribution to advancing the field?
-            - Does it address high-impact problems or gaps identified in the insights?
-            - How applicable is it in practical settings and industry contexts?
-        4. Feasibility
-            - Rating (1-10):
-            - Comments:
-            - Assess the feasibility of implementing the idea.
-            - Is it practically applicable in real-world scenarios?
-            - Does it consider efficiency and scalability, in line with the practical application focus of the insights?
-        5. Clarity
-            - Rating (1-10):
-            - Comments:
-            - Assess the clarity, organization, and presentation quality of the idea.
-            - Is the idea communicated effectively, adhering to high presentation standards seen in top-tier conferences?
-        6. Ethical Considerations
-            - Rating (1-10):
-            - Comments:
-            - Consider the ethical implications and societal impact of the idea.
-            - Does it adhere to the growing emphasis on ethical research practices as highlighted in the insights?
-        """,
+        'intro': (
+            'Please evaluate the idea based on the following dimensions, considering the current research insights within the research community. '
+            'If the research insights field is left blank, please use your common knowledge to assess the insights. Finally, give an overall score (0-100) '
+            'and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the idea.\n\n'
+            'The details of rating are as follows:\n'
+            '1. Novelty\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - How original and unique is the idea?\n'
+            '    - Does it introduce a new perspective or significant advancement compared to existing methods?\n'
+            '    - How does it align with or diverge from the innovations highlighted in the insights?\n'
+            '2. Validity\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does it include solid theoretical foundations, robust algorithms, and detailed methodologies?\n'
+            '    - Is the method in line with the state-of-the-art techniques noted in the insights?\n'
+            '    - Are the underlying principles well-defined and logically consistent?\n'
+            '    - Does the idea demonstrate a deep understanding of relevant theories and concepts?\n'
+            '3. Significance\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Evaluate the potential impact of the idea on the specific domain of research community that the idea belongs to and beyond.\n'
+            '    - How significant is its contribution to advancing the field?\n'
+            '    - Does it address high-impact problems or gaps identified in the insights?\n'
+            '    - How applicable is it in practical settings and industry contexts?\n'
+            '4. Feasibility\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Assess the feasibility of implementing the idea.\n'
+            '    - Is it practically applicable in real-world scenarios?\n'
+            '    - Does it consider efficiency and scalability, in line with the practical application focus of the insights?\n'
+            '5. Clarity\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Assess the clarity, organization, and presentation quality of the idea.\n'
+            '    - Is the idea communicated effectively, adhering to high presentation standards seen in top-tier conferences?\n'
+            '6. Ethical Considerations\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Consider the ethical implications and societal impact of the idea.\n'
+            '    - Does it adhere to the growing emphasis on ethical research practices as highlighted in the insights?\n'
+        ),
         'examples': ['', ''],
         'template': 'Here is the idea to evaluate: {idea}.\nHere is the research insights: {insights}.',
     }
     paper_quality: Dict[str, Union[str, List[str]]] = {
-        'intro': """
-        Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft.
-
-        The details of rating are as follows:
-        1. Novelty
-            - Rating (1-10):
-            - Comments:
-            - Does the paper introduce a novel problem or new perspective that has not been explored before?
-            - Does it introduce new techniques or significant advancements compared to existing methods?
-            - How does it align with or diverge from the innovations highlighted in the insights?
-        2. Validity
-            - Rating (1-10):
-            - Comments:
-            - Does it include solid theoretical foundations, robust algorithms, and detailed methodologies in addressing the research problem?
-            - Are the underlying principles well-defined and logically consistent?
-        3. Significance
-            - Rating (1-10):
-            - Comments:
-            - Evaluate the potential contribution and impact of the paper on the specific domain of research community that the paper belongs to and beyond.
-            - How does it compare to existing works in terms of impact?
-        4. Rigorousness
-            - Rating (1-10):
-            - Comments:
-            - Are the research design and methods clearly described and justified?
-            - Is the methodology robust and suitable for addressing the research questions?
-            - Are the results well-analyzed and interpreted?
-            - Do the findings support the claims made in the paper?
-        5. Clarity
-            - Rating (1-10):
-            - Comments:
-            - Evaluate the clarity, organization, and presentation quality of the paper.
-            - How well do the title and abstract summarize the paper? Are they clear, concise, and informative?
-            - Does it effectively convey the significance and main contributions of the paper?
-            - How well do the title and abstract align with each other? Do they accurately represent the core idea and content of the paper?
-            - Is the content well-structured and easy to follow?
-        6. Ethical Considerations
-            - Rating (1-10):
-            - Comments:
-            - Consider the ethical implications and societal impact of the paper.
-            - Does it adhere to ethical guidelines and responsible research practices?
-            - Are potential negative consequences or biases addressed?
-        """,
+        'intro': (
+            'Please evaluate the paper draft based on the following dimensions. Finally, give an overall score (0-100) and 6 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the draft.\n\n'
+            'The details of rating are as follows:\n'
+            '1. Novelty\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does the paper introduce a novel problem or new perspective that has not been explored before?\n'
+            '    - Does it introduce new techniques or significant advancements compared to existing methods?\n'
+            '    - How does it align with or diverge from the innovations highlighted in the insights?\n'
+            '2. Validity\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does it include solid theoretical foundations, robust algorithms, and detailed methodologies in addressing the research problem?\n'
+            '    - Are the underlying principles well-defined and logically consistent?\n'
+            '3. Significance\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Evaluate the potential contribution and impact of the paper on the specific domain of research community that the paper belongs to and beyond.\n'
+            '    - How does it compare to existing works in terms of impact?\n'
+            '4. Rigorousness\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are the research design and methods clearly described and justified?\n'
+            '    - Is the methodology robust and suitable for addressing the research questions?\n'
+            '    - Are the results well-analyzed and interpreted?\n'
+            '    - Do the findings support the claims made in the paper?\n'
+            '5. Clarity\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Evaluate the clarity, organization, and presentation quality of the paper.\n'
+            '    - How well do the title and abstract summarize the paper? Are they clear, concise, and informative?\n'
+            '    - Does it effectively convey the significance and main contributions of the paper?\n'
+            '    - How well do the title and abstract align with each other? Do they accurately represent the core idea and content of the paper?\n'
+            '    - Is the content well-structured and easy to follow?\n'
+            '6. Ethical Considerations\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Consider the ethical implications and societal impact of the paper.\n'
+            '    - Does it adhere to ethical guidelines and responsible research practices?\n'
+            '    - Are potential negative consequences or biases addressed?\n'
+        ),
         'examples': ['', ''],
         'template': 'Here is the paper draft to evaluate:\npaper: {paper}\nIdea: {idea}\nInsights: {insights}',
     }
     review_quality: Dict[str, Union[str, List[str]]] = {
-        'intro': """
-        Please evaluate the review based on the following dimensions. You only need to give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. For these components that are left blank (for example: rebuttal, meta_review, etc), please provide your common knowledge to assess the review. You must give an overall score with dimension scores. No detailed analysis is needed.
-
-        The details of rating are as follows:
-        1. Summarization
-            - Rating (1-10):
-            - Comments:
-            - Does the review accurately summarize the paper's motivation?
-            - Are the key contributions and achievements clearly summarized?
-            - Are there any misunderstandings that need to be addressed in the author's response?
-        2. Strengths
-            - Rating (1-10):
-            - Comments:
-            - Are the strengths of the work clearly described?
-            - Are the claims sound, both theoretically and empirically?
-            - Is the contribution significant and novel?
-            - Is the work relevant to the community?
-        3. Weaknesses
-            - Rating (1-10):
-            - Comments:
-            - Are the limitations of the work clearly explained?
-            - Are the weaknesses addressed along the same axes as the strengths?
-            - Are the criticisms detailed, specific, and polite?
-        4. Correctness
-            - Rating (1-10):
-            - Comments:
-            - Are the claims and methods correct?
-            - Is the empirical methodology sound?
-            - Are there any incorrect claims or methods detailed thoroughly?
-            - Is the criticism well-motivated and understandable?
-        5. Clarity
-            - Rating (1-10):
-            - Comments:
-            - Is the paper well-written?
-            - Is the exposition of the paper clear?
-            - What parts of the paper need revision to improve clarity?
-        6. Originality
-            - Rating (1-10):
-            - Comments:
-            - Is it clearly discussed how this work differs from previous contributions?
-            - Does the submission show due scholarship, relating the proposed work to prior work?
-            - Does the related work section explain how the proposed work differs from prior literature?
-        7. Reproducibility
-            - Rating (1-10):
-            - Comments:
-            - Are there enough details to reproduce the major results of this work?
-            - Is the work reasonably reproducible?
-            - If not, are the reproducibility issues listed among the weaknesses?
-        8. Significance
-            - Rating (1-10):
-            - Comments:
-            - Have the authors adequately addressed the broader impact of their work?
-            - Are potential negative ethical and societal implications considered?
-        9. Ethical Considerations
-            - Rating (1-10):
-            - Comments:
-            - Does the submission raise potential ethical concerns?
-            - Are there methods, applications, or data that create or reinforce unfair bias?
-            - Does the work have a primary purpose of harm or injury?
-        10. Fairness
-            - Rating (1-10):
-            - Comments:
-            - Are the review scores distributed fairly?
-            - Is there a balance in the scoring, without significant bias towards extremely high or low scores?
-            - Do the scores reflect a reasonable and unbiased assessment of the paper?
-        """,
+        'intro': (
+            'Please evaluate the review based on the following dimensions. You only need to give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. '
+            'For these components that are left blank (for example: rebuttal, meta_review, etc), please provide your common knowledge to assess the review. You must give an overall score with dimension scores. No detailed analysis is needed.\n\n'
+            'The details of rating are as follows:\n'
+            '1. Summarization\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            "    - Does the review accurately summarize the paper's motivation?\n"
+            '    - Are the key contributions and achievements clearly summarized?\n'
+            "    - Are there any misunderstandings that need to be addressed in the author's response?\n"
+            '2. Strengths\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are the strengths of the work clearly described?\n'
+            '    - Are the claims sound, both theoretically and empirically?\n'
+            '    - Is the contribution significant and novel?\n'
+            '    - Is the work relevant to the community?\n'
+            '3. Weaknesses\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are the limitations of the work clearly explained?\n'
+            '    - Are the weaknesses addressed along the same axes as the strengths?\n'
+            '    - Are the criticisms detailed, specific, and polite?\n'
+            '4. Correctness\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are the claims and methods correct?\n'
+            '    - Is the empirical methodology sound?\n'
+            '    - Are there any incorrect claims or methods detailed thoroughly?\n'
+            '    - Is the criticism well-motivated and understandable?\n'
+            '5. Clarity\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Is the paper well-written?\n'
+            '    - Is the exposition of the paper clear?\n'
+            '    - What parts of the paper need revision to improve clarity?\n'
+            '6. Originality\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Is it clearly discussed how this work differs from previous contributions?\n'
+            '    - Does the submission show due scholarship, relating the proposed work to prior work?\n'
+            '    - Does the related work section explain how the proposed work differs from prior literature?\n'
+            '7. Reproducibility\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are there enough details to reproduce the major results of this work?\n'
+            '    - Is the work reasonably reproducible?\n'
+            '    - If not, are the reproducibility issues listed among the weaknesses?\n'
+            '8. Significance\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Have the authors adequately addressed the broader impact of their work?\n'
+            '    - Are potential negative ethical and societal implications considered?\n'
+            '9. Ethical Considerations\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does the submission raise potential ethical concerns?\n'
+            '    - Are there methods, applications, or data that create or reinforce unfair bias?\n'
+            '    - Does the work have a primary purpose of harm or injury?\n'
+            '10. Fairness\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are the review scores distributed fairly?\n'
+            '    - Is there a balance in the scoring, without significant bias towards extremely high or low scores?\n'
+            '    - Do the scores reflect a reasonable and unbiased assessment of the paper?\n'
+        ),
         'examples': ['', ''],
         'template': 'Here is the review to evaluate:\nidea: {idea}\nresearch insights: {insights}\npaper: {paper}\nreview: {review}',
     }
     rebuttal_quality: Dict[str, Union[str, List[str]]] = {
-        'intro': """
-        Please evaluate the rebuttal based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.
-
-        The details of rating are as follows:
-        1. Clarity of Response
-            - Rating (1-10):
-            - Comments:
-            - Is the rebuttal clear in addressing the criticisms raised in the reviews?
-            - Are the responses to each criticism well-structured and understandable?
-        2. Accuracy and Justification
-            - Rating (1-10):
-            - Comments:
-            - Are the rebuttal claims and justifications adequately supported by evidence?
-            - Are any disagreements or discrepancies with the reviews addressed convincingly?
-        3. Responsiveness
-            - Rating (1-10):
-            - Comments:
-            - Does the rebuttal address all major concerns and critiques raised in the reviews?
-            - Are the rebuttal responses thorough and comprehensive?
-        4. Persuasiveness
-            - Rating (1-10):
-            - Comments:
-            - How persuasive are the arguments and explanations provided in the rebuttal?
-            - Are the rebuttal responses effective in mitigating concerns and defending the paper?
-        5. Professionalism
-            - Rating (1-10):
-            - Comments:
-            - Is the tone and language of the rebuttal professional and respectful?
-            - Are there any instances of defensive or dismissive language that need improvement?
-        6. Insightfulness
-            - Rating (1-10):
-            - Comments:
-            - Does the rebuttal provide new insights or perspectives that were not fully addressed in the original paper or reviews?
-        7. Overall Improvement
-            - Rating (1-10):
-            - Comments:
-            - How much does the rebuttal improve the overall perception and understanding of the paper's strengths and weaknesses?
-        8. Clarity of Contributions
-            - Rating (1-10):
-            - Comments:
-            - Are the contributions of the paper clarified and emphasized in the rebuttal?
-        9. Ethical Considerations
-            - Rating (1-10):
-            - Comments:
-            - Are there any ethical implications or considerations raised in the rebuttal?
-        10. Balance and Fairness
-            - Rating (1-10):
-            - Comments:
-            - Does the rebuttal acknowledge both strengths and weaknesses of the paper in a balanced manner?
-            - Is there fairness in addressing criticisms without bias?
-        """,
+        'intro': (
+            'Please evaluate the rebuttal based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.\n\n'
+            'The details of rating are as follows:\n'
+            '1. Clarity of Response\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Is the rebuttal clear in addressing the criticisms raised in the reviews?\n'
+            '    - Are the responses to each criticism well-structured and understandable?\n'
+            '2. Accuracy and Justification\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are the rebuttal claims and justifications adequately supported by evidence?\n'
+            '    - Are any disagreements or discrepancies with the reviews addressed convincingly?\n'
+            '3. Responsiveness\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does the rebuttal address all major concerns and critiques raised in the reviews?\n'
+            '    - Are the rebuttal responses thorough and comprehensive?\n'
+            '4. Persuasiveness\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - How persuasive are the arguments and explanations provided in the rebuttal?\n'
+            '    - Are the rebuttal responses effective in mitigating concerns and defending the paper?\n'
+            '5. Professionalism\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Is the tone and language of the rebuttal professional and respectful?\n'
+            '    - Are there any instances of defensive or dismissive language that need improvement?\n'
+            '6. Insightfulness\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does the rebuttal provide new insights or perspectives that were not fully addressed in the original paper or reviews?\n'
+            '7. Overall Improvement\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            "    - How much does the rebuttal improve the overall perception and understanding of the paper's strengths and weaknesses?\n"
+            '8. Clarity of Contributions\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are the contributions of the paper clarified and emphasized in the rebuttal?\n'
+            '9. Ethical Considerations\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are there any ethical implications or considerations raised in the rebuttal?\n'
+            '10. Balance and Fairness\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does the rebuttal acknowledge both strengths and weaknesses of the paper in a balanced manner?\n'
+            '    - Is there fairness in addressing criticisms without bias?\n'
+        ),
         'examples': ['', ''],
         'template': 'Here is the review to evaluate:\nresearch insights: {insights}\nidea: {idea}\npaper: {paper}\nreviews: {review}\nrebuttal: {rebuttal}',
     }
     meta_review_quality: Dict[str, Union[str, List[str]]] = {
-        'intro': """
-        Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.
-
-        The details of rating are as follows:
-        1. Summarization
-            - Rating (1-10):
-            - Comments:
-            - Does the meta-review accurately summarize the strengths and weaknesses of the original reviews?
-            - Are the key points of each review clearly and succinctly summarized?
-            - Are any discrepancies or misunderstandings among the reviews identified and addressed?
-        2. Quality
-            - Rating (1-10):
-            - Comments:
-            - Are the strengths and weaknesses of the reviewed paper clearly identified and appropriately critiqued?
-            - Do the critiques show a deep understanding of the paper's content and contributions?
-            - Are the assessments fair and balanced?
-        3. Consistency and Fairness
-            - Rating (1-10):
-            - Comments:
-            - Is there consistency in evaluating different aspects of the reviewed paper across the reviews?
-            - Are the assessments fair, avoiding significant bias towards any particular aspect of the paper?
-            - Are any conflicting opinions among the reviews reconciled appropriately?
-        4. Constructiveness
-            - Rating (1-10):
-            - Comments:
-            - Are the critiques and suggestions provided in the meta-review constructive and actionable?
-            - Do they offer meaningful insights for improving the reviewed paper or future revisions?
-            - Are the recommendations clear and well-supported by evidence from the reviews?
-        5. Clarity
-            - Rating (1-10):
-            - Comments:
-            - Is the meta-review well-written and logically organized?
-            - Are the points expressed clearly and effectively?
-            - Is the language appropriate and professional?
-        6. Insightfulness
-            - Rating (1-10):
-            - Comments:
-            - Does the meta-review provide insightful commentary beyond summarizing individual reviews?
-            - Are there novel observations or perspectives that enrich the understanding of the reviewed paper?
-        7. Alignment with Review Criteria
-            - Rating (1-10):
-            - Comments:
-            - Does the meta-review align with the evaluation criteria provided by the submission guidelines?
-            - Are all relevant aspects of the reviewed paper adequately covered in the meta-review?
-        8. Justification of Final Decision
-            - Rating (1-10):
-            - Comments:
-            - Is the final decision or recommendation based on a thorough analysis of the reviews?
-            - Are the reasons for the recommendation clearly articulated and justified?
-        9. Ethical Considerations
-            - Rating (1-10):
-            - Comments:
-            - Are there any ethical considerations raised in the meta-review regarding the reviewed paper or its reviews?
-            - Are potential biases or conflicts of interest addressed appropriately?
-        10. Overall Impression
-            - Rating (1-10):
-            - Comments:
-            - What is your overall impression of the meta-review?
-            - Does it meet the standards expected for a meta-review in terms of thoroughness, insightfulness, and clarity?
-        """,
+        'intro': (
+            'Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.\n\n'
+            'The details of rating are as follows:\n'
+            '1. Summarization\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does the meta-review accurately summarize the strengths and weaknesses of the original reviews?\n'
+            '    - Are the key points of each review clearly and succinctly summarized?\n'
+            '    - Are any discrepancies or misunderstandings among the reviews identified and addressed?\n'
+            '2. Quality\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are the strengths and weaknesses of the reviewed paper clearly identified and appropriately critiqued?\n'
+            "    - Do the critiques show a deep understanding of the paper's content and contributions?\n"
+            '    - Are the assessments fair and balanced?\n'
+            '3. Consistency and Fairness\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Is there consistency in evaluating different aspects of the reviewed paper across the reviews?\n'
+            '    - Are the assessments fair, avoiding significant bias towards any particular aspect of the paper?\n'
+            '    - Are any conflicting opinions among the reviews reconciled appropriately?\n'
+            '4. Constructiveness\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are the critiques and suggestions provided in the meta-review constructive and actionable?\n'
+            '    - Do they offer meaningful insights for improving the reviewed paper or future revisions?\n'
+            '    - Are the recommendations clear and well-supported by evidence from the reviews?\n'
+            '5. Clarity\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Is the meta-review well-written and logically organized?\n'
+            '    - Are the points expressed clearly and effectively?\n'
+            '    - Is the language appropriate and professional?\n'
+            '6. Insightfulness\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does the meta-review provide insightful commentary beyond summarizing individual reviews?\n'
+            '    - Are there novel observations or perspectives that enrich the understanding of the reviewed paper?\n'
+            '7. Alignment with Review Criteria\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Does the meta-review align with the evaluation criteria provided by the submission guidelines?\n'
+            '    - Are all relevant aspects of the reviewed paper adequately covered in the meta-review?\n'
+            '8. Justification of Final Decision\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Is the final decision or recommendation based on a thorough analysis of the reviews?\n'
+            '    - Are the reasons for the recommendation clearly articulated and justified?\n'
+            '9. Ethical Considerations\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - Are there any ethical considerations raised in the meta-review regarding the reviewed paper or its reviews?\n'
+            '    - Are potential biases or conflicts of interest addressed appropriately?\n'
+            '10. Overall Impression\n'
+            '    - Rating (1-10):\n'
+            '    - Comments:\n'
+            '    - What is your overall impression of the meta-review?\n'
+            '    - Does it meet the standards expected for a meta-review in terms of thoroughness, insightfulness, and clarity?\n'
+        ),
         'examples': ['', ''],
         'template': 'Here is the review to evaluate:\nresearch insights: {insights}\nidea: {idea}\npaper: {paper}\nreviews: {reviews}\nrebuttals: {rebuttals}\nmeta_review: {meta_review}',
     }
