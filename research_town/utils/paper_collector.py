@@ -32,7 +32,7 @@ def get_daily_papers(
             paper_table_captions,
             paper_figure_captions,
             paper_bibliography,
-        ) = get_full_content(paper_url)
+        ) = get_paper_content(paper_url)
 
         if publish_time in content:
             content[publish_time]['title'].append(paper_title)
@@ -41,12 +41,9 @@ def get_daily_papers(
             content[publish_time]['url'].append(paper_url)
             content[publish_time]['domain'].append(paper_domain)
             content[publish_time]['timestamp'].append(paper_timestamp)
-            content[publish_time]['section_contents'].append(
-                paper_section_contents)
-            content[publish_time]['table_captions'].append(
-                paper_table_captions)
-            content[publish_time]['figure_captions'].append(
-                paper_figure_captions)
+            content[publish_time]['section_contents'].append(paper_section_contents)
+            content[publish_time]['table_captions'].append(paper_table_captions)
+            content[publish_time]['figure_captions'].append(paper_figure_captions)
             content[publish_time]['bibliography'].append(paper_bibliography)
         else:
             content[publish_time] = {}
@@ -56,15 +53,14 @@ def get_daily_papers(
             content[publish_time]['url'] = [paper_url]
             content[publish_time]['domain'] = [paper_domain]
             content[publish_time]['timestamp'] = [paper_timestamp]
-            content[publish_time]['section_contents'] = [
-                paper_section_contents]
+            content[publish_time]['section_contents'] = [paper_section_contents]
             content[publish_time]['table_captions'] = [paper_table_captions]
             content[publish_time]['figure_captions'] = [paper_figure_captions]
             content[publish_time]['bibliography'] = [paper_bibliography]
     return content, publish_time
 
 
-def get_full_content(
+def get_paper_content(
     url: str,
 ) -> Tuple[
     Optional[Dict[str, str]],
@@ -95,8 +91,7 @@ def get_full_content(
                     section_contents[section_title] = section_content
 
             # bibliography
-            bibliography_raw = article.find(
-                'section', class_='ltx_bibliography')
+            bibliography_raw = article.find('section', class_='ltx_bibliography')
             if bibliography_raw is not None:
                 bibliography = {}
                 bibliography_list = bibliography_raw.find_all(
@@ -140,8 +135,7 @@ def get_full_content(
                 table_captions = {}
                 table_index = 0
                 for table in tables:
-                    table_caption_raw = table.find(
-                        'figcaption', class_='ltx_caption')
+                    table_caption_raw = table.find('figcaption', class_='ltx_caption')
                     if table_caption_raw:
                         table_caption = table_caption_raw.text
                     else:

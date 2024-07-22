@@ -1,7 +1,7 @@
 import datetime
 from unittest.mock import MagicMock, patch
 
-from research_town.utils.paper_collector import get_daily_papers, get_full_content
+from research_town.utils.paper_collector import get_daily_papers, get_paper_content
 
 
 def test_get_daily_papers() -> None:
@@ -29,8 +29,8 @@ def test_get_daily_papers() -> None:
         assert newest_day == datetime.date(2023, 7, 2)  # Compare to the date part only
 
 
-def test_get_full_content() -> None:
-    section_contents, table_captions, figure_captions, bibliography = get_full_content(
+def test_get_paper_content() -> None:
+    section_contents, table_captions, figure_captions, bibliography = get_paper_content(
         'https://arxiv.org/html/2403.05534v1'
     )
     assert section_contents is not None
