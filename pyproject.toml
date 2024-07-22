@@ -19,6 +19,7 @@ arxiv = { version = "^2.1.0", optional = true }
 pandas = { version = "*", optional = true }
 requests = { version = "*", optional = true }
 bs4 = { version = "*", optional = true }
+lxml = { version = "*", optional = true }
 
 
 [tool.poetry.group.dev.dependencies]
@@ -38,7 +39,7 @@ mypy = "^1.11.0"
 
 [tool.poetry.extras]
 retriever = ["torch", "transformers"]
-collector = ["arxiv", "requests", "bs4"]
+collector = ["arxiv", "requests", "bs4", "lxml"]
 logger = ["termcolor"]
 humaneval = ["pandas"]
 
