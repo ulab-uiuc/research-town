@@ -1,6 +1,6 @@
 import litellm
 from beartype import beartype
-from beartype.typing import List, Optional
+from beartype.typing import Dict, List, Optional
 
 from .error_handler import api_calling_error_exponential_backoff
 
@@ -9,7 +9,7 @@ from .error_handler import api_calling_error_exponential_backoff
 @api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
 def model_prompting(
     llm_model: str,
-    prompt: str,
+    messages: List[Dict[str, str]],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
@@ -22,7 +22,7 @@ def model_prompting(
     """
     completion = litellm.completion(
         model=llm_model,
-        messages=[{'role': 'user', 'content': prompt}],
+        messages=messages,
         max_tokens=max_token_num,
         # for some models, 'n'(The number of chat completion choices ) is not supported.
         n=return_num,
