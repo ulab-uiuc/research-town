@@ -61,7 +61,7 @@ class BaseResearchAgent(object):
             papers=serialized_papers,
             domains=domains,
             model_name=self.model_name,
-            prompt_template_review_literature=config.agent_prompt_template.review_literature,
+            prompt_template=config.agent_prompt_template.review_literature,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
             temperature=config.param.temperature,
