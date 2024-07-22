@@ -13,10 +13,11 @@ def test_default_initialization() -> None:
     assert config.param.proj_participant_num == 3
     assert config.param.domain == 'computer_vision'
     assert config.param.reviewer_num == 3
-    assert config.agent_prompt_template.discuss == (
-        'Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way. '
-        'Here are the messages from other researchers: {message}'
-    )
+    assert config.agent_prompt_template.discuss == {
+        'intro': 'Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way.',
+        'examples': ['', ''],
+        'template': 'Here are the messages from other researchers: {message}',
+    }
 
 
 def test_yaml_loading() -> None:
@@ -55,9 +56,19 @@ def test_merging_configurations() -> None:
     new_config = {
         'param': {'related_paper_num': 5},
         'agent_prompt_template': {
-            'find_collaborators': 'template2 {profile_bio} {domains}'
+            'write_rebuttal': {
+                'intro': 'hello',
+                'examples': ['a', 'b'],
+                'template': 'template2 {profile_bio} {domains}',
+            }
         },
-        'eval_prompt_template': {'idea_quality': 'template2 {profile_bio} {domains}'},
+        'eval_prompt_template': {
+            'idea_quality': {
+                'intro': 'hello',
+                'examples': ['a', 'b'],
+                'template': 'template2 {profile_bio} {domains}',
+            }
+        },
     }
 
     config = Config()
@@ -72,13 +83,16 @@ def test_merging_configurations() -> None:
     assert config.param.related_paper_num == 5
     assert config.param.proj_participant_num == 10
     assert config.agent_prompt_template.test == 'template1'  # type: ignore
-    assert (
-        config.agent_prompt_template.find_collaborators
-        == 'template2 {profile_bio} {domains}'
-    )
-    assert (
-        config.eval_prompt_template.idea_quality == 'template2 {profile_bio} {domains}'
-    )
+    assert config.agent_prompt_template.write_rebuttal == {
+        'intro': 'hello',
+        'examples': ['a', 'b'],
+        'template': 'template2 {profile_bio} {domains}',
+    }
+    assert config.eval_prompt_template.idea_quality == {
+        'intro': 'hello',
+        'examples': ['a', 'b'],
+        'template': 'template2 {profile_bio} {domains}',
+    }
 
 
 def test_yaml_serialization() -> None:
@@ -99,13 +113,13 @@ def test_placeholder_check() -> None:
     config = Config()
     config.check_agent_prompt_template_placeholder()
 
-    config.agent_prompt_template.write_rebuttal = 'missing {test}'
+    config.agent_prompt_template.write_rebuttal['template'] = 'missing {test}'
     with pytest.raises(AssertionError):
         config.check_agent_prompt_template_placeholder()
 
     config = Config()
     config.check_eval_prompt_template_placeholder()
 
-    config.eval_prompt_template.insight_quality = 'missing {test}'
+    config.eval_prompt_template.insight_quality['template'] = 'missing {test}'
     with pytest.raises(AssertionError):
         config.check_eval_prompt_template_placeholder()

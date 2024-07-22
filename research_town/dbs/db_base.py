@@ -3,6 +3,8 @@ import os
 import pickle
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
+import torch
+
 from ..utils.logger import logger
 from .data import BaseDBData
 
@@ -13,8 +15,9 @@ class BaseDB(Generic[T]):
     def __init__(
         self, data_class: Type[T], load_file_path: Optional[str] = None
     ) -> None:
-        self.data: Dict[str, T] = {}
         self.data_class = data_class
+        self.data: Dict[str, T] = {}
+        self.data_embed: Dict[str, torch.Tensor] = {}
         if load_file_path is not None:
             self.load_from_json(load_file_path)
 
@@ -47,11 +50,19 @@ class BaseDB(Generic[T]):
                 result.append(data)
         return result
 
-    def save_to_json(self, save_path: str, class_name: Optional[str] = None) -> None:
+    def save_to_json(
+        self, save_path: str, with_embed: bool = False, class_name: Optional[str] = None
+    ) -> None:
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
         if class_name is None:
             file_name = f'{self.__class__.__name__}.json'
         else:
             file_name = f'{class_name}.json'
+
+        if with_embed:
+            self.save_to_pkl(save_path, class_name=class_name)
+
         with open(os.path.join(save_path, file_name), 'w') as f:
             json.dump(
                 {pk: data.model_dump() for pk, data in self.data.items()},
@@ -60,10 +71,12 @@ class BaseDB(Generic[T]):
             )
 
     def save_to_pkl(self, save_path: str, class_name: Optional[str] = None) -> None:
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
         if class_name is None:
-            file_name = f'{self.__class__.__name__}.json'
+            file_name = f'{self.__class__.__name__}.pkl'
         else:
-            file_name = f'{class_name}.json'
+            file_name = f'{class_name}.pkl'
         with open(os.path.join(save_path, file_name), 'wb') as pkl_file:
             pickle.dump(self.data_embed, pkl_file)
 
@@ -79,11 +92,11 @@ class BaseDB(Generic[T]):
             self.load_from_pkl(save_path, class_name=class_name)
 
         with open(os.path.join(save_path, file_name), 'r') as f:
-            data = json.load(f)
+            data: Dict[str, Any] = json.load(f)
             if with_embed:
-                for name in data.keys():
-                    if name in self.data_embed:
-                        data[name]['embed'] = self.data_embed[name][0]
+                for pk in data.keys():
+                    if pk in self.data_embed:
+                        data[pk]['embed'] = self.data_embed[pk]
             self.data = {pk: self.data_class(**data) for pk, data in data.items()}
 
     def load_from_pkl(self, save_path: str, class_name: Optional[str] = None) -> None:
