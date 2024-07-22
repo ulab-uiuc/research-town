@@ -6,6 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class BaseDBData(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    project_name: Optional[str] = Field(default=None)
 
 
 class AgentProfile(BaseDBData):

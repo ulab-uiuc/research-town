@@ -18,6 +18,7 @@ def test_research_lifecycle_two_stage(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     engine = LifecycleResearchEngine(
+        project_name='test',
         agent_db=example_agent_db,
         paper_db=example_paper_db,
         progress_db=example_progress_db,
