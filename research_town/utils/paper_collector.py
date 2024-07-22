@@ -1,7 +1,9 @@
 import datetime
 
 import arxiv
+import requests
 from beartype.typing import Any, Dict, List, Tuple
+from bs4 import BeautifulSoup
 
 
 def get_daily_papers(
@@ -42,4 +44,19 @@ def get_daily_papers(
             content[publish_time]['url'] = [paper_url]
             content[publish_time]['domain'] = [paper_domain]
             content[publish_time]['timestamp'] = [timestamp]
+
+        html_url = paper_url.replace('abs', 'html')
+        response = requests.get(html_url, timeout=60)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, 'lxml')
+            article = soup.find('article', class_='ltx_document')
+            sections = article.find_all('section', class_='ltx_section')
+            bibliography = article.find('section', class_='ltx_bibliography')
+            appendices = article.find_all('section', class_='ltx_appendix')
+            figures = article.find_all('figure', class_='ltx_figure')
+            figure_captions = [figure.find(
+                'figcaption').text for figure in figures]
+            tables = article.find_all('figure', class_='ltx_table')
+            table_captions = [table.find(
+                'figcaption').text for table in tables]
     return content, newest_day
