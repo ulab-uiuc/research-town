@@ -1,3 +1,5 @@
+import os
+
 from beartype.typing import Literal
 
 from research_town.configs import Config
@@ -21,11 +23,17 @@ def run_sync_experiment(
         'Christos Faloutsos',
         'Julian McAuley',
     ]
+    # if save path exists, then load
     config = Config(config_file_path)
     agent_db = AgentProfileDB()
-    agent_db.pull_agents(agent_names=agent_names, config=config)
     paper_db = PaperProfileDB()
-    paper_db.pull_papers(num=10, domain='graph neural networks')
+    if os.path.exists(save_file_path):
+        agent_db.load_from_json(save_file_path, with_embed=True)
+        paper_db.load_from_json(save_file_path, with_embed=True)
+    else:
+        agent_db.pull_agents(agent_names=agent_names, config=config)
+        paper_db.pull_papers(num=10, domain='graph neural networks')
+
     env_db = EnvLogDB()
     progress_db = ProgressDB()
     engine = LifecycleResearchEngine(
@@ -39,7 +47,7 @@ def run_sync_experiment(
     agent_profile = agent_db.get(name='Jiaxuan You')[0]
     engine.enter_env(env_name='start', proj_leader=agent_profile)
     engine.run()
-    engine.save(save_file_path=save_file_path)
+    engine.save(save_file_path=save_file_path, with_embed=True)
     return
 
 

@@ -182,12 +182,12 @@ class BaseResearchEngine:
             self.time_step += 1
             self.transition()
 
-    def save(self, save_file_path: str) -> None:
+    def save(self, save_file_path: str, with_embed: bool = False) -> None:
         if not os.path.exists(save_file_path):
             os.makedirs(save_file_path)
 
-        self.agent_db.save_to_json(save_file_path)
-        self.paper_db.save_to_json(save_file_path)
+        self.agent_db.save_to_json(save_file_path, with_embed=with_embed)
+        self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
         self.progress_db.save_to_json(save_file_path)
         self.env_db.save_to_json(save_file_path)
 
