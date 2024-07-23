@@ -12,12 +12,40 @@ on:
 
 jobs:
   pytest:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: install dependencies
+      run: |
+        curl -sSL https://install.python-poetry.org | python3
+        poetry install --with test --extras "retriever collector logger"
+    - name: test with pytest
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        TOGETHERAI_API_KEY: ${{ secrets.TOGETHERAI_API_KEY }}
+      run: |
+        poetry run pytest --cov=. --cov-report=xml
+    - name: upload coverage report to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
 
+  pytest-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 5
+      matrix:
+        python-version: ["3.10"]
     steps:
     - uses: actions/checkout@v2
     - name: set up Python ${{ matrix.python-version }}
