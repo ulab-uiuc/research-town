@@ -16,8 +16,7 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        python-version: ["3.10"]
-
+        python-version: ["3.10", "3.11", "3.12"]
     steps:
     - uses: actions/checkout@v2
     - name: set up python ${{ matrix.python-version }}
@@ -30,6 +29,5 @@ jobs:
         poetry install --with test
     - name: type-checking package with mypy
       run: |
-        # Run this mypy instance against our main package.
         poetry run pip install types-protobuf==4.24.0.4
         poetry run mypy --config-file pyproject.toml .
