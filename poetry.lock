@@ -1156,13 +1156,13 @@ test = ["ipykernel", "pre-commit", "pytest (<8)", "pytest-cov", "pytest-timeout"
 
 [[package]]
 name = "litellm"
-version = "1.41.26"
+version = "1.41.28"
 description = "Library to easily interface with LLM API providers"
 optional = false
 python-versions = "!=2.7.*,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,!=3.7.*,>=3.8"
 files = [
-    {file = "litellm-1.41.26-py3-none-any.whl", hash = "sha256:b4090403dace2349b3325768a700bde868b5f7d9f24ff89895e8bdd2171e28b2"},
-    {file = "litellm-1.41.26.tar.gz", hash = "sha256:be7cec5ca3c18bf949a138cb6053d00e6dea7d4232a7c8bd8804a92dd4d18bbf"},
+    {file = "litellm-1.41.28-py3-none-any.whl", hash = "sha256:a1f0536abd873b58ddb0320736b355bac01b6d94a137a3963d83b6be05867d59"},
+    {file = "litellm-1.41.28.tar.gz", hash = "sha256:30b30c1ee76d6a378a33395f5d4fccfe204be7c8b63f0a77b6d13bf72fc80942"},
 ]
 
 [package.dependencies]
@@ -3663,4 +3663,4 @@ retriever = ["torch", "transformers"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10, <3.12"
-content-hash = "df92269770af779f119c282f0fcbc4468ab30a286fe65ed624d3cd07f427a576"
+content-hash = "d5a85dab1cd4fbf31ff41e9c94edb403ebd27a69f242e7c204e5fe2daee9a6b7"
