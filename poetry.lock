@@ -3675,4 +3675,4 @@ retriever = ["torch", "transformers"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10, <3.12"
-content-hash = "60ce42df70481b1c23878dcbdd67f138af32e19b70c12de5ba762824d4bead69"
+content-hash = "17144622720a1b90f4e88d34b5c36591a438933bffef8901ce69b42cfdbc5e5d"
