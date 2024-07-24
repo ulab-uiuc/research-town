@@ -4,6 +4,7 @@ import arxiv
 import requests
 from beartype.typing import Any, Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
+from tqdm import tqdm
 
 
 def get_daily_papers(
@@ -15,7 +16,7 @@ def get_daily_papers(
     )
     results = client.results(search)
     content: Dict[str, Dict[str, Any]] = {}
-    for result in results:
+    for result in tqdm(results, desc=f'Collecting papers with "{query}"', unit='Paper'):
         paper_title = result.title
         paper_url = result.entry_id
         paper_abstract = result.summary.replace('\n', ' ')
@@ -76,7 +77,6 @@ def get_paper_content(
     try:
         response = requests.get(html_url, timeout=60)
         if response.status_code == 200:
-            print(html_url)
             soup = BeautifulSoup(response.text, 'lxml')
             article = soup.find('article', class_='ltx_document')
 
@@ -86,9 +86,20 @@ def get_paper_content(
             if len(sections) > 0:
                 section_contents = {}
                 for section in sections:
-                    section_title = section.find('h2', class_='ltx_title').text
+                    section_tag_raw = section.find(
+                        attrs={
+                            'class': [
+                                'ltx_title ltx_title_section',
+                                'ltx_title ltx_title_appendix',
+                            ]
+                        }
+                    )
+                    if section_tag_raw:
+                        section_tag = section_tag_raw.text
+                    else:
+                        continue
                     section_content = section.text
-                    section_contents[section_title] = section_content
+                    section_contents[section_tag] = section_content
 
             # bibliography
             bibliography_raw = article.find('section', class_='ltx_bibliography')
