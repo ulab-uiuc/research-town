@@ -371,9 +371,9 @@ class AgentPromptTemplateConfig(BaseModel):
         'template': 'Here are the personas from different times: {publication_info}',
     }
     review_literature: Dict[str, Union[str, List[str]]] = {
-        'intro': 'Given the profile of me, keywords, some recent paper titles and abstracts, could you summarize the keywords of high-level research backgrounds and insights in this field (related to my profile if possible)?',
+        'intro': 'Given a biograph of me, target research domain, and some recent paper abstracts, could you summarize the keywords of high-level research backgrounds and insights in this field (related to my profile if possible)?',
         'examples': ['', ''],
-        'template': 'Here is my profile biology: {profile_bio}\nHere are the research domains: {domains}\nHere are some recent paper titles and abstracts: {papers}',
+        'template': 'Biography:\n {profile_bio}\nResearch domains: {domains}\nRecent paper abstracts: {papers}',
     }
     brainstorm_idea: Dict[str, Union[str, List[str]]] = {
         'intro': 'Here is a high-level summarized insight of a research field. How do you view this field? Do you have any novel ideas or insights? Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.',
