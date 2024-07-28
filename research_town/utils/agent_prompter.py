@@ -226,7 +226,7 @@ def write_review_prompting(
         temperature,
         top_p,
         stream,
-    )[0]
+    )[0].strip()
     score = int(score_str[0]) if score_str[0].isdigit() else 0
 
     return summary, strength, weakness, score
