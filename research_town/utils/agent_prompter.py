@@ -226,7 +226,7 @@ def write_review_prompting(
         temperature,
         top_p,
         stream,
-    )[0].strip()
+    )[0].split("Based on the given information, I would give this submission a score of ")[1].split(" out of 10")[0]
     score = int(score_str[0]) if score_str[0].isdigit() else 0
 
     return summary, strength, weakness, score
