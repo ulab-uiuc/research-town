@@ -1,15 +1,15 @@
 {
-  "3428054b-1294-497a-9967-1c0e4c14185a": {
-    "pk": "3428054b-1294-497a-9967-1c0e4c14185a",
+  "6c68532c-e338-426b-9da5-f9359ca316b9": {
+    "pk": "6c68532c-e338-426b-9da5-f9359ca316b9",
     "project_name": "research_town_demo",
     "timestep": 0,
     "paper_pks": [
-      "08f1bcf1-413e-4e13-a741-8918020383b6",
-      "f161163a-bd53-4751-bc85-a7bbd7042dd6"
+      "4bfbcef7-ea8e-4de3-b393-a24784db9f5b",
+      "470ea968-4098-44b3-bf7b-98b09f05b523"
     ],
-    "agent_pk": "ec68fe4c-97c5-4d63-9b20-c766e8571960",
+    "agent_pk": "0a2c23e6-b89f-48cb-806f-dc115b62bda6",
     "insight_pks": [
-      "63fc805d-0b30-46ec-bcf8-ae4f95a87981"
+      "67399fd9-1c77-4704-ab64-0b20dda563b3"
     ],
     "other_agent_pks": []
   }
