@@ -49,7 +49,11 @@ def mock_prompting(
             'Weakness of the paper3',
         ]
     elif prompt[0]['content'] == agent_template_config.write_review_score['intro']:
-        return ['8', '7', '6']
+        return [
+            'Based on the given information, I would give this submission a score of 8 out of 10.',
+            'Based on the given information, I would give this submission a score of 6 out of 10.',
+            'Based on the given information, I would give this submission a score of 5 out of 10.',
+        ]
     elif (
         prompt[0]['content'] == agent_template_config.write_meta_review_summary['intro']
     ):
