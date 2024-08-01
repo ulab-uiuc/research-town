@@ -4,7 +4,6 @@ from research_town.configs import Config
 from research_town.engines import LifecycleResearchEngine
 from tests.mocks.mocking_func import mock_prompting
 
-from ..constants.data_constants import agent_profile_A
 from ..constants.db_constants import (
     example_agent_db,
     example_env_db,
@@ -25,5 +24,4 @@ def test_research_lifecycle_two_stage(mock_model_prompting: MagicMock) -> None:
         env_db=example_env_db,
         config=Config(),
     )
-    engine.enter_env(env_name='start', proj_leader=agent_profile_A)
-    engine.run()
+    engine.run(task='Conduct research on Graph Neural Networks (GNN).')

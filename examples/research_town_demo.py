@@ -44,9 +44,7 @@ def run_sync_experiment(
         env_db=env_db,
         config=config,
     )
-    agent_profile = agent_db.get(name='Jiaxuan You')[0]
-    engine.enter_env(env_name='start', proj_leader=agent_profile)
-    engine.run()
+    engine.run(task='Conduct research on Graph Neural Networks (GNN).')
     engine.save(save_file_path=save_file_path, with_embed=True)
     return
 
