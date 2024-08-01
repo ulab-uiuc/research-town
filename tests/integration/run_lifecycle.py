@@ -24,7 +24,4 @@ def test_research_lifecycle_two_stage(mock_model_prompting: MagicMock) -> None:
         env_db=example_env_db,
         config=Config(),
     )
-    engine.enter_state(
-        env_name='start', query='Conduct research on Graph Neural Networks (GNN).'
-    )
-    engine.run()
+    engine.run(task='Conduct research on Graph Neural Networks (GNN).')
