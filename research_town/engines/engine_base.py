@@ -67,12 +67,15 @@ class BaseResearchEngine:
     def add_transition(self, from_env: str, pass_or_fail: bool, to_env: str) -> None:
         self.transitions[from_env][pass_or_fail] = to_env
 
-    def enter_env(self, env_name: str, proj_leader: AgentProfile) -> None:
+    def enter_state(self, env_name: str, query: str) -> None:
         if env_name not in self.envs:
             raise ValueError(f'env {env_name} not found')
 
         self.curr_env_name = env_name
         self.curr_env = self.envs[env_name]
+        proj_leader = self.find_agents(
+            condition={}, query=query, num=1, update_fields={}
+        )[0]
         self.curr_env.on_enter(
             time_step=self.time_step,
             stop_flag=self.stop_flag,

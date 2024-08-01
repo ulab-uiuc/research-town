@@ -218,15 +218,21 @@ def write_review_prompting(
     score_messages = openai_format_prompt_construct(
         score_prompt_template, score_template_input
     )
-    score_str = model_prompting(
-        model_name,
-        score_messages,
-        return_num,
-        max_token_num,
-        temperature,
-        top_p,
-        stream,
-    )[0].split("Based on the given information, I would give this submission a score of ")[1].split(" out of 10")[0]
+    score_str = (
+        model_prompting(
+            model_name,
+            score_messages,
+            return_num,
+            max_token_num,
+            temperature,
+            top_p,
+            stream,
+        )[0]
+        .split(
+            'Based on the given information, I would give this submission a score of '
+        )[1]
+        .split(' out of 10')[0]
+    )
     score = int(score_str[0]) if score_str[0].isdigit() else 0
 
     return summary, strength, weakness, score

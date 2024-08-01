@@ -44,12 +44,7 @@ def run_sync_experiment(
         env_db=env_db,
         config=config,
     )
-    import pdb
-
-    pdb.set_trace()
-    engine.enter_state(
-        env_name='start', query='Conduct research on Graph Neural Networks (GNN).'
-    )
+    engine.enter_state(env_name='start', query="Conduct research on Graph Neural Networks (GNN).")
     engine.run()
     engine.save(save_file_path=save_file_path, with_embed=True)
     return
@@ -57,7 +52,7 @@ def run_sync_experiment(
 
 def main() -> None:
     run_sync_experiment(
-        config_file_path='../configs/default_config.yaml',
+        config_file_path='./configs/default_config.yaml',
         save_file_path='./research_town_demo_log',
     )
 
