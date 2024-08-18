@@ -106,6 +106,12 @@ class AgentPaperMetaReviewWritingLog(BaseDBData):
     weakness: Optional[str] = Field(default=None)
 
 
+class AgentExperimentLog(BaseDBData):
+    timestep: int = Field(default=0)
+    paper_pk: str
+    experiment_pk: str
+
+
 class ResearchInsight(BaseDBData):
     content: Optional[str] = Field(default=None)
     eval_score: Optional[List[int]] = Field(default=[])  # evaluation scores
@@ -157,4 +163,11 @@ class ResearchMetaReview(BaseDBData):
     weakness: Optional[str] = Field(default=None)
     decision: bool = Field(default=False)
     eval_score: Optional[List[int]] = Field(default=[])  # evaluation scores
+    model_config = ConfigDict(extra='allow')
+
+
+class ResearchExperiment(BaseDBData):
+    paper_pk: Optional[str] = Field(default=None)
+    code: Optional[str] = Field(default=None)
+    exec_result: Optional[str] = Field(default=None)
     model_config = ConfigDict(extra='allow')

@@ -27,6 +27,7 @@ class ParamConfig(BaseModel):
     temperature: Optional[float] = 0.0
     top_p: Optional[float] = None
     stream: Optional[bool] = None
+    experiment_model_name: Optional[str] = 'gpt-4o-mini'
 
     model_config = ConfigDict(
         extra='allow',

@@ -21,6 +21,7 @@ requests = { version = "*", optional = true }
 bs4 = { version = "*", optional = true }
 lxml = { version = "*", optional = true }
 tqdm = { version = "*", optional = true }
+aider = "^0.2.6"
 
 
 [tool.poetry.group.dev.dependencies]
