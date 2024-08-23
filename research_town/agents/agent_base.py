@@ -114,11 +114,25 @@ class BaseResearchAgent(object):
     ) -> ResearchPaperSubmission:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
+        
+        write_paper_strategy = config.param.write_paper_strategy
+        if write_paper_strategy == 'default':
+            prompt_template=config.agent_prompt_template.write_paper
+        elif write_paper_strategy == 'cot':
+            prompt_template=config.agent_prompt_template.write_paper_cot
+        elif write_paper_strategy == 'react':
+            prompt_template=config.agent_prompt_template.write_paper_react
+        elif write_paper_strategy == 'reflexion':
+            prompt_template=config.agent_prompt_template.write_paper_reflexion
+        else:
+            print('write_paper_strategy not supported, will use default')
+            prompt_template=config.agent_prompt_template.write_paper
+
         paper_abstract = write_paper_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
-            prompt_template=config.agent_prompt_template.write_paper,
+            prompt_template=prompt_template,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
             temperature=config.param.temperature,
