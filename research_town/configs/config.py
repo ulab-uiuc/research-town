@@ -392,22 +392,17 @@ class AgentPromptTemplateConfig(BaseModel):
         'template': 'Here is the idea: {idea}\nHere are the external data, which is a list of abstracts of related papers: {papers}',
     }
     write_paper_cot: Dict[str, Union[str, List[str]]] = {
-        'intro': 'Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract. You might use two or more of these ideas if they are related and work well together. Let\'s think step by step.',
+        'intro': 'Please write a paper based on the following ideas and external data. You might use two or more of these ideas if they are related and work well together. Let\'s think step by step.',
         'examples': ['', ''],
         'template': '''Here is the idea: {idea}
     Here are the external data, which is a list of abstracts of related papers: {papers}
 
-    Let's approach this step-by-step:
-    1. Analyze the main idea and its key components.
-    2. Review the external data and identify relevant information.
-    3. Synthesize the idea with the relevant external data.
-    4. Outline the main points for the abstract.
-    5. Write a concise abstract incorporating these elements.
-
+    You need to first break down the task into smaller steps and think about each step carefully.
+    After that, you need to generate the abstract based on the ideas and external data. You need to generate:' Abstract: [Your abstract]' in the end of the task.
     Now, let's begin:''',
     }
     write_paper_react: Dict[str, Union[str, List[str]]] = {
-        'intro': 'Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract. You might use two or more of these ideas if they are related and work well together. Use the ReAct (Reason+Act) approach to complete this task.',
+        'intro': 'Please write a paper based on the following ideas and external data.  You might use two or more of these ideas if they are related and work well together. Use the ReAct (Reason+Act) approach to complete this task.',
         'examples': ['', ''],
         'template': '''Here is the idea: {idea}
     Here are the external data, which is a list of abstracts of related papers: {papers}
@@ -435,7 +430,7 @@ class AgentPromptTemplateConfig(BaseModel):
     ''',
     }
     write_paper_reflexion: Dict[str, Union[str, List[str]]] = {
-            'intro': 'Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract. You might use two or more of these ideas if they are related and work well together. Use the Reflexion approach to complete and improve this task.',
+            'intro': 'Please write a paper based on the following ideas and external data. You might use two or more of these ideas if they are related and work well together. Use the Reflexion approach to complete and improve this task.',
             'examples': ['', ''],
             'template': '''Here is the idea: {idea}
         Here are the external data, which is a list of abstracts of related papers: {papers}
@@ -458,7 +453,7 @@ class AgentPromptTemplateConfig(BaseModel):
         1. How has the abstract improved?
         2. Are there any remaining areas for further improvement?
 
-        Final Abstract:[Your final abstract]
+        Abstract:[Your final abstract]
         Now, let's begin:
         ''',
         }

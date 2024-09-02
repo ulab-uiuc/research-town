@@ -1,5 +1,6 @@
 from beartype import beartype
 from beartype.typing import Dict, List, Literal, Optional
+import re
 
 from ..configs import Config
 from ..dbs import (
@@ -106,6 +107,22 @@ class BaseResearchAgent(object):
             stream=config.param.stream,
         )[0]
         return ResearchIdea(content=idea_summarized)
+    
+    @staticmethod
+    @beartype
+    def prompting_parser(paper_abstract: str, write_paper_strategy: str) -> str:
+        if write_paper_strategy == 'default':
+            return paper_abstract.strip()
+        elif write_paper_strategy in ['cot', 'react', 'reflexion']:
+            match = re.search(r'Abstract:\s*"(.*?)"', paper_abstract, re.DOTALL)
+            if match:
+                return match.group(1).strip()
+        else:
+            print(f"Unsupported write_paper_strategy: {write_paper_strategy}")
+            return paper_abstract.strip()
+
+        print(f"Failed to extract abstract for strategy: {write_paper_strategy}")
+        return paper_abstract.strip()
 
     @beartype
     @proj_leader_required
@@ -139,6 +156,7 @@ class BaseResearchAgent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )[0]
+        paper_abstract = self.prompting_parser(paper_abstract, write_paper_strategy)
         return ResearchPaperSubmission(abstract=paper_abstract)
 
     @beartype
