@@ -1,6 +1,5 @@
 from beartype import beartype
 from beartype.typing import Dict, List, Literal, Optional
-import re
 
 from ..configs import Config
 from ..dbs import (
@@ -13,6 +12,7 @@ from ..dbs import (
     ResearchRebuttal,
     ResearchReview,
 )
+import re
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
@@ -29,6 +29,7 @@ from ..utils.role_verifier import (
     reviewer_required,
 )
 from ..utils.serializer import Serializer
+
 
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair']
 
