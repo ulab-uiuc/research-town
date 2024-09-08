@@ -3,6 +3,7 @@ from typing import Optional
 from .data import (
     AgentAgentCollaborationFindingLog,
     AgentAgentIdeaDiscussionLog,
+    AgentExperimentLog,
     AgentIdeaBrainstormingLog,
     AgentPaperLiteratureReviewLog,
     AgentPaperMetaReviewWritingLog,
@@ -25,6 +26,7 @@ class EnvLogDB(ComplexDB):
                 AgentPaperReviewWritingLog,
                 AgentPaperRebuttalWritingLog,
                 AgentPaperMetaReviewWritingLog,
+                AgentExperimentLog,
             ],
             load_file_path=load_file_path,
         )

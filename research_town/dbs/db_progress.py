@@ -1,6 +1,7 @@
 from typing import Optional
 
 from .data import (
+    ResearchExperiment,
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
@@ -21,6 +22,7 @@ class ProgressDB(ComplexDB):
                 ResearchReview,
                 ResearchRebuttal,
                 ResearchMetaReview,
+                ResearchExperiment,
             ],
             load_file_path=load_file_path,
         )
