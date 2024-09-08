@@ -10,7 +10,7 @@ from ..dbs import (
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -108,28 +108,12 @@ class BaseResearchAgent(object):
             stream=config.param.stream,
         )[0]
         return ResearchIdea(content=idea_summarized)
-    
-    @staticmethod
-    @beartype
-    def prompting_parser(paper_abstract: str, write_proposal_strategy: str) -> str:
-        if write_proposal_strategy == 'default':
-            return paper_abstract.strip()
-        elif write_proposal_strategy in ['cot', 'react', 'reflexion']:
-            match = re.search(r'Abstract:\s*"(.*?)"', paper_abstract, re.DOTALL)
-            if match:
-                return match.group(1).strip()
-        else:
-            print(f"Unsupported write_proposal_strategy: {write_proposal_strategy}")
-            return paper_abstract.strip()
-
-        print(f"Failed to extract abstract for strategy: {write_proposal_strategy}")
-        return paper_abstract.strip()
 
     @beartype
     @proj_leader_required
     def write_proposal(
         self, idea: ResearchIdea, papers: List[PaperProfile], config: Config
-    ) -> ResearchPaperSubmission:
+    ) -> ResearchProposal:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
         
@@ -158,12 +142,12 @@ class BaseResearchAgent(object):
             stream=config.param.stream,
         )[0]
         paper_abstract = self.prompting_parser(paper_abstract, write_proposal_strategy)
-        return ResearchPaperSubmission(abstract=paper_abstract)
+        return ResearchProposal(abstract=paper_abstract)
 
     @beartype
     @reviewer_required
     def write_review(
-        self, paper: ResearchPaperSubmission, config: Config
+        self, paper: ResearchProposal, config: Config
     ) -> ResearchReview:
         serialized_paper = self.serializer.serialize(paper)
 
@@ -193,7 +177,7 @@ class BaseResearchAgent(object):
     @chair_required
     def write_meta_review(
         self,
-        paper: ResearchPaperSubmission,
+        paper: ResearchProposal,
         reviews: List[ResearchReview],
         rebuttals: List[ResearchRebuttal],
         config: Config,
@@ -233,7 +217,7 @@ class BaseResearchAgent(object):
     @proj_leader_required
     def write_rebuttal(
         self,
-        paper: ResearchPaperSubmission,
+        paper: ResearchProposal,
         review: ResearchReview,
         config: Config,
     ) -> ResearchRebuttal:
@@ -258,3 +242,19 @@ class BaseResearchAgent(object):
             author_pk=self.profile.pk,
             content=rebuttal_content,
         )
+    
+    @staticmethod
+    @beartype
+    def prompting_parser(paper_abstract: str, write_proposal_strategy: str) -> str:
+        if write_proposal_strategy == 'default':
+            return paper_abstract.strip()
+        elif write_proposal_strategy in ['cot', 'react', 'reflexion']:
+            match = re.search(r'Abstract:\s*"(.*?)"', paper_abstract, re.DOTALL)
+            if match:
+                return match.group(1).strip()
+        else:
+            print(f"Unsupported write_proposal_strategy: {write_proposal_strategy}")
+            return paper_abstract.strip()
+
+        print(f"Failed to extract abstract for strategy: {write_proposal_strategy}")
+        return paper_abstract.strip()

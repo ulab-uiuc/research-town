@@ -2,7 +2,7 @@ from research_town.dbs import (
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -19,7 +19,7 @@ def test_researchprogress_class_extra_args() -> None:
     assert hasattr(insight, 'additional_attr')
     assert insight.additional_attr == 'extra'
 
-    paper = ResearchPaperSubmission(
+    paper = ResearchProposal(
         title='title', abstract='Paper for a new AI algorithm', additional_attr='extra'
     )
     assert hasattr(paper, 'additional_attr')

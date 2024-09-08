@@ -1,5 +1,5 @@
 from research_town.configs import Config
-from research_town.engines import BaseResearchEngine
+from research_town.engines import BaseEngine
 
 from ..constants.data_constants import agent_profile_A, research_paper_submission_A
 from ..constants.db_constants import (
@@ -12,7 +12,7 @@ from ..constants.db_constants import (
 
 def test_engine_fine_proj_participants() -> None:
     example_agent_db.reset_role_avaialbility()
-    engine = BaseResearchEngine(
+    engine = BaseEngine(
         project_name='test',
         agent_db=example_agent_db,
         paper_db=example_paper_db,
@@ -30,7 +30,7 @@ def test_engine_fine_proj_participants() -> None:
 
 def test_engine_find_proj_reviewers() -> None:
     example_agent_db.reset_role_avaialbility()
-    engine = BaseResearchEngine(
+    engine = BaseEngine(
         project_name='test',
         agent_db=example_agent_db,
         paper_db=example_paper_db,
@@ -48,7 +48,7 @@ def test_engine_find_proj_reviewers() -> None:
 
 def test_engine_find_chair() -> None:
     example_agent_db.reset_role_avaialbility()
-    engine = BaseResearchEngine(
+    engine = BaseEngine(
         project_name='test',
         agent_db=example_agent_db,
         paper_db=example_paper_db,

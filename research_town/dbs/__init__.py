@@ -12,7 +12,7 @@ from .data import (
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -34,7 +34,7 @@ __all__ = [
     'AgentProfile',
     'ResearchIdea',
     'ResearchInsight',
-    'ResearchPaperSubmission',
+    'ResearchProposal',
     'ResearchReview',
     'ResearchRebuttal',
     'ResearchMetaReview',

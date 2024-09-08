@@ -9,12 +9,12 @@ from ..dbs import (
     EnvLogDB,
     PaperProfileDB,
     ProgressDB,
-    ResearchPaperSubmission,
+    ResearchProposal,
 )
 from ..envs.env_base import BaseMultiAgentEnv
 
 
-class BaseResearchEngine:
+class BaseEngine:
     def __init__(
         self,
         project_name: str,
@@ -152,7 +152,7 @@ class BaseResearchEngine:
         )
 
     def find_reviewers(
-        self, paper_submission: ResearchPaperSubmission, reviewer_num: int
+        self, paper_submission: ResearchProposal, reviewer_num: int
     ) -> List[AgentProfile]:
         return self.find_agents(
             condition={'is_reviewer_candidate': True},
@@ -166,7 +166,7 @@ class BaseResearchEngine:
             },
         )
 
-    def find_chair(self, paper_submission: ResearchPaperSubmission) -> AgentProfile:
+    def find_chair(self, paper_submission: ResearchProposal) -> AgentProfile:
         return self.find_agents(
             condition={'is_chair_candidate': True},
             query=paper_submission.abstract,
