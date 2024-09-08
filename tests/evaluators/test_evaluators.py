@@ -94,9 +94,7 @@ def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
     paper = research_paper_submission_A.model_dump()
     input_dict = {'insights': insights, 'idea': idea, 'paper': paper}
 
-    evaluator = ResearchProposalQualityEvaluator(
-        model_name=model_name, config=config
-    )
+    evaluator = ResearchProposalQualityEvaluator(model_name=model_name, config=config)
 
     if use_mock:
         with patch(

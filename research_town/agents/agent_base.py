@@ -116,19 +116,19 @@ class BaseResearchAgent(object):
     ) -> ResearchProposal:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
-        
+
         write_proposal_strategy = config.param.write_proposal_strategy
         if write_proposal_strategy == 'default':
-            prompt_template=config.agent_prompt_template.write_proposal
+            prompt_template = config.agent_prompt_template.write_proposal
         elif write_proposal_strategy == 'cot':
-            prompt_template=config.agent_prompt_template.write_proposal_cot
+            prompt_template = config.agent_prompt_template.write_proposal_cot
         elif write_proposal_strategy == 'react':
-            prompt_template=config.agent_prompt_template.write_proposal_react
+            prompt_template = config.agent_prompt_template.write_proposal_react
         elif write_proposal_strategy == 'reflexion':
-            prompt_template=config.agent_prompt_template.write_proposal_reflexion
+            prompt_template = config.agent_prompt_template.write_proposal_reflexion
         else:
             print('write_proposal_strategy not supported, will use default')
-            prompt_template=config.agent_prompt_template.write_proposal
+            prompt_template = config.agent_prompt_template.write_proposal
 
         paper_abstract = write_proposal_prompting(
             idea=serialized_idea,
@@ -146,9 +146,7 @@ class BaseResearchAgent(object):
 
     @beartype
     @reviewer_required
-    def write_review(
-        self, paper: ResearchProposal, config: Config
-    ) -> ResearchReview:
+    def write_review(self, paper: ResearchProposal, config: Config) -> ResearchReview:
         serialized_paper = self.serializer.serialize(paper)
 
         summary, strength, weakness, score = write_review_prompting(
@@ -242,7 +240,7 @@ class BaseResearchAgent(object):
             author_pk=self.profile.pk,
             content=rebuttal_content,
         )
-    
+
     @staticmethod
     @beartype
     def prompting_parser(paper_abstract: str, write_proposal_strategy: str) -> str:
@@ -253,8 +251,8 @@ class BaseResearchAgent(object):
             if match:
                 return match.group(1).strip()
         else:
-            print(f"Unsupported write_proposal_strategy: {write_proposal_strategy}")
+            print(f'Unsupported write_proposal_strategy: {write_proposal_strategy}')
             return paper_abstract.strip()
 
-        print(f"Failed to extract abstract for strategy: {write_proposal_strategy}")
+        print(f'Failed to extract abstract for strategy: {write_proposal_strategy}')
         return paper_abstract.strip()
