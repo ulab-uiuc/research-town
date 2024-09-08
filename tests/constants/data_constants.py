@@ -8,7 +8,7 @@ from research_town.dbs import (
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -61,12 +61,12 @@ research_insight_B = ResearchInsight(
 )
 
 
-research_paper_submission_A = ResearchPaperSubmission(
+research_paper_submission_A = ResearchProposal(
     title='A Survey on Machine Learning',
     abstract='This paper surveys the field of machine learning.',
 )
 
-research_paper_submission_B = ResearchPaperSubmission(
+research_paper_submission_B = ResearchProposal(
     title='A Survey on Graph Neural Networks',
     abstract='This paper surveys the field of graph neural networks.',
 )

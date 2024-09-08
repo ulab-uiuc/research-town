@@ -6,7 +6,7 @@ from research_town.dbs import (
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -71,7 +71,7 @@ def test_brainstorm_idea(
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_write_paper(mock_model_prompting: MagicMock) -> None:
+def test_write_proposal(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     research_agent = BaseResearchAgent(
@@ -79,12 +79,12 @@ def test_write_paper(mock_model_prompting: MagicMock) -> None:
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='proj_leader',
     )
-    paper = research_agent.write_paper(
+    paper = research_agent.write_proposal(
         idea=research_idea_A,
         papers=[paper_profile_A, paper_profile_B],
         config=Config(),
     )
-    assert isinstance(paper, ResearchPaperSubmission)
+    assert isinstance(paper, ResearchProposal)
     assert paper.abstract == 'Paper abstract1'
     assert paper.pk is not None
 

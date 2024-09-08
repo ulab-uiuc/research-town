@@ -5,7 +5,7 @@ from .data import (
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -18,7 +18,7 @@ class ProgressDB(ComplexDB):
             classes_to_register=[
                 ResearchInsight,
                 ResearchIdea,
-                ResearchPaperSubmission,
+                ResearchProposal,
                 ResearchReview,
                 ResearchRebuttal,
                 ResearchMetaReview,

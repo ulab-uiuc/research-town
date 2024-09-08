@@ -4,7 +4,7 @@ from research_town.dbs import (
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -22,7 +22,7 @@ def main(
     progress_db = ProgressDB(load_file_path)
     insights = progress_db.get(ResearchInsight, **conditions)
     idea = progress_db.get(ResearchIdea, **conditions)[0]
-    paper = progress_db.get(ResearchPaperSubmission, **conditions)[0]
+    paper = progress_db.get(ResearchProposal, **conditions)[0]
     reviews = progress_db.get(ResearchReview, **conditions)
     rebuttals = progress_db.get(ResearchRebuttal, **conditions)
     meta_review = progress_db.get(ResearchMetaReview, **conditions)[0]
@@ -59,7 +59,7 @@ def main(
         pk=idea.pk,
     )
     progress_db.update(
-        ResearchPaperSubmission,
+        ResearchProposal,
         updates={'eval_score': paper_quality.dimension_scores},
         pk=paper.pk,
     )

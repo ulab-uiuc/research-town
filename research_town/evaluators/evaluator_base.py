@@ -5,7 +5,7 @@ from research_town.dbs import (
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -15,7 +15,7 @@ from .evaluator_output import (
     ResearchIdeaEvalOutput,
     ResearchInsightEvalOutput,
     ResearchMetaReviewEvalOutput,
-    ResearchPaperSubmissionEvalOutput,
+    ResearchProposalEvalOutput,
     ResearchRebuttalEvalOutput,
     ResearchReviewEvalOutput,
 )
@@ -23,7 +23,7 @@ from .evaluator_quality import (
     ResearchIdeaQualityEvaluator,
     ResearchInsightQualityEvaluator,
     ResearchMetaReviewQualityEvaluator,
-    ResearchPaperSubmissionQualityEvaluator,
+    ResearchProposalQualityEvaluator,
     ResearchRebuttalQualityEvaluator,
     ResearchReviewQualityEvaluator,
 )
@@ -60,9 +60,9 @@ class BaseEvaluator:
         self,
         insights: List[ResearchInsight],
         idea: ResearchIdea,
-        paper: ResearchPaperSubmission,
-    ) -> ResearchPaperSubmissionEvalOutput:
-        evaluator = ResearchPaperSubmissionQualityEvaluator(
+        paper: ResearchProposal,
+    ) -> ResearchProposalEvalOutput:
+        evaluator = ResearchProposalQualityEvaluator(
             model_name=self.model_name, config=self.config
         )
         return evaluator.eval(
@@ -75,7 +75,7 @@ class BaseEvaluator:
         self,
         insights: List[ResearchInsight],
         idea: ResearchIdea,
-        paper: ResearchPaperSubmission,
+        paper: ResearchProposal,
         review: ResearchReview,
     ) -> ResearchReviewEvalOutput:
         evaluator = ResearchReviewQualityEvaluator(
@@ -92,7 +92,7 @@ class BaseEvaluator:
         self,
         insights: List[ResearchInsight],
         idea: ResearchIdea,
-        paper: ResearchPaperSubmission,
+        paper: ResearchProposal,
         review: ResearchReview,
         rebuttal: ResearchRebuttal,
     ) -> ResearchRebuttalEvalOutput:
@@ -111,7 +111,7 @@ class BaseEvaluator:
         self,
         insights: List[ResearchInsight],
         idea: ResearchIdea,
-        paper: ResearchPaperSubmission,
+        paper: ResearchProposal,
         reviews: List[ResearchReview],
         rebuttals: List[ResearchRebuttal],
         meta_review: ResearchMetaReview,
@@ -132,14 +132,14 @@ class BaseEvaluator:
         self,
         insights: List[ResearchInsight],
         idea: ResearchIdea,
-        paper: ResearchPaperSubmission,
+        paper: ResearchProposal,
         reviews: List[ResearchReview],
         rebuttals: List[ResearchRebuttal],
         meta_review: ResearchMetaReview,
     ) -> Tuple[
         List[ResearchInsightEvalOutput],
         ResearchIdeaEvalOutput,
-        ResearchPaperSubmissionEvalOutput,
+        ResearchProposalEvalOutput,
         List[ResearchReviewEvalOutput],
         List[ResearchRebuttalEvalOutput],
         ResearchMetaReviewEvalOutput,

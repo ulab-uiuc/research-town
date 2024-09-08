@@ -1,7 +1,7 @@
-from .engine_base import BaseResearchEngine
-from .engine_lifecycle import LifecycleResearchEngine
+from .engine_base import BaseEngine
+from .engine_lifecycle import LifecycleEngine
 
 __all__ = [
-    'BaseResearchEngine',
-    'LifecycleResearchEngine',
+    'BaseEngine',
+    'LifecycleEngine',
 ]

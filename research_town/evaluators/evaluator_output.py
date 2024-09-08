@@ -35,7 +35,7 @@ class ResearchIdeaEvalOutput(BaseEvalOutput):
     pass
 
 
-class ResearchPaperSubmissionEvalOutput(BaseEvalOutput):
+class ResearchProposalEvalOutput(BaseEvalOutput):
     pass
 
 

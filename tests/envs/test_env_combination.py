@@ -6,7 +6,7 @@ from research_town.configs import Config
 from research_town.dbs import (
     AgentProfile,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -56,7 +56,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     paper_submission_env.run()
     paper = paper_submission_env.paper
 
-    assert isinstance(paper, ResearchPaperSubmission)
+    assert isinstance(paper, ResearchProposal)
     assert paper.abstract == 'Paper abstract1'
 
     # Agent profiles and roles for peer review environment

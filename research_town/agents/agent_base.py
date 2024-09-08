@@ -1,3 +1,5 @@
+import re
+
 from beartype import beartype
 from beartype.typing import Dict, List, Literal, Optional
 
@@ -8,7 +10,7 @@ from ..dbs import (
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -17,7 +19,7 @@ from ..utils.agent_prompter import (
     discuss_idea_prompting,
     review_literature_prompting,
     write_meta_review_prompting,
-    write_paper_prompting,
+    write_proposal_prompting,
     write_rebuttal_prompting,
     write_review_prompting,
 )
@@ -109,28 +111,43 @@ class BaseResearchAgent(object):
 
     @beartype
     @proj_leader_required
-    def write_paper(
+    def write_proposal(
         self, idea: ResearchIdea, papers: List[PaperProfile], config: Config
-    ) -> ResearchPaperSubmission:
+    ) -> ResearchProposal:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
-        paper_abstract = write_paper_prompting(
+        
+        write_proposal_strategy = config.param.write_proposal_strategy
+        if write_proposal_strategy == 'default':
+            prompt_template=config.agent_prompt_template.write_proposal
+        elif write_proposal_strategy == 'cot':
+            prompt_template=config.agent_prompt_template.write_proposal_cot
+        elif write_proposal_strategy == 'react':
+            prompt_template=config.agent_prompt_template.write_proposal_react
+        elif write_proposal_strategy == 'reflexion':
+            prompt_template=config.agent_prompt_template.write_proposal_reflexion
+        else:
+            print('write_proposal_strategy not supported, will use default')
+            prompt_template=config.agent_prompt_template.write_proposal
+
+        paper_abstract = write_proposal_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
-            prompt_template=config.agent_prompt_template.write_paper,
+            prompt_template=prompt_template,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
             temperature=config.param.temperature,
             top_p=config.param.top_p,
             stream=config.param.stream,
         )[0]
-        return ResearchPaperSubmission(abstract=paper_abstract)
+        paper_abstract = self.prompting_parser(paper_abstract, write_proposal_strategy)
+        return ResearchProposal(abstract=paper_abstract)
 
     @beartype
     @reviewer_required
     def write_review(
-        self, paper: ResearchPaperSubmission, config: Config
+        self, paper: ResearchProposal, config: Config
     ) -> ResearchReview:
         serialized_paper = self.serializer.serialize(paper)
 
@@ -160,7 +177,7 @@ class BaseResearchAgent(object):
     @chair_required
     def write_meta_review(
         self,
-        paper: ResearchPaperSubmission,
+        paper: ResearchProposal,
         reviews: List[ResearchReview],
         rebuttals: List[ResearchRebuttal],
         config: Config,
@@ -200,7 +217,7 @@ class BaseResearchAgent(object):
     @proj_leader_required
     def write_rebuttal(
         self,
-        paper: ResearchPaperSubmission,
+        paper: ResearchProposal,
         review: ResearchReview,
         config: Config,
     ) -> ResearchRebuttal:
@@ -225,3 +242,19 @@ class BaseResearchAgent(object):
             author_pk=self.profile.pk,
             content=rebuttal_content,
         )
+    
+    @staticmethod
+    @beartype
+    def prompting_parser(paper_abstract: str, write_proposal_strategy: str) -> str:
+        if write_proposal_strategy == 'default':
+            return paper_abstract.strip()
+        elif write_proposal_strategy in ['cot', 'react', 'reflexion']:
+            match = re.search(r'Abstract:\s*"(.*?)"', paper_abstract, re.DOTALL)
+            if match:
+                return match.group(1).strip()
+        else:
+            print(f"Unsupported write_proposal_strategy: {write_proposal_strategy}")
+            return paper_abstract.strip()
+
+        print(f"Failed to extract abstract for strategy: {write_proposal_strategy}")
+        return paper_abstract.strip()

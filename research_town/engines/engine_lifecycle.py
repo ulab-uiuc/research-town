@@ -6,10 +6,10 @@ from ..envs import (
     PeerReviewMultiAgentEnv,
     StartMultiAgentEnv,
 )
-from .engine_base import BaseResearchEngine
+from .engine_base import BaseEngine
 
 
-class LifecycleResearchEngine(BaseResearchEngine):
+class LifecycleEngine(BaseEngine):
     def set_envs(self) -> None:
         self.add_env(
             'start',
