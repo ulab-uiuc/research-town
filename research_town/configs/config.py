@@ -27,6 +27,7 @@ class ParamConfig(BaseModel):
     temperature: Optional[float] = 0.0
     top_p: Optional[float] = None
     stream: Optional[bool] = None
+    write_paper_strategy: str = 'default' # default, cot, react, reflexion
 
     model_config = ConfigDict(
         extra='allow',
@@ -390,6 +391,72 @@ class AgentPromptTemplateConfig(BaseModel):
         'examples': ['', ''],
         'template': 'Here is the idea: {idea}\nHere are the external data, which is a list of abstracts of related papers: {papers}',
     }
+    write_paper_cot: Dict[str, Union[str, List[str]]] = {
+        'intro': 'Please write a paper based on the following ideas and external data. You might use two or more of these ideas if they are related and work well together. Let\'s think step by step.',
+        'examples': ['', ''],
+        'template': '''Here is the idea: {idea}
+    Here are the external data, which is a list of abstracts of related papers: {papers}
+
+    You need to first break down the task into smaller steps and think about each step carefully.
+    After that, you need to generate the abstract based on the ideas and external data. You need to generate:' Abstract: [Your abstract]' in the end of the task.
+    Now, let's begin:''',
+    }
+    write_paper_react: Dict[str, Union[str, List[str]]] = {
+        'intro': 'Please write a paper based on the following ideas and external data.  You might use two or more of these ideas if they are related and work well together. Use the ReAct (Reason+Act) approach to complete this task.',
+        'examples': ['', ''],
+        'template': '''Here is the idea: {idea}
+    Here are the external data, which is a list of abstracts of related papers: {papers}
+
+    Let's use the ReAct approach:
+
+    Thought: First, I need to analyze the main idea and review the external data.
+    Action: Analyze idea and review external data
+    Observation: [Your analysis of the idea and relevant points from external data]
+
+    Thought: Now, I should synthesize the idea with the relevant external data.
+    Action: Synthesize information
+    Observation: [Your synthesis of the idea and external data]
+
+    Thought: I can now outline the main points for the abstract.
+    Action: Create outline
+    Observation: [Your outline for the abstract]
+
+    Thought: Finally, I will write a concise abstract incorporating these elements.
+    Action: Write abstract
+    Observation: [Your written abstract]
+
+    Abstract: [Your abstract]
+    Now, let's begin:
+    ''',
+    }
+    write_paper_reflexion: Dict[str, Union[str, List[str]]] = {
+            'intro': 'Please write a paper based on the following ideas and external data. You might use two or more of these ideas if they are related and work well together. Use the Reflexion approach to complete and improve this task.',
+            'examples': ['', ''],
+            'template': '''Here is the idea: {idea}
+        Here are the external data, which is a list of abstracts of related papers: {papers}
+
+        Let's use the Reflexion approach:
+
+        Initial attempt:
+        [Write an initial version of the abstract]
+
+        Reflection:
+        1. What are the strengths of this abstract?
+        2. What are the weaknesses or areas for improvement?
+        3. How well does it incorporate the main idea and relevant external data?
+        4. Is the abstract concise and well-structured?
+
+        Improved attempt:
+        [Write an improved version of the abstract based on the reflection]
+
+        Final Reflection:
+        1. How has the abstract improved?
+        2. Are there any remaining areas for further improvement?
+
+        Abstract:[Your final abstract]
+        Now, let's begin:
+        ''',
+        }
     write_review_summary: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write a summary of the paper for the following submission you have made to an academic conference.',
         'examples': ['', ''],
@@ -481,6 +548,9 @@ class Config(BaseModel):
             'brainstorm_idea': ['{insights}'],
             'discuss_idea': ['{ideas}'],
             'write_proposal': ['{idea}', '{papers}'],
+            'write_proposal_cot': ['{idea}', '{papers}'],
+            'write_proposal_react': ['{idea}', '{papers}'],
+            'write_proposal_reflexion': ['{idea}', '{papers}'],
             'write_review_summary': ['{paper}'],
             'write_review_strength': ['{paper}', '{summary}'],
             'write_review_weakness': ['{paper}', '{summary}'],

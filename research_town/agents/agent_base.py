@@ -1,3 +1,5 @@
+import re
+
 from beartype import beartype
 from beartype.typing import Dict, List, Literal, Optional
 
@@ -106,6 +108,22 @@ class BaseResearchAgent(object):
             stream=config.param.stream,
         )[0]
         return ResearchIdea(content=idea_summarized)
+    
+    @staticmethod
+    @beartype
+    def prompting_parser(paper_abstract: str, write_paper_strategy: str) -> str:
+        if write_paper_strategy == 'default':
+            return paper_abstract.strip()
+        elif write_paper_strategy in ['cot', 'react', 'reflexion']:
+            match = re.search(r'Abstract:\s*"(.*?)"', paper_abstract, re.DOTALL)
+            if match:
+                return match.group(1).strip()
+        else:
+            print(f"Unsupported write_paper_strategy: {write_paper_strategy}")
+            return paper_abstract.strip()
+
+        print(f"Failed to extract abstract for strategy: {write_paper_strategy}")
+        return paper_abstract.strip()
 
     @beartype
     @proj_leader_required
@@ -114,17 +132,32 @@ class BaseResearchAgent(object):
     ) -> ResearchPaperSubmission:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
-        paper_abstract = write_proposal_prompting(
+        
+        write_paper_strategy = config.param.write_paper_strategy
+        if write_paper_strategy == 'default':
+            prompt_template=config.agent_prompt_template.write_paper
+        elif write_paper_strategy == 'cot':
+            prompt_template=config.agent_prompt_template.write_paper_cot
+        elif write_paper_strategy == 'react':
+            prompt_template=config.agent_prompt_template.write_paper_react
+        elif write_paper_strategy == 'reflexion':
+            prompt_template=config.agent_prompt_template.write_paper_reflexion
+        else:
+            print('write_paper_strategy not supported, will use default')
+            prompt_template=config.agent_prompt_template.write_paper
+
+        paper_abstract = write_paper_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
-            prompt_template=config.agent_prompt_template.write_proposal,
+            prompt_template=prompt_template,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
             temperature=config.param.temperature,
             top_p=config.param.top_p,
             stream=config.param.stream,
         )[0]
+        paper_abstract = self.prompting_parser(paper_abstract, write_paper_strategy)
         return ResearchPaperSubmission(abstract=paper_abstract)
 
     @beartype
