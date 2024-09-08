@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from ..envs import (
     EndMultiAgentEnv,
     PaperSubmissionMultiAgentEnv,
@@ -5,7 +7,6 @@ from ..envs import (
     StartMultiAgentEnv,
 )
 from .engine_base import BaseEngine
-from typing import Any, Dict
 
 
 class LifecycleEngine(BaseEngine):
