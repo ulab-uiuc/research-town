@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.10, <3.12"
-pydantic = "^2.8.2"
+pydantic = "^2.9.0"
 litellm = "~1.44.19"
 beartype = "^0.18.5"
 
