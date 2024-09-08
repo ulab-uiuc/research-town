@@ -386,7 +386,7 @@ class AgentPromptTemplateConfig(BaseModel):
         'examples': ['', ''],
         'template': 'Here are the research ideas:\n{ideas}\n',
     }
-    write_paper: Dict[str, Union[str, List[str]]] = {
+    write_proposal: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract. You might use two or more of these ideas if they are related and work well together.',
         'examples': ['', ''],
         'template': 'Here is the idea: {idea}\nHere are the external data, which is a list of abstracts of related papers: {papers}',
@@ -547,10 +547,10 @@ class Config(BaseModel):
             'review_literature': ['{profile_bio}', '{domains}', '{papers}'],
             'brainstorm_idea': ['{insights}'],
             'discuss_idea': ['{ideas}'],
-            'write_paper': ['{idea}', '{papers}'],
-            'write_paper_cot': ['{idea}', '{papers}'],
-            'write_paper_react': ['{idea}', '{papers}'],
-            'write_paper_reflexion': ['{idea}', '{papers}'],
+            'write_proposal': ['{idea}', '{papers}'],
+            'write_proposal_cot': ['{idea}', '{papers}'],
+            'write_proposal_react': ['{idea}', '{papers}'],
+            'write_proposal_reflexion': ['{idea}', '{papers}'],
             'write_review_summary': ['{paper}'],
             'write_review_strength': ['{paper}', '{summary}'],
             'write_review_weakness': ['{paper}', '{summary}'],
