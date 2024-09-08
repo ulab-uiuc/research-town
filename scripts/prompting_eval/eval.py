@@ -3,7 +3,7 @@ from research_town.evaluators import (
     ResearchIdeaQualityEvaluator,
     ResearchInsightQualityEvaluator,
     ResearchMetaReviewQualityEvaluator,
-    ResearchPaperSubmissionQualityEvaluator,
+    ResearchProposalQualityEvaluator,
     ResearchRebuttalQualityEvaluator,
     ResearchReviewQualityEvaluator,
 )
@@ -47,7 +47,7 @@ def main(
 
     insight_evaluator = ResearchInsightQualityEvaluator(model_name, config)
     idea_evaluator = ResearchIdeaQualityEvaluator(model_name, config)
-    paper_evaluator = ResearchPaperSubmissionQualityEvaluator(model_name, config)
+    paper_evaluator = ResearchProposalQualityEvaluator(model_name, config)
     review_evaluator = ResearchReviewQualityEvaluator(model_name, config)
     rebuttal_evaluator = ResearchRebuttalQualityEvaluator(model_name, config)
     meta_review_evaluator = ResearchMetaReviewQualityEvaluator(model_name, config)

@@ -6,7 +6,7 @@ from research_town.dbs import (
     ResearchIdea,
     ResearchInsight,
     ResearchMetaReview,
-    ResearchPaperSubmission,
+    ResearchProposal,
     ResearchRebuttal,
     ResearchReview,
 )
@@ -84,7 +84,7 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
         papers=[paper_profile_A, paper_profile_B],
         config=Config(),
     )
-    assert isinstance(paper, ResearchPaperSubmission)
+    assert isinstance(paper, ResearchProposal)
     assert paper.abstract == 'Paper abstract1'
     assert paper.pk is not None
 

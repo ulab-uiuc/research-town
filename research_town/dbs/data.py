@@ -118,7 +118,7 @@ class ResearchIdea(BaseDBData):
     model_config = ConfigDict(extra='allow')
 
 
-class ResearchPaperSubmission(BaseDBData):
+class ResearchProposal(BaseDBData):
     abstract: str
     title: Optional[str] = Field(default=None)
     content: Optional[str] = Field(default=None)

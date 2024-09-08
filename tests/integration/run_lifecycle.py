@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.configs import Config
-from research_town.engines import LifecycleResearchEngine
+from research_town.engines import LifecycleEngine
 from tests.mocks.mocking_func import mock_prompting
 
 from ..constants.db_constants import (
@@ -16,7 +16,7 @@ from ..constants.db_constants import (
 def test_research_lifecycle_two_stage(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    engine = LifecycleResearchEngine(
+    engine = LifecycleEngine(
         project_name='test',
         agent_db=example_agent_db,
         paper_db=example_paper_db,
