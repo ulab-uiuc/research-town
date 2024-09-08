@@ -17,7 +17,7 @@ from ..utils.agent_prompter import (
     discuss_idea_prompting,
     review_literature_prompting,
     write_meta_review_prompting,
-    write_paper_prompting,
+    write_proposal_prompting,
     write_rebuttal_prompting,
     write_review_prompting,
 )
@@ -109,16 +109,16 @@ class BaseResearchAgent(object):
 
     @beartype
     @proj_leader_required
-    def write_paper(
+    def write_proposal(
         self, idea: ResearchIdea, papers: List[PaperProfile], config: Config
     ) -> ResearchPaperSubmission:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
-        paper_abstract = write_paper_prompting(
+        paper_abstract = write_proposal_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
-            prompt_template=config.agent_prompt_template.write_paper,
+            prompt_template=config.agent_prompt_template.write_proposal,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
             temperature=config.param.temperature,

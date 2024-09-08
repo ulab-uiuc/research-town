@@ -159,7 +159,7 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
         self.progress_db.add(summarized_idea)
 
         # write paper
-        self.paper = self.proj_leader.write_paper(
+        self.paper = self.proj_leader.write_proposal(
             idea=summarized_idea, papers=related_papers, config=self.config
         )
         self.progress_db.add(self.paper)

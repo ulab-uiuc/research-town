@@ -126,7 +126,7 @@ def discuss_idea_prompting(
 
 
 @beartype
-def write_paper_prompting(
+def write_proposal_prompting(
     idea: Dict[str, str],
     papers: List[Dict[str, str]],
     model_name: str,
