@@ -111,18 +111,18 @@ class BaseResearchAgent(object):
     
     @staticmethod
     @beartype
-    def prompting_parser(paper_abstract: str, write_paper_strategy: str) -> str:
-        if write_paper_strategy == 'default':
+    def prompting_parser(paper_abstract: str, write_proposal_strategy: str) -> str:
+        if write_proposal_strategy == 'default':
             return paper_abstract.strip()
-        elif write_paper_strategy in ['cot', 'react', 'reflexion']:
+        elif write_proposal_strategy in ['cot', 'react', 'reflexion']:
             match = re.search(r'Abstract:\s*"(.*?)"', paper_abstract, re.DOTALL)
             if match:
                 return match.group(1).strip()
         else:
-            print(f"Unsupported write_paper_strategy: {write_paper_strategy}")
+            print(f"Unsupported write_proposal_strategy: {write_proposal_strategy}")
             return paper_abstract.strip()
 
-        print(f"Failed to extract abstract for strategy: {write_paper_strategy}")
+        print(f"Failed to extract abstract for strategy: {write_proposal_strategy}")
         return paper_abstract.strip()
 
     @beartype
@@ -133,20 +133,20 @@ class BaseResearchAgent(object):
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
         
-        write_paper_strategy = config.param.write_paper_strategy
-        if write_paper_strategy == 'default':
-            prompt_template=config.agent_prompt_template.write_paper
-        elif write_paper_strategy == 'cot':
-            prompt_template=config.agent_prompt_template.write_paper_cot
-        elif write_paper_strategy == 'react':
-            prompt_template=config.agent_prompt_template.write_paper_react
-        elif write_paper_strategy == 'reflexion':
-            prompt_template=config.agent_prompt_template.write_paper_reflexion
+        write_proposal_strategy = config.param.write_proposal_strategy
+        if write_proposal_strategy == 'default':
+            prompt_template=config.agent_prompt_template.write_proposal
+        elif write_proposal_strategy == 'cot':
+            prompt_template=config.agent_prompt_template.write_proposal_cot
+        elif write_proposal_strategy == 'react':
+            prompt_template=config.agent_prompt_template.write_proposal_react
+        elif write_proposal_strategy == 'reflexion':
+            prompt_template=config.agent_prompt_template.write_proposal_reflexion
         else:
-            print('write_paper_strategy not supported, will use default')
-            prompt_template=config.agent_prompt_template.write_paper
+            print('write_proposal_strategy not supported, will use default')
+            prompt_template=config.agent_prompt_template.write_proposal
 
-        paper_abstract = write_paper_prompting(
+        paper_abstract = write_proposal_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
@@ -157,7 +157,7 @@ class BaseResearchAgent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )[0]
-        paper_abstract = self.prompting_parser(paper_abstract, write_paper_strategy)
+        paper_abstract = self.prompting_parser(paper_abstract, write_proposal_strategy)
         return ResearchPaperSubmission(abstract=paper_abstract)
 
     @beartype
