@@ -28,7 +28,7 @@ def mock_prompting(
         return ['Idea1', 'Idea2', 'Idea3']
     elif prompt[0]['content'] == agent_template_config.discuss_idea['intro']:
         return ['Summarized idea1', 'Summarized idea2', 'Summarized idea3']
-    elif prompt[0]['content'] == agent_template_config.write_paper['intro']:
+    elif prompt[0]['content'] == agent_template_config.write_proposal['intro']:
         return ['Paper abstract1', 'Paper abstract2', 'Paper abstract3']
     elif prompt[0]['content'] == agent_template_config.write_review_summary['intro']:
         return [
