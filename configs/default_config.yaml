@@ -1021,4 +1021,4 @@ param:
   stream: null
   temperature: 0.0
   top_p: null
-  write_paper_strategy: default
+  write_proposal_strategy: default
