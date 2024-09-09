@@ -1,11 +1,4 @@
-from research_town.dbs import (
-    Idea,
-    Insight,
-    MetaReview,
-    Proposal,
-    Rebuttal,
-    Review,
-)
+from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 
 
 def test_researchprogress_class_extra_args() -> None:

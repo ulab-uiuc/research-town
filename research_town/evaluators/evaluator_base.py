@@ -1,14 +1,7 @@
 from typing import List, Tuple
 
 from research_town.configs import Config
-from research_town.dbs import (
-    Idea,
-    Insight,
-    MetaReview,
-    Proposal,
-    Rebuttal,
-    Review,
-)
+from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 
 from ..utils.serializer import Serializer
 from .evaluator_output import (

@@ -28,9 +28,7 @@ class ResearcherDB(BaseDB[Researcher]):
             proposals, collaborators = collect_proposals_and_coauthors(
                 author=name, paper_max_num=10
             )
-            publication_info = '; '.join(
-                [f'{abstract}' for abstract in proposals]
-            )
+            publication_info = '; '.join([f'{abstract}' for abstract in proposals])
             bio = write_bio_prompting(
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,

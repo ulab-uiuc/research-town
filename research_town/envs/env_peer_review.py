@@ -10,9 +10,9 @@ from ..dbs import (
     MetaReviewWritingLog,
     PaperDB,
     ProgressDB,
+    Rebuttal,
     RebuttalWritingLog,
     Researcher,
-    Rebuttal,
     Review,
     ReviewWritingLog,
 )

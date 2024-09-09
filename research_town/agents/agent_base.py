@@ -10,8 +10,8 @@ from ..dbs import (
     MetaReview,
     Paper,
     Proposal,
-    Researcher,
     Rebuttal,
+    Researcher,
     Review,
 )
 from ..utils.agent_prompter import (

@@ -1,14 +1,6 @@
 from typing import Optional
 
-from .data import (
-    Experiment,
-    Idea,
-    Insight,
-    MetaReview,
-    Proposal,
-    Rebuttal,
-    Review,
-)
+from .data import Experiment, Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from .db_complex import ComplexDB
 
 

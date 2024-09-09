@@ -6,9 +6,9 @@ from research_town.dbs import (
     MetaReviewWritingLog,
     Paper,
     Proposal,
+    Rebuttal,
     RebuttalWritingLog,
     Researcher,
-    Rebuttal,
     Review,
     ReviewWritingLog,
 )
