@@ -1,10 +1,10 @@
 {
-  "49c4957f-379f-4b3b-985a-12b9c8a09cee": {
-    "pk": "49c4957f-379f-4b3b-985a-12b9c8a09cee",
+  "5f90f323-87d0-4637-8579-253e708bc47a": {
+    "pk": "5f90f323-87d0-4637-8579-253e708bc47a",
     "project_name": "research_town_demo",
     "timestep": 0,
-    "paper_pk": "c950a929-17a5-4304-953e-a53c4a3f666b",
-    "agent_pk": "924558f7-a874-41bb-bbc7-123265aa40ec",
+    "paper_pk": "7420f0e6-076f-4a17-ad4c-4a76585a1267",
+    "agent_pk": "0a2c23e6-b89f-48cb-806f-dc115b62bda6",
     "other_agent_pks": []
   }
 }
