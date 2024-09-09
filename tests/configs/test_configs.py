@@ -1,8 +1,8 @@
+import os
 from tempfile import NamedTemporaryFile
 
 import pytest
 import yaml
-import os
 
 from research_town.configs import Config
 
@@ -103,11 +103,11 @@ def test_yaml_serialization() -> None:
         config.save_to_yaml(tmpfile_path)
 
     for yaml_file in os.listdir(tmpfile_path):
-        if yaml_file.endswith(".yaml"):
+        if yaml_file.endswith('.yaml'):
             with open(os.path.join(tmpfile_path, yaml_file), 'r') as f:
                 loaded_data = yaml.safe_load(f)
 
-            if "config" in yaml_file:
+            if 'config' in yaml_file:
                 assert loaded_data['related_paper_num'] == 10
                 assert loaded_data['base_llm'] == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
                 assert loaded_data['proj_participant_num'] == 3
