@@ -2,7 +2,7 @@ from unittest.mock import MagicMock, patch
 
 from research_town.configs import Config
 from research_town.dbs import MetaReview, Rebuttal, Review
-from research_town.envs import PaperSubmissionEnv, PeerReviewEnv
+from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.data_constants import (
     agent_profile_A,
     agent_profile_B,
@@ -20,7 +20,7 @@ from tests.mocks.mocking_func import mock_prompting
 def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    env = PeerReviewEnv(
+    env = ReviewWritingEnv(
         env_db=example_env_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
@@ -68,7 +68,7 @@ def test_paper_submission_env(
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    env = PaperSubmissionEnv(
+    env = ProposalWritingEnv(
         env_db=example_env_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,

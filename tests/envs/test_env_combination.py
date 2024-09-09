@@ -4,7 +4,7 @@ from beartype.typing import List, Literal
 
 from research_town.configs import Config
 from research_town.dbs import MetaReview, Proposal, Rebuttal, Researcher, Review
-from research_town.envs import PaperSubmissionEnv, PeerReviewEnv
+from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.db_constants import (
     example_env_db,
     example_paper_db,
@@ -32,7 +32,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     ]
 
     # Create and run the paper submission environment
-    paper_submission_env = PaperSubmissionEnv(
+    paper_submission_env = ProposalWritingEnv(
         paper_db=example_paper_db,
         env_db=example_env_db,
         progress_db=example_progress_db,
@@ -64,7 +64,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     ]
 
     # Create and run the peer review environment
-    peer_review_env = PeerReviewEnv(
+    peer_review_env = ReviewWritingEnv(
         paper_db=example_paper_db,
         env_db=example_env_db,
         progress_db=example_progress_db,
