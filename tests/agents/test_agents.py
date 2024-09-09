@@ -3,12 +3,12 @@ from unittest.mock import MagicMock, patch
 from research_town.agents.agent_base import BaseResearchAgent
 from research_town.configs import Config
 from research_town.dbs import (
-    ResearchIdea,
-    ResearchInsight,
-    ResearchMetaReview,
-    ResearchProposal,
+    Idea,
+    Insight,
+    MetaReview,
+    Proposal,
     ResearchRebuttal,
-    ResearchReview,
+    Review,
 )
 from tests.constants.data_constants import (
     agent_profile_A,
@@ -39,13 +39,13 @@ def test_review_literature(
         config=Config(),
     )
     assert len(research_insight) == 3
-    assert isinstance(research_insight[0], ResearchInsight)
+    assert isinstance(research_insight[0], Insight)
     assert research_insight[0].pk is not None
     assert research_insight[0].content == 'Insight1'
-    assert isinstance(research_insight[1], ResearchInsight)
+    assert isinstance(research_insight[1], Insight)
     assert research_insight[1].pk is not None
     assert research_insight[1].content == 'Insight2'
-    assert isinstance(research_insight[2], ResearchInsight)
+    assert isinstance(research_insight[2], Insight)
     assert research_insight[2].pk is not None
     assert research_insight[2].content == 'Insight3'
 
@@ -65,7 +65,7 @@ def test_brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
         config=Config(),
     )
-    assert isinstance(research_idea, ResearchIdea)
+    assert isinstance(research_idea, Idea)
     assert research_idea.pk is not None
     assert research_idea.content == 'Idea1'
 
@@ -84,7 +84,7 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
         papers=[paper_profile_A, paper_profile_B],
         config=Config(),
     )
-    assert isinstance(paper, ResearchProposal)
+    assert isinstance(paper, Proposal)
     assert paper.abstract == 'Paper abstract1'
     assert paper.pk is not None
 
@@ -102,7 +102,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
         paper=research_paper_submission_A,
         config=Config(),
     )
-    assert isinstance(review, ResearchReview)
+    assert isinstance(review, Review)
     assert review.summary == 'Summary of the paper1'
     assert review.strength == 'Strength of the paper1'
     assert review.weakness == 'Weakness of the paper1'
@@ -143,7 +143,7 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
         rebuttals=[rebuttal],
         config=Config(),
     )
-    assert isinstance(meta_review, ResearchMetaReview)
+    assert isinstance(meta_review, MetaReview)
     assert meta_review.summary == 'Meta review summary1'
     assert meta_review.strength == 'Meta review strength1'
     assert meta_review.weakness == 'Meta review weakness1'

@@ -1,12 +1,12 @@
 from research_town.configs import Config
 from research_town.dbs import (
     ProgressDB,
-    ResearchIdea,
-    ResearchInsight,
-    ResearchMetaReview,
-    ResearchProposal,
+    Idea,
+    Insight,
+    MetaReview,
+    Proposal,
     ResearchRebuttal,
-    ResearchReview,
+    Review,
 )
 from research_town.evaluators import BaseEvaluator
 
@@ -20,12 +20,12 @@ def main(
     # step 1: load the log from file
     conditions = {'project_name': 'research_town_demo'}
     progress_db = ProgressDB(load_file_path)
-    insights = progress_db.get(ResearchInsight, **conditions)
-    idea = progress_db.get(ResearchIdea, **conditions)[0]
-    paper = progress_db.get(ResearchProposal, **conditions)[0]
-    reviews = progress_db.get(ResearchReview, **conditions)
+    insights = progress_db.get(Insight, **conditions)
+    idea = progress_db.get(Idea, **conditions)[0]
+    paper = progress_db.get(Proposal, **conditions)[0]
+    reviews = progress_db.get(Review, **conditions)
     rebuttals = progress_db.get(ResearchRebuttal, **conditions)
-    meta_review = progress_db.get(ResearchMetaReview, **conditions)[0]
+    meta_review = progress_db.get(MetaReview, **conditions)[0]
     config = Config(config_file_path)
     evaluator = BaseEvaluator(model_name=model_name, config=config)
 
@@ -49,23 +49,23 @@ def main(
     # step 4: store the evaluation results to database
     for insight, insight_quality in zip(insights, insights_quality):
         progress_db.update(
-            ResearchInsight,
+            Insight,
             updates={'eval_score': insight_quality.dimension_scores},
             pk=insight.pk,
         )
     progress_db.update(
-        ResearchIdea,
+        Idea,
         updates={'eval_score': idea_quality.dimension_scores},
         pk=idea.pk,
     )
     progress_db.update(
-        ResearchProposal,
+        Proposal,
         updates={'eval_score': paper_quality.dimension_scores},
         pk=paper.pk,
     )
     for review, review_quality in zip(reviews, reviews_quality):
         progress_db.update(
-            ResearchReview,
+            Review,
             updates={'eval_score': review_quality.dimension_scores},
             pk=review.pk,
         )
@@ -76,7 +76,7 @@ def main(
             pk=rebuttal.pk,
         )
     progress_db.update(
-        ResearchMetaReview,
+        MetaReview,
         updates={'eval_score': meta_review_quality.dimension_scores},
         pk=meta_review.pk,
     )

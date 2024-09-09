@@ -3,7 +3,7 @@ import os
 from beartype.typing import Literal
 
 from research_town.configs import Config
-from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB, ProgressDB
+from research_town.dbs import ResearcherDB, LogDB, PaperDB, ProgressDB
 from research_town.engines import LifecycleEngine
 
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
@@ -25,8 +25,8 @@ def run_sync_experiment(
     ]
     # if save path exists, then load
     config = Config(config_file_path)
-    agent_db = AgentProfileDB()
-    paper_db = PaperProfileDB()
+    agent_db = ResearcherDB()
+    paper_db = PaperDB()
     if os.path.exists(save_file_path):
         agent_db.load_from_json(save_file_path, with_embed=True)
         paper_db.load_from_json(save_file_path, with_embed=True)
@@ -34,7 +34,7 @@ def run_sync_experiment(
         agent_db.pull_agents(agent_names=agent_names, config=config)
         paper_db.pull_papers(num=10, domain='graph neural networks')
 
-    env_db = EnvLogDB()
+    env_db = LogDB()
     progress_db = ProgressDB()
     engine = LifecycleEngine(
         project_name='research_town_demo',

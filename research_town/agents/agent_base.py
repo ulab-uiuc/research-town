@@ -5,14 +5,14 @@ from beartype.typing import Dict, List, Literal, Optional
 
 from ..configs import Config
 from ..dbs import (
-    AgentProfile,
-    PaperProfile,
-    ResearchIdea,
-    ResearchInsight,
-    ResearchMetaReview,
-    ResearchProposal,
+    Researcher,
+    Paper,
+    Idea,
+    Insight,
+    MetaReview,
+    Proposal,
     ResearchRebuttal,
-    ResearchReview,
+    Review,
 )
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
@@ -37,11 +37,11 @@ Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair']
 class BaseResearchAgent(object):
     def __init__(
         self,
-        agent_profile: AgentProfile,
+        agent_profile: Researcher,
         model_name: str,
         agent_role: Optional[Role] = None,
     ) -> None:
-        self.profile: AgentProfile = agent_profile
+        self.profile: Researcher = agent_profile
         self.memory: Dict[str, str] = {}
         self.role: Role | None = agent_role
         self.model_name: str = model_name
@@ -54,8 +54,8 @@ class BaseResearchAgent(object):
     @beartype
     @proj_participant_required
     def review_literature(
-        self, papers: List[PaperProfile], domains: List[str], config: Config
-    ) -> List[ResearchInsight]:
+        self, papers: List[Paper], domains: List[str], config: Config
+    ) -> List[Insight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
         insight_contents = review_literature_prompting(
@@ -70,16 +70,16 @@ class BaseResearchAgent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )
-        insights: List[ResearchInsight] = []
+        insights: List[Insight] = []
         for content in insight_contents:
-            insights.append(ResearchInsight(content=content))
+            insights.append(Insight(content=content))
         return insights
 
     @beartype
     @proj_participant_required
     def brainstorm_idea(
-        self, insights: List[ResearchInsight], config: Config
-    ) -> ResearchIdea:
+        self, insights: List[Insight], config: Config
+    ) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
         idea_content = brainstorm_idea_prompting(
             insights=serialized_insights,
@@ -91,11 +91,11 @@ class BaseResearchAgent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )[0]
-        return ResearchIdea(content=idea_content)
+        return Idea(content=idea_content)
 
     @beartype
     @proj_participant_required
-    def discuss_idea(self, ideas: List[ResearchIdea], config: Config) -> ResearchIdea:
+    def discuss_idea(self, ideas: List[Idea], config: Config) -> Idea:
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized = discuss_idea_prompting(
             ideas=serialized_ideas,
@@ -107,13 +107,13 @@ class BaseResearchAgent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )[0]
-        return ResearchIdea(content=idea_summarized)
+        return Idea(content=idea_summarized)
 
     @beartype
     @proj_leader_required
     def write_proposal(
-        self, idea: ResearchIdea, papers: List[PaperProfile], config: Config
-    ) -> ResearchProposal:
+        self, idea: Idea, papers: List[Paper], config: Config
+    ) -> Proposal:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
         
@@ -142,13 +142,13 @@ class BaseResearchAgent(object):
             stream=config.param.stream,
         )[0]
         paper_abstract = self.prompting_parser(paper_abstract, write_proposal_strategy)
-        return ResearchProposal(abstract=paper_abstract)
+        return Proposal(abstract=paper_abstract)
 
     @beartype
     @reviewer_required
     def write_review(
-        self, paper: ResearchProposal, config: Config
-    ) -> ResearchReview:
+        self, paper: Proposal, config: Config
+    ) -> Review:
         serialized_paper = self.serializer.serialize(paper)
 
         summary, strength, weakness, score = write_review_prompting(
@@ -164,7 +164,7 @@ class BaseResearchAgent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )
-        return ResearchReview(
+        return Review(
             paper_pk=paper.pk,
             reviewer_pk=self.profile.pk,
             summary=summary,
@@ -177,11 +177,11 @@ class BaseResearchAgent(object):
     @chair_required
     def write_meta_review(
         self,
-        paper: ResearchProposal,
-        reviews: List[ResearchReview],
+        paper: Proposal,
+        reviews: List[Review],
         rebuttals: List[ResearchRebuttal],
         config: Config,
-    ) -> ResearchMetaReview:
+    ) -> MetaReview:
         serialized_paper = self.serializer.serialize(paper)
         serialized_reviews = self.serializer.serialize(reviews)
         serialized_rebuttals = self.serializer.serialize(rebuttals)
@@ -202,7 +202,7 @@ class BaseResearchAgent(object):
             stream=config.param.stream,
         )
 
-        return ResearchMetaReview(
+        return MetaReview(
             paper_pk=paper.pk,
             chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
@@ -217,8 +217,8 @@ class BaseResearchAgent(object):
     @proj_leader_required
     def write_rebuttal(
         self,
-        paper: ResearchProposal,
-        review: ResearchReview,
+        paper: Proposal,
+        review: Review,
         config: Config,
     ) -> ResearchRebuttal:
         serialized_paper = self.serializer.serialize(paper)

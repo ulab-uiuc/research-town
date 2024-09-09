@@ -1,19 +1,19 @@
 from beartype.typing import Any, Dict, List, Literal, Optional, Union
 
 from ..configs import Config
-from ..dbs import AgentProfile, EnvLogDB, PaperProfileDB, ProgressDB
-from .env_base import BaseMultiAgentEnv
+from ..dbs import Researcher, LogDB, PaperDB, ProgressDB
+from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
-class EndMultiAgentEnv(BaseMultiAgentEnv):
+class EndEnv(BaseEnv):
     def __init__(
         self,
-        env_db: EnvLogDB,
+        env_db: LogDB,
         progress_db: ProgressDB,
-        paper_db: PaperProfileDB,
+        paper_db: PaperDB,
         config: Config,
     ) -> None:
         super().__init__(
@@ -27,7 +27,7 @@ class EndMultiAgentEnv(BaseMultiAgentEnv):
         self,
         time_step: int,
         stop_flag: bool,
-        agent_profiles: Optional[List[AgentProfile]] = None,
+        agent_profiles: Optional[List[Researcher]] = None,
         agent_roles: Optional[List[Role]] = None,
         agent_models: Optional[List[str]] = None,
         *args: Any,

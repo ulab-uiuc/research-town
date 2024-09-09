@@ -7,15 +7,15 @@ from ..utils.agent_collector import collect_paper_abstracts_and_coauthors
 from ..utils.agent_prompter import write_bio_prompting
 from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
-from .data import AgentProfile, BaseDBData
+from .data import Researcher, BaseDBData
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=BaseDBData)
 
 
-class AgentProfileDB(BaseDB[AgentProfile]):
+class ResearcherDB(BaseDB[Researcher]):
     def __init__(self, load_file_path: Optional[str] = None) -> None:
-        super().__init__(AgentProfile, load_file_path)
+        super().__init__(Researcher, load_file_path)
         self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
             'facebook/contriever'
         )
@@ -35,7 +35,7 @@ class AgentProfileDB(BaseDB[AgentProfile]):
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,
             )[0]
-            agent_profile = AgentProfile(
+            agent_profile = Researcher(
                 name=name,
                 bio=bio,
                 collaborators=collaborators,
@@ -43,8 +43,8 @@ class AgentProfileDB(BaseDB[AgentProfile]):
             self.add(agent_profile)
 
     def match(
-        self, query: str, agent_profiles: List[AgentProfile], num: int = 1
-    ) -> List[AgentProfile]:
+        self, query: str, agent_profiles: List[Researcher], num: int = 1
+    ) -> List[Researcher]:
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,

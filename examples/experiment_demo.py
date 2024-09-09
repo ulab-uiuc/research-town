@@ -1,7 +1,7 @@
 from research_town.configs import Config
 from research_town.dbs import (
-    EnvLogDB,
-    PaperProfileDB,
+    LogDB,
+    PaperDB,
     ProgressDB,
     ResearchPaperSubmission,
 )
@@ -13,9 +13,9 @@ def run_sync_experiment(
     save_file_path: str,
 ) -> None:
     config = Config(config_file_path)
-    env_db = EnvLogDB()
+    env_db = LogDB()
     progress_db = ProgressDB()
-    paper_db = PaperProfileDB()
+    paper_db = PaperDB()
 
     paper_from_gallery = ResearchPaperSubmission(
         title='Advancing Large-Scale Spatio-Temporal Data Analytics: Techniques for Temporal-Aware Compression, In-Database Machine Learning with Graph Neural Networks, Adaptive NUMA-Aware Scheduling, and Explainable AI',

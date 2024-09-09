@@ -1,77 +1,77 @@
 from research_town.dbs import (
-    AgentAgentIdeaDiscussionLog,
-    AgentPaperMetaReviewWritingLog,
-    AgentPaperRebuttalWritingLog,
-    AgentPaperReviewWritingLog,
-    AgentProfile,
-    PaperProfile,
-    ResearchIdea,
-    ResearchInsight,
-    ResearchMetaReview,
-    ResearchProposal,
+    IdeaDiscussionLog,
+    MetaReviewWritingLog,
+    RebuttalWritingLog,
+    ReviewWritingLog,
+    Researcher,
+    Paper,
+    Idea,
+    Insight,
+    MetaReview,
+    Proposal,
     ResearchRebuttal,
-    ResearchReview,
+    Review,
 )
 
-paper_profile_A = PaperProfile(
+paper_profile_A = Paper(
     title='A Survey on Machine Learning',
     abstract='This paper surveys the field of machine learning.',
 )
 
-paper_profile_B = PaperProfile(
+paper_profile_B = Paper(
     title='A Survey on Graph Neural Networks',
     abstract='This paper surveys the field of graph neural networks.',
 )
 
-paper_profile_C = PaperProfile(
+paper_profile_C = Paper(
     title='A Survey on Natural Language Processing',
     abstract='This paper surveys the field of natural language processing.',
 )
 
 
-agent_profile_A = AgentProfile(
+agent_profile_A = Researcher(
     name='Jiaxuan You',
     bio='A researcher in the field of machine learning.',
 )
 
-agent_profile_B = AgentProfile(
+agent_profile_B = Researcher(
     name='Rex Ying',
     bio='A researcher in the field of GNN.',
 )
 
-agent_profile_C = AgentProfile(
+agent_profile_C = Researcher(
     name='Chris Manning',
     bio='A researcher in the field of NLP.',
 )
 
-research_idea_A = ResearchIdea(
+research_idea_A = Idea(
     content='A new idea',
 )
 
-research_idea_B = ResearchIdea(
+research_idea_B = Idea(
     content='Another idea',
 )
 
-research_insight_A = ResearchInsight(
+research_insight_A = Insight(
     content='A new insight',
 )
 
-research_insight_B = ResearchInsight(
+research_insight_B = Insight(
     content='Another insight',
 )
 
 
-research_paper_submission_A = ResearchProposal(
+research_paper_submission_A = Proposal(
     title='A Survey on Machine Learning',
     abstract='This paper surveys the field of machine learning.',
 )
 
-research_paper_submission_B = ResearchProposal(
+research_paper_submission_B = Proposal(
     title='A Survey on Graph Neural Networks',
     abstract='This paper surveys the field of graph neural networks.',
 )
 
-research_review_A = ResearchReview(
+research_review_A = Review(
     paper_pk=paper_profile_A.pk,
     reviewer_pk=agent_profile_A.pk,
     summary='This paper is well-written.',
@@ -80,7 +80,7 @@ research_review_A = ResearchReview(
     score=5,
 )
 
-research_review_B = ResearchReview(
+research_review_B = Review(
     paper_pk=paper_profile_A.pk,
     reviewer_pk=agent_profile_B.pk,
     summary='This paper is well-written.',
@@ -89,7 +89,7 @@ research_review_B = ResearchReview(
     score=5,
 )
 
-research_review_C = ResearchReview(
+research_review_C = Review(
     paper_pk=paper_profile_A.pk,
     reviewer_pk=agent_profile_C.pk,
     summary='This paper is well-written.',
@@ -110,7 +110,7 @@ research_rebuttal_B = ResearchRebuttal(
     content='I have revised the paper.',
 )
 
-research_meta_review_A = ResearchMetaReview(
+research_meta_review_A = MetaReview(
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
     decision=True,
@@ -119,7 +119,7 @@ research_meta_review_A = ResearchMetaReview(
     weakness='None',
 )
 
-research_meta_review_B = ResearchMetaReview(
+research_meta_review_B = MetaReview(
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_B.pk,
     decision=True,
@@ -128,7 +128,7 @@ research_meta_review_B = ResearchMetaReview(
     weakness='None',
 )
 
-agent_paper_review_log = AgentPaperReviewWritingLog(
+agent_paper_review_log = ReviewWritingLog(
     time_step=0,
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
@@ -138,7 +138,7 @@ agent_paper_review_log = AgentPaperReviewWritingLog(
     weakness='None',
 )
 
-agent_paper_meta_review_log = AgentPaperMetaReviewWritingLog(
+agent_paper_meta_review_log = MetaReviewWritingLog(
     time_step=0,
     paper_pk=paper_profile_B.pk,
     agent_pk=agent_profile_B.pk,
@@ -148,14 +148,14 @@ agent_paper_meta_review_log = AgentPaperMetaReviewWritingLog(
     weakness='None',
 )
 
-agent_paper_rebuttal_log = AgentPaperRebuttalWritingLog(
+agent_paper_rebuttal_log = RebuttalWritingLog(
     time_step=0,
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
     rebuttal_content='I have revised the paper.',
 )
 
-agent_agent_idea_discussion_log = AgentAgentIdeaDiscussionLog(
+agent_agent_idea_discussion_log = IdeaDiscussionLog(
     time_step=0,
     agent_from_pk=agent_profile_A.pk,
     agent_from_name=agent_profile_A.name,

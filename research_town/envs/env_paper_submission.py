@@ -6,27 +6,27 @@ from beartype.typing import Any, Dict, List, Literal, Union
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
-    AgentIdeaBrainstormingLog,
-    AgentPaperLiteratureReviewLog,
-    AgentPaperWritingLog,
-    AgentProfile,
-    EnvLogDB,
-    PaperProfileDB,
+    IdeaBrainstormingLog,
+    LiteratureReviewLog,
+    ProposalWritingLog,
+    Researcher,
+    LogDB,
+    PaperDB,
     ProgressDB,
-    ResearchIdea,
+    Idea,
 )
-from .env_base import BaseMultiAgentEnv
+from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
-class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
+class PaperSubmissionEnv(BaseEnv):
     def __init__(
         self,
-        env_db: EnvLogDB,
+        env_db: LogDB,
         progress_db: ProgressDB,
-        paper_db: PaperProfileDB,
+        paper_db: PaperDB,
         config: Config,
     ) -> None:
         super().__init__(
@@ -41,7 +41,7 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
         self,
         time_step: int,
         stop_flag: bool,
-        agent_profiles: List[AgentProfile],
+        agent_profiles: List[Researcher],
         agent_roles: List[Role],
         agent_models: List[str],
         *args: Any,
@@ -114,7 +114,7 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
         for insight in self.insights:
             self.progress_db.add(insight)
         self.env_db.add(
-            AgentPaperLiteratureReviewLog(
+            LiteratureReviewLog(
                 time_step=self.time_step,
                 paper_pks=[paper.pk for paper in related_papers],
                 agent_pk=self.proj_leader.profile.pk,
@@ -123,14 +123,14 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
         )
 
         # leader brainstorm idea
-        self.ideas: List[ResearchIdea] = []
+        self.ideas: List[Idea] = []
         idea = self.proj_leader.brainstorm_idea(
             insights=self.insights, config=self.config
         )
         self.ideas.append(idea)
         self.progress_db.add(idea)
         self.env_db.add(
-            AgentIdeaBrainstormingLog(
+            IdeaBrainstormingLog(
                 time_step=self.time_step,
                 idea_pk=idea.pk,
                 agent_pk=self.proj_leader.profile.pk,
@@ -145,7 +145,7 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
             self.ideas.append(idea)
             self.progress_db.add(idea)
             self.env_db.add(
-                AgentIdeaBrainstormingLog(
+                IdeaBrainstormingLog(
                     time_step=self.time_step,
                     idea_pk=idea.pk,
                     agent_pk=participant.profile.pk,
@@ -164,7 +164,7 @@ class PaperSubmissionMultiAgentEnv(BaseMultiAgentEnv):
         )
         self.progress_db.add(self.paper)
         self.env_db.add(
-            AgentPaperWritingLog(
+            ProposalWritingLog(
                 time_step=self.time_step,
                 paper_pk=self.paper.pk,
                 agent_pk=self.proj_leader.profile.pk,

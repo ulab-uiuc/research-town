@@ -27,19 +27,19 @@ class BaseEvalOutput(BaseModel):
         return v
 
 
-class ResearchInsightEvalOutput(BaseEvalOutput):
+class InsightEvalOutput(BaseEvalOutput):
     pass
 
 
-class ResearchIdeaEvalOutput(BaseEvalOutput):
+class IdeaEvalOutput(BaseEvalOutput):
     pass
 
 
-class ResearchProposalEvalOutput(BaseEvalOutput):
+class ProposalEvalOutput(BaseEvalOutput):
     pass
 
 
-class ResearchReviewEvalOutput(BaseEvalOutput):
+class ReviewEvalOutput(BaseEvalOutput):
     pass
 
 
@@ -47,5 +47,5 @@ class ResearchRebuttalEvalOutput(BaseEvalOutput):
     pass
 
 
-class ResearchMetaReviewEvalOutput(BaseEvalOutput):
+class MetaReviewEvalOutput(BaseEvalOutput):
     pass
