@@ -21,7 +21,7 @@ LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
-class PaperSubmissionEnv(BaseEnv):
+class ProposalWritingEnv(BaseEnv):
     def __init__(
         self,
         env_db: LogDB,
@@ -89,57 +89,43 @@ class PaperSubmissionEnv(BaseEnv):
             self.progress_db.add(insight)
         for idea in self.ideas:
             self.progress_db.add(idea)
-        self.progress_db.add(self.paper)
+        self.progress_db.add(self.proposal)
         self.env_run_num += 1
         return True
 
     @beartype
-    def run(
-        self,
-    ) -> None:
-        # TODO: support retrieval from database
+    def run(self) -> None:
         available_papers = list(self.paper_db.data.values())
-        related_papers = self.paper_db.match(
-            query=self.proj_leader.profile.bio,
-            paper_profiles=available_papers,
-            num=2,
-        )
 
-        # leader review literature
-        self.insights = self.proj_leader.review_literature(
-            papers=related_papers,
-            domains=['machine learning'],
-            config=self.config,
-        )
-        for insight in self.insights:
-            self.progress_db.add(insight)
-        self.env_db.add(
-            LiteratureReviewLog(
-                time_step=self.time_step,
-                paper_pks=[paper.pk for paper in related_papers],
-                agent_pk=self.proj_leader.profile.pk,
-                insight_pks=[insight.pk for insight in self.insights],
+        # Each member reviews literature
+        self.insights = []
+        for agent in self.agents:
+            related_papers = self.paper_db.match(
+                query=agent.profile.bio,
+                paper_profiles=available_papers,
+                num=2,
             )
-        )
+            agent_insights = agent.review_literature(
+                papers=related_papers,
+                domains=['machine learning'],
+                config=self.config,
+            )
+            self.insights.extend(agent_insights)  # Collect insights from all members
+            for insight in agent_insights:
+                self.progress_db.add(insight)
+            self.env_db.add(
+                LiteratureReviewLog(
+                    time_step=self.time_step,
+                    paper_pks=[paper.pk for paper in related_papers],
+                    agent_pk=agent.profile.pk,
+                    insight_pks=[insight.pk for insight in agent_insights],
+                )
+            )
 
-        # leader brainstorm idea
+        # Brainstorm ideas
         self.ideas: List[Idea] = []
-        idea = self.proj_leader.brainstorm_idea(
-            insights=self.insights, config=self.config
-        )
-        self.ideas.append(idea)
-        self.progress_db.add(idea)
-        self.env_db.add(
-            IdeaBrainstormingLog(
-                time_step=self.time_step,
-                idea_pk=idea.pk,
-                agent_pk=self.proj_leader.profile.pk,
-            )
-        )
-
-        # collaborator brainstorm idea
-        for participant in self.proj_participants:
-            idea = participant.brainstorm_idea(
+        for agent in self.agents:
+            idea = agent.brainstorm_idea(
                 insights=self.insights, config=self.config
             )
             self.ideas.append(idea)
@@ -148,25 +134,33 @@ class PaperSubmissionEnv(BaseEnv):
                 IdeaBrainstormingLog(
                     time_step=self.time_step,
                     idea_pk=idea.pk,
-                    agent_pk=participant.profile.pk,
+                    agent_pk=agent.profile.pk,
                 )
             )
 
-        # leader discuss idea
+        # Leader discusses ideas
         summarized_idea = self.proj_leader.discuss_idea(
             ideas=self.ideas, config=self.config
         )
         self.progress_db.add(summarized_idea)
 
-        # write paper
-        self.paper = self.proj_leader.write_proposal(
-            idea=summarized_idea, papers=related_papers, config=self.config
+
+        # write one proposal
+        related_papers = self.paper_db.match(
+            query=summarized_idea.content,
+            paper_profiles=available_papers,
+            num=2,
         )
-        self.progress_db.add(self.paper)
+        self.proposal = self.proj_leader.write_proposal(
+            idea=summarized_idea,
+            papers=related_papers,
+            config=self.config,
+        )
+        self.progress_db.add(self.proposal)
         self.env_db.add(
             ProposalWritingLog(
                 time_step=self.time_step,
-                paper_pk=self.paper.pk,
+                paper_pk=self.proposal.pk,
                 agent_pk=self.proj_leader.profile.pk,
             )
         )

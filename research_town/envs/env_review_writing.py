@@ -22,7 +22,7 @@ LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
-class PeerReviewEnv(BaseEnv):
+class ReviewWritingEnv(BaseEnv):
     def __init__(
         self,
         env_db: LogDB,
@@ -100,7 +100,6 @@ class PeerReviewEnv(BaseEnv):
 
     @beartype
     def run(self) -> None:
-        # Paper Reviewing
         self.reviews: List[Review] = []
         for reviewer in self.reviewers:
             review = reviewer.write_review(
@@ -116,42 +115,3 @@ class PeerReviewEnv(BaseEnv):
                     paper_pk=self.paper.pk,
                 )
             )
-
-        # Rebuttal Submitting
-        self.rebuttals: List[Rebuttal] = []
-        for review in self.reviews:
-            rebuttal = self.proj_leader.write_rebuttal(
-                paper=self.paper,
-                review=review,
-                config=self.config,
-            )
-            self.rebuttals.append(rebuttal)
-            self.progress_db.add(rebuttal)
-            self.env_db.add(
-                RebuttalWritingLog(
-                    time_step=self.time_step,
-                    paper_pk=rebuttal.paper_pk,
-                    agent_pk=self.proj_leader.profile.pk,
-                    rebuttal_content=rebuttal.content,
-                )
-            )
-
-        # Paper Meta Reviewing
-        self.meta_review = self.chair.write_meta_review(
-            paper=self.paper,
-            reviews=self.reviews,
-            rebuttals=self.rebuttals,
-            config=self.config,
-        )
-        self.progress_db.add(self.meta_review)
-        self.env_db.add(
-            MetaReviewWritingLog(
-                time_step=self.time_step,
-                paper_pk=self.meta_review.paper_pk,
-                agent_pk=self.chair.profile.pk,
-                summary=self.meta_review.summary,
-                strength=self.meta_review.strength,
-                weakness=self.meta_review.weakness,
-                decision=self.meta_review.decision,
-            )
-        )
