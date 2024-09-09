@@ -6,8 +6,8 @@ from .env_review_writing import ReviewWritingEnv
 from .env_start import StartEnv
 
 __all__ = [
-    'PeerReviewEnv',
-    'PaperSubmissionEnv',
+    'ReviewWritingEnv',
+    'ProposalWritingEnv',
     'BaseEnv',
     'StartEnv',
     'EndEnv',
