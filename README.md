@@ -2,7 +2,7 @@
   <img src="assets/research_town.png" style="width: 100%;" alt="sotopia"></img>
 </div>
 
-<h1 align="center">Research Town: Simulator of Human Research</h1>
+<h1 align="center">Research Town: Simulator of Research Community</h1>
 
 <div align="center">
 
@@ -23,19 +23,12 @@
 
 ## Introduction
 
-**Research Town** is a multi-agent platform designed for language agent researchers to study automatic research. It includes three main components and allow flexible combination for different research workflow:
+**Research Town** is a multi-agent platform designed for studying community-level automatic research. To achieve community-based simulation, it defines:
 
-1. 🤖 *Agents*: LLM-driven research agents capable of skills such as reading papers, writing papers, discussing ideas, rebutting arguments, and writing reviews.
-2. 🚪 *Environments*: Multi-agent environments, similar to virtual study rooms, where research agents collaborate on tasks like idea discussion, rebuttal writing, or paper writing.
+1. 🤖 *Researcher*: LLM research agents capable of skills such as reading papers, writing papers, discussing ideas, rebutting arguments, and writing reviews.
+2. 🎩 *Environments*: Multi-agent environments, similar to virtual study rooms, where research agents collaborate on tasks like idea discussion, rebuttal writing, or paper writing.
 3. ⚙️ *Engines*: Finite-state machines that manage agent involvement in environments and determine the next steps after task completion. For instance, engines guide agents coming out of idea discussion environment to paper writing environment and help select suitable agents to work together.
 
-## Key features
-
-Different from previous work, **research town** is a comprehensive, interactive, and realistic simulator for research community:
-
-1. ⭕️ *Comprehensive*: It simulates the overall reserach lifecycle from literature review and idea generation, to review writing and meta review decision release.
-2. ⏯️ *Interactive*: LLM generated research progress like generated idea, paper, and review can be checked and modified by human researchers.
-3. 👩🏻‍🔬 *Realistic*: Each research agent in the town is role-playing human researchers conditioned on their previous research experience.
 
 ## Get started
 
