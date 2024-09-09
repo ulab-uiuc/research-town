@@ -1,0 +1,14 @@
+param:
+  base_llm: together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1
+  domain: computer_vision
+  max_token_num: 512
+  proj_participant_num: 3
+  related_paper_num: 10
+  result_path: Mixtral-8x7B
+  return_num: 1
+  reviewer_num: 3
+  stream: null
+  temperature: 0.0
+  top_p: null
+  experiment_model_name: gpt-4o-mini
+  write_proposal_strategy: default
