@@ -6,7 +6,7 @@ from .data import (
     Insight,
     MetaReview,
     Proposal,
-    ResearchRebuttal,
+    Rebuttal,
     Review,
 )
 from .db_complex import ComplexDB
@@ -20,7 +20,7 @@ class ProgressDB(ComplexDB):
                 Idea,
                 Proposal,
                 Review,
-                ResearchRebuttal,
+                Rebuttal,
                 MetaReview,
                 Experiment,
             ],

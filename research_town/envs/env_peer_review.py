@@ -12,7 +12,7 @@ from ..dbs import (
     ProgressDB,
     RebuttalWritingLog,
     Researcher,
-    ResearchRebuttal,
+    Rebuttal,
     Review,
     ReviewWritingLog,
 )
@@ -118,7 +118,7 @@ class PeerReviewEnv(BaseEnv):
             )
 
         # Rebuttal Submitting
-        self.rebuttals: List[ResearchRebuttal] = []
+        self.rebuttals: List[Rebuttal] = []
         for review in self.reviews:
             rebuttal = self.proj_leader.write_rebuttal(
                 paper=self.paper,

@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from beartype.typing import List, Literal
 
 from research_town.configs import Config
-from research_town.dbs import MetaReview, Proposal, Researcher, ResearchRebuttal, Review
+from research_town.dbs import MetaReview, Proposal, Researcher, Rebuttal, Review
 from research_town.envs import PaperSubmissionEnv, PeerReviewEnv
 from tests.constants.db_constants import (
     example_env_db,
@@ -112,6 +112,6 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
 
     assert isinstance(rebuttals, list)
     assert len(rebuttals) == 1
-    assert isinstance(rebuttals[0], ResearchRebuttal)
+    assert isinstance(rebuttals[0], Rebuttal)
     assert rebuttals[0].content == 'Rebuttal text1'
     assert rebuttals[0].paper_pk == paper.pk

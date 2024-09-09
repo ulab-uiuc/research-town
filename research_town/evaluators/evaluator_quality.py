@@ -18,7 +18,7 @@ from .evaluator_output import (
     InsightEvalOutput,
     MetaReviewEvalOutput,
     ProposalEvalOutput,
-    ResearchRebuttalEvalOutput,
+    RebuttalEvalOutput,
     ReviewEvalOutput,
 )
 from .evaluator_output_format import OutputFormatError
@@ -207,7 +207,7 @@ class ReviewQualityEvaluator(BaseQualityEvaluator):
         return self.parsed_output
 
 
-class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
+class RebuttalQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
@@ -215,10 +215,10 @@ class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, ResearchRebuttalEvalOutput, *args, **kwargs)
+        super().__init__(model_name, RebuttalEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
-    def eval(self, *args: Any, **kwargs: Any) -> ResearchRebuttalEvalOutput:
+    def eval(self, *args: Any, **kwargs: Any) -> RebuttalEvalOutput:
         raw_output = research_rebuttal_quality_eval_prompting(
             model_name=self.model_name,
             insights=kwargs['insights'],
@@ -235,7 +235,7 @@ class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
             if self.config
             else Config().eval_prompt_template.rebuttal_quality,
         )
-        self.parsed_output = self.parse(raw_output, ResearchRebuttalEvalOutput)
+        self.parsed_output = self.parse(raw_output, RebuttalEvalOutput)
 
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)

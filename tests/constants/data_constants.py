@@ -8,7 +8,7 @@ from research_town.dbs import (
     Proposal,
     RebuttalWritingLog,
     Researcher,
-    ResearchRebuttal,
+    Rebuttal,
     Review,
     ReviewWritingLog,
 )
@@ -98,13 +98,13 @@ research_review_C = Review(
     score=5,
 )
 
-research_rebuttal_A = ResearchRebuttal(
+research_rebuttal_A = Rebuttal(
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_A.pk,
     content='I have revised the paper.',
 )
 
-research_rebuttal_B = ResearchRebuttal(
+research_rebuttal_B = Rebuttal(
     paper_pk=paper_profile_A.pk,
     agent_pk=agent_profile_B.pk,
     content='I have revised the paper.',

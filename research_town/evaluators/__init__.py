@@ -4,7 +4,7 @@ from .evaluator_output import (
     InsightEvalOutput,
     MetaReviewEvalOutput,
     ProposalEvalOutput,
-    ResearchRebuttalEvalOutput,
+    RebuttalEvalOutput,
     ReviewEvalOutput,
 )
 from .evaluator_output_format import OutputFormatError
@@ -13,7 +13,7 @@ from .evaluator_quality import (
     InsightQualityEvaluator,
     MetaReviewQualityEvaluator,
     ProposalQualityEvaluator,
-    ResearchRebuttalQualityEvaluator,
+    RebuttalQualityEvaluator,
     ReviewQualityEvaluator,
 )
 
@@ -23,13 +23,13 @@ __all__ = [
     'IdeaEvalOutput',
     'ProposalEvalOutput',
     'ReviewEvalOutput',
-    'ResearchRebuttalEvalOutput',
+    'RebuttalEvalOutput',
     'MetaReviewEvalOutput',
     'IdeaQualityEvaluator',
     'ProposalQualityEvaluator',
     'ReviewQualityEvaluator',
     'InsightQualityEvaluator',
-    'ResearchRebuttalQualityEvaluator',
+    'RebuttalQualityEvaluator',
     'MetaReviewQualityEvaluator',
     'BaseEvaluator',
 ]

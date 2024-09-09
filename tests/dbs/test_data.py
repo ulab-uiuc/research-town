@@ -3,7 +3,7 @@ from research_town.dbs import (
     Insight,
     MetaReview,
     Proposal,
-    ResearchRebuttal,
+    Rebuttal,
     Review,
 )
 
@@ -27,7 +27,7 @@ def test_researchprogress_class_extra_args() -> None:
     assert hasattr(review, 'additional_attr')
     assert review.additional_attr == 'extra'
 
-    rebuttal = ResearchRebuttal(
+    rebuttal = Rebuttal(
         content='Rebuttal for a new AI algorithm', additional_attr='extra'
     )
     assert hasattr(rebuttal, 'additional_attr')

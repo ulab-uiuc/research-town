@@ -6,7 +6,7 @@ from research_town.dbs import (
     Insight,
     MetaReview,
     Proposal,
-    ResearchRebuttal,
+    Rebuttal,
     Review,
 )
 
@@ -16,7 +16,7 @@ from .evaluator_output import (
     InsightEvalOutput,
     MetaReviewEvalOutput,
     ProposalEvalOutput,
-    ResearchRebuttalEvalOutput,
+    RebuttalEvalOutput,
     ReviewEvalOutput,
 )
 from .evaluator_quality import (
@@ -24,7 +24,7 @@ from .evaluator_quality import (
     InsightQualityEvaluator,
     MetaReviewQualityEvaluator,
     ProposalQualityEvaluator,
-    ResearchRebuttalQualityEvaluator,
+    RebuttalQualityEvaluator,
     ReviewQualityEvaluator,
 )
 
@@ -90,9 +90,9 @@ class BaseEvaluator:
         idea: Idea,
         paper: Proposal,
         review: Review,
-        rebuttal: ResearchRebuttal,
-    ) -> ResearchRebuttalEvalOutput:
-        evaluator = ResearchRebuttalQualityEvaluator(
+        rebuttal: Rebuttal,
+    ) -> RebuttalEvalOutput:
+        evaluator = RebuttalQualityEvaluator(
             model_name=self.model_name, config=self.config
         )
         return evaluator.eval(
@@ -109,7 +109,7 @@ class BaseEvaluator:
         idea: Idea,
         paper: Proposal,
         reviews: List[Review],
-        rebuttals: List[ResearchRebuttal],
+        rebuttals: List[Rebuttal],
         meta_review: MetaReview,
     ) -> MetaReviewEvalOutput:
         evaluator = MetaReviewQualityEvaluator(
@@ -130,14 +130,14 @@ class BaseEvaluator:
         idea: Idea,
         paper: Proposal,
         reviews: List[Review],
-        rebuttals: List[ResearchRebuttal],
+        rebuttals: List[Rebuttal],
         meta_review: MetaReview,
     ) -> Tuple[
         List[InsightEvalOutput],
         IdeaEvalOutput,
         ProposalEvalOutput,
         List[ReviewEvalOutput],
-        List[ResearchRebuttalEvalOutput],
+        List[RebuttalEvalOutput],
         MetaReviewEvalOutput,
     ]:
         insights_quality = [

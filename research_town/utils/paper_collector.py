@@ -19,7 +19,7 @@ def get_daily_papers(
     for result in tqdm(results, desc=f'Collecting papers with "{query}"', unit='Paper'):
         paper_title = result.title
         paper_url = result.entry_id
-        paper_abstract = result.summary.replace('\n', ' ')
+        proposal = result.summary.replace('\n', ' ')
         paper_authors = [author.name for author in result.authors]
         paper_domain = result.primary_category
         publish_time = result.published.date()
@@ -37,7 +37,7 @@ def get_daily_papers(
 
         if publish_time in content:
             content[publish_time]['title'].append(paper_title)
-            content[publish_time]['abstract'].append(paper_abstract)
+            content[publish_time]['abstract'].append(proposal)
             content[publish_time]['authors'].append(paper_authors)
             content[publish_time]['url'].append(paper_url)
             content[publish_time]['domain'].append(paper_domain)
@@ -49,7 +49,7 @@ def get_daily_papers(
         else:
             content[publish_time] = {}
             content[publish_time]['title'] = [paper_title]
-            content[publish_time]['abstract'] = [paper_abstract]
+            content[publish_time]['abstract'] = [proposal]
             content[publish_time]['authors'] = [paper_authors]
             content[publish_time]['url'] = [paper_url]
             content[publish_time]['domain'] = [paper_domain]

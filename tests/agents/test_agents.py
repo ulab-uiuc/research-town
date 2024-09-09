@@ -7,7 +7,7 @@ from research_town.dbs import (
     Insight,
     MetaReview,
     Proposal,
-    ResearchRebuttal,
+    Rebuttal,
     Review,
 )
 from tests.constants.data_constants import (
@@ -174,7 +174,7 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         review=review,
         config=Config(),
     )
-    assert isinstance(rebuttal, ResearchRebuttal)
+    assert isinstance(rebuttal, Rebuttal)
     if rebuttal.content is not None:
         assert len(rebuttal.content) > 0
     assert rebuttal.content == 'Rebuttal text1'
