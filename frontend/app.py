@@ -1,7 +1,7 @@
 import gradio as gr
 
 
-def get_ideas():
+def get_proposals():
     return ['idea 1', 'idea 2', 'idea 3']
 
 
@@ -14,12 +14,12 @@ with gr.Blocks() as demo:
         if len(text) == 0:
             gr.Markdown('## No arxiv link provided')
         else:
-            ideas = get_ideas()
-            for idea in ideas:
+            proposals = get_proposals()
+            for proposal in proposals:
                 if mode == 'textbox':
-                    gr.Textbox(idea)
+                    gr.Textbox(proposal)
                 else:
-                    gr.Button(idea)
+                    gr.Button(proposal)
 
 
 demo.launch()
