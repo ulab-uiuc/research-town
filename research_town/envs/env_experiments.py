@@ -14,7 +14,7 @@ from ..dbs import (
     PaperDB,
     ProgressDB,
     Experiment,
-    ResearchPaperSubmission,
+    Proposal,
 )
 
 LogType = Union[List[Dict[str, str]], None]
@@ -91,7 +91,7 @@ class ExperimentEnv:
 
     def run(self, time_step: int, paper_pk: str) -> None:
         conditions = {'pk': paper_pk}
-        proposal = self.progress_db.get(ResearchPaperSubmission, **conditions)[
+        proposal = self.progress_db.get(Proposal, **conditions)[
             0
         ].abstract
         # Define folder and file paths based on pk
