@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional, Union
+import os
 
 import yaml
 from pydantic import BaseModel, ConfigDict
@@ -529,15 +530,46 @@ class Config(BaseModel):
         self.check_eval_prompt_template_placeholder()
 
     def load_from_yaml(self, yaml_config_path: str) -> None:
-        with open(yaml_config_path, 'r') as f:
-            yaml_cfg: Dict[str, Any] = yaml.safe_load(f)
-        self.merge_from_other_cfg(yaml_cfg)
+        for file_name in os.listdir(yaml_config_path):
+            file_path = os.path.join(yaml_config_path, file_name)
+            
+            if os.path.isfile(file_path) and (file_name.endswith('.yaml') or file_name.endswith('.yml')):
+                with open(file_path, 'r') as f:
+                    yaml_cfg: Dict[str, Any] = yaml.safe_load(f)
+                    
+                    self.merge_from_other_cfg(yaml_cfg)
+                    
         self.check_agent_prompt_template_placeholder()
         self.check_eval_prompt_template_placeholder()
 
     def save_to_yaml(self, yaml_config_path: str) -> None:
-        with open(yaml_config_path, 'w') as f:
-            yaml.dump(self.model_dump(), f)
+        full_cfg = self.model_dump()
+        import pprint
+        pprint.pprint(full_cfg)
+        
+        config_cfg = full_cfg.get('param', {})
+        print(config_cfg)
+        prompt_cfg = full_cfg.get('agent_prompt_template', {})
+        eval_prompt_cfg = full_cfg.get('eval_prompt_template', {})
+        
+        config_file_path = os.path.join(yaml_config_path, 'config.yaml')
+        prompt_file_path = os.path.join(yaml_config_path, 'prompt.yaml')
+        eval_prompt_file_path = os.path.join(yaml_config_path, 'eval_prompt.yaml')
+        
+        with open(config_file_path, 'w') as f:
+            yaml.dump(config_cfg, f)
+            
+        with open(prompt_file_path, 'w') as f:
+            yaml.dump(prompt_cfg, f)
+            
+        with open(eval_prompt_file_path, 'w') as f:
+            yaml.dump(eval_prompt_cfg, f)
+        
+        for file_name in os.listdir(yaml_config_path):
+            file_path = os.path.join(yaml_config_path, file_name)
+            
+            if os.path.isfile(file_path) and file_name.endswith('.yaml') and file_name not in {'config.yaml', 'prompt.yaml', 'eval_prompt.yaml'}:
+                os.remove(file_path)
 
     def check_agent_prompt_template_placeholder(self) -> None:
         templates = self.agent_prompt_template.model_dump()

@@ -2,6 +2,7 @@ from tempfile import NamedTemporaryFile
 
 import pytest
 import yaml
+import os
 
 from research_town.configs import Config
 
@@ -35,7 +36,7 @@ def test_yaml_loading() -> None:
     """
     with NamedTemporaryFile(delete=False, suffix='.yaml') as tmpfile:
         tmpfile.write(yaml_content.encode())
-        tmpfile_path = tmpfile.name
+        tmpfile_path = os.path.dirname(tmpfile.name)
 
     config = Config(yaml_config_path=tmpfile_path)
     assert config.param.related_paper_num == 5
@@ -98,15 +99,18 @@ def test_merging_configurations() -> None:
 def test_yaml_serialization() -> None:
     config = Config()
     with NamedTemporaryFile(delete=False, suffix='.yaml') as tmpfile:
-        tmpfile_path = tmpfile.name
+        tmpfile_path = os.path.dirname(tmpfile.name)
         config.save_to_yaml(tmpfile_path)
 
-    with open(tmpfile_path, 'r') as f:
-        loaded_data = yaml.safe_load(f)
+    for yaml_file in os.listdir(tmpfile_path):
+        if yaml_file.endswith(".yaml"):
+            with open(os.path.join(tmpfile_path, yaml_file), 'r') as f:
+                loaded_data = yaml.safe_load(f)
 
-    assert loaded_data['param']['related_paper_num'] == 10
-    assert loaded_data['param']['base_llm'] == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
-    assert loaded_data['param']['proj_participant_num'] == 3
+            if "config" in yaml_file:
+                assert loaded_data['related_paper_num'] == 10
+                assert loaded_data['base_llm'] == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
+                assert loaded_data['proj_participant_num'] == 3
 
 
 def test_placeholder_check() -> None:
