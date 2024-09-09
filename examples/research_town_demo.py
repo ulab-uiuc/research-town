@@ -51,7 +51,7 @@ def run_sync_experiment(
 
 def main() -> None:
     run_sync_experiment(
-        config_file_path='../configs/default_config.yaml',
+        config_file_path='../configs',
         save_file_path='./research_town_demo_log',
     )
 

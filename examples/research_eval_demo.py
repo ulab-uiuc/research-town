@@ -13,7 +13,7 @@ from research_town.evaluators import BaseEvaluator
 
 def main(
     model_name: str = 'openai/gpt-4o',
-    config_file_path: str = '../configs/default_config.yaml',
+    config_file_path: str = '../configs',
     load_file_path: str = './research_town_demo_log',
     save_file_path: str = './research_eval_demo_log',
 ) -> None:
