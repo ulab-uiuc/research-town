@@ -144,7 +144,7 @@ class ProposalWritingEnv(BaseEnv):
 
         # write one proposal
         related_papers = self.paper_db.match(
-            query=summarized_idea.content,
+            query=summarized_idea.content if summarized_idea else self.project_leader.profile.bio,
             paper_profiles=available_papers,
             num=2,
         )
