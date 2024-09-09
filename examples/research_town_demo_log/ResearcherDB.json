@@ -83,8 +83,8 @@
     "embed": null,
     "is_proj_leader_candidate": false,
     "is_proj_participant_candidate": false,
-    "is_reviewer_candidate": false,
-    "is_chair_candidate": true
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": false
   },
   "005fb705-a383-41fe-8b52-663fca278115": {
     "pk": "005fb705-a383-41fe-8b52-663fca278115",
@@ -174,7 +174,7 @@
     "embed": null,
     "is_proj_leader_candidate": false,
     "is_proj_participant_candidate": false,
-    "is_reviewer_candidate": true,
-    "is_chair_candidate": false
+    "is_reviewer_candidate": false,
+    "is_chair_candidate": true
   }
 }
