@@ -125,9 +125,7 @@ class ProposalWritingEnv(BaseEnv):
         # Brainstorm ideas
         self.ideas: List[Idea] = []
         for agent in self.agents:
-            idea = agent.brainstorm_idea(
-                insights=self.insights, config=self.config
-            )
+            idea = agent.brainstorm_idea(insights=self.insights, config=self.config)
             self.ideas.append(idea)
             self.progress_db.add(idea)
             self.env_db.add(
@@ -143,7 +141,6 @@ class ProposalWritingEnv(BaseEnv):
             ideas=self.ideas, config=self.config
         )
         self.progress_db.add(summarized_idea)
-
 
         # write one proposal
         related_papers = self.paper_db.match(

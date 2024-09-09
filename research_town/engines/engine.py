@@ -38,12 +38,14 @@ class Engine(BaseEngine):
     def set_transition_funcs(self) -> None:
         transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {
             ('start', 'proposal_writing'): self.from_start_to_proposal_writing,
-            ('proposal_writing', 'review_writing'): self.from_proposal_writing_to_review_writing,
+            (
+                'proposal_writing',
+                'review_writing',
+            ): self.from_proposal_writing_to_review_writing,
             ('review_writing', 'end'): self.from_review_writing_to_end,
         }
         for (from_env, to_env), func in transition_funcs.items():
             self.add_transition_func(from_env, func, to_env)
-
 
     def from_start_to_proposal_writing(
         self,
