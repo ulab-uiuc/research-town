@@ -1,7 +1,6 @@
 from typing import Optional
 
 from .data import (
-    CollaborationFindingLog,
     ExperimentLog,
     IdeaBrainstormingLog,
     IdeaDiscussionLog,
@@ -20,7 +19,6 @@ class LogDB(ComplexDB):
             classes_to_register=[
                 LiteratureReviewLog,
                 IdeaBrainstormingLog,
-                CollaborationFindingLog,
                 IdeaDiscussionLog,
                 ProposalWritingLog,
                 ReviewWritingLog,
