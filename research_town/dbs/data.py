@@ -54,12 +54,6 @@ class IdeaBrainstormingLog(BaseDBData):
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
-class CollaborationFindingLog(BaseDBData):
-    timestep: int = Field(default=0)
-    agent_pk: str
-    other_agent_pks: Optional[List[str]] = Field(default=[])
-
-
 class IdeaDiscussionLog(BaseDBData):
     timestep: int = Field(default=0)
     agent_from_pk: str

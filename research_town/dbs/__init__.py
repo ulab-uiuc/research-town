@@ -1,5 +1,4 @@
 from .data import (
-    CollaborationFindingLog,
     Experiment,
     ExperimentLog,
     Idea,
@@ -24,7 +23,6 @@ from .db_progress import ProgressDB
 from .db_researcher import ResearcherDB
 
 __all__ = [
-    'CollaborationFindingLog',
     'IdeaDiscussionLog',
     'IdeaBrainstormingLog',
     'LiteratureReviewLog',

@@ -5,7 +5,17 @@ from beartype.typing import Any, Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
-from ..dbs import LogDB, PaperDB, ProgressDB, Researcher, Review, Rebuttal, ReviewWritingLog, MetaReviewWritingLog, RebuttalWritingLog
+from ..dbs import (
+    LogDB,
+    MetaReviewWritingLog,
+    PaperDB,
+    ProgressDB,
+    Rebuttal,
+    RebuttalWritingLog,
+    Researcher,
+    Review,
+    ReviewWritingLog,
+)
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
