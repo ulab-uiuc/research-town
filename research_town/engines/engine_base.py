@@ -27,6 +27,7 @@ class BaseEngine:
         self.config = config
         self.time_step = time_step
         self.stop_flag = stop_flag
+        self.model_name = self.config.param.base_llm
         self.envs: Dict[str, BaseEnv] = {}
         self.transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {}
         self.transitions: Dict[str, Dict[bool, str]] = defaultdict(dict)
@@ -74,7 +75,7 @@ class BaseEngine:
             stop_flag=self.stop_flag,
             agent_profiles=[proj_leader],
             agent_roles=['proj_leader'],
-            agent_models=['gpt-4o'],
+            agent_models=[self.model_name],
         )
 
     def transition(self) -> None:

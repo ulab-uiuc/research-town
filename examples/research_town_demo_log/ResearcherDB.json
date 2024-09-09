@@ -1,0 +1,180 @@
+{
+  "924558f7-a874-41bb-bbc7-123265aa40ec": {
+    "pk": "924558f7-a874-41bb-bbc7-123265aa40ec",
+    "project_name": null,
+    "name": "Jiaxuan You",
+    "bio": " I am a researcher in the field of graph neural networks (GNNs) and machine learning, with a focus on developing and improving GNN architectures for various tasks. I have made significant contributions to the understanding of GNNs and their applications in prediction tasks on graphs.\n\nI have proposed Position-aware Graph Neural Networks (P-GNNs), a new class of GNNs for computing position-aware node embeddings. P-GNNs sample sets of anchor nodes, compute the distance of a given target node to each anchor-set, and then learn a non-linear distance-weighted aggregation scheme over the anchor-sets. This allows P-GNNs to capture the positions/locations of nodes with respect to the anchor nodes. I have shown that P-GNNs consistently outperform state-of-the-art GNNs, with up to 66% improvement in terms of the ROC AUC score on multiple prediction tasks including link prediction and community detection.\n\nI have also investigated the relationship between the graph structure of neural networks and their predictive performance. I developed a novel graph-based representation of neural networks called relational graph, where layers of neural network computation correspond to rounds of message exchange along the graph structure. I have shown that a \"sweet spot\" of relational graphs leads to neural networks with significantly improved predictive performance, and that neural network's performance is approximately a smooth function of the clustering coefficient and average path length of its relational graph.\n\nIn addition, I have developed a class of message passing GNNs, named Identity-aware Graph Neural Networks (ID-GNNs), with greater expressive power than the 1-Weisfeiler-Lehman (1-WL) graph isomorphism test. ID-GNNs extend existing GNN architectures by inductively considering nodes' identities during message passing, and have been shown to improve the performance of existing GNN architectures on challenging node, edge, and graph property prediction tasks, as well as node and graph classification benchmarks and real-world link prediction tasks.\n\nI have also worked on the problem of applying GNNs to dynamic graphs, proposing ROLAND, an effective graph representation learning framework for real-world dynamic graphs. ROLAND can help researchers easily repurpose any static GNN to dynamic graphs, and I have conducted experiments over eight different dynamic graph",
+    "collaborators": [
+      "Jure Leskovec",
+      "Rex Ying",
+      "Kaidi Cao",
+      "Kaiming He",
+      "Saining Xie",
+      "Jonathan Gomes-Selman",
+      "Tianyu Du",
+      "Shirley Wu",
+      "Jiaju Liu"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_proj_leader_candidate": false,
+    "is_proj_participant_candidate": true,
+    "is_reviewer_candidate": false,
+    "is_chair_candidate": false
+  },
+  "a4bff433-db6f-4c9f-bd68-d999303f2414": {
+    "pk": "a4bff433-db6f-4c9f-bd68-d999303f2414",
+    "project_name": null,
+    "name": "Jure Leskovec",
+    "bio": " I am a researcher in the field of network analysis and machine learning, with a focus on developing models to understand and predict the structure and behavior of large-scale networks. My research has made significant contributions to the understanding of networks in social, technological, and natural domains, with a particular emphasis on incorporating attribute information into network models.\n\nIn my earlier work, I studied anonymized data from the Microsoft Messenger instant-messaging system, constructing the largest social network ever analyzed at the time and reporting on various aspects of the dataset and synthesized graph. I also developed the Multiplicative Attribute Graph (MAG) model, which considers nodes with categorical attributes and models the probability of an edge as the product of individual attribute link formation affinities. This model was shown to reliably capture network connectivity and provide insights into how different attributes shape the network structure.\n\nIn more recent work, I have developed the Latent Multi-group Membership Graph (LMMG) model, which allows for the modeling of networks with rich node feature structure. In the LMMG model, each node belongs to multiple groups, and each latent group models the occurrence of links as well as the node feature structure. This model can be used to summarize the network structure, predict links between nodes, and predict missing features of a node. I have also studied the Multiplicative Attribute Graphs (MAG) model, which naturally captures the interactions between the network structure and the node attributes. This model yields itself to mathematical analysis and allows for the derivation of thresholds for connectivity and the emergence of the giant connected component, and shows that the model gives rise to networks with a constant diameter.\n\nIn addition to my work on network analysis, I have also applied machine learning techniques to the problem of large-scale image retrieval, extending benchmark datasets with social-network metadata and proposing a model that explicitly accounts for the interdependencies between images sharing common properties. I have also developed a model for automatically identifying users' social circles in personal social networks, and a latent factor recommendation system that explicitly accounts for each user's level of experience.\n\nI have also studied the dynamics of time-varying network data, proposing a nonparametric multi-group membership model for dynamic networks. This model contains three main components: We model the birth and death of individual groups with respect to the dynamics of the network structure via a distance dependent Indian Buffet Process",
+    "collaborators": [
+      "Myunghwan Kim",
+      "Julian McAuley",
+      "Eric Horvitz",
+      "Tim Althoff",
+      "Hongwei Wang"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_proj_leader_candidate": false,
+    "is_proj_participant_candidate": false,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": false
+  },
+  "aafd443a-6295-4534-aff8-c1d5d358e2af": {
+    "pk": "aafd443a-6295-4534-aff8-c1d5d358e2af",
+    "project_name": null,
+    "name": "Stefanie Jegelka",
+    "bio": " I am a researcher in the fields of machine learning and graph theory, with a focus on the theoretical properties of graph neural networks (GNNs) and other neural network architectures. My work has contributed to the understanding of the approximation and learning properties of message passing GNNs and higher-order GNNs, as well as the mathematical connections between these models.\n\nIn addition to my work on GNNs, I have also studied the universal approximation properties of deep ResNet architectures, demonstrating that a very deep ResNet with stacked modules and ReLU activation functions can uniformly approximate any Lebesgue integrable function in a given number of dimensions. I have also considered the problem of optimal resource allocation from a robust optimization perspective, and have shown that a nonconvex version of the Budget Allocation or Bipartite Influence Maximization problem can be solved exactly using connections to continuous submodular functions.\n\nI have also contributed to the field of Bayesian optimization, proposing a new criterion called Max-value Entropy Search (MES) that uses information about the maximum function value rather than the entropy. I have shown that MES maintains or improves the good empirical performance of existing methods while significantly reducing the computational burden.\n\nIn the area of distributionally robust optimization (DRO), I have studied DRO with uncertainty sets measured via maximum mean discrepancy (MMD), showing that MMD DRO is roughly equivalent to regularization by the Hilbert norm and revealing deep connections to classic results in statistical learning. I have also derived a generically applicable approximation of MMD DRO and shown that it generalizes recent work on variance-based regularization.\n\nI am also interested in the implicit bias induced by the training of neural networks, and have shown that when one trains a deep nonlinear network with logistic or exponential loss on linearly separable data, the weights converge to rank-1 matrices. I have also studied the theoretical properties of kernel ridge regression on compact manifolds, providing minimax optimal rates for target functions that are invariant to a group action on the manifold.\n\nIn my most recent work, I have considered the question of whether graph neural networks can generalize to graphs that are different from the graphs they were trained on, and have demonstrated how the operator perspective allows for the development of quantitative bounds on the distance between a finite GNN and its limit on an infinite graph.",
+    "collaborators": [
+      "Matthew Staib",
+      "Thien Le",
+      "Behrooz Tahmasebi",
+      "Chengtao Li",
+      "Suvrit Sra",
+      "Hongzhou Lin",
+      "Zi Wang"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_proj_leader_candidate": false,
+    "is_proj_participant_candidate": true,
+    "is_reviewer_candidate": false,
+    "is_chair_candidate": false
+  },
+  "5cddeb45-29fd-4899-88a9-12d3d57bce5b": {
+    "pk": "5cddeb45-29fd-4899-88a9-12d3d57bce5b",
+    "project_name": null,
+    "name": "Silvio Lattanzi",
+    "bio": " I am a researcher in the fields of computer science and machine learning, with a focus on developing algorithms for large-scale data analysis and network analysis. My work includes contributions to the problems of reconciling multiple online social networks, improving the $k$-means clustering algorithm, estimating the common mean of random variables with different standard deviations, and designing algorithms for the $k$-core decomposition and facility location problem in dynamic data streams. I am also interested in the problem of fair clustering under the disparate impact doctrine and have developed approximation algorithms for this problem. Additionally, I have worked on the question of maintaining a constant approximate clustering with a small number of center swaps in a stream of points in a metric space. I have also developed a parallel algorithm for computing random walks that is both memory and round efficient, and have studied the problem of learning the hierarchical cluster structure of graphs in the seeded model. I am particularly interested in developing algorithms that are efficient, scalable, and have strong theoretical guarantees.",
+    "collaborators": [
+      "Nikos Parotsidis",
+      "Michael Kapralov",
+      "Nitish Korula",
+      "Lorenzo Beretta",
+      "Vincent Cohen-Addad",
+      "Luc Devroye",
+      "Gabor Lugosi",
+      "Nikita Zhivotovskiy",
+      "Hossein Esfandiari",
+      "Vahab Mirrokni"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_proj_leader_candidate": false,
+    "is_proj_participant_candidate": false,
+    "is_reviewer_candidate": false,
+    "is_chair_candidate": true
+  },
+  "b61516d5-4e71-4935-9266-6613a31e4489": {
+    "pk": "b61516d5-4e71-4935-9266-6613a31e4489",
+    "project_name": null,
+    "name": "Rex Ying",
+    "bio": " I am a researcher in the field of graph neural networks and machine learning, with a focus on developing models for graph representation and analysis. My work has explored a variety of topics, including structural feature correlation in geometric graphs, temporal graph neural networks, and hyperbolic graph convolutional neural networks.\n\nIn my research on structural feature correlation, I introduced graph feature to feature (Fea2Fea) prediction pipelines in a low dimensional space to explore the correlation between structural features in geometric graphs. I showed that there exists high correlation between some of the structural features, and that using an irredundant feature combination with initial node features, filtered by a graph neural network, can improve classification accuracy in graph-based tasks.\n\nIn the area of temporal graphs, I proposed a novel approach called Temporal Motifs Explainer (TempME) to uncover the most pivotal temporal motifs guiding the prediction of temporal graph neural networks (TGNNs). TempME extracts the most interaction-related motifs while minimizing the amount of contained information to preserve the sparsity and succinctness of the explanation. This approach has been shown to provide more understandable insights and improve the explanation accuracy of current TGNNs.\n\nI have also worked on extending graph convolutional neural networks (GCNs) to hyperbolic geometry, which enables embeddings with much smaller distortion for real-world graphs with scale-free or hierarchical structure. I proposed the Hyperbolic Graph Convolutional Neural Network (HGCN), the first inductive hyperbolic GCN that leverages both the expressiveness of GCNs and hyperbolic geometry to learn inductive node representations for hierarchical and scale-free graphs.\n\nIn addition to my work on graph representation and analysis, I am also interested in the interpretability and trustworthiness of GNNs. I have conducted a comprehensive review of explanation methods for GNNs from the perspective of graph generation, proposing a unified optimization objective for generative explanation methods and demonstrating their specific manifestations in various generative model architectures and different explanation scenarios.\n\nOverall, my research is focused on developing models for graph representation and analysis, with a particular emphasis on structural feature correlation, temporal graph neural networks, and hyperbolic graph convolutional neural networks. I am also interested in the interpretability and trustworthiness of GNNs, and have conducted",
+    "collaborators": [
+      "Jure Leskovec",
+      "Jialin Chen",
+      "William L. Hamilton",
+      "Jiaqing Xie",
+      "Ines Chami",
+      "Christopher R\u00e9",
+      "Jiaxuan You",
+      "Irene Li",
+      "Aosong Feng",
+      "Dragomir Radev"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_proj_leader_candidate": false,
+    "is_proj_participant_candidate": true,
+    "is_reviewer_candidate": false,
+    "is_chair_candidate": false
+  },
+  "66782aeb-5795-4752-aace-bcdc7d7e602c": {
+    "pk": "66782aeb-5795-4752-aace-bcdc7d7e602c",
+    "project_name": null,
+    "name": "Tim Althoff",
+    "bio": " I am a researcher with a focus on using large-scale data to understand and improve various aspects of society and technology. In my work, I have tackled a wide range of problems, from studying the dynamics of online crowdfunding platforms and donor retention, to developing computational methods for analyzing text-message-based counseling conversations, to understanding the characteristics of trending topics on social media.\n\nOne area of particular interest to me is the use of data to improve public health. For example, I have studied the impact of the mobile game Pok\u00e9mon Go on physical activity, finding that it led to significant increases in physical activity over a period of 30 days. I have also examined the role of social networks in physical activity tracking applications, finding that the creation of new social connections increases user online in-application activity, user retention, and user offline real-world physical activity.\n\nIn addition to my work on public health, I am also interested in the use of data and machine learning to improve counseling and therapy. In one study, I developed a set of novel computational discourse analysis methods to measure how various linguistic aspects of conversations are correlated with conversation outcomes, discovering actionable conversation strategies that are associated with better conversation outcomes.\n\nI am also passionate about using data to understand and improve the way we use and interact with technology. In one project, I studied how social networks influence user behavior in a physical activity tracking application, finding that social networking leads to a significant increase in users' online as well as offline activities.\n\nOverall, my research is focused on using large-scale data to understand and improve various aspects of society and technology, with a particular focus on public health, counseling and therapy, and the use of technology.",
+    "collaborators": [
+      "Jure Leskovec",
+      "Hyun Oh Song",
+      "Trevor Darrell",
+      "Kevin Clark",
+      "Damian Borth",
+      "J\u00f6rn Hees",
+      "Andreas Dengel",
+      "Ali Shameli",
+      "Amin Saberi",
+      "Xin Luna Dong"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_proj_leader_candidate": true,
+    "is_proj_participant_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "679b89be-823c-4907-9711-9f44433e5414": {
+    "pk": "679b89be-823c-4907-9711-9f44433e5414",
+    "project_name": null,
+    "name": "Christos Faloutsos",
+    "bio": " I am a researcher with a focus on developing scalable and efficient algorithms for large-scale data analysis, with a particular emphasis on network analysis and graph mining. My work includes the development of V-SMART-Join, a MapReduce-based framework for discovering all pairs of similar entities in large datasets, which was shown to be up to 30 times faster than the state of the art algorithm. I have also worked on developing a model for predicting the popularity of social networks, which was able to accurately fit the observed Daily Active Users (DAU) of Facebook and its competitors and predict their fate four years into the future.\n\nIn addition to my work on large-scale data analysis, I am also interested in graph visualization and have developed the GMine system, which addresses the challenges of large graphs by using summarization and multi-resolution techniques. I have also proposed NetSimile, a novel and scalable method for assessing the similarity between graphs without solving the node-correspondence problem, and DeltaCon, a principled and scalable algorithm for assessing the similarity between two graphs on the same nodes.\n\nI have also worked on developing methods for succinctly describing large graphs, by constructing a \"vocabulary\" of subgraph-types that often occur in real graphs and using the Minimum Description Length (MDL) principle to find the most succinct description of a graph in terms of this vocabulary. I have also proposed TribeFlow, a method for predicting user trajectories in a constantly changing network, and HoloScope, a method for detecting groups of fraudulent users in a network using information from graph topology, temporal spikes, and ratings.\n\nI have also studied the problem of detecting dense subtensors in tensor streams, and proposed DenseStream and DenseAlert, incremental algorithms that maintain and update a dense subtensor in a tensor stream and spot the sudden appearances of dense subtensors with an accuracy guarantee. I have also proposed Higher-Order Label Spreading (HOLS), a method for spreading labels using higher-order structures in a graph, which has been shown to be up to 4.7% better than label spreading using edges alone.\n\nOverall, my research is focused on developing scalable and efficient algorithms for large-scale data analysis, with a particular emphasis on network analysis and graph mining. I am also interested in graph visualization,",
+    "collaborators": [
+      "Danai Koutra",
+      "Bruno Ribeiro",
+      "Bryan Hooi",
+      "Ahmed Metwally",
+      "Jose Rodrigues",
+      "Hanghang Tong",
+      "Agma Traina",
+      "Jure Leskovec",
+      "Michele Berlingerio",
+      "Tina Eliassi-Rad"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_proj_leader_candidate": false,
+    "is_proj_participant_candidate": false,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": false
+  },
+  "ff2f6864-12fd-4960-b636-c35ac13c6121": {
+    "pk": "ff2f6864-12fd-4960-b636-c35ac13c6121",
+    "project_name": null,
+    "name": "Julian McAuley",
+    "bio": " I am a researcher in the fields of machine learning and network analysis, with a focus on developing models to understand and predict the behavior of large-scale networks and systems. My work has included the study of large-scale image retrieval benchmarks, with a particular focus on incorporating social-network metadata into models to improve image classification and retrieval. I have also studied the task of automatically identifying users' social circles in personal social networks, and developed a model for detecting circles that combines network structure and user profile information.\n\nIn addition to my work on network analysis, I have also developed a latent factor recommendation system that explicitly accounts for each user's level of experience, with the goal of recommending products that a user will enjoy now while acknowledging that their tastes may have changed over time. I have also surveyed the current state of model compression and acceleration for pretrained language models, with a focus on the inference stage.\n\nI am interested in the use of machine learning for natural language processing and have studied the task of automatically learning whether a review of a product is relevant to a given query. I have also proposed a scalable factorization model to incorporate visual signals into predictors of people's opinions, which I have applied to large, real-world datasets.\n\nIn the area of fashion recommendation, I have built novel models for the One-Class Collaborative Filtering setting, where the goal is to estimate users' fashion-aware personalized ranking functions based on their past feedback. I have also investigated the use of review text to improve recommender systems and have called for discussion on the \"importance\" of user reviews for recommendation.\n\nOverall, my research is focused on developing models to understand and predict the behavior of large-scale networks and systems, with a particular emphasis on incorporating additional data sources and signals to improve model performance. I am also interested in the use of machine learning for natural language processing and recommendation tasks.",
+    "collaborators": [
+      "Jure Leskovec",
+      "Ruining He",
+      "Canwen Xu",
+      "Alex Yang",
+      "Noveen Sachdeva"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_proj_leader_candidate": false,
+    "is_proj_participant_candidate": false,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": false
+  }
+}

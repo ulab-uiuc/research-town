@@ -1,0 +1,16 @@
+{
+  "7b150436-4d25-4a58-8567-24fe7af4fced": {
+    "pk": "7b150436-4d25-4a58-8567-24fe7af4fced",
+    "project_name": "research_town_demo",
+    "timestep": 0,
+    "paper_pks": [
+      "95096867-5fba-410f-ae59-176fd7d5b9b0",
+      "202ffc0e-7feb-48aa-97e3-f73e09d5180d"
+    ],
+    "agent_pk": "924558f7-a874-41bb-bbc7-123265aa40ec",
+    "insight_pks": [
+      "2da47bac-2046-4696-9b61-c333c6a51985"
+    ],
+    "other_agent_pks": []
+  }
+}

@@ -74,7 +74,7 @@ class LifecycleEngine(BaseEngine):
             'agent_profiles': [proj_leader] + proj_participants,
             'agent_roles': ['proj_leader']
             + ['proj_participant'] * proj_participant_num,
-            'agent_models': ['gpt-4o'] * (proj_participant_num + 1),
+            'agent_models': [self.model_name] * (proj_participant_num + 1),
         }
 
     def from_paper_submission_to_peer_review(
@@ -88,7 +88,7 @@ class LifecycleEngine(BaseEngine):
         return {
             'agent_profiles': [proj_leader] + reviewers + [chair],
             'agent_roles': ['proj_leader'] + ['reviewer'] * reviewer_num + ['chair'],
-            'agent_models': ['gpt-4o'] * (reviewer_num + 2),
+            'agent_models': [self.model_name] * (reviewer_num + 2),
             'paper': env.paper,
         }
 
@@ -104,7 +104,7 @@ class LifecycleEngine(BaseEngine):
             'agent_profiles': [proj_leader] + proj_participants,
             'agent_roles': ['proj_leader']
             + ['proj_participant'] * proj_participant_num,
-            'agent_models': ['gpt-4o'] * (proj_participant_num + 1),
+            'agent_models': [self.model_name] * (proj_participant_num + 1),
         }
 
     def from_peer_review_to_end(self, env: PeerReviewEnv) -> Dict[str, Any]:
@@ -117,7 +117,7 @@ class LifecycleEngine(BaseEngine):
         return {
             'agent_profiles': [proj_leader] + reviewers + [chair],
             'agent_roles': ['proj_leader'] + ['reviewer'] * 2 + ['chair'],
-            'agent_models': ['gpt-4o'] * 4,
+            'agent_models': [self.model_name] * 4,
             'paper': env.paper,
         }
 

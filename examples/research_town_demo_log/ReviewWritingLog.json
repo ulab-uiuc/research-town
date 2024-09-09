@@ -1,0 +1,38 @@
+{
+  "f3862a79-35d9-4815-9b8c-811da31c9a6e": {
+    "pk": "f3862a79-35d9-4815-9b8c-811da31c9a6e",
+    "project_name": "research_town_demo",
+    "timestep": 0,
+    "paper_pk": "c950a929-17a5-4304-953e-a53c4a3f666b",
+    "agent_pk": "679b89be-823c-4907-9711-9f44433e5414",
+    "other_agent_pks": [],
+    "score": 0,
+    "summary": null,
+    "strength": null,
+    "weakness": null
+  },
+  "c612055b-5427-4059-926f-34e260d22c48": {
+    "pk": "c612055b-5427-4059-926f-34e260d22c48",
+    "project_name": "research_town_demo",
+    "timestep": 0,
+    "paper_pk": "c950a929-17a5-4304-953e-a53c4a3f666b",
+    "agent_pk": "a4bff433-db6f-4c9f-bd68-d999303f2414",
+    "other_agent_pks": [],
+    "score": 0,
+    "summary": null,
+    "strength": null,
+    "weakness": null
+  },
+  "092f6812-c23a-4603-9ccc-e865961cac79": {
+    "pk": "092f6812-c23a-4603-9ccc-e865961cac79",
+    "project_name": "research_town_demo",
+    "timestep": 0,
+    "paper_pk": "c950a929-17a5-4304-953e-a53c4a3f666b",
+    "agent_pk": "ff2f6864-12fd-4960-b636-c35ac13c6121",
+    "other_agent_pks": [],
+    "score": 0,
+    "summary": null,
+    "strength": null,
+    "weakness": null
+  }
+}
