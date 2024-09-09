@@ -69,13 +69,13 @@ class Engine(BaseEngine):
     ) -> Dict[str, Any]:
         reviewer_num = self.config.param.reviewer_num
         proj_leader = env.proj_leader.profile
-        reviewers = self.find_reviewers(env.paper, reviewer_num)
-        chair = self.find_chair(env.paper)
+        reviewers = self.find_reviewers(env.proposal, reviewer_num)
+        chair = self.find_chair(env.proposal)
         return {
             'agent_profiles': [proj_leader] + reviewers + [chair],
             'agent_roles': ['proj_leader'] + ['reviewer'] * reviewer_num + ['chair'],
             'agent_models': ['gpt-4o'] * (reviewer_num + 2),
-            'paper': env.paper,
+            'paper': env.proposal,
         }
 
     def from_review_writing_to_end(self, env: ReviewWritingEnv) -> Dict[str, Any]:

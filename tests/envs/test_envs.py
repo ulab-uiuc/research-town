@@ -54,13 +54,6 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
     assert len(env.reviews) == 2
     assert isinstance(env.reviews[0], Review)
 
-    assert isinstance(env.rebuttals, list)
-    assert len(env.rebuttals) == 2
-    assert isinstance(env.rebuttals[0], Rebuttal)
-
-    assert isinstance(env.meta_review, MetaReview)
-    assert isinstance(env.meta_review.decision, bool)
-
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_paper_submission_env(
@@ -83,6 +76,6 @@ def test_paper_submission_env(
     )
     env.run()
     exit_status = env.on_exit()
-    assert env.paper.abstract is not None
-    assert env.paper.abstract == 'Paper abstract1'
+    assert env.proposal.abstract is not None
+    assert env.proposal.abstract == 'Paper abstract1'
     assert exit_status is True

@@ -80,9 +80,6 @@ class ReviewWritingEnv(BaseEnv):
     def on_exit(self) -> bool:
         if self.stop_flag:
             raise NotImplementedError('Stop signal is not implemented yet.')
-        self.progress_db.add(self.meta_review)
-        for rebuttal in self.rebuttals:
-            self.progress_db.add(rebuttal)
         for review in self.reviews:
             self.progress_db.add(review)
         self.env_run_num += 1
