@@ -1,10 +1,5 @@
 from research_town.configs import Config
-from research_town.dbs import (
-    LogDB,
-    PaperDB,
-    ProgressDB,
-    Proposal,
-)
+from research_town.dbs import LogDB, PaperDB, ProgressDB, Proposal
 from research_town.envs import ExperimentEnv
 
 

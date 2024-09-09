@@ -35,9 +35,7 @@ class BaseEvaluator:
         self.config = config
         self.serializer = Serializer()
 
-    def evaluate_insight_quality(
-        self, insight: Insight
-    ) -> InsightEvalOutput:
+    def evaluate_insight_quality(self, insight: Insight) -> InsightEvalOutput:
         evaluator = InsightQualityEvaluator(
             model_name=self.model_name, config=self.config
         )
@@ -48,9 +46,7 @@ class BaseEvaluator:
     def evaluate_idea_quality(
         self, insights: List[Insight], idea: Idea
     ) -> IdeaEvalOutput:
-        evaluator = IdeaQualityEvaluator(
-            model_name=self.model_name, config=self.config
-        )
+        evaluator = IdeaQualityEvaluator(model_name=self.model_name, config=self.config)
         return evaluator.eval(
             insights=self.serializer.serialize(insights),
             idea=self.serializer.serialize(idea),

@@ -1,16 +1,16 @@
 from research_town.dbs import (
-    IdeaDiscussionLog,
-    MetaReviewWritingLog,
-    RebuttalWritingLog,
-    ReviewWritingLog,
-    Researcher,
-    Paper,
     Idea,
+    IdeaDiscussionLog,
     Insight,
     MetaReview,
+    MetaReviewWritingLog,
+    Paper,
     Proposal,
+    RebuttalWritingLog,
+    Researcher,
     ResearchRebuttal,
     Review,
+    ReviewWritingLog,
 )
 
 paper_profile_A = Paper(

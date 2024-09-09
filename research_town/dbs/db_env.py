@@ -2,14 +2,14 @@ from typing import Optional
 
 from .data import (
     CollaborationFindingLog,
-    IdeaDiscussionLog,
     ExperimentLog,
     IdeaBrainstormingLog,
+    IdeaDiscussionLog,
     LiteratureReviewLog,
     MetaReviewWritingLog,
+    ProposalWritingLog,
     RebuttalWritingLog,
     ReviewWritingLog,
-    ProposalWritingLog,
 )
 from .db_complex import ComplexDB
 

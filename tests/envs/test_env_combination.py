@@ -3,13 +3,7 @@ from unittest.mock import MagicMock, patch
 from beartype.typing import List, Literal
 
 from research_town.configs import Config
-from research_town.dbs import (
-    Researcher,
-    MetaReview,
-    Proposal,
-    ResearchRebuttal,
-    Review,
-)
+from research_town.dbs import MetaReview, Proposal, Researcher, ResearchRebuttal, Review
 from research_town.envs import PaperSubmissionEnv, PeerReviewEnv
 from tests.constants.db_constants import (
     example_env_db,
@@ -33,9 +27,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     ]
     paper_submission_agent_profiles = [
         Researcher(name='Jiaxuan You', bio='A researcher in machine learning.'),
-        Researcher(
-            name='Rex Ying', bio='A researcher in natural language processing.'
-        ),
+        Researcher(name='Rex Ying', bio='A researcher in natural language processing.'),
         Researcher(name='Rex Zhu', bio='A researcher in computer vision.'),
     ]
 

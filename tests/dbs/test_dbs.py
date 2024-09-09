@@ -9,17 +9,17 @@ from beartype.typing import Any, Dict, List
 
 from research_town.configs import Config
 from research_town.dbs import (
+    Idea,
     IdeaDiscussionLog,
-    MetaReviewWritingLog,
-    RebuttalWritingLog,
-    ReviewWritingLog,
-    Researcher,
-    ResearcherDB,
     LogDB,
+    MetaReviewWritingLog,
     Paper,
     PaperDB,
     ProgressDB,
-    Idea,
+    RebuttalWritingLog,
+    Researcher,
+    ResearcherDB,
+    ReviewWritingLog,
 )
 from tests.mocks.mocking_func import mock_prompting
 

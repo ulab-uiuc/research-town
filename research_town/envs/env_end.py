@@ -1,7 +1,7 @@
 from beartype.typing import Any, Dict, List, Literal, Optional, Union
 
 from ..configs import Config
-from ..dbs import Researcher, LogDB, PaperDB, ProgressDB
+from ..dbs import LogDB, PaperDB, ProgressDB, Researcher
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]

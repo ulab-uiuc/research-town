@@ -8,14 +8,7 @@ from aider.io import InputOutput
 from aider.models import Model
 
 from ..configs import Config
-from ..dbs import (
-    ExperimentLog,
-    LogDB,
-    PaperDB,
-    ProgressDB,
-    Experiment,
-    Proposal,
-)
+from ..dbs import Experiment, ExperimentLog, LogDB, PaperDB, ProgressDB, Proposal
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
@@ -91,9 +84,7 @@ class ExperimentEnv:
 
     def run(self, time_step: int, paper_pk: str) -> None:
         conditions = {'pk': paper_pk}
-        proposal = self.progress_db.get(Proposal, **conditions)[
-            0
-        ].abstract
+        proposal = self.progress_db.get(Proposal, **conditions)[0].abstract
         # Define folder and file paths based on pk
         folder = os.path.join(self.folder, paper_pk)
         experiment_script = os.path.join(folder, 'experiment.py')

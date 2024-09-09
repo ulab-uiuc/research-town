@@ -6,14 +6,14 @@ from beartype.typing import Any, Dict, List, Literal, Union
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
+    Idea,
     IdeaBrainstormingLog,
     LiteratureReviewLog,
-    ProposalWritingLog,
-    Researcher,
     LogDB,
     PaperDB,
     ProgressDB,
-    Idea,
+    ProposalWritingLog,
+    Researcher,
 )
 from .env_base import BaseEnv
 

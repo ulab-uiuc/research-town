@@ -3,7 +3,7 @@ import os
 from beartype.typing import Literal
 
 from research_town.configs import Config
-from research_town.dbs import ResearcherDB, LogDB, PaperDB, ProgressDB
+from research_town.dbs import LogDB, PaperDB, ProgressDB, ResearcherDB
 from research_town.engines import LifecycleEngine
 
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None

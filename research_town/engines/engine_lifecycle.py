@@ -1,11 +1,6 @@
 from typing import Any, Callable, Dict, Tuple
 
-from ..envs import (
-    EndEnv,
-    PaperSubmissionEnv,
-    PeerReviewEnv,
-    StartEnv,
-)
+from ..envs import EndEnv, PaperSubmissionEnv, PeerReviewEnv, StartEnv
 from .engine_base import BaseEngine
 
 
@@ -13,9 +8,7 @@ class LifecycleEngine(BaseEngine):
     def set_envs(self) -> None:
         self.add_env(
             'start',
-            StartEnv(
-                self.env_db, self.progress_db, self.paper_db, self.config
-            ),
+            StartEnv(self.env_db, self.progress_db, self.paper_db, self.config),
         )
         self.add_env(
             'paper_submission',
@@ -25,9 +18,7 @@ class LifecycleEngine(BaseEngine):
         )
         self.add_env(
             'peer_review',
-            PeerReviewEnv(
-                self.env_db, self.progress_db, self.paper_db, self.config
-            ),
+            PeerReviewEnv(self.env_db, self.progress_db, self.paper_db, self.config),
         )
         self.add_env(
             'end',
@@ -119,9 +110,7 @@ class LifecycleEngine(BaseEngine):
     def from_peer_review_to_end(self, env: PeerReviewEnv) -> Dict[str, Any]:
         return {'meta_review': env.meta_review}
 
-    def from_peer_review_to_peer_review(
-        self, env: PeerReviewEnv
-    ) -> Dict[str, Any]:
+    def from_peer_review_to_peer_review(self, env: PeerReviewEnv) -> Dict[str, Any]:
         proj_leader = env.proj_leader.profile
         reviewers = self.find_reviewers(env.paper, 2)
         chair = self.find_chair(env.paper)

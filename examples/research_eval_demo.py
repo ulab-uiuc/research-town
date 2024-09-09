@@ -1,9 +1,9 @@
 from research_town.configs import Config
 from research_town.dbs import (
-    ProgressDB,
     Idea,
     Insight,
     MetaReview,
+    ProgressDB,
     Proposal,
     ResearchRebuttal,
     Review,

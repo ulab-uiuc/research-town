@@ -3,14 +3,7 @@ from collections import defaultdict
 from typing import Any, Callable, Dict, List, Tuple
 
 from ..configs import Config
-from ..dbs import (
-    Researcher,
-    ResearcherDB,
-    LogDB,
-    PaperDB,
-    ProgressDB,
-    Proposal,
-)
+from ..dbs import LogDB, PaperDB, ProgressDB, Proposal, Researcher, ResearcherDB
 from ..envs.env_base import BaseEnv
 
 
