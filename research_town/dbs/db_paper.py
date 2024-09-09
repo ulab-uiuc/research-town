@@ -6,15 +6,15 @@ from transformers import BertModel, BertTokenizer
 from ..utils.logger import logger
 from ..utils.paper_collector import get_daily_papers
 from ..utils.retriever import get_embed, rank_topk
-from .data import BaseDBData, PaperProfile
+from .data import BaseDBData, Paper
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=BaseDBData)
 
 
-class PaperProfileDB(BaseDB[PaperProfile]):
+class PaperDB(BaseDB[Paper]):
     def __init__(self, load_file_path: Optional[str] = None) -> None:
-        super().__init__(PaperProfile, load_file_path)
+        super().__init__(Paper, load_file_path)
         self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
             'facebook/contriever'
         )
@@ -27,7 +27,7 @@ class PaperProfileDB(BaseDB[PaperProfile]):
 
         for paper_data in data.values():
             papers = [
-                PaperProfile(
+                Paper(
                     title=title,
                     abstract=abstract,
                     authors=authors,
@@ -57,8 +57,8 @@ class PaperProfileDB(BaseDB[PaperProfile]):
                 self.add(paper)
 
     def match(
-        self, query: str, paper_profiles: List[PaperProfile], num: int = 1
-    ) -> List[PaperProfile]:
+        self, query: str, paper_profiles: List[Paper], num: int = 1
+    ) -> List[Paper]:
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,

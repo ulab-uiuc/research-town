@@ -5,12 +5,12 @@ from beartype.typing import Any
 
 from research_town.configs import Config
 from research_town.evaluators.evaluator_quality import (
-    ResearchIdeaQualityEvaluator,
-    ResearchInsightQualityEvaluator,
-    ResearchMetaReviewQualityEvaluator,
-    ResearchProposalQualityEvaluator,
+    IdeaQualityEvaluator,
+    InsightQualityEvaluator,
+    MetaReviewQualityEvaluator,
+    ProposalQualityEvaluator,
     ResearchRebuttalQualityEvaluator,
-    ResearchReviewQualityEvaluator,
+    ReviewQualityEvaluator,
 )
 from tests.constants.data_constants import (
     research_idea_A,
@@ -33,7 +33,7 @@ def model_name(request: pytest.FixtureRequest) -> Any:
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_insight(use_mock: bool, model_name: str) -> None:
     config = Config()
-    evaluator = ResearchInsightQualityEvaluator(model_name=model_name, config=config)
+    evaluator = InsightQualityEvaluator(model_name=model_name, config=config)
 
     insight = research_insight_A.model_dump()
     input_dict = {'insight': insight}
@@ -61,7 +61,7 @@ def test_evaluator_eval_insight(use_mock: bool, model_name: str) -> None:
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_idea(use_mock: bool, model_name: str) -> None:
     config = Config()
-    evaluator = ResearchIdeaQualityEvaluator(model_name=model_name, config=config)
+    evaluator = IdeaQualityEvaluator(model_name=model_name, config=config)
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
     input_dict = {'insights': insights, 'idea': idea}
@@ -94,9 +94,7 @@ def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
     paper = research_paper_submission_A.model_dump()
     input_dict = {'insights': insights, 'idea': idea, 'paper': paper}
 
-    evaluator = ResearchProposalQualityEvaluator(
-        model_name=model_name, config=config
-    )
+    evaluator = ProposalQualityEvaluator(model_name=model_name, config=config)
 
     if use_mock:
         with patch(
@@ -127,7 +125,7 @@ def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
     review = research_review_A.model_dump()
     input_dict = {'insights': insights, 'idea': idea, 'paper': paper, 'review': review}
 
-    evaluator = ResearchReviewQualityEvaluator(model_name=model_name, config=config)
+    evaluator = ReviewQualityEvaluator(model_name=model_name, config=config)
 
     if use_mock:
         with patch(
@@ -209,7 +207,7 @@ def test_evaluator_eval_meta_review(use_mock: bool, model_name: str) -> None:
         'meta_review': meta_review,
     }
 
-    evaluator = ResearchMetaReviewQualityEvaluator(model_name=model_name, config=config)
+    evaluator = MetaReviewQualityEvaluator(model_name=model_name, config=config)
 
     if use_mock:
         with patch(

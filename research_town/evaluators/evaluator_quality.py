@@ -14,12 +14,12 @@ from ..utils.eval_prompter import (
 )
 from .evaluator_output import (
     BaseEvalOutput,
-    ResearchIdeaEvalOutput,
-    ResearchInsightEvalOutput,
-    ResearchMetaReviewEvalOutput,
-    ResearchProposalEvalOutput,
+    IdeaEvalOutput,
+    InsightEvalOutput,
+    MetaReviewEvalOutput,
+    ProposalEvalOutput,
     ResearchRebuttalEvalOutput,
-    ResearchReviewEvalOutput,
+    ReviewEvalOutput,
 )
 from .evaluator_output_format import OutputFormatError
 
@@ -77,7 +77,7 @@ class BaseQualityEvaluator:
         )
 
 
-class ResearchInsightQualityEvaluator(BaseQualityEvaluator):
+class InsightQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
@@ -85,10 +85,10 @@ class ResearchInsightQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, ResearchInsightEvalOutput, *args, **kwargs)
+        super().__init__(model_name, InsightEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
-    def eval(self, *args: Any, **kwargs: Any) -> ResearchInsightEvalOutput:
+    def eval(self, *args: Any, **kwargs: Any) -> InsightEvalOutput:
         raw_output = research_insight_quality_eval_prompting(
             model_name=self.model_name,
             insight=kwargs['insight'],
@@ -101,14 +101,14 @@ class ResearchInsightQualityEvaluator(BaseQualityEvaluator):
             if self.config
             else Config().eval_prompt_template.insight_quality,
         )
-        self.parsed_output = self.parse(raw_output, ResearchInsightEvalOutput)
+        self.parsed_output = self.parse(raw_output, InsightEvalOutput)
 
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
         return self.parsed_output
 
 
-class ResearchIdeaQualityEvaluator(BaseQualityEvaluator):
+class IdeaQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
@@ -116,10 +116,10 @@ class ResearchIdeaQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, ResearchIdeaEvalOutput, *args, **kwargs)
+        super().__init__(model_name, IdeaEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
-    def eval(self, *args: Any, **kwargs: Any) -> ResearchIdeaEvalOutput:
+    def eval(self, *args: Any, **kwargs: Any) -> IdeaEvalOutput:
         raw_output = research_idea_quality_eval_prompting(
             model_name=self.model_name,
             insights=kwargs['insights'],
@@ -133,14 +133,14 @@ class ResearchIdeaQualityEvaluator(BaseQualityEvaluator):
             if self.config
             else Config().eval_prompt_template.idea_quality,
         )
-        self.parsed_output = self.parse(raw_output, ResearchIdeaEvalOutput)
+        self.parsed_output = self.parse(raw_output, IdeaEvalOutput)
 
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
         return self.parsed_output
 
 
-class ResearchProposalQualityEvaluator(BaseQualityEvaluator):
+class ProposalQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
@@ -148,10 +148,10 @@ class ResearchProposalQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, ResearchProposalEvalOutput, *args, **kwargs)
+        super().__init__(model_name, ProposalEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
-    def eval(self, *args: Any, **kwargs: Any) -> ResearchProposalEvalOutput:
+    def eval(self, *args: Any, **kwargs: Any) -> ProposalEvalOutput:
         raw_output = research_paper_submission_quality_eval_prompting(
             model_name=self.model_name,
             insights=kwargs['insights'],
@@ -166,14 +166,14 @@ class ResearchProposalQualityEvaluator(BaseQualityEvaluator):
             if self.config
             else Config().eval_prompt_template.paper_quality,
         )
-        self.parsed_output = self.parse(raw_output, ResearchProposalEvalOutput)
+        self.parsed_output = self.parse(raw_output, ProposalEvalOutput)
 
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
         return self.parsed_output
 
 
-class ResearchReviewQualityEvaluator(BaseQualityEvaluator):
+class ReviewQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
@@ -181,10 +181,10 @@ class ResearchReviewQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, ResearchReviewEvalOutput, *args, **kwargs)
+        super().__init__(model_name, ReviewEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
-    def eval(self, *args: Any, **kwargs: Any) -> ResearchReviewEvalOutput:
+    def eval(self, *args: Any, **kwargs: Any) -> ReviewEvalOutput:
         raw_output = research_review_quality_eval_prompting(
             model_name=self.model_name,
             insights=kwargs['insights'],
@@ -200,7 +200,7 @@ class ResearchReviewQualityEvaluator(BaseQualityEvaluator):
             if self.config
             else Config().eval_prompt_template.review_quality,
         )
-        self.parsed_output = self.parse(raw_output, ResearchReviewEvalOutput)
+        self.parsed_output = self.parse(raw_output, ReviewEvalOutput)
 
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)
@@ -242,7 +242,7 @@ class ResearchRebuttalQualityEvaluator(BaseQualityEvaluator):
         return self.parsed_output
 
 
-class ResearchMetaReviewQualityEvaluator(BaseQualityEvaluator):
+class MetaReviewQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
@@ -250,10 +250,10 @@ class ResearchMetaReviewQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, ResearchMetaReviewEvalOutput, *args, **kwargs)
+        super().__init__(model_name, MetaReviewEvalOutput, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
-    def eval(self, *args: Any, **kwargs: Any) -> ResearchMetaReviewEvalOutput:
+    def eval(self, *args: Any, **kwargs: Any) -> MetaReviewEvalOutput:
         raw_output = research_meta_review_quality_eval_prompting(
             model_name=self.model_name,
             insights=kwargs['insights'],
@@ -271,7 +271,7 @@ class ResearchMetaReviewQualityEvaluator(BaseQualityEvaluator):
             if self.config
             else Config().eval_prompt_template.meta_review_quality,
         )
-        self.parsed_output = self.parse(raw_output, ResearchMetaReviewEvalOutput)
+        self.parsed_output = self.parse(raw_output, MetaReviewEvalOutput)
 
         for key, value in kwargs.items():
             setattr(self.parsed_output, key, value)

@@ -9,24 +9,24 @@ from beartype.typing import Any, Dict, List
 
 from research_town.configs import Config
 from research_town.dbs import (
-    AgentAgentIdeaDiscussionLog,
-    AgentPaperMetaReviewWritingLog,
-    AgentPaperRebuttalWritingLog,
-    AgentPaperReviewWritingLog,
-    AgentProfile,
-    AgentProfileDB,
-    EnvLogDB,
-    PaperProfile,
-    PaperProfileDB,
+    Idea,
+    IdeaDiscussionLog,
+    LogDB,
+    MetaReviewWritingLog,
+    Paper,
+    PaperDB,
     ProgressDB,
-    ResearchIdea,
+    RebuttalWritingLog,
+    Researcher,
+    ResearcherDB,
+    ReviewWritingLog,
 )
 from tests.mocks.mocking_func import mock_prompting
 
 
-def test_envlogdb_basic() -> None:
-    db = EnvLogDB()
-    review_log = AgentPaperReviewWritingLog(
+def test_LogDB_basic() -> None:
+    db = LogDB()
+    review_log = ReviewWritingLog(
         paper_pk='paper1',
         agent_pk='agent1',
         score=5,
@@ -34,12 +34,12 @@ def test_envlogdb_basic() -> None:
         strength='Interesting',
         weakness='None',
     )
-    rebuttal_log = AgentPaperRebuttalWritingLog(
+    rebuttal_log = RebuttalWritingLog(
         paper_pk='paper1',
         agent_pk='agent1',
         rebuttal_content='I disagree with the review',
     )
-    meta_review_log = AgentPaperMetaReviewWritingLog(
+    meta_review_log = MetaReviewWritingLog(
         paper_pk='paper1',
         agent_pk='agent1',
         decision=True,
@@ -47,7 +47,7 @@ def test_envlogdb_basic() -> None:
         strength='Interesting',
         weakness='None',
     )
-    discussion_log = AgentAgentIdeaDiscussionLog(
+    discussion_log = IdeaDiscussionLog(
         agent_from_pk='agent1',
         agent_from_name='Rex Ying',
         agent_to_pk='agent2',
@@ -60,7 +60,7 @@ def test_envlogdb_basic() -> None:
     db.add(meta_review_log)
     db.add(discussion_log)
 
-    new_review_log = AgentPaperReviewWritingLog(
+    new_review_log = ReviewWritingLog(
         paper_pk='paper1',
         agent_pk='agent2',
         score=4,
@@ -69,11 +69,11 @@ def test_envlogdb_basic() -> None:
         weakness='None',
     )
     db.add(new_review_log)
-    assert new_review_log.pk in db.dbs['AgentPaperReviewWritingLog'].data
-    assert len(db.dbs['AgentPaperReviewWritingLog'].data) == 2
+    assert new_review_log.pk in db.dbs['ReviewWritingLog'].data
+    assert len(db.dbs['ReviewWritingLog'].data) == 2
 
     conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
-    results = db.get(AgentPaperReviewWritingLog, **conditions)
+    results = db.get(ReviewWritingLog, **conditions)
     assert len(results) == 2
     assert results[0].summary == 'Good paper'
     assert results[0].strength == 'Interesting'
@@ -86,10 +86,10 @@ def test_envlogdb_basic() -> None:
         'weakness': 'Really?',
     }
     updated_conditions = {'paper_pk': 'paper1'}
-    updated_count = db.update(AgentPaperReviewWritingLog, updates, **updated_conditions)
+    updated_count = db.update(ReviewWritingLog, updates, **updated_conditions)
     assert updated_count == 2
 
-    updated_log = db.get(AgentPaperReviewWritingLog, **conditions)[0]
+    updated_log = db.get(ReviewWritingLog, **conditions)[0]
 
     assert updated_log.score == 3
     assert updated_log.summary == 'Bad paper'
@@ -97,58 +97,58 @@ def test_envlogdb_basic() -> None:
     assert updated_log.weakness == 'Really?'
 
     delete_conditions = {'paper_pk': 'paper1', 'agent_pk': 'agent1'}
-    deleted_count = db.delete(AgentPaperReviewWritingLog, **delete_conditions)
+    deleted_count = db.delete(ReviewWritingLog, **delete_conditions)
     assert deleted_count == 1
 
-    results = db.get(AgentPaperReviewWritingLog, **conditions)
+    results = db.get(ReviewWritingLog, **conditions)
     assert len(results) == 1
 
     with TemporaryDirectory() as temp_dir:
         db.save_to_json(temp_dir)
 
-        new_db = EnvLogDB()
+        new_db = LogDB()
         new_db.load_from_json(temp_dir)
 
-        assert len(new_db.dbs['AgentPaperReviewWritingLog'].data) == 1
-        assert len(new_db.dbs['AgentPaperRebuttalWritingLog'].data) == 1
-        assert len(new_db.dbs['AgentPaperMetaReviewWritingLog'].data) == 1
-        assert len(new_db.dbs['AgentAgentIdeaDiscussionLog'].data) == 1
+        assert len(new_db.dbs['ReviewWritingLog'].data) == 1
+        assert len(new_db.dbs['RebuttalWritingLog'].data) == 1
+        assert len(new_db.dbs['MetaReviewWritingLog'].data) == 1
+        assert len(new_db.dbs['IdeaDiscussionLog'].data) == 1
         assert (
-            new_db.dbs['AgentPaperReviewWritingLog'].data[new_review_log.pk].summary
+            new_db.dbs['ReviewWritingLog'].data[new_review_log.pk].summary
             == 'Bad paper'
         )
 
 
 def test_progressdb_basic() -> None:
     db = ProgressDB()
-    idea1 = ResearchIdea(content='Idea for a new AI algorithm')
-    idea2 = ResearchIdea(content='Quantum computing research plan')
+    idea1 = Idea(content='Idea for a new AI algorithm')
+    idea2 = Idea(content='Quantum computing research plan')
 
     db.add(idea1)
     db.add(idea2)
 
-    new_idea = ResearchIdea(content='Blockchain research proposal')
+    new_idea = Idea(content='Blockchain research proposal')
     db.add(new_idea)
-    assert new_idea.pk in db.dbs['ResearchIdea'].data
+    assert new_idea.pk in db.dbs['Idea'].data
 
     content: Dict[str, Any] = {'content': 'Idea for a new AI algorithm'}
-    results = db.get(ResearchIdea, **content)
+    results = db.get(Idea, **content)
     assert len(results) == 1
     assert results[0].content == 'Idea for a new AI algorithm'
 
     updates = {'content': 'Updated idea content'}
     conditions = {'content': 'Idea for a new AI algorithm'}
-    updated_count = db.update(ResearchIdea, updates, **conditions)
+    updated_count = db.update(Idea, updates, **conditions)
     assert updated_count == 1
     content2: Dict[str, Any] = {'content': 'Updated idea content'}
-    updated_results = db.get(ResearchIdea, **content2)
+    updated_results = db.get(Idea, **content2)
     assert len(updated_results) == 1
     assert updated_results[0].content == 'Updated idea content'
 
     content3: Dict[str, Any] = {'content': 'Quantum computing research plan'}
-    deleted_count = db.delete(ResearchIdea, **content3)
+    deleted_count = db.delete(Idea, **content3)
     assert deleted_count == 1
-    remaining_results = db.get(ResearchIdea, **content3)
+    remaining_results = db.get(Idea, **content3)
     assert len(remaining_results) == 0
 
     with TemporaryDirectory() as temp_dir:
@@ -157,19 +157,19 @@ def test_progressdb_basic() -> None:
         new_db = ProgressDB()
         new_db.load_from_json(temp_dir)
 
-        assert len(new_db.dbs['ResearchIdea'].data) == 2
+        assert len(new_db.dbs['Idea'].data) == 2
 
 
-def test_agentprofiledb_basic() -> None:
-    db = AgentProfileDB()
-    agent1 = AgentProfile(
+def test_Researcherdb_basic() -> None:
+    db = ResearcherDB()
+    agent1 = Researcher(
         name='John Doe', bio='Researcher in AI', institute='AI Institute'
     )
-    agent2 = AgentProfile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    agent2 = Researcher(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     db.add(agent1)
     db.add(agent2)
 
-    agent3 = AgentProfile(
+    agent3 = Researcher(
         name='Alice Johnson', bio='Data Scientist', institute='Data Lab'
     )
     db.add(agent3)
@@ -194,7 +194,7 @@ def test_agentprofiledb_basic() -> None:
 
     conditions: Dict[str, str] = {'name': 'Jane Smith'}
 
-    results: List[AgentProfile] = db.get(**conditions)
+    results: List[Researcher] = db.get(**conditions)
 
     assert len(results) == 1
     assert results[0].name == 'Jane Smith'
@@ -203,9 +203,9 @@ def test_agentprofiledb_basic() -> None:
         db.save_to_json(temp_dir)
 
 
-def test_paperprofiledb_basic() -> None:
-    db = PaperProfileDB()
-    paper1 = PaperProfile(
+def test_Paperdb_basic() -> None:
+    db = PaperDB()
+    paper1 = Paper(
         title='Sample Paper 1',
         abstract='This is the abstract for paper 1',
         authors=['Author A', 'Author B'],
@@ -215,7 +215,7 @@ def test_paperprofiledb_basic() -> None:
         domain='Computer Science',
         citation_count=10,
     )
-    paper2 = PaperProfile(
+    paper2 = Paper(
         title='Sample Paper 2',
         abstract='This is the abstract for paper 2',
         authors=['Author C'],
@@ -228,7 +228,7 @@ def test_paperprofiledb_basic() -> None:
     db.add(paper1)
     db.add(paper2)
 
-    new_paper = PaperProfile(
+    new_paper = Paper(
         title='Sample Paper 3',
         abstract='This is the abstract for paper 3',
         authors=['Author D'],
@@ -242,7 +242,7 @@ def test_paperprofiledb_basic() -> None:
     assert new_paper.pk in db.data
 
     conditions = {'pk': paper1.pk}
-    paper: PaperProfile = db.get(**conditions)[0]
+    paper: Paper = db.get(**conditions)[0]
     assert paper is not None
     assert paper.title == 'Sample Paper 1'
 
@@ -252,7 +252,7 @@ def test_paperprofiledb_basic() -> None:
     assert result
 
     conditions = {'pk': paper1.pk}
-    updated_paper: PaperProfile = db.get(**conditions)[0]
+    updated_paper: Paper = db.get(**conditions)[0]
     assert updated_paper is not None
     assert updated_paper.title == 'Updated Sample Paper 1'
     assert updated_paper.citation_count == 15
@@ -261,7 +261,7 @@ def test_paperprofiledb_basic() -> None:
     assert result
 
     domain: Dict[str, Any] = {'domain': 'Computer Science'}
-    results: List[PaperProfile] = db.get(**domain)
+    results: List[Paper] = db.get(**domain)
     assert len(results) == 2
     assert results[0].title == 'Updated Sample Paper 1'
     assert results[1].title == 'Sample Paper 3'
@@ -269,7 +269,7 @@ def test_paperprofiledb_basic() -> None:
     with TemporaryDirectory() as temp_dir:
         db.save_to_json(temp_dir)
 
-        new_db = PaperProfileDB()
+        new_db = PaperDB()
         new_db.load_from_json(temp_dir)
 
         assert len(new_db.data) == 2
@@ -278,12 +278,12 @@ def test_paperprofiledb_basic() -> None:
 
 
 def test_agent_match() -> None:
-    db = AgentProfileDB()
-    agent1 = AgentProfile(
+    db = ResearcherDB()
+    agent1 = Researcher(
         name='John Doe', bio='Researcher in AI', institute='AI Institute'
     )
-    agent2 = AgentProfile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
-    agent3 = AgentProfile(name='Jane kid', bio='Expert in RL', institute='RL Lab')
+    agent2 = Researcher(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    agent3 = Researcher(name='Jane kid', bio='Expert in RL', institute='RL Lab')
     agent_profile_l = [agent1, agent2, agent3]
     lead_agent_profile = 'Researcher in CV'
     match_agent_profiles = db.match(
@@ -294,8 +294,8 @@ def test_agent_match() -> None:
 
 
 def test_paper_match() -> None:
-    db = PaperProfileDB()
-    paper1 = PaperProfile(
+    db = PaperDB()
+    paper1 = Paper(
         title='Sample Paper 1',
         abstract='This is the abstract for paper 1',
         authors=['Author A', 'Author B'],
@@ -305,7 +305,7 @@ def test_paper_match() -> None:
         domain='Computer Science',
         citation_count=10,
     )
-    paper2 = PaperProfile(
+    paper2 = Paper(
         title='Sample Paper 2',
         abstract='This is the abstract for paper 2',
         authors=['Author C'],
@@ -315,7 +315,7 @@ def test_paper_match() -> None:
         domain='Physics',
         citation_count=5,
     )
-    paper_3 = PaperProfile(
+    paper_3 = Paper(
         title='Sample Paper 3',
         abstract='This is the abstract for paper 3',
         authors=['Author D'],
@@ -335,33 +335,33 @@ def test_paper_match() -> None:
 
 
 def test_agent_file() -> None:
-    db = AgentProfileDB()
-    agent1 = AgentProfile(
+    db = ResearcherDB()
+    agent1 = Researcher(
         name='John Doe', bio='Researcher in AI', institute='AI Institute'
     )
-    agent2 = AgentProfile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    agent2 = Researcher(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     db.add(agent1)
     db.add(agent2)
     # save without embeddings
     db.save_to_json('data/test')
-    with open('data/test/AgentProfileDB.json', 'r') as f:
+    with open('data/test/ResearcherDB.json', 'r') as f:
         data_test = json.load(f)
     assert len(data_test) > 0
-    assert db.data == {pk: AgentProfile(**data) for pk, data in data_test.items()}
+    assert db.data == {pk: Researcher(**data) for pk, data in data_test.items()}
     # load without embeddings
-    db_test = AgentProfileDB()
+    db_test = ResearcherDB()
     db_test.load_from_json('data/test')
     assert db.data == db_test.data
     # save with embeddings
     db.transform_to_embed()
     db.save_to_json('data/test', with_embed=True)
-    with open('data/test/AgentProfileDB.pkl', 'rb') as f:
+    with open('data/test/ResearcherDB.pkl', 'rb') as f:
         data_embed_test = pickle.load(f)
     assert db.data_embed.keys() == data_embed_test.keys()
     for agent_pk in db.data_embed:
         assert torch.equal(db.data_embed[agent_pk], data_embed_test[agent_pk])
     # load with embeddings
-    db_test = AgentProfileDB()
+    db_test = ResearcherDB()
     db_test.load_from_json('data/test', with_embed=True)
     assert db.data_embed.keys() == db_test.data_embed.keys()
     for agent_pk in db.data_embed:
@@ -371,8 +371,8 @@ def test_agent_file() -> None:
 
 
 def test_paper_file() -> None:
-    db = PaperProfileDB()
-    paper1 = PaperProfile(
+    db = PaperDB()
+    paper1 = Paper(
         title='Sample Paper 1',
         abstract='This is the abstract for paper 1',
         authors=['Author A', 'Author B'],
@@ -382,7 +382,7 @@ def test_paper_file() -> None:
         domain='Computer Science',
         citation_count=10,
     )
-    paper2 = PaperProfile(
+    paper2 = Paper(
         title='Sample Paper 2',
         abstract='This is the abstract for paper 2',
         authors=['Author C'],
@@ -396,24 +396,24 @@ def test_paper_file() -> None:
     db.add(paper2)
     # save without embeddings
     db.save_to_json('data/test')
-    with open('data/test/PaperProfileDB.json', 'r') as f:
+    with open('data/test/PaperDB.json', 'r') as f:
         data_test = json.load(f)
     assert len(data_test) > 0
-    assert db.data == {pk: PaperProfile(**data) for pk, data in data_test.items()}
+    assert db.data == {pk: Paper(**data) for pk, data in data_test.items()}
     # load without embeddings
-    db_test = PaperProfileDB()
+    db_test = PaperDB()
     db_test.load_from_json('data/test')
     assert db.data == db_test.data
     # save with embeddings
     db.transform_to_embed()
     db.save_to_json('data/test', with_embed=True)
-    with open('data/test/PaperProfileDB.pkl', 'rb') as f:
+    with open('data/test/PaperDB.pkl', 'rb') as f:
         data_embed_test = pickle.load(f)
     assert db.data_embed.keys() == data_embed_test.keys()
     for paper_pk in db.data_embed:
         assert torch.equal(db.data_embed[paper_pk], data_embed_test[paper_pk])
     # load with embeddings
-    db_test = PaperProfileDB()
+    db_test = PaperDB()
     db_test.load_from_json('data/test', with_embed=True)
     assert db.data_embed.keys() == db_test.data_embed.keys()
     for paper_pk in db.data_embed:
@@ -426,7 +426,7 @@ def test_paper_file() -> None:
 def test_pull_agents(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    db = AgentProfileDB()
+    db = ResearcherDB()
     agent_names = ['Jiaxuan You', 'Jure Leskovec']
     db.pull_agents(agent_names=agent_names, config=Config())
     assert db.data.keys()
@@ -435,7 +435,7 @@ def test_pull_agents(mock_model_prompting: MagicMock) -> None:
 
 
 def test_pull_papers() -> None:
-    db = PaperProfileDB()
+    db = PaperDB()
     db.pull_papers(num=2, domain='Data Mining')
     assert db.data.keys()
     assert len(db.data.keys()) == 2

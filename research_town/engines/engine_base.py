@@ -3,25 +3,18 @@ from collections import defaultdict
 from typing import Any, Callable, Dict, List, Tuple
 
 from ..configs import Config
-from ..dbs import (
-    AgentProfile,
-    AgentProfileDB,
-    EnvLogDB,
-    PaperProfileDB,
-    ProgressDB,
-    ResearchProposal,
-)
-from ..envs.env_base import BaseMultiAgentEnv
+from ..dbs import LogDB, PaperDB, ProgressDB, Proposal, Researcher, ResearcherDB
+from ..envs.env_base import BaseEnv
 
 
 class BaseEngine:
     def __init__(
         self,
         project_name: str,
-        agent_db: AgentProfileDB,
-        paper_db: PaperProfileDB,
+        agent_db: ResearcherDB,
+        paper_db: PaperDB,
         progress_db: ProgressDB,
-        env_db: EnvLogDB,
+        env_db: LogDB,
         config: Config,
         time_step: int = 0,
         stop_flag: bool = False,
@@ -34,7 +27,7 @@ class BaseEngine:
         self.config = config
         self.time_step = time_step
         self.stop_flag = stop_flag
-        self.envs: Dict[str, BaseMultiAgentEnv] = {}
+        self.envs: Dict[str, BaseEnv] = {}
         self.transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {}
         self.transitions: Dict[str, Dict[bool, str]] = defaultdict(dict)
         self.set_dbs()
@@ -56,7 +49,7 @@ class BaseEngine:
     def set_transition_funcs(self) -> None:
         pass
 
-    def add_env(self, name: str, env: BaseMultiAgentEnv) -> None:
+    def add_env(self, name: str, env: BaseEnv) -> None:
         self.envs[name] = env
 
     def add_transition_func(
@@ -110,7 +103,7 @@ class BaseEngine:
         query: str,
         num: int,
         update_fields: Dict[str, bool],
-    ) -> List[AgentProfile]:
+    ) -> List[Researcher]:
         candidates = self.agent_db.get(**condition)
         selected_agents = self.agent_db.match(
             query=query, agent_profiles=candidates, num=num
@@ -123,7 +116,7 @@ class BaseEngine:
 
         return selected_agents
 
-    def set_proj_leader(self, proj_leader: AgentProfile) -> AgentProfile:
+    def set_proj_leader(self, proj_leader: Researcher) -> Researcher:
         return self.find_agents(
             condition={'pk': proj_leader.pk},
             query=proj_leader.bio,
@@ -137,8 +130,8 @@ class BaseEngine:
         )[0]
 
     def find_proj_participants(
-        self, proj_leader: AgentProfile, proj_participant_num: int
-    ) -> List[AgentProfile]:
+        self, proj_leader: Researcher, proj_participant_num: int
+    ) -> List[Researcher]:
         return self.find_agents(
             condition={'is_proj_participant_candidate': True},
             query=proj_leader.bio,
@@ -152,8 +145,8 @@ class BaseEngine:
         )
 
     def find_reviewers(
-        self, paper_submission: ResearchProposal, reviewer_num: int
-    ) -> List[AgentProfile]:
+        self, paper_submission: Proposal, reviewer_num: int
+    ) -> List[Researcher]:
         return self.find_agents(
             condition={'is_reviewer_candidate': True},
             query=paper_submission.abstract,
@@ -166,7 +159,7 @@ class BaseEngine:
             },
         )
 
-    def find_chair(self, paper_submission: ResearchProposal) -> AgentProfile:
+    def find_chair(self, paper_submission: Proposal) -> Researcher:
         return self.find_agents(
             condition={'is_chair_candidate': True},
             query=paper_submission.abstract,

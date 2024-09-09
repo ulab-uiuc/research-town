@@ -1,11 +1,6 @@
 from typing import Any, Callable, Dict, Tuple
 
-from ..envs import (
-    EndMultiAgentEnv,
-    PaperSubmissionMultiAgentEnv,
-    PeerReviewMultiAgentEnv,
-    StartMultiAgentEnv,
-)
+from ..envs import EndEnv, PaperSubmissionEnv, PeerReviewEnv, StartEnv
 from .engine_base import BaseEngine
 
 
@@ -13,25 +8,21 @@ class LifecycleEngine(BaseEngine):
     def set_envs(self) -> None:
         self.add_env(
             'start',
-            StartMultiAgentEnv(
-                self.env_db, self.progress_db, self.paper_db, self.config
-            ),
+            StartEnv(self.env_db, self.progress_db, self.paper_db, self.config),
         )
         self.add_env(
             'paper_submission',
-            PaperSubmissionMultiAgentEnv(
+            PaperSubmissionEnv(
                 self.env_db, self.progress_db, self.paper_db, self.config
             ),
         )
         self.add_env(
             'peer_review',
-            PeerReviewMultiAgentEnv(
-                self.env_db, self.progress_db, self.paper_db, self.config
-            ),
+            PeerReviewEnv(self.env_db, self.progress_db, self.paper_db, self.config),
         )
         self.add_env(
             'end',
-            EndMultiAgentEnv(self.env_db, self.progress_db, self.paper_db, self.config),
+            EndEnv(self.env_db, self.progress_db, self.paper_db, self.config),
         )
 
     def set_transitions(self) -> None:
@@ -67,12 +58,12 @@ class LifecycleEngine(BaseEngine):
         for (from_env, to_env), func in transition_funcs.items():
             self.add_transition_func(from_env, func, to_env)
 
-    def from_start_to_start(self, env: StartMultiAgentEnv) -> Dict[str, Any]:
+    def from_start_to_start(self, env: StartEnv) -> Dict[str, Any]:
         return {}
 
     def from_start_to_paper_submission(
         self,
-        env: StartMultiAgentEnv,
+        env: StartEnv,
     ) -> Dict[str, Any]:
         proj_participant_num = self.config.param.proj_participant_num
         proj_leader = env.proj_leader.profile
@@ -88,7 +79,7 @@ class LifecycleEngine(BaseEngine):
 
     def from_paper_submission_to_peer_review(
         self,
-        env: PaperSubmissionMultiAgentEnv,
+        env: PaperSubmissionEnv,
     ) -> Dict[str, Any]:
         reviewer_num = self.config.param.reviewer_num
         proj_leader = env.proj_leader.profile
@@ -102,7 +93,7 @@ class LifecycleEngine(BaseEngine):
         }
 
     def from_paper_submission_to_paper_submission(
-        self, env: PaperSubmissionMultiAgentEnv
+        self, env: PaperSubmissionEnv
     ) -> Dict[str, Any]:
         proj_participant_num = self.config.param.proj_participant_num
         proj_leader = env.proj_leader.profile
@@ -116,12 +107,10 @@ class LifecycleEngine(BaseEngine):
             'agent_models': ['gpt-4o'] * (proj_participant_num + 1),
         }
 
-    def from_peer_review_to_end(self, env: PeerReviewMultiAgentEnv) -> Dict[str, Any]:
+    def from_peer_review_to_end(self, env: PeerReviewEnv) -> Dict[str, Any]:
         return {'meta_review': env.meta_review}
 
-    def from_peer_review_to_peer_review(
-        self, env: PeerReviewMultiAgentEnv
-    ) -> Dict[str, Any]:
+    def from_peer_review_to_peer_review(self, env: PeerReviewEnv) -> Dict[str, Any]:
         proj_leader = env.proj_leader.profile
         reviewers = self.find_reviewers(env.paper, 2)
         chair = self.find_chair(env.paper)
@@ -132,5 +121,5 @@ class LifecycleEngine(BaseEngine):
             'paper': env.paper,
         }
 
-    def from_end_to_end(self, env: EndMultiAgentEnv) -> Dict[str, Any]:
+    def from_end_to_end(self, env: EndEnv) -> Dict[str, Any]:
         return {}

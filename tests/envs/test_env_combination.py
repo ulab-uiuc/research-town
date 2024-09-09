@@ -3,14 +3,8 @@ from unittest.mock import MagicMock, patch
 from beartype.typing import List, Literal
 
 from research_town.configs import Config
-from research_town.dbs import (
-    AgentProfile,
-    ResearchMetaReview,
-    ResearchProposal,
-    ResearchRebuttal,
-    ResearchReview,
-)
-from research_town.envs import PaperSubmissionMultiAgentEnv, PeerReviewMultiAgentEnv
+from research_town.dbs import MetaReview, Proposal, Researcher, ResearchRebuttal, Review
+from research_town.envs import PaperSubmissionEnv, PeerReviewEnv
 from tests.constants.db_constants import (
     example_env_db,
     example_paper_db,
@@ -32,15 +26,13 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         'proj_participant',
     ]
     paper_submission_agent_profiles = [
-        AgentProfile(name='Jiaxuan You', bio='A researcher in machine learning.'),
-        AgentProfile(
-            name='Rex Ying', bio='A researcher in natural language processing.'
-        ),
-        AgentProfile(name='Rex Zhu', bio='A researcher in computer vision.'),
+        Researcher(name='Jiaxuan You', bio='A researcher in machine learning.'),
+        Researcher(name='Rex Ying', bio='A researcher in natural language processing.'),
+        Researcher(name='Rex Zhu', bio='A researcher in computer vision.'),
     ]
 
     # Create and run the paper submission environment
-    paper_submission_env = PaperSubmissionMultiAgentEnv(
+    paper_submission_env = PaperSubmissionEnv(
         paper_db=example_paper_db,
         env_db=example_env_db,
         progress_db=example_progress_db,
@@ -56,7 +48,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     paper_submission_env.run()
     paper = paper_submission_env.paper
 
-    assert isinstance(paper, ResearchProposal)
+    assert isinstance(paper, Proposal)
     assert paper.abstract == 'Paper abstract1'
 
     # Agent profiles and roles for peer review environment
@@ -67,12 +59,12 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     ]
     peer_review_role_list: List[Role] = ['proj_leader', 'reviewer', 'chair']
     peer_review_agent_profiles = [
-        AgentProfile(name=agent, bio='A researcher in machine learning.')
+        Researcher(name=agent, bio='A researcher in machine learning.')
         for agent in peer_review_agent_list
     ]
 
     # Create and run the peer review environment
-    peer_review_env = PeerReviewMultiAgentEnv(
+    peer_review_env = PeerReviewEnv(
         paper_db=example_paper_db,
         env_db=example_env_db,
         progress_db=example_progress_db,
@@ -102,7 +94,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         peer_review_env.reviews,
     )
 
-    assert isinstance(meta_review, ResearchMetaReview)
+    assert isinstance(meta_review, MetaReview)
     assert meta_review.paper_pk == paper.pk
     assert meta_review.decision is True
     assert meta_review.weakness == 'Meta review weakness1'
@@ -111,7 +103,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
 
     assert isinstance(reviews, list)
     assert len(reviews) == 1
-    assert isinstance(reviews[0], ResearchReview)
+    assert isinstance(reviews[0], Review)
     assert reviews[0].paper_pk == paper.pk
     assert reviews[0].score == 8
     assert reviews[0].weakness == 'Weakness of the paper1'

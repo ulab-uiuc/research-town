@@ -9,7 +9,7 @@ class BaseDBData(BaseModel):
     project_name: Optional[str] = Field(default=None)
 
 
-class AgentProfile(BaseDBData):
+class Researcher(BaseDBData):
     name: str
     bio: str
     collaborators: Optional[List[str]] = Field(default=[])
@@ -21,7 +21,7 @@ class AgentProfile(BaseDBData):
     is_chair_candidate: Optional[bool] = Field(default=True)
 
 
-class PaperProfile(BaseDBData):
+class Paper(BaseDBData):
     authors: List[str] = Field(default=[])
     title: str
     abstract: str
@@ -39,7 +39,7 @@ class PaperProfile(BaseDBData):
     embed: Optional[Any] = Field(default=None)
 
 
-class AgentPaperLiteratureReviewLog(BaseDBData):
+class LiteratureReviewLog(BaseDBData):
     timestep: int = Field(default=0)
     paper_pks: List[str]
     agent_pk: str
@@ -47,20 +47,20 @@ class AgentPaperLiteratureReviewLog(BaseDBData):
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
-class AgentIdeaBrainstormingLog(BaseDBData):
+class IdeaBrainstormingLog(BaseDBData):
     timestep: int = Field(default=0)
     idea_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
-class AgentAgentCollaborationFindingLog(BaseDBData):
+class CollaborationFindingLog(BaseDBData):
     timestep: int = Field(default=0)
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
-class AgentAgentIdeaDiscussionLog(BaseDBData):
+class IdeaDiscussionLog(BaseDBData):
     timestep: int = Field(default=0)
     agent_from_pk: str
     agent_from_name: str
@@ -69,14 +69,14 @@ class AgentAgentIdeaDiscussionLog(BaseDBData):
     message: Optional[str] = Field(default=None)
 
 
-class AgentPaperWritingLog(BaseDBData):
+class ProposalWritingLog(BaseDBData):
     timestep: int = Field(default=0)
     paper_pk: str
     agent_pk: str
     other_agent_pks: Optional[List[str]] = Field(default=[])
 
 
-class AgentPaperReviewWritingLog(BaseDBData):
+class ReviewWritingLog(BaseDBData):
     timestep: int = Field(default=0)
     paper_pk: str
     agent_pk: str
@@ -87,7 +87,7 @@ class AgentPaperReviewWritingLog(BaseDBData):
     weakness: Optional[str] = Field(default=None)
 
 
-class AgentPaperRebuttalWritingLog(BaseDBData):
+class RebuttalWritingLog(BaseDBData):
     timestep: int = Field(default=0)
     paper_pk: str
     agent_pk: str
@@ -95,7 +95,7 @@ class AgentPaperRebuttalWritingLog(BaseDBData):
     rebuttal_content: Optional[str] = Field(default=None)
 
 
-class AgentPaperMetaReviewWritingLog(BaseDBData):
+class MetaReviewWritingLog(BaseDBData):
     timestep: int = Field(default=0)
     paper_pk: str
     agent_pk: str
@@ -106,25 +106,25 @@ class AgentPaperMetaReviewWritingLog(BaseDBData):
     weakness: Optional[str] = Field(default=None)
 
 
-class AgentExperimentLog(BaseDBData):
+class ExperimentLog(BaseDBData):
     timestep: int = Field(default=0)
     paper_pk: str
     experiment_pk: str
 
 
-class ResearchInsight(BaseDBData):
+class Insight(BaseDBData):
     content: Optional[str] = Field(default=None)
     eval_score: Optional[List[int]] = Field(default=[])  # evaluation scores
     model_config = ConfigDict(extra='allow')
 
 
-class ResearchIdea(BaseDBData):
+class Idea(BaseDBData):
     content: Optional[str] = Field(default=None)
     eval_score: Optional[List[int]] = Field(default=[])  # evaluation scores
     model_config = ConfigDict(extra='allow')
 
 
-class ResearchProposal(BaseDBData):
+class Proposal(BaseDBData):
     abstract: str
     title: Optional[str] = Field(default=None)
     content: Optional[str] = Field(default=None)
@@ -133,7 +133,7 @@ class ResearchProposal(BaseDBData):
     model_config = ConfigDict(extra='allow')
 
 
-class ResearchReview(BaseDBData):
+class Review(BaseDBData):
     paper_pk: Optional[str] = Field(default=None)
     reviewer_pk: Optional[str] = Field(default=None)
     summary: Optional[str] = Field(default=None)
@@ -153,7 +153,7 @@ class ResearchRebuttal(BaseDBData):
     model_config = ConfigDict(extra='allow')
 
 
-class ResearchMetaReview(BaseDBData):
+class MetaReview(BaseDBData):
     paper_pk: Optional[str] = Field(default=None)
     chair_pk: Optional[str] = Field(default=None)
     reviewer_pks: List[str] = Field(default=[])
@@ -166,7 +166,7 @@ class ResearchMetaReview(BaseDBData):
     model_config = ConfigDict(extra='allow')
 
 
-class ResearchExperiment(BaseDBData):
+class Experiment(BaseDBData):
     paper_pk: Optional[str] = Field(default=None)
     code: Optional[str] = Field(default=None)
     exec_result: Optional[str] = Field(default=None)

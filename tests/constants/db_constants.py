@@ -1,4 +1,4 @@
-from research_town.dbs import AgentProfileDB, EnvLogDB, PaperProfileDB, ProgressDB
+from research_town.dbs import LogDB, PaperDB, ProgressDB, ResearcherDB
 
 from .data_constants import (
     agent_agent_idea_discussion_log,
@@ -19,12 +19,12 @@ from .data_constants import (
     research_paper_submission_B,
 )
 
-example_agent_db = AgentProfileDB()
+example_agent_db = ResearcherDB()
 example_agent_db.add(agent_profile_A)
 example_agent_db.add(agent_profile_B)
 example_agent_db.add(agent_profile_C)
 
-example_paper_db = PaperProfileDB()
+example_paper_db = PaperDB()
 example_paper_db.add(paper_profile_A)
 example_paper_db.add(paper_profile_B)
 example_paper_db.add(paper_profile_C)
@@ -37,7 +37,7 @@ example_progress_db.add(research_insight_B)
 example_progress_db.add(research_paper_submission_A)
 example_progress_db.add(research_paper_submission_B)
 
-example_env_db = EnvLogDB()
+example_env_db = LogDB()
 example_env_db.add(agent_paper_review_log)
 example_env_db.add(agent_paper_rebuttal_log)
 example_env_db.add(agent_paper_meta_review_log)

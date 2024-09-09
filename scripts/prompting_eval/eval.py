@@ -1,11 +1,11 @@
 from research_town.configs import Config
 from research_town.evaluators import (
-    ResearchIdeaQualityEvaluator,
-    ResearchInsightQualityEvaluator,
-    ResearchMetaReviewQualityEvaluator,
-    ResearchProposalQualityEvaluator,
+    IdeaQualityEvaluator,
+    InsightQualityEvaluator,
+    MetaReviewQualityEvaluator,
+    ProposalQualityEvaluator,
     ResearchRebuttalQualityEvaluator,
-    ResearchReviewQualityEvaluator,
+    ReviewQualityEvaluator,
 )
 
 
@@ -45,12 +45,12 @@ def main(
         'weakness': 'meta_review_weakness',
     }
 
-    insight_evaluator = ResearchInsightQualityEvaluator(model_name, config)
-    idea_evaluator = ResearchIdeaQualityEvaluator(model_name, config)
-    paper_evaluator = ResearchProposalQualityEvaluator(model_name, config)
-    review_evaluator = ResearchReviewQualityEvaluator(model_name, config)
+    insight_evaluator = InsightQualityEvaluator(model_name, config)
+    idea_evaluator = IdeaQualityEvaluator(model_name, config)
+    paper_evaluator = ProposalQualityEvaluator(model_name, config)
+    review_evaluator = ReviewQualityEvaluator(model_name, config)
     rebuttal_evaluator = ResearchRebuttalQualityEvaluator(model_name, config)
-    meta_review_evaluator = ResearchMetaReviewQualityEvaluator(model_name, config)
+    meta_review_evaluator = MetaReviewQualityEvaluator(model_name, config)
 
     for insight in insights:
         insight_quality = insight_evaluator.eval(insight=insight)

@@ -6,28 +6,28 @@ from beartype.typing import Any, Dict, List, Literal, Union
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
-    AgentPaperMetaReviewWritingLog,
-    AgentPaperRebuttalWritingLog,
-    AgentPaperReviewWritingLog,
-    AgentProfile,
-    EnvLogDB,
-    PaperProfileDB,
+    LogDB,
+    MetaReviewWritingLog,
+    PaperDB,
     ProgressDB,
+    RebuttalWritingLog,
+    Researcher,
     ResearchRebuttal,
-    ResearchReview,
+    Review,
+    ReviewWritingLog,
 )
-from .env_base import BaseMultiAgentEnv
+from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
 
-class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
+class PeerReviewEnv(BaseEnv):
     def __init__(
         self,
-        env_db: EnvLogDB,
+        env_db: LogDB,
         progress_db: ProgressDB,
-        paper_db: PaperProfileDB,
+        paper_db: PaperDB,
         config: Config,
     ) -> None:
         super().__init__(
@@ -42,7 +42,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         self,
         time_step: int,
         stop_flag: bool,
-        agent_profiles: List[AgentProfile],
+        agent_profiles: List[Researcher],
         agent_roles: List[Role],
         agent_models: List[str],
         *args: Any,
@@ -101,7 +101,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
     @beartype
     def run(self) -> None:
         # Paper Reviewing
-        self.reviews: List[ResearchReview] = []
+        self.reviews: List[Review] = []
         for reviewer in self.reviewers:
             review = reviewer.write_review(
                 paper=self.paper,
@@ -110,7 +110,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
             self.reviews.append(review)
             self.progress_db.add(review)
             self.env_db.add(
-                AgentPaperReviewWritingLog(
+                ReviewWritingLog(
                     time_step=self.time_step,
                     agent_pk=reviewer.profile.pk,
                     paper_pk=self.paper.pk,
@@ -128,7 +128,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
             self.rebuttals.append(rebuttal)
             self.progress_db.add(rebuttal)
             self.env_db.add(
-                AgentPaperRebuttalWritingLog(
+                RebuttalWritingLog(
                     time_step=self.time_step,
                     paper_pk=rebuttal.paper_pk,
                     agent_pk=self.proj_leader.profile.pk,
@@ -145,7 +145,7 @@ class PeerReviewMultiAgentEnv(BaseMultiAgentEnv):
         )
         self.progress_db.add(self.meta_review)
         self.env_db.add(
-            AgentPaperMetaReviewWritingLog(
+            MetaReviewWritingLog(
                 time_step=self.time_step,
                 paper_pk=self.meta_review.paper_pk,
                 agent_pk=self.chair.profile.pk,

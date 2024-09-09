@@ -8,14 +8,7 @@ from aider.io import InputOutput
 from aider.models import Model
 
 from ..configs import Config
-from ..dbs import (
-    AgentExperimentLog,
-    EnvLogDB,
-    PaperProfileDB,
-    ProgressDB,
-    ResearchExperiment,
-    ResearchPaperSubmission,
-)
+from ..dbs import Experiment, ExperimentLog, LogDB, PaperDB, ProgressDB, Proposal
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
@@ -24,9 +17,9 @@ Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 class ExperimentEnv:
     def __init__(
         self,
-        env_db: EnvLogDB,
+        env_db: LogDB,
         progress_db: ProgressDB,
-        paper_db: PaperProfileDB,
+        paper_db: PaperDB,
         config: Config,
         folder: str = 'experiments',
         max_loops: int = 5,
@@ -91,9 +84,7 @@ class ExperimentEnv:
 
     def run(self, time_step: int, paper_pk: str) -> None:
         conditions = {'pk': paper_pk}
-        proposal = self.progress_db.get(ResearchPaperSubmission, **conditions)[
-            0
-        ].abstract
+        proposal = self.progress_db.get(Proposal, **conditions)[0].abstract
         # Define folder and file paths based on pk
         folder = os.path.join(self.folder, paper_pk)
         experiment_script = os.path.join(folder, 'experiment.py')
@@ -183,14 +174,14 @@ class ExperimentEnv:
 
         print('Final results:')
         print(self.result)
-        self.experiment = ResearchExperiment(
+        self.experiment = Experiment(
             paper_pk=paper_pk,
             code=self._read_from_text_file(experiment_script),
             exec_result=self.result,
         )
         self.progress_db.add(self.experiment)
         self.env_db.add(
-            AgentExperimentLog(
+            ExperimentLog(
                 time_step=time_step, paper_pk=paper_pk, experiment_pk=self.experiment.pk
             )
         )

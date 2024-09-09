@@ -28,7 +28,7 @@ class ParamConfig(BaseModel):
     top_p: Optional[float] = None
     stream: Optional[bool] = None
     experiment_model_name: Optional[str] = 'gpt-4o-mini'
-    write_proposal_strategy: str = 'default' # default, cot, react, reflexion
+    write_proposal_strategy: str = 'default'  # default, cot, react, reflexion
 
     model_config = ConfigDict(
         extra='allow',
@@ -393,19 +393,19 @@ class AgentPromptTemplateConfig(BaseModel):
         'template': 'Here is the idea: {idea}\nHere are the external data, which is a list of abstracts of related papers: {papers}',
     }
     write_proposal_cot: Dict[str, Union[str, List[str]]] = {
-        'intro': 'Please write a paper based on the following ideas and external data. You might use two or more of these ideas if they are related and work well together. Let\'s think step by step.',
+        'intro': "Please write a paper based on the following ideas and external data. You might use two or more of these ideas if they are related and work well together. Let's think step by step.",
         'examples': ['', ''],
-        'template': '''Here is the idea: {idea}
+        'template': """Here is the idea: {idea}
     Here are the external data, which is a list of abstracts of related papers: {papers}
 
     You need to first break down the task into smaller steps and think about each step carefully.
     After that, you need to generate the abstract based on the ideas and external data. You need to generate:' Abstract: [Your abstract]' in the end of the task.
-    Now, let's begin:''',
+    Now, let's begin:""",
     }
     write_proposal_react: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write a paper based on the following ideas and external data.  You might use two or more of these ideas if they are related and work well together. Use the ReAct (Reason+Act) approach to complete this task.',
         'examples': ['', ''],
-        'template': '''Here is the idea: {idea}
+        'template': """Here is the idea: {idea}
     Here are the external data, which is a list of abstracts of related papers: {papers}
 
     Let's use the ReAct approach:
@@ -428,12 +428,12 @@ class AgentPromptTemplateConfig(BaseModel):
 
     Abstract: [Your abstract]
     Now, let's begin:
-    ''',
+    """,
     }
     write_proposal_reflexion: Dict[str, Union[str, List[str]]] = {
-            'intro': 'Please write a paper based on the following ideas and external data. You might use two or more of these ideas if they are related and work well together. Use the Reflexion approach to complete and improve this task.',
-            'examples': ['', ''],
-            'template': '''Here is the idea: {idea}
+        'intro': 'Please write a paper based on the following ideas and external data. You might use two or more of these ideas if they are related and work well together. Use the Reflexion approach to complete and improve this task.',
+        'examples': ['', ''],
+        'template': """Here is the idea: {idea}
         Here are the external data, which is a list of abstracts of related papers: {papers}
 
         Let's use the Reflexion approach:
@@ -456,8 +456,8 @@ class AgentPromptTemplateConfig(BaseModel):
 
         Abstract:[Your final abstract]
         Now, let's begin:
-        ''',
-        }
+        """,
+    }
     write_review_summary: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write a summary of the paper for the following submission you have made to an academic conference.',
         'examples': ['', ''],

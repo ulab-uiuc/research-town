@@ -2,30 +2,30 @@ from typing import List, Tuple
 
 from research_town.configs import Config
 from research_town.dbs import (
-    ResearchIdea,
-    ResearchInsight,
-    ResearchMetaReview,
-    ResearchProposal,
+    Idea,
+    Insight,
+    MetaReview,
+    Proposal,
     ResearchRebuttal,
-    ResearchReview,
+    Review,
 )
 
 from ..utils.serializer import Serializer
 from .evaluator_output import (
-    ResearchIdeaEvalOutput,
-    ResearchInsightEvalOutput,
-    ResearchMetaReviewEvalOutput,
-    ResearchProposalEvalOutput,
+    IdeaEvalOutput,
+    InsightEvalOutput,
+    MetaReviewEvalOutput,
+    ProposalEvalOutput,
     ResearchRebuttalEvalOutput,
-    ResearchReviewEvalOutput,
+    ReviewEvalOutput,
 )
 from .evaluator_quality import (
-    ResearchIdeaQualityEvaluator,
-    ResearchInsightQualityEvaluator,
-    ResearchMetaReviewQualityEvaluator,
-    ResearchProposalQualityEvaluator,
+    IdeaQualityEvaluator,
+    InsightQualityEvaluator,
+    MetaReviewQualityEvaluator,
+    ProposalQualityEvaluator,
     ResearchRebuttalQualityEvaluator,
-    ResearchReviewQualityEvaluator,
+    ReviewQualityEvaluator,
 )
 
 
@@ -35,10 +35,8 @@ class BaseEvaluator:
         self.config = config
         self.serializer = Serializer()
 
-    def evaluate_insight_quality(
-        self, insight: ResearchInsight
-    ) -> ResearchInsightEvalOutput:
-        evaluator = ResearchInsightQualityEvaluator(
+    def evaluate_insight_quality(self, insight: Insight) -> InsightEvalOutput:
+        evaluator = InsightQualityEvaluator(
             model_name=self.model_name, config=self.config
         )
         return evaluator.eval(
@@ -46,11 +44,9 @@ class BaseEvaluator:
         )
 
     def evaluate_idea_quality(
-        self, insights: List[ResearchInsight], idea: ResearchIdea
-    ) -> ResearchIdeaEvalOutput:
-        evaluator = ResearchIdeaQualityEvaluator(
-            model_name=self.model_name, config=self.config
-        )
+        self, insights: List[Insight], idea: Idea
+    ) -> IdeaEvalOutput:
+        evaluator = IdeaQualityEvaluator(model_name=self.model_name, config=self.config)
         return evaluator.eval(
             insights=self.serializer.serialize(insights),
             idea=self.serializer.serialize(idea),
@@ -58,11 +54,11 @@ class BaseEvaluator:
 
     def evaluate_paper_quality(
         self,
-        insights: List[ResearchInsight],
-        idea: ResearchIdea,
-        paper: ResearchProposal,
-    ) -> ResearchProposalEvalOutput:
-        evaluator = ResearchProposalQualityEvaluator(
+        insights: List[Insight],
+        idea: Idea,
+        paper: Proposal,
+    ) -> ProposalEvalOutput:
+        evaluator = ProposalQualityEvaluator(
             model_name=self.model_name, config=self.config
         )
         return evaluator.eval(
@@ -73,12 +69,12 @@ class BaseEvaluator:
 
     def evaluate_review_quality(
         self,
-        insights: List[ResearchInsight],
-        idea: ResearchIdea,
-        paper: ResearchProposal,
-        review: ResearchReview,
-    ) -> ResearchReviewEvalOutput:
-        evaluator = ResearchReviewQualityEvaluator(
+        insights: List[Insight],
+        idea: Idea,
+        paper: Proposal,
+        review: Review,
+    ) -> ReviewEvalOutput:
+        evaluator = ReviewQualityEvaluator(
             model_name=self.model_name, config=self.config
         )
         return evaluator.eval(
@@ -90,10 +86,10 @@ class BaseEvaluator:
 
     def evaluate_rebuttal_quality(
         self,
-        insights: List[ResearchInsight],
-        idea: ResearchIdea,
-        paper: ResearchProposal,
-        review: ResearchReview,
+        insights: List[Insight],
+        idea: Idea,
+        paper: Proposal,
+        review: Review,
         rebuttal: ResearchRebuttal,
     ) -> ResearchRebuttalEvalOutput:
         evaluator = ResearchRebuttalQualityEvaluator(
@@ -109,14 +105,14 @@ class BaseEvaluator:
 
     def evaluate_meta_review_quality(
         self,
-        insights: List[ResearchInsight],
-        idea: ResearchIdea,
-        paper: ResearchProposal,
-        reviews: List[ResearchReview],
+        insights: List[Insight],
+        idea: Idea,
+        paper: Proposal,
+        reviews: List[Review],
         rebuttals: List[ResearchRebuttal],
-        meta_review: ResearchMetaReview,
-    ) -> ResearchMetaReviewEvalOutput:
-        evaluator = ResearchMetaReviewQualityEvaluator(
+        meta_review: MetaReview,
+    ) -> MetaReviewEvalOutput:
+        evaluator = MetaReviewQualityEvaluator(
             model_name=self.model_name, config=self.config
         )
         return evaluator.eval(
@@ -130,19 +126,19 @@ class BaseEvaluator:
 
     def pipeline_eval(
         self,
-        insights: List[ResearchInsight],
-        idea: ResearchIdea,
-        paper: ResearchProposal,
-        reviews: List[ResearchReview],
+        insights: List[Insight],
+        idea: Idea,
+        paper: Proposal,
+        reviews: List[Review],
         rebuttals: List[ResearchRebuttal],
-        meta_review: ResearchMetaReview,
+        meta_review: MetaReview,
     ) -> Tuple[
-        List[ResearchInsightEvalOutput],
-        ResearchIdeaEvalOutput,
-        ResearchProposalEvalOutput,
-        List[ResearchReviewEvalOutput],
+        List[InsightEvalOutput],
+        IdeaEvalOutput,
+        ProposalEvalOutput,
+        List[ReviewEvalOutput],
         List[ResearchRebuttalEvalOutput],
-        ResearchMetaReviewEvalOutput,
+        MetaReviewEvalOutput,
     ]:
         insights_quality = [
             self.evaluate_insight_quality(insight) for insight in insights

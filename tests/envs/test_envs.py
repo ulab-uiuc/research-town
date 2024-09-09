@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.configs import Config
-from research_town.dbs import ResearchMetaReview, ResearchRebuttal, ResearchReview
-from research_town.envs import PaperSubmissionMultiAgentEnv, PeerReviewMultiAgentEnv
+from research_town.dbs import MetaReview, ResearchRebuttal, Review
+from research_town.envs import PaperSubmissionEnv, PeerReviewEnv
 from tests.constants.data_constants import (
     agent_profile_A,
     agent_profile_B,
@@ -20,7 +20,7 @@ from tests.mocks.mocking_func import mock_prompting
 def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    env = PeerReviewMultiAgentEnv(
+    env = PeerReviewEnv(
         env_db=example_env_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
@@ -52,13 +52,13 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
 
     assert isinstance(env.reviews, list)
     assert len(env.reviews) == 2
-    assert isinstance(env.reviews[0], ResearchReview)
+    assert isinstance(env.reviews[0], Review)
 
     assert isinstance(env.rebuttals, list)
     assert len(env.rebuttals) == 2
     assert isinstance(env.rebuttals[0], ResearchRebuttal)
 
-    assert isinstance(env.meta_review, ResearchMetaReview)
+    assert isinstance(env.meta_review, MetaReview)
     assert isinstance(env.meta_review.decision, bool)
 
 
@@ -68,7 +68,7 @@ def test_paper_submission_env(
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    env = PaperSubmissionMultiAgentEnv(
+    env = PaperSubmissionEnv(
         env_db=example_env_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
