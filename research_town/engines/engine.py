@@ -79,4 +79,4 @@ class Engine(BaseEngine):
         }
 
     def from_review_writing_to_end(self, env: ReviewWritingEnv) -> Dict[str, Any]:
-        return {'reviews': env.reviews}
+        return {'meta_review': env.meta_review}
