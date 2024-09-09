@@ -3,7 +3,7 @@ from typing import List, Optional, TypeVar
 from transformers import BertModel, BertTokenizer
 
 from ..configs import Config
-from ..utils.agent_collector import collect_paper_abstracts_and_coauthors
+from ..utils.agent_collector import collect_proposals_and_coauthors
 from ..utils.agent_prompter import write_bio_prompting
 from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
@@ -25,12 +25,10 @@ class ResearcherDB(BaseDB[Researcher]):
 
     def pull_agents(self, agent_names: List[str], config: Config) -> None:
         for name in agent_names:
-            paper_abstracts, collaborators = collect_paper_abstracts_and_coauthors(
+            proposals, collaborators = collect_proposals_and_coauthors(
                 author=name, paper_max_num=10
             )
-            publication_info = '; '.join(
-                [f'{abstract}' for abstract in paper_abstracts]
-            )
+            publication_info = '; '.join([f'{abstract}' for abstract in proposals])
             bio = write_bio_prompting(
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,

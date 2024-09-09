@@ -21,7 +21,7 @@ def coauthor_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
     return [name for name, _ in co_author_list[:limit]]
 
 
-def collect_paper_abstracts_and_coauthors(
+def collect_proposals_and_coauthors(
     author: str, paper_max_num: int = 10
 ) -> Tuple[List[Dict[str, Any]], List[str]]:
     client = Client()

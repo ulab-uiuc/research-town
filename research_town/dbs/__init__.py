@@ -12,16 +12,16 @@ from .data import (
     Paper,
     Proposal,
     ProposalWritingLog,
+    Rebuttal,
     RebuttalWritingLog,
     Researcher,
-    ResearchRebuttal,
     Review,
     ReviewWritingLog,
 )
-from .db_agent import ResearcherDB
-from .db_env import LogDB
+from .db_log import LogDB
 from .db_paper import PaperDB
 from .db_progress import ProgressDB
+from .db_researcher import ResearcherDB
 
 __all__ = [
     'CollaborationFindingLog',
@@ -39,7 +39,7 @@ __all__ = [
     'Insight',
     'Proposal',
     'Review',
-    'ResearchRebuttal',
+    'Rebuttal',
     'MetaReview',
     'Experiment',
     'LogDB',

@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.configs import Config
-from research_town.dbs import MetaReview, ResearchRebuttal, Review
+from research_town.dbs import MetaReview, Rebuttal, Review
 from research_town.envs import PaperSubmissionEnv, PeerReviewEnv
 from tests.constants.data_constants import (
     agent_profile_A,
@@ -56,7 +56,7 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
 
     assert isinstance(env.rebuttals, list)
     assert len(env.rebuttals) == 2
-    assert isinstance(env.rebuttals[0], ResearchRebuttal)
+    assert isinstance(env.rebuttals[0], Rebuttal)
 
     assert isinstance(env.meta_review, MetaReview)
     assert isinstance(env.meta_review.decision, bool)

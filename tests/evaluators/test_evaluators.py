@@ -9,7 +9,7 @@ from research_town.evaluators.evaluator_quality import (
     InsightQualityEvaluator,
     MetaReviewQualityEvaluator,
     ProposalQualityEvaluator,
-    ResearchRebuttalQualityEvaluator,
+    RebuttalQualityEvaluator,
     ReviewQualityEvaluator,
 )
 from tests.constants.data_constants import (
@@ -165,7 +165,7 @@ def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
         'rebuttal': rebuttal,
     }
 
-    evaluator = ResearchRebuttalQualityEvaluator(model_name=model_name, config=config)
+    evaluator = RebuttalQualityEvaluator(model_name=model_name, config=config)
 
     if use_mock:
         with patch(

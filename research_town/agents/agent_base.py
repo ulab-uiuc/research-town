@@ -10,8 +10,8 @@ from ..dbs import (
     MetaReview,
     Paper,
     Proposal,
+    Rebuttal,
     Researcher,
-    ResearchRebuttal,
     Review,
 )
 from ..utils.agent_prompter import (
@@ -128,7 +128,7 @@ class BaseResearchAgent(object):
             print('write_proposal_strategy not supported, will use default')
             prompt_template = config.agent_prompt_template.write_proposal
 
-        paper_abstract = write_proposal_prompting(
+        proposal = write_proposal_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
@@ -139,8 +139,8 @@ class BaseResearchAgent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )[0]
-        paper_abstract = self.prompting_parser(paper_abstract, write_proposal_strategy)
-        return Proposal(abstract=paper_abstract)
+        proposal = self.prompting_parser(proposal, write_proposal_strategy)
+        return Proposal(abstract=proposal)
 
     @beartype
     @reviewer_required
@@ -175,7 +175,7 @@ class BaseResearchAgent(object):
         self,
         paper: Proposal,
         reviews: List[Review],
-        rebuttals: List[ResearchRebuttal],
+        rebuttals: List[Rebuttal],
         config: Config,
     ) -> MetaReview:
         serialized_paper = self.serializer.serialize(paper)
@@ -216,7 +216,7 @@ class BaseResearchAgent(object):
         paper: Proposal,
         review: Review,
         config: Config,
-    ) -> ResearchRebuttal:
+    ) -> Rebuttal:
         serialized_paper = self.serializer.serialize(paper)
         serialized_review = self.serializer.serialize(review)
 
@@ -232,7 +232,7 @@ class BaseResearchAgent(object):
             stream=config.param.stream,
         )[0]
 
-        return ResearchRebuttal(
+        return Rebuttal(
             paper_pk=paper.pk,
             reviewer_pk=review.reviewer_pk,
             author_pk=self.profile.pk,
@@ -241,16 +241,16 @@ class BaseResearchAgent(object):
 
     @staticmethod
     @beartype
-    def prompting_parser(paper_abstract: str, write_proposal_strategy: str) -> str:
+    def prompting_parser(proposal: str, write_proposal_strategy: str) -> str:
         if write_proposal_strategy == 'default':
-            return paper_abstract.strip()
+            return proposal.strip()
         elif write_proposal_strategy in ['cot', 'react', 'reflexion']:
-            match = re.search(r'Abstract:\s*"(.*?)"', paper_abstract, re.DOTALL)
+            match = re.search(r'Abstract:\s*"(.*?)"', proposal, re.DOTALL)
             if match:
                 return match.group(1).strip()
         else:
             print(f'Unsupported write_proposal_strategy: {write_proposal_strategy}')
-            return paper_abstract.strip()
+            return proposal.strip()
 
         print(f'Failed to extract abstract for strategy: {write_proposal_strategy}')
-        return paper_abstract.strip()
+        return proposal.strip()

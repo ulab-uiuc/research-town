@@ -2,14 +2,7 @@ from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent_base import BaseResearchAgent
 from research_town.configs import Config
-from research_town.dbs import (
-    Idea,
-    Insight,
-    MetaReview,
-    Proposal,
-    ResearchRebuttal,
-    Review,
-)
+from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from tests.constants.data_constants import (
     agent_profile_A,
     agent_profile_B,
@@ -174,7 +167,7 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         review=review,
         config=Config(),
     )
-    assert isinstance(rebuttal, ResearchRebuttal)
+    assert isinstance(rebuttal, Rebuttal)
     if rebuttal.content is not None:
         assert len(rebuttal.content) > 0
     assert rebuttal.content == 'Rebuttal text1'

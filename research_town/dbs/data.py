@@ -144,7 +144,7 @@ class Review(BaseDBData):
     model_config = ConfigDict(extra='allow')
 
 
-class ResearchRebuttal(BaseDBData):
+class Rebuttal(BaseDBData):
     paper_pk: Optional[str] = Field(default=None)
     reviewer_pk: Optional[str] = Field(default=None)
     author_pk: Optional[str] = Field(default=None)

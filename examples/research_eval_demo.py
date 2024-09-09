@@ -5,7 +5,7 @@ from research_town.dbs import (
     MetaReview,
     ProgressDB,
     Proposal,
-    ResearchRebuttal,
+    Rebuttal,
     Review,
 )
 from research_town.evaluators import BaseEvaluator
@@ -24,7 +24,7 @@ def main(
     idea = progress_db.get(Idea, **conditions)[0]
     paper = progress_db.get(Proposal, **conditions)[0]
     reviews = progress_db.get(Review, **conditions)
-    rebuttals = progress_db.get(ResearchRebuttal, **conditions)
+    rebuttals = progress_db.get(Rebuttal, **conditions)
     meta_review = progress_db.get(MetaReview, **conditions)[0]
     config = Config(config_file_path)
     evaluator = BaseEvaluator(model_name=model_name, config=config)
@@ -71,7 +71,7 @@ def main(
         )
     for rebuttal, rebuttal_quality in zip(rebuttals, rebuttals_quality):
         progress_db.update(
-            ResearchRebuttal,
+            Rebuttal,
             updates={'eval_score': rebuttal_quality.dimension_scores},
             pk=rebuttal.pk,
         )

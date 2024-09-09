@@ -68,4 +68,4 @@ Human researchers can review and modify content during each stage, ensuring thei
 
 ### Connection with Real-World Research Community
 
-The engine integrates simulated and real-world research activities through AgentDB and PaperDB. AgentDB collects language agents based on human researcher profiles, while PaperDB catalogs academic papers from both real-world and simulated environments. This setup facilitates interaction and knowledge updates between human researchers and LLM agents.
+The engine integrates simulated and real-world research activities through ResearcherDB and PaperDB. ResearcherDB collects language agents based on human researcher profiles, while PaperDB catalogs academic papers from both real-world and simulated environments. This setup facilitates interaction and knowledge updates between human researchers and LLM agents.

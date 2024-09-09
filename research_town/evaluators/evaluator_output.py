@@ -43,7 +43,7 @@ class ReviewEvalOutput(BaseEvalOutput):
     pass
 
 
-class ResearchRebuttalEvalOutput(BaseEvalOutput):
+class RebuttalEvalOutput(BaseEvalOutput):
     pass
 
 
