@@ -4,7 +4,7 @@ from beartype.typing import Literal
 
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProgressDB, ResearcherDB
-from research_town.engines import LifecycleEngine
+from research_town.engines import Engine
 
 Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
 
@@ -36,7 +36,7 @@ def run_sync_experiment(
 
     env_db = LogDB()
     progress_db = ProgressDB()
-    engine = LifecycleEngine(
+    engine = Engine(
         project_name='research_town_demo',
         agent_db=agent_db,
         paper_db=paper_db,

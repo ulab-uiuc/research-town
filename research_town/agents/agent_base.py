@@ -108,7 +108,7 @@ class BaseResearchAgent(object):
         return Idea(content=idea_summarized)
 
     @beartype
-    @proj_leader_required
+    @proj_participant_required
     def write_proposal(
         self, idea: Idea, papers: List[Paper], config: Config
     ) -> Proposal:
