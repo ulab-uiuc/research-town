@@ -12,7 +12,7 @@ from tests.constants.db_constants import (
 )
 from tests.mocks.mocking_func import mock_prompting
 
-Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
+Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -21,9 +21,9 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
 
     # Agent profiles and roles for paper submission environment
     proposal_writing_role_list: List[Role] = [
-        'proj_leader',
-        'proj_participant',
-        'proj_participant',
+        'leader',
+        'member',
+        'member',
     ]
     proposal_writing_agent_profiles = [
         Researcher(name='Jiaxuan You', bio='A researcher in machine learning.'),
@@ -57,7 +57,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         'Jure Leskovec',
         'Geoffrey Hinton',
     ]
-    review_writing_role_list: List[Role] = ['proj_leader', 'reviewer', 'chair']
+    review_writing_role_list: List[Role] = ['leader', 'reviewer', 'chair']
     review_writing_agent_profiles = [
         Researcher(name=agent, bio='A researcher in machine learning.')
         for agent in review_writing_agent_list

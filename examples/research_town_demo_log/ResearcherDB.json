@@ -17,8 +17,8 @@
     ],
     "institute": null,
     "embed": null,
-    "is_proj_leader_candidate": false,
-    "is_proj_participant_candidate": true,
+    "is_leader_candidate": false,
+    "is_member_candidate": true,
     "is_reviewer_candidate": false,
     "is_chair_candidate": false
   },
@@ -36,8 +36,8 @@
     ],
     "institute": null,
     "embed": null,
-    "is_proj_leader_candidate": false,
-    "is_proj_participant_candidate": false,
+    "is_leader_candidate": false,
+    "is_member_candidate": false,
     "is_reviewer_candidate": true,
     "is_chair_candidate": false
   },
@@ -57,8 +57,8 @@
     ],
     "institute": null,
     "embed": null,
-    "is_proj_leader_candidate": false,
-    "is_proj_participant_candidate": false,
+    "is_leader_candidate": false,
+    "is_member_candidate": false,
     "is_reviewer_candidate": true,
     "is_chair_candidate": false
   },
@@ -81,8 +81,8 @@
     ],
     "institute": null,
     "embed": null,
-    "is_proj_leader_candidate": false,
-    "is_proj_participant_candidate": false,
+    "is_leader_candidate": false,
+    "is_member_candidate": false,
     "is_reviewer_candidate": false,
     "is_chair_candidate": true
   },
@@ -105,8 +105,8 @@
     ],
     "institute": null,
     "embed": null,
-    "is_proj_leader_candidate": false,
-    "is_proj_participant_candidate": true,
+    "is_leader_candidate": false,
+    "is_member_candidate": true,
     "is_reviewer_candidate": false,
     "is_chair_candidate": false
   },
@@ -129,8 +129,8 @@
     ],
     "institute": null,
     "embed": null,
-    "is_proj_leader_candidate": true,
-    "is_proj_participant_candidate": true,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
     "is_reviewer_candidate": true,
     "is_chair_candidate": true
   },
@@ -153,8 +153,8 @@
     ],
     "institute": null,
     "embed": null,
-    "is_proj_leader_candidate": false,
-    "is_proj_participant_candidate": true,
+    "is_leader_candidate": false,
+    "is_member_candidate": true,
     "is_reviewer_candidate": false,
     "is_chair_candidate": false
   },
@@ -172,8 +172,8 @@
     ],
     "institute": null,
     "embed": null,
-    "is_proj_leader_candidate": false,
-    "is_proj_participant_candidate": false,
+    "is_leader_candidate": false,
+    "is_member_candidate": false,
     "is_reviewer_candidate": true,
     "is_chair_candidate": false
   }

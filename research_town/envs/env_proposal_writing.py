@@ -18,7 +18,7 @@ from ..dbs import (
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
+Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 class ProposalWritingEnv(BaseEnv):
@@ -63,23 +63,19 @@ class ProposalWritingEnv(BaseEnv):
                 )
             )
 
-        if 'proj_leader' not in agent_roles:
-            raise ValueError('At least one proj_leader is required to submit paper.')
+        if 'leader' not in agent_roles:
+            raise ValueError('At least one leader is required to submit paper.')
         if 'reviewer' in agent_roles:
             raise ValueError('Reviewer role is not allowed in paper submission.')
         if 'chair' in agent_roles:
             raise ValueError('Chair role is not allowed in paper submission.')
 
         counter = Counter(agent_roles)
-        if counter['proj_leader'] != 1:
-            raise ValueError('Exactly one proj_leader is required to submit paper.')
+        if counter['leader'] != 1:
+            raise ValueError('Exactly one leader is required to submit paper.')
 
-        self.proj_leader = [
-            agent for agent in self.agents if agent.role == 'proj_leader'
-        ][0]
-        self.proj_participants = [
-            agent for agent in self.agents if agent.role == 'proj_participant'
-        ]
+        self.leader = [agent for agent in self.agents if agent.role == 'leader'][0]
+        self.members = [agent for agent in self.agents if agent.role == 'member']
 
     @beartype
     def on_exit(self) -> bool:
@@ -137,20 +133,18 @@ class ProposalWritingEnv(BaseEnv):
             )
 
         # Leader discusses ideas
-        summarized_idea = self.proj_leader.discuss_idea(
-            ideas=self.ideas, config=self.config
-        )
+        summarized_idea = self.leader.discuss_idea(ideas=self.ideas, config=self.config)
         self.progress_db.add(summarized_idea)
 
         # write one proposal
         related_papers = self.paper_db.match(
             query=summarized_idea.content
             if summarized_idea.content
-            else self.proj_leader.profile.bio,
+            else self.leader.profile.bio,
             paper_profiles=available_papers,
             num=2,
         )
-        self.proposal = self.proj_leader.write_proposal(
+        self.proposal = self.leader.write_proposal(
             idea=summarized_idea,
             papers=related_papers,
             config=self.config,
@@ -160,6 +154,6 @@ class ProposalWritingEnv(BaseEnv):
             ProposalWritingLog(
                 time_step=self.time_step,
                 paper_pk=self.proposal.pk,
-                agent_pk=self.proj_leader.profile.pk,
+                agent_pk=self.leader.profile.pk,
             )
         )
