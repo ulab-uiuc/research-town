@@ -24,7 +24,7 @@ def test_review_literature(
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='proj_leader',
+        agent_role='leader',
     )
     research_insight = research_agent.review_literature(
         papers=[paper_profile_A, paper_profile_B],
@@ -52,7 +52,7 @@ def test_brainstorm_idea(
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='proj_leader',
+        agent_role='leader',
     )
     research_idea = research_agent.brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
@@ -70,7 +70,7 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
     research_agent = BaseResearchAgent(
         agent_profile=agent_profile_B,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='proj_leader',
+        agent_role='leader',
     )
     paper = research_agent.write_proposal(
         idea=research_idea_A,
@@ -116,16 +116,16 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='chair',
     )
-    research_agent_proj_leader = BaseResearchAgent(
+    research_agent_leader = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='proj_leader',
+        agent_role='leader',
     )
     review = research_agent_reviewer.write_review(
         paper=research_paper_submission_A,
         config=Config(),
     )
-    rebuttal = research_agent_proj_leader.write_rebuttal(
+    rebuttal = research_agent_leader.write_rebuttal(
         paper=research_paper_submission_A,
         review=review,
         config=Config(),
@@ -153,16 +153,16 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='reviewer',
     )
-    research_agent_proj_leader = BaseResearchAgent(
+    research_agent_leader = BaseResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='proj_leader',
+        agent_role='leader',
     )
     review = research_agent_reviewer.write_review(
         paper=research_paper_submission_A,
         config=Config(),
     )
-    rebuttal = research_agent_proj_leader.write_rebuttal(
+    rebuttal = research_agent_leader.write_rebuttal(
         paper=research_paper_submission_A,
         review=review,
         config=Config(),

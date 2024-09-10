@@ -25,13 +25,13 @@ from ..utils.agent_prompter import (
 )
 from ..utils.role_verifier import (
     chair_required,
-    proj_leader_required,
-    proj_participant_required,
+    leader_required,
+    participant_required,
     reviewer_required,
 )
 from ..utils.serializer import Serializer
 
-Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair']
+Role = Literal['reviewer', 'leader', 'participant', 'chair']
 
 
 class BaseResearchAgent(object):
@@ -52,7 +52,7 @@ class BaseResearchAgent(object):
         self.role = role
 
     @beartype
-    @proj_participant_required
+    @participant_required
     def review_literature(
         self, papers: List[Paper], domains: List[str], config: Config
     ) -> List[Insight]:
@@ -76,7 +76,7 @@ class BaseResearchAgent(object):
         return insights
 
     @beartype
-    @proj_participant_required
+    @participant_required
     def brainstorm_idea(self, insights: List[Insight], config: Config) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
         idea_content = brainstorm_idea_prompting(
@@ -92,7 +92,7 @@ class BaseResearchAgent(object):
         return Idea(content=idea_content)
 
     @beartype
-    @proj_participant_required
+    @participant_required
     def discuss_idea(self, ideas: List[Idea], config: Config) -> Idea:
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized = discuss_idea_prompting(
@@ -108,7 +108,7 @@ class BaseResearchAgent(object):
         return Idea(content=idea_summarized)
 
     @beartype
-    @proj_participant_required
+    @participant_required
     def write_proposal(
         self, idea: Idea, papers: List[Paper], config: Config
     ) -> Proposal:
@@ -210,7 +210,7 @@ class BaseResearchAgent(object):
         )
 
     @beartype
-    @proj_leader_required
+    @leader_required
     def write_rebuttal(
         self,
         paper: Proposal,

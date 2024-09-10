@@ -5,18 +5,20 @@ from ..dbs import LogDB, PaperDB, ProgressDB, Researcher
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
+Role = Literal['reviewer', 'leader', 'participant', 'chair'] | None
 
 
 class EndEnv(BaseEnv):
     def __init__(
         self,
+        name: str,
         env_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
         config: Config,
     ) -> None:
         super().__init__(
+            name=name,
             env_db=env_db,
             progress_db=progress_db,
             paper_db=paper_db,

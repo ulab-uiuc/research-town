@@ -1,4 +1,4 @@
-from typing import List, Optional, TypeVar
+from typing import List, Optional, TypeVar, Dict, Any
 
 from transformers import BertModel, BertTokenizer
 
@@ -9,6 +9,7 @@ from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
 from .data import BaseDBData, Researcher
 from .db_base import BaseDB
+from ..dbs.data import Proposal
 
 T = TypeVar('T', bound=BaseDBData)
 
@@ -67,6 +68,77 @@ class ResearcherDB(BaseDB[Researcher]):
         match_agent_profiles = [agent_profiles[index] for index in indexes]
         logger.info(f'Matched agents: {match_agent_profiles}')
         return match_agent_profiles
+    
+
+    def find_agents(
+        self,
+        condition: Dict[str, Any],
+        query: str,
+        num: int,
+        update_fields: Dict[str, bool],
+    ) -> List[Researcher]:
+        candidates = self.get(**condition)
+        selected_agents = self.match(
+            query=query, agent_profiles=candidates, num=num
+        )
+
+        for agent in selected_agents:
+            for field, value in update_fields.items():
+                setattr(agent, field, value)
+            self.update(pk=agent.pk, updates=agent.model_dump())
+        return selected_agents
+
+    def set_leader(self, leader: Researcher) -> Researcher:
+        return self.find_agents(
+            condition={'pk': leader.pk},
+            query=leader.bio,
+            num=1,
+            update_fields={
+                'is_leader_candidate': True,
+                'is_participant_candidate': False,
+                'is_reviewer_candidate': False,
+                'is_chair_candidate': False,
+            },
+        )[0]
+
+    def find_participants(self, leader: Researcher, participant_num: int) -> List[Researcher]:
+        return self.find_agents(
+            condition={'is_participant_candidate': True},
+            query=leader.bio,
+            num=participant_num,
+            update_fields={
+                'is_leader_candidate': False,
+                'is_participant_candidate': True,
+                'is_reviewer_candidate': False,
+                'is_chair_candidate': False,
+            },
+        )
+
+    def find_reviewers(self, paper_submission: Proposal, reviewer_num: int) -> List[Researcher]:
+        return self.find_agents(
+            condition={'is_reviewer_candidate': True},
+            query=paper_submission.abstract,
+            num=reviewer_num,
+            update_fields={
+                'is_leader_candidate': False,
+                'is_participant_candidate': False,
+                'is_reviewer_candidate': True,
+                'is_chair_candidate': False,
+            },
+        )
+
+    def find_chair(self, paper_submission: Proposal) -> Researcher:
+        return self.find_agents(
+            condition={'is_chair_candidate': True},
+            query=paper_submission.abstract,
+            num=1,
+            update_fields={
+                'is_leader_candidate': False,
+                'is_participant_candidate': False,
+                'is_reviewer_candidate': False,
+                'is_chair_candidate': True,
+            },
+        )[0]
 
     def transform_to_embed(self) -> None:
         for agent_pk in self.data:
@@ -78,8 +150,8 @@ class ResearcherDB(BaseDB[Researcher]):
 
     def reset_role_avaialbility(self) -> None:
         for profile in self.data.values():
-            profile.is_proj_leader_candidate = True
-            profile.is_proj_participant_candidate = True
+            profile.is_leader_candidate = True
+            profile.is_participant_candidate = True
             profile.is_reviewer_candidate = True
             profile.is_chair_candidate = True
             self.update(pk=profile.pk, updates=profile.model_dump())

@@ -10,7 +10,7 @@ from ..constants.db_constants import (
 )
 
 
-def test_engine_fine_proj_participants() -> None:
+def test_engine_fine_participants() -> None:
     example_agent_db.reset_role_avaialbility()
     engine = BaseEngine(
         project_name='test',
@@ -20,12 +20,12 @@ def test_engine_fine_proj_participants() -> None:
         env_db=example_env_db,
         config=Config(),
     )
-    engine.set_proj_leader(agent_profile_A)
-    proj_participants = engine.find_proj_participants(
-        proj_leader=agent_profile_A,
-        proj_participant_num=2,
+    engine.set_leader(agent_profile_A)
+    participants = engine.find_participants(
+        leader=agent_profile_A,
+        participant_num=2,
     )
-    assert len(proj_participants) == 2
+    assert len(participants) == 2
 
 
 def test_engine_find_proj_reviewers() -> None:
@@ -38,7 +38,7 @@ def test_engine_find_proj_reviewers() -> None:
         env_db=example_env_db,
         config=Config(),
     )
-    engine.set_proj_leader(agent_profile_A)
+    engine.set_leader(agent_profile_A)
     reviewers = engine.find_reviewers(
         paper_submission=research_paper_submission_A,
         reviewer_num=2,
@@ -56,7 +56,7 @@ def test_engine_find_chair() -> None:
         env_db=example_env_db,
         config=Config(),
     )
-    engine.set_proj_leader(agent_profile_A)
+    engine.set_leader(agent_profile_A)
     chair = engine.find_chair(
         paper_submission=research_paper_submission_A,
     )

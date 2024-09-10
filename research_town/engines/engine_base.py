@@ -5,6 +5,8 @@ from typing import Any, Callable, Dict, List, Tuple
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProgressDB, Proposal, Researcher, ResearcherDB
 from ..envs.env_base import BaseEnv
+from ..dbs import Idea, Review, Rebuttal, MetaReview, Insight
+from ..dbs import IdeaBrainstormingLog, LiteratureReviewLog, ProposalWritingLog, ReviewWritingLog, RebuttalWritingLog, MetaReviewWritingLog
 
 
 class BaseEngine:
@@ -50,16 +52,19 @@ class BaseEngine:
     def set_transition_funcs(self) -> None:
         pass
 
-    def add_env(self, name: str, env: BaseEnv) -> None:
-        self.envs[name] = env
+    def add_envs(self, envs: List[BaseEnv]) -> None:
+        for env in envs:
+            self.envs[env.name] = env
 
-    def add_transition_func(
-        self, from_env: str, func: Callable[..., Any], to_env: str
+    def add_transition_funcs(
+        self, funcs: List[Tuple[str, Callable[..., Any], str]]
     ) -> None:
-        self.transition_funcs[(from_env, to_env)] = func
+        for from_env, func, to_env in funcs:
+            self.add_transition_func(from_env, func, to_env)
 
-    def add_transition(self, from_env: str, pass_or_fail: bool, to_env: str) -> None:
-        self.transitions[from_env][pass_or_fail] = to_env
+    def add_transitions(self, transitions: List[Tuple[str, bool, str]]) -> None:
+        for from_env, pass_or_fail, to_env in transitions:
+            self.transitions[from_env][pass_or_fail] = to_env
 
     def start(self, task: str, env_name: str = 'start') -> None:
         if env_name not in self.envs:
@@ -67,14 +72,14 @@ class BaseEngine:
 
         self.curr_env_name = env_name
         self.curr_env = self.envs[env_name]
-        proj_leader = self.find_agents(
+        leader = self.find_agents(
             condition={}, query=task, num=1, update_fields={}
         )[0]
         self.curr_env.on_enter(
             time_step=self.time_step,
             stop_flag=self.stop_flag,
-            agent_profiles=[proj_leader],
-            agent_roles=['proj_leader'],
+            agent_profiles=[leader],
+            agent_roles=['leader'],
             agent_models=[self.model_name],
         )
 
@@ -98,85 +103,11 @@ class BaseEngine:
             **input_data,
         )
 
-    def find_agents(
-        self,
-        condition: Dict[str, Any],
-        query: str,
-        num: int,
-        update_fields: Dict[str, bool],
-    ) -> List[Researcher]:
-        candidates = self.agent_db.get(**condition)
-        selected_agents = self.agent_db.match(
-            query=query, agent_profiles=candidates, num=num
-        )
-
-        for agent in selected_agents:
-            for field, value in update_fields.items():
-                setattr(agent, field, value)
-            self.agent_db.update(pk=agent.pk, updates=agent.model_dump())
-
-        return selected_agents
-
-    def set_proj_leader(self, proj_leader: Researcher) -> Researcher:
-        return self.find_agents(
-            condition={'pk': proj_leader.pk},
-            query=proj_leader.bio,
-            num=1,
-            update_fields={
-                'is_proj_leader_candidate': True,
-                'is_proj_participant_candidate': False,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': False,
-            },
-        )[0]
-
-    def find_proj_participants(
-        self, proj_leader: Researcher, proj_participant_num: int
-    ) -> List[Researcher]:
-        return self.find_agents(
-            condition={'is_proj_participant_candidate': True},
-            query=proj_leader.bio,
-            num=proj_participant_num,
-            update_fields={
-                'is_proj_leader_candidate': False,
-                'is_proj_participant_candidate': True,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': False,
-            },
-        )
-
-    def find_reviewers(
-        self, paper_submission: Proposal, reviewer_num: int
-    ) -> List[Researcher]:
-        return self.find_agents(
-            condition={'is_reviewer_candidate': True},
-            query=paper_submission.abstract,
-            num=reviewer_num,
-            update_fields={
-                'is_proj_leader_candidate': False,
-                'is_proj_participant_candidate': False,
-                'is_reviewer_candidate': True,
-                'is_chair_candidate': False,
-            },
-        )
-
-    def find_chair(self, paper_submission: Proposal) -> Researcher:
-        return self.find_agents(
-            condition={'is_chair_candidate': True},
-            query=paper_submission.abstract,
-            num=1,
-            update_fields={
-                'is_proj_leader_candidate': False,
-                'is_proj_participant_candidate': False,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': True,
-            },
-        )[0]
-
     def run(self, task: str) -> None:
         self.start(task=task)
         while self.curr_env_name != 'end':
-            self.curr_env.run()
+            progress, agent = self.curr_env.run()
+            self.sync_dbs(progress, agent)
             self.time_step += 1
             self.transition()
 
@@ -191,3 +122,61 @@ class BaseEngine:
 
     def load(self) -> None:
         pass
+
+    def sync_dbs(self, progress: Any, agent: Researcher) -> None:
+        self.progress_db.add(progress)
+        if isinstance(progress, Insight):
+            self.env_db.add(
+                LiteratureReviewLog(
+                    time_step=self.time_step,
+                    agent_pk=agent.profile.pk,
+                    paper_pk=progress.paper_pk,
+                    insight_pk=progress.pk,
+                )
+            )
+
+        if isinstance(progress, Idea):
+            self.env_db.add(
+                IdeaBrainstormingLog(
+                    time_step=self.time_step,
+                    agent_pk=agent.profile.pk,
+                    idea_pk=progress.pk,
+                )
+            )
+
+        if isinstance(progress, Proposal):
+            self.env_db.add(
+                ProposalWritingLog(
+                    time_step=self.time_step,
+                    agent_pk=agent.profile.pk,
+                    proposal_pk=progress.pk,
+                )
+            )
+
+        if isinstance(progress, Review):
+            self.env_db.add(
+                ReviewWritingLog(
+                    time_step=self.time_step,
+                    agent_pk=agent.profile.pk,
+                    paper_pk=progress.paper_pk,
+                    review_pk=progress.pk,
+                )
+            )
+        if isinstance(progress, Rebuttal):
+            self.env_db.add(
+                RebuttalWritingLog(
+                    time_step=self.time_step,
+                    agent_pk=agent.profile.pk,
+                    paper_pk=progress.paper_pk,
+                    rebuttal_pk=progress.pk,
+                )
+            )
+        if isinstance(progress, MetaReview):
+            self.env_db.add(
+                MetaReviewWritingLog(
+                    time_step=self.time_step,
+                    agent_pk=agent.profile.pk,
+                    paper_pk=progress.paper_pk,
+                    meta_review_pk=progress.pk,
+                )
+            )

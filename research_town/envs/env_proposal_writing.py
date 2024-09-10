@@ -1,38 +1,34 @@
 from collections import Counter
 
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Literal, Union
+from beartype.typing import Any, Dict, List, Literal, Union, Tuple
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
     Idea,
-    IdeaBrainstormingLog,
-    LiteratureReviewLog,
-    LogDB,
     PaperDB,
-    ProgressDB,
-    ProposalWritingLog,
+    ResearcherDB,
     Researcher,
 )
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
+Role = Literal['reviewer', 'leader', 'participant', 'chair'] | None
 
 
 class ProposalWritingEnv(BaseEnv):
     def __init__(
         self,
-        env_db: LogDB,
-        progress_db: ProgressDB,
+        name: str,
         paper_db: PaperDB,
+        agent_db: ResearcherDB,
         config: Config,
     ) -> None:
         super().__init__(
-            env_db=env_db,
-            progress_db=progress_db,
+            name=name,
             paper_db=paper_db,
+            agent_db=agent_db,
             config=config,
         )
 
@@ -63,38 +59,30 @@ class ProposalWritingEnv(BaseEnv):
                 )
             )
 
-        if 'proj_leader' not in agent_roles:
-            raise ValueError('At least one proj_leader is required to submit paper.')
+        if 'leader' not in agent_roles:
+            raise ValueError('At least one leader is required to submit paper.')
         if 'reviewer' in agent_roles:
             raise ValueError('Reviewer role is not allowed in paper submission.')
         if 'chair' in agent_roles:
             raise ValueError('Chair role is not allowed in paper submission.')
 
         counter = Counter(agent_roles)
-        if counter['proj_leader'] != 1:
-            raise ValueError('Exactly one proj_leader is required to submit paper.')
+        if counter['leader'] != 1:
+            raise ValueError('Exactly one leader is required to submit paper.')
 
-        self.proj_leader = [
-            agent for agent in self.agents if agent.role == 'proj_leader'
+        self.leader = [
+            agent for agent in self.agents if agent.role == 'leader'
         ][0]
-        self.proj_participants = [
-            agent for agent in self.agents if agent.role == 'proj_participant'
+        self.participants = [
+            agent for agent in self.agents if agent.role == 'participant'
         ]
 
     @beartype
     def on_exit(self) -> bool:
-        if self.stop_flag:
-            raise NotImplementedError('Stop signal is not implemented yet.')
-        for insight in self.insights:
-            self.progress_db.add(insight)
-        for idea in self.ideas:
-            self.progress_db.add(idea)
-        self.progress_db.add(self.proposal)
-        self.env_run_num += 1
         return True
 
     @beartype
-    def run(self) -> None:
+    def run(self) -> Tuple[Any, BaseResearchAgent]:
         available_papers = list(self.paper_db.data.values())
 
         # Each member reviews literature
@@ -110,56 +98,33 @@ class ProposalWritingEnv(BaseEnv):
                 domains=['machine learning'],
                 config=self.config,
             )
-            self.insights.extend(agent_insights)  # Collect insights from all members
-            for insight in agent_insights:
-                self.progress_db.add(insight)
-            self.env_db.add(
-                LiteratureReviewLog(
-                    time_step=self.time_step,
-                    paper_pks=[paper.pk for paper in related_papers],
-                    agent_pk=agent.profile.pk,
-                    insight_pks=[insight.pk for insight in agent_insights],
-                )
-            )
+            yield agent_insights, agent
 
         # Brainstorm ideas
         self.ideas: List[Idea] = []
         for agent in self.agents:
-            idea = agent.brainstorm_idea(insights=self.insights, config=self.config)
-            self.ideas.append(idea)
-            self.progress_db.add(idea)
-            self.env_db.add(
-                IdeaBrainstormingLog(
-                    time_step=self.time_step,
-                    idea_pk=idea.pk,
-                    agent_pk=agent.profile.pk,
-                )
+            idea = agent.bainstorm_idea(
+                insights=self.insights, config=self.config
             )
+            yield idea, agent
 
         # Leader discusses ideas
-        summarized_idea = self.proj_leader.discuss_idea(
+        summarized_idea = self.leader.discuss_idea(
             ideas=self.ideas, config=self.config
         )
-        self.progress_db.add(summarized_idea)
+        yield summarized_idea, self.leader
 
         # write one proposal
         related_papers = self.paper_db.match(
             query=summarized_idea.content
             if summarized_idea.content
-            else self.proj_leader.profile.bio,
+            else self.leader.profile.bio,
             paper_profiles=available_papers,
             num=2,
         )
-        self.proposal = self.proj_leader.write_proposal(
+        proposal = self.leader.write_proposal(
             idea=summarized_idea,
             papers=related_papers,
             config=self.config,
         )
-        self.progress_db.add(self.proposal)
-        self.env_db.add(
-            ProposalWritingLog(
-                time_step=self.time_step,
-                paper_pk=self.proposal.pk,
-                agent_pk=self.proj_leader.profile.pk,
-            )
-        )
+        yield proposal, self.leader

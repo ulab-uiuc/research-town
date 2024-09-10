@@ -7,17 +7,19 @@ from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProgressDB, Researcher
 
 LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
+Role = Literal['reviewer', 'leader', 'participant', 'chair'] | None
 
 
 class BaseEnv(ABC):
     def __init__(
         self,
+        name: str,
         env_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
         config: Config,
     ) -> None:
+        self.name = name
         self.env_run_num = 0
         self.env_db = env_db
         self.progress_db = progress_db

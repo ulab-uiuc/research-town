@@ -9,18 +9,20 @@ from ..dbs import LogDB, PaperDB, ProgressDB, Researcher
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
+Role = Literal['reviewer', 'leader', 'participant', 'chair'] | None
 
 
 class StartEnv(BaseEnv):
     def __init__(
         self,
+        name: str,
         env_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
         config: Config,
     ) -> None:
         super().__init__(
+            name=name,
             env_db=env_db,
             progress_db=progress_db,
             paper_db=paper_db,
@@ -54,11 +56,11 @@ class StartEnv(BaseEnv):
                 )
             )
 
-        if 'proj_leader' not in agent_roles:
-            raise ValueError('At least one proj_leader is required to submit paper.')
-        if 'proj_participant' in agent_roles:
+        if 'leader' not in agent_roles:
+            raise ValueError('At least one leader is required to submit paper.')
+        if 'participant' in agent_roles:
             raise ValueError(
-                'Proj_participant role is not allowed in paper submission.'
+                'participant role is not allowed in paper submission.'
             )
         if 'reviewer' in agent_roles:
             raise ValueError('Reviewer role is not allowed in paper submission.')
@@ -66,11 +68,11 @@ class StartEnv(BaseEnv):
             raise ValueError('Chair role is not allowed in paper submission.')
 
         counter = Counter(agent_roles)
-        if counter['proj_leader'] != 1:
-            raise ValueError('Exactly one proj_leader is required to submit paper.')
+        if counter['leader'] != 1:
+            raise ValueError('Exactly one leader is required to submit paper.')
 
-        self.proj_leader = [
-            agent for agent in self.agents if agent.role == 'proj_leader'
+        self.leader = [
+            agent for agent in self.agents if agent.role == 'leader'
         ][0]
 
     def run(self) -> None:
