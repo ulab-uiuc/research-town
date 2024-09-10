@@ -19,7 +19,7 @@ from ..dbs import (
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
+Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 class ReviewWritingEnv(BaseEnv):
@@ -65,24 +65,24 @@ class ReviewWritingEnv(BaseEnv):
                 )
             )
 
-        if 'proj_leader' not in agent_roles:
-            raise ValueError('At least one proj_leader is required to write rebuttal.')
+        if 'leader' not in agent_roles:
+            raise ValueError('At least one leader is required to write rebuttal.')
         if 'reviewer' not in agent_roles:
             raise ValueError('At least one reviewer is required to write review.')
         if 'chair' not in agent_roles:
             raise ValueError('At least one chair is required to write meta-review.')
-        if 'proj_participant' in agent_roles:
-            raise ValueError('Proj_participant role is not allowed in peer review.')
+        if 'member' in agent_roles:
+            raise ValueError('member role is not allowed in peer review.')
 
         counter = Counter(agent_roles)
-        if counter['proj_leader'] != 1:
-            raise ValueError('Exactly one proj_leader is required to write rebuttal.')
+        if counter['leader'] != 1:
+            raise ValueError('Exactly one leader is required to write rebuttal.')
         if counter['chair'] != 1:
             raise ValueError('Exactly one chair is required to write meta-review.')
 
         self.chair = [agent for agent in self.agents if agent.role == 'chair'][0]
-        self.proj_leader = [
-            agent for agent in self.agents if agent.role == 'proj_leader'
+        self.leader = [
+            agent for agent in self.agents if agent.role == 'leader'
         ][0]
         self.reviewers = [agent for agent in self.agents if agent.role == 'reviewer']
 
@@ -116,7 +116,7 @@ class ReviewWritingEnv(BaseEnv):
         # Rebuttal Submitting
         self.rebuttals: List[Rebuttal] = []
         for review in self.reviews:
-            rebuttal = self.proj_leader.write_rebuttal(
+            rebuttal = self.leader.write_rebuttal(
                 paper=self.paper,
                 review=review,
                 config=self.config,
@@ -127,7 +127,7 @@ class ReviewWritingEnv(BaseEnv):
                 RebuttalWritingLog(
                     time_step=self.time_step,
                     paper_pk=rebuttal.paper_pk,
-                    agent_pk=self.proj_leader.profile.pk,
+                    agent_pk=self.leader.profile.pk,
                     rebuttal_content=rebuttal.content,
                 )
             )

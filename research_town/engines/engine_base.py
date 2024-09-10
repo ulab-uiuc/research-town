@@ -67,14 +67,14 @@ class BaseEngine:
 
         self.curr_env_name = env_name
         self.curr_env = self.envs[env_name]
-        proj_leader = self.find_agents(
+        leader = self.find_agents(
             condition={}, query=task, num=1, update_fields={}
         )[0]
         self.curr_env.on_enter(
             time_step=self.time_step,
             stop_flag=self.stop_flag,
-            agent_profiles=[proj_leader],
-            agent_roles=['proj_leader'],
+            agent_profiles=[leader],
+            agent_roles=['leader'],
             agent_models=[self.model_name],
         )
 
@@ -117,29 +117,29 @@ class BaseEngine:
 
         return selected_agents
 
-    def set_proj_leader(self, proj_leader: Researcher) -> Researcher:
+    def set_leader(self, leader: Researcher) -> Researcher:
         return self.find_agents(
-            condition={'pk': proj_leader.pk},
-            query=proj_leader.bio,
+            condition={'pk': leader.pk},
+            query=leader.bio,
             num=1,
             update_fields={
-                'is_proj_leader_candidate': True,
-                'is_proj_participant_candidate': False,
+                'is_leader_candidate': True,
+                'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
             },
         )[0]
 
-    def find_proj_participants(
-        self, proj_leader: Researcher, proj_participant_num: int
+    def find_members(
+        self, leader: Researcher, member_num: int
     ) -> List[Researcher]:
         return self.find_agents(
-            condition={'is_proj_participant_candidate': True},
-            query=proj_leader.bio,
-            num=proj_participant_num,
+            condition={'is_member_candidate': True},
+            query=leader.bio,
+            num=member_num,
             update_fields={
-                'is_proj_leader_candidate': False,
-                'is_proj_participant_candidate': True,
+                'is_leader_candidate': False,
+                'is_member_candidate': True,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
             },
@@ -153,8 +153,8 @@ class BaseEngine:
             query=paper_submission.abstract,
             num=reviewer_num,
             update_fields={
-                'is_proj_leader_candidate': False,
-                'is_proj_participant_candidate': False,
+                'is_leader_candidate': False,
+                'is_member_candidate': False,
                 'is_reviewer_candidate': True,
                 'is_chair_candidate': False,
             },
@@ -166,8 +166,8 @@ class BaseEngine:
             query=paper_submission.abstract,
             num=1,
             update_fields={
-                'is_proj_leader_candidate': False,
-                'is_proj_participant_candidate': False,
+                'is_leader_candidate': False,
+                'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': True,
             },

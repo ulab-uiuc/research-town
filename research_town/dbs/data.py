@@ -15,8 +15,8 @@ class Researcher(BaseDBData):
     collaborators: Optional[List[str]] = Field(default=[])
     institute: Optional[str] = Field(default=None)
     embed: Optional[Any] = Field(default=None)
-    is_proj_leader_candidate: Optional[bool] = Field(default=True)
-    is_proj_participant_candidate: Optional[bool] = Field(default=True)
+    is_leader_candidate: Optional[bool] = Field(default=True)
+    is_member_candidate: Optional[bool] = Field(default=True)
     is_reviewer_candidate: Optional[bool] = Field(default=True)
     is_chair_candidate: Optional[bool] = Field(default=True)
 
