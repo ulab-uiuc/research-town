@@ -12,9 +12,7 @@ def leader_required(method: F) -> F:
         if self.role is None:
             raise PermissionError('Roles are not assigned for research agent.')
         if self.role != 'leader':
-            raise PermissionError(
-                "This operation is allowed only for 'leader' role."
-            )
+            raise PermissionError("This operation is allowed only for 'leader' role.")
         return method(self, *args, **kwargs)
 
     return cast(F, wrapper)
@@ -38,9 +36,7 @@ def member_required(method: F) -> F:
         if self.role is None:
             raise PermissionError('Roles are not assigned for research agent.')
         if self.role != 'member' and self.role != 'leader':
-            raise PermissionError(
-                "This operation is allowed only for 'member' role."
-            )
+            raise PermissionError("This operation is allowed only for 'member' role.")
         return method(self, *args, **kwargs)
 
     return cast(F, wrapper)

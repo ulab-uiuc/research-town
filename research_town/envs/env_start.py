@@ -57,9 +57,7 @@ class StartEnv(BaseEnv):
         if 'leader' not in agent_roles:
             raise ValueError('At least one leader is required to submit paper.')
         if 'member' in agent_roles:
-            raise ValueError(
-                'member role is not allowed in paper submission.'
-            )
+            raise ValueError('member role is not allowed in paper submission.')
         if 'reviewer' in agent_roles:
             raise ValueError('Reviewer role is not allowed in paper submission.')
         if 'chair' in agent_roles:
@@ -69,9 +67,7 @@ class StartEnv(BaseEnv):
         if counter['leader'] != 1:
             raise ValueError('Exactly one leader is required to submit paper.')
 
-        self.leader = [
-            agent for agent in self.agents if agent.role == 'leader'
-        ][0]
+        self.leader = [agent for agent in self.agents if agent.role == 'leader'][0]
 
     def run(self) -> None:
         return

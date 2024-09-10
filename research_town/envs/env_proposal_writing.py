@@ -74,12 +74,8 @@ class ProposalWritingEnv(BaseEnv):
         if counter['leader'] != 1:
             raise ValueError('Exactly one leader is required to submit paper.')
 
-        self.leader = [
-            agent for agent in self.agents if agent.role == 'leader'
-        ][0]
-        self.members = [
-            agent for agent in self.agents if agent.role == 'member'
-        ]
+        self.leader = [agent for agent in self.agents if agent.role == 'leader'][0]
+        self.members = [agent for agent in self.agents if agent.role == 'member']
 
     @beartype
     def on_exit(self) -> bool:
@@ -137,9 +133,7 @@ class ProposalWritingEnv(BaseEnv):
             )
 
         # Leader discusses ideas
-        summarized_idea = self.leader.discuss_idea(
-            ideas=self.ideas, config=self.config
-        )
+        summarized_idea = self.leader.discuss_idea(ideas=self.ideas, config=self.config)
         self.progress_db.add(summarized_idea)
 
         # write one proposal

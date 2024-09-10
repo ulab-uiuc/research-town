@@ -67,9 +67,7 @@ class BaseEngine:
 
         self.curr_env_name = env_name
         self.curr_env = self.envs[env_name]
-        leader = self.find_agents(
-            condition={}, query=task, num=1, update_fields={}
-        )[0]
+        leader = self.find_agents(condition={}, query=task, num=1, update_fields={})[0]
         self.curr_env.on_enter(
             time_step=self.time_step,
             stop_flag=self.stop_flag,
@@ -130,9 +128,7 @@ class BaseEngine:
             },
         )[0]
 
-    def find_members(
-        self, leader: Researcher, member_num: int
-    ) -> List[Researcher]:
+    def find_members(self, leader: Researcher, member_num: int) -> List[Researcher]:
         return self.find_agents(
             condition={'is_member_candidate': True},
             query=leader.bio,

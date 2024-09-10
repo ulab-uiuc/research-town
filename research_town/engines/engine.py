@@ -53,13 +53,10 @@ class Engine(BaseEngine):
     ) -> Dict[str, Any]:
         member_num = self.config.param.member_num
         leader = env.leader.profile
-        members = self.find_members(
-            leader, member_num
-        )
+        members = self.find_members(leader, member_num)
         return {
             'agent_profiles': [leader] + members,
-            'agent_roles': ['leader']
-            + ['member'] * member_num,
+            'agent_roles': ['leader'] + ['member'] * member_num,
             'agent_models': [self.model_name] * (member_num + 1),
         }
 

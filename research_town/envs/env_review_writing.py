@@ -81,9 +81,7 @@ class ReviewWritingEnv(BaseEnv):
             raise ValueError('Exactly one chair is required to write meta-review.')
 
         self.chair = [agent for agent in self.agents if agent.role == 'chair'][0]
-        self.leader = [
-            agent for agent in self.agents if agent.role == 'leader'
-        ][0]
+        self.leader = [agent for agent in self.agents if agent.role == 'leader'][0]
         self.reviewers = [agent for agent in self.agents if agent.role == 'reviewer']
 
     @beartype
