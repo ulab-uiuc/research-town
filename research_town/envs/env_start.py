@@ -72,7 +72,5 @@ class StartEnv(BaseEnv):
     def run(self) -> None:
         return
 
-    def on_exit(self) -> bool:
-        if self.stop_flag:
-            raise NotImplementedError('Stop signal is not implemented yet.')
-        return True
+    def on_exit(self) -> str:
+        return 'start_proposal'

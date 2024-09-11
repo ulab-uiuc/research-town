@@ -43,5 +43,5 @@ class BaseEnv(ABC):
         pass
 
     @abstractmethod
-    def on_exit(self, *args: Any, **kwargs: Any) -> bool:
+    def on_exit(self, *args: Any, **kwargs: Any) -> str:
         pass

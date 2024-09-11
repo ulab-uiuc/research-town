@@ -30,7 +30,7 @@ class BaseEngine:
         self.model_name = self.config.param.base_llm
         self.envs: Dict[str, BaseEnv] = {}
         self.transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {}
-        self.transitions: Dict[str, Dict[bool, str]] = defaultdict(dict)
+        self.transitions: Dict[str, Dict[str, str]] = defaultdict(dict)
         self.set_dbs()
         self.set_envs()
         self.set_transitions()
@@ -58,8 +58,8 @@ class BaseEngine:
     ) -> None:
         self.transition_funcs[(from_env, to_env)] = func
 
-    def add_transition(self, from_env: str, pass_or_fail: bool, to_env: str) -> None:
-        self.transitions[from_env][pass_or_fail] = to_env
+    def add_transition(self, from_env: str, trigger: str, to_env: str) -> None:
+        self.transitions[from_env][trigger] = to_env
 
     def start(self, task: str, env_name: str = 'start') -> None:
         if env_name not in self.envs:
@@ -77,8 +77,8 @@ class BaseEngine:
         )
 
     def transition(self) -> None:
-        pass_or_fail = self.curr_env.on_exit()
-        next_env_name = self.transitions[self.curr_env_name][pass_or_fail]
+        trigger = self.curr_env.on_exit()
+        next_env_name = self.transitions[self.curr_env_name][trigger]
         if (self.curr_env_name, next_env_name) in self.transition_funcs:
             input_data = self.transition_funcs[(self.curr_env_name, next_env_name)](
                 self.curr_env

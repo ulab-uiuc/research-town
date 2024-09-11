@@ -78,9 +78,9 @@ class ProposalWritingEnv(BaseEnv):
         self.members = [agent for agent in self.agents if agent.role == 'member']
 
     @beartype
-    def on_exit(self) -> bool:
+    def on_exit(self) -> str:
         self.env_run_num += 1
-        return True
+        return 'start_review'
 
     @beartype
     def run(self) -> None:
