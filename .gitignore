@@ -162,3 +162,6 @@ cython_debug/
 
 # otree
 **/.DS_Store
+
+# download pdf files from arxiv
+*.pdf
