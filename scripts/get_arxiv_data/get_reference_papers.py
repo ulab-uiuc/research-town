@@ -4,18 +4,20 @@ import time
 import re
 import os
 import argparse
+from tqdm import tqdm
 
-def get_references(arxiv_id, offset=0, limit=100):
+def get_references(arxiv_id, offset=0, limit=100, max_retry=5):
     """
-    Fetch references for a given arXiv paper using the Semantic Scholar API.
+    Fetch references for a given arXiv paper using the Semantic Scholar API with retry mechanism.
 
     Args:
         arxiv_id (str): The arXiv ID of the paper.
         offset (int): The offset for pagination. Default is 0.
         limit (int): The number of references to retrieve per request. Default is 100.
+        max_retry (int): The maximum number of retries if the request fails. Default is 5.
 
     Returns:
-        dict or None: The JSON response containing the references or None if the request failed.
+        dict or None: The JSON response containing the references or None if the request failed after retries.
     """
     paper_id = f"ARXIV:{arxiv_id}"
     url = f"https://api.semanticscholar.org/graph/v1/paper/{paper_id}/references"
@@ -25,12 +27,16 @@ def get_references(arxiv_id, offset=0, limit=100):
         "limit": limit,
         "fields": fields
     }
-    response = requests.get(url, params=params)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print(f"Error fetching references for {paper_id}: {response.status_code}")
-        return None
+
+    for attempt in range(max_retry):
+        response = requests.get(url, params=params)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Error fetching references for {paper_id}: {response.status_code}. Retrying {attempt + 1}/{max_retry}...")
+            time.sleep(5)  # Wait for 5 seconds before the next retry
+    print(f"Failed to fetch references for {paper_id} after {max_retry} attempts.")
+    return None
 
 def get_all_references(arxiv_id):
     """
@@ -114,7 +120,9 @@ def process_papers(input_file, output_file):
         return
 
     # Process each paper in the input file
-    for title, data in output_data.items():
+    paper_titles = list(output_data.keys())
+    for title in tqdm(paper_titles, desc="Processing papers"):
+        data = output_data.get(title)
         pdf_path = data.get('pdf_path')
         if not pdf_path:
             print(f"Skipping {title} due to missing pdf_path")

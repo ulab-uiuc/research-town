@@ -165,3 +165,6 @@ cython_debug/
 
 # download pdf files from arxiv
 *.pdf
+data/arxiv_ai_papers/paper_info.json
+data/arxiv_ai_papers/output_with_downloaded_references.json
+data/arxiv_ai_papers/output_with_references.json
