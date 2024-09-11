@@ -17,10 +17,10 @@ from .data import (
     Review,
     ReviewWritingLog,
 )
+from .db_agent import AgentDB
 from .db_log import LogDB
 from .db_paper import PaperDB
 from .db_progress import ProgressDB
-from .db_agent import AgentDB
 
 __all__ = [
     'IdeaDiscussionLog',
