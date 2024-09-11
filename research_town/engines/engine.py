@@ -6,7 +6,7 @@ from .engine_base import BaseEngine
 
 class Engine(BaseEngine):
     def set_envs(self) -> None:
-        self.add_envs(
+        self.add_envs([
             StartEnv(
                 'start', self.env_db, self.progress_db, self.paper_db, self.config
             ),
@@ -25,7 +25,7 @@ class Engine(BaseEngine):
                 self.config,
             ),
             EndEnv('end', self.env_db, self.progress_db, self.paper_db, self.config),
-        )
+        ])
 
     def set_transitions(self) -> None:
         self.add_transitions(

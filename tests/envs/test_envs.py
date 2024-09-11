@@ -21,6 +21,7 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     env = ReviewWritingEnv(
+        name='review_writing',
         env_db=example_env_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
@@ -62,6 +63,7 @@ def test_paper_submission_env(
     mock_model_prompting.side_effect = mock_prompting
 
     env = ProposalWritingEnv(
+        name='proposal_writing',
         env_db=example_env_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,

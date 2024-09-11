@@ -58,9 +58,9 @@ class BaseEngine:
         self, funcs: List[Tuple[str, Callable[..., Any], str]]
     ) -> None:
         for from_env, func, to_env in funcs:
-            self.add_transition_func(from_env, func, to_env)
+            self.transition_funcs[from_env, to_env] = func
 
-    def add_transitions(self, transitions: List[Tuple[str, bool, str]]) -> None:
+    def add_transitions(self, transitions: List[Tuple[str, str, str]]) -> None:
         for from_env, pass_or_fail, to_env in transitions:
             self.transitions[from_env][pass_or_fail] = to_env
 

@@ -13,11 +13,13 @@ Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 class BaseEnv(ABC):
     def __init__(
         self,
+        name: str,
         env_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
         config: Config,
     ) -> None:
+        self.name = name
         self.env_run_num = 0
         self.env_db = env_db
         self.progress_db = progress_db
