@@ -51,6 +51,8 @@ def get_proposals(introduction: str) -> List[str]:
 
 def get_introduction(url: str) -> Optional[str]:
     contents = get_paper_content(url)
+    if contents is None or contents[0] is None:
+        return None
     section_contents = contents[0]
     for section_name, section_content in section_contents.items():
         if 'Introduction' in section_name:
@@ -69,9 +71,10 @@ with gr.Blocks() as demo:
             introduction = get_introduction(url)
             if introduction is None:
                 gr.Markdown('Paper parsing error.')
-            proposals = get_proposals(introduction)
-            for proposal in proposals:
-                gr.Textbox(proposal)
+            else:
+                proposals = get_proposals(introduction)
+                for proposal in proposals:
+                    gr.Textbox(proposal)
 
 
 demo.launch()
