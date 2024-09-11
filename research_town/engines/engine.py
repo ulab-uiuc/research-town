@@ -51,16 +51,13 @@ class Engine(BaseEngine):
         self,
         env: StartEnv,
     ) -> Dict[str, Any]:
-        proj_participant_num = self.config.param.proj_participant_num
-        proj_leader = env.proj_leader.profile
-        proj_participants = self.find_proj_participants(
-            proj_leader, proj_participant_num
-        )
+        member_num = self.config.param.member_num
+        leader = env.leader.profile
+        members = self.find_members(leader, member_num)
         return {
-            'agent_profiles': [proj_leader] + proj_participants,
-            'agent_roles': ['proj_leader']
-            + ['proj_participant'] * proj_participant_num,
-            'agent_models': [self.model_name] * (proj_participant_num + 1),
+            'agent_profiles': [leader] + members,
+            'agent_roles': ['leader'] + ['member'] * member_num,
+            'agent_models': [self.model_name] * (member_num + 1),
         }
 
     def from_proposal_writing_to_review_writing(
@@ -68,15 +65,15 @@ class Engine(BaseEngine):
         env: ProposalWritingEnv,
     ) -> Dict[str, Any]:
         reviewer_num = self.config.param.reviewer_num
-        proj_leader = env.proj_leader.profile
+        leader = env.leader.profile
         reviewers = self.find_reviewers(env.proposal, reviewer_num)
         chair = self.find_chair(env.proposal)
         return {
-            'agent_profiles': [proj_leader] + reviewers + [chair],
-            'agent_roles': ['proj_leader'] + ['reviewer'] * reviewer_num + ['chair'],
+            'agent_profiles': [leader] + reviewers + [chair],
+            'agent_roles': ['leader'] + ['reviewer'] * reviewer_num + ['chair'],
             'agent_models': [self.model_name] * (reviewer_num + 2),
             'paper': env.proposal,
         }
 
     def from_review_writing_to_end(self, env: ReviewWritingEnv) -> Dict[str, Any]:
-        return {'reviews': env.reviews}
+        return {'meta_review': env.meta_review}

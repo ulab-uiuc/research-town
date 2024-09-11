@@ -5,11 +5,21 @@ from beartype.typing import Any, Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
-from ..dbs import LogDB, PaperDB, ProgressDB, Researcher, Review, ReviewWritingLog
+from ..dbs import (
+    LogDB,
+    MetaReviewWritingLog,
+    PaperDB,
+    ProgressDB,
+    Rebuttal,
+    RebuttalWritingLog,
+    Researcher,
+    Review,
+    ReviewWritingLog,
+)
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
+Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 class ReviewWritingEnv(BaseEnv):
@@ -55,25 +65,23 @@ class ReviewWritingEnv(BaseEnv):
                 )
             )
 
-        if 'proj_leader' not in agent_roles:
-            raise ValueError('At least one proj_leader is required to write rebuttal.')
+        if 'leader' not in agent_roles:
+            raise ValueError('At least one leader is required to write rebuttal.')
         if 'reviewer' not in agent_roles:
             raise ValueError('At least one reviewer is required to write review.')
         if 'chair' not in agent_roles:
             raise ValueError('At least one chair is required to write meta-review.')
-        if 'proj_participant' in agent_roles:
-            raise ValueError('Proj_participant role is not allowed in peer review.')
+        if 'member' in agent_roles:
+            raise ValueError('member role is not allowed in peer review.')
 
         counter = Counter(agent_roles)
-        if counter['proj_leader'] != 1:
-            raise ValueError('Exactly one proj_leader is required to write rebuttal.')
+        if counter['leader'] != 1:
+            raise ValueError('Exactly one leader is required to write rebuttal.')
         if counter['chair'] != 1:
             raise ValueError('Exactly one chair is required to write meta-review.')
 
         self.chair = [agent for agent in self.agents if agent.role == 'chair'][0]
-        self.proj_leader = [
-            agent for agent in self.agents if agent.role == 'proj_leader'
-        ][0]
+        self.leader = [agent for agent in self.agents if agent.role == 'leader'][0]
         self.reviewers = [agent for agent in self.agents if agent.role == 'reviewer']
 
     @beartype
@@ -102,3 +110,42 @@ class ReviewWritingEnv(BaseEnv):
                     paper_pk=self.paper.pk,
                 )
             )
+
+        # Rebuttal Submitting
+        self.rebuttals: List[Rebuttal] = []
+        for review in self.reviews:
+            rebuttal = self.leader.write_rebuttal(
+                paper=self.paper,
+                review=review,
+                config=self.config,
+            )
+            self.rebuttals.append(rebuttal)
+            self.progress_db.add(rebuttal)
+            self.env_db.add(
+                RebuttalWritingLog(
+                    time_step=self.time_step,
+                    paper_pk=rebuttal.paper_pk,
+                    agent_pk=self.leader.profile.pk,
+                    rebuttal_content=rebuttal.content,
+                )
+            )
+
+        # Paper Meta Reviewing
+        self.meta_review = self.chair.write_meta_review(
+            paper=self.paper,
+            reviews=self.reviews,
+            rebuttals=self.rebuttals,
+            config=self.config,
+        )
+        self.progress_db.add(self.meta_review)
+        self.env_db.add(
+            MetaReviewWritingLog(
+                time_step=self.time_step,
+                paper_pk=self.meta_review.paper_pk,
+                agent_pk=self.chair.profile.pk,
+                summary=self.meta_review.summary,
+                strength=self.meta_review.strength,
+                weakness=self.meta_review.weakness,
+                decision=self.meta_review.decision,
+            )
+        )
