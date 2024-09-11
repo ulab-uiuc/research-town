@@ -95,7 +95,7 @@ def get_paper_content(
                         }
                     )
                     if section_tag_raw:
-                        section_tag = section_tag_raw.text
+                        section_tag = section_tag_raw.text.replace('\n', '')
                     else:
                         continue
                     section_content = section.text

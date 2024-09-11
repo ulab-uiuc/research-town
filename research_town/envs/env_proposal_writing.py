@@ -79,13 +79,6 @@ class ProposalWritingEnv(BaseEnv):
 
     @beartype
     def on_exit(self) -> bool:
-        if self.stop_flag:
-            raise NotImplementedError('Stop signal is not implemented yet.')
-        for insight in self.insights:
-            self.progress_db.add(insight)
-        for idea in self.ideas:
-            self.progress_db.add(idea)
-        self.progress_db.add(self.proposal)
         self.env_run_num += 1
         return True
 

@@ -86,10 +86,6 @@ class ReviewWritingEnv(BaseEnv):
 
     @beartype
     def on_exit(self) -> bool:
-        if self.stop_flag:
-            raise NotImplementedError('Stop signal is not implemented yet.')
-        for review in self.reviews:
-            self.progress_db.add(review)
         self.env_run_num += 1
         return True
 
