@@ -23,6 +23,9 @@ from research_town.dbs import (
 )
 from tests.mocks.mocking_func import mock_prompting
 
+from ..constants.data_constants import agent_profile_A, research_paper_submission_A
+from ..constants.db_constants import example_agent_db
+
 
 def test_LogDB_basic() -> None:
     db = LogDB()
@@ -440,3 +443,33 @@ def test_pull_papers() -> None:
     assert db.data.keys()
     assert len(db.data.keys()) == 2
     assert db.data.values()
+
+
+def test_agentdb_invite_members() -> None:
+    example_agent_db.reset_role_avaialbility()
+    example_agent_db.set_leader(agent_profile_A)
+    members = example_agent_db.invite_members(
+        leader=agent_profile_A,
+        member_num=2,
+    )
+    assert len(members) == 2
+
+
+def test_agentdb_invite_reviewers() -> None:
+    example_agent_db.reset_role_avaialbility()
+    example_agent_db.set_leader(agent_profile_A)
+    reviewers = example_agent_db.invite_reviewers(
+        paper_submission=research_paper_submission_A,
+        reviewer_num=2,
+    )
+    assert len(reviewers) == 2
+
+
+def test_agentdb_invite_chair() -> None:
+    example_agent_db.reset_role_avaialbility()
+    example_agent_db.set_leader(agent_profile_A)
+    chair = example_agent_db.invite_chairs(
+        paper_submission=research_paper_submission_A,
+        chair_num=1,
+    )[0]
+    assert chair is not None

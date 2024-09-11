@@ -1,4 +1,4 @@
-from typing import List, Optional, TypeVar
+from typing import Any, Dict, List, Optional, TypeVar
 
 from transformers import BertModel, BertTokenizer
 
@@ -7,7 +7,7 @@ from ..utils.agent_collector import collect_proposals_and_coauthors
 from ..utils.agent_prompter import write_bio_prompting
 from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
-from .data import BaseDBData, Researcher
+from .data import BaseDBData, Proposal, Researcher
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=BaseDBData)
