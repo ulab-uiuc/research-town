@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, Tuple
+from typing import Any, Dict
 
 from ..envs import EndEnv, ProposalWritingEnv, ReviewWritingEnv, StartEnv
 from .engine_base import BaseEngine
@@ -7,27 +7,49 @@ from .engine_base import BaseEngine
 class Engine(BaseEngine):
     def set_envs(self) -> None:
         self.add_envs(
-            StartEnv('start', self.env_db, self.progress_db, self.paper_db, self.config),
-            ProposalWritingEnv('proposal_writing', self.env_db, self.progress_db, self.paper_db, self.config),
-            ReviewWritingEnv('review_writing', self.env_db, self.progress_db, self.paper_db, self.config),
+            StartEnv(
+                'start', self.env_db, self.progress_db, self.paper_db, self.config
+            ),
+            ProposalWritingEnv(
+                'proposal_writing',
+                self.env_db,
+                self.progress_db,
+                self.paper_db,
+                self.config,
+            ),
+            ReviewWritingEnv(
+                'review_writing',
+                self.env_db,
+                self.progress_db,
+                self.paper_db,
+                self.config,
+            ),
             EndEnv('end', self.env_db, self.progress_db, self.paper_db, self.config),
         )
 
     def set_transitions(self) -> None:
-        self.add_transitions([
-            ('start', 'start_proposal', 'proposal_writing'),
-            ('proposal_writing', 'start_review', 'review_writing'),
-            ('review_writing', 'proposal_accept', 'end'),
-            ('review_writing', 'proposal_reject', 'start'),
-            ('review_writing', 'parse_error', 'review_writing'),
-        ])
+        self.add_transitions(
+            [
+                ('start', 'start_proposal', 'proposal_writing'),
+                ('proposal_writing', 'start_review', 'review_writing'),
+                ('review_writing', 'proposal_accept', 'end'),
+                ('review_writing', 'proposal_reject', 'start'),
+                ('review_writing', 'parse_error', 'review_writing'),
+            ]
+        )
 
     def set_transition_funcs(self) -> None:
-        self.add_transition_funcs([
-            ('start', self.from_start_to_proposal_writing, 'proposal_writing'),
-            ('proposal_writing', self.from_proposal_writing_to_review_writing, 'review_writing'),
-            ('review_writing', self.from_review_writing_to_end, 'end'),
-        ])
+        self.add_transition_funcs(
+            [
+                ('start', self.from_start_to_proposal_writing, 'proposal_writing'),
+                (
+                    'proposal_writing',
+                    self.from_proposal_writing_to_review_writing,
+                    'review_writing',
+                ),
+                ('review_writing', self.from_review_writing_to_end, 'end'),
+            ]
+        )
 
     def start_proposal(
         self,
