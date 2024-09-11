@@ -1,10 +1,12 @@
+import argparse
 import json
-import re
+import logging
 import os
+import re
+
 import arxiv
 from tqdm import tqdm
-import argparse
-import logging
+
 
 def setup_logging():
     """Setup logging configuration."""

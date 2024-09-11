@@ -1,10 +1,12 @@
-import json
-import requests
-import time
-import re
-import os
 import argparse
+import json
+import os
+import re
+import time
+
+import requests
 from tqdm import tqdm
+
 
 def get_references(arxiv_id, offset=0, limit=100, max_retry=5):
     """
