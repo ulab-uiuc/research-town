@@ -33,6 +33,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
 
     # Create and run the paper submission environment
     proposal_writing_env = ProposalWritingEnv(
+        name='proposal_writing',
         paper_db=example_paper_db,
         env_db=example_env_db,
         progress_db=example_progress_db,
@@ -65,6 +66,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
 
     # Create and run the peer review environment
     review_writing_env = ReviewWritingEnv(
+        name='review_writing',
         paper_db=example_paper_db,
         env_db=example_env_db,
         progress_db=example_progress_db,

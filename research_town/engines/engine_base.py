@@ -1,6 +1,6 @@
 import os
 from collections import defaultdict
-from typing import Any, Callable, Dict, Tuple
+from typing import Any, Callable, Dict, List, Tuple
 
 from ..configs import Config
 from ..dbs import AgentDB, LogDB, PaperDB, ProgressDB
@@ -50,16 +50,19 @@ class BaseEngine:
     def set_transition_funcs(self) -> None:
         pass
 
-    def add_env(self, name: str, env: BaseEnv) -> None:
-        self.envs[name] = env
+    def add_envs(self, envs: List[BaseEnv]) -> None:
+        for env in envs:
+            self.envs[env.name] = env
 
-    def add_transition_func(
-        self, from_env: str, func: Callable[..., Any], to_env: str
+    def add_transition_funcs(
+        self, funcs: List[Tuple[str, Callable[..., Any], str]]
     ) -> None:
-        self.transition_funcs[(from_env, to_env)] = func
+        for from_env, func, to_env in funcs:
+            self.transition_funcs[from_env, to_env] = func
 
-    def add_transition(self, from_env: str, trigger: str, to_env: str) -> None:
-        self.transitions[from_env][trigger] = to_env
+    def add_transitions(self, transitions: List[Tuple[str, str, str]]) -> None:
+        for from_env, pass_or_fail, to_env in transitions:
+            self.transitions[from_env][pass_or_fail] = to_env
 
     def start(self, task: str, env_name: str = 'start') -> None:
         if env_name not in self.envs:
