@@ -40,7 +40,5 @@ class EndEnv(BaseEnv):
     def run(self) -> None:
         return
 
-    def on_exit(self) -> bool:
-        if self.stop_flag:
-            raise NotImplementedError('Stop signal is not implemented yet.')
-        return False
+    def on_exit(self) -> str:
+        return 'end'

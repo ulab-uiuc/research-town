@@ -27,27 +27,25 @@ class Engine(BaseEngine):
 
     def set_transitions(self) -> None:
         transitions = [
-            ('start', True, 'proposal_writing'),
-            ('proposal_writing', True, 'review_writing'),
-            ('review_writing', True, 'end'),
-            ('review_writing', False, 'start'),
+            ('start', 'start_proposal', 'proposal_writing'),
+            ('proposal_writing', 'start_review', 'review_writing'),
+            ('review_writing', 'proposal_accept', 'end'),
+            ('review_writing', 'proposal_reject', 'start'),
+            ('review_writing', 'parse_error', 'review_writing'),
         ]
-        for from_env, pass_or_fail, to_env in transitions:
-            self.add_transition(from_env, pass_or_fail, to_env)
+        for from_env, trigger, to_env in transitions:
+            self.add_transition(from_env, trigger, to_env)
 
     def set_transition_funcs(self) -> None:
         transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {
-            ('start', 'proposal_writing'): self.from_start_to_proposal_writing,
-            (
-                'proposal_writing',
-                'review_writing',
-            ): self.from_proposal_writing_to_review_writing,
-            ('review_writing', 'end'): self.from_review_writing_to_end,
+            ('start', 'proposal_writing'): self.start_proposal,
+            ('proposal_writing', 'review_writing'): self.start_review,
+            ('review_writing', 'end'): self.proposal_accept,
         }
         for (from_env, to_env), func in transition_funcs.items():
             self.add_transition_func(from_env, func, to_env)
 
-    def from_start_to_proposal_writing(
+    def start_proposal(
         self,
         env: StartEnv,
     ) -> Dict[str, Any]:
@@ -60,7 +58,7 @@ class Engine(BaseEngine):
             'agent_models': [self.model_name] * (member_num + 1),
         }
 
-    def from_proposal_writing_to_review_writing(
+    def start_review(
         self,
         env: ProposalWritingEnv,
     ) -> Dict[str, Any]:
@@ -75,5 +73,11 @@ class Engine(BaseEngine):
             'paper': env.proposal,
         }
 
-    def from_review_writing_to_end(self, env: ReviewWritingEnv) -> Dict[str, Any]:
+    def proposal_accept(self, env: ReviewWritingEnv) -> Dict[str, Any]:
         return {'meta_review': env.meta_review}
+
+    def proposal_reject(self, env: ReviewWritingEnv) -> Dict[str, Any]:
+        return {}
+
+    def parse_error(self, env: ReviewWritingEnv) -> Dict[str, Any]:
+        return {}

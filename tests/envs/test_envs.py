@@ -48,7 +48,7 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
     env.run()
     exit_status = env.on_exit()
 
-    assert exit_status is True
+    assert exit_status is 'proposal_accept'
 
     assert isinstance(env.reviews, list)
     assert len(env.reviews) == 2
@@ -78,4 +78,4 @@ def test_paper_submission_env(
     exit_status = env.on_exit()
     assert env.proposal.abstract is not None
     assert env.proposal.abstract == 'Paper abstract1'
-    assert exit_status is True
+    assert exit_status is 'start_review'
