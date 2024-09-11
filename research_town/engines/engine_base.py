@@ -67,7 +67,7 @@ class BaseEngine:
 
         self.curr_env_name = env_name
         self.curr_env = self.envs[env_name]
-        leader = self.agent_db.invite_leader(query=task, leader_num=1)[0]
+        leader = self.agent_db.invite_leaders(query=task, leader_num=1)[0]
         self.curr_env.on_enter(
             time_step=self.time_step,
             stop_flag=self.stop_flag,
