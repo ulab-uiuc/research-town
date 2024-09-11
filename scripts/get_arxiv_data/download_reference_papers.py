@@ -17,7 +17,7 @@ def setup_logging()->None:
         filemode='w'
     )
 
-def extract_arxiv_id(file_path)->str:
+def extract_arxiv_id(file_path:str)->str:
     """
     Extract the arXiv ID from a file path using regex.
 
@@ -34,7 +34,7 @@ def extract_arxiv_id(file_path)->str:
         logging.error(f"Could not extract arXiv ID from {file_path}")
         return None
 
-def download_pdf(arxiv_id, save_path)->bool:
+def download_pdf(arxiv_id:str, save_path:str)->bool:
     """
     Download an arXiv paper as a PDF by its arXiv ID.
 
@@ -55,7 +55,7 @@ def download_pdf(arxiv_id, save_path)->bool:
         logging.error(f"Error downloading {arxiv_id}: {str(e)}")
         return False
 
-def process_papers(input_file, output_file, base_save_dir)->None:
+def process_papers(input_file:str, output_file:str, base_save_dir:str)->None:
     """
     Process each paper, extract references, and download the referenced PDFs.
 
