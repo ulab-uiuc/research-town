@@ -4,7 +4,7 @@ from typing import List, Optional
 import gradio as gr
 
 from research_town.configs import Config
-from research_town.dbs import LogDB, PaperDB, ProgressDB, Proposal, AgentDB 
+from research_town.dbs import AgentDB, LogDB, PaperDB, ProgressDB, Proposal
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_paper_content
 
