@@ -6,44 +6,28 @@ from .engine_base import BaseEngine
 
 class Engine(BaseEngine):
     def set_envs(self) -> None:
-        self.add_env(
-            'start',
-            StartEnv(self.env_db, self.progress_db, self.paper_db, self.config),
-        )
-        self.add_env(
-            'proposal_writing',
-            ProposalWritingEnv(
-                self.env_db, self.progress_db, self.paper_db, self.config
-            ),
-        )
-        self.add_env(
-            'review_writing',
-            ReviewWritingEnv(self.env_db, self.progress_db, self.paper_db, self.config),
-        )
-        self.add_env(
-            'end',
-            EndEnv(self.env_db, self.progress_db, self.paper_db, self.config),
+        self.add_envs(
+            StartEnv('start', self.env_db, self.progress_db, self.paper_db, self.config),
+            ProposalWritingEnv('proposal_writing', self.env_db, self.progress_db, self.paper_db, self.config),
+            ReviewWritingEnv('review_writing', self.env_db, self.progress_db, self.paper_db, self.config),
+            EndEnv('end', self.env_db, self.progress_db, self.paper_db, self.config),
         )
 
     def set_transitions(self) -> None:
-        transitions = [
+        self.add_transitions([
             ('start', 'start_proposal', 'proposal_writing'),
             ('proposal_writing', 'start_review', 'review_writing'),
             ('review_writing', 'proposal_accept', 'end'),
             ('review_writing', 'proposal_reject', 'start'),
             ('review_writing', 'parse_error', 'review_writing'),
-        ]
-        for from_env, trigger, to_env in transitions:
-            self.add_transition(from_env, trigger, to_env)
+        ])
 
     def set_transition_funcs(self) -> None:
-        transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {
-            ('start', 'proposal_writing'): self.start_proposal,
-            ('proposal_writing', 'review_writing'): self.start_review,
-            ('review_writing', 'end'): self.proposal_accept,
-        }
-        for (from_env, to_env), func in transition_funcs.items():
-            self.add_transition_func(from_env, func, to_env)
+        self.add_transition_funcs([
+            ('start', self.from_start_to_proposal_writing, 'proposal_writing'),
+            ('proposal_writing', self.from_proposal_writing_to_review_writing, 'review_writing'),
+            ('review_writing', self.from_review_writing_to_end, 'end'),
+        ])
 
     def start_proposal(
         self,
