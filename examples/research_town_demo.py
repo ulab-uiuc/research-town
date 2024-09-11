@@ -3,7 +3,7 @@ import os
 from beartype.typing import Literal
 
 from research_town.configs import Config
-from research_town.dbs import LogDB, PaperDB, ProgressDB, ResearcherDB
+from research_town.dbs import AgentDB, LogDB, PaperDB, ProgressDB
 from research_town.engines import Engine
 
 Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
@@ -25,7 +25,7 @@ def run_sync_experiment(
     ]
     # if save path exists, then load
     config = Config(config_file_path)
-    agent_db = ResearcherDB()
+    agent_db = AgentDB()
     paper_db = PaperDB()
     if os.path.exists(save_file_path):
         agent_db.load_from_json(save_file_path, with_embed=True)

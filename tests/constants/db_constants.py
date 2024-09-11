@@ -1,4 +1,4 @@
-from research_town.dbs import LogDB, PaperDB, ProgressDB, ResearcherDB
+from research_town.dbs import AgentDB, LogDB, PaperDB, ProgressDB
 
 from .data_constants import (
     agent_agent_idea_discussion_log,
@@ -19,7 +19,7 @@ from .data_constants import (
     research_paper_submission_B,
 )
 
-example_agent_db = ResearcherDB()
+example_agent_db = AgentDB()
 example_agent_db.add(agent_profile_A)
 example_agent_db.add(agent_profile_B)
 example_agent_db.add(agent_profile_C)

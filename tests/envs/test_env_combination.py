@@ -86,7 +86,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     exit_status = review_writing_env.on_exit()
 
     # Assertions for peer review environment
-    assert exit_status is 'proposal_accept'
+    assert exit_status == 'proposal_accept'
 
     reviews = review_writing_env.reviews
 
