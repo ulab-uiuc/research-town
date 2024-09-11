@@ -3,12 +3,13 @@ import json
 import os
 import re
 import time
+from typing import Dict, Optional
 
 import requests
 from tqdm import tqdm
 
 
-def get_references(arxiv_id, offset=0, limit=100, max_retry=5):
+def get_references(arxiv_id, offset=0, limit=100, max_retry=5)->Optional[Dict, None]:
     """
     Fetch references for a given arXiv paper using the Semantic Scholar API with retry mechanism.
 
@@ -40,7 +41,7 @@ def get_references(arxiv_id, offset=0, limit=100, max_retry=5):
     print(f"Failed to fetch references for {paper_id} after {max_retry} attempts.")
     return None
 
-def get_all_references(arxiv_id):
+def get_all_references(arxiv_id: str)->list:
     """
     Retrieve all references for a given arXiv paper by handling pagination.
 
@@ -63,7 +64,7 @@ def get_all_references(arxiv_id):
         time.sleep(5)  # Wait for 5 seconds before the next API call to avoid rate limits
     return all_references
 
-def process_reference(ref):
+def process_reference(ref: dict)->dict:
     """
     Process a reference paper and extract key details.
 
@@ -88,7 +89,7 @@ def process_reference(ref):
         "fieldsOfStudy": ref.get("fieldsOfStudy")
     }
 
-def extract_arxiv_id(file_path):
+def extract_arxiv_id(file_path: str)->Optional[str]:
     """
     Extract the arXiv ID from a file path.
 
@@ -105,7 +106,7 @@ def extract_arxiv_id(file_path):
         print(f"Could not extract arXiv ID from {file_path}")
         return None
 
-def process_papers(input_file, output_file):
+def process_papers(input_file:str, output_file:str)->None:
     """
     Process papers from the input JSON file, fetch their references, and update the output JSON file.
 

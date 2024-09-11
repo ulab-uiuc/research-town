@@ -7,7 +7,7 @@ import arxiv
 import requests
 
 
-def download_papers(keywords: str, start_date: str, end_date: str, save_dir: str):
+def download_papers(keywords: str, start_date: str, end_date: str, save_dir: str)->None:
     """
     Downloads arXiv papers based on the search query and criteria.
 
@@ -81,7 +81,7 @@ def download_papers(keywords: str, start_date: str, end_date: str, save_dir: str
     print(f"Paper information saved to {json_file_path}")
 
 
-def parse_args():
+def parse_args()->argparse.Namespace:
     """
     Parses command-line arguments for the script.
 

@@ -8,7 +8,7 @@ import arxiv
 from tqdm import tqdm
 
 
-def setup_logging():
+def setup_logging()->None:
     """Setup logging configuration."""
     logging.basicConfig(
         filename='download_reference_papers.log',
@@ -17,7 +17,7 @@ def setup_logging():
         filemode='w'
     )
 
-def extract_arxiv_id(file_path):
+def extract_arxiv_id(file_path)->str:
     """
     Extract the arXiv ID from a file path using regex.
 
@@ -34,7 +34,7 @@ def extract_arxiv_id(file_path):
         logging.error(f"Could not extract arXiv ID from {file_path}")
         return None
 
-def download_pdf(arxiv_id, save_path):
+def download_pdf(arxiv_id, save_path)->bool:
     """
     Download an arXiv paper as a PDF by its arXiv ID.
 
@@ -55,7 +55,7 @@ def download_pdf(arxiv_id, save_path):
         logging.error(f"Error downloading {arxiv_id}: {str(e)}")
         return False
 
-def process_papers(input_file, output_file, base_save_dir):
+def process_papers(input_file, output_file, base_save_dir)->None:
     """
     Process each paper, extract references, and download the referenced PDFs.
 
@@ -106,7 +106,7 @@ def process_papers(input_file, output_file, base_save_dir):
     logging.info(f"Processing complete. Results saved in {output_file}")
 
 
-def parse_args():
+def parse_args()->argparse.Namespace:
     """
     Parse command-line arguments for the script.
 
