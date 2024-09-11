@@ -34,8 +34,8 @@ def test_get_paper_content() -> None:
         'https://arxiv.org/html/2403.05534v1'
     )
     assert section_contents is not None
-    assert '\n1 Introduction' in section_contents
-    assert len(section_contents['\n1 Introduction']) > 0
+    assert '1 Introduction' in section_contents
+    assert len(section_contents['1 Introduction']) > 0
     assert table_captions is None
     assert figure_captions is not None
     assert 'Figure 1: ' in figure_captions
