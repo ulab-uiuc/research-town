@@ -2,13 +2,13 @@
 
 [[package]]
 name = "aider-chat"
-version = "0.50.0"
+version = "0.50.1"
 description = "Aider is AI pair programming in your terminal"
 optional = false
 python-versions = "<3.13,>=3.9"
 files = [
-    {file = "aider_chat-0.50.0-py3-none-any.whl", hash = "sha256:2eb6f1e052dab55339f70513d023c8373e9e97039d8dad11d3edbd35c83dae27"},
-    {file = "aider_chat-0.50.0.tar.gz", hash = "sha256:1e67dce40536c40ff14cc318d44e94eca8254d865f8b29d212c4fad5440945fd"},
+    {file = "aider_chat-0.50.1-py3-none-any.whl", hash = "sha256:6bdc29861932cdbef67b1103e61b29acb2699e2506a178877d7304586e2be8c4"},
+    {file = "aider_chat-0.50.1.tar.gz", hash = "sha256:f6c107863edd1b3316ae054784cb439cda2ac4a176c7a18e7976a614543d6ae0"},
 ]
 
 [package.dependencies]
@@ -3381,13 +3381,13 @@ files = [
 
 [[package]]
 name = "pytest"
-version = "8.3.2"
+version = "8.3.3"
 description = "pytest: simple powerful testing with Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pytest-8.3.2-py3-none-any.whl", hash = "sha256:4ba08f9ae7dcf84ded419494d229b48d0903ea6407b030eaec46df5e6a73bba5"},
-    {file = "pytest-8.3.2.tar.gz", hash = "sha256:c132345d12ce551242c87269de812483f5bcc87cdbb4722e48487ba194f9fdce"},
+    {file = "pytest-8.3.3-py3-none-any.whl", hash = "sha256:a6853c7375b2663155079443d2e45de913a911a11d669df02a50814944db57b2"},
+    {file = "pytest-8.3.3.tar.gz", hash = "sha256:70b98107bd648308a7952b06e6ca9a50bc660be218d53c257cc1fc94fda10181"},
 ]
 
 [package.dependencies]

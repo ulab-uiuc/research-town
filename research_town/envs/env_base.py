@@ -7,7 +7,7 @@ from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProgressDB, Researcher
 
 LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'proj_leader', 'proj_participant', 'chair'] | None
+Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 class BaseEnv(ABC):
