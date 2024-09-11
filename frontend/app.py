@@ -1,14 +1,15 @@
+import os
 from typing import List
 
-import os
 import gradio as gr
+
 from research_town.configs import Config
-from research_town.dbs import LogDB, PaperDB, ProgressDB, ResearcherDB, Proposal
+from research_town.dbs import LogDB, PaperDB, ProgressDB, Proposal, ResearcherDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_paper_content
 
 
-def get_proposals(introduction) -> List[str]:
+def get_proposals(introduction: str) -> List[str]:
     config_file_path = '../configs'
     save_file_path = '../examples/research_town_demo_log'
     agent_names = [
@@ -47,12 +48,15 @@ def get_proposals(introduction) -> List[str]:
     contents = [proposal.abstract for proposal in proposals]
     return contents
 
-def get_introduction(url) -> str:
+
+def get_introduction(url: str) -> str:
     contents = get_paper_content(url)
     section_contents = contents[0]
     for section_name, section_content in section_contents.items():
         if 'Introduction' in section_name:
             return section_content
+    return ''
+
 
 with gr.Blocks() as demo:
     input_url = gr.Textbox(label='input')
