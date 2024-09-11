@@ -20,8 +20,8 @@ def test_engine_fine_members() -> None:
         env_db=example_env_db,
         config=Config(),
     )
-    engine.set_leader(agent_profile_A)
-    members = engine.find_members(
+    example_agent_db.set_leader(agent_profile_A)
+    members = example_agent_db.invite_members(
         leader=agent_profile_A,
         member_num=2,
     )
@@ -38,15 +38,15 @@ def test_engine_find_proj_reviewers() -> None:
         env_db=example_env_db,
         config=Config(),
     )
-    engine.set_leader(agent_profile_A)
-    reviewers = engine.find_reviewers(
+    example_agent_db.set_leader(agent_profile_A)
+    reviewers = example_agent_db.invite_reviewers(
         paper_submission=research_paper_submission_A,
         reviewer_num=2,
     )
     assert len(reviewers) == 2
 
 
-def test_engine_find_chair() -> None:
+def test_engine_invite_chair() -> None:
     example_agent_db.reset_role_avaialbility()
     engine = BaseEngine(
         project_name='test',
@@ -56,8 +56,9 @@ def test_engine_find_chair() -> None:
         env_db=example_env_db,
         config=Config(),
     )
-    engine.set_leader(agent_profile_A)
-    chair = engine.find_chair(
+    example_agent_db.set_leader(agent_profile_A)
+    chair = example_agent_db.invite_chairs(
         paper_submission=research_paper_submission_A,
-    )
+        chair_num=1,
+    )[0]
     assert chair is not None

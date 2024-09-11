@@ -3,7 +3,7 @@ from collections import defaultdict
 from typing import Any, Callable, Dict, List, Tuple
 
 from ..configs import Config
-from ..dbs import LogDB, PaperDB, ProgressDB, Proposal, Researcher, ResearcherDB
+from ..dbs import LogDB, PaperDB, ProgressDB, Proposal, Researcher, AgentDB
 from ..envs.env_base import BaseEnv
 
 
@@ -11,7 +11,7 @@ class BaseEngine:
     def __init__(
         self,
         project_name: str,
-        agent_db: ResearcherDB,
+        agent_db: AgentDB,
         paper_db: PaperDB,
         progress_db: ProgressDB,
         env_db: LogDB,
@@ -67,7 +67,7 @@ class BaseEngine:
 
         self.curr_env_name = env_name
         self.curr_env = self.envs[env_name]
-        leader = self.find_agents(condition={}, query=task, num=1, update_fields={})[0]
+        leader = self.agent_db.invite_leader(query=task, leader_num=1)[0]
         self.curr_env.on_enter(
             time_step=self.time_step,
             stop_flag=self.stop_flag,
@@ -95,79 +95,6 @@ class BaseEngine:
             stop_flag=self.stop_flag,
             **input_data,
         )
-
-    def find_agents(
-        self,
-        condition: Dict[str, Any],
-        query: str,
-        num: int,
-        update_fields: Dict[str, bool],
-    ) -> List[Researcher]:
-        candidates = self.agent_db.get(**condition)
-        selected_agents = self.agent_db.match(
-            query=query, agent_profiles=candidates, num=num
-        )
-
-        for agent in selected_agents:
-            for field, value in update_fields.items():
-                setattr(agent, field, value)
-            self.agent_db.update(pk=agent.pk, updates=agent.model_dump())
-
-        return selected_agents
-
-    def set_leader(self, leader: Researcher) -> Researcher:
-        return self.find_agents(
-            condition={'pk': leader.pk},
-            query=leader.bio,
-            num=1,
-            update_fields={
-                'is_leader_candidate': True,
-                'is_member_candidate': False,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': False,
-            },
-        )[0]
-
-    def find_members(self, leader: Researcher, member_num: int) -> List[Researcher]:
-        return self.find_agents(
-            condition={'is_member_candidate': True},
-            query=leader.bio,
-            num=member_num,
-            update_fields={
-                'is_leader_candidate': False,
-                'is_member_candidate': True,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': False,
-            },
-        )
-
-    def find_reviewers(
-        self, paper_submission: Proposal, reviewer_num: int
-    ) -> List[Researcher]:
-        return self.find_agents(
-            condition={'is_reviewer_candidate': True},
-            query=paper_submission.abstract,
-            num=reviewer_num,
-            update_fields={
-                'is_leader_candidate': False,
-                'is_member_candidate': False,
-                'is_reviewer_candidate': True,
-                'is_chair_candidate': False,
-            },
-        )
-
-    def find_chair(self, paper_submission: Proposal) -> Researcher:
-        return self.find_agents(
-            condition={'is_chair_candidate': True},
-            query=paper_submission.abstract,
-            num=1,
-            update_fields={
-                'is_leader_candidate': False,
-                'is_member_candidate': False,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': True,
-            },
-        )[0]
 
     def run(self, task: str) -> None:
         self.start(task=task)

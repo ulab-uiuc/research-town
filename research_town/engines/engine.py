@@ -51,7 +51,7 @@ class Engine(BaseEngine):
     ) -> Dict[str, Any]:
         member_num = self.config.param.member_num
         leader = env.leader.profile
-        members = self.find_members(leader, member_num)
+        members = self.agent_db.invite_members(leader, member_num)
         return {
             'agent_profiles': [leader] + members,
             'agent_roles': ['leader'] + ['member'] * member_num,
@@ -64,8 +64,8 @@ class Engine(BaseEngine):
     ) -> Dict[str, Any]:
         reviewer_num = self.config.param.reviewer_num
         leader = env.leader.profile
-        reviewers = self.find_reviewers(env.proposal, reviewer_num)
-        chair = self.find_chair(env.proposal)
+        reviewers = self.agent_db.invite_reviewers(env.proposal, reviewer_num)
+        chair = self.agent_db.invite_chairs(env.proposal, chair_num=1)[0]
         return {
             'agent_profiles': [leader] + reviewers + [chair],
             'agent_roles': ['leader'] + ['reviewer'] * reviewer_num + ['chair'],

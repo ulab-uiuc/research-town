@@ -18,7 +18,7 @@ from research_town.dbs import (
     ProgressDB,
     RebuttalWritingLog,
     Researcher,
-    ResearcherDB,
+    AgentDB,
     ReviewWritingLog,
 )
 from tests.mocks.mocking_func import mock_prompting
@@ -160,8 +160,8 @@ def test_progressdb_basic() -> None:
         assert len(new_db.dbs['Idea'].data) == 2
 
 
-def test_Researcherdb_basic() -> None:
-    db = ResearcherDB()
+def test_AgentDB_basic() -> None:
+    db = AgentDB()
     agent1 = Researcher(
         name='John Doe', bio='Researcher in AI', institute='AI Institute'
     )
@@ -278,7 +278,7 @@ def test_Paperdb_basic() -> None:
 
 
 def test_agent_match() -> None:
-    db = ResearcherDB()
+    db = AgentDB()
     agent1 = Researcher(
         name='John Doe', bio='Researcher in AI', institute='AI Institute'
     )
@@ -335,7 +335,7 @@ def test_paper_match() -> None:
 
 
 def test_agent_file() -> None:
-    db = ResearcherDB()
+    db = AgentDB()
     agent1 = Researcher(
         name='John Doe', bio='Researcher in AI', institute='AI Institute'
     )
@@ -344,24 +344,24 @@ def test_agent_file() -> None:
     db.add(agent2)
     # save without embeddings
     db.save_to_json('data/test')
-    with open('data/test/ResearcherDB.json', 'r') as f:
+    with open('data/test/AgentDB.json', 'r') as f:
         data_test = json.load(f)
     assert len(data_test) > 0
     assert db.data == {pk: Researcher(**data) for pk, data in data_test.items()}
     # load without embeddings
-    db_test = ResearcherDB()
+    db_test = AgentDB()
     db_test.load_from_json('data/test')
     assert db.data == db_test.data
     # save with embeddings
     db.transform_to_embed()
     db.save_to_json('data/test', with_embed=True)
-    with open('data/test/ResearcherDB.pkl', 'rb') as f:
+    with open('data/test/AgentDB.pkl', 'rb') as f:
         data_embed_test = pickle.load(f)
     assert db.data_embed.keys() == data_embed_test.keys()
     for agent_pk in db.data_embed:
         assert torch.equal(db.data_embed[agent_pk], data_embed_test[agent_pk])
     # load with embeddings
-    db_test = ResearcherDB()
+    db_test = AgentDB()
     db_test.load_from_json('data/test', with_embed=True)
     assert db.data_embed.keys() == db_test.data_embed.keys()
     for agent_pk in db.data_embed:
@@ -426,7 +426,7 @@ def test_paper_file() -> None:
 def test_pull_agents(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    db = ResearcherDB()
+    db = AgentDB()
     agent_names = ['Jiaxuan You', 'Jure Leskovec']
     db.pull_agents(agent_names=agent_names, config=Config())
     assert db.data.keys()
