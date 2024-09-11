@@ -1,4 +1,4 @@
-from research_town.dbs import LogDB, PaperDB, ProgressDB, AgentDB
+from research_town.dbs import AgentDB, LogDB, PaperDB, ProgressDB
 
 from .data_constants import (
     agent_agent_idea_discussion_log,

@@ -1,9 +1,9 @@
 import os
 from collections import defaultdict
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict, Tuple
 
 from ..configs import Config
-from ..dbs import LogDB, PaperDB, ProgressDB, Proposal, Researcher, AgentDB
+from ..dbs import AgentDB, LogDB, PaperDB, ProgressDB
 from ..envs.env_base import BaseEnv
 
 

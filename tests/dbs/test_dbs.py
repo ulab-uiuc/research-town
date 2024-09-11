@@ -9,6 +9,7 @@ from beartype.typing import Any, Dict, List
 
 from research_town.configs import Config
 from research_town.dbs import (
+    AgentDB,
     Idea,
     IdeaDiscussionLog,
     LogDB,
@@ -18,7 +19,6 @@ from research_town.dbs import (
     ProgressDB,
     RebuttalWritingLog,
     Researcher,
-    AgentDB,
     ReviewWritingLog,
 )
 from tests.mocks.mocking_func import mock_prompting

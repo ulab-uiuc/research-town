@@ -103,7 +103,8 @@ class AgentDB(BaseDB[Researcher]):
 
         return invited_agents
 
-    def invite_members(self, leader: Researcher, member_num: int = 1
+    def invite_members(
+        self, leader: Researcher, member_num: int = 1
     ) -> List[Researcher]:
         return self.invite_agents(
             condition={'is_member_candidate': True},
@@ -132,7 +133,8 @@ class AgentDB(BaseDB[Researcher]):
             },
         )
 
-    def invite_chair(self, paper_submission: Proposal, chair_num: int = 1
+    def invite_chair(
+        self, paper_submission: Proposal, chair_num: int = 1
     ) -> List[Researcher]:
         return self.invite_agents(
             condition={'is_chair_candidate': True},
@@ -146,8 +148,7 @@ class AgentDB(BaseDB[Researcher]):
             },
         )
 
-    def invite_leader(self, query: str, leader_num: int = 1
-    ) -> List[Researcher]:
+    def invite_leader(self, query: str, leader_num: int = 1) -> List[Researcher]:
         return self.invite_agents(
             condition={'is_leader_candidate': True},
             query=query,
