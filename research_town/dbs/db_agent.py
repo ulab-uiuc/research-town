@@ -91,15 +91,15 @@ class AgentDB(BaseDB[Researcher]):
         num: int,
         update_fields: Dict[str, bool],
     ) -> List[Researcher]:
-        candidates = self.agent_db.get(**condition)
-        invited_agents = self.agent_db.match(
+        candidates = self.get(**condition)
+        invited_agents = self.match(
             query=query, agent_profiles=candidates, num=num
         )
 
         for agent in invited_agents:
             for field, value in update_fields.items():
                 setattr(agent, field, value)
-            self.agent_db.update(pk=agent.pk, updates=agent.model_dump())
+            self.update(pk=agent.pk, updates=agent.model_dump())
 
         return invited_agents
 

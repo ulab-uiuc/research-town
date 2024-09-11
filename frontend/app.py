@@ -4,7 +4,7 @@ from typing import List, Optional
 import gradio as gr
 
 from research_town.configs import Config
-from research_town.dbs import LogDB, PaperDB, ProgressDB, Proposal, ResearcherDB
+from research_town.dbs import LogDB, PaperDB, ProgressDB, Proposal, AgentDB 
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_paper_content
 
@@ -24,7 +24,7 @@ def get_proposals(introduction: str) -> List[str]:
     ]
     # if save path exists, then load
     config = Config(config_file_path)
-    agent_db = ResearcherDB()
+    agent_db = AgentDB()
     paper_db = PaperDB()
     if os.path.exists(save_file_path):
         agent_db.load_from_json(save_file_path, with_embed=True)
