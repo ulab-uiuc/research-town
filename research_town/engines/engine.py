@@ -41,13 +41,11 @@ class Engine(BaseEngine):
     def set_transition_funcs(self) -> None:
         self.add_transition_funcs(
             [
-                ('start', self.from_start_to_proposal_writing, 'proposal_writing'),
-                (
-                    'proposal_writing',
-                    self.from_proposal_writing_to_review_writing,
-                    'review_writing',
-                ),
-                ('review_writing', self.from_review_writing_to_end, 'end'),
+                ('start', self.start_proposal, 'proposal_writing'),
+                ('proposal_writing', self.start_review, 'review_writing'),
+                ('review_writing', self.proposal_accept, 'end'),
+                ('review_writing', self.proposal_reject, 'start'),
+                ('review_writing', self.parse_error, 'review_writing'),
             ]
         )
 
