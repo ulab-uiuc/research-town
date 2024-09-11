@@ -6,26 +6,30 @@ from .engine_base import BaseEngine
 
 class Engine(BaseEngine):
     def set_envs(self) -> None:
-        self.add_envs([
-            StartEnv(
-                'start', self.env_db, self.progress_db, self.paper_db, self.config
-            ),
-            ProposalWritingEnv(
-                'proposal_writing',
-                self.env_db,
-                self.progress_db,
-                self.paper_db,
-                self.config,
-            ),
-            ReviewWritingEnv(
-                'review_writing',
-                self.env_db,
-                self.progress_db,
-                self.paper_db,
-                self.config,
-            ),
-            EndEnv('end', self.env_db, self.progress_db, self.paper_db, self.config),
-        ])
+        self.add_envs(
+            [
+                StartEnv(
+                    'start', self.env_db, self.progress_db, self.paper_db, self.config
+                ),
+                ProposalWritingEnv(
+                    'proposal_writing',
+                    self.env_db,
+                    self.progress_db,
+                    self.paper_db,
+                    self.config,
+                ),
+                ReviewWritingEnv(
+                    'review_writing',
+                    self.env_db,
+                    self.progress_db,
+                    self.paper_db,
+                    self.config,
+                ),
+                EndEnv(
+                    'end', self.env_db, self.progress_db, self.paper_db, self.config
+                ),
+            ]
+        )
 
     def set_transitions(self) -> None:
         self.add_transitions(

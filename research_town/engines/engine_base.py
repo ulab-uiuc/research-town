@@ -41,15 +41,6 @@ class BaseEngine:
         self.env_db.set_project_name(self.project_name)
         self.progress_db.set_project_name(self.project_name)
 
-    def set_envs(self) -> None:
-        pass
-
-    def set_transitions(self) -> None:
-        pass
-
-    def set_transition_funcs(self) -> None:
-        pass
-
     def add_envs(self, envs: List[BaseEnv]) -> None:
         for env in envs:
             self.envs[env.name] = env
