@@ -22,7 +22,7 @@ bs4 = { version = "*", optional = true }
 lxml = { version = "*", optional = true }
 tqdm = { version = "*", optional = true }
 gradio = { version = ">=4.29.0", optional = true }
-aider-chat = "=0.50"
+aider-chat = "=0.50.1"
 
 
 [tool.poetry.group.dev.dependencies]
