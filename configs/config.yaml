@@ -6,7 +6,7 @@ param:
   related_paper_num: 10
   result_path: Mixtral-8x7B
   return_num: 1
-  reviewer_num: 3
+  reviewer_num: 1
   stream: null
   temperature: 0.0
   top_p: null

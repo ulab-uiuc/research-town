@@ -47,8 +47,8 @@ class BaseDB(Generic[T]):
             return True
         return False
 
-    def get(self, **conditions: Union[str, int, float, List[int]]) -> List[T]:
-        if conditions == {}:
+    def get(self, **conditions: Union[str, int, float, List[int], None]) -> List[T]:
+        if conditions == {} or conditions is None:
             return list(self.data.values())
         result = []
         for data in self.data.values():
