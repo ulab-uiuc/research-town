@@ -49,13 +49,13 @@ def get_proposals(introduction: str) -> List[str]:
     return contents
 
 
-def get_introduction(url: str) -> str:
+def get_introduction(url: str) -> Optional[str]:
     contents = get_paper_content(url)
     section_contents = contents[0]
     for section_name, section_content in section_contents.items():
         if 'Introduction' in section_name:
             return section_content
-    return ''
+    return None
 
 
 with gr.Blocks() as demo:
@@ -67,6 +67,8 @@ with gr.Blocks() as demo:
             gr.Markdown('We only accept arxiv links.')
         else:
             introduction = get_introduction(url)
+            if introduction is None:
+                gr.Markdown('Paper parsing error.')
             proposals = get_proposals(introduction)
             for proposal in proposals:
                 gr.Textbox(proposal)
