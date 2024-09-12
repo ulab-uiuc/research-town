@@ -437,30 +437,30 @@ def test_pull_papers() -> None:
     assert db.data.values()
 
 
-def test_agentdb_invite_member_profiles() -> None:
+def test_agentdb_match_member_profiles() -> None:
     example_profile_db.reset_role_avaialbility()
-    example_profile_db.set_leader_profile(agent_profile_A)
-    members = example_profile_db.invite_member_profiles(
+    agent_profile_A.is_leader_candidate = True
+    members = example_profile_db.match_member_profiles(
         leader=agent_profile_A,
         member_num=2,
     )
     assert len(members) == 2
 
 
-def test_agentdb_invite_reviewer_profiles() -> None:
+def test_agentdb_match_reviewer_profiles() -> None:
     example_profile_db.reset_role_avaialbility()
-    example_profile_db.set_leader_profile(agent_profile_A)
-    reviewers = example_profile_db.invite_reviewer_profiles(
+    agent_profile_A.is_leader_candidate = True
+    reviewers = example_profile_db.match_reviewer_profiles(
         proposal=research_proposal_A,
         reviewer_num=2,
     )
     assert len(reviewers) == 2
 
 
-def test_agentdb_invite_chair() -> None:
+def test_agentdb_match_chair() -> None:
     example_profile_db.reset_role_avaialbility()
-    example_profile_db.set_leader_profile(agent_profile_A)
-    chair = example_profile_db.invite_chair_profiles(
+    agent_profile_A.is_leader_candidate = True
+    chair = example_profile_db.match_chair_profiles(
         proposal=research_proposal_A,
         chair_num=1,
     )

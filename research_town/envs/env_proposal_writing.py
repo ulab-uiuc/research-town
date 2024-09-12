@@ -52,7 +52,7 @@ class ProposalWritingEnv(BaseEnv):
             agent_role='leader',
             model_name=self.config.param.base_llm,
         )
-        member_profiles = self.profile_db.invite_member_profiles(
+        member_profiles = self.profile_db.match_member_profiles(
             leader=leader_profile,
             member_num=self.config.param.member_num,
         )

@@ -101,7 +101,7 @@ class ProfileDB(BaseDB[Profile]):
 
         return searched_profiles
 
-    def invite_member_profiles(
+    def match_member_profiles(
         self, leader: Profile, member_num: int = 1
     ) -> List[Profile]:
         members = self.search_profiles(
@@ -117,7 +117,7 @@ class ProfileDB(BaseDB[Profile]):
         )
         return members
 
-    def invite_reviewer_profiles(
+    def match_reviewer_profiles(
         self, proposal: Proposal, reviewer_num: int = 1
     ) -> List[Profile]:
         reviewers = self.search_profiles(
@@ -133,7 +133,7 @@ class ProfileDB(BaseDB[Profile]):
         )
         return reviewers
 
-    def invite_chair_profiles(
+    def match_chair_profiles(
         self, proposal: Proposal, chair_num: int = 1
     ) -> List[Profile]:
         chairs = self.search_profiles(
@@ -149,7 +149,7 @@ class ProfileDB(BaseDB[Profile]):
         )
         return chairs
 
-    def invite_leader_profiles(self, query: str, leader_num: int = 1) -> List[Profile]:
+    def match_leader_profiles(self, query: str, leader_num: int = 1) -> List[Profile]:
         leaders = self.search_profiles(
             condition={'is_leader_candidate': True},
             query=query,
@@ -162,47 +162,3 @@ class ProfileDB(BaseDB[Profile]):
             },
         )
         return leaders
-
-    def set_leader_profile(self, agent: Profile) -> None:
-        self.update(
-            pk=agent.pk,
-            updates={
-                'is_leader_candidate': True,
-                'is_member_candidate': False,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': False,
-            },
-        )
-
-    def set_member_profile(self, agent: Profile) -> None:
-        self.update(
-            pk=agent.pk,
-            updates={
-                'is_leader_candidate': False,
-                'is_member_candidate': True,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': False,
-            },
-        )
-
-    def set_reviewer_profile(self, agent: Profile) -> None:
-        self.update(
-            pk=agent.pk,
-            updates={
-                'is_leader_candidate': False,
-                'is_member_candidate': False,
-                'is_reviewer_candidate': True,
-                'is_chair_candidate': False,
-            },
-        )
-
-    def set_chair_profile(self, agent: Profile) -> None:
-        self.update(
-            pk=agent.pk,
-            updates={
-                'is_leader_candidate': False,
-                'is_member_candidate': False,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': True,
-            },
-        )
