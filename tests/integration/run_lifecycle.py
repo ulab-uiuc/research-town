@@ -5,9 +5,9 @@ from research_town.engines import Engine
 from tests.mocks.mocking_func import mock_prompting
 
 from ..constants.db_constants import (
-    example_profile_db,
     example_log_db,
     example_paper_db,
+    example_profile_db,
     example_progress_db,
 )
 

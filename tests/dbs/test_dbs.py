@@ -9,13 +9,13 @@ from beartype.typing import Any, Dict, List
 
 from research_town.configs import Config
 from research_town.dbs import (
-    ProfileDB,
     Idea,
     IdeaDiscussionLog,
     LogDB,
     MetaReviewWritingLog,
     Paper,
     PaperDB,
+    ProfileDB,
     ProgressDB,
     RebuttalWritingLog,
     Researcher,

@@ -5,9 +5,9 @@ from research_town.dbs import Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.data_constants import agent_profile_A, research_proposal_A
 from tests.constants.db_constants import (
-    example_profile_db,
     example_log_db,
     example_paper_db,
+    example_profile_db,
     example_progress_db,
 )
 from tests.mocks.mocking_func import mock_prompting

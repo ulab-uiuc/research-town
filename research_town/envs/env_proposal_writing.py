@@ -4,12 +4,12 @@ from beartype.typing import Any, Dict, List, Literal, Union
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
-    ProfileDB,
     Idea,
     IdeaBrainstormingLog,
     LiteratureReviewLog,
     LogDB,
     PaperDB,
+    ProfileDB,
     ProgressDB,
     ProposalWritingLog,
 )

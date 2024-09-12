@@ -6,9 +6,9 @@ from research_town.configs import Config
 from research_town.dbs import Proposal, Researcher, Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.db_constants import (
-    example_profile_db,
     example_log_db,
     example_paper_db,
+    example_profile_db,
     example_progress_db,
 )
 from tests.mocks.mocking_func import mock_prompting
