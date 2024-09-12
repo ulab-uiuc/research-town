@@ -3,7 +3,7 @@ import json
 import os
 import re
 import time
-from typing import Dict, Any, Optional, Union, cast, List
+from typing import Any, Dict, List, Optional, Union, cast
 
 import requests
 from tqdm import tqdm
