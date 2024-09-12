@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Optional, TypeVar
 
 from transformers import BertModel, BertTokenizer
 
+from ..agents.agent_base import ResearchAgent, Role
 from ..configs import Config
 from ..utils.agent_collector import collect_proposals_and_coauthors
 from ..utils.agent_prompter import write_bio_prompting
@@ -9,7 +10,6 @@ from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
 from .data import BaseDBData, Profile, Proposal
 from .db_base import BaseDB
-from ..agents.agent_base import ResearchAgent, Role
 
 T = TypeVar('T', bound=BaseDBData)
 
