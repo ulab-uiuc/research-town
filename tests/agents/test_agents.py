@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, patch
 from research_town.agents.agent_base import ResearchAgent
 from research_town.configs import Config
 from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
+from research_town.agents.agent_role import Role
 from tests.constants.data_constants import (
     agent_profile_A,
     agent_profile_B,
@@ -24,7 +25,7 @@ def test_review_literature(
     research_agent = ResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='leader',
+        agent_role=Role.LEADER,
     )
     research_insight = research_agent.review_literature(
         papers=[paper_profile_A, paper_profile_B],
@@ -52,7 +53,7 @@ def test_brainstorm_idea(
     research_agent = ResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='leader',
+        agent_role=Role.LEADER,
     )
     research_idea = research_agent.brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
@@ -70,7 +71,7 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
     research_agent = ResearchAgent(
         agent_profile=agent_profile_B,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='leader',
+        agent_role=Role.LEADER,
     )
     paper = research_agent.write_proposal(
         idea=research_idea_A,
@@ -89,7 +90,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
     research_agent = ResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='reviewer',
+        agent_role=Role.REVIEWER,
     )
     review = research_agent.write_review(
         paper=research_proposal_A,
@@ -109,17 +110,17 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
     research_agent_reviewer = ResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='reviewer',
+        agent_role=Role.REVIEWER,
     )
     research_agent_chair = ResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='chair',
+        agent_role=Role.CHAIR,
     )
     research_agent_leader = ResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='leader',
+        agent_role=Role.LEADER,
     )
     review = research_agent_reviewer.write_review(
         paper=research_proposal_A,
@@ -151,12 +152,12 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     research_agent_reviewer = ResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='reviewer',
+        agent_role=Role.REVIEWER,
     )
     research_agent_leader = ResearchAgent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='leader',
+        agent_role=Role.LEADER,
     )
     review = research_agent_reviewer.write_review(
         paper=research_proposal_A,

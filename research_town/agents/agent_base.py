@@ -21,8 +21,7 @@ from ..utils.role_verifier import (
     reviewer_required,
 )
 from ..utils.serializer import Serializer
-
-Role = Literal['reviewer', 'leader', 'member', 'chair']
+from .agent_role import Role
 
 
 class ResearchAgent(object):
