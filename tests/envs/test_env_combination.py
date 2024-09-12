@@ -6,7 +6,8 @@ from research_town.configs import Config
 from research_town.dbs import Proposal, Researcher, Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.db_constants import (
-    example_env_db,
+    example_agent_db,
+    example_log_db,
     example_paper_db,
     example_progress_db,
 )
@@ -35,8 +36,9 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     proposal_writing_env = ProposalWritingEnv(
         name='proposal_writing',
         paper_db=example_paper_db,
-        env_db=example_env_db,
+        log_db=example_log_db,
         progress_db=example_progress_db,
+        agent_db=example_agent_db,
         config=Config(),
     )
     proposal_writing_env.on_enter(
@@ -68,8 +70,9 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     review_writing_env = ReviewWritingEnv(
         name='review_writing',
         paper_db=example_paper_db,
-        env_db=example_env_db,
+        log_db=example_log_db,
         progress_db=example_progress_db,
+        agent_db=example_agent_db,
         config=Config(),
     )
     review_writing_env.on_enter(

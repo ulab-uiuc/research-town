@@ -6,12 +6,13 @@ from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.data_constants import (
     agent_profile_A,
     agent_profile_B,
-    research_paper_submission_A,
+    research_proposal_A,
 )
 from tests.constants.db_constants import (
-    example_env_db,
+    example_log_db,
     example_paper_db,
     example_progress_db,
+    example_agent_db,
 )
 from tests.mocks.mocking_func import mock_prompting
 
@@ -22,9 +23,10 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
 
     env = ReviewWritingEnv(
         name='review_writing',
-        env_db=example_env_db,
+        log_db=example_log_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
+        agent_db=example_agent_db,
         config=Config(),
     )
 
@@ -44,7 +46,7 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
             'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
             'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         ],
-        paper=research_paper_submission_A,
+        paper=research_proposal_A,
     )
     env.run()
     exit_status = env.on_exit()
@@ -57,16 +59,17 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_paper_submission_env(
+def test_proposal_env(
     mock_model_prompting: MagicMock,
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     env = ProposalWritingEnv(
         name='proposal_writing',
-        env_db=example_env_db,
+        log_db=example_log_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
+        agent_db=example_agent_db,
         config=Config(),
     )
     env.on_enter(

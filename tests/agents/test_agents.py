@@ -11,7 +11,7 @@ from tests.constants.data_constants import (
     research_idea_A,
     research_insight_A,
     research_insight_B,
-    research_paper_submission_A,
+    research_proposal_A,
 )
 from tests.mocks.mocking_func import mock_prompting
 
@@ -92,7 +92,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
         agent_role='reviewer',
     )
     review = research_agent.write_review(
-        paper=research_paper_submission_A,
+        paper=research_proposal_A,
         config=Config(),
     )
     assert isinstance(review, Review)
@@ -122,16 +122,16 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
         agent_role='leader',
     )
     review = research_agent_reviewer.write_review(
-        paper=research_paper_submission_A,
+        paper=research_proposal_A,
         config=Config(),
     )
     rebuttal = research_agent_leader.write_rebuttal(
-        paper=research_paper_submission_A,
+        paper=research_proposal_A,
         review=review,
         config=Config(),
     )
     meta_review = research_agent_chair.write_meta_review(
-        paper=research_paper_submission_A,
+        paper=research_proposal_A,
         reviews=[review],
         rebuttals=[rebuttal],
         config=Config(),
@@ -159,11 +159,11 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         agent_role='leader',
     )
     review = research_agent_reviewer.write_review(
-        paper=research_paper_submission_A,
+        paper=research_proposal_A,
         config=Config(),
     )
     rebuttal = research_agent_leader.write_rebuttal(
-        paper=research_paper_submission_A,
+        paper=research_proposal_A,
         review=review,
         config=Config(),
     )

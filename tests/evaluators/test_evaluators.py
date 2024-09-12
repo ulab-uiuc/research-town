@@ -17,7 +17,7 @@ from tests.constants.data_constants import (
     research_insight_A,
     research_insight_B,
     research_meta_review_A,
-    research_paper_submission_A,
+    research_proposal_A,
     research_rebuttal_A,
     research_rebuttal_B,
     research_review_A,
@@ -91,7 +91,7 @@ def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
     config = Config()
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
-    paper = research_paper_submission_A.model_dump()
+    paper = research_proposal_A.model_dump()
     input_dict = {'insights': insights, 'idea': idea, 'paper': paper}
 
     evaluator = ProposalQualityEvaluator(model_name=model_name, config=config)
@@ -121,7 +121,7 @@ def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
     config = Config()
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
-    paper = research_paper_submission_A.model_dump()
+    paper = research_proposal_A.model_dump()
     review = research_review_A.model_dump()
     input_dict = {'insights': insights, 'idea': idea, 'paper': paper, 'review': review}
 
@@ -154,7 +154,7 @@ def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
     config = Config()
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
-    paper = research_paper_submission_A.model_dump()
+    paper = research_proposal_A.model_dump()
     review = research_review_A.model_dump()
     rebuttal = research_rebuttal_A.model_dump()
     input_dict = {
@@ -194,7 +194,7 @@ def test_evaluator_eval_meta_review(use_mock: bool, model_name: str) -> None:
     config = Config()
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
-    paper = research_paper_submission_A.model_dump()
+    paper = research_proposal_A.model_dump()
     reviews = [research_review_A.model_dump(), research_review_B.model_dump()]
     rebuttals = [research_rebuttal_A.model_dump(), research_rebuttal_B.model_dump()]
     meta_review = research_meta_review_A.model_dump()

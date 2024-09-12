@@ -34,14 +34,14 @@ def run_sync_experiment(
         agent_db.pull_agents(agent_names=agent_names, config=config)
         paper_db.pull_papers(num=10, domain='graph neural networks')
 
-    env_db = LogDB()
+    log_db = LogDB()
     progress_db = ProgressDB()
     engine = Engine(
         project_name='research_town_demo',
         agent_db=agent_db,
         paper_db=paper_db,
         progress_db=progress_db,
-        env_db=env_db,
+        log_db=log_db,
         config=config,
     )
     engine.run(task='Conduct research on Graph Neural Networks (GNN).')

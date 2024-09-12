@@ -104,7 +104,7 @@ class AgentDB(BaseDB[Researcher]):
     def invite_members(
         self, leader: Researcher, member_num: int = 1
     ) -> List[Researcher]:
-        return self.invite_agents(
+        members = self.invite_agents(
             condition={'is_member_candidate': True},
             query=leader.bio,
             num=member_num,
@@ -115,13 +115,14 @@ class AgentDB(BaseDB[Researcher]):
                 'is_chair_candidate': False,
             },
         )
+        return members
 
     def invite_reviewers(
-        self, paper_submission: Proposal, reviewer_num: int = 1
+        self, proposal: Proposal, reviewer_num: int = 1
     ) -> List[Researcher]:
-        return self.invite_agents(
+        reviewers = self.invite_agents(
             condition={'is_reviewer_candidate': True},
-            query=paper_submission.abstract,
+            query=proposal.abstract,
             num=reviewer_num,
             update_fields={
                 'is_leader_candidate': False,
@@ -130,13 +131,14 @@ class AgentDB(BaseDB[Researcher]):
                 'is_chair_candidate': False,
             },
         )
+        return reviewers
 
     def invite_chairs(
-        self, paper_submission: Proposal, chair_num: int = 1
+        self, proposal: Proposal, chair_num: int = 1
     ) -> List[Researcher]:
-        return self.invite_agents(
+        chairs = self.invite_agents(
             condition={'is_chair_candidate': True},
-            query=paper_submission.abstract,
+            query=proposal.abstract,
             num=chair_num,
             update_fields={
                 'is_leader_candidate': False,
@@ -145,9 +147,12 @@ class AgentDB(BaseDB[Researcher]):
                 'is_chair_candidate': True,
             },
         )
+        return chairs
 
-    def invite_leaders(self, query: str, leader_num: int = 1) -> List[Researcher]:
-        return self.invite_agents(
+    def invite_leaders(
+        self, query: str, leader_num: int = 1
+    ) -> List[Researcher]:
+        leaders = self.invite_agents(
             condition={'is_leader_candidate': True},
             query=query,
             num=leader_num,
@@ -158,6 +163,7 @@ class AgentDB(BaseDB[Researcher]):
                 'is_chair_candidate': False,
             },
         )
+        return leaders
 
     def set_leader(self, agent: Researcher) -> None:
         self.update(

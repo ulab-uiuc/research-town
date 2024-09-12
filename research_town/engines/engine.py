@@ -9,24 +9,36 @@ class Engine(BaseEngine):
         self.add_envs(
             [
                 StartEnv(
-                    'start', self.env_db, self.progress_db, self.paper_db, self.config
+                    'start', 
+                    self.log_db, 
+                    self.progress_db, 
+                    self.paper_db, 
+                    self.agent_db,
+                    self.config
                 ),
                 ProposalWritingEnv(
                     'proposal_writing',
-                    self.env_db,
+                    self.log_db,
                     self.progress_db,
                     self.paper_db,
+                    self.agent_db,
                     self.config,
                 ),
                 ReviewWritingEnv(
                     'review_writing',
-                    self.env_db,
+                    self.log_db,
                     self.progress_db,
                     self.paper_db,
+                    self.agent_db,
                     self.config,
                 ),
                 EndEnv(
-                    'end', self.env_db, self.progress_db, self.paper_db, self.config
+                    'end', 
+                    self.log_db, 
+                    self.progress_db, 
+                    self.paper_db, 
+                    self.agent_db,
+                    self.config
                 ),
             ]
         )
@@ -57,29 +69,14 @@ class Engine(BaseEngine):
         self,
         env: StartEnv,
     ) -> Dict[str, Any]:
-        member_num = self.config.param.member_num
-        leader = env.leader.profile
-        members = self.agent_db.invite_members(leader, member_num)
-        return {
-            'agent_profiles': [leader] + members,
-            'agent_roles': ['leader'] + ['member'] * member_num,
-            'agent_models': [self.model_name] * (member_num + 1),
-        }
+        return {'leader_profile': env.leader.profile}
+
 
     def start_review(
         self,
         env: ProposalWritingEnv,
     ) -> Dict[str, Any]:
-        reviewer_num = self.config.param.reviewer_num
-        leader = env.leader.profile
-        reviewers = self.agent_db.invite_reviewers(env.proposal, reviewer_num)
-        chair = self.agent_db.invite_chairs(env.proposal, chair_num=1)[0]
-        return {
-            'agent_profiles': [leader] + reviewers + [chair],
-            'agent_roles': ['leader'] + ['reviewer'] * reviewer_num + ['chair'],
-            'agent_models': [self.model_name] * (reviewer_num + 2),
-            'paper': env.proposal,
-        }
+        return {'proposal': env.proposal, 'leader_profile': env.leader.profile}
 
     def proposal_accept(self, env: ReviewWritingEnv) -> Dict[str, Any]:
         return {'meta_review': env.meta_review}

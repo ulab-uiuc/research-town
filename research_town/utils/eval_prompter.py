@@ -71,7 +71,7 @@ def research_idea_quality_eval_prompting(
 
 
 @beartype
-def research_paper_submission_quality_eval_prompting(
+def research_proposal_quality_eval_prompting(
     model_name: str,
     insights: List[Dict[str, str]],
     idea: Dict[str, str],

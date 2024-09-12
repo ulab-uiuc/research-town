@@ -12,6 +12,7 @@ from ..dbs import (
     LogDB,
     PaperDB,
     ProgressDB,
+    AgentDB,
     ProposalWritingLog,
     Researcher,
 )
@@ -25,16 +26,18 @@ class ProposalWritingEnv(BaseEnv):
     def __init__(
         self,
         name: str,
-        env_db: LogDB,
+        log_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
+        agent_db: AgentDB,
         config: Config,
     ) -> None:
         super().__init__(
             name=name,
-            env_db=env_db,
+            log_db=log_db,
             progress_db=progress_db,
             paper_db=paper_db,
+            agent_db=agent_db,
             config=config,
         )
 
@@ -42,42 +45,28 @@ class ProposalWritingEnv(BaseEnv):
     def on_enter(
         self,
         time_step: int,
-        stop_flag: bool,
-        agent_profiles: List[Researcher],
-        agent_roles: List[Role],
-        agent_models: List[str],
         *args: Any,
         **kwargs: Any,
     ) -> None:
         self.time_step = time_step
-        self.stop_flag = stop_flag
-
-        assert len(agent_profiles) == len(agent_roles)
-
-        for agent_profile, agent_role, agent_model in zip(
-            agent_profiles, agent_roles, agent_models
-        ):
-            self.agents.append(
-                BaseResearchAgent(
-                    agent_profile=agent_profile,
-                    agent_role=agent_role,
-                    model_name=agent_model,
-                )
+        leader_profile = kwargs['leader_profile']
+        self.leader = BaseResearchAgent(
+            agent_profile=leader_profile,
+            agent_role='leader',
+            model_name=self.config.param.base_llm,
+        )
+        member_profiles = self.agent_db.invite_members(
+            leader=leader_profile,
+            member_num=self.config.param.member_num,
+        )
+        self.members = [
+            BaseResearchAgent(
+                agent_profile=member_profile,
+                agent_role='member',
+                model_name=self.config.param.base_llm,
             )
-
-        if 'leader' not in agent_roles:
-            raise ValueError('At least one leader is required to submit paper.')
-        if 'reviewer' in agent_roles:
-            raise ValueError('Reviewer role is not allowed in paper submission.')
-        if 'chair' in agent_roles:
-            raise ValueError('Chair role is not allowed in paper submission.')
-
-        counter = Counter(agent_roles)
-        if counter['leader'] != 1:
-            raise ValueError('Exactly one leader is required to submit paper.')
-
-        self.leader = [agent for agent in self.agents if agent.role == 'leader'][0]
-        self.members = [agent for agent in self.agents if agent.role == 'member']
+            for member_profile in member_profiles
+        ]
 
     @beartype
     def on_exit(self) -> str:
@@ -104,7 +93,7 @@ class ProposalWritingEnv(BaseEnv):
             self.insights.extend(agent_insights)  # Collect insights from all members
             for insight in agent_insights:
                 self.progress_db.add(insight)
-            self.env_db.add(
+            self.log_db.add(
                 LiteratureReviewLog(
                     time_step=self.time_step,
                     paper_pks=[paper.pk for paper in related_papers],
@@ -119,7 +108,7 @@ class ProposalWritingEnv(BaseEnv):
             idea = agent.brainstorm_idea(insights=self.insights, config=self.config)
             self.ideas.append(idea)
             self.progress_db.add(idea)
-            self.env_db.add(
+            self.log_db.add(
                 IdeaBrainstormingLog(
                     time_step=self.time_step,
                     idea_pk=idea.pk,
@@ -145,7 +134,7 @@ class ProposalWritingEnv(BaseEnv):
             config=self.config,
         )
         self.progress_db.add(self.proposal)
-        self.env_db.add(
+        self.log_db.add(
             ProposalWritingLog(
                 time_step=self.time_step,
                 paper_pk=self.proposal.pk,

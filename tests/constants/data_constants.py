@@ -61,12 +61,12 @@ research_insight_B = Insight(
 )
 
 
-research_paper_submission_A = Proposal(
+research_proposal_A = Proposal(
     title='A Survey on Machine Learning',
     abstract='This paper surveys the field of machine learning.',
 )
 
-research_paper_submission_B = Proposal(
+research_proposal_B = Proposal(
     title='A Survey on Graph Neural Networks',
     abstract='This paper surveys the field of graph neural networks.',
 )

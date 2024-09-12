@@ -8,7 +8,7 @@ def run_sync_experiment(
     save_file_path: str,
 ) -> None:
     config = Config(config_file_path)
-    env_db = LogDB()
+    log_db = LogDB()
     progress_db = ProgressDB()
     paper_db = PaperDB()
 
@@ -22,7 +22,7 @@ def run_sync_experiment(
     exp_env = ExperimentEnv(
         paper_db=paper_db,
         progress_db=progress_db,
-        env_db=env_db,
+        log_db=log_db,
         config=config,  # set exp model name
     )
 

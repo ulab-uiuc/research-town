@@ -8,7 +8,7 @@ from ..utils.eval_prompter import (
     research_idea_quality_eval_prompting,
     research_insight_quality_eval_prompting,
     research_meta_review_quality_eval_prompting,
-    research_paper_submission_quality_eval_prompting,
+    research_proposal_quality_eval_prompting,
     research_rebuttal_quality_eval_prompting,
     research_review_quality_eval_prompting,
 )
@@ -152,7 +152,7 @@ class ProposalQualityEvaluator(BaseQualityEvaluator):
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ProposalEvalOutput:
-        raw_output = research_paper_submission_quality_eval_prompting(
+        raw_output = research_proposal_quality_eval_prompting(
             model_name=self.model_name,
             insights=kwargs['insights'],
             idea=kwargs['idea'],
