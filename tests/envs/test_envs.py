@@ -37,7 +37,7 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
     assert exit_status == 'proposal_accept'
 
     assert isinstance(env.reviews, list)
-    assert len(env.reviews) == 2
+    assert len(env.reviews) == 1
     assert isinstance(env.reviews[0], Review)
 
 
