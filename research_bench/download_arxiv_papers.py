@@ -118,7 +118,7 @@ def parse_args()->argparse.Namespace:
     parser.add_argument(
         '--save_dir',
         type=str,
-        default='../../data/arxiv_AI_papers',
+        default='./data/arxiv_AI_papers',
         help="Directory to save downloaded papers (Default: 'AI_agent_papers')"
     )
 
