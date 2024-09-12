@@ -3,13 +3,13 @@ import json
 import os
 import re
 import time
-from typing import Dict, Optional
+from typing import Any, Dict, List, Optional
 
 import requests
 from tqdm import tqdm
 
 
-def get_references(arxiv_id:str, offset:int=0, limit:int=100, max_retry:int=5)->Optional[Dict, None]:
+def get_references(arxiv_id:str, offset:int=0, limit:int=100, max_retry:int=5)->Optional[Dict]:
     """
     Fetch references for a given arXiv paper using the Semantic Scholar API with retry mechanism.
 
@@ -41,7 +41,7 @@ def get_references(arxiv_id:str, offset:int=0, limit:int=100, max_retry:int=5)->
     print(f"Failed to fetch references for {paper_id} after {max_retry} attempts.")
     return None
 
-def get_all_references(arxiv_id: str)->list:
+def get_all_references(arxiv_id: str)->List[Dict[str, Any]]:
     """
     Retrieve all references for a given arXiv paper by handling pagination.
 
@@ -64,7 +64,7 @@ def get_all_references(arxiv_id: str)->list:
         time.sleep(5)  # Wait for 5 seconds before the next API call to avoid rate limits
     return all_references
 
-def process_reference(ref: dict)->dict:
+def process_reference(ref: dict[str, Any])->dict[str, Any]:
     """
     Process a reference paper and extract key details.
 
@@ -153,7 +153,7 @@ def process_papers(input_file:str, output_file:str)->None:
 
     print(f"Processing complete. Results saved in {output_file}")
 
-def parse_args():
+def parse_args()->argparse.Namespace:
     """
     Parse command-line arguments for the script.
 
@@ -180,7 +180,7 @@ def parse_args():
 
     return parser.parse_args()
 
-def main():
+def main()->None:
     """
     Main function to process papers and fetch their references.
     """

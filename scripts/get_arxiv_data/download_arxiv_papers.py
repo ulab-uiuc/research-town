@@ -125,7 +125,7 @@ def parse_args()->argparse.Namespace:
     return parser.parse_args()
 
 
-def main():
+def main()->None:
     """
     Main execution function that parses arguments and triggers the download process.
     """

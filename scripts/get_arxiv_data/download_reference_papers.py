@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import re
+from typing import Optional
 
 import arxiv
 from tqdm import tqdm
@@ -17,7 +18,7 @@ def setup_logging()->None:
         filemode='w'
     )
 
-def extract_arxiv_id(file_path:str)->str:
+def extract_arxiv_id(file_path:str)->Optional[str]:
     """
     Extract the arXiv ID from a file path using regex.
 
@@ -139,7 +140,7 @@ def parse_args()->argparse.Namespace:
     return parser.parse_args()
 
 
-def main():
+def main()->None:
     """
     Main function to process papers and fetch their references.
     """
