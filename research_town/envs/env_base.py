@@ -1,11 +1,10 @@
 from abc import ABC, abstractmethod
 
-from beartype.typing import Any, Dict, List, Literal, Union
+from beartype.typing import Any, List
 
 from ..agents.agent_base import ResearchAgent
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-
 
 
 class BaseEnv(ABC):

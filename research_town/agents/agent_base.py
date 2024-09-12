@@ -1,7 +1,7 @@
 import re
 
 from beartype import beartype
-from beartype.typing import Dict, List, Literal, Optional
+from beartype.typing import Dict, List, Optional
 
 from ..configs import Config
 from ..dbs import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
