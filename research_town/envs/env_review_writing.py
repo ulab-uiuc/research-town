@@ -1,7 +1,7 @@
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Literal, Union
 
-from ..agents.agent_base import BaseResearchAgent
+from ..agents.agent_base import ResearchAgent
 from ..configs import Config
 from ..dbs import (
     LogDB,
@@ -50,7 +50,7 @@ class ReviewWritingEnv(BaseEnv):
         self.proposal = kwargs['proposal']
 
         leader_profile = kwargs['leader_profile']
-        self.leader = BaseResearchAgent(
+        self.leader = ResearchAgent(
             agent_profile=leader_profile,
             agent_role='leader',
             model_name=self.config.param.base_llm,
@@ -60,7 +60,7 @@ class ReviewWritingEnv(BaseEnv):
             proposal=self.proposal,
             chair_num=1,
         )[0]
-        self.chair = BaseResearchAgent(
+        self.chair = ResearchAgent(
             agent_profile=chair_profile,
             agent_role='chair',
             model_name=self.config.param.base_llm,
@@ -71,7 +71,7 @@ class ReviewWritingEnv(BaseEnv):
             reviewer_num=self.config.param.reviewer_num,
         )
         self.reviewers = [
-            BaseResearchAgent(
+            ResearchAgent(
                 agent_profile=reviewer_profile,
                 agent_role='reviewer',
                 model_name=self.config.param.base_llm,

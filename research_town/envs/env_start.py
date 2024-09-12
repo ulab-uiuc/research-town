@@ -1,7 +1,7 @@
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Literal, Union
 
-from ..agents.agent_base import BaseResearchAgent
+from ..agents.agent_base import ResearchAgent
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from .env_base import BaseEnv
@@ -41,7 +41,7 @@ class StartEnv(BaseEnv):
             query=task, leader_num=1
         )[0]
         self.time_step = time_step
-        self.leader = BaseResearchAgent(
+        self.leader = ResearchAgent(
             agent_profile=leader_profile,
             agent_role='leader',
             model_name=self.config.param.base_llm,
