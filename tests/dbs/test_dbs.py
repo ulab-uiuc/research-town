@@ -9,22 +9,22 @@ from beartype.typing import Any, Dict, List
 
 from research_town.configs import Config
 from research_town.dbs import (
-    AgentDB,
     Idea,
     IdeaDiscussionLog,
     LogDB,
     MetaReviewWritingLog,
     Paper,
     PaperDB,
+    Profile,
+    ProfileDB,
     ProgressDB,
     RebuttalWritingLog,
-    Researcher,
     ReviewWritingLog,
 )
 from tests.mocks.mocking_func import mock_prompting
 
-from ..constants.data_constants import agent_profile_A, research_paper_submission_A
-from ..constants.db_constants import example_agent_db
+from ..constants.data_constants import agent_profile_A, research_proposal_A
+from ..constants.db_constants import example_profile_db
 
 
 def test_LogDB_basic() -> None:
@@ -163,27 +163,23 @@ def test_progressdb_basic() -> None:
         assert len(new_db.dbs['Idea'].data) == 2
 
 
-def test_AgentDB_basic() -> None:
-    db = AgentDB()
-    agent1 = Researcher(
-        name='John Doe', bio='Researcher in AI', institute='AI Institute'
-    )
-    agent2 = Researcher(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+def test_ProfileDB_basic() -> None:
+    db = ProfileDB()
+    agent1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
+    agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     db.add(agent1)
     db.add(agent2)
 
-    agent3 = Researcher(
-        name='Alice Johnson', bio='Data Scientist', institute='Data Lab'
-    )
+    agent3 = Profile(name='Alice Johnson', bio='Data Scientist', institute='Data Lab')
     db.add(agent3)
     assert agent3.pk in db.data
     assert db.data[agent3.pk].name == 'Alice Johnson'
 
-    updates = {'bio': 'Senior Researcher in AI'}
+    updates = {'bio': 'Senior Profile in AI'}
     success = db.update(agent1.pk, updates)
 
     assert success
-    assert db.data[agent1.pk].bio == 'Senior Researcher in AI'
+    assert db.data[agent1.pk].bio == 'Senior Profile in AI'
 
     success = db.update('non-existing-pk', {'bio': 'New Bio'})
     assert not success
@@ -197,7 +193,7 @@ def test_AgentDB_basic() -> None:
 
     conditions: Dict[str, str] = {'name': 'Jane Smith'}
 
-    results: List[Researcher] = db.get(**conditions)
+    results: List[Profile] = db.get(**conditions)
 
     assert len(results) == 1
     assert results[0].name == 'Jane Smith'
@@ -281,14 +277,12 @@ def test_Paperdb_basic() -> None:
 
 
 def test_agent_match() -> None:
-    db = AgentDB()
-    agent1 = Researcher(
-        name='John Doe', bio='Researcher in AI', institute='AI Institute'
-    )
-    agent2 = Researcher(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
-    agent3 = Researcher(name='Jane kid', bio='Expert in RL', institute='RL Lab')
+    db = ProfileDB()
+    agent1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
+    agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    agent3 = Profile(name='Jane kid', bio='Expert in RL', institute='RL Lab')
     agent_profile_l = [agent1, agent2, agent3]
-    lead_agent_profile = 'Researcher in CV'
+    lead_agent_profile = 'Profile in CV'
     match_agent_profiles = db.match(
         query=lead_agent_profile, agent_profiles=agent_profile_l, num=2
     )
@@ -329,7 +323,7 @@ def test_paper_match() -> None:
         citation_count=2,
     )
     agent_profile_l = [paper1, paper2, paper_3]
-    lead_agent_profile = 'Researcher in CV'
+    lead_agent_profile = 'Profile in CV'
     match_paper_profiles = db.match(
         query=lead_agent_profile, paper_profiles=agent_profile_l, num=2
     )
@@ -338,33 +332,31 @@ def test_paper_match() -> None:
 
 
 def test_agent_file() -> None:
-    db = AgentDB()
-    agent1 = Researcher(
-        name='John Doe', bio='Researcher in AI', institute='AI Institute'
-    )
-    agent2 = Researcher(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    db = ProfileDB()
+    agent1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
+    agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     db.add(agent1)
     db.add(agent2)
     # save without embeddings
     db.save_to_json('data/test')
-    with open('data/test/AgentDB.json', 'r') as f:
+    with open('data/test/ProfileDB.json', 'r') as f:
         data_test = json.load(f)
     assert len(data_test) > 0
-    assert db.data == {pk: Researcher(**data) for pk, data in data_test.items()}
+    assert db.data == {pk: Profile(**data) for pk, data in data_test.items()}
     # load without embeddings
-    db_test = AgentDB()
+    db_test = ProfileDB()
     db_test.load_from_json('data/test')
     assert db.data == db_test.data
     # save with embeddings
     db.transform_to_embed()
     db.save_to_json('data/test', with_embed=True)
-    with open('data/test/AgentDB.pkl', 'rb') as f:
+    with open('data/test/ProfileDB.pkl', 'rb') as f:
         data_embed_test = pickle.load(f)
     assert db.data_embed.keys() == data_embed_test.keys()
     for agent_pk in db.data_embed:
         assert torch.equal(db.data_embed[agent_pk], data_embed_test[agent_pk])
     # load with embeddings
-    db_test = AgentDB()
+    db_test = ProfileDB()
     db_test.load_from_json('data/test', with_embed=True)
     assert db.data_embed.keys() == db_test.data_embed.keys()
     for agent_pk in db.data_embed:
@@ -426,12 +418,12 @@ def test_paper_file() -> None:
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_pull_agents(mock_model_prompting: MagicMock) -> None:
+def test_pull_profiles(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    db = AgentDB()
+    db = ProfileDB()
     agent_names = ['Jiaxuan You', 'Jure Leskovec']
-    db.pull_agents(agent_names=agent_names, config=Config())
+    db.pull_profiles(agent_names=agent_names, config=Config())
     assert db.data.keys()
     assert len(db.data.keys()) == 2
     assert db.data.values()
@@ -445,31 +437,31 @@ def test_pull_papers() -> None:
     assert db.data.values()
 
 
-def test_agentdb_invite_members() -> None:
-    example_agent_db.reset_role_avaialbility()
-    example_agent_db.set_leader(agent_profile_A)
-    members = example_agent_db.invite_members(
+def test_agentdb_invite_member_profiles() -> None:
+    example_profile_db.reset_role_avaialbility()
+    example_profile_db.set_leader_profile(agent_profile_A)
+    members = example_profile_db.invite_member_profiles(
         leader=agent_profile_A,
         member_num=2,
     )
     assert len(members) == 2
 
 
-def test_agentdb_invite_reviewers() -> None:
-    example_agent_db.reset_role_avaialbility()
-    example_agent_db.set_leader(agent_profile_A)
-    reviewers = example_agent_db.invite_reviewers(
-        paper_submission=research_paper_submission_A,
+def test_agentdb_invite_reviewer_profiles() -> None:
+    example_profile_db.reset_role_avaialbility()
+    example_profile_db.set_leader_profile(agent_profile_A)
+    reviewers = example_profile_db.invite_reviewer_profiles(
+        proposal=research_proposal_A,
         reviewer_num=2,
     )
     assert len(reviewers) == 2
 
 
 def test_agentdb_invite_chair() -> None:
-    example_agent_db.reset_role_avaialbility()
-    example_agent_db.set_leader(agent_profile_A)
-    chair = example_agent_db.invite_chairs(
-        paper_submission=research_paper_submission_A,
+    example_profile_db.reset_role_avaialbility()
+    example_profile_db.set_leader_profile(agent_profile_A)
+    chair = example_profile_db.invite_chair_profiles(
+        proposal=research_proposal_A,
         chair_num=1,
-    )[0]
+    )
     assert chair is not None

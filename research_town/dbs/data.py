@@ -9,7 +9,7 @@ class BaseDBData(BaseModel):
     project_name: Optional[str] = Field(default=None)
 
 
-class Researcher(BaseDBData):
+class Profile(BaseDBData):
     name: str
     bio: str
     collaborators: Optional[List[str]] = Field(default=[])

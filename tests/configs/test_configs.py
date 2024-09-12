@@ -11,9 +11,9 @@ def test_default_initialization() -> None:
     config = Config()
     assert config.param.related_paper_num == 10
     assert config.param.base_llm == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
-    assert config.param.member_num == 3
+    assert config.param.member_num == 1
     assert config.param.domain == 'computer_vision'
-    assert config.param.reviewer_num == 3
+    assert config.param.reviewer_num == 1
     assert config.agent_prompt_template.discuss == {
         'intro': 'Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way.',
         'examples': ['', ''],
@@ -110,7 +110,7 @@ def test_yaml_serialization() -> None:
             if 'config' in yaml_file:
                 assert loaded_data['related_paper_num'] == 10
                 assert loaded_data['base_llm'] == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
-                assert loaded_data['member_num'] == 3
+                assert loaded_data['member_num'] == 1
 
 
 def test_placeholder_check() -> None:

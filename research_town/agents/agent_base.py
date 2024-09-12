@@ -4,16 +4,7 @@ from beartype import beartype
 from beartype.typing import Dict, List, Literal, Optional
 
 from ..configs import Config
-from ..dbs import (
-    Idea,
-    Insight,
-    MetaReview,
-    Paper,
-    Proposal,
-    Rebuttal,
-    Researcher,
-    Review,
-)
+from ..dbs import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
@@ -37,11 +28,11 @@ Role = Literal['reviewer', 'leader', 'member', 'chair']
 class BaseResearchAgent(object):
     def __init__(
         self,
-        agent_profile: Researcher,
+        agent_profile: Profile,
         model_name: str,
         agent_role: Optional[Role] = None,
     ) -> None:
-        self.profile: Researcher = agent_profile
+        self.profile: Profile = agent_profile
         self.memory: Dict[str, str] = {}
         self.role: Role | None = agent_role
         self.model_name: str = model_name

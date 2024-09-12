@@ -1,5 +1,3 @@
-from collections import Counter
-
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Literal, Union
 
@@ -9,10 +7,10 @@ from ..dbs import (
     LogDB,
     MetaReviewWritingLog,
     PaperDB,
+    ProfileDB,
     ProgressDB,
     Rebuttal,
     RebuttalWritingLog,
-    Researcher,
     Review,
     ReviewWritingLog,
 )
@@ -26,16 +24,18 @@ class ReviewWritingEnv(BaseEnv):
     def __init__(
         self,
         name: str,
-        env_db: LogDB,
+        log_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
+        profile_db: ProfileDB,
         config: Config,
     ) -> None:
         super().__init__(
             name=name,
-            env_db=env_db,
+            log_db=log_db,
             progress_db=progress_db,
             paper_db=paper_db,
+            profile_db=profile_db,
             config=config,
         )
 
@@ -43,48 +43,41 @@ class ReviewWritingEnv(BaseEnv):
     def on_enter(
         self,
         time_step: int,
-        stop_flag: bool,
-        agent_profiles: List[Researcher],
-        agent_roles: List[Role],
-        agent_models: List[str],
         *args: Any,
         **kwargs: Any,
     ) -> None:
         self.time_step = time_step
-        self.stop_flag = stop_flag
-        self.paper = kwargs['paper']
+        self.proposal = kwargs['proposal']
 
-        assert len(agent_profiles) == len(agent_roles)
+        leader_profile = kwargs['leader_profile']
+        self.leader = BaseResearchAgent(
+            agent_profile=leader_profile,
+            agent_role='leader',
+            model_name=self.config.param.base_llm,
+        )
 
-        for agent_profile, agent_role, agent_model in zip(
-            agent_profiles, agent_roles, agent_models
-        ):
-            self.agents.append(
-                BaseResearchAgent(
-                    agent_profile=agent_profile,
-                    agent_role=agent_role,
-                    model_name=agent_model,
-                )
+        chair_profile = self.profile_db.invite_chair_profiles(
+            proposal=self.proposal,
+            chair_num=1,
+        )[0]
+        self.chair = BaseResearchAgent(
+            agent_profile=chair_profile,
+            agent_role='chair',
+            model_name=self.config.param.base_llm,
+        )
+
+        reviewer_profiles = self.profile_db.invite_reviewer_profiles(
+            proposal=self.proposal,
+            reviewer_num=self.config.param.reviewer_num,
+        )
+        self.reviewers = [
+            BaseResearchAgent(
+                agent_profile=reviewer_profile,
+                agent_role='reviewer',
+                model_name=self.config.param.base_llm,
             )
-
-        if 'leader' not in agent_roles:
-            raise ValueError('At least one leader is required to write rebuttal.')
-        if 'reviewer' not in agent_roles:
-            raise ValueError('At least one reviewer is required to write review.')
-        if 'chair' not in agent_roles:
-            raise ValueError('At least one chair is required to write meta-review.')
-        if 'member' in agent_roles:
-            raise ValueError('member role is not allowed in peer review.')
-
-        counter = Counter(agent_roles)
-        if counter['leader'] != 1:
-            raise ValueError('Exactly one leader is required to write rebuttal.')
-        if counter['chair'] != 1:
-            raise ValueError('Exactly one chair is required to write meta-review.')
-
-        self.chair = [agent for agent in self.agents if agent.role == 'chair'][0]
-        self.leader = [agent for agent in self.agents if agent.role == 'leader'][0]
-        self.reviewers = [agent for agent in self.agents if agent.role == 'reviewer']
+            for reviewer_profile in reviewer_profiles
+        ]
 
     @beartype
     def on_exit(self) -> str:
@@ -96,16 +89,16 @@ class ReviewWritingEnv(BaseEnv):
         self.reviews: List[Review] = []
         for reviewer in self.reviewers:
             review = reviewer.write_review(
-                paper=self.paper,
+                paper=self.proposal,
                 config=self.config,
             )
             self.reviews.append(review)
             self.progress_db.add(review)
-            self.env_db.add(
+            self.log_db.add(
                 ReviewWritingLog(
                     time_step=self.time_step,
                     agent_pk=reviewer.profile.pk,
-                    paper_pk=self.paper.pk,
+                    paper_pk=self.proposal.pk,
                 )
             )
 
@@ -113,13 +106,13 @@ class ReviewWritingEnv(BaseEnv):
         self.rebuttals: List[Rebuttal] = []
         for review in self.reviews:
             rebuttal = self.leader.write_rebuttal(
-                paper=self.paper,
+                paper=self.proposal,
                 review=review,
                 config=self.config,
             )
             self.rebuttals.append(rebuttal)
             self.progress_db.add(rebuttal)
-            self.env_db.add(
+            self.log_db.add(
                 RebuttalWritingLog(
                     time_step=self.time_step,
                     paper_pk=rebuttal.paper_pk,
@@ -130,13 +123,13 @@ class ReviewWritingEnv(BaseEnv):
 
         # Paper Meta Reviewing
         self.meta_review = self.chair.write_meta_review(
-            paper=self.paper,
+            paper=self.proposal,
             reviews=self.reviews,
             rebuttals=self.rebuttals,
             config=self.config,
         )
         self.progress_db.add(self.meta_review)
-        self.env_db.add(
+        self.log_db.add(
             MetaReviewWritingLog(
                 time_step=self.time_step,
                 paper_pk=self.meta_review.paper_pk,

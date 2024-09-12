@@ -7,15 +7,15 @@ from ..utils.agent_collector import collect_proposals_and_coauthors
 from ..utils.agent_prompter import write_bio_prompting
 from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
-from .data import BaseDBData, Proposal, Researcher
+from .data import BaseDBData, Profile, Proposal
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=BaseDBData)
 
 
-class AgentDB(BaseDB[Researcher]):
+class ProfileDB(BaseDB[Profile]):
     def __init__(self, load_file_path: Optional[str] = None) -> None:
-        super().__init__(Researcher, load_file_path)
+        super().__init__(Profile, load_file_path)
         self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
             'facebook/contriever'
         )
@@ -23,7 +23,7 @@ class AgentDB(BaseDB[Researcher]):
             'facebook/contriever'
         )
 
-    def pull_agents(self, agent_names: List[str], config: Config) -> None:
+    def pull_profiles(self, agent_names: List[str], config: Config) -> None:
         for name in agent_names:
             proposals, collaborators = collect_proposals_and_coauthors(
                 author=name, paper_max_num=10
@@ -33,7 +33,7 @@ class AgentDB(BaseDB[Researcher]):
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,
             )[0]
-            agent_profile = Researcher(
+            agent_profile = Profile(
                 name=name,
                 bio=bio,
                 collaborators=collaborators,
@@ -41,8 +41,8 @@ class AgentDB(BaseDB[Researcher]):
             self.add(agent_profile)
 
     def match(
-        self, query: str, agent_profiles: List[Researcher], num: int = 1
-    ) -> List[Researcher]:
+        self, query: str, agent_profiles: List[Profile], num: int = 1
+    ) -> List[Profile]:
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,
@@ -84,27 +84,27 @@ class AgentDB(BaseDB[Researcher]):
             profile.is_chair_candidate = True
             self.update(pk=profile.pk, updates=profile.model_dump())
 
-    def invite_agents(
+    def search_profiles(
         self,
         condition: Dict[str, Any],
         query: str,
         num: int,
         update_fields: Dict[str, bool],
-    ) -> List[Researcher]:
+    ) -> List[Profile]:
         candidates = self.get(**condition)
-        invited_agents = self.match(query=query, agent_profiles=candidates, num=num)
+        searched_profiles = self.match(query=query, agent_profiles=candidates, num=num)
 
-        for agent in invited_agents:
+        for agent in searched_profiles:
             for field, value in update_fields.items():
                 setattr(agent, field, value)
             self.update(pk=agent.pk, updates=agent.model_dump())
 
-        return invited_agents
+        return searched_profiles
 
-    def invite_members(
-        self, leader: Researcher, member_num: int = 1
-    ) -> List[Researcher]:
-        return self.invite_agents(
+    def invite_member_profiles(
+        self, leader: Profile, member_num: int = 1
+    ) -> List[Profile]:
+        members = self.search_profiles(
             condition={'is_member_candidate': True},
             query=leader.bio,
             num=member_num,
@@ -115,13 +115,14 @@ class AgentDB(BaseDB[Researcher]):
                 'is_chair_candidate': False,
             },
         )
+        return members
 
-    def invite_reviewers(
-        self, paper_submission: Proposal, reviewer_num: int = 1
-    ) -> List[Researcher]:
-        return self.invite_agents(
+    def invite_reviewer_profiles(
+        self, proposal: Proposal, reviewer_num: int = 1
+    ) -> List[Profile]:
+        reviewers = self.search_profiles(
             condition={'is_reviewer_candidate': True},
-            query=paper_submission.abstract,
+            query=proposal.abstract,
             num=reviewer_num,
             update_fields={
                 'is_leader_candidate': False,
@@ -130,13 +131,14 @@ class AgentDB(BaseDB[Researcher]):
                 'is_chair_candidate': False,
             },
         )
+        return reviewers
 
-    def invite_chairs(
-        self, paper_submission: Proposal, chair_num: int = 1
-    ) -> List[Researcher]:
-        return self.invite_agents(
+    def invite_chair_profiles(
+        self, proposal: Proposal, chair_num: int = 1
+    ) -> List[Profile]:
+        chairs = self.search_profiles(
             condition={'is_chair_candidate': True},
-            query=paper_submission.abstract,
+            query=proposal.abstract,
             num=chair_num,
             update_fields={
                 'is_leader_candidate': False,
@@ -145,9 +147,10 @@ class AgentDB(BaseDB[Researcher]):
                 'is_chair_candidate': True,
             },
         )
+        return chairs
 
-    def invite_leaders(self, query: str, leader_num: int = 1) -> List[Researcher]:
-        return self.invite_agents(
+    def invite_leader_profiles(self, query: str, leader_num: int = 1) -> List[Profile]:
+        leaders = self.search_profiles(
             condition={'is_leader_candidate': True},
             query=query,
             num=leader_num,
@@ -158,8 +161,9 @@ class AgentDB(BaseDB[Researcher]):
                 'is_chair_candidate': False,
             },
         )
+        return leaders
 
-    def set_leader(self, agent: Researcher) -> None:
+    def set_leader_profile(self, agent: Profile) -> None:
         self.update(
             pk=agent.pk,
             updates={
@@ -170,7 +174,7 @@ class AgentDB(BaseDB[Researcher]):
             },
         )
 
-    def set_member(self, agent: Researcher) -> None:
+    def set_member_profile(self, agent: Profile) -> None:
         self.update(
             pk=agent.pk,
             updates={
@@ -181,7 +185,7 @@ class AgentDB(BaseDB[Researcher]):
             },
         )
 
-    def set_reviewer(self, agent: Researcher) -> None:
+    def set_reviewer_profile(self, agent: Profile) -> None:
         self.update(
             pk=agent.pk,
             updates={
@@ -192,7 +196,7 @@ class AgentDB(BaseDB[Researcher]):
             },
         )
 
-    def set_chair(self, agent: Researcher) -> None:
+    def set_chair_profile(self, agent: Profile) -> None:
         self.update(
             pk=agent.pk,
             updates={

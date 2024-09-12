@@ -17,14 +17,14 @@ Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 class ExperimentEnv:
     def __init__(
         self,
-        env_db: LogDB,
+        log_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
         config: Config,
         folder: str = 'experiments',
         max_loops: int = 5,
     ) -> None:
-        self.env_db = env_db
+        self.log_db = log_db
         self.progress_db = progress_db
         self.paper_db = paper_db
         self.folder = folder  # Initialize the folder path
@@ -180,7 +180,7 @@ class ExperimentEnv:
             exec_result=self.result,
         )
         self.progress_db.add(self.experiment)
-        self.env_db.add(
+        self.log_db.add(
             ExperimentLog(
                 time_step=time_step, paper_pk=paper_pk, experiment_pk=self.experiment.pk
             )

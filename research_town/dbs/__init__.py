@@ -9,17 +9,17 @@ from .data import (
     MetaReview,
     MetaReviewWritingLog,
     Paper,
+    Profile,
     Proposal,
     ProposalWritingLog,
     Rebuttal,
     RebuttalWritingLog,
-    Researcher,
     Review,
     ReviewWritingLog,
 )
-from .db_agent import AgentDB
 from .db_log import LogDB
 from .db_paper import PaperDB
+from .db_profile import ProfileDB
 from .db_progress import ProgressDB
 
 __all__ = [
@@ -32,7 +32,7 @@ __all__ = [
     'ReviewWritingLog',
     'ExperimentLog',
     'Paper',
-    'Researcher',
+    'Profile',
     'Idea',
     'Insight',
     'Proposal',
@@ -42,6 +42,6 @@ __all__ = [
     'Experiment',
     'LogDB',
     'PaperDB',
-    'AgentDB',
+    'ProfileDB',
     'ProgressDB',
 ]

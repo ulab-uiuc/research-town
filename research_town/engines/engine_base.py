@@ -3,7 +3,7 @@ from collections import defaultdict
 from typing import Any, Callable, Dict, List, Tuple
 
 from ..configs import Config
-from ..dbs import AgentDB, LogDB, PaperDB, ProgressDB
+from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from ..envs.env_base import BaseEnv
 
 
@@ -11,34 +11,34 @@ class BaseEngine:
     def __init__(
         self,
         project_name: str,
-        agent_db: AgentDB,
+        profile_db: ProfileDB,
         paper_db: PaperDB,
         progress_db: ProgressDB,
-        env_db: LogDB,
+        log_db: LogDB,
         config: Config,
         time_step: int = 0,
         stop_flag: bool = False,
     ) -> None:
         self.project_name = project_name
-        self.agent_db = agent_db
+        self.profile_db = profile_db
         self.paper_db = paper_db
         self.progress_db = progress_db
-        self.env_db = env_db
+        self.log_db = log_db
         self.config = config
         self.time_step = time_step
         self.stop_flag = stop_flag
         self.model_name = self.config.param.base_llm
         self.envs: Dict[str, BaseEnv] = {}
         self.transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {}
-        self.transitions: Dict[str, Dict[str, str]] = defaultdict(dict)
+        self.transitions: Dict[Tuple[str, str], str] = defaultdict(str)
         self.set_dbs()
         self.set_envs()
         self.set_transitions()
         self.set_transition_funcs()
 
     def set_dbs(self) -> None:
-        self.agent_db.reset_role_avaialbility()
-        self.env_db.set_project_name(self.project_name)
+        self.profile_db.reset_role_avaialbility()
+        self.log_db.set_project_name(self.project_name)
         self.progress_db.set_project_name(self.project_name)
 
     def set_envs(self) -> None:
@@ -61,8 +61,8 @@ class BaseEngine:
             self.transition_funcs[from_env, to_env] = func
 
     def add_transitions(self, transitions: List[Tuple[str, str, str]]) -> None:
-        for from_env, pass_or_fail, to_env in transitions:
-            self.transitions[from_env][pass_or_fail] = to_env
+        for from_env, trigger, to_env in transitions:
+            self.transitions[from_env, trigger] = to_env
 
     def start(self, task: str, env_name: str = 'start') -> None:
         if env_name not in self.envs:
@@ -70,18 +70,14 @@ class BaseEngine:
 
         self.curr_env_name = env_name
         self.curr_env = self.envs[env_name]
-        leader = self.agent_db.invite_leaders(query=task, leader_num=1)[0]
         self.curr_env.on_enter(
             time_step=self.time_step,
-            stop_flag=self.stop_flag,
-            agent_profiles=[leader],
-            agent_roles=['leader'],
-            agent_models=[self.model_name],
+            kwargs={'task': task},
         )
 
     def transition(self) -> None:
         trigger = self.curr_env.on_exit()
-        next_env_name = self.transitions[self.curr_env_name][trigger]
+        next_env_name = self.transitions[self.curr_env_name, trigger]
         if (self.curr_env_name, next_env_name) in self.transition_funcs:
             input_data = self.transition_funcs[(self.curr_env_name, next_env_name)](
                 self.curr_env
@@ -110,10 +106,10 @@ class BaseEngine:
         if not os.path.exists(save_file_path):
             os.makedirs(save_file_path)
 
-        self.agent_db.save_to_json(save_file_path, with_embed=with_embed)
+        self.profile_db.save_to_json(save_file_path, with_embed=with_embed)
         self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
         self.progress_db.save_to_json(save_file_path)
-        self.env_db.save_to_json(save_file_path)
+        self.log_db.save_to_json(save_file_path)
 
     def load(self) -> None:
         pass
