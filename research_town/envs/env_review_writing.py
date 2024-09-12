@@ -59,7 +59,6 @@ class ReviewWritingEnv(BaseEnv):
             config=self.config
         )
 
-
     @beartype
     def on_exit(self) -> str:
         self.env_run_num += 1
