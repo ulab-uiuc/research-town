@@ -9,16 +9,17 @@ import arxiv
 from tqdm import tqdm
 
 
-def setup_logging()->None:
+def setup_logging() -> None:
     """Setup logging configuration."""
     logging.basicConfig(
         filename='download_reference_papers.log',
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s',
-        filemode='w'
+        filemode='w',
     )
 
-def extract_arxiv_id(file_path:str)->Optional[str]:
+
+def extract_arxiv_id(file_path: str) -> Optional[str]:
     """
     Extract the arXiv ID from a file path using regex.
 
@@ -32,10 +33,11 @@ def extract_arxiv_id(file_path:str)->Optional[str]:
     if match:
         return match.group(1)
     else:
-        logging.error(f"Could not extract arXiv ID from {file_path}")
+        logging.error(f'Could not extract arXiv ID from {file_path}')
         return None
 
-def download_pdf(arxiv_id:str, save_path:str)->bool:
+
+def download_pdf(arxiv_id: str, save_path: str) -> bool:
     """
     Download an arXiv paper as a PDF by its arXiv ID.
 
@@ -50,13 +52,14 @@ def download_pdf(arxiv_id:str, save_path:str)->bool:
         search = arxiv.Search(id_list=[arxiv_id])
         paper = next(search.results())
         paper.download_pdf(filename=save_path)
-        logging.info(f"Downloaded {arxiv_id} to {save_path}")
+        logging.info(f'Downloaded {arxiv_id} to {save_path}')
         return True
     except Exception as e:
-        logging.error(f"Error downloading {arxiv_id}: {str(e)}")
+        logging.error(f'Error downloading {arxiv_id}: {str(e)}')
         return False
 
-def process_papers(input_file:str, output_file:str, base_save_dir:str)->None:
+
+def process_papers(input_file: str, output_file: str, base_save_dir: str) -> None:
     """
     Process each paper, extract references, and download the referenced PDFs.
 
@@ -70,12 +73,12 @@ def process_papers(input_file:str, output_file:str, base_save_dir:str)->None:
         output_data = json.load(f)
 
     # Process each paper in the JSON file
-    for title, data in tqdm(output_data.items(), desc="Processing papers"):
+    for title, data in tqdm(output_data.items(), desc='Processing papers'):
         arxiv_id = extract_arxiv_id(data.get('pdf_path'))
         data['arxiv_id'] = arxiv_id
 
         if not arxiv_id:
-            logging.warning(f"Skipping {title} due to invalid arXiv ID")
+            logging.warning(f'Skipping {title} due to invalid arXiv ID')
             continue
 
         # Create a folder for references
@@ -84,18 +87,24 @@ def process_papers(input_file:str, output_file:str, base_save_dir:str)->None:
 
         # Process references
         arxiv_references = []
-        for ref in tqdm(data.get('references', []), desc=f"Processing references for {arxiv_id}", leave=False):
+        for ref in tqdm(
+            data.get('references', []),
+            desc=f'Processing references for {arxiv_id}',
+            leave=False,
+        ):
             if not ref or not ref.get('externalIds'):
                 continue
             ref_arxiv_id = ref.get('externalIds', {}).get('ArXiv')
             if ref_arxiv_id:
-                pdf_path = os.path.join(ref_folder, f"{ref_arxiv_id}.pdf")
+                pdf_path = os.path.join(ref_folder, f'{ref_arxiv_id}.pdf')
                 if download_pdf(ref_arxiv_id, pdf_path):
-                    arxiv_references.append({
-                        'title': ref.get('title'),
-                        'arxiv_id': ref_arxiv_id,
-                        'pdf_path': pdf_path
-                    })
+                    arxiv_references.append(
+                        {
+                            'title': ref.get('title'),
+                            'arxiv_id': ref_arxiv_id,
+                            'pdf_path': pdf_path,
+                        }
+                    )
 
         # Add arxiv_references to the paper data
         data['arxiv_references'] = arxiv_references
@@ -104,43 +113,45 @@ def process_papers(input_file:str, output_file:str, base_save_dir:str)->None:
     with open(output_file, 'w') as f:
         json.dump(output_data, f, indent=2)
 
-    logging.info(f"Processing complete. Results saved in {output_file}")
+    logging.info(f'Processing complete. Results saved in {output_file}')
 
 
-def parse_args()->argparse.Namespace:
+def parse_args() -> argparse.Namespace:
     """
     Parse command-line arguments for the script.
 
     Returns:
         argparse.Namespace: Parsed arguments.
     """
-    parser = argparse.ArgumentParser(description="Download arXiv reference papers as PDFs.")
-    
-    parser.add_argument(
-        '--input_file', 
-        type=str, 
-        required=True, 
-        help="Path to the input JSON file containing paper metadata."
+    parser = argparse.ArgumentParser(
+        description='Download arXiv reference papers as PDFs.'
     )
-    
+
     parser.add_argument(
-        '--output_file', 
-        type=str, 
-        required=True, 
-        help="Path to the output JSON file to save updated metadata."
+        '--input_file',
+        type=str,
+        required=True,
+        help='Path to the input JSON file containing paper metadata.',
     )
-    
+
     parser.add_argument(
-        '--save_dir', 
-        type=str, 
-        required=True, 
-        help="Base directory where reference PDFs will be saved."
+        '--output_file',
+        type=str,
+        required=True,
+        help='Path to the output JSON file to save updated metadata.',
     )
-    
+
+    parser.add_argument(
+        '--save_dir',
+        type=str,
+        required=True,
+        help='Base directory where reference PDFs will be saved.',
+    )
+
     return parser.parse_args()
 
 
-def main()->None:
+def main() -> None:
     """
     Main function to process papers and fetch their references.
     """
