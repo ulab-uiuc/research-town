@@ -99,9 +99,11 @@ class ProfileDB(BaseDB[Profile]):
                 setattr(agent, field, value)
             self.update(pk=agent.pk, updates=agent.model_dump())
 
-        return searched_profiles 
+        return searched_profiles
 
-    def invite_member_profiles(self, leader: Profile, member_num: int = 1) -> List[Profile]:
+    def invite_member_profiles(
+        self, leader: Profile, member_num: int = 1
+    ) -> List[Profile]:
         members = self.search_profiles(
             condition={'is_member_candidate': True},
             query=leader.bio,
@@ -131,7 +133,9 @@ class ProfileDB(BaseDB[Profile]):
         )
         return reviewers
 
-    def invite_chair_profiles(self, proposal: Proposal, chair_num: int = 1) -> List[Profile]:
+    def invite_chair_profiles(
+        self, proposal: Proposal, chair_num: int = 1
+    ) -> List[Profile]:
         chairs = self.search_profiles(
             condition={'is_chair_candidate': True},
             query=proposal.abstract,
