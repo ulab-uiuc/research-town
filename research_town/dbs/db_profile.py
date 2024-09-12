@@ -8,6 +8,7 @@ from ..utils.agent_prompter import write_bio_prompting
 from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
 from .data import BaseDBData, Profile, Proposal
+from .research_agent import ResearchAgent, Role
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=BaseDBData)
@@ -83,7 +84,6 @@ class ProfileDB(BaseDB[Profile]):
             profile.is_reviewer_candidate = True
             profile.is_chair_candidate = True
             self.update(pk=profile.pk, updates=profile.model_dump())
-
     def search_profiles(
         self,
         condition: Dict[str, Any],
@@ -101,56 +101,84 @@ class ProfileDB(BaseDB[Profile]):
 
         return searched_profiles
 
-    def invite_member_profiles(
-        self, leader: Profile, member_num: int = 1
-    ) -> List[Profile]:
-        members = self.search_profiles(
-            condition={'is_member_candidate': True},
-            query=leader.bio,
-            num=member_num,
-            update_fields={
+    def set_profile_role(self, agent: Profile, role_update: Dict[str, bool]) -> None:
+        """
+        General method to update profile role fields dynamically.
+        """
+        self.update(pk=agent.pk, updates=role_update)
+
+    def set_leader_profile(self, agent: Profile) -> None:
+        self.set_profile_role(
+            agent, 
+            {
+                'is_leader_candidate': True,
+                'is_member_candidate': False,
+                'is_reviewer_candidate': False,
+                'is_chair_candidate': False,
+            }
+        )
+
+    def set_member_profile(self, agent: Profile) -> None:
+        self.set_profile_role(
+            agent,
+            {
                 'is_leader_candidate': False,
                 'is_member_candidate': True,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
-            },
+            }
         )
-        return members
 
-    def invite_reviewer_profiles(
-        self, proposal: Proposal, reviewer_num: int = 1
-    ) -> List[Profile]:
-        reviewers = self.search_profiles(
-            condition={'is_reviewer_candidate': True},
-            query=proposal.abstract,
-            num=reviewer_num,
-            update_fields={
+    def set_reviewer_profile(self, agent: Profile) -> None:
+        self.set_profile_role(
+            agent,
+            {
                 'is_leader_candidate': False,
                 'is_member_candidate': False,
                 'is_reviewer_candidate': True,
                 'is_chair_candidate': False,
-            },
+            }
         )
-        return reviewers
 
-    def invite_chair_profiles(
-        self, proposal: Proposal, chair_num: int = 1
-    ) -> List[Profile]:
-        chairs = self.search_profiles(
-            condition={'is_chair_candidate': True},
-            query=proposal.abstract,
-            num=chair_num,
-            update_fields={
+    def set_chair_profile(self, agent: Profile) -> None:
+        self.set_profile_role(
+            agent,
+            {
                 'is_leader_candidate': False,
                 'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': True,
-            },
+            }
         )
-        return chairs
 
-    def invite_leader_profiles(self, query: str, leader_num: int = 1) -> List[Profile]:
-        leaders = self.search_profiles(
+    def create_agents(self, agent_profiles: List[Profile], role: Role, config: Config) -> List[ResearchAgent]:
+        """
+        General method to create agents for any role.
+        """
+        return [
+            ResearchAgent(
+                agent_profile=agent_profile,
+                agent_role=role,
+                model_name=config.param.base_llm,
+            )
+            for agent_profile in agent_profiles
+        ]
+
+    def create_agent(self, agent_profile: Profile, role: Role, config: Config) -> ResearchAgent:
+        """
+        Create a single agent based on profile and role.
+        """
+        return ResearchAgent(
+            agent_profile=agent_profile,
+            agent_role=role,
+            model_name=config.param.base_llm,
+        )
+
+    def search_leader_agents(self, query: str, leader_num: int, config: Config) -> List[ResearchAgent]:
+        """
+        Search for leader agents by query.
+        """
+        leader_profiles = self.search_profiles(
             condition={'is_leader_candidate': True},
             query=query,
             num=leader_num,
@@ -159,50 +187,71 @@ class ProfileDB(BaseDB[Profile]):
                 'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
-            },
+            }
         )
-        return leaders
+        return self.create_agents(leader_profiles, role=Role.LEADER, config=config)
 
-    def set_leader_profile(self, agent: Profile) -> None:
-        self.update(
-            pk=agent.pk,
-            updates={
-                'is_leader_candidate': True,
-                'is_member_candidate': False,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': False,
-            },
-        )
-
-    def set_member_profile(self, agent: Profile) -> None:
-        self.update(
-            pk=agent.pk,
-            updates={
+    def search_member_agents(self, leader: Profile, member_num: int, config: Config) -> List[ResearchAgent]:
+        """
+        Search for member agents based on the leader's profile.
+        """
+        member_profiles = self.search_profiles(
+            condition={'is_member_candidate': True},
+            query=leader.bio,
+            num=member_num,
+            update_fields={
                 'is_leader_candidate': False,
                 'is_member_candidate': True,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
-            },
+            }
         )
+        return self.create_agents(member_profiles, role=Role.MEMBER, config=config)
 
-    def set_reviewer_profile(self, agent: Profile) -> None:
-        self.update(
-            pk=agent.pk,
-            updates={
+    def search_reviewer_agents(self, proposal: Proposal, reviewer_num: int, config: Config) -> List[ResearchAgent]:
+        """
+        Search for reviewer agents based on the proposal abstract.
+        """
+        reviewer_profiles = self.search_profiles(
+            condition={'is_reviewer_candidate': True},
+            query=proposal.abstract,
+            num=reviewer_num,
+            update_fields={
                 'is_leader_candidate': False,
                 'is_member_candidate': False,
                 'is_reviewer_candidate': True,
                 'is_chair_candidate': False,
-            },
+            }
         )
+        return self.create_agents(reviewer_profiles, role=Role.REVIEWER, config=config)
 
-    def set_chair_profile(self, agent: Profile) -> None:
-        self.update(
-            pk=agent.pk,
-            updates={
+    def search_chair_agents(self, proposal: Proposal, chair_num: int, config: Config) -> List[ResearchAgent]:
+        """
+        Search for chair agents based on the proposal abstract.
+        """
+        chair_profiles = self.search_profiles(
+            condition={'is_chair_candidate': True},
+            query=proposal.abstract,
+            num=chair_num,
+            update_fields={
                 'is_leader_candidate': False,
                 'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': True,
-            },
+            }
         )
+        return self.create_agents(chair_profiles, role=Role.CHAIR, config=config)
+
+    def search_leader_agent(self, query: str, config: Config) -> ResearchAgent:
+        """
+        Search for a single leader agent based on a query.
+        """
+        leader_profiles = self.search_leader_agents(query=query, leader_num=1, config=config)
+        return leader_profiles[0]
+
+    def search_chair_agent(self, proposal: Proposal, config: Config) -> ResearchAgent:
+        """
+        Search for a single chair agent based on a proposal.
+        """
+        chair_profiles = self.search_chair_agents(proposal=proposal, chair_num=1, config=config)
+        return chair_profiles[0]

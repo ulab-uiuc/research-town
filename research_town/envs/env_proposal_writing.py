@@ -46,24 +46,13 @@ class ProposalWritingEnv(BaseEnv):
         **kwargs: Any,
     ) -> None:
         self.time_step = time_step
-        leader_profile = kwargs['leader_profile']
-        self.leader = ResearchAgent(
-            agent_profile=leader_profile,
-            agent_role='leader',
-            model_name=self.config.param.base_llm,
-        )
-        member_profiles = self.profile_db.invite_member_profiles(
-            leader=leader_profile,
+        self.leader = kwargs['leader']
+
+        self.members = self.profile_db.search_member_agents(
+            leader=self.leader.profile,
             member_num=self.config.param.member_num,
+            config=self.config,
         )
-        self.members = [
-            ResearchAgent(
-                agent_profile=member_profile,
-                agent_role='member',
-                model_name=self.config.param.base_llm,
-            )
-            for member_profile in member_profiles
-        ]
 
     @beartype
     def on_exit(self) -> str:
@@ -82,20 +71,20 @@ class ProposalWritingEnv(BaseEnv):
                 paper_profiles=available_papers,
                 num=2,
             )
-            agent_insights = agent.review_literature(
+            insights = agent.review_literature(
                 papers=related_papers,
                 domains=['machine learning'],
                 config=self.config,
             )
-            self.insights.extend(agent_insights)  # Collect insights from all members
-            for insight in agent_insights:
+            self.insights.extend(insights)  # Collect insights from all members
+            for insight in insights:
                 self.progress_db.add(insight)
             self.log_db.add(
                 LiteratureReviewLog(
                     time_step=self.time_step,
                     paper_pks=[paper.pk for paper in related_papers],
                     agent_pk=agent.profile.pk,
-                    insight_pks=[insight.pk for insight in agent_insights],
+                    insight_pks=[insight.pk for insight in insights],
                 )
             )
 

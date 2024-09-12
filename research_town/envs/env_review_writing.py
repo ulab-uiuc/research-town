@@ -48,36 +48,17 @@ class ReviewWritingEnv(BaseEnv):
     ) -> None:
         self.time_step = time_step
         self.proposal = kwargs['proposal']
-
-        leader_profile = kwargs['leader_profile']
-        self.leader = ResearchAgent(
-            agent_profile=leader_profile,
-            agent_role='leader',
-            model_name=self.config.param.base_llm,
-        )
-
-        chair_profile = self.profile_db.invite_chair_profiles(
+        self.leader = kwargs['leader']
+        self.chair = self.profile_db.search_chair_agent(
             proposal=self.proposal,
-            chair_num=1,
-        )[0]
-        self.chair = ResearchAgent(
-            agent_profile=chair_profile,
-            agent_role='chair',
-            model_name=self.config.param.base_llm,
+            config=self.config,
         )
-
-        reviewer_profiles = self.profile_db.invite_reviewer_profiles(
+        self.reviewers = self.profile_db.search_reviewer_agents(
             proposal=self.proposal,
             reviewer_num=self.config.param.reviewer_num,
+            config=self.config
         )
-        self.reviewers = [
-            ResearchAgent(
-                agent_profile=reviewer_profile,
-                agent_role='reviewer',
-                model_name=self.config.param.base_llm,
-            )
-            for reviewer_profile in reviewer_profiles
-        ]
+
 
     @beartype
     def on_exit(self) -> str:

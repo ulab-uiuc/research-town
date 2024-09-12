@@ -37,15 +37,10 @@ class StartEnv(BaseEnv):
         **kwargs: Any,
     ) -> None:
         task = kwargs['task']
-        leader_profile = self.profile_db.invite_leader_profiles(
-            query=task, leader_num=1
-        )[0]
-        self.time_step = time_step
-        self.leader = ResearchAgent(
-            agent_profile=leader_profile,
-            agent_role='leader',
-            model_name=self.config.param.base_llm,
+        self.leader = self.profile_db.search_leader_agent(
+            query=task, config=self.config
         )
+        self.time_step = time_step
 
     def run(self) -> None:
         return

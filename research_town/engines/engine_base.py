@@ -17,7 +17,6 @@ class BaseEngine:
         log_db: LogDB,
         config: Config,
         time_step: int = 0,
-        stop_flag: bool = False,
     ) -> None:
         self.project_name = project_name
         self.profile_db = profile_db
@@ -26,7 +25,6 @@ class BaseEngine:
         self.log_db = log_db
         self.config = config
         self.time_step = time_step
-        self.stop_flag = stop_flag
         self.model_name = self.config.param.base_llm
         self.envs: Dict[str, BaseEnv] = {}
         self.transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {}
@@ -91,7 +89,6 @@ class BaseEngine:
         self.curr_env = self.envs[self.curr_env_name]
         self.curr_env.on_enter(
             time_step=self.time_step,
-            stop_flag=self.stop_flag,
             **input_data,
         )
 

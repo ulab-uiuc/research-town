@@ -69,13 +69,13 @@ class Engine(BaseEngine):
         self,
         env: StartEnv,
     ) -> Dict[str, Any]:
-        return {'leader_profile': env.leader.profile}
+        return {'leader': env.leader}
 
     def start_review(
         self,
         env: ProposalWritingEnv,
     ) -> Dict[str, Any]:
-        return {'proposal': env.proposal, 'leader_profile': env.leader.profile}
+        return {'proposal': env.proposal, 'leader': env.leader}
 
     def proposal_accept(self, env: ReviewWritingEnv) -> Dict[str, Any]:
         return {'meta_review': env.meta_review}
