@@ -20,12 +20,6 @@ Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 def test_env_combo(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    # Agent profiles and roles for paper submission environment
-    proposal_writing_role_list: List[Role] = [
-        'leader',
-        'member',
-        'member',
-    ]
     proposal_writing_agent_profiles = [
         Researcher(name='Jiaxuan You', bio='A researcher in machine learning.'),
         Researcher(name='Rex Ying', bio='A researcher in natural language processing.'),
@@ -57,7 +51,6 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         'Jure Leskovec',
         'Geoffrey Hinton',
     ]
-    review_writing_role_list: List[Role] = ['leader', 'reviewer', 'chair']
     review_writing_agent_profiles = [
         Researcher(name=agent, bio='A researcher in machine learning.')
         for agent in review_writing_agent_list

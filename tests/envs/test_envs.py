@@ -3,11 +3,7 @@ from unittest.mock import MagicMock, patch
 from research_town.configs import Config
 from research_town.dbs import Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
-from tests.constants.data_constants import (
-    agent_profile_A,
-    agent_profile_B,
-    research_proposal_A,
-)
+from tests.constants.data_constants import agent_profile_A, research_proposal_A
 from tests.constants.db_constants import (
     example_agent_db,
     example_log_db,
