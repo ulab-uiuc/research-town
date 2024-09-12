@@ -65,8 +65,15 @@ def test_proposal_env(
     mock_model_prompting.side_effect = mock_prompting
 
     env = ProposalWritingEnv(
+<<<<<<< HEAD
         name='proposal_writing',
         log_db=example_log_db,
+||||||| c45f97c
+        env_db=example_env_db,
+=======
+        name='proposal_writing',
+        env_db=example_env_db,
+>>>>>>> 763c267652678b3f2a6f7a4e96382e61743ff1b0
         progress_db=example_progress_db,
         paper_db=example_paper_db,
         agent_db=example_agent_db,
