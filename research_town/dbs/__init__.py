@@ -13,11 +13,11 @@ from .data import (
     ProposalWritingLog,
     Rebuttal,
     RebuttalWritingLog,
-    Researcher,
+    Profile,
     Review,
     ReviewWritingLog,
 )
-from .db_agent import ProfileDB
+from .db_profile import ProfileDB
 from .db_log import LogDB
 from .db_paper import PaperDB
 from .db_progress import ProgressDB
@@ -32,7 +32,7 @@ __all__ = [
     'ReviewWritingLog',
     'ExperimentLog',
     'Paper',
-    'Researcher',
+    'Profile',
     'Idea',
     'Insight',
     'Proposal',

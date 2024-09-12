@@ -18,7 +18,7 @@ from research_town.dbs import (
     ProfileDB,
     ProgressDB,
     RebuttalWritingLog,
-    Researcher,
+    Profile,
     ReviewWritingLog,
 )
 from tests.mocks.mocking_func import mock_prompting
@@ -165,25 +165,25 @@ def test_progressdb_basic() -> None:
 
 def test_ProfileDB_basic() -> None:
     db = ProfileDB()
-    agent1 = Researcher(
-        name='John Doe', bio='Researcher in AI', institute='AI Institute'
+    agent1 = Profile(
+        name='John Doe', bio='Profile in AI', institute='AI Institute'
     )
-    agent2 = Researcher(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     db.add(agent1)
     db.add(agent2)
 
-    agent3 = Researcher(
+    agent3 = Profile(
         name='Alice Johnson', bio='Data Scientist', institute='Data Lab'
     )
     db.add(agent3)
     assert agent3.pk in db.data
     assert db.data[agent3.pk].name == 'Alice Johnson'
 
-    updates = {'bio': 'Senior Researcher in AI'}
+    updates = {'bio': 'Senior Profile in AI'}
     success = db.update(agent1.pk, updates)
 
     assert success
-    assert db.data[agent1.pk].bio == 'Senior Researcher in AI'
+    assert db.data[agent1.pk].bio == 'Senior Profile in AI'
 
     success = db.update('non-existing-pk', {'bio': 'New Bio'})
     assert not success
@@ -197,7 +197,7 @@ def test_ProfileDB_basic() -> None:
 
     conditions: Dict[str, str] = {'name': 'Jane Smith'}
 
-    results: List[Researcher] = db.get(**conditions)
+    results: List[Profile] = db.get(**conditions)
 
     assert len(results) == 1
     assert results[0].name == 'Jane Smith'
@@ -282,13 +282,13 @@ def test_Paperdb_basic() -> None:
 
 def test_agent_match() -> None:
     db = ProfileDB()
-    agent1 = Researcher(
-        name='John Doe', bio='Researcher in AI', institute='AI Institute'
+    agent1 = Profile(
+        name='John Doe', bio='Profile in AI', institute='AI Institute'
     )
-    agent2 = Researcher(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
-    agent3 = Researcher(name='Jane kid', bio='Expert in RL', institute='RL Lab')
+    agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    agent3 = Profile(name='Jane kid', bio='Expert in RL', institute='RL Lab')
     agent_profile_l = [agent1, agent2, agent3]
-    lead_agent_profile = 'Researcher in CV'
+    lead_agent_profile = 'Profile in CV'
     match_agent_profiles = db.match(
         query=lead_agent_profile, agent_profiles=agent_profile_l, num=2
     )
@@ -329,7 +329,7 @@ def test_paper_match() -> None:
         citation_count=2,
     )
     agent_profile_l = [paper1, paper2, paper_3]
-    lead_agent_profile = 'Researcher in CV'
+    lead_agent_profile = 'Profile in CV'
     match_paper_profiles = db.match(
         query=lead_agent_profile, paper_profiles=agent_profile_l, num=2
     )
@@ -339,10 +339,10 @@ def test_paper_match() -> None:
 
 def test_agent_file() -> None:
     db = ProfileDB()
-    agent1 = Researcher(
-        name='John Doe', bio='Researcher in AI', institute='AI Institute'
+    agent1 = Profile(
+        name='John Doe', bio='Profile in AI', institute='AI Institute'
     )
-    agent2 = Researcher(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     db.add(agent1)
     db.add(agent2)
     # save without embeddings
@@ -350,7 +350,7 @@ def test_agent_file() -> None:
     with open('data/test/ProfileDB.json', 'r') as f:
         data_test = json.load(f)
     assert len(data_test) > 0
-    assert db.data == {pk: Researcher(**data) for pk, data in data_test.items()}
+    assert db.data == {pk: Profile(**data) for pk, data in data_test.items()}
     # load without embeddings
     db_test = ProfileDB()
     db_test.load_from_json('data/test')

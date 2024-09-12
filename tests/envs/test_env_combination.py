@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from beartype.typing import List, Literal
 
 from research_town.configs import Config
-from research_town.dbs import Proposal, Researcher, Review
+from research_town.dbs import Proposal, Profile, Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.db_constants import (
     example_log_db,
@@ -21,9 +21,9 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     proposal_writing_agent_profiles = [
-        Researcher(name='Jiaxuan You', bio='A researcher in machine learning.'),
-        Researcher(name='Rex Ying', bio='A researcher in natural language processing.'),
-        Researcher(name='Rex Zhu', bio='A researcher in computer vision.'),
+        Profile(name='Jiaxuan You', bio='A researcher in machine learning.'),
+        Profile(name='Rex Ying', bio='A researcher in natural language processing.'),
+        Profile(name='Rex Zhu', bio='A researcher in computer vision.'),
     ]
 
     # Create and run the paper submission environment
@@ -52,7 +52,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         'Geoffrey Hinton',
     ]
     review_writing_agent_profiles = [
-        Researcher(name=agent, bio='A researcher in machine learning.')
+        Profile(name=agent, bio='A researcher in machine learning.')
         for agent in review_writing_agent_list
     ]
 

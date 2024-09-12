@@ -8,7 +8,7 @@ from research_town.dbs import (
     Proposal,
     Rebuttal,
     RebuttalWritingLog,
-    Researcher,
+    Profile,
     Review,
     ReviewWritingLog,
 )
@@ -29,17 +29,17 @@ paper_profile_C = Paper(
 )
 
 
-agent_profile_A = Researcher(
+agent_profile_A = Profile(
     name='Jiaxuan You',
     bio='A researcher in the field of machine learning.',
 )
 
-agent_profile_B = Researcher(
+agent_profile_B = Profile(
     name='Rex Ying',
     bio='A researcher in the field of GNN.',
 )
 
-agent_profile_C = Researcher(
+agent_profile_C = Profile(
     name='Chris Manning',
     bio='A researcher in the field of NLP.',
 )

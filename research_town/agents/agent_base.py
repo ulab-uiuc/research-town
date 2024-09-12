@@ -11,7 +11,7 @@ from ..dbs import (
     Paper,
     Proposal,
     Rebuttal,
-    Researcher,
+    Profile,
     Review,
 )
 from ..utils.agent_prompter import (
@@ -37,11 +37,11 @@ Role = Literal['reviewer', 'leader', 'member', 'chair']
 class BaseResearchAgent(object):
     def __init__(
         self,
-        agent_profile: Researcher,
+        agent_profile: Profile,
         model_name: str,
         agent_role: Optional[Role] = None,
     ) -> None:
-        self.profile: Researcher = agent_profile
+        self.profile: Profile = agent_profile
         self.memory: Dict[str, str] = {}
         self.role: Role | None = agent_role
         self.model_name: str = model_name
