@@ -9,7 +9,7 @@ import requests
 from tqdm import tqdm
 
 
-def get_references(arxiv_id:str, offset:int=0, limit:int=100, max_retry:int=5)->Optional[Dict]:
+def get_references(arxiv_id:str, offset:int=0, limit:int=100, max_retry:int=5)->Optional[Dict[str, Any]]:
     """
     Fetch references for a given arXiv paper using the Semantic Scholar API with retry mechanism.
 
@@ -25,7 +25,7 @@ def get_references(arxiv_id:str, offset:int=0, limit:int=100, max_retry:int=5)->
     paper_id = f"ARXIV:{arxiv_id}"
     url = f"https://api.semanticscholar.org/graph/v1/paper/{paper_id}/references"
     fields = "title,abstract,year,venue,authors,externalIds,url,referenceCount,citationCount,influentialCitationCount,isOpenAccess,fieldsOfStudy"
-    params = {
+    params: dict[str, object] = {
         "offset": offset,
         "limit": limit,
         "fields": fields
