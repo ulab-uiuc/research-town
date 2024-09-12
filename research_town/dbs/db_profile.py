@@ -7,7 +7,7 @@ from ..utils.agent_collector import collect_proposals_and_coauthors
 from ..utils.agent_prompter import write_bio_prompting
 from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
-from .data import BaseDBData, Proposal, Profile
+from .data import BaseDBData, Profile, Proposal
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=BaseDBData)
@@ -101,9 +101,7 @@ class ProfileDB(BaseDB[Profile]):
 
         return invited_agents
 
-    def invite_members(
-        self, leader: Profile, member_num: int = 1
-    ) -> List[Profile]:
+    def invite_members(self, leader: Profile, member_num: int = 1) -> List[Profile]:
         members = self.invite_agents(
             condition={'is_member_candidate': True},
             query=leader.bio,

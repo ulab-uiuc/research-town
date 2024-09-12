@@ -5,10 +5,10 @@ from research_town.dbs import (
     MetaReview,
     MetaReviewWritingLog,
     Paper,
+    Profile,
     Proposal,
     Rebuttal,
     RebuttalWritingLog,
-    Profile,
     Review,
     ReviewWritingLog,
 )

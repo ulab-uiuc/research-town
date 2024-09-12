@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from beartype.typing import List, Literal
 
 from research_town.configs import Config
-from research_town.dbs import Proposal, Profile, Review
+from research_town.dbs import Profile, Proposal, Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.db_constants import (
     example_log_db,

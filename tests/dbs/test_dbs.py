@@ -15,10 +15,10 @@ from research_town.dbs import (
     MetaReviewWritingLog,
     Paper,
     PaperDB,
+    Profile,
     ProfileDB,
     ProgressDB,
     RebuttalWritingLog,
-    Profile,
     ReviewWritingLog,
 )
 from tests.mocks.mocking_func import mock_prompting
@@ -165,16 +165,12 @@ def test_progressdb_basic() -> None:
 
 def test_ProfileDB_basic() -> None:
     db = ProfileDB()
-    agent1 = Profile(
-        name='John Doe', bio='Profile in AI', institute='AI Institute'
-    )
+    agent1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
     agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     db.add(agent1)
     db.add(agent2)
 
-    agent3 = Profile(
-        name='Alice Johnson', bio='Data Scientist', institute='Data Lab'
-    )
+    agent3 = Profile(name='Alice Johnson', bio='Data Scientist', institute='Data Lab')
     db.add(agent3)
     assert agent3.pk in db.data
     assert db.data[agent3.pk].name == 'Alice Johnson'
@@ -282,9 +278,7 @@ def test_Paperdb_basic() -> None:
 
 def test_agent_match() -> None:
     db = ProfileDB()
-    agent1 = Profile(
-        name='John Doe', bio='Profile in AI', institute='AI Institute'
-    )
+    agent1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
     agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     agent3 = Profile(name='Jane kid', bio='Expert in RL', institute='RL Lab')
     agent_profile_l = [agent1, agent2, agent3]
@@ -339,9 +333,7 @@ def test_paper_match() -> None:
 
 def test_agent_file() -> None:
     db = ProfileDB()
-    agent1 = Profile(
-        name='John Doe', bio='Profile in AI', institute='AI Institute'
-    )
+    agent1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
     agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     db.add(agent1)
     db.add(agent2)

@@ -9,17 +9,17 @@ from .data import (
     MetaReview,
     MetaReviewWritingLog,
     Paper,
+    Profile,
     Proposal,
     ProposalWritingLog,
     Rebuttal,
     RebuttalWritingLog,
-    Profile,
     Review,
     ReviewWritingLog,
 )
-from .db_profile import ProfileDB
 from .db_log import LogDB
 from .db_paper import PaperDB
+from .db_profile import ProfileDB
 from .db_progress import ProgressDB
 
 __all__ = [
