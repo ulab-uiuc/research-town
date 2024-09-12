@@ -1,7 +1,6 @@
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Literal, Union
 
-from ..agents.agent_base import ResearchAgent
 from ..configs import Config
 from ..dbs import (
     LogDB,
@@ -56,7 +55,7 @@ class ReviewWritingEnv(BaseEnv):
         self.reviewers = self.profile_db.search_reviewer_agents(
             proposal=self.proposal,
             reviewer_num=self.config.param.reviewer_num,
-            config=self.config
+            config=self.config,
         )
 
     @beartype

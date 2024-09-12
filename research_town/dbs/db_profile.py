@@ -8,8 +8,8 @@ from ..utils.agent_prompter import write_bio_prompting
 from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
 from .data import BaseDBData, Profile, Proposal
-from .research_agent import ResearchAgent, Role
 from .db_base import BaseDB
+from .research_agent import ResearchAgent, Role
 
 T = TypeVar('T', bound=BaseDBData)
 
@@ -84,6 +84,7 @@ class ProfileDB(BaseDB[Profile]):
             profile.is_reviewer_candidate = True
             profile.is_chair_candidate = True
             self.update(pk=profile.pk, updates=profile.model_dump())
+
     def search_profiles(
         self,
         condition: Dict[str, Any],
@@ -109,13 +110,13 @@ class ProfileDB(BaseDB[Profile]):
 
     def set_leader_profile(self, agent: Profile) -> None:
         self.set_profile_role(
-            agent, 
+            agent,
             {
                 'is_leader_candidate': True,
                 'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
-            }
+            },
         )
 
     def set_member_profile(self, agent: Profile) -> None:
@@ -126,7 +127,7 @@ class ProfileDB(BaseDB[Profile]):
                 'is_member_candidate': True,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
-            }
+            },
         )
 
     def set_reviewer_profile(self, agent: Profile) -> None:
@@ -137,7 +138,7 @@ class ProfileDB(BaseDB[Profile]):
                 'is_member_candidate': False,
                 'is_reviewer_candidate': True,
                 'is_chair_candidate': False,
-            }
+            },
         )
 
     def set_chair_profile(self, agent: Profile) -> None:
@@ -148,10 +149,12 @@ class ProfileDB(BaseDB[Profile]):
                 'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': True,
-            }
+            },
         )
 
-    def create_agents(self, agent_profiles: List[Profile], role: Role, config: Config) -> List[ResearchAgent]:
+    def create_agents(
+        self, agent_profiles: List[Profile], role: Role, config: Config
+    ) -> List[ResearchAgent]:
         """
         General method to create agents for any role.
         """
@@ -164,7 +167,9 @@ class ProfileDB(BaseDB[Profile]):
             for agent_profile in agent_profiles
         ]
 
-    def create_agent(self, agent_profile: Profile, role: Role, config: Config) -> ResearchAgent:
+    def create_agent(
+        self, agent_profile: Profile, role: Role, config: Config
+    ) -> ResearchAgent:
         """
         Create a single agent based on profile and role.
         """
@@ -174,7 +179,9 @@ class ProfileDB(BaseDB[Profile]):
             model_name=config.param.base_llm,
         )
 
-    def search_leader_agents(self, query: str, leader_num: int, config: Config) -> List[ResearchAgent]:
+    def search_leader_agents(
+        self, query: str, leader_num: int, config: Config
+    ) -> List[ResearchAgent]:
         """
         Search for leader agents by query.
         """
@@ -187,11 +194,13 @@ class ProfileDB(BaseDB[Profile]):
                 'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
-            }
+            },
         )
         return self.create_agents(leader_profiles, role=Role.LEADER, config=config)
 
-    def search_member_agents(self, leader: Profile, member_num: int, config: Config) -> List[ResearchAgent]:
+    def search_member_agents(
+        self, leader: Profile, member_num: int, config: Config
+    ) -> List[ResearchAgent]:
         """
         Search for member agents based on the leader's profile.
         """
@@ -204,11 +213,13 @@ class ProfileDB(BaseDB[Profile]):
                 'is_member_candidate': True,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
-            }
+            },
         )
         return self.create_agents(member_profiles, role=Role.MEMBER, config=config)
 
-    def search_reviewer_agents(self, proposal: Proposal, reviewer_num: int, config: Config) -> List[ResearchAgent]:
+    def search_reviewer_agents(
+        self, proposal: Proposal, reviewer_num: int, config: Config
+    ) -> List[ResearchAgent]:
         """
         Search for reviewer agents based on the proposal abstract.
         """
@@ -221,11 +232,13 @@ class ProfileDB(BaseDB[Profile]):
                 'is_member_candidate': False,
                 'is_reviewer_candidate': True,
                 'is_chair_candidate': False,
-            }
+            },
         )
         return self.create_agents(reviewer_profiles, role=Role.REVIEWER, config=config)
 
-    def search_chair_agents(self, proposal: Proposal, chair_num: int, config: Config) -> List[ResearchAgent]:
+    def search_chair_agents(
+        self, proposal: Proposal, chair_num: int, config: Config
+    ) -> List[ResearchAgent]:
         """
         Search for chair agents based on the proposal abstract.
         """
@@ -238,7 +251,7 @@ class ProfileDB(BaseDB[Profile]):
                 'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': True,
-            }
+            },
         )
         return self.create_agents(chair_profiles, role=Role.CHAIR, config=config)
 
@@ -246,12 +259,16 @@ class ProfileDB(BaseDB[Profile]):
         """
         Search for a single leader agent based on a query.
         """
-        leader_profiles = self.search_leader_agents(query=query, leader_num=1, config=config)
+        leader_profiles = self.search_leader_agents(
+            query=query, leader_num=1, config=config
+        )
         return leader_profiles[0]
 
     def search_chair_agent(self, proposal: Proposal, config: Config) -> ResearchAgent:
         """
         Search for a single chair agent based on a proposal.
         """
-        chair_profiles = self.search_chair_agents(proposal=proposal, chair_num=1, config=config)
+        chair_profiles = self.search_chair_agents(
+            proposal=proposal, chair_num=1, config=config
+        )
         return chair_profiles[0]
