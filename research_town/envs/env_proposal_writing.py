@@ -14,9 +14,6 @@ from ..dbs import (
 )
 from .env_base import BaseEnv
 
-LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
-
 
 class ProposalWritingEnv(BaseEnv):
     def __init__(

@@ -2,7 +2,8 @@ from typing import Any, Dict, List, Optional, TypeVar
 
 from transformers import BertModel, BertTokenizer
 
-from ..agents.agent_base import ResearchAgent, Role
+from ..agents.agent_base import ResearchAgent
+from ..agents.agent_role import Role
 from ..configs import Config
 from ..utils.agent_collector import collect_proposals_and_coauthors
 from ..utils.agent_prompter import write_bio_prompting

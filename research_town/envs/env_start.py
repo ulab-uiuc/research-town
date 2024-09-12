@@ -5,9 +5,6 @@ from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from .env_base import BaseEnv
 
-LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
-
 
 class StartEnv(BaseEnv):
     def __init__(
