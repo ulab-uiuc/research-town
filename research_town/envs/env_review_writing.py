@@ -56,7 +56,7 @@ class ReviewWritingEnv(BaseEnv):
             model_name=self.config.param.base_llm,
         )
 
-        chair_profile = self.profile_db.invite_chair_profiles(
+        chair_profile = self.profile_db.match_chair_profiles(
             proposal=self.proposal,
             chair_num=1,
         )[0]
@@ -66,7 +66,7 @@ class ReviewWritingEnv(BaseEnv):
             model_name=self.config.param.base_llm,
         )
 
-        reviewer_profiles = self.profile_db.invite_reviewer_profiles(
+        reviewer_profiles = self.profile_db.match_reviewer_profiles(
             proposal=self.proposal,
             reviewer_num=self.config.param.reviewer_num,
         )
