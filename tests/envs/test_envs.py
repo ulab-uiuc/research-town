@@ -32,21 +32,8 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
 
     env.on_enter(
         time_step=0,
-        stop_flag=False,
-        agent_profiles=[
-            agent_profile_A,
-            agent_profile_B,
-            agent_profile_B,
-            agent_profile_A,
-        ],
-        agent_roles=['leader', 'reviewer', 'reviewer', 'chair'],
-        agent_models=[
-            'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-            'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-            'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-            'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        ],
-        paper=research_proposal_A,
+        proposal=research_proposal_A,
+        leader_profile=agent_profile_A,
     )
     env.run()
     exit_status = env.on_exit()
@@ -74,10 +61,7 @@ def test_proposal_env(
     )
     env.on_enter(
         time_step=0,
-        stop_flag=False,
-        agent_profiles=[agent_profile_A],
-        agent_roles=['leader'],
-        agent_models=['together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1'],
+        leader_profile=agent_profile_A,
     )
     env.run()
     exit_status = env.on_exit()

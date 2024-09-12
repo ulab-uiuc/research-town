@@ -43,10 +43,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     )
     proposal_writing_env.on_enter(
         time_step=0,
-        stop_flag=False,
-        agent_profiles=proposal_writing_agent_profiles,
-        agent_roles=proposal_writing_role_list,
-        agent_models=['together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1'],
+        leader_profile=proposal_writing_agent_profiles[0],
     )
     proposal_writing_env.run()
     paper = proposal_writing_env.proposal
@@ -77,15 +74,8 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     )
     review_writing_env.on_enter(
         time_step=0,
-        stop_flag=False,
-        agent_profiles=review_writing_agent_profiles,
-        agent_roles=review_writing_role_list,
-        agent_models=[
-            'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-            'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-            'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        ],
-        paper=paper,
+        proposal=paper,
+        leader_profile=review_writing_agent_profiles[0],
     )
     review_writing_env.run()
     exit_status = review_writing_env.on_exit()
