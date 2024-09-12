@@ -1,5 +1,3 @@
-from collections import Counter
-
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Literal, Union
 
@@ -14,7 +12,6 @@ from ..dbs import (
     PaperDB,
     ProgressDB,
     ProposalWritingLog,
-    Researcher,
 )
 from .env_base import BaseEnv
 
@@ -25,15 +22,8 @@ Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 class ProposalWritingEnv(BaseEnv):
     def __init__(
         self,
-<<<<<<< HEAD
         name: str,
         log_db: LogDB,
-||||||| c45f97c
-        env_db: LogDB,
-=======
-        name: str,
-        env_db: LogDB,
->>>>>>> 763c267652678b3f2a6f7a4e96382e61743ff1b0
         progress_db: ProgressDB,
         paper_db: PaperDB,
         agent_db: AgentDB,

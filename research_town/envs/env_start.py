@@ -37,9 +37,7 @@ class StartEnv(BaseEnv):
         **kwargs: Any,
     ) -> None:
         task = kwargs['task']
-        leader_profile = self.agent_db.invite_leaders(
-            query=kwargs['task'], leader_num=1
-        )[0]
+        leader_profile = self.agent_db.invite_leaders(query=task, leader_num=1)[0]
         self.time_step = time_step
         self.leader = BaseResearchAgent(
             agent_profile=leader_profile,
