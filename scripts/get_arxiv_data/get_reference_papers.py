@@ -3,7 +3,7 @@ import json
 import os
 import re
 import time
-from typing import Any, Dict, List, Optional
+from typing import Dict, Any, Optional, Union, cast, List
 
 import requests
 from tqdm import tqdm
@@ -25,7 +25,7 @@ def get_references(arxiv_id:str, offset:int=0, limit:int=100, max_retry:int=5)->
     paper_id = f"ARXIV:{arxiv_id}"
     url = f"https://api.semanticscholar.org/graph/v1/paper/{paper_id}/references"
     fields = "title,abstract,year,venue,authors,externalIds,url,referenceCount,citationCount,influentialCitationCount,isOpenAccess,fieldsOfStudy"
-    params: dict[str, object] = {
+    params: Dict[str, Union[str, int]] = {
         "offset": offset,
         "limit": limit,
         "fields": fields
@@ -34,7 +34,7 @@ def get_references(arxiv_id:str, offset:int=0, limit:int=100, max_retry:int=5)->
     for attempt in range(max_retry):
         response = requests.get(url, params=params)
         if response.status_code == 200:
-            return response.json()
+            return cast(Dict[str, Any], response.json())
         else:
             print(f"Error fetching references for {paper_id}: {response.status_code}. Retrying {attempt + 1}/{max_retry}...")
             time.sleep(5)  # Wait for 5 seconds before the next retry
