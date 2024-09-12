@@ -17,7 +17,6 @@ class BaseEngine:
         log_db: LogDB,
         config: Config,
         time_step: int = 0,
-        stop_flag: bool = False,
     ) -> None:
         self.project_name = project_name
         self.profile_db = profile_db
@@ -26,8 +25,7 @@ class BaseEngine:
         self.log_db = log_db
         self.config = config
         self.time_step = time_step
-        self.stop_flag = stop_flag
-        self.model_name = self.config.param.base_llm
+
         self.envs: Dict[str, BaseEnv] = {}
         self.transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {}
         self.transitions: Dict[Tuple[str, str], str] = defaultdict(str)
@@ -57,12 +55,12 @@ class BaseEngine:
     def add_transition_funcs(
         self, funcs: List[Tuple[str, Callable[..., Any], str]]
     ) -> None:
-        for from_env, func, to_env in funcs:
-            self.transition_funcs[from_env, to_env] = func
+        for src, func, dst in funcs:
+            self.transition_funcs[src, dst] = func
 
     def add_transitions(self, transitions: List[Tuple[str, str, str]]) -> None:
-        for from_env, trigger, to_env in transitions:
-            self.transitions[from_env, trigger] = to_env
+        for src, trigger, dst in transitions:
+            self.transitions[src, trigger] = dst
 
     def start(self, task: str, env_name: str = 'start') -> None:
         if env_name not in self.envs:
@@ -91,7 +89,6 @@ class BaseEngine:
         self.curr_env = self.envs[self.curr_env_name]
         self.curr_env.on_enter(
             time_step=self.time_step,
-            stop_flag=self.stop_flag,
             **input_data,
         )
 
