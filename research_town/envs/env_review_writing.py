@@ -61,7 +61,10 @@ class ReviewWritingEnv(BaseEnv):
     @beartype
     def on_exit(self) -> str:
         self.env_run_num += 1
-        return 'proposal_accept'
+        if 'accept' in self.meta_review.decision:
+            return 'proposal_accept'
+        else:
+            return 'proposal_reject'
 
     @beartype
     def run(self) -> None:

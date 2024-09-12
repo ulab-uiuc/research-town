@@ -9,7 +9,7 @@ from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
 from .data import BaseDBData, Profile, Proposal
 from .db_base import BaseDB
-from .research_agent import ResearchAgent, Role
+from ..agents.agent_base import ResearchAgent, Role
 
 T = TypeVar('T', bound=BaseDBData)
 
