@@ -1,7 +1,7 @@
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Literal, Union
 
-from ..agents.agent_base import BaseResearchAgent
+from ..agents.agent_base import ResearchAgent
 from ..configs import Config
 from ..dbs import (
     Idea,
@@ -47,7 +47,7 @@ class ProposalWritingEnv(BaseEnv):
     ) -> None:
         self.time_step = time_step
         leader_profile = kwargs['leader_profile']
-        self.leader = BaseResearchAgent(
+        self.leader = ResearchAgent(
             agent_profile=leader_profile,
             agent_role='leader',
             model_name=self.config.param.base_llm,
@@ -57,7 +57,7 @@ class ProposalWritingEnv(BaseEnv):
             member_num=self.config.param.member_num,
         )
         self.members = [
-            BaseResearchAgent(
+            ResearchAgent(
                 agent_profile=member_profile,
                 agent_role='member',
                 model_name=self.config.param.base_llm,
