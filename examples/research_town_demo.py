@@ -31,7 +31,7 @@ def run_sync_experiment(
         profile_db.load_from_json(save_file_path, with_embed=True)
         paper_db.load_from_json(save_file_path, with_embed=True)
     else:
-        profile_db.pull_agents(agent_names=agent_names, config=config)
+        profile_db.pull_profiles(agent_names=agent_names, config=config)
         paper_db.pull_papers(num=10, domain='graph neural networks')
 
     log_db = LogDB()

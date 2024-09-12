@@ -14,9 +14,10 @@ from tests.mocks.mocking_func import mock_prompting
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
+def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
+    example_profile_db.reset_role_avaialbility()
     env = ReviewWritingEnv(
         name='review_writing',
         log_db=example_log_db,
@@ -42,11 +43,12 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_proposal_env(
+def test_proposal_writing_env(
     mock_model_prompting: MagicMock,
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
+    example_profile_db.reset_role_avaialbility()
     env = ProposalWritingEnv(
         name='proposal_writing',
         log_db=example_log_db,

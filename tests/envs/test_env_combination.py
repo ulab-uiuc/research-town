@@ -3,12 +3,11 @@ from unittest.mock import MagicMock, patch
 from beartype.typing import List, Literal
 
 from research_town.configs import Config
-from research_town.dbs import Profile, Proposal, Review
+from research_town.dbs import Profile, Proposal, Review, ProfileDB
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.db_constants import (
     example_log_db,
     example_paper_db,
-    example_profile_db,
     example_progress_db,
 )
 from tests.mocks.mocking_func import mock_prompting
@@ -26,13 +25,17 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         Profile(name='Rex Zhu', bio='A researcher in computer vision.'),
     ]
 
+    temp_profile_db = ProfileDB()
+    for profile in proposal_writing_agent_profiles:
+        temp_profile_db.add(profile)
+
     # Create and run the paper submission environment
     proposal_writing_env = ProposalWritingEnv(
         name='proposal_writing',
         paper_db=example_paper_db,
         log_db=example_log_db,
         progress_db=example_progress_db,
-        profile_db=example_profile_db,
+        profile_db=temp_profile_db,
         config=Config(),
     )
     proposal_writing_env.on_enter(
@@ -56,13 +59,17 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         for agent in review_writing_agent_list
     ]
 
+    temp_profile_db = ProfileDB()
+    for profile in review_writing_agent_profiles:
+        temp_profile_db.add(profile)
+
     # Create and run the peer review environment
     review_writing_env = ReviewWritingEnv(
         name='review_writing',
         paper_db=example_paper_db,
         log_db=example_log_db,
         progress_db=example_progress_db,
-        profile_db=example_profile_db,
+        profile_db=temp_profile_db,
         config=Config(),
     )
     review_writing_env.on_enter(

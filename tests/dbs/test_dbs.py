@@ -418,12 +418,12 @@ def test_paper_file() -> None:
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_pull_agents(mock_model_prompting: MagicMock) -> None:
+def test_pull_profiles(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     db = ProfileDB()
     agent_names = ['Jiaxuan You', 'Jure Leskovec']
-    db.pull_agents(agent_names=agent_names, config=Config())
+    db.pull_profiles(agent_names=agent_names, config=Config())
     assert db.data.keys()
     assert len(db.data.keys()) == 2
     assert db.data.values()
@@ -437,20 +437,20 @@ def test_pull_papers() -> None:
     assert db.data.values()
 
 
-def test_agentdb_invite_members() -> None:
+def test_agentdb_invite_member_profiles() -> None:
     example_profile_db.reset_role_avaialbility()
-    example_profile_db.set_leader(agent_profile_A)
-    members = example_profile_db.invite_members(
+    example_profile_db.set_leader_profile(agent_profile_A)
+    members = example_profile_db.invite_member_profiles(
         leader=agent_profile_A,
         member_num=2,
     )
     assert len(members) == 2
 
 
-def test_agentdb_invite_reviewers() -> None:
+def test_agentdb_invite_reviewer_profiles() -> None:
     example_profile_db.reset_role_avaialbility()
-    example_profile_db.set_leader(agent_profile_A)
-    reviewers = example_profile_db.invite_reviewers(
+    example_profile_db.set_leader_profile(agent_profile_A)
+    reviewers = example_profile_db.invite_reviewer_profiles(
         proposal=research_proposal_A,
         reviewer_num=2,
     )
@@ -459,8 +459,8 @@ def test_agentdb_invite_reviewers() -> None:
 
 def test_agentdb_invite_chair() -> None:
     example_profile_db.reset_role_avaialbility()
-    example_profile_db.set_leader(agent_profile_A)
-    chair = example_profile_db.invite_chairs(
+    example_profile_db.set_leader_profile(agent_profile_A)
+    chair = example_profile_db.invite_chair_profiles(
         proposal=research_proposal_A,
         chair_num=1,
     )
