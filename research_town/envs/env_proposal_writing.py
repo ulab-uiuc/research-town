@@ -4,7 +4,7 @@ from beartype.typing import Any, Dict, List, Literal, Union
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
-    AgentDB,
+    ProfileDB,
     Idea,
     IdeaBrainstormingLog,
     LiteratureReviewLog,
@@ -26,7 +26,7 @@ class ProposalWritingEnv(BaseEnv):
         log_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
-        agent_db: AgentDB,
+        profile_db: ProfileDB,
         config: Config,
     ) -> None:
         super().__init__(
@@ -34,7 +34,7 @@ class ProposalWritingEnv(BaseEnv):
             log_db=log_db,
             progress_db=progress_db,
             paper_db=paper_db,
-            agent_db=agent_db,
+            profile_db=profile_db,
             config=config,
         )
 
@@ -52,7 +52,7 @@ class ProposalWritingEnv(BaseEnv):
             agent_role='leader',
             model_name=self.config.param.base_llm,
         )
-        member_profiles = self.agent_db.invite_members(
+        member_profiles = self.profile_db.invite_members(
             leader=leader_profile,
             member_num=self.config.param.member_num,
         )

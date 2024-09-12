@@ -5,7 +5,7 @@ from research_town.dbs import Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.data_constants import agent_profile_A, research_proposal_A
 from tests.constants.db_constants import (
-    example_agent_db,
+    example_profile_db,
     example_log_db,
     example_paper_db,
     example_progress_db,
@@ -22,7 +22,7 @@ def test_peer_review_env(mock_model_prompting: MagicMock) -> None:
         log_db=example_log_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
-        agent_db=example_agent_db,
+        profile_db=example_profile_db,
         config=Config(),
     )
 
@@ -52,7 +52,7 @@ def test_proposal_env(
         log_db=example_log_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
-        agent_db=example_agent_db,
+        profile_db=example_profile_db,
         config=Config(),
     )
     env.on_enter(

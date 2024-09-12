@@ -13,7 +13,7 @@ from .db_base import BaseDB
 T = TypeVar('T', bound=BaseDBData)
 
 
-class AgentDB(BaseDB[Researcher]):
+class ProfileDB(BaseDB[Researcher]):
     def __init__(self, load_file_path: Optional[str] = None) -> None:
         super().__init__(Researcher, load_file_path)
         self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(

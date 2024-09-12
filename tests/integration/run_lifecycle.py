@@ -5,7 +5,7 @@ from research_town.engines import Engine
 from tests.mocks.mocking_func import mock_prompting
 
 from ..constants.db_constants import (
-    example_agent_db,
+    example_profile_db,
     example_log_db,
     example_paper_db,
     example_progress_db,
@@ -18,7 +18,7 @@ def test_research_lifecycle_two_stage(mock_model_prompting: MagicMock) -> None:
 
     engine = Engine(
         project_name='test',
-        agent_db=example_agent_db,
+        profile_db=example_profile_db,
         paper_db=example_paper_db,
         progress_db=example_progress_db,
         log_db=example_log_db,

@@ -4,7 +4,7 @@ from beartype.typing import Any, Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
-from ..dbs import AgentDB, LogDB, PaperDB, ProgressDB
+from ..dbs import ProfileDB, LogDB, PaperDB, ProgressDB
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
@@ -17,7 +17,7 @@ class BaseEnv(ABC):
         log_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
-        agent_db: AgentDB,
+        profile_db: ProfileDB,
         config: Config,
     ) -> None:
         self.name = name
@@ -25,7 +25,7 @@ class BaseEnv(ABC):
         self.log_db = log_db
         self.progress_db = progress_db
         self.paper_db = paper_db
-        self.agent_db = agent_db
+        self.profile_db = profile_db
         self.config = config
         self.agents: List[BaseResearchAgent] = []
 

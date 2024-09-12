@@ -1,7 +1,7 @@
 from beartype.typing import Any, Dict, List, Literal, Union
 
 from ..configs import Config
-from ..dbs import AgentDB, LogDB, PaperDB, ProgressDB
+from ..dbs import ProfileDB, LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
@@ -15,7 +15,7 @@ class EndEnv(BaseEnv):
         log_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
-        agent_db: AgentDB,
+        profile_db: ProfileDB,
         config: Config,
     ) -> None:
         super().__init__(
@@ -23,7 +23,7 @@ class EndEnv(BaseEnv):
             log_db=log_db,
             progress_db=progress_db,
             paper_db=paper_db,
-            agent_db=agent_db,
+            profile_db=profile_db,
             config=config,
         )
 

@@ -13,7 +13,7 @@ class Engine(BaseEngine):
                     self.log_db,
                     self.progress_db,
                     self.paper_db,
-                    self.agent_db,
+                    self.profile_db,
                     self.config,
                 ),
                 ProposalWritingEnv(
@@ -21,7 +21,7 @@ class Engine(BaseEngine):
                     self.log_db,
                     self.progress_db,
                     self.paper_db,
-                    self.agent_db,
+                    self.profile_db,
                     self.config,
                 ),
                 ReviewWritingEnv(
@@ -29,7 +29,7 @@ class Engine(BaseEngine):
                     self.log_db,
                     self.progress_db,
                     self.paper_db,
-                    self.agent_db,
+                    self.profile_db,
                     self.config,
                 ),
                 EndEnv(
@@ -37,7 +37,7 @@ class Engine(BaseEngine):
                     self.log_db,
                     self.progress_db,
                     self.paper_db,
-                    self.agent_db,
+                    self.profile_db,
                     self.config,
                 ),
             ]

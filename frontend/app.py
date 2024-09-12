@@ -4,7 +4,7 @@ from typing import List, Optional
 import gradio as gr
 
 from research_town.configs import Config
-from research_town.dbs import AgentDB, LogDB, PaperDB, ProgressDB, Proposal
+from research_town.dbs import ProfileDB, LogDB, PaperDB, ProgressDB, Proposal
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_paper_content
 
@@ -24,20 +24,20 @@ def get_proposals(introduction: str) -> List[str]:
     ]
     # if save path exists, then load
     config = Config(config_file_path)
-    agent_db = AgentDB()
+    profile_db = ProfileDB()
     paper_db = PaperDB()
     if os.path.exists(save_file_path):
-        agent_db.load_from_json(save_file_path, with_embed=True)
+        profile_db.load_from_json(save_file_path, with_embed=True)
         paper_db.load_from_json(save_file_path, with_embed=True)
     else:
-        agent_db.pull_agents(agent_names=agent_names, config=config)
+        profile_db.pull_agents(agent_names=agent_names, config=config)
         paper_db.pull_papers(num=10, domain='graph neural networks')
 
     log_db = LogDB()
     progress_db = ProgressDB()
     engine = Engine(
         project_name='research_town_demo',
-        agent_db=agent_db,
+        profile_db=profile_db,
         paper_db=paper_db,
         progress_db=progress_db,
         log_db=log_db,

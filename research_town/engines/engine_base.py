@@ -3,7 +3,7 @@ from collections import defaultdict
 from typing import Any, Callable, Dict, List, Tuple
 
 from ..configs import Config
-from ..dbs import AgentDB, LogDB, PaperDB, ProgressDB
+from ..dbs import ProfileDB, LogDB, PaperDB, ProgressDB
 from ..envs.env_base import BaseEnv
 
 
@@ -11,7 +11,7 @@ class BaseEngine:
     def __init__(
         self,
         project_name: str,
-        agent_db: AgentDB,
+        profile_db: ProfileDB,
         paper_db: PaperDB,
         progress_db: ProgressDB,
         log_db: LogDB,
@@ -20,7 +20,7 @@ class BaseEngine:
         stop_flag: bool = False,
     ) -> None:
         self.project_name = project_name
-        self.agent_db = agent_db
+        self.profile_db = profile_db
         self.paper_db = paper_db
         self.progress_db = progress_db
         self.log_db = log_db
@@ -37,7 +37,7 @@ class BaseEngine:
         self.set_transition_funcs()
 
     def set_dbs(self) -> None:
-        self.agent_db.reset_role_avaialbility()
+        self.profile_db.reset_role_avaialbility()
         self.log_db.set_project_name(self.project_name)
         self.progress_db.set_project_name(self.project_name)
 
@@ -106,7 +106,7 @@ class BaseEngine:
         if not os.path.exists(save_file_path):
             os.makedirs(save_file_path)
 
-        self.agent_db.save_to_json(save_file_path, with_embed=with_embed)
+        self.profile_db.save_to_json(save_file_path, with_embed=with_embed)
         self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
         self.progress_db.save_to_json(save_file_path)
         self.log_db.save_to_json(save_file_path)

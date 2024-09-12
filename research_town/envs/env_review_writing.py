@@ -4,7 +4,7 @@ from beartype.typing import Any, Dict, List, Literal, Union
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
-    AgentDB,
+    ProfileDB,
     LogDB,
     MetaReviewWritingLog,
     PaperDB,
@@ -27,7 +27,7 @@ class ReviewWritingEnv(BaseEnv):
         log_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
-        agent_db: AgentDB,
+        profile_db: ProfileDB,
         config: Config,
     ) -> None:
         super().__init__(
@@ -35,7 +35,7 @@ class ReviewWritingEnv(BaseEnv):
             log_db=log_db,
             progress_db=progress_db,
             paper_db=paper_db,
-            agent_db=agent_db,
+            profile_db=profile_db,
             config=config,
         )
 
@@ -56,7 +56,7 @@ class ReviewWritingEnv(BaseEnv):
             model_name=self.config.param.base_llm,
         )
 
-        chair_profile = self.agent_db.invite_chairs(
+        chair_profile = self.profile_db.invite_chairs(
             proposal=self.proposal,
             chair_num=1,
         )[0]
@@ -66,7 +66,7 @@ class ReviewWritingEnv(BaseEnv):
             model_name=self.config.param.base_llm,
         )
 
-        reviewer_profiles = self.agent_db.invite_reviewers(
+        reviewer_profiles = self.profile_db.invite_reviewers(
             proposal=self.proposal,
             reviewer_num=self.config.param.reviewer_num,
         )

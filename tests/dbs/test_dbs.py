@@ -9,7 +9,7 @@ from beartype.typing import Any, Dict, List
 
 from research_town.configs import Config
 from research_town.dbs import (
-    AgentDB,
+    ProfileDB,
     Idea,
     IdeaDiscussionLog,
     LogDB,
@@ -24,7 +24,7 @@ from research_town.dbs import (
 from tests.mocks.mocking_func import mock_prompting
 
 from ..constants.data_constants import agent_profile_A, research_proposal_A
-from ..constants.db_constants import example_agent_db
+from ..constants.db_constants import example_profile_db
 
 
 def test_LogDB_basic() -> None:
@@ -163,8 +163,8 @@ def test_progressdb_basic() -> None:
         assert len(new_db.dbs['Idea'].data) == 2
 
 
-def test_AgentDB_basic() -> None:
-    db = AgentDB()
+def test_ProfileDB_basic() -> None:
+    db = ProfileDB()
     agent1 = Researcher(
         name='John Doe', bio='Researcher in AI', institute='AI Institute'
     )
@@ -281,7 +281,7 @@ def test_Paperdb_basic() -> None:
 
 
 def test_agent_match() -> None:
-    db = AgentDB()
+    db = ProfileDB()
     agent1 = Researcher(
         name='John Doe', bio='Researcher in AI', institute='AI Institute'
     )
@@ -338,7 +338,7 @@ def test_paper_match() -> None:
 
 
 def test_agent_file() -> None:
-    db = AgentDB()
+    db = ProfileDB()
     agent1 = Researcher(
         name='John Doe', bio='Researcher in AI', institute='AI Institute'
     )
@@ -347,24 +347,24 @@ def test_agent_file() -> None:
     db.add(agent2)
     # save without embeddings
     db.save_to_json('data/test')
-    with open('data/test/AgentDB.json', 'r') as f:
+    with open('data/test/ProfileDB.json', 'r') as f:
         data_test = json.load(f)
     assert len(data_test) > 0
     assert db.data == {pk: Researcher(**data) for pk, data in data_test.items()}
     # load without embeddings
-    db_test = AgentDB()
+    db_test = ProfileDB()
     db_test.load_from_json('data/test')
     assert db.data == db_test.data
     # save with embeddings
     db.transform_to_embed()
     db.save_to_json('data/test', with_embed=True)
-    with open('data/test/AgentDB.pkl', 'rb') as f:
+    with open('data/test/ProfileDB.pkl', 'rb') as f:
         data_embed_test = pickle.load(f)
     assert db.data_embed.keys() == data_embed_test.keys()
     for agent_pk in db.data_embed:
         assert torch.equal(db.data_embed[agent_pk], data_embed_test[agent_pk])
     # load with embeddings
-    db_test = AgentDB()
+    db_test = ProfileDB()
     db_test.load_from_json('data/test', with_embed=True)
     assert db.data_embed.keys() == db_test.data_embed.keys()
     for agent_pk in db.data_embed:
@@ -429,7 +429,7 @@ def test_paper_file() -> None:
 def test_pull_agents(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    db = AgentDB()
+    db = ProfileDB()
     agent_names = ['Jiaxuan You', 'Jure Leskovec']
     db.pull_agents(agent_names=agent_names, config=Config())
     assert db.data.keys()
@@ -446,9 +446,9 @@ def test_pull_papers() -> None:
 
 
 def test_agentdb_invite_members() -> None:
-    example_agent_db.reset_role_avaialbility()
-    example_agent_db.set_leader(agent_profile_A)
-    members = example_agent_db.invite_members(
+    example_profile_db.reset_role_avaialbility()
+    example_profile_db.set_leader(agent_profile_A)
+    members = example_profile_db.invite_members(
         leader=agent_profile_A,
         member_num=2,
     )
@@ -456,9 +456,9 @@ def test_agentdb_invite_members() -> None:
 
 
 def test_agentdb_invite_reviewers() -> None:
-    example_agent_db.reset_role_avaialbility()
-    example_agent_db.set_leader(agent_profile_A)
-    reviewers = example_agent_db.invite_reviewers(
+    example_profile_db.reset_role_avaialbility()
+    example_profile_db.set_leader(agent_profile_A)
+    reviewers = example_profile_db.invite_reviewers(
         proposal=research_proposal_A,
         reviewer_num=2,
     )
@@ -466,9 +466,9 @@ def test_agentdb_invite_reviewers() -> None:
 
 
 def test_agentdb_invite_chair() -> None:
-    example_agent_db.reset_role_avaialbility()
-    example_agent_db.set_leader(agent_profile_A)
-    chair = example_agent_db.invite_chairs(
+    example_profile_db.reset_role_avaialbility()
+    example_profile_db.set_leader(agent_profile_A)
+    chair = example_profile_db.invite_chairs(
         proposal=research_proposal_A,
         chair_num=1,
     )
