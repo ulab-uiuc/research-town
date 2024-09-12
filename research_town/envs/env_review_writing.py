@@ -1,19 +1,16 @@
-from collections import Counter
-
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
 from ..dbs import (
+    AgentDB,
     LogDB,
     MetaReviewWritingLog,
     PaperDB,
     ProgressDB,
-    AgentDB,
     Rebuttal,
     RebuttalWritingLog,
-    Researcher,
     Review,
     ReviewWritingLog,
 )

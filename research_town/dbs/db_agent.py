@@ -133,9 +133,7 @@ class AgentDB(BaseDB[Researcher]):
         )
         return reviewers
 
-    def invite_chairs(
-        self, proposal: Proposal, chair_num: int = 1
-    ) -> List[Researcher]:
+    def invite_chairs(self, proposal: Proposal, chair_num: int = 1) -> List[Researcher]:
         chairs = self.invite_agents(
             condition={'is_chair_candidate': True},
             query=proposal.abstract,
@@ -149,9 +147,7 @@ class AgentDB(BaseDB[Researcher]):
         )
         return chairs
 
-    def invite_leaders(
-        self, query: str, leader_num: int = 1
-    ) -> List[Researcher]:
+    def invite_leaders(self, query: str, leader_num: int = 1) -> List[Researcher]:
         leaders = self.invite_agents(
             condition={'is_leader_candidate': True},
             query=query,

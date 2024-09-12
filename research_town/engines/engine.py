@@ -9,12 +9,12 @@ class Engine(BaseEngine):
         self.add_envs(
             [
                 StartEnv(
-                    'start', 
-                    self.log_db, 
-                    self.progress_db, 
-                    self.paper_db, 
+                    'start',
+                    self.log_db,
+                    self.progress_db,
+                    self.paper_db,
                     self.agent_db,
-                    self.config
+                    self.config,
                 ),
                 ProposalWritingEnv(
                     'proposal_writing',
@@ -33,12 +33,12 @@ class Engine(BaseEngine):
                     self.config,
                 ),
                 EndEnv(
-                    'end', 
-                    self.log_db, 
-                    self.progress_db, 
-                    self.paper_db, 
+                    'end',
+                    self.log_db,
+                    self.progress_db,
+                    self.paper_db,
                     self.agent_db,
-                    self.config
+                    self.config,
                 ),
             ]
         )
@@ -70,7 +70,6 @@ class Engine(BaseEngine):
         env: StartEnv,
     ) -> Dict[str, Any]:
         return {'leader_profile': env.leader.profile}
-
 
     def start_review(
         self,

@@ -9,10 +9,10 @@ from tests.constants.data_constants import (
     research_proposal_A,
 )
 from tests.constants.db_constants import (
+    example_agent_db,
     example_log_db,
     example_paper_db,
     example_progress_db,
-    example_agent_db,
 )
 from tests.mocks.mocking_func import mock_prompting
 

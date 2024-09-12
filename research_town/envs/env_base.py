@@ -4,7 +4,7 @@ from beartype.typing import Any, Dict, List, Literal, Union
 
 from ..agents.agent_base import BaseResearchAgent
 from ..configs import Config
-from ..dbs import LogDB, PaperDB, ProgressDB, AgentDB, Researcher
+from ..dbs import AgentDB, LogDB, PaperDB, ProgressDB
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
