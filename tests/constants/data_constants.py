@@ -13,17 +13,17 @@ from research_town.dbs import (
     ReviewWritingLog,
 )
 
-paper_profile_A = Paper(
+paper_A = Paper(
     title='A Survey on Machine Learning',
     abstract='This paper surveys the field of machine learning.',
 )
 
-paper_profile_B = Paper(
+paper_B = Paper(
     title='A Survey on Graph Neural Networks',
     abstract='This paper surveys the field of graph neural networks.',
 )
 
-paper_profile_C = Paper(
+paper_C = Paper(
     title='A Survey on Natural Language Processing',
     abstract='This paper surveys the field of natural language processing.',
 )
@@ -72,7 +72,7 @@ research_proposal_B = Proposal(
 )
 
 research_review_A = Review(
-    paper_pk=paper_profile_A.pk,
+    paper_pk=paper_A.pk,
     reviewer_pk=agent_profile_A.pk,
     summary='This paper is well-written.',
     strength='Interesting',
@@ -81,7 +81,7 @@ research_review_A = Review(
 )
 
 research_review_B = Review(
-    paper_pk=paper_profile_A.pk,
+    paper_pk=paper_A.pk,
     reviewer_pk=agent_profile_B.pk,
     summary='This paper is well-written.',
     strength='Interesting',
@@ -90,7 +90,7 @@ research_review_B = Review(
 )
 
 research_review_C = Review(
-    paper_pk=paper_profile_A.pk,
+    paper_pk=paper_A.pk,
     reviewer_pk=agent_profile_C.pk,
     summary='This paper is well-written.',
     strength='Interesting',
@@ -99,19 +99,19 @@ research_review_C = Review(
 )
 
 research_rebuttal_A = Rebuttal(
-    paper_pk=paper_profile_A.pk,
+    paper_pk=paper_A.pk,
     agent_pk=agent_profile_A.pk,
     content='I have revised the paper.',
 )
 
 research_rebuttal_B = Rebuttal(
-    paper_pk=paper_profile_A.pk,
+    paper_pk=paper_A.pk,
     agent_pk=agent_profile_B.pk,
     content='I have revised the paper.',
 )
 
 research_meta_review_A = MetaReview(
-    paper_pk=paper_profile_A.pk,
+    paper_pk=paper_A.pk,
     agent_pk=agent_profile_A.pk,
     decision=True,
     summary='This paper is well-written.',
@@ -120,7 +120,7 @@ research_meta_review_A = MetaReview(
 )
 
 research_meta_review_B = MetaReview(
-    paper_pk=paper_profile_A.pk,
+    paper_pk=paper_A.pk,
     agent_pk=agent_profile_B.pk,
     decision=True,
     summary='This paper is well-written.',
@@ -130,7 +130,7 @@ research_meta_review_B = MetaReview(
 
 agent_paper_review_log = ReviewWritingLog(
     time_step=0,
-    paper_pk=paper_profile_A.pk,
+    paper_pk=paper_A.pk,
     agent_pk=agent_profile_A.pk,
     score=5,
     summary='This paper is well-written.',
@@ -140,7 +140,7 @@ agent_paper_review_log = ReviewWritingLog(
 
 agent_paper_meta_review_log = MetaReviewWritingLog(
     time_step=0,
-    paper_pk=paper_profile_B.pk,
+    paper_pk=paper_B.pk,
     agent_pk=agent_profile_B.pk,
     decision=True,
     summary='This paper is well-written.',
@@ -150,7 +150,7 @@ agent_paper_meta_review_log = MetaReviewWritingLog(
 
 agent_paper_rebuttal_log = RebuttalWritingLog(
     time_step=0,
-    paper_pk=paper_profile_A.pk,
+    paper_pk=paper_A.pk,
     agent_pk=agent_profile_A.pk,
     rebuttal_content='I have revised the paper.',
 )

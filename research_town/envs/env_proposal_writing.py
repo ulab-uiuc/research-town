@@ -79,7 +79,7 @@ class ProposalWritingEnv(BaseEnv):
         for agent in self.agents:
             related_papers = self.paper_db.match(
                 query=agent.profile.bio,
-                paper_profiles=available_papers,
+                papers=available_papers,
                 num=2,
             )
             agent_insights = agent.review_literature(
@@ -122,7 +122,7 @@ class ProposalWritingEnv(BaseEnv):
             query=summarized_idea.content
             if summarized_idea.content
             else self.leader.profile.bio,
-            paper_profiles=available_papers,
+            papers=available_papers,
             num=2,
         )
         self.proposal = self.leader.write_proposal(

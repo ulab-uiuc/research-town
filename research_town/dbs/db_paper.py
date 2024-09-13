@@ -57,7 +57,7 @@ class PaperDB(BaseDB[Paper]):
                 self.add(paper)
 
     def match(
-        self, query: str, paper_profiles: List[Paper], num: int = 1
+        self, query: str, papers: List[Paper], num: int = 1
     ) -> List[Paper]:
         query_embed = get_embed(
             instructions=[query],
@@ -65,12 +65,12 @@ class PaperDB(BaseDB[Paper]):
             retriever_model=self.retriever_model,
         )
         corpus_embed: List[torch.Tensor] = []
-        for paper_profile in paper_profiles:
-            if paper_profile.pk in self.data_embed:
-                corpus_embed.append(self.data_embed[paper_profile.pk])
+        for paper in papers:
+            if paper.pk in self.data_embed:
+                corpus_embed.append(self.data_embed[paper.pk])
             else:
                 paper_embed = get_embed(
-                    instructions=[paper_profile.abstract],
+                    instructions=[paper.abstract],
                     retriever_tokenizer=self.retriever_tokenizer,
                     retriever_model=self.retriever_model,
                 )[0]
@@ -79,9 +79,9 @@ class PaperDB(BaseDB[Paper]):
             query_embed=query_embed, corpus_embed=corpus_embed, num=num
         )
         indexes = [index for topk_index in topk_indexes for index in topk_index]
-        match_paper_profiles = [paper_profiles[index] for index in indexes]
-        logger.info(f'Matched papers: {match_paper_profiles}')
-        return match_paper_profiles
+        match_papers = [papers[index] for index in indexes]
+        logger.info(f'Matched papers: {match_papers}')
+        return match_papers
 
     def transform_to_embed(self) -> None:
         for paper_pk in self.data:

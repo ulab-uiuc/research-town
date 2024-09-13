@@ -6,8 +6,8 @@ from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Rev
 from tests.constants.data_constants import (
     agent_profile_A,
     agent_profile_B,
-    paper_profile_A,
-    paper_profile_B,
+    paper_A,
+    paper_B,
     research_idea_A,
     research_insight_A,
     research_insight_B,
@@ -27,7 +27,7 @@ def test_review_literature(
         agent_role='leader',
     )
     research_insight = research_agent.review_literature(
-        papers=[paper_profile_A, paper_profile_B],
+        papers=[paper_A, paper_B],
         domains=['machine learning', 'graph neural network'],
         config=Config(),
     )
@@ -74,7 +74,7 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
     )
     paper = research_agent.write_proposal(
         idea=research_idea_A,
-        papers=[paper_profile_A, paper_profile_B],
+        papers=[paper_A, paper_B],
         config=Config(),
     )
     assert isinstance(paper, Proposal)
