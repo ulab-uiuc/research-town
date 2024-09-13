@@ -53,7 +53,6 @@ def test_LogDB_basic() -> None:
     db.add(review_log)
     db.add(rebuttal_log)
     db.add(meta_review_log)
-    db.add(discussion_log)
 
     new_review_log = ReviewWritingLog(
         paper_pk='paper1',
