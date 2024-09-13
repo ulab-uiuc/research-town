@@ -94,12 +94,16 @@ class BaseEngine:
 
     def run(self, task: str) -> None:
         self.start(task=task)
+        transition_count = 0
         while self.curr_env_name != 'end':
             if self.curr_env.run():
                 for progress, agent in self.curr_env.run():
                     self.sync_dbs(progress, agent)
                     self.time_step += 1
             self.transition()
+            transition_count += 1
+            if transition_count > self.config.param.max_transitions:
+                break
 
     def save(self, save_file_path: str, with_embed: bool = False) -> None:
         if not os.path.exists(save_file_path):
