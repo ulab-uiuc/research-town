@@ -1,18 +1,9 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Literal, Union
+from beartype.typing import Any, Dict, List, Literal, Tuple, Union
 
 from ..agents.agent_base import ResearchAgent
 from ..configs import Config
-from ..dbs import (
-    Idea,
-    IdeaBrainstormingLog,
-    LiteratureReviewLog,
-    LogDB,
-    PaperDB,
-    ProfileDB,
-    ProgressDB,
-    ProposalWritingLog,
-)
+from ..dbs import Idea, LogDB, PaperDB, Profile, ProfileDB, ProgressDB
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
@@ -71,11 +62,11 @@ class ProposalWritingEnv(BaseEnv):
         return 'start_review'
 
     @beartype
-    def run(self) -> None:
+    def run(self) -> Tuple[Any, Profile]:
         available_papers = list(self.paper_db.data.values())
 
         # Each member reviews literature
-        self.insights = []
+        all_insights = []
         for member in self.members:
             related_papers = self.paper_db.match(
                 query=member.profile.bio,
@@ -87,54 +78,35 @@ class ProposalWritingEnv(BaseEnv):
                 domains=['machine learning'],
                 config=self.config,
             )
-            self.insights.extend(insights)  # Collect insights from all members
+            all_insights.extend(insights)
             for insight in insights:
-                self.progress_db.add(insight)
-            self.log_db.add(
-                LiteratureReviewLog(
-                    time_step=self.time_step,
-                    paper_pks=[paper.pk for paper in related_papers],
-                    agent_pk=member.profile.pk,
-                    insight_pks=[insight.pk for insight in insights],
-                )
-            )
+                yield insight, member.profile
 
         # Brainstorm ideas
-        self.ideas: List[Idea] = []
+        ideas: List[Idea] = []
         for member in self.members:
-            idea = member.brainstorm_idea(insights=self.insights, config=self.config)
-            self.ideas.append(idea)
-            self.progress_db.add(idea)
-            self.log_db.add(
-                IdeaBrainstormingLog(
-                    time_step=self.time_step,
-                    idea_pk=idea.pk,
-                    agent_pk=member.profile.pk,
-                )
-            )
+            idea = member.brainstorm_idea(insights=all_insights, config=self.config)
+            ideas.append(idea)
+            yield idea, member.profile
 
         # Leader discusses ideas
-        summarized_idea = self.leader.discuss_idea(ideas=self.ideas, config=self.config)
-        self.progress_db.add(summarized_idea)
+        summarized_idea = self.leader.discuss_idea(ideas=ideas, config=self.config)
+        yield summarized_idea, self.leader.profile
 
         # write one proposal
-        related_papers = self.paper_db.match(
-            query=summarized_idea.content
+        query = (
+            summarized_idea.content
             if summarized_idea.content
-            else self.leader.profile.bio,
+            else self.leader.profile.bio
+        )
+        related_papers = self.paper_db.match(
+            query=query,
             papers=available_papers,
             num=2,
         )
-        self.proposal = self.leader.write_proposal(
+        proposal = self.leader.write_proposal(
             idea=summarized_idea,
             papers=related_papers,
             config=self.config,
         )
-        self.progress_db.add(self.proposal)
-        self.log_db.add(
-            ProposalWritingLog(
-                time_step=self.time_step,
-                paper_pk=self.proposal.pk,
-                agent_pk=self.leader.profile.pk,
-            )
-        )
+        yield proposal, self.leader.profile

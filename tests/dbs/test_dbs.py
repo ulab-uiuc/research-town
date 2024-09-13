@@ -10,7 +10,6 @@ from beartype.typing import Any, Dict, List
 from research_town.configs import Config
 from research_town.dbs import (
     Idea,
-    IdeaDiscussionLog,
     LogDB,
     MetaReviewWritingLog,
     Paper,
@@ -49,13 +48,6 @@ def test_LogDB_basic() -> None:
         summary='Good paper',
         strength='Interesting',
         weakness='None',
-    )
-    discussion_log = IdeaDiscussionLog(
-        agent_from_pk='agent1',
-        agent_from_name='Rex Ying',
-        agent_to_pk='agent2',
-        agent_to_name='John Doe',
-        message="Let's discuss this paper",
     )
 
     db.add(review_log)
@@ -115,7 +107,6 @@ def test_LogDB_basic() -> None:
         assert len(new_db.dbs['ReviewWritingLog'].data) == 1
         assert len(new_db.dbs['RebuttalWritingLog'].data) == 1
         assert len(new_db.dbs['MetaReviewWritingLog'].data) == 1
-        assert len(new_db.dbs['IdeaDiscussionLog'].data) == 1
         assert (
             new_db.dbs['ReviewWritingLog'].data[new_review_log.pk].summary
             == 'Bad paper'

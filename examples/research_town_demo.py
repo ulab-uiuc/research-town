@@ -42,7 +42,7 @@ def run_sync_experiment(
         paper_db=paper_db,
         progress_db=progress_db,
         log_db=log_db,
-        config=config
+        config=config,
     )
     engine.run(task='Conduct research on Graph Neural Networks (GNN).')
     engine.save(save_file_path=save_file_path, with_embed=True)

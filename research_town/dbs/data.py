@@ -41,63 +41,38 @@ class Paper(BaseDBData):
 
 class LiteratureReviewLog(BaseDBData):
     timestep: int = Field(default=0)
-    paper_pks: List[str]
-    agent_pk: str
-    insight_pks: Optional[List[str]] = Field(default=[])
-    other_agent_pks: Optional[List[str]] = Field(default=[])
+    profile_pk: str
+    insight_pk: Optional[str] = Field(default=None)
 
 
 class IdeaBrainstormingLog(BaseDBData):
     timestep: int = Field(default=0)
+    profile_pk: str
     idea_pk: str
-    agent_pk: str
-    other_agent_pks: Optional[List[str]] = Field(default=[])
-
-
-class IdeaDiscussionLog(BaseDBData):
-    timestep: int = Field(default=0)
-    agent_from_pk: str
-    agent_from_name: str
-    agent_to_pk: str
-    agent_to_name: str
-    message: Optional[str] = Field(default=None)
 
 
 class ProposalWritingLog(BaseDBData):
     timestep: int = Field(default=0)
-    paper_pk: str
-    agent_pk: str
-    other_agent_pks: Optional[List[str]] = Field(default=[])
+    profile_pk: str
+    proposal_pk: str
 
 
 class ReviewWritingLog(BaseDBData):
     timestep: int = Field(default=0)
-    paper_pk: str
-    agent_pk: str
-    other_agent_pks: Optional[List[str]] = Field(default=[])
-    score: Optional[int] = Field(default=0)
-    summary: Optional[str] = Field(default=None)
-    strength: Optional[str] = Field(default=None)
-    weakness: Optional[str] = Field(default=None)
+    profile_pk: str
+    review_pk: str
 
 
 class RebuttalWritingLog(BaseDBData):
     timestep: int = Field(default=0)
-    paper_pk: str
-    agent_pk: str
-    other_agent_pks: Optional[List[str]] = Field(default=[])
-    rebuttal_content: Optional[str] = Field(default=None)
+    profile_pk: str
+    rebuttal_pk: str
 
 
 class MetaReviewWritingLog(BaseDBData):
     timestep: int = Field(default=0)
-    paper_pk: str
-    agent_pk: str
-    other_agent_pks: Optional[List[str]] = Field(default=[])
-    decision: Optional[bool] = Field(default=False)
-    summary: Optional[str] = Field(default=None)
-    strength: Optional[str] = Field(default=None)
-    weakness: Optional[str] = Field(default=None)
+    profile_pk: str
+    meta_review_pk: str
 
 
 class ExperimentLog(BaseDBData):

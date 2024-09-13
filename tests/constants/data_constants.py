@@ -1,6 +1,5 @@
 from research_town.dbs import (
     Idea,
-    IdeaDiscussionLog,
     Insight,
     MetaReview,
     MetaReviewWritingLog,
@@ -153,13 +152,4 @@ agent_paper_rebuttal_log = RebuttalWritingLog(
     paper_pk=paper_A.pk,
     agent_pk=agent_profile_A.pk,
     rebuttal_content='I have revised the paper.',
-)
-
-agent_agent_idea_discussion_log = IdeaDiscussionLog(
-    time_step=0,
-    agent_from_pk=agent_profile_A.pk,
-    agent_from_name=agent_profile_A.name,
-    agent_to_pk=agent_profile_B.pk,
-    agent_to_name=agent_profile_B.name,
-    message='How about the idea of building a research town with language agents?',
 )

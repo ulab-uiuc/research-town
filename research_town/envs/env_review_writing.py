@@ -1,19 +1,9 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Literal, Union
+from beartype.typing import Any, Dict, List, Literal, Tuple, Union
 
 from ..agents.agent_base import ResearchAgent
 from ..configs import Config
-from ..dbs import (
-    LogDB,
-    MetaReviewWritingLog,
-    PaperDB,
-    ProfileDB,
-    ProgressDB,
-    Rebuttal,
-    RebuttalWritingLog,
-    Review,
-    ReviewWritingLog,
-)
+from ..dbs import LogDB, PaperDB, Profile, ProfileDB, ProgressDB, Rebuttal, Review
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
@@ -85,22 +75,14 @@ class ReviewWritingEnv(BaseEnv):
         return 'proposal_accept'
 
     @beartype
-    def run(self) -> None:
+    def run(self) -> Tuple[Any, Profile]:
         self.reviews: List[Review] = []
         for reviewer in self.reviewers:
             review = reviewer.write_review(
                 paper=self.proposal,
                 config=self.config,
             )
-            self.reviews.append(review)
-            self.progress_db.add(review)
-            self.log_db.add(
-                ReviewWritingLog(
-                    time_step=self.time_step,
-                    agent_pk=reviewer.profile.pk,
-                    paper_pk=self.proposal.pk,
-                )
-            )
+            yield review, reviewer.profile
 
         # Rebuttal Submitting
         self.rebuttals: List[Rebuttal] = []
@@ -110,33 +92,13 @@ class ReviewWritingEnv(BaseEnv):
                 review=review,
                 config=self.config,
             )
-            self.rebuttals.append(rebuttal)
-            self.progress_db.add(rebuttal)
-            self.log_db.add(
-                RebuttalWritingLog(
-                    time_step=self.time_step,
-                    paper_pk=rebuttal.paper_pk,
-                    agent_pk=self.leader.profile.pk,
-                    rebuttal_content=rebuttal.content,
-                )
-            )
+            yield rebuttal, self.leader.profile
 
         # Paper Meta Reviewing
-        self.meta_review = self.chair.write_meta_review(
+        meta_review = self.chair.write_meta_review(
             paper=self.proposal,
             reviews=self.reviews,
             rebuttals=self.rebuttals,
             config=self.config,
         )
-        self.progress_db.add(self.meta_review)
-        self.log_db.add(
-            MetaReviewWritingLog(
-                time_step=self.time_step,
-                paper_pk=self.meta_review.paper_pk,
-                agent_pk=self.chair.profile.pk,
-                summary=self.meta_review.summary,
-                strength=self.meta_review.strength,
-                weakness=self.meta_review.weakness,
-                decision=self.meta_review.decision,
-            )
-        )
+        yield meta_review, self.chair.profile

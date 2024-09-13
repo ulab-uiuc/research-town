@@ -4,6 +4,15 @@ from typing import Any, Callable, Dict, List, Tuple
 
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
+from ..dbs.data import Idea, Insight, MetaReview, Profile, Proposal, Rebuttal, Review
+from ..dbs.logs import (
+    IdeaBrainstormLog,
+    LiteratureReviewLog,
+    MetaReviewWritingLog,
+    ProposalWritingLog,
+    RebuttalWritingLog,
+    ReviewWritingLog,
+)
 from ..envs.env_base import BaseEnv
 
 
@@ -97,8 +106,8 @@ class BaseEngine:
         transition_count = 0
         while self.curr_env_name != 'end':
             if self.curr_env.run():
-                for progress, agent in self.curr_env.run():
-                    self.sync_dbs(progress, agent)
+                for progress, profile in self.curr_env.run():
+                    self.add_to_dbs(progress, profile)
                     self.time_step += 1
             self.transition()
             transition_count += 1
@@ -116,3 +125,46 @@ class BaseEngine:
 
     def load(self) -> None:
         pass
+
+    def add_to_dbs(self, progress: Any, profile: Profile) -> None:
+        if isinstance(progress, Insight):
+            log = LiteratureReviewLog(
+                time_step=self.time_step,
+                profile_pk=profile.pk,
+                insight_pk=progress.pk,
+            )
+        elif isinstance(progress, Idea):
+            log = IdeaBrainstormLog(
+                time_step=self.time_step,
+                profile_pk=profile.pk,
+                idea_pk=progress.pk,
+            )
+        elif isinstance(progress, Proposal):
+            log = ProposalWritingLog(
+                time_step=self.time_step,
+                profile_pk=profile.pk,
+                proposal_pk=progress.pk,
+            )
+        elif isinstance(progress, Review):
+            log = ReviewWritingLog(
+                time_step=self.time_step,
+                profile_pk=profile.pk,
+                review_pk=progress.pk,
+            )
+        elif isinstance(progress, Rebuttal):
+            log = RebuttalWritingLog(
+                time_step=self.time_step,
+                profile_pk=profile.pk,
+                rebuttal_pk=progress.pk,
+            )
+        elif isinstance(progress, MetaReview):
+            log = MetaReviewWritingLog(
+                time_step=self.time_step,
+                profile_pk=profile.pk,
+                meta_review_pk=progress.pk,
+            )
+        else:
+            raise ValueError(f'progress {progress} not recognized')
+
+        self.progress_db.add(progress)
+        self.log_db.add(log)
