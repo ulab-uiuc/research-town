@@ -98,7 +98,11 @@ class BaseEngine:
         log_class = log_map.get(type(progress))
         if not log_class:
             raise ValueError(f'Unrecognized progress type: {type(progress)}')
-        
-        log = log_class(time_step=self.time_step, profile_pk=profile.pk, **{f"{progress.__class__.__name__.lower()}_pk": progress.pk})
+
+        log = log_class(
+            time_step=self.time_step,
+            profile_pk=profile.pk,
+            **{f'{progress.__class__.__name__.lower()}_pk': progress.pk},
+        )
         self.progress_db.add(progress)
         self.log_db.add(log)

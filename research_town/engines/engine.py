@@ -5,8 +5,21 @@ from .engine_base import BaseEngine
 class Engine(BaseEngine):
     def set_envs(self) -> None:
         env_classes = [StartEnv, ProposalWritingEnv, ReviewWritingEnv, EndEnv]
-        self.add_envs([cls(name, self.log_db, self.progress_db, self.paper_db, self.profile_db, self.config)
-                       for name, cls in zip(['start', 'proposal_writing', 'review_writing', 'end'], env_classes)])
+        self.add_envs(
+            [
+                cls(
+                    name,
+                    self.log_db,
+                    self.progress_db,
+                    self.paper_db,
+                    self.profile_db,
+                    self.config,
+                )
+                for name, cls in zip(
+                    ['start', 'proposal_writing', 'review_writing', 'end'], env_classes
+                )
+            ]
+        )
 
     def set_transitions(self) -> None:
         transitions = [
