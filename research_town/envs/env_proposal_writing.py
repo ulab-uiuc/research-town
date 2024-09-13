@@ -76,40 +76,40 @@ class ProposalWritingEnv(BaseEnv):
 
         # Each member reviews literature
         self.insights = []
-        for agent in self.agents:
+        for member in self.members:
             related_papers = self.paper_db.match(
-                query=agent.profile.bio,
+                query=member.profile.bio,
                 papers=available_papers,
                 num=2,
             )
-            agent_insights = agent.review_literature(
+            insights = member.review_literature(
                 papers=related_papers,
                 domains=['machine learning'],
                 config=self.config,
             )
-            self.insights.extend(agent_insights)  # Collect insights from all members
-            for insight in agent_insights:
+            self.insights.extend(insights)  # Collect insights from all members
+            for insight in insights:
                 self.progress_db.add(insight)
             self.log_db.add(
                 LiteratureReviewLog(
                     time_step=self.time_step,
                     paper_pks=[paper.pk for paper in related_papers],
-                    agent_pk=agent.profile.pk,
-                    insight_pks=[insight.pk for insight in agent_insights],
+                    agent_pk=member.profile.pk,
+                    insight_pks=[insight.pk for insight in insights],
                 )
             )
 
         # Brainstorm ideas
         self.ideas: List[Idea] = []
-        for agent in self.agents:
-            idea = agent.brainstorm_idea(insights=self.insights, config=self.config)
+        for member in self.members:
+            idea = member.brainstorm_idea(insights=self.insights, config=self.config)
             self.ideas.append(idea)
             self.progress_db.add(idea)
             self.log_db.add(
                 IdeaBrainstormingLog(
                     time_step=self.time_step,
                     idea_pk=idea.pk,
-                    agent_pk=agent.profile.pk,
+                    agent_pk=member.profile.pk,
                 )
             )
 

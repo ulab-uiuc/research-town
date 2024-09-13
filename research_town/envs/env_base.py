@@ -27,7 +27,6 @@ class BaseEnv(ABC):
         self.paper_db = paper_db
         self.profile_db = profile_db
         self.config = config
-        self.agents: List[ResearchAgent] = []
 
     @abstractmethod
     def on_enter(
