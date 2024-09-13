@@ -56,9 +56,7 @@ class PaperDB(BaseDB[Paper]):
             for paper in papers:
                 self.add(paper)
 
-    def match(
-        self, query: str, papers: List[Paper], num: int = 1
-    ) -> List[Paper]:
+    def match(self, query: str, papers: List[Paper], num: int = 1) -> List[Paper]:
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,
