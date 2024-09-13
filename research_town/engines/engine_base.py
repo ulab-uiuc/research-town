@@ -64,26 +64,20 @@ class BaseEngine:
         if env_name not in self.envs:
             raise ValueError(f'env {env_name} not found')
 
-        self.curr_env_name = env_name
         self.curr_env = self.envs[env_name]
-        self.curr_env.on_enter(
-            task=task,
-        )
+        self.curr_env.on_enter(task=task)
 
     def transition(self) -> None:
         trigger, exit_data = self.curr_env.on_exit()
-        next_env_name = self.transitions[self.curr_env_name, trigger]
+        next_env_name = self.transitions[self.curr_env.name, trigger]
 
-        self.curr_env_name = next_env_name
-        self.curr_env = self.envs[self.curr_env_name]
-        self.curr_env.on_enter(
-            **exit_data,
-        )
+        self.curr_env = self.envs[next_env_name]
+        self.curr_env.on_enter(**exit_data)
 
     def run(self, task: str) -> None:
         self.start(task=task)
         transition_count = 0
-        while self.curr_env_name != 'end':
+        while self.curr_env.name != 'end':
             if self.curr_env.run():
                 for progress, profile in self.curr_env.run():
                     self.record(progress, profile)
