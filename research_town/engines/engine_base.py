@@ -36,15 +36,15 @@ class BaseEngine:
         self.time_step = time_step
 
         self.envs: Dict[str, BaseEnv] = {}
-        self.transitions: Dict[Tuple[str, str], str] = defaultdict(str)
-        self.set_dbs()
+        self.transitions: Dict[Tuple[BaseEnv, str], BaseEnv] = defaultdict(str)
+        self._setup_dbs()
         self.set_envs()
         self.set_transitions()
 
-    def set_dbs(self) -> None:
+    def _setup_dbs(self) -> None:
         self.profile_db.reset_role_avaialbility()
-        self.log_db.set_project_name(self.project_name)
-        self.progress_db.set_project_name(self.project_name)
+        for db in [self.log_db, self.progress_db]:
+            db.set_project_name(self.project_name)
 
     def set_envs(self) -> None:
         pass
@@ -53,25 +53,19 @@ class BaseEngine:
         pass
 
     def add_envs(self, envs: List[BaseEnv]) -> None:
-        for env in envs:
-            self.envs[env.name] = env
+        self.envs.update({env.name: env for env in envs})
 
     def add_transitions(self, transitions: List[Tuple[str, str, str]]) -> None:
         for src, trigger, dst in transitions:
-            self.transitions[src, trigger] = dst
+            self.transitions[self.envs[src], trigger] = self.envs[dst]
 
-    def start(self, task: str, env_name: str = 'start') -> None:
-        if env_name not in self.envs:
-            raise ValueError(f'env {env_name} not found')
-
-        self.curr_env = self.envs[env_name]
+    def start(self, task: str) -> None:
+        self.curr_env = self.envs['start']
         self.curr_env.on_enter(task=task)
 
     def transition(self) -> None:
         trigger, exit_data = self.curr_env.on_exit()
-        next_env_name = self.transitions[self.curr_env.name, trigger]
-
-        self.curr_env = self.envs[next_env_name]
+        self.curr_env = self.transitions[(self.curr_env, trigger)]
         self.curr_env.on_enter(**exit_data)
 
     def run(self, task: str) -> None:
@@ -88,53 +82,23 @@ class BaseEngine:
                 break
 
     def save(self, save_file_path: str, with_embed: bool = False) -> None:
-        if not os.path.exists(save_file_path):
-            os.makedirs(save_file_path)
-
-        self.profile_db.save_to_json(save_file_path, with_embed=with_embed)
-        self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
-        self.progress_db.save_to_json(save_file_path)
-        self.log_db.save_to_json(save_file_path)
+        os.makedirs(save_file_path, exist_ok=True)
+        for db in [self.profile_db, self.paper_db, self.progress_db, self.log_db]:
+            db.save_to_json(save_file_path, with_embed=with_embed)
 
     def record(self, progress: Any, profile: Profile) -> None:
-        if isinstance(progress, Insight):
-            log = LiteratureReviewLog(
-                time_step=self.time_step,
-                profile_pk=profile.pk,
-                insight_pk=progress.pk,
-            )
-        elif isinstance(progress, Idea):
-            log = IdeaBrainstormLog(
-                time_step=self.time_step,
-                profile_pk=profile.pk,
-                idea_pk=progress.pk,
-            )
-        elif isinstance(progress, Proposal):
-            log = ProposalWritingLog(
-                time_step=self.time_step,
-                profile_pk=profile.pk,
-                proposal_pk=progress.pk,
-            )
-        elif isinstance(progress, Review):
-            log = ReviewWritingLog(
-                time_step=self.time_step,
-                profile_pk=profile.pk,
-                review_pk=progress.pk,
-            )
-        elif isinstance(progress, Rebuttal):
-            log = RebuttalWritingLog(
-                time_step=self.time_step,
-                profile_pk=profile.pk,
-                rebuttal_pk=progress.pk,
-            )
-        elif isinstance(progress, MetaReview):
-            log = MetaReviewWritingLog(
-                time_step=self.time_step,
-                profile_pk=profile.pk,
-                meta_review_pk=progress.pk,
-            )
-        else:
-            raise ValueError(f'progress {progress} not recognized')
-
+        log_map = {
+            Insight: LiteratureReviewLog,
+            Idea: IdeaBrainstormLog,
+            Proposal: ProposalWritingLog,
+            Review: ReviewWritingLog,
+            Rebuttal: RebuttalWritingLog,
+            MetaReview: MetaReviewWritingLog,
+        }
+        log_class = log_map.get(type(progress))
+        if not log_class:
+            raise ValueError(f'Unrecognized progress type: {type(progress)}')
+        
+        log = log_class(time_step=self.time_step, profile_pk=profile.pk, **{f"{progress.__class__.__name__.lower()}_pk": progress.pk})
         self.progress_db.add(progress)
         self.log_db.add(log)
