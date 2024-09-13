@@ -70,7 +70,7 @@ class BaseEngine:
         self.curr_env = self.envs[env_name]
         self.curr_env.on_enter(
             time_step=self.time_step,
-            kwargs={'task': task},
+            task=task,
         )
 
     def transition(self) -> None:
@@ -95,8 +95,10 @@ class BaseEngine:
     def run(self, task: str) -> None:
         self.start(task=task)
         while self.curr_env_name != 'end':
-            self.curr_env.run()
-            self.time_step += 1
+            if self.curr_env.run():
+                for progress, agent in self.curr_env.run():
+                    self.sync_dbs(progress, agent)
+                    self.time_step += 1
             self.transition()
 
     def save(self, save_file_path: str, with_embed: bool = False) -> None:
