@@ -32,11 +32,9 @@ class ProposalWritingEnv(BaseEnv):
     @beartype
     def on_enter(
         self,
-        time_step: int,
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        self.time_step = time_step
         leader_profile = kwargs['leader_profile']
         self.leader = ResearchAgent(
             agent_profile=leader_profile,
@@ -57,9 +55,9 @@ class ProposalWritingEnv(BaseEnv):
         ]
 
     @beartype
-    def on_exit(self) -> str:
+    def on_exit(self) -> Tuple[str, Dict[str, Any]]:
         self.env_run_num += 1
-        return 'start_review'
+        return 'start_review', self.exit_data
 
     @beartype
     def run(self) -> Tuple[Any, Profile]:
@@ -93,7 +91,7 @@ class ProposalWritingEnv(BaseEnv):
         summarized_idea = self.leader.discuss_idea(ideas=ideas, config=self.config)
         yield summarized_idea, self.leader.profile
 
-        # write one proposal
+        # Write Proposal
         query = (
             summarized_idea.content
             if summarized_idea.content
@@ -110,3 +108,5 @@ class ProposalWritingEnv(BaseEnv):
             config=self.config,
         )
         yield proposal, self.leader.profile
+
+        self.exit_data = {'proposal': proposal, 'leader_profile': self.leader.profile}

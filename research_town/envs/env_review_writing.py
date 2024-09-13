@@ -32,11 +32,9 @@ class ReviewWritingEnv(BaseEnv):
     @beartype
     def on_enter(
         self,
-        time_step: int,
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        self.time_step = time_step
         self.proposal = kwargs['proposal']
 
         leader_profile = kwargs['leader_profile']
@@ -70,12 +68,13 @@ class ReviewWritingEnv(BaseEnv):
         ]
 
     @beartype
-    def on_exit(self) -> str:
+    def on_exit(self) -> Tuple[str, Dict[str, Any]]:
         self.env_run_num += 1
-        return 'proposal_accept'
+        return 'proposal_accept', self.exit_data
 
     @beartype
     def run(self) -> Tuple[Any, Profile]:
+        # Review Writing
         self.reviews: List[Review] = []
         for reviewer in self.reviewers:
             review = reviewer.write_review(
@@ -102,3 +101,5 @@ class ReviewWritingEnv(BaseEnv):
             config=self.config,
         )
         yield meta_review, self.chair.profile
+
+        self.exit_data = {'meta_review': meta_review}

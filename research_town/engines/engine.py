@@ -53,35 +53,3 @@ class Engine(BaseEngine):
                 ('review_writing', 'parse_error', 'review_writing'),
             ]
         )
-
-    def set_transition_funcs(self) -> None:
-        self.add_transition_funcs(
-            [
-                ('start', self.start_proposal, 'proposal_writing'),
-                ('proposal_writing', self.start_review, 'review_writing'),
-                ('review_writing', self.proposal_accept, 'end'),
-                ('review_writing', self.proposal_reject, 'start'),
-                ('review_writing', self.parse_error, 'review_writing'),
-            ]
-        )
-
-    def start_proposal(
-        self,
-        env: StartEnv,
-    ) -> Dict[str, Any]:
-        return {'leader_profile': env.leader.profile}
-
-    def start_review(
-        self,
-        env: ProposalWritingEnv,
-    ) -> Dict[str, Any]:
-        return {'proposal': env.proposal, 'leader_profile': env.leader.profile}
-
-    def proposal_accept(self, env: ReviewWritingEnv) -> Dict[str, Any]:
-        return {'meta_review': env.meta_review}
-
-    def proposal_reject(self, env: ReviewWritingEnv) -> Dict[str, Any]:
-        return {}
-
-    def parse_error(self, env: ReviewWritingEnv) -> Dict[str, Any]:
-        return {}

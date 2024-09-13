@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Literal, Union
+from beartype.typing import Any, Dict, List, Literal, Union, Tuple
 
 from ..agents.agent_base import ResearchAgent
 from ..configs import Config
@@ -32,7 +32,6 @@ class StartEnv(BaseEnv):
     @beartype
     def on_enter(
         self,
-        time_step: int,
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -40,7 +39,6 @@ class StartEnv(BaseEnv):
         leader_profile = self.profile_db.match_leader_profiles(
             query=task, leader_num=1
         )[0]
-        self.time_step = time_step
         self.leader = ResearchAgent(
             agent_profile=leader_profile,
             agent_role='leader',
@@ -50,5 +48,5 @@ class StartEnv(BaseEnv):
     def run(self) -> None:
         return
 
-    def on_exit(self) -> str:
-        return 'start_proposal'
+    def on_exit(self) -> Tuple[str, Dict[str, Any]]:
+        return 'start_proposal', {}

@@ -1,4 +1,4 @@
-from beartype.typing import Any, Dict, List, Literal, Union
+from beartype.typing import Any, Dict, List, Literal, Union, Tuple
 
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
@@ -29,15 +29,13 @@ class EndEnv(BaseEnv):
 
     def on_enter(
         self,
-        time_step: int,
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        self.time_step = time_step
         return
 
     def run(self) -> None:
         return
 
-    def on_exit(self) -> str:
-        return 'end'
+    def on_exit(self) -> Tuple[str, Dict[str, Any]]:
+        return 'end', {}

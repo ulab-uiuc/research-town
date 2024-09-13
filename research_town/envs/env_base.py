@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from beartype.typing import Any, Dict, List, Literal, Union
+from beartype.typing import Any, Dict, List, Literal, Union, Tuple
 
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
@@ -41,5 +41,5 @@ class BaseEnv(ABC):
         pass
 
     @abstractmethod
-    def on_exit(self, *args: Any, **kwargs: Any) -> str:
+    def on_exit(self, *args: Any, **kwargs: Any) -> Tuple[str, Dict[str, Any]]:
         pass

@@ -36,12 +36,10 @@ class BaseEngine:
         self.time_step = time_step
 
         self.envs: Dict[str, BaseEnv] = {}
-        self.transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {}
         self.transitions: Dict[Tuple[str, str], str] = defaultdict(str)
         self.set_dbs()
         self.set_envs()
         self.set_transitions()
-        self.set_transition_funcs()
 
     def set_dbs(self) -> None:
         self.profile_db.reset_role_avaialbility()
@@ -54,18 +52,9 @@ class BaseEngine:
     def set_transitions(self) -> None:
         pass
 
-    def set_transition_funcs(self) -> None:
-        pass
-
     def add_envs(self, envs: List[BaseEnv]) -> None:
         for env in envs:
             self.envs[env.name] = env
-
-    def add_transition_funcs(
-        self, funcs: List[Tuple[str, Callable[..., Any], str]]
-    ) -> None:
-        for src, func, dst in funcs:
-            self.transition_funcs[src, dst] = func
 
     def add_transitions(self, transitions: List[Tuple[str, str, str]]) -> None:
         for src, trigger, dst in transitions:
@@ -78,27 +67,17 @@ class BaseEngine:
         self.curr_env_name = env_name
         self.curr_env = self.envs[env_name]
         self.curr_env.on_enter(
-            time_step=self.time_step,
             task=task,
         )
 
     def transition(self) -> None:
-        trigger = self.curr_env.on_exit()
+        trigger, exit_data = self.curr_env.on_exit()
         next_env_name = self.transitions[self.curr_env_name, trigger]
-        if (self.curr_env_name, next_env_name) in self.transition_funcs:
-            input_data = self.transition_funcs[(self.curr_env_name, next_env_name)](
-                self.curr_env
-            )
-        else:
-            raise ValueError(
-                f'no transition function from {self.curr_env_name} to {next_env_name}'
-            )
 
         self.curr_env_name = next_env_name
         self.curr_env = self.envs[self.curr_env_name]
         self.curr_env.on_enter(
-            time_step=self.time_step,
-            **input_data,
+            **exit_data,
         )
 
     def run(self, task: str) -> None:
@@ -107,7 +86,7 @@ class BaseEngine:
         while self.curr_env_name != 'end':
             if self.curr_env.run():
                 for progress, profile in self.curr_env.run():
-                    self.add_to_dbs(progress, profile)
+                    self.record(progress, profile)
                     self.time_step += 1
             self.transition()
             transition_count += 1
@@ -123,10 +102,7 @@ class BaseEngine:
         self.progress_db.save_to_json(save_file_path)
         self.log_db.save_to_json(save_file_path)
 
-    def load(self) -> None:
-        pass
-
-    def add_to_dbs(self, progress: Any, profile: Profile) -> None:
+    def record(self, progress: Any, profile: Profile) -> None:
         if isinstance(progress, Insight):
             log = LiteratureReviewLog(
                 time_step=self.time_step,
