@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 
 from beartype.typing import Any, Dict, List, Literal, Union
 
-from ..agents.agent_base import ResearchAgent
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 
@@ -27,7 +26,6 @@ class BaseEnv(ABC):
         self.paper_db = paper_db
         self.profile_db = profile_db
         self.config = config
-        self.agents: List[ResearchAgent] = []
 
     @abstractmethod
     def on_enter(

@@ -324,11 +324,9 @@ def test_paper_match() -> None:
     )
     agent_profile_l = [paper1, paper2, paper_3]
     lead_agent_profile = 'Profile in CV'
-    match_paper_profiles = db.match(
-        query=lead_agent_profile, paper_profiles=agent_profile_l, num=2
-    )
-    assert match_paper_profiles
-    assert len(match_paper_profiles) == 2
+    match_papers = db.match(query=lead_agent_profile, papers=agent_profile_l, num=2)
+    assert match_papers
+    assert len(match_papers) == 2
 
 
 def test_agent_file() -> None:

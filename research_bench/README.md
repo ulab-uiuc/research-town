@@ -4,13 +4,13 @@ This repository contains three Python scripts that automate the process of downl
 
 ## Scripts Overview
 
-1. **`download_arxiv_papers.py`**: 
+1. **`download_arxiv_papers.py`**:
    - Downloads papers from ArXiv based on specified keywords and date ranges, and saves them as PDFs along with a JSON file containing metadata.
 
-2. **`get_reference_papers.py`**: 
+2. **`get_reference_papers.py`**:
    - Fetches the references for each downloaded ArXiv paper using the Semantic Scholar API and updates the JSON file (`paper_info.json`) with reference details.
 
-3. **`download_reference_papers.py`**: 
+3. **`download_reference_papers.py`**:
    - Downloads the PDFs of the referenced papers from ArXiv based on the references fetched in the previous step, and saves them in a structured directory.
 
 ## How to Run

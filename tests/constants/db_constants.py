@@ -8,9 +8,9 @@ from .data_constants import (
     agent_profile_A,
     agent_profile_B,
     agent_profile_C,
-    paper_profile_A,
-    paper_profile_B,
-    paper_profile_C,
+    paper_A,
+    paper_B,
+    paper_C,
     research_idea_A,
     research_idea_B,
     research_insight_A,
@@ -25,9 +25,9 @@ example_profile_db.add(agent_profile_B)
 example_profile_db.add(agent_profile_C)
 
 example_paper_db = PaperDB()
-example_paper_db.add(paper_profile_A)
-example_paper_db.add(paper_profile_B)
-example_paper_db.add(paper_profile_C)
+example_paper_db.add(paper_A)
+example_paper_db.add(paper_B)
+example_paper_db.add(paper_C)
 
 example_progress_db = ProgressDB()
 example_progress_db.add(research_idea_A)
