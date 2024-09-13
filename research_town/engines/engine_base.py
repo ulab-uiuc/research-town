@@ -1,6 +1,6 @@
 import os
 from collections import defaultdict
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB

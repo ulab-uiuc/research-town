@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Literal, Union, Tuple
+from beartype.typing import Any, Dict, List, Literal, Tuple, Union
 
 from ..agents.agent_base import ResearchAgent
 from ..configs import Config

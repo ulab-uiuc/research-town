@@ -1,4 +1,4 @@
-from beartype.typing import Any, Dict, List, Literal, Union, Tuple
+from beartype.typing import Any, Dict, List, Literal, Tuple, Union
 
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
