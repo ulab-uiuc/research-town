@@ -57,6 +57,8 @@ class ProposalWritingEnv(BaseEnv):
     @beartype
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
         self.env_run_num += 1
+        if self.env_run_num < self.config.param.max_env_run_num:
+            return 'end', {}
         return 'start_review', self.exit_data
 
     @beartype

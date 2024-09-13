@@ -70,16 +70,11 @@ class BaseEngine:
 
     def run(self, task: str) -> None:
         self.start(task=task)
-        transition_count = 0
         while self.curr_env.name != 'end':
-            if self.curr_env.run():
-                for progress, profile in self.curr_env.run():
-                    self.record(progress, profile)
-                    self.time_step += 1
+            for progress, profile in self.curr_env.run():
+                self.record(progress, profile)
+                self.time_step += 1
             self.transition()
-            transition_count += 1
-            if transition_count > self.config.param.max_transitions:
-                break
 
     def save(self, save_file_path: str, with_embed: bool = False) -> None:
         os.makedirs(save_file_path, exist_ok=True)
