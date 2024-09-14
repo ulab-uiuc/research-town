@@ -84,7 +84,7 @@ class ExperimentEnv:
 
     def run(self, time_step: int, paper_pk: str) -> None:
         conditions = {'pk': paper_pk}
-        proposal = self.progress_db.get(Proposal, **conditions)[0].abstract
+        proposal = self.progress_db.get(Proposal, **conditions)[0].content
         # Define folder and file paths based on pk
         folder = os.path.join(self.folder, paper_pk)
         experiment_script = os.path.join(folder, 'experiment.py')
