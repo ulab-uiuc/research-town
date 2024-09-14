@@ -2,7 +2,7 @@ from typing import Optional
 
 from .data import (
     ExperimentLog,
-    IdeaBrainstormingLog,
+    IdeaBrainstormLog,
     LiteratureReviewLog,
     MetaReviewWritingLog,
     ProposalWritingLog,
@@ -17,7 +17,7 @@ class LogDB(ComplexDB):
         super().__init__(
             classes_to_register=[
                 LiteratureReviewLog,
-                IdeaBrainstormingLog,
+                IdeaBrainstormLog,
                 ProposalWritingLog,
                 ReviewWritingLog,
                 RebuttalWritingLog,

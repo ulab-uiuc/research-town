@@ -2,7 +2,7 @@ from .data import (
     Experiment,
     ExperimentLog,
     Idea,
-    IdeaBrainstormingLog,
+    IdeaBrainstormLog,
     Insight,
     LiteratureReviewLog,
     Log,
@@ -26,7 +26,7 @@ from .db_progress import ProgressDB
 
 __all__ = [
     'Log',
-    'IdeaBrainstormingLog',
+    'IdeaBrainstormLog',
     'LiteratureReviewLog',
     'ProposalWritingLog',
     'MetaReviewWritingLog',
