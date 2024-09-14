@@ -159,13 +159,14 @@ def write_review_prompting(
     summary_prompt_template: Dict[str, Union[str, List[str]]],
     strength_prompt_template: Dict[str, Union[str, List[str]]],
     weakness_prompt_template: Dict[str, Union[str, List[str]]],
+    ethical_prompt_template: Dict[str, Union[str, List[str]]],
     score_prompt_template: Dict[str, Union[str, List[str]]],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> Tuple[str, str, str, int]:
+) -> Tuple[str, str, str, str, int]:
     paper_str = map_paper_to_str(paper)
     summary_template_input = {'paper': paper_str}
     summary_messages = openai_format_prompt_construct(
@@ -189,6 +190,10 @@ def write_review_prompting(
     weakness_messages = openai_format_prompt_construct(
         weakness_prompt_template, weakness_template_input
     )
+    ethical_template_input = {'paper': paper_str, 'summary': summary}
+    ethical_messages = openai_format_prompt_construct(
+        ethical_prompt_template, ethical_template_input
+    )
 
     strength = model_prompting(
         model_name,
@@ -208,12 +213,23 @@ def write_review_prompting(
         top_p,
         stream,
     )[0]
+    ethical_concerns = model_prompting(
+        model_name,
+        ethical_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
+
 
     score_template_input = {
         'paper': paper_str,
         'summary': summary,
         'strength': strength,
         'weakness': weakness,
+        'ethical_concerns': ethical_concerns
     }
     score_messages = openai_format_prompt_construct(
         score_prompt_template, score_template_input
@@ -235,11 +251,11 @@ def write_review_prompting(
     )
     score = int(score_str[0]) if score_str[0].isdigit() else 0
 
-    return summary, strength, weakness, score
+    return summary, strength, weakness, ethical_concerns, score
 
 
 @beartype
-def write_meta_review_prompting(
+def write_metareview_prompting(
     paper: Dict[str, str],
     reviews: List[Dict[str, Union[int, str]]],
     rebuttals: List[Dict[str, str]],
@@ -247,13 +263,14 @@ def write_meta_review_prompting(
     summary_prompt_template: Dict[str, Union[str, List[str]]],
     strength_prompt_template: Dict[str, Union[str, List[str]]],
     weakness_prompt_template: Dict[str, Union[str, List[str]]],
+    ethical_prompt_template: Dict[str, Union[str, List[str]]],
     decision_prompt_template: Dict[str, Union[str, List[str]]],
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> Tuple[str, str, str, bool]:
+) -> Tuple[str, str, str, str, bool]:
     paper_str = map_paper_to_str(paper)
     reviews_str = map_review_list_to_str(reviews)
     rebuttals_str = map_rebuttal_list_to_str(rebuttals)
@@ -287,11 +304,20 @@ def write_meta_review_prompting(
         'rebuttals': rebuttals_str,
         'summary': summary,
     }
+    ethical_template_input = {
+        'paper': paper_str,
+        'reviews': reviews_str,
+        'rebuttals': rebuttals_str,
+        'summary': summary,
+    }
     strength_messages = openai_format_prompt_construct(
         strength_prompt_template, strength_template_input
     )
     weakness_messages = openai_format_prompt_construct(
         weakness_prompt_template, weakness_template_input
+    )
+    ethical_messages = openai_format_prompt_construct(
+        ethical_prompt_template, ethical_template_input
     )
 
     strength = model_prompting(
@@ -312,6 +338,15 @@ def write_meta_review_prompting(
         top_p,
         stream,
     )[0]
+    ethical_concerns = model_prompting(
+        model_name,
+        ethical_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
 
     decision_template_input = {
         'paper': paper_str,
@@ -320,6 +355,7 @@ def write_meta_review_prompting(
         'summary': summary,
         'strength': strength,
         'weakness': weakness,
+        'ethical_concerns': ethical_concerns
     }
     decision_messages = openai_format_prompt_construct(
         decision_prompt_template, decision_template_input
@@ -335,7 +371,7 @@ def write_meta_review_prompting(
     )
     decision = 'accept' in decision_str[0].lower()
 
-    return summary, strength, weakness, decision
+    return summary, strength, weakness, ethical_concerns, decision
 
 
 @beartype

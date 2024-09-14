@@ -48,7 +48,7 @@ class LiteratureReviewLog(Log):
     insight_pk: Optional[str] = Field(default=None)
 
 
-class IdeaBrainstormingLog(Log):
+class IdeaBrainstormLog(Log):
     idea_pk: str
 
 
@@ -65,7 +65,7 @@ class RebuttalWritingLog(Log):
 
 
 class MetaReviewWritingLog(Log):
-    meta_review_pk: str
+    metareview_pk: str
 
 
 class ExperimentLog(Log):
@@ -106,6 +106,7 @@ class Review(Progress):
     summary: Optional[str] = Field(default=None)
     strength: Optional[str] = Field(default=None)
     weakness: Optional[str] = Field(default=None)
+    ethical_concerns: Optional[str] = Field(default=None)
     score: Optional[int] = Field(default=None)
     model_config = ConfigDict(extra='allow')
 
@@ -126,6 +127,7 @@ class MetaReview(Progress):
     summary: Optional[str] = Field(default=None)
     strength: Optional[str] = Field(default=None)
     weakness: Optional[str] = Field(default=None)
+    ethical_concerns: Optional[str] = Field(default=None)
     decision: bool = Field(default=False)
     model_config = ConfigDict(extra='allow')
 

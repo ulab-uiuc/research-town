@@ -109,7 +109,7 @@ research_rebuttal_B = Rebuttal(
     content='I have revised the paper.',
 )
 
-research_meta_review_A = MetaReview(
+research_metareview_A = MetaReview(
     paper_pk=paper_A.pk,
     profile_pk=agent_profile_A.pk,
     decision=True,
@@ -118,7 +118,7 @@ research_meta_review_A = MetaReview(
     weakness='None',
 )
 
-research_meta_review_B = MetaReview(
+research_metareview_B = MetaReview(
     paper_pk=paper_A.pk,
     profile_pk=agent_profile_B.pk,
     decision=True,
@@ -134,11 +134,11 @@ agent_paper_review_log = ReviewWritingLog(
     review_pk=research_review_A.pk,
 )
 
-agent_paper_meta_review_log = MetaReviewWritingLog(
+agent_paper_metareview_log = MetaReviewWritingLog(
     time_step=0,
     paper_pk=paper_B.pk,
     profile_pk=agent_profile_B.pk,
-    meta_review_pk=research_meta_review_B.pk,
+    metareview_pk=research_metareview_B.pk,
 )
 
 agent_paper_rebuttal_log = RebuttalWritingLog(

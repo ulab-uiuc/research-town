@@ -36,14 +36,14 @@ def test_LogDB_basic() -> None:
         profile_pk='agent1',
         rebuttal_pk='rebuttal1',
     )
-    meta_review_log = MetaReviewWritingLog(
+    metareview_log = MetaReviewWritingLog(
         profile_pk='agent1',
-        meta_review_pk='meta_review1',
+        metareview_pk='metareview1',
     )
 
     db.add(review_log)
     db.add(rebuttal_log)
-    db.add(meta_review_log)
+    db.add(metareview_log)
 
     new_review_log = ReviewWritingLog(
         profile_pk='agent1',

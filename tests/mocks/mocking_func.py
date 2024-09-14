@@ -55,12 +55,11 @@ def mock_prompting(
             'Based on the given information, I would give this submission a score of 5 out of 10.',
         ]
     elif (
-        prompt[0]['content'] == agent_template_config.write_meta_review_summary['intro']
+        prompt[0]['content'] == agent_template_config.write_metareview_summary['intro']
     ):
         return ['Meta review summary1', 'Meta review summary2', 'Meta review summary3']
     elif (
-        prompt[0]['content']
-        == agent_template_config.write_meta_review_strength['intro']
+        prompt[0]['content'] == agent_template_config.write_metareview_strength['intro']
     ):
         return [
             'Meta review strength1',
@@ -68,8 +67,7 @@ def mock_prompting(
             'Meta review strength3',
         ]
     elif (
-        prompt[0]['content']
-        == agent_template_config.write_meta_review_weakness['intro']
+        prompt[0]['content'] == agent_template_config.write_metareview_weakness['intro']
     ):
         return [
             'Meta review weakness1',
@@ -77,8 +75,7 @@ def mock_prompting(
             'Meta review weakness3',
         ]
     elif (
-        prompt[0]['content']
-        == agent_template_config.write_meta_review_decision['intro']
+        prompt[0]['content'] == agent_template_config.write_metareview_decision['intro']
     ):
         return ['accept', 'accept', 'reject']
     elif prompt[0]['content'] == agent_template_config.write_rebuttal['intro']:
@@ -99,7 +96,7 @@ def mock_prompting(
         return ['Review quality1', 'Review quality2', 'Review quality3']
     elif prompt[0]['content'] == eval_template_config.rebuttal_quality['intro']:
         return ['Rebuttal quality1', 'Rebuttal quality2', 'Rebuttal quality3']
-    elif prompt[0]['content'] == eval_template_config.meta_review_quality['intro']:
+    elif prompt[0]['content'] == eval_template_config.metareview_quality['intro']:
         return ['Meta review quality1', 'Meta review quality2', 'Meta review quality3']
 
     return ['Default response1', 'Default response2', 'Default response3']

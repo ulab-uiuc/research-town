@@ -103,7 +103,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
+def test_write_metareview(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     agent_reviewer = Agent(
@@ -130,18 +130,18 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
         review=review,
         config=Config(),
     )
-    meta_review = agent_chair.write_meta_review(
+    metareview = agent_chair.write_metareview(
         paper=research_proposal_A,
         reviews=[review],
         rebuttals=[rebuttal],
         config=Config(),
     )
-    assert isinstance(meta_review, MetaReview)
-    assert meta_review.summary == 'Meta review summary1'
-    assert meta_review.strength == 'Meta review strength1'
-    assert meta_review.weakness == 'Meta review weakness1'
-    assert meta_review.decision is True
-    assert meta_review.pk is not None
+    assert isinstance(metareview, MetaReview)
+    assert metareview.summary == 'Meta review summary1'
+    assert metareview.strength == 'Meta review strength1'
+    assert metareview.weakness == 'Meta review weakness1'
+    assert metareview.decision is True
+    assert metareview.pk is not None
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')

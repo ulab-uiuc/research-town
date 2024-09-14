@@ -7,7 +7,7 @@ from ..utils.error_handler import parsing_error_exponential_backoff
 from ..utils.eval_prompter import (
     research_idea_quality_eval_prompting,
     research_insight_quality_eval_prompting,
-    research_meta_review_quality_eval_prompting,
+    research_metareview_quality_eval_prompting,
     research_proposal_quality_eval_prompting,
     research_rebuttal_quality_eval_prompting,
     research_review_quality_eval_prompting,
@@ -254,22 +254,22 @@ class MetaReviewQualityEvaluator(BaseQualityEvaluator):
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> MetaReviewEvalOutput:
-        raw_output = research_meta_review_quality_eval_prompting(
+        raw_output = research_metareview_quality_eval_prompting(
             model_name=self.model_name,
             insights=kwargs['insights'],
             idea=kwargs['idea'],
             paper=kwargs['paper'],
             reviews=kwargs['reviews'],
             rebuttals=kwargs['rebuttals'],
-            meta_review=kwargs['meta_review'],
+            metareview=kwargs['metareview'],
             return_num=self.config.param.return_num if self.config else 1,
             max_token_num=self.config.param.max_token_num if self.config else 512,
             temperature=self.config.param.temperature if self.config else None,
             top_p=self.config.param.top_p if self.config else None,
             stream=self.config.param.stream if self.config else None,
-            prompt_template=self.config.eval_prompt_template.meta_review_quality
+            prompt_template=self.config.eval_prompt_template.metareview_quality
             if self.config
-            else Config().eval_prompt_template.meta_review_quality,
+            else Config().eval_prompt_template.metareview_quality,
         )
         self.parsed_output = self.parse(raw_output, MetaReviewEvalOutput)
 

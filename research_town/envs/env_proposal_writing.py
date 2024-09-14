@@ -39,7 +39,7 @@ class ProposalWritingEnv(BaseEnv):
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
         self.env_run_num += 1
         if self.env_run_num > self.config.param.max_env_run_num:
-            return 'end', {}
+            return 'error', {}
         else:
             return 'start_review', {'proposal': self.proposal, 'leader': self.leader}
 
