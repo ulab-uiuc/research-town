@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.configs import Config
-from research_town.dbs import Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.agent_constants import example_agent_manager
 from tests.constants.data_constants import agent_profile_A, research_proposal_A

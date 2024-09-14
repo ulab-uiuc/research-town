@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Generator, Tuple
 
-from ..configs import Config
-from ..dbs import Profile, Progress
 from ..agents import Agent
+from ..configs import Config
+from ..dbs import Progress
 
 
 class BaseEnv(ABC):

@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from beartype.typing import List, Literal
 
 from research_town.configs import Config
-from research_town.dbs import Profile, ProfileDB, Proposal, Review
+from research_town.dbs import Profile, ProfileDB, Proposal
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.agent_constants import example_agent_manager
 from tests.constants.db_constants import (
