@@ -1,0 +1,36 @@
+/* src/styles/App.css */
+.app-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.input-form {
+    margin-bottom: 20px;
+}
+
+.url-input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.output-display {
+    text-align: left;
+    margin: 0 auto;
+    width: 80%;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #f8f8f8;
+    padding: 15px;
+    border: 1px solid #ddd;
+    white-space: pre-wrap;
+}
+
+.processing-message {
+    font-style: italic;
+}
