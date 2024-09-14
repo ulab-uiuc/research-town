@@ -1,5 +1,6 @@
-from beartype import beartype
 import re
+
+from beartype import beartype
 from beartype.typing import Dict, List, Optional, Tuple, Union
 
 from .model_prompting import model_prompting
@@ -160,8 +161,9 @@ def write_proposal_prompting(
         question_number = f'q{match[0]}'
         answer = match[1].strip()
         q5_result[question_number] = answer
-    
-    return proposal, q5_result 
+
+    return proposal, q5_result
+
 
 @beartype
 def write_review_prompting(

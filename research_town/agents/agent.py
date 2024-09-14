@@ -1,5 +1,3 @@
-import re
-
 from beartype import beartype
 from beartype.typing import Dict, List, Literal, Optional
 
