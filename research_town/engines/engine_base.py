@@ -1,5 +1,5 @@
 import os
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Type
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
@@ -9,6 +9,7 @@ from ..dbs.data import (
     IdeaBrainstormLog,
     Insight,
     LiteratureReviewLog,
+    Log,
     MetaReview,
     MetaReviewWritingLog,
     Progress,
@@ -93,7 +94,7 @@ class BaseEngine:
         self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
 
     def record(self, progress: Progress, agent: Agent) -> None:
-        log_map = {
+        log_map: Dict[Type[Progress], Type[Log]] = {
             Insight: LiteratureReviewLog,
             Idea: IdeaBrainstormLog,
             Proposal: ProposalWritingLog,

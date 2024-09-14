@@ -1,5 +1,5 @@
 import os
-from typing import Optional
+from typing import Generator, Optional
 
 import gradio as gr
 
@@ -9,7 +9,7 @@ from research_town.engines import Engine
 from research_town.utils.paper_collector import get_paper_content
 
 
-def get_proposals(introduction: str):
+def get_proposals(introduction: str) -> Optional[str]:
     config_file_path = '../configs'
     save_file_path = '../examples/research_town_demo_log'
     agent_names = [
@@ -48,9 +48,9 @@ def get_proposals(introduction: str):
         run_result = engine.curr_env.run()
         if run_result is not None:
             for progress, agent in run_result:
-                yield progress.content  # Adjust based on your actual `progress` structure
                 engine.time_step += 1
         engine.transition()
+    return None
 
 
 def get_introduction(url: str) -> Optional[str]:
@@ -64,7 +64,7 @@ def get_introduction(url: str) -> Optional[str]:
     return None
 
 
-def count():
+def count() -> Generator[int, None, None]:
     for i in range(10):
         yield i
 

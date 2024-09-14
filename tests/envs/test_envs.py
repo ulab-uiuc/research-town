@@ -38,7 +38,7 @@ def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
     exit_status, exit_dict = env.on_exit()
 
     assert exit_status == 'proposal_accept'
-    assert exit_dict['meta_review'] is not None
+    assert exit_dict['metareview'] is not None
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
