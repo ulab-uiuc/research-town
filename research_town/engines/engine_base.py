@@ -77,13 +77,13 @@ class BaseEngine:
 
     def run(self, task: str) -> None:
         self.start(task=task)
-        self.transition()
         while self.curr_env.name != 'end':
             run_result = self.curr_env.run()
             if run_result is not None:
                 for progress, agent in run_result:
                     self.record(progress, agent)
                     self.time_step += 1
+            self.transition()
 
     def save(self, save_file_path: str, with_embed: bool = False) -> None:
         os.makedirs(save_file_path, exist_ok=True)

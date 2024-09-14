@@ -96,14 +96,14 @@ class BaseEvaluator:
             rebuttal=self.serializer.serialize(rebuttal),
         )
 
-    def evaluate_meta_review_quality(
+    def evaluate_metareview_quality(
         self,
         insights: List[Insight],
         idea: Idea,
         paper: Proposal,
         reviews: List[Review],
         rebuttals: List[Rebuttal],
-        meta_review: MetaReview,
+        metareview: MetaReview,
     ) -> MetaReviewEvalOutput:
         evaluator = MetaReviewQualityEvaluator(
             model_name=self.model_name, config=self.config
@@ -114,7 +114,7 @@ class BaseEvaluator:
             paper=self.serializer.serialize(paper),
             reviews=self.serializer.serialize(reviews),
             rebuttals=self.serializer.serialize(rebuttals),
-            meta_review=self.serializer.serialize(meta_review),
+            metareview=self.serializer.serialize(metareview),
         )
 
     def pipeline_eval(
@@ -124,7 +124,7 @@ class BaseEvaluator:
         paper: Proposal,
         reviews: List[Review],
         rebuttals: List[Rebuttal],
-        meta_review: MetaReview,
+        metareview: MetaReview,
     ) -> Tuple[
         List[InsightEvalOutput],
         IdeaEvalOutput,
@@ -146,8 +146,8 @@ class BaseEvaluator:
             self.evaluate_rebuttal_quality(insights, idea, paper, review, rebuttal)
             for review, rebuttal in zip(reviews, rebuttals)
         ]
-        meta_review_quality = self.evaluate_meta_review_quality(
-            insights, idea, paper, reviews, rebuttals, meta_review
+        metareview_quality = self.evaluate_metareview_quality(
+            insights, idea, paper, reviews, rebuttals, metareview
         )
 
         return (
@@ -156,5 +156,5 @@ class BaseEvaluator:
             paper_quality,
             reviews_quality,
             rebuttals_quality,
-            meta_review_quality,
+            metareview_quality,
         )

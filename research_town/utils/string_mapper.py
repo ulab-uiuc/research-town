@@ -56,22 +56,22 @@ def map_rebuttal_to_str(paper: Dict[str, str]) -> str:
     return f"Rebuttal: {paper['content']}"
 
 
-def map_meta_review_list_to_str(meta_reviews: List[Dict[str, str]]) -> str:
+def map_metareview_list_to_str(metareviews: List[Dict[str, str]]) -> str:
     result = ''
-    for meta_review in meta_reviews:
-        result += map_meta_review_to_str(meta_review)
+    for metareview in metareviews:
+        result += map_metareview_to_str(metareview)
     return result
 
 
-def map_meta_review_to_str(meta_review: Dict[str, str]) -> str:
-    assert 'decision' in meta_review
-    assert 'summary' in meta_review
-    assert 'strength' in meta_review
-    assert 'weakness' in meta_review
-    decision = meta_review['decision']
-    summary = meta_review['summary']
-    strength = meta_review['strength']
-    weakness = meta_review['weakness']
+def map_metareview_to_str(metareview: Dict[str, str]) -> str:
+    assert 'decision' in metareview
+    assert 'summary' in metareview
+    assert 'strength' in metareview
+    assert 'weakness' in metareview
+    decision = metareview['decision']
+    summary = metareview['summary']
+    strength = metareview['strength']
+    weakness = metareview['weakness']
     return f'Summary: {summary}\nStrength: {strength}\nWeakness: {weakness}\nDecision: {decision}'
 
 

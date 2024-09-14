@@ -65,7 +65,7 @@ class RebuttalWritingLog(Log):
 
 
 class MetaReviewWritingLog(Log):
-    meta_review_pk: str
+    metareview_pk: str
 
 
 class ExperimentLog(Log):
