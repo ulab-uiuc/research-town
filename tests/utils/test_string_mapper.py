@@ -5,8 +5,8 @@ from research_town.utils.string_mapper import (
     map_idea_to_str,
     map_insight_list_to_str,
     map_insight_to_str,
-    map_meta_review_list_to_str,
-    map_meta_review_to_str,
+    map_metareview_list_to_str,
+    map_metareview_to_str,
     map_paper_list_to_str,
     map_paper_to_str,
     map_rebuttal_to_str,
@@ -87,19 +87,19 @@ def test_map_review_to_str() -> None:
     assert map_review_to_str(review) == expected_result
 
 
-def test_map_meta_review_to_str() -> None:
-    meta_review = {
+def test_map_metareview_to_str() -> None:
+    metareview = {
         'summary': 'This is a meta review',
         'strength': 'Strength',
         'weakness': 'Weakness',
         'decision': 'accept',
     }
     expected_result = 'Summary: This is a meta review\nStrength: Strength\nWeakness: Weakness\nDecision: accept'
-    assert map_meta_review_to_str(meta_review) == expected_result
+    assert map_metareview_to_str(metareview) == expected_result
 
 
-def test_map_meta_review_list_to_str() -> None:
-    meta_reviews = [
+def test_map_metareview_list_to_str() -> None:
+    metareviews = [
         {
             'summary': 'Meta review 1',
             'strength': 'Strength 1',
@@ -120,7 +120,7 @@ def test_map_meta_review_list_to_str() -> None:
         },
     ]
     expected_result = 'Summary: Meta review 1\nStrength: Strength 1\nWeakness: Weakness 1\nDecision: acceptSummary: Meta review 2\nStrength: Strength 2\nWeakness: Weakness 2\nDecision: rejectSummary: Meta review 3\nStrength: Strength 3\nWeakness: Weakness 3\nDecision: accept'
-    assert map_meta_review_list_to_str(meta_reviews) == expected_result
+    assert map_metareview_list_to_str(metareviews) == expected_result
 
 
 def test_map_insight_list_to_str() -> None:

@@ -1,16 +1,23 @@
 import os
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Type
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from ..dbs.data import Idea, Insight, MetaReview, Progress, Proposal, Rebuttal, Review
-from ..dbs.logs import (
+from ..dbs.data import (
+    Idea,
     IdeaBrainstormLog,
+    Insight,
     LiteratureReviewLog,
+    Log,
+    MetaReview,
     MetaReviewWritingLog,
+    Progress,
+    Proposal,
     ProposalWritingLog,
+    Rebuttal,
     RebuttalWritingLog,
+    Review,
     ReviewWritingLog,
 )
 from ..envs.env_base import BaseEnv
@@ -71,13 +78,13 @@ class BaseEngine:
 
     def run(self, task: str) -> None:
         self.start(task=task)
-        self.transition()
         while self.curr_env.name != 'end':
             run_result = self.curr_env.run()
             if run_result is not None:
                 for progress, agent in run_result:
                     self.record(progress, agent)
                     self.time_step += 1
+            self.transition()
 
     def save(self, save_file_path: str, with_embed: bool = False) -> None:
         os.makedirs(save_file_path, exist_ok=True)
@@ -87,7 +94,7 @@ class BaseEngine:
         self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
 
     def record(self, progress: Progress, agent: Agent) -> None:
-        log_map = {
+        log_map: Dict[Type[Progress], Type[Log]] = {
             Insight: LiteratureReviewLog,
             Idea: IdeaBrainstormLog,
             Proposal: ProposalWritingLog,

@@ -178,7 +178,7 @@ class EvalPromptTemplateConfig(BaseModel):
     review_quality: Dict[str, Union[str, List[str]]] = {
         'intro': (
             'Please evaluate the review based on the following dimensions. You only need to give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review. '
-            'For these components that are left blank (for example: rebuttal, meta_review, etc), please provide your common knowledge to assess the review. You must give an overall score with dimension scores. No detailed analysis is needed.\n\n'
+            'For these components that are left blank (for example: rebuttal, metareview, etc), please provide your common knowledge to assess the review. You must give an overall score with dimension scores. No detailed analysis is needed.\n\n'
             'The details of rating are as follows:\n'
             '1. Summarization\n'
             '- Rating (1-10):\n'
@@ -299,7 +299,7 @@ class EvalPromptTemplateConfig(BaseModel):
         'examples': ['', ''],
         'template': 'Here is the review to evaluate:\nresearch insights: {insights}\nidea: {idea}\npaper: {paper}\nreviews: {review}\nrebuttal: {rebuttal}. The output format should follow these rules: Overall Score of an insight (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where di is the score of the i-th dimension. An example of output is: Overall Score=89 Dimension Scores=[8,9,9,9,9,9].',
     }
-    meta_review_quality: Dict[str, Union[str, List[str]]] = {
+    metareview_quality: Dict[str, Union[str, List[str]]] = {
         'intro': (
             'Please evaluate the review based on the following dimensions. Finally, give an overall score (0-100) and 10 dimension scores (for each dimension, provide a rating (1-10)) as the evaluation for the review.\n\n'
             'The details of rating are as follows:\n'
@@ -360,7 +360,7 @@ class EvalPromptTemplateConfig(BaseModel):
             '- Does it meet the standards expected for a meta-review in terms of thoroughness, insightfulness, and clarity?\n'
         ),
         'examples': ['', ''],
-        'template': 'Here is the review to evaluate:\nresearch insights: {insights}\nidea: {idea}\npaper: {paper}\nreviews: {reviews}\nrebuttals: {rebuttals}\nmeta_review: {meta_review}. The output format should follow these rules: Overall Score of an insight (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where di is the score of the i-th dimension. An example of output is: Overall Score=89 Dimension Scores=[8,9,9,9,9,9].',
+        'template': 'Here is the review to evaluate:\nresearch insights: {insights}\nidea: {idea}\npaper: {paper}\nreviews: {reviews}\nrebuttals: {rebuttals}\nmetareview: {metareview}. The output format should follow these rules: Overall Score of an insight (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where di is the score of the i-th dimension. An example of output is: Overall Score=89 Dimension Scores=[8,9,9,9,9,9].',
     }
 
     model_config = ConfigDict(
@@ -539,22 +539,22 @@ class AgentPromptTemplateConfig(BaseModel):
         'examples': ['', ''],
         'template': 'Here is the submission: {paper}\nHere is the summary of the paper: {summary}\nHere is the strength of the paper: {strength}\nHere is the ethical concern of the paper: {ethical_concerns}\nHere is the weakness of the paper: {weakness}',
     }
-    write_meta_review_summary: Dict[str, Union[str, List[str]]] = {
+    write_metareview_summary: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write a summary of the reviews for the following submission you have made to an academic conference. Your summary should summarize the reviews and decisions to help the reviewers to make a decision.',
         'examples': ['', ''],
         'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}',
     }
-    write_meta_review_strength: Dict[str, Union[str, List[str]]] = {
+    write_metareview_strength: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write the strength of the submission for the following submission you have made to an academic conference. Your strength should summarize the reviews and decisions to help the reviewers to make a decision.',
         'examples': ['', ''],
         'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
     }
-    write_meta_review_weakness: Dict[str, Union[str, List[str]]] = {
+    write_metareview_weakness: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write the weakness of the submission for the following submission you have made to an academic conference. Your weakness should summarize the reviews and decisions to help the reviewers to make a decision.',
         'examples': ['', ''],
         'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
     }
-    write_meta_review_ethical: Dict[str, Union[str, List[str]]] = {
+    write_metareview_ethical: Dict[str, Union[str, List[str]]] = {
         'intro': '''Please write an ethical meta-review for the following submission to an academic conference. Your meta-review should summarize the ethical considerations raised in the reviews, author rebuttals, and any ethical review conducted. Consider the following aspects:
 
     1. Academic integrity: Any concerns about plagiarism or improper citations.
@@ -674,20 +674,20 @@ class Config(BaseModel):
             'write_review_strength': ['{paper}', '{summary}'],
             'write_review_weakness': ['{paper}', '{summary}'],
             'write_review_score': ['{paper}', '{summary}', '{strength}', '{weakness}'],
-            'write_meta_review_summary': ['{paper}', '{reviews}', '{rebuttals}'],
-            'write_meta_review_strength': [
+            'write_metareview_summary': ['{paper}', '{reviews}', '{rebuttals}'],
+            'write_metareview_strength': [
                 '{paper}',
                 '{reviews}',
                 '{rebuttals}',
                 '{summary}',
             ],
-            'write_meta_review_weakness': [
+            'write_metareview_weakness': [
                 '{paper}',
                 '{reviews}',
                 '{rebuttals}',
                 '{summary}',
             ],
-            'write_meta_review_decision': [
+            'write_metareview_decision': [
                 '{paper}',
                 '{reviews}',
                 '{rebuttals}',
@@ -719,13 +719,13 @@ class Config(BaseModel):
                 '{review}',
                 '{rebuttal}',
             ],
-            'meta_review_quality': [
+            'metareview_quality': [
                 '{insights}',
                 '{idea}',
                 '{paper}',
                 '{reviews}',
                 '{rebuttals}',
-                '{meta_review}',
+                '{metareview}',
             ],
         }
 

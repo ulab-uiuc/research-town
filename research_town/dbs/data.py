@@ -48,7 +48,7 @@ class LiteratureReviewLog(Log):
     insight_pk: Optional[str] = Field(default=None)
 
 
-class IdeaBrainstormingLog(Log):
+class IdeaBrainstormLog(Log):
     idea_pk: str
 
 
@@ -65,7 +65,7 @@ class RebuttalWritingLog(Log):
 
 
 class MetaReviewWritingLog(Log):
-    meta_review_pk: str
+    metareview_pk: str
 
 
 class ExperimentLog(Log):

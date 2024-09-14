@@ -9,7 +9,7 @@ from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
     review_literature_prompting,
-    write_meta_review_prompting,
+    write_metareview_prompting,
     write_proposal_prompting,
     write_rebuttal_prompting,
     write_review_prompting,
@@ -164,7 +164,7 @@ class Agent(object):
 
     @beartype
     @chair_required
-    def write_meta_review(
+    def write_metareview(
         self,
         paper: Proposal,
         reviews: List[Review],
@@ -175,16 +175,16 @@ class Agent(object):
         serialized_reviews = self.serializer.serialize(reviews)
         serialized_rebuttals = self.serializer.serialize(rebuttals)
 
-        summary, strength, weakness, ethical_concerns, decision = write_meta_review_prompting(
+        summary, strength, weakness, ethical_concerns, decision = write_metareview_prompting(
             paper=serialized_paper,
             reviews=serialized_reviews,
             rebuttals=serialized_rebuttals,
             model_name=self.model_name,
-            summary_prompt_template=config.agent_prompt_template.write_meta_review_summary,
-            strength_prompt_template=config.agent_prompt_template.write_meta_review_strength,
-            weakness_prompt_template=config.agent_prompt_template.write_meta_review_weakness,
-            ethical_prompt_template=config.agent_prompt_template.write_meta_review_ethical,
-            decision_prompt_template=config.agent_prompt_template.write_meta_review_decision,
+            summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
+            strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
+            weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
+            ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
+            decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
             temperature=config.param.temperature,
