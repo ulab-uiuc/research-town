@@ -100,6 +100,7 @@ class Review(Progress):
     summary: Optional[str] = Field(default=None)
     strength: Optional[str] = Field(default=None)
     weakness: Optional[str] = Field(default=None)
+    ethical_concerns: Optional[str] = Field(default=None)
     score: Optional[int] = Field(default=None)
     model_config = ConfigDict(extra='allow')
 
@@ -120,6 +121,7 @@ class MetaReview(Progress):
     summary: Optional[str] = Field(default=None)
     strength: Optional[str] = Field(default=None)
     weakness: Optional[str] = Field(default=None)
+    ethical_concerns: Optional[str] = Field(default=None)
     decision: bool = Field(default=False)
     model_config = ConfigDict(extra='allow')
 

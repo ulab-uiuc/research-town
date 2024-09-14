@@ -138,12 +138,13 @@ class Agent(object):
     def write_review(self, paper: Proposal, config: Config) -> Review:
         serialized_paper = self.serializer.serialize(paper)
 
-        summary, strength, weakness, score = write_review_prompting(
+        summary, strength, weakness, ethical_concerns, score = write_review_prompting(
             paper=serialized_paper,
             model_name=self.model_name,
             summary_prompt_template=config.agent_prompt_template.write_review_summary,
             strength_prompt_template=config.agent_prompt_template.write_review_strength,
             weakness_prompt_template=config.agent_prompt_template.write_review_weakness,
+            ethical_prompt_template=config.agent_prompt_template.write_review_ethical,
             score_prompt_template=config.agent_prompt_template.write_review_score,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
@@ -157,6 +158,7 @@ class Agent(object):
             summary=summary,
             strength=strength,
             weakness=weakness,
+            ethical_concerns=ethical_concerns,
             score=score,
         )
 
@@ -173,7 +175,7 @@ class Agent(object):
         serialized_reviews = self.serializer.serialize(reviews)
         serialized_rebuttals = self.serializer.serialize(rebuttals)
 
-        summary, strength, weakness, decision = write_metareview_prompting(
+        summary, strength, weakness, ethical_concerns, decision = write_metareview_prompting(
             paper=serialized_paper,
             reviews=serialized_reviews,
             rebuttals=serialized_rebuttals,
@@ -181,6 +183,7 @@ class Agent(object):
             summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
             strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
             weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
+            ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
             decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
@@ -197,6 +200,7 @@ class Agent(object):
             summary=summary,
             strength=strength,
             weakness=weakness,
+            ethical_concerns=ethical_concerns,
             decision=decision,
         )
 

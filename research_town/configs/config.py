@@ -389,8 +389,27 @@ class AgentPromptTemplateConfig(BaseModel):
         'examples': ['', ''],
         'template': 'Here are the research ideas:\n{ideas}\n',
     }
+
     write_proposal: Dict[str, Union[str, List[str]]] = {
-        'intro': 'Please write a paper based on the following ideas and external data. To save time, you only need to write the abstract. You might use two or more of these ideas if they are related and work well together.',
+        'intro': '''
+    You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data. The abstract should be structured to answer five core questions:
+
+    1. What is the problem? - Clearly state the research problem and its significance.
+    2. Why is it interesting and important? - Explain why solving this problem would matter to the broader research community or society.
+    3. Why is it hard? - Discuss the challenges involved and why naive approaches may fail.
+    4. Why hasn't it been solved before? - Identify any gaps in previous research or existing solutions.
+    5. What are the key components of my approach and results? - Outline your methodology and expected outcomes, including any limitations.
+    Remember the following writing strategy for a successful proposal:
+    Writing Strategy:
+    
+    - Context: Begin by introducing the broader field to give readers an overview. Then, gradually narrow the focus to the specific problem or knowledge gap that this research addresses. A well-crafted context should clearly distinguish the study's contributions from the current literature, identifying what is missing (the specific gap) and why filling this gap is important in the broader context of the field.
+    
+    - Content: After establishing the context, explain how this study fills the identified gap. Begin with a description of the methods or approaches used, followed by a concise summary of the key findings.
+    
+    - Conclusion: Finally, interpret the results in a way that answers the research question posed in the context. If applicable, you may include a broader implications section that highlights how the findings advance the field or open new avenues for future research.
+
+    Your goal is to ensure the proposal is clear, concise, and logically structured. 
+    ''',
         'examples': ['', ''],
         'template': 'Here is the idea: {idea}\nHere are the external data, which is a list of abstracts of related papers: {papers}',
     }
@@ -475,10 +494,50 @@ class AgentPromptTemplateConfig(BaseModel):
         'examples': ['', ''],
         'template': 'Here is the submission: {paper}\nHere is the summary of the paper: {summary}',
     }
+
+    write_review_ethical: Dict[str, Union[str, List[str]]] = {
+        'intro': '''Please conduct an ethical review of the following paper submission for an academic conference. Consider these key ethical concerns:
+
+    1. Academic integrity: Check for any signs of plagiarism or improper citation. This is crucial for maintaining the integrity of academic research.
+
+    2. Ethical implications of AI/ML technologies: Evaluate if the paper involves technologies like large language models, pre-trained models, or generation models. Consider:
+    - Is the technology deployed or only theoretical?
+    - Is there potential for immediate harm or misuse?
+    - Are there long-term ethical implications even if not immediately deployed?
+
+    3. Human subjects research: If the study involves human participants:
+    - Are there any risks to the participants?
+    - Has proper consent been obtained?
+    - Are there adequate safeguards for participant privacy and data protection?
+
+    4. Data usage and rights: Examine the data sources used in the research:
+    - Is the data properly cited?
+    - Do the researchers have legitimate rights to use this data?
+    - Are there any privacy concerns related to the data?
+
+    5. Language and content: Review the paper for any potentially offensive or inappropriate language, considering:
+    - Cultural sensitivity
+    - Potential biases in terminology
+    - Respectful discussion of sensitive topics
+
+    6. Broader ethical considerations: Look for any other ethical issues that might not fit into the above categories but could be significant. This might include:
+    - Potential for dual use (benign and harmful applications)
+    - Environmental impacts of the research
+    - Societal implications of the technology or findings
+
+    After your review, conclude with one of these statements:
+    - "This paper raises significant ethical concerns in the area(s) of [specific concern(s)]." OR
+    - "This paper does not raise significant ethical concerns."
+
+    Provide a brief explanation for your conclusion, noting which specific guideline(s) informed your decision.''',
+        'examples': ['', ''],
+        'template': 'Here is the submission: {paper}\nHere is the summary of the paper: {summary}',
+    }
+
     write_review_score: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please provide a score for the following submission you have made to an academic conference. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest.',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere is the summary of the paper: {summary}\nHere is the strength of the paper: {strength}\nHere is the weakness of the paper: {weakness}',
+        'template': 'Here is the submission: {paper}\nHere is the summary of the paper: {summary}\nHere is the strength of the paper: {strength}\nHere is the ethical concern of the paper: {ethical_concerns}\nHere is the weakness of the paper: {weakness}',
     }
     write_metareview_summary: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write a summary of the reviews for the following submission you have made to an academic conference. Your summary should summarize the reviews and decisions to help the reviewers to make a decision.',
@@ -495,10 +554,29 @@ class AgentPromptTemplateConfig(BaseModel):
         'examples': ['', ''],
         'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
     }
-    write_metareview_decision: Dict[str, Union[str, List[str]]] = {
-        'intro': 'Please make a review decision to decide whether the following submission should be accepted or rejected by an academic conference. Please indicate your review decision as accept or reject.',
+    write_metareview_ethical: Dict[str, Union[str, List[str]]] = {
+        'intro': '''Please write an ethical meta-review for the following submission to an academic conference. Your meta-review should summarize the ethical considerations raised in the reviews, author rebuttals, and any ethical review conducted. Consider the following aspects:
+
+    1. Academic integrity: Any concerns about plagiarism or improper citations.
+    2. Ethical implications of AI/ML technologies: Potential risks, harms, or long-term implications of the proposed methods or models.
+    3. Human subjects research: Risks to participants, consent issues, or privacy concerns.
+    4. Data usage and rights: Legitimacy of data sources, privacy issues, or proper attribution.
+    5. Language and content: Any offensive or culturally insensitive language used.
+    6. Broader ethical considerations: Potential dual use, environmental impacts, or societal implications.
+
+    Your meta-review should help in making a final decision regarding the ethical soundness of the paper. Conclude with one of these statements:
+    - "This paper raises significant ethical concerns that need to be addressed before publication."
+    - "This paper has minor ethical concerns that should be addressed but do not prevent publication."
+    - "This paper does not raise significant ethical concerns and is ethically sound for publication."
+
+    Provide a brief explanation for your conclusion, noting which specific ethical aspects informed your decision.''',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}\nHere is the strength of the submission: {strength}\nHere is the weakness of the submission: {weakness}',
+        'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
+    }
+    write_metareview_decision: Dict[str, Union[str, List[str]]] = {
+        'intro': 'Please make a review decision to decide whether the following submission should be accepted or rejected by an academic conference. If there are major ethical concerns about this paper, you should Reject the paper. Please indicate your review decision as accept or reject.',
+        'examples': ['', ''],
+        'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}\nHere is the strength of the submission: {strength}\nHere is the weakness of the submission: {weakness}\nHere is the ethical concern of the submission: {ethical_concerns}',
     }
     write_rebuttal: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write a rebuttal for the following submission you have made to an academic conference. Your rebuttal should rebut the reviews to convince the reviewers to accept your submission.',
