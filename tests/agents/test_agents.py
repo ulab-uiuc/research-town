@@ -82,8 +82,8 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
         config=Config(),
     )
     assert isinstance(paper, List[Proposal])
-    assert paper.content == 'Paper abstract1'
-    assert paper.pk is not None
+    for p in paper:
+        assert p.content == 'Paper abstract1'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')

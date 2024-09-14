@@ -145,7 +145,7 @@ class Agent(object):
             q4=q5_result.get('q4', ''),
             q5=q5_result.get('q5', ''),
             ))
-            return proposal_list
+        return proposal_list
 
     @beartype
     @reviewer_required
