@@ -47,6 +47,7 @@ def review_literature_prompting(
     profile: Dict[str, str],
     papers: List[Dict[str, str]],
     domains: List[str],
+    contexts: List[str],
     model_name: str,
     prompt_template: Dict[str, Union[str, List[str]]],
     return_num: Optional[int] = 1,
@@ -60,6 +61,7 @@ def review_literature_prompting(
     template_input = {
         'profile_bio': profile['bio'],
         'domains': domains_str,
+        'contexts': contexts,
         'papers': papers_str,
     }
     messages = openai_format_prompt_construct(prompt_template, template_input)

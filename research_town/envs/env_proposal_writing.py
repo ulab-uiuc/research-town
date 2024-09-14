@@ -32,6 +32,7 @@ class ProposalWritingEnv(BaseEnv):
     @beartype
     def on_enter(self, **context: Any) -> None:
         leader = context['leader']
+        self.contexts = context['contexts']
         self.leader = leader
         self.members = self.agent_manager.find_members(leader.profile)
 
@@ -58,6 +59,7 @@ class ProposalWritingEnv(BaseEnv):
             insights = member.review_literature(
                 papers=related_papers,
                 domains=['machine learning'],
+                contexts=self.contexts,
                 config=self.config,
             )
             all_insights.extend(insights)

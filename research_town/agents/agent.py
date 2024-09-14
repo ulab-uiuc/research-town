@@ -45,7 +45,11 @@ class Agent(object):
     @beartype
     @member_required
     def review_literature(
-        self, papers: List[Paper], domains: List[str], config: Config
+        self,
+        papers: List[Paper],
+        domains: List[str],
+        contexts: List[str],
+        config: Config,
     ) -> List[Insight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
@@ -53,6 +57,7 @@ class Agent(object):
             profile=serialized_profile,
             papers=serialized_papers,
             domains=domains,
+            contexts=contexts,
             model_name=self.model_name,
             prompt_template=config.agent_prompt_template.review_literature,
             return_num=config.param.return_num,
