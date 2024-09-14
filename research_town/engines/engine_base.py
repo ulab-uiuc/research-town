@@ -67,17 +67,17 @@ class BaseEngine:
         for src, trigger, dst in transitions:
             self.transitions[self.envs[src], trigger] = self.envs[dst]
 
-    def start(self, task: str) -> None:
+    def start(self, contexts: List[str]) -> None:
         self.curr_env = self.envs['start']
-        self.curr_env.on_enter(task=task)
+        self.curr_env.on_enter(contexts=contexts)
 
     def transition(self) -> None:
         trigger, exit_data = self.curr_env.on_exit()
         self.curr_env = self.transitions[(self.curr_env, trigger)]
         self.curr_env.on_enter(**exit_data)
 
-    def run(self, task: str) -> None:
-        self.start(task=task)
+    def run(self, contexts: List[str]) -> None:
+        self.start(contexts=contexts)
         while self.curr_env.name != 'end':
             run_result = self.curr_env.run()
             if run_result is not None:

@@ -1,8 +1,7 @@
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
-
-from .generator_func import run_engine
+from generator_func import run_engine
 
 app = FastAPI()
 
@@ -15,7 +14,7 @@ app.add_middleware(
 )
 
 
-@app.post('/process') # type: ignore
+@app.post('/process')  # type: ignore
 async def process_url(request: Request) -> Response:
     data = await request.json()
     url = data.get('url')

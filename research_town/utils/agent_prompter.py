@@ -1,3 +1,5 @@
+import re
+
 from beartype import beartype
 from beartype.typing import Dict, List, Optional, Tuple, Union
 
@@ -47,6 +49,7 @@ def review_literature_prompting(
     profile: Dict[str, str],
     papers: List[Dict[str, str]],
     domains: List[str],
+    contexts: List[str],
     model_name: str,
     prompt_template: Dict[str, Union[str, List[str]]],
     return_num: Optional[int] = 1,
@@ -60,6 +63,7 @@ def review_literature_prompting(
     template_input = {
         'profile_bio': profile['bio'],
         'domains': domains_str,
+        'contexts': contexts,
         'papers': papers_str,
     }
     messages = openai_format_prompt_construct(prompt_template, template_input)
@@ -136,12 +140,12 @@ def write_proposal_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> List[str]:
+) -> Tuple[str, Dict[str, str]]:
     idea_str = map_idea_to_str(idea)
     papers_str = map_paper_list_to_str(papers)
     template_input = {'idea': idea_str, 'papers': papers_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
-    return model_prompting(
+    proposal = model_prompting(
         model_name,
         messages,
         return_num=return_num,
@@ -149,7 +153,18 @@ def write_proposal_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
+    )[0]
+
+    pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
+    matches = re.findall(pattern, proposal, re.DOTALL)
+    q5_result = {}
+
+    for match in matches:
+        question_number = f'q{match[0]}'
+        answer = match[1].strip()
+        q5_result[question_number] = answer
+
+    return proposal, q5_result
 
 
 @beartype

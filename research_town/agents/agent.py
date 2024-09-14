@@ -1,5 +1,3 @@
-import re
-
 from beartype import beartype
 from beartype.typing import Dict, List, Literal, Optional
 
@@ -45,7 +43,11 @@ class Agent(object):
     @beartype
     @member_required
     def review_literature(
-        self, papers: List[Paper], domains: List[str], config: Config
+        self,
+        papers: List[Paper],
+        domains: List[str],
+        contexts: List[str],
+        config: Config,
     ) -> List[Insight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
@@ -53,6 +55,7 @@ class Agent(object):
             profile=serialized_profile,
             papers=serialized_papers,
             domains=domains,
+            contexts=contexts,
             model_name=self.model_name,
             prompt_template=config.agent_prompt_template.review_literature,
             return_num=config.param.return_num,
@@ -118,8 +121,9 @@ class Agent(object):
         else:
             print('write_proposal_strategy not supported, will use default')
             prompt_template = config.agent_prompt_template.write_proposal
+
         proposal_list = []
-        proposals = write_proposal_prompting(
+        proposals, q5_results = write_proposal_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
@@ -130,10 +134,18 @@ class Agent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )
-        for proposal in proposals:
-            q5_result = self.prompting_parser(proposal)
-            proposal_list.append(Proposal(content=proposal, q1=q5_result.get('q1', ''), q2=q5_result.get('q2', ''), q3=q5_result.get('q3', ''), q4=q5_result.get('q4', ''), q5=q5_result.get('q5', '')))
-        return proposal_list
+
+        for idx, proposal in enumerate(proposals):
+            q5_result = q5_results[idx]
+            proposal_list.append(Proposal(
+            content=proposal,
+            q1=q5_result.get('q1', ''),
+            q2=q5_result.get('q2', ''),
+            q3=q5_result.get('q3', ''),
+            q4=q5_result.get('q4', ''),
+            q5=q5_result.get('q5', ''),
+            ))
+            return proposal_list
 
     @beartype
     @reviewer_required
@@ -237,26 +249,3 @@ class Agent(object):
             author_pk=self.profile.pk,
             content=rebuttal_content,
         )
-
-    @staticmethod
-    @beartype
-    def prompting_parser(proposal: str) -> Dict[str, str]:
-        """
-        Parses the research proposal abstract and returns the answers to the five core questions.
-
-        Args:
-        proposal (str): The research proposal abstract in the specified format.
-
-        Returns:
-        Dict[str, str]: A dictionary containing the answers to the five questions, keyed as 'Question1', 'Question2', etc.
-        """
-        pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
-        matches = re.findall(pattern, proposal, re.DOTALL)
-        results = {}
-
-        for match in matches:
-            question_number = f'q{match[0]}'
-            answer = match[1].strip()
-            results[question_number] = answer
-
-        return results
