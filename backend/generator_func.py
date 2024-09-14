@@ -1,13 +1,15 @@
 import os
-from typing import Generator
+from typing import Generator, Dict
+import json
 
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_intro
+from research_town.utils.serializer import Serializer
 
 
-def run_engine(url: str) -> Generator[str, None, None]:
+def run_engine(url: str) -> Generator[Dict[str, str], None, None]:
     intro = get_intro(url)
     if intro is None:
         yield 'Error: invalid URL\n'
@@ -24,6 +26,7 @@ def run_engine(url: str) -> Generator[str, None, None]:
         'Christos Faloutsos',
         'Julian McAuley',
     ]
+    serializer = Serializer()
     # Load or initialize databases
     config = Config(config_file_path)
     profile_db = ProfileDB()
@@ -50,6 +53,8 @@ def run_engine(url: str) -> Generator[str, None, None]:
         run_result = engine.curr_env.run()
         if run_result is not None:
             for progress, agent in run_result:
-                yield 'hello, world\n'
+                progress_dict = serializer.serialize(progress)
+                json_string = json.dumps(progress_dict)
+                yield json_string
                 engine.time_step += 1
         engine.transition()
