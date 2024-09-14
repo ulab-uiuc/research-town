@@ -73,21 +73,19 @@ class ExperimentLog(Log):
 
 
 class Progress(Data):
+    content: Optional[str] = Field(default=None)
     eval_score: Optional[List[int]] = Field(default=[])  # evaluation scores
 
 
 class Insight(Progress):
-    content: Optional[str] = Field(default=None)
     model_config = ConfigDict(extra='allow')
 
 
 class Idea(Progress):
-    content: Optional[str] = Field(default=None)
     model_config = ConfigDict(extra='allow')
 
 
 class Proposal(Progress):
-    content: str
     q1: Optional[str] = Field(default=None)
     q2: Optional[str] = Field(default=None)
     q3: Optional[str] = Field(default=None)
@@ -114,7 +112,6 @@ class Rebuttal(Progress):
     paper_pk: Optional[str] = Field(default=None)
     reviewer_pk: Optional[str] = Field(default=None)
     author_pk: Optional[str] = Field(default=None)
-    content: Optional[str] = Field(default=None)
     model_config = ConfigDict(extra='allow')
 
 
