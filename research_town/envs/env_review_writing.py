@@ -1,7 +1,7 @@
 from beartype import beartype
 from beartype.typing import Any, Dict, Generator, List, Literal, Tuple, Union
 
-from ..agents import AgentManager
+from ..agents import AgentManager, Agent
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, Profile, Progress, ProgressDB, Rebuttal, Review
 from .env_base import BaseEnv
@@ -51,7 +51,7 @@ class ReviewWritingEnv(BaseEnv):
             }
 
     @beartype
-    def run(self) -> Generator[Tuple[Progress, Profile], None, None] | None:
+    def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         # Review Writing
         self.reviews: List[Review] = []
         for reviewer in self.reviewers:
@@ -59,7 +59,7 @@ class ReviewWritingEnv(BaseEnv):
                 paper=self.proposal,
                 config=self.config,
             )
-            yield review, reviewer.profile
+            yield review, reviewer
 
         # Rebuttal Submitting
         self.rebuttals: List[Rebuttal] = []
@@ -69,7 +69,7 @@ class ReviewWritingEnv(BaseEnv):
                 review=review,
                 config=self.config,
             )
-            yield rebuttal, self.leader.profile
+            yield rebuttal, self.leader
 
         # Paper Meta Reviewing
         meta_review = self.chair.write_meta_review(
@@ -78,7 +78,7 @@ class ReviewWritingEnv(BaseEnv):
             rebuttals=self.rebuttals,
             config=self.config,
         )
-        yield meta_review, self.chair.profile
+        yield meta_review, self.chair
 
         self.meta_review = meta_review
 

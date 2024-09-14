@@ -4,6 +4,7 @@ from ..agents import AgentManager
 from ..configs import Config
 from ..dbs import Profile, Progress
 from .env_base import BaseEnv
+from ..agents import Agent
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
@@ -25,7 +26,7 @@ class EndEnv(BaseEnv):
     def on_enter(self, **context: Any) -> None:
         return
 
-    def run(self) -> Generator[Tuple[Progress, Profile], None, None] | None:
+    def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         return None
 
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:

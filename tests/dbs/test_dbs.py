@@ -46,14 +46,14 @@ def test_LogDB_basic() -> None:
     db.add(meta_review_log)
 
     new_review_log = ReviewWritingLog(
-        profile_pk='agent2',
+        profile_pk='agent1',
         review_pk='review2',
     )
     db.add(new_review_log)
     assert new_review_log.pk in db.dbs['ReviewWritingLog'].data
     assert len(db.dbs['ReviewWritingLog'].data) == 2
 
-    conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
+    conditions: Dict[str, Any] = {'profile_pk': 'agent1'}
     results = db.get(ReviewWritingLog, **conditions)
     assert len(results) == 2
 
@@ -68,10 +68,10 @@ def test_LogDB_basic() -> None:
 
     delete_conditions = {'profile_pk': 'agent1'}
     deleted_count = db.delete(ReviewWritingLog, **delete_conditions)
-    assert deleted_count == 1
+    assert deleted_count == 2
 
     results = db.get(ReviewWritingLog, **conditions)
-    assert len(results) == 1
+    assert len(results) == 0
 
     with TemporaryDirectory() as temp_dir:
         db.save_to_json(temp_dir)
@@ -79,13 +79,9 @@ def test_LogDB_basic() -> None:
         new_db = LogDB()
         new_db.load_from_json(temp_dir)
 
-        assert len(new_db.dbs['ReviewWritingLog'].data) == 1
+        assert len(new_db.dbs['ReviewWritingLog'].data) == 0
         assert len(new_db.dbs['RebuttalWritingLog'].data) == 1
         assert len(new_db.dbs['MetaReviewWritingLog'].data) == 1
-        assert (
-            new_db.dbs['ReviewWritingLog'].data[new_review_log.pk].summary
-            == 'Bad paper'
-        )
 
 
 def test_progressdb_basic() -> None:

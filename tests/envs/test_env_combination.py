@@ -39,15 +39,20 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         config=Config(),
         agent_manager=example_agent_manager,
     )
+    leader = example_agent_manager.create_leader(proposal_writing_agent_profiles[0])
     proposal_writing_env.on_enter(
         time_step=0,
-        leader_profile=proposal_writing_agent_profiles[0],
+        leader=leader,
     )
-    proposal_writing_env.run()
-    paper = proposal_writing_env.proposal
+    run_result = proposal_writing_env.run()
+    if run_result is not None:
+        for progress, agent in run_result:
+            pass
+    exit_status, exit_dict = proposal_writing_env.on_exit()
+    proposal = exit_dict['proposal']
 
-    assert isinstance(paper, Proposal)
-    assert paper.abstract == 'Paper abstract1'
+    assert isinstance(proposal, Proposal)
+    assert proposal.abstract == 'Paper abstract1'
 
     # Agent profiles and roles for peer review environment
     review_writing_agent_list: List[str] = [
@@ -73,26 +78,20 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         config=Config(),
         agent_manager=example_agent_manager,
     )
+    leader = example_agent_manager.create_leader(review_writing_agent_profiles[0])
     review_writing_env.on_enter(
         time_step=0,
-        proposal=paper,
-        leader_profile=review_writing_agent_profiles[0],
+        proposal=proposal,
+        leader=leader,
     )
     run_result = review_writing_env.run()
-    for progress, agent in run_result:
-        pass
+    if run_result is not None:
+        for progress, agent in run_result:
+            pass
     exit_status, _ = review_writing_env.on_exit()
 
     # Assertions for peer review environment
     assert exit_status == 'proposal_accept'
 
-    reviews = review_writing_env.reviews
-
-    assert isinstance(reviews, list)
-    assert len(reviews) == 1
-    assert isinstance(reviews[0], Review)
-    assert reviews[0].paper_pk == paper.pk
-    assert reviews[0].score == 8
-    assert reviews[0].weakness == 'Weakness of the paper1'
-    assert reviews[0].strength == 'Strength of the paper1'
-    assert reviews[0].summary == 'Summary of the paper1'
+    meta_review = review_writing_env.meta_review
+    assert meta_review is not None

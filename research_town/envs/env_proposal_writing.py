@@ -1,7 +1,7 @@
 from beartype import beartype
 from beartype.typing import Any, Dict, Generator, List, Literal, Tuple, Union
 
-from ..agents import AgentManager
+from ..agents import AgentManager, Agent
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, Profile, Progress, ProgressDB
 from .env_base import BaseEnv
@@ -44,7 +44,7 @@ class ProposalWritingEnv(BaseEnv):
             return 'start_review', {'proposal': self.proposal, 'leader': self.leader}
 
     @beartype
-    def run(self) -> Generator[Tuple[Progress, Profile], None, None]:
+    def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         available_papers = list(self.paper_db.data.values())
 
         # Each member reviews literature
@@ -62,18 +62,18 @@ class ProposalWritingEnv(BaseEnv):
             )
             all_insights.extend(insights)
             for insight in insights:
-                yield insight, member.profile
+                yield insight, member
 
         # Brainstorm ideas
         ideas = []
         for member in self.members:
             idea = member.brainstorm_idea(insights=all_insights, config=self.config)
             ideas.append(idea)
-            yield idea, member.profile
+            yield idea, member
 
         # Leader discusses ideas
         summarized_idea = self.leader.discuss_idea(ideas=ideas, config=self.config)
-        yield summarized_idea, self.leader.profile
+        yield summarized_idea, self.leader
 
         # Write Proposal
         query = summarized_idea.content or self.leader.profile.bio
@@ -87,6 +87,6 @@ class ProposalWritingEnv(BaseEnv):
             papers=related_papers,
             config=self.config,
         )
-        yield proposal, self.leader.profile
+        yield proposal, self.leader
 
         self.proposal = proposal  # Store the proposal for use in on_exit

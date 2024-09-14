@@ -1,7 +1,7 @@
 import os
 from typing import Dict, List, Tuple
 
-from ..agents import Agent
+from ..agents import Agent, AgentManager
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from ..dbs.data import Idea, Insight, MetaReview, Progress, Proposal, Rebuttal, Review
@@ -33,6 +33,7 @@ class BaseEngine:
         self.progress_db = progress_db
         self.log_db = log_db
         self.config = config
+        self.agent_manager = AgentManager(profile_db=profile_db, config=config)
         self.time_step = time_step
 
         self.envs: Dict[str, BaseEnv] = {}
