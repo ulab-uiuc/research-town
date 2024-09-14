@@ -138,7 +138,7 @@ def write_proposal_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> Tuple[str, str]:
+) -> Tuple[str, Dict[str, str]]:
     idea_str = map_idea_to_str(idea)
     papers_str = map_paper_list_to_str(papers)
     template_input = {'idea': idea_str, 'papers': papers_str}
