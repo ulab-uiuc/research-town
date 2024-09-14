@@ -150,7 +150,7 @@ def write_proposal_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
+    )[0]
 
     pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
     matches = re.findall(pattern, proposal, re.DOTALL)
