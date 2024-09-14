@@ -145,7 +145,7 @@ def write_proposal_prompting(
     papers_str = map_paper_list_to_str(papers)
     template_input = {'idea': idea_str, 'papers': papers_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
-    proposal = model_prompting(
+    proposals = model_prompting(
         model_name,
         messages,
         return_num=return_num,
@@ -153,18 +153,21 @@ def write_proposal_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )[0]
+    )
+    q5_results = []
 
-    pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
-    matches = re.findall(pattern, proposal, re.DOTALL)
-    q5_result = {}
+    for proposal in proposals:
+        pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
+        matches = re.findall(pattern, proposal, re.DOTALL)
+        q5_result = {}
 
-    for match in matches:
-        question_number = f'q{match[0]}'
-        answer = match[1].strip()
-        q5_result[question_number] = answer
+        for match in matches:
+            question_number = f'q{match[0]}'
+            answer = match[1].strip()
+            q5_result[question_number] = answer
+        q5_results.append(q5_result)
 
-    return proposal, q5_result
+    return proposals, q5_results
 
 
 @beartype
