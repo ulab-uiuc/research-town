@@ -17,8 +17,8 @@
     ],
     "institute": null,
     "embed": null,
-    "is_leader_candidate": true,
-    "is_member_candidate": false,
+    "is_leader_candidate": false,
+    "is_member_candidate": true,
     "is_reviewer_candidate": false,
     "is_chair_candidate": false
   },
@@ -37,9 +37,9 @@
     "institute": null,
     "embed": null,
     "is_leader_candidate": false,
-    "is_member_candidate": false,
+    "is_member_candidate": true,
     "is_reviewer_candidate": false,
-    "is_chair_candidate": true
+    "is_chair_candidate": false
   },
   "00786bb0-b977-4b9c-81d3-aaf26d4cea13": {
     "pk": "00786bb0-b977-4b9c-81d3-aaf26d4cea13",
@@ -105,8 +105,8 @@
     ],
     "institute": null,
     "embed": null,
-    "is_leader_candidate": false,
-    "is_member_candidate": true,
+    "is_leader_candidate": true,
+    "is_member_candidate": false,
     "is_reviewer_candidate": false,
     "is_chair_candidate": false
   },
@@ -154,9 +154,9 @@
     "institute": null,
     "embed": null,
     "is_leader_candidate": false,
-    "is_member_candidate": true,
+    "is_member_candidate": false,
     "is_reviewer_candidate": false,
-    "is_chair_candidate": false
+    "is_chair_candidate": true
   },
   "ce861789-5287-4931-a554-e8ca419faaed": {
     "pk": "ce861789-5287-4931-a554-e8ca419faaed",
