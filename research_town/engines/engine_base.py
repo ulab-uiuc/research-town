@@ -5,7 +5,7 @@ from ..agents import Agent, AgentManager
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from ..dbs.data import Idea, Insight, MetaReview, Progress, Proposal, Rebuttal, Review
-from ..dbs.logs import (
+from ..dbs.data import (
     IdeaBrainstormLog,
     LiteratureReviewLog,
     MetaReviewWritingLog,

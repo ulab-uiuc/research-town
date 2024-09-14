@@ -32,6 +32,12 @@ class ProfileDB(BaseDB[Profile]):
             bio = write_bio_prompting(
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,
+                model_name=config.param.base_llm,
+                return_num=config.param.return_num,
+                max_token_num=config.param.max_token_num,
+                temperature=config.param.temperature,
+                top_p=config.param.top_p,
+                stream=config.param.stream,
             )[0]
             agent_profile = Profile(
                 name=name,
