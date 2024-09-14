@@ -45,7 +45,7 @@ def run_engine(url: str) -> Generator[str, None, None]:
         log_db=log_db,
         config=config,
     )
-    engine.start(task=intro)
+    engine.start(contexts=[intro])
     while engine.curr_env.name != 'end':
         run_result = engine.curr_env.run()
         if run_result is not None:
