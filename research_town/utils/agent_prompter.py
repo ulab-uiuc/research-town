@@ -166,7 +166,7 @@ def write_review_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> Tuple[str, str, str, int]:
+) -> Tuple[str, str, str, str, int]:
     paper_str = map_paper_to_str(paper)
     summary_template_input = {'paper': paper_str}
     summary_messages = openai_format_prompt_construct(
@@ -251,7 +251,7 @@ def write_review_prompting(
     )
     score = int(score_str[0]) if score_str[0].isdigit() else 0
 
-    return summary, strength, weakness, score, ethical_concerns
+    return summary, strength, weakness, ethical_concerns, score
 
 
 @beartype
@@ -270,7 +270,7 @@ def write_metareview_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> Tuple[str, str, str, bool]:
+) -> Tuple[str, str, str, str, bool]:
     paper_str = map_paper_to_str(paper)
     reviews_str = map_review_list_to_str(reviews)
     rebuttals_str = map_rebuttal_list_to_str(rebuttals)

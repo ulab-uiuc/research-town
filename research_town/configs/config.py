@@ -573,7 +573,7 @@ class AgentPromptTemplateConfig(BaseModel):
         'examples': ['', ''],
         'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
     }
-    write_meta_review_decision: Dict[str, Union[str, List[str]]] = {
+    write_metareview_decision: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please make a review decision to decide whether the following submission should be accepted or rejected by an academic conference. If there are major ethical concerns about this paper, you should Reject the paper. Please indicate your review decision as accept or reject.',
         'examples': ['', ''],
         'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}\nHere is the strength of the submission: {strength}\nHere is the weakness of the submission: {weakness}\nHere is the ethical concern of the submission: {ethical_concerns}',

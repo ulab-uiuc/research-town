@@ -138,7 +138,7 @@ class Agent(object):
     def write_review(self, paper: Proposal, config: Config) -> Review:
         serialized_paper = self.serializer.serialize(paper)
 
-        summary, strength, weakness, score, ethical_concerns = write_review_prompting(
+        summary, strength, weakness, ethical_concerns, score = write_review_prompting(
             paper=serialized_paper,
             model_name=self.model_name,
             summary_prompt_template=config.agent_prompt_template.write_review_summary,
