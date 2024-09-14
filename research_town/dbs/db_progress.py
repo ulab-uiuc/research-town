@@ -1,6 +1,6 @@
 from typing import Optional
 
-from .data import Experiment, Idea, Insight, MetaReview, Proposal, Rebuttal, Review
+from .data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from .db_complex import ComplexDB
 
 
@@ -14,7 +14,6 @@ class ProgressDB(ComplexDB):
                 Review,
                 Rebuttal,
                 MetaReview,
-                Experiment,
             ],
             load_file_path=load_file_path,
         )

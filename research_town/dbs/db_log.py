@@ -1,7 +1,6 @@
 from typing import Optional
 
 from .data import (
-    ExperimentLog,
     IdeaBrainstormLog,
     LiteratureReviewLog,
     MetaReviewWritingLog,
@@ -22,7 +21,6 @@ class LogDB(ComplexDB):
                 ReviewWritingLog,
                 RebuttalWritingLog,
                 MetaReviewWritingLog,
-                ExperimentLog,
             ],
             load_file_path=load_file_path,
         )
