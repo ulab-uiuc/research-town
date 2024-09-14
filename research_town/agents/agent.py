@@ -246,7 +246,7 @@ class Agent(object):
 
         Args:
         proposal (str): The research proposal abstract in the specified format.
-        
+
         Returns:
         Dict[str, str]: A dictionary containing the answers to the five questions, keyed as 'Question1', 'Question2', etc.
         """
@@ -258,3 +258,5 @@ class Agent(object):
             question_number = f'q{match[0]}'
             answer = match[1].strip()
             results[question_number] = answer
+
+        return results
