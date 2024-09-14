@@ -1,6 +1,6 @@
 import os
-
 from typing import Generator
+
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.engines import Engine
