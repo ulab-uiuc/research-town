@@ -87,15 +87,14 @@ class Idea(Progress):
 
 
 class Proposal(Progress):
-    content: Optional[str] = Field(default=None)
+    content: str
     q1: Optional[str] = Field(default=None)
     q2: Optional[str] = Field(default=None)
     q3: Optional[str] = Field(default=None)
     q4: Optional[str] = Field(default=None)
     q5: Optional[str] = Field(default=None)
-    abstract: str
+    abstract: str = Field(default="")
     title: Optional[str] = Field(default=None)
-    content: Optional[str] = Field(default=None)
     conference: Optional[str] = Field(default=None)
     model_config = ConfigDict(extra='allow')
 
