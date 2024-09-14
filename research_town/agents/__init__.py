@@ -1,7 +1,7 @@
-from .agent import ResearchAgent
-from .agent_manager import ResearchAgentManager
+from .agent import Agent
+from .agent_manager import AgentManager
 
 __all__ = [
-    'ResearchAgentManager',
-    'ResearchAgent',
+    'AgentManager',
+    'Agent',
 ]

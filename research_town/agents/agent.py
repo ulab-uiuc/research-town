@@ -25,7 +25,7 @@ from ..utils.serializer import Serializer
 Role = Literal['reviewer', 'leader', 'member', 'chair']
 
 
-class ResearchAgent(object):
+class Agent(object):
     def __init__(
         self,
         agent_profile: Profile,

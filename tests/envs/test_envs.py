@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from research_town.configs import Config
 from research_town.dbs import Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
-from tests.constants.agent_constants import example_research_agent_manager
+from tests.constants.agent_constants import example_agent_manager
 from tests.constants.data_constants import agent_profile_A, research_proposal_A
 from tests.constants.db_constants import (
     example_log_db,
@@ -25,7 +25,7 @@ def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
         progress_db=example_progress_db,
         paper_db=example_paper_db,
         config=Config(),
-        agent_manager=example_research_agent_manager,
+        agent_manager=example_agent_manager,
     )
 
     env.on_enter(
@@ -33,7 +33,9 @@ def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
         proposal=research_proposal_A,
         leader_profile=agent_profile_A,
     )
-    env.run()
+    run_result = env.run()
+    for progress, profile in run_result:
+        pass
     exit_status, _ = env.on_exit()
 
     assert exit_status == 'proposal_accept'
@@ -56,13 +58,15 @@ def test_proposal_writing_env(
         progress_db=example_progress_db,
         paper_db=example_paper_db,
         config=Config(),
-        agent_manager=example_research_agent_manager,
+        agent_manager=example_agent_manager,
     )
     env.on_enter(
         time_step=0,
         leader_profile=agent_profile_A,
     )
-    env.run()
+    run_result = env.run()
+    for progress, profile in run_result:
+        pass
     exit_status, _ = env.on_exit()
     assert env.proposal.abstract is not None
     assert env.proposal.abstract == 'Paper abstract1'

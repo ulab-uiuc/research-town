@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from research_town.agents.agent import ResearchAgent
+from research_town.agents.agent import Agent
 from research_town.configs import Config
 from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from tests.constants.data_constants import (
@@ -21,12 +21,12 @@ def test_review_literature(
     mock_model_prompting: MagicMock,
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
-    research_agent = ResearchAgent(
+    agent = Agent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='leader',
     )
-    research_insight = research_agent.review_literature(
+    research_insight = agent.review_literature(
         papers=[paper_A, paper_B],
         domains=['machine learning', 'graph neural network'],
         config=Config(),
@@ -49,12 +49,12 @@ def test_brainstorm_idea(
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    research_agent = ResearchAgent(
+    agent = Agent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='leader',
     )
-    research_idea = research_agent.brainstorm_idea(
+    research_idea = agent.brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
         config=Config(),
     )
@@ -67,12 +67,12 @@ def test_brainstorm_idea(
 def test_write_proposal(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    research_agent = ResearchAgent(
+    agent = Agent(
         agent_profile=agent_profile_B,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='leader',
     )
-    paper = research_agent.write_proposal(
+    paper = agent.write_proposal(
         idea=research_idea_A,
         papers=[paper_A, paper_B],
         config=Config(),
@@ -86,12 +86,12 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
 def test_write_review(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    research_agent = ResearchAgent(
+    agent = Agent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='reviewer',
     )
-    review = research_agent.write_review(
+    review = agent.write_review(
         paper=research_proposal_A,
         config=Config(),
     )
@@ -106,31 +106,31 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
 def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    research_agent_reviewer = ResearchAgent(
+    agent_reviewer = Agent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='reviewer',
     )
-    research_agent_chair = ResearchAgent(
+    agent_chair = Agent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='chair',
     )
-    research_agent_leader = ResearchAgent(
+    agent_leader = Agent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='leader',
     )
-    review = research_agent_reviewer.write_review(
+    review = agent_reviewer.write_review(
         paper=research_proposal_A,
         config=Config(),
     )
-    rebuttal = research_agent_leader.write_rebuttal(
+    rebuttal = agent_leader.write_rebuttal(
         paper=research_proposal_A,
         review=review,
         config=Config(),
     )
-    meta_review = research_agent_chair.write_meta_review(
+    meta_review = agent_chair.write_meta_review(
         paper=research_proposal_A,
         reviews=[review],
         rebuttals=[rebuttal],
@@ -148,21 +148,21 @@ def test_write_meta_review(mock_model_prompting: MagicMock) -> None:
 def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    research_agent_reviewer = ResearchAgent(
+    agent_reviewer = Agent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='reviewer',
     )
-    research_agent_leader = ResearchAgent(
+    agent_leader = Agent(
         agent_profile=agent_profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='leader',
     )
-    review = research_agent_reviewer.write_review(
+    review = agent_reviewer.write_review(
         paper=research_proposal_A,
         config=Config(),
     )
-    rebuttal = research_agent_leader.write_rebuttal(
+    rebuttal = agent_leader.write_rebuttal(
         paper=research_proposal_A,
         review=review,
         config=Config(),

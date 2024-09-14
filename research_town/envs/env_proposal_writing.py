@@ -1,7 +1,7 @@
 from beartype import beartype
 from beartype.typing import Any, Dict, Generator, List, Literal, Tuple, Union
 
-from ..agents import ResearchAgentManager
+from ..agents import AgentManager
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, Profile, Progress, ProgressDB
 from .env_base import BaseEnv
@@ -18,7 +18,7 @@ class ProposalWritingEnv(BaseEnv):
         progress_db: ProgressDB,
         paper_db: PaperDB,
         config: Config,
-        agent_manager: ResearchAgentManager,
+        agent_manager: AgentManager,
     ) -> None:
         super().__init__(
             name=name,

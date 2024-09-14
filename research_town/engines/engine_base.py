@@ -22,6 +22,7 @@ from ..dbs.logs import (
     ReviewWritingLog,
 )
 from ..envs.env_base import BaseEnv
+from ..agents import Agent
 
 
 class BaseEngine:
@@ -81,8 +82,8 @@ class BaseEngine:
         while self.curr_env.name != 'end':
             run_result = self.curr_env.run()
             if run_result is not None:
-                for progress, profile in run_result:
-                    self.record(progress, profile)
+                for progress, agent in run_result:
+                    self.record(progress, agent)
                     self.time_step += 1
             self.transition()
 
@@ -93,7 +94,7 @@ class BaseEngine:
         self.progress_db.save_to_json(save_file_path, with_embed=with_embed)
         self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
 
-    def record(self, progress: Progress, profile: Profile) -> None:
+    def record(self, progress: Progress, agent: Agent) -> None:
         log_map = {
             Insight: LiteratureReviewLog,
             Idea: IdeaBrainstormLog,
@@ -108,7 +109,7 @@ class BaseEngine:
 
         log = log_class(
             time_step=self.time_step,
-            profile_pk=profile.pk,
+            profile_pk=agent.profile.pk,
             **{f'{progress.__class__.__name__.lower()}_pk': progress.pk},
         )
         self.progress_db.add(progress)
