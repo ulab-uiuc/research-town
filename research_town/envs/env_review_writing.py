@@ -84,7 +84,7 @@ class ReviewWritingEnv(BaseEnv):
             all_rebuttals.append(rebuttals)
 
             # Meta Reviewing for each proposal
-            chair = self.chairs[i]  # Chair for the current proposal
+            chair = self.chair[i]  # Chair for the current proposal
             metareview = chair.write_metareview(
                 paper=proposal,
                 reviews=reviews,
