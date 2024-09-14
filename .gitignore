@@ -168,3 +168,11 @@ cython_debug/
 data/arxiv_ai_papers/paper_info.json
 data/arxiv_ai_papers/output_with_downloaded_references.json
 data/arxiv_ai_papers/output_with_references.json
+
+# database
+examples/research_town_demo_log/*
+
+!examples/research_town_demo_log/PaperDB.json
+!examples/research_town_demo_log/PaperDB.pkl
+!examples/research_town_demo_log/ProfileDB.json
+!examples/research_town_demo_log/ProfileDB.pkl
