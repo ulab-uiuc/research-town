@@ -1,18 +1,10 @@
 import os
 from typing import Dict, List, Tuple
 
+from ..agents import Agent
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from ..dbs.data import (
-    Idea,
-    Insight,
-    MetaReview,
-    Profile,
-    Progress,
-    Proposal,
-    Rebuttal,
-    Review,
-)
+from ..dbs.data import Idea, Insight, MetaReview, Progress, Proposal, Rebuttal, Review
 from ..dbs.logs import (
     IdeaBrainstormLog,
     LiteratureReviewLog,
@@ -22,7 +14,6 @@ from ..dbs.logs import (
     ReviewWritingLog,
 )
 from ..envs.env_base import BaseEnv
-from ..agents import Agent
 
 
 class BaseEngine:
