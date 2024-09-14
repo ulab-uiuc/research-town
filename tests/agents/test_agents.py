@@ -1,3 +1,4 @@
+from typing import List
 from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent import Agent
@@ -77,7 +78,7 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
         papers=[paper_A, paper_B],
         config=Config(),
     )
-    assert isinstance(paper, Proposal)
+    assert isinstance(paper, List[Proposal])
     assert paper.content == 'Paper abstract1'
     assert paper.pk is not None
 

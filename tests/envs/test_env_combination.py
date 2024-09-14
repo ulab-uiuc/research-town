@@ -51,7 +51,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     exit_status, exit_dict = proposal_writing_env.on_exit()
     proposal = exit_dict['proposal']
 
-    assert isinstance(proposal, Proposal)
+    assert isinstance(proposal, List[Proposal])
     assert proposal.content == 'Paper abstract1'
 
     # Agent profiles and roles for peer review environment
