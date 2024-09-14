@@ -102,7 +102,7 @@ class Agent(object):
     @member_required
     def write_proposal(
         self, idea: Idea, papers: List[Paper], config: Config
-    ) -> Proposal:
+    ) -> List[Proposal]:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
 
@@ -118,20 +118,22 @@ class Agent(object):
         else:
             print('write_proposal_strategy not supported, will use default')
             prompt_template = config.agent_prompt_template.write_proposal
-
-        proposal = write_proposal_prompting(
+        proposal_list = []
+        proposals = write_proposal_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
             prompt_template=prompt_template,
-            return_num=config.param.return_num,
+            return_num=config.param.proposal_num,
             max_token_num=config.param.max_token_num,
             temperature=config.param.temperature,
             top_p=config.param.top_p,
             stream=config.param.stream,
-        )[0]
-        q5_result = self.prompting_parser(proposal)
-        return Proposal(content=proposal, q1=q5_result.get('q1', ''), q2=q5_result.get('q2', ''), q3=q5_result.get('q3', ''), q4=q5_result.get('q4', ''), q5=q5_result.get('q5', ''))
+        )
+        for proposal in proposals:
+            q5_result = self.prompting_parser(proposal)
+            proposal_list.append(Proposal(content=proposal, q1=q5_result.get('q1', ''), q2=q5_result.get('q2', ''), q3=q5_result.get('q3', ''), q4=q5_result.get('q4', ''), q5=q5_result.get('q5', '')))
+        return proposal_list
 
     @beartype
     @reviewer_required
@@ -262,19 +264,3 @@ class Agent(object):
             results[question_number] = answer
         
         return results
-    # def prompting_parser(proposal: str, write_proposal_strategy: str) -> str:
-    #     if write_proposal_strategy == 'default':
-    #         return proposal.strip()
-        
-        #Todo new implemention 
-
-        # elif write_proposal_strategy in ['cot', 'react', 'reflexion']:
-        #     match = re.search(r'Abstract:\s*"(.*?)"', proposal, re.DOTALL)
-        #     if match:
-        #         return match.group(1).strip()
-        # else:
-        #     print(f'Unsupported write_proposal_strategy: {write_proposal_strategy}')
-        #     return proposal.strip()
-
-        # print(f'Failed to extract abstract for strategy: {write_proposal_strategy}')
-        # return proposal.strip()

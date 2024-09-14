@@ -8,8 +8,9 @@ param:
   return_num: 1
   reviewer_num: 1
   stream: null
-  temperature: 0.0
+  temperature: 0.8
   top_p: null
   experiment_model_name: gpt-4o-mini
   write_proposal_strategy: default
   max_env_run_num: 1
+  proposal_num: 3

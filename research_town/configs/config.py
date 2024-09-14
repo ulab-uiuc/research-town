@@ -24,6 +24,7 @@ class ParamConfig(BaseModel):
     domain: str = 'computer_vision'
     result_path: str = 'Mixtral-8x7B'
     return_num: Optional[int] = 1
+    proposal_num: int = 1
     max_token_num: Optional[int] = 512
     temperature: Optional[float] = 0.0
     top_p: Optional[float] = None
