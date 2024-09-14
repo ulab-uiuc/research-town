@@ -26,7 +26,8 @@ class EndEnv(BaseEnv):
         return
 
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
-        return None
+        if False:
+            yield
 
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
         return 'end', {}

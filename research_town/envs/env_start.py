@@ -32,7 +32,8 @@ class StartEnv(BaseEnv):
         self.leader = self.agent_manager.find_leader(task)
 
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
-        return None
+        if False:
+            yield
 
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
         return 'start_proposal', {'leader': self.leader}
