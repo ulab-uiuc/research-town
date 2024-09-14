@@ -78,7 +78,7 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
         config=Config(),
     )
     assert isinstance(paper, Proposal)
-    assert paper.abstract == 'Paper abstract1'
+    assert paper.content == 'Paper abstract1'
     assert paper.pk is not None
 
 

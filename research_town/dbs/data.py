@@ -87,6 +87,12 @@ class Idea(Progress):
 
 
 class Proposal(Progress):
+    content: Optional[str] = Field(default=None)
+    q1: Optional[str] = Field(default=None)
+    q2: Optional[str] = Field(default=None)
+    q3: Optional[str] = Field(default=None)
+    q4: Optional[str] = Field(default=None)
+    q5: Optional[str] = Field(default=None)
     abstract: str
     title: Optional[str] = Field(default=None)
     content: Optional[str] = Field(default=None)

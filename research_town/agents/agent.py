@@ -130,8 +130,8 @@ class Agent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )[0]
-        proposal = self.prompting_parser(proposal, write_proposal_strategy)
-        return Proposal(abstract=proposal)
+        q5_result = self.prompting_parser(proposal)
+        return Proposal(content=proposal, q1=q5_result.get('q1', ''), q2=q5_result.get('q2', ''), q3=q5_result.get('q3', ''), q4=q5_result.get('q4', ''), q5=q5_result.get('q5', ''))
 
     @beartype
     @reviewer_required
@@ -232,16 +232,45 @@ class Agent(object):
 
     @staticmethod
     @beartype
-    def prompting_parser(proposal: str, write_proposal_strategy: str) -> str:
-        if write_proposal_strategy == 'default':
-            return proposal.strip()
-        elif write_proposal_strategy in ['cot', 'react', 'reflexion']:
-            match = re.search(r'Abstract:\s*"(.*?)"', proposal, re.DOTALL)
-            if match:
-                return match.group(1).strip()
-        else:
-            print(f'Unsupported write_proposal_strategy: {write_proposal_strategy}')
-            return proposal.strip()
+    def prompting_parser(proposal: str) -> Dict[str, str]:
+        """
+        Parses the research proposal abstract and returns the answers to the five core questions.
 
-        print(f'Failed to extract abstract for strategy: {write_proposal_strategy}')
-        return proposal.strip()
+        Args:
+        proposal (str): The research proposal abstract in the specified format.
+
+        Returns:
+        Dict[str, str]: A dictionary containing the answers to the five questions, keyed as 'Question1', 'Question2', etc.
+        """
+        # Define the regex pattern to match the question blocks, including the end of the text (\Z)
+        pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
+        
+        # Use the regex to find all matches
+        matches = re.findall(pattern, proposal, re.DOTALL)
+        
+        # Prepare a dictionary to store the results
+        results = {}
+        
+        # Iterate over the matches and store them in the dictionary
+        for match in matches:
+            question_number = f"q{match[0]}"
+            answer = match[1].strip()  # strip leading/trailing whitespace
+            results[question_number] = answer
+        
+        return results
+    # def prompting_parser(proposal: str, write_proposal_strategy: str) -> str:
+    #     if write_proposal_strategy == 'default':
+    #         return proposal.strip()
+        
+        #Todo new implemention 
+
+        # elif write_proposal_strategy in ['cot', 'react', 'reflexion']:
+        #     match = re.search(r'Abstract:\s*"(.*?)"', proposal, re.DOTALL)
+        #     if match:
+        #         return match.group(1).strip()
+        # else:
+        #     print(f'Unsupported write_proposal_strategy: {write_proposal_strategy}')
+        #     return proposal.strip()
+
+        # print(f'Failed to extract abstract for strategy: {write_proposal_strategy}')
+        # return proposal.strip()

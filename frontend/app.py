@@ -45,7 +45,7 @@ def get_proposals(introduction: str) -> List[str]:
     )
     engine.run(task=introduction)
     proposals = progress_db.get(Proposal)
-    contents = [proposal.abstract for proposal in proposals]
+    contents = [proposal.content for proposal in proposals]
     return contents
 
 

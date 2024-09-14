@@ -392,13 +392,17 @@ class AgentPromptTemplateConfig(BaseModel):
 
     write_proposal: Dict[str, Union[str, List[str]]] = {
         'intro': '''
-    You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data. The abstract should be structured to answer five core questions:
+    You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data. 
+    The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
 
-    1. What is the problem? - Clearly state the research problem and its significance.
-    2. Why is it interesting and important? - Explain why solving this problem would matter to the broader research community or society.
-    3. Why is it hard? - Discuss the challenges involved and why naive approaches may fail.
-    4. Why hasn't it been solved before? - Identify any gaps in previous research or existing solutions.
-    5. What are the key components of my approach and results? - Outline your methodology and expected outcomes, including any limitations.
+    Here are the five core questions:
+
+    [Question 1] - What is the problem? Clearly state the research problem and its significance.
+    [Question 2] - Why is it interesting and important? Explain why solving this problem would matter to the broader research community or society.
+    [Question 3] - Why is it hard? Discuss the challenges involved and why naive approaches may fail.
+    [Question 4] - Why hasn't it been solved before? Identify any gaps in previous research or existing solutions.
+    [Question 5] - What are the key components of my approach and results? Outline your methodology and expected outcomes, including any limitations.
+    
     Remember the following writing strategy for a successful proposal:
     Writing Strategy:
     
@@ -411,7 +415,7 @@ class AgentPromptTemplateConfig(BaseModel):
     Your goal is to ensure the proposal is clear, concise, and logically structured. 
     ''',
         'examples': ['', ''],
-        'template': 'Here is the idea: {idea}\nHere are the external data, which is a list of abstracts of related papers: {papers}',
+        'template': 'Here is the idea: {idea}\nHere are the external data, which is a list of abstracts of related papers: {papers} . The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). For example, [Question 1]: ....\n [Question 2]: ....\n [Question 3]: ....\n [Question 4]: ....\n [Question 5]: ...., Now, let\'s begin:',
     }
     write_proposal_cot: Dict[str, Union[str, List[str]]] = {
         'intro': "Please write a paper based on the following ideas and external data. You might use two or more of these ideas if they are related and work well together. Let's think step by step.",
