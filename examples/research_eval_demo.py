@@ -25,7 +25,7 @@ def main(
     paper = progress_db.get(Proposal, **conditions)[0]
     reviews = progress_db.get(Review, **conditions)
     rebuttals = progress_db.get(Rebuttal, **conditions)
-    meta_review = progress_db.get(MetaReview, **conditions)[0]
+    metareview = progress_db.get(MetaReview, **conditions)[0]
     config = Config(config_file_path)
     evaluator = BaseEvaluator(model_name=model_name, config=config)
 
@@ -36,14 +36,14 @@ def main(
         paper_quality,
         reviews_quality,
         rebuttals_quality,
-        meta_review_quality,
+        metareview_quality,
     ) = evaluator.pipeline_eval(
         insights=insights,
         idea=idea,
         paper=paper,
         reviews=reviews,
         rebuttals=rebuttals,
-        meta_review=meta_review,
+        metareview=metareview,
     )
 
     # step 4: store the evaluation results to database
@@ -77,8 +77,8 @@ def main(
         )
     progress_db.update(
         MetaReview,
-        updates={'eval_score': meta_review_quality.dimension_scores},
-        pk=meta_review.pk,
+        updates={'eval_score': metareview_quality.dimension_scores},
+        pk=metareview.pk,
     )
 
     # step 5: save the database logs with evaluation results to file

@@ -26,8 +26,8 @@ def test_researchprogress_class_extra_args() -> None:
     assert hasattr(rebuttal, 'additional_attr')
     assert rebuttal.additional_attr == 'extra'
 
-    meta_review = MetaReview(
+    metareview = MetaReview(
         content='Meta Review for a new AI algorithm', additional_attr='extra'
     )
-    assert hasattr(meta_review, 'additional_attr')
-    assert meta_review.additional_attr == 'extra'
+    assert hasattr(metareview, 'additional_attr')
+    assert metareview.additional_attr == 'extra'

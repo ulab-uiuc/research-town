@@ -239,7 +239,7 @@ def write_review_prompting(
 
 
 @beartype
-def write_meta_review_prompting(
+def write_metareview_prompting(
     paper: Dict[str, str],
     reviews: List[Dict[str, Union[int, str]]],
     rebuttals: List[Dict[str, str]],

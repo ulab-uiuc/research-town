@@ -30,8 +30,10 @@ class Engine(BaseEngine):
         transitions = [
             ('start', 'start_proposal', 'proposal_writing'),
             ('proposal_writing', 'start_review', 'review_writing'),
+            ('proposal_writing', 'error', 'end'),
             ('review_writing', 'proposal_accept', 'end'),
             ('review_writing', 'proposal_reject', 'start'),
             ('review_writing', 'parse_error', 'review_writing'),
+            ('review_writing', 'error', 'end'),
         ]
         self.add_transitions(transitions)
