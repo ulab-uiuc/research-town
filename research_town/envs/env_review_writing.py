@@ -44,10 +44,11 @@ class ReviewWritingEnv(BaseEnv):
         self.env_run_num += 1
         if self.env_run_num > self.config.param.max_env_run_num:
             return 'end', {}
-        return 'proposal_accept', {
-            'meta_review': self.meta_review,
-            'leader': self.leader,
-        }
+        else:
+            return 'proposal_accept', {
+                'meta_review': self.meta_review,
+                'leader': self.leader,
+            }
 
     @beartype
     def run(self) -> Generator[Tuple[Progress, Profile], None, None] | None:

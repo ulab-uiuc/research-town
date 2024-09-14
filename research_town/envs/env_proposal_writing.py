@@ -40,7 +40,8 @@ class ProposalWritingEnv(BaseEnv):
         self.env_run_num += 1
         if self.env_run_num > self.config.param.max_env_run_num:
             return 'end', {}
-        return 'start_review', {'proposal': self.proposal, 'leader': self.leader}
+        else:
+            return 'start_review', {'proposal': self.proposal, 'leader': self.leader}
 
     @beartype
     def run(self) -> Generator[Tuple[Progress, Profile], None, None]:
