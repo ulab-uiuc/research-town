@@ -1,4 +1,4 @@
-from research_town.agents.agent_base import ResearchAgent
+from research_town.agents.agent import ResearchAgent
 from research_town.utils.serializer import Serializer
 from tests.constants.data_constants import agent_profile_A
 

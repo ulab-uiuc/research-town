@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from research_town.agents.agent_base import ResearchAgent
+from research_town.agents.agent import ResearchAgent
 from research_town.configs import Config
 from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from tests.constants.data_constants import (

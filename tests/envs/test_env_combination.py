@@ -5,6 +5,7 @@ from beartype.typing import List, Literal
 from research_town.configs import Config
 from research_town.dbs import Profile, ProfileDB, Proposal, Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
+from tests.constants.agent_constants import example_research_agent_manager
 from tests.constants.db_constants import (
     example_log_db,
     example_paper_db,
@@ -35,8 +36,8 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         paper_db=example_paper_db,
         log_db=example_log_db,
         progress_db=example_progress_db,
-        profile_db=temp_profile_db,
         config=Config(),
+        agent_manager=example_research_agent_manager,
     )
     proposal_writing_env.on_enter(
         time_step=0,
@@ -69,8 +70,8 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         paper_db=example_paper_db,
         log_db=example_log_db,
         progress_db=example_progress_db,
-        profile_db=temp_profile_db,
         config=Config(),
+        agent_manager=example_research_agent_manager,
     )
     review_writing_env.on_enter(
         time_step=0,
@@ -78,7 +79,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         leader_profile=review_writing_agent_profiles[0],
     )
     review_writing_env.run()
-    exit_status = review_writing_env.on_exit()
+    exit_status, _ = review_writing_env.on_exit()
 
     # Assertions for peer review environment
     assert exit_status == 'proposal_accept'

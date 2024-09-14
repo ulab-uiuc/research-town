@@ -1,10 +1,18 @@
 import os
-from collections import defaultdict
-from typing import Any, Dict, List, Tuple
+from typing import Dict, List, Tuple
 
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from ..dbs.data import Idea, Insight, MetaReview, Profile, Proposal, Rebuttal, Review
+from ..dbs.data import (
+    Idea,
+    Insight,
+    MetaReview,
+    Profile,
+    Progress,
+    Proposal,
+    Rebuttal,
+    Review,
+)
 from ..dbs.logs import (
     IdeaBrainstormLog,
     LiteratureReviewLog,
@@ -36,7 +44,7 @@ class BaseEngine:
         self.time_step = time_step
 
         self.envs: Dict[str, BaseEnv] = {}
-        self.transitions: Dict[Tuple[BaseEnv, str], BaseEnv] = defaultdict(str)
+        self.transitions: Dict[Tuple[BaseEnv, str], BaseEnv] = {}
         self._setup_dbs()
         self.set_envs()
         self.set_transitions()
@@ -71,17 +79,21 @@ class BaseEngine:
     def run(self, task: str) -> None:
         self.start(task=task)
         while self.curr_env.name != 'end':
-            for progress, profile in self.curr_env.run():
-                self.record(progress, profile)
-                self.time_step += 1
+            run_result = self.curr_env.run()
+            if run_result is not None:
+                for progress, profile in run_result:
+                    self.record(progress, profile)
+                    self.time_step += 1
             self.transition()
 
     def save(self, save_file_path: str, with_embed: bool = False) -> None:
         os.makedirs(save_file_path, exist_ok=True)
-        for db in [self.profile_db, self.paper_db, self.progress_db, self.log_db]:
-            db.save_to_json(save_file_path, with_embed=with_embed)
+        self.profile_db.save_to_json(save_file_path, with_embed=with_embed)
+        self.log_db.save_to_json(save_file_path, with_embed=with_embed)
+        self.progress_db.save_to_json(save_file_path, with_embed=with_embed)
+        self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
 
-    def record(self, progress: Any, profile: Profile) -> None:
+    def record(self, progress: Progress, profile: Profile) -> None:
         log_map = {
             Insight: LiteratureReviewLog,
             Idea: IdeaBrainstormLog,

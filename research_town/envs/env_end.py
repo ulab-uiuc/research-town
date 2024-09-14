@@ -1,7 +1,8 @@
-from beartype.typing import Any, Dict, List, Literal, Tuple, Union
+from beartype.typing import Any, Dict, Generator, List, Literal, Tuple, Union
 
+from ..agents import ResearchAgentManager
 from ..configs import Config
-from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
+from ..dbs import Profile, Progress
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
@@ -12,30 +13,20 @@ class EndEnv(BaseEnv):
     def __init__(
         self,
         name: str,
-        log_db: LogDB,
-        progress_db: ProgressDB,
-        paper_db: PaperDB,
-        profile_db: ProfileDB,
         config: Config,
+        agent_manager: ResearchAgentManager,
     ) -> None:
         super().__init__(
             name=name,
-            log_db=log_db,
-            progress_db=progress_db,
-            paper_db=paper_db,
-            profile_db=profile_db,
             config=config,
         )
+        self.agent_manager = agent_manager
 
-    def on_enter(
-        self,
-        *args: Any,
-        **kwargs: Any,
-    ) -> None:
+    def on_enter(self, **context: Any) -> None:
         return
 
-    def run(self) -> None:
-        return
+    def run(self) -> Generator[Tuple[Progress, Profile], None, None] | None:
+        return None
 
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
         return 'end', {}

@@ -1,9 +1,9 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Literal, Tuple, Union
+from beartype.typing import Any, Dict, Generator, List, Literal, Tuple, Union
 
-from ..agents.agent_base import ResearchAgent
+from ..agents import ResearchAgentManager
 from ..configs import Config
-from ..dbs import Idea, LogDB, PaperDB, Profile, ProfileDB, ProgressDB
+from ..dbs import LogDB, PaperDB, Profile, Progress, ProgressDB
 from .env_base import BaseEnv
 
 LogType = Union[List[Dict[str, str]], None]
@@ -17,52 +17,33 @@ class ProposalWritingEnv(BaseEnv):
         log_db: LogDB,
         progress_db: ProgressDB,
         paper_db: PaperDB,
-        profile_db: ProfileDB,
         config: Config,
+        agent_manager: ResearchAgentManager,
     ) -> None:
         super().__init__(
             name=name,
-            log_db=log_db,
-            progress_db=progress_db,
-            paper_db=paper_db,
-            profile_db=profile_db,
             config=config,
         )
+        self.log_db = log_db
+        self.progress_db = progress_db
+        self.paper_db = paper_db
+        self.agent_manager = agent_manager
 
     @beartype
-    def on_enter(
-        self,
-        *args: Any,
-        **kwargs: Any,
-    ) -> None:
-        leader_profile = kwargs['leader_profile']
-        self.leader = ResearchAgent(
-            agent_profile=leader_profile,
-            agent_role='leader',
-            model_name=self.config.param.base_llm,
-        )
-        member_profiles = self.profile_db.match_member_profiles(
-            leader=leader_profile,
-            member_num=self.config.param.member_num,
-        )
-        self.members = [
-            ResearchAgent(
-                agent_profile=member_profile,
-                agent_role='member',
-                model_name=self.config.param.base_llm,
-            )
-            for member_profile in member_profiles
-        ]
+    def on_enter(self, **context: Any) -> None:
+        leader = context['leader']
+        self.leader = leader
+        self.members = self.agent_manager.find_members(leader.profile)
 
     @beartype
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
         self.env_run_num += 1
-        if self.env_run_num < self.config.param.max_env_run_num:
+        if self.env_run_num > self.config.param.max_env_run_num:
             return 'end', {}
-        return 'start_review', self.exit_data
+        return 'start_review', {'proposal': self.proposal, 'leader': self.leader}
 
     @beartype
-    def run(self) -> Tuple[Any, Profile]:
+    def run(self) -> Generator[Tuple[Progress, Profile], None, None]:
         available_papers = list(self.paper_db.data.values())
 
         # Each member reviews literature
@@ -83,7 +64,7 @@ class ProposalWritingEnv(BaseEnv):
                 yield insight, member.profile
 
         # Brainstorm ideas
-        ideas: List[Idea] = []
+        ideas = []
         for member in self.members:
             idea = member.brainstorm_idea(insights=all_insights, config=self.config)
             ideas.append(idea)
@@ -94,11 +75,7 @@ class ProposalWritingEnv(BaseEnv):
         yield summarized_idea, self.leader.profile
 
         # Write Proposal
-        query = (
-            summarized_idea.content
-            if summarized_idea.content
-            else self.leader.profile.bio
-        )
+        query = summarized_idea.content or self.leader.profile.bio
         related_papers = self.paper_db.match(
             query=query,
             papers=available_papers,
@@ -111,4 +88,4 @@ class ProposalWritingEnv(BaseEnv):
         )
         yield proposal, self.leader.profile
 
-        self.exit_data = {'proposal': proposal, 'leader_profile': self.leader.profile}
+        self.proposal = proposal  # Store the proposal for use in on_exit

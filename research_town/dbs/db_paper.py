@@ -6,10 +6,10 @@ from transformers import BertModel, BertTokenizer
 from ..utils.logger import logger
 from ..utils.paper_collector import get_daily_papers
 from ..utils.retriever import get_embed, rank_topk
-from .data import BaseDBData, Paper
+from .data import Data, Paper
 from .db_base import BaseDB
 
-T = TypeVar('T', bound=BaseDBData)
+T = TypeVar('T', bound=Data)
 
 
 class PaperDB(BaseDB[Paper]):

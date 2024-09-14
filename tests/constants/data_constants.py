@@ -99,19 +99,19 @@ research_review_C = Review(
 
 research_rebuttal_A = Rebuttal(
     paper_pk=paper_A.pk,
-    agent_pk=agent_profile_A.pk,
+    profile_pk=agent_profile_A.pk,
     content='I have revised the paper.',
 )
 
 research_rebuttal_B = Rebuttal(
     paper_pk=paper_A.pk,
-    agent_pk=agent_profile_B.pk,
+    profile_pk=agent_profile_B.pk,
     content='I have revised the paper.',
 )
 
 research_meta_review_A = MetaReview(
     paper_pk=paper_A.pk,
-    agent_pk=agent_profile_A.pk,
+    profile_pk=agent_profile_A.pk,
     decision=True,
     summary='This paper is well-written.',
     strength='Interesting',
@@ -120,7 +120,7 @@ research_meta_review_A = MetaReview(
 
 research_meta_review_B = MetaReview(
     paper_pk=paper_A.pk,
-    agent_pk=agent_profile_B.pk,
+    profile_pk=agent_profile_B.pk,
     decision=True,
     summary='This paper is well-written.',
     strength='Interesting',
@@ -130,26 +130,20 @@ research_meta_review_B = MetaReview(
 agent_paper_review_log = ReviewWritingLog(
     time_step=0,
     paper_pk=paper_A.pk,
-    agent_pk=agent_profile_A.pk,
-    score=5,
-    summary='This paper is well-written.',
-    strength='Interesting',
-    weakness='None',
+    profile_pk=agent_profile_A.pk,
+    review_pk=research_review_A.pk,
 )
 
 agent_paper_meta_review_log = MetaReviewWritingLog(
     time_step=0,
     paper_pk=paper_B.pk,
-    agent_pk=agent_profile_B.pk,
-    decision=True,
-    summary='This paper is well-written.',
-    strength='Interesting',
-    weakness='None',
+    profile_pk=agent_profile_B.pk,
+    meta_review_pk=research_meta_review_B.pk,
 )
 
 agent_paper_rebuttal_log = RebuttalWritingLog(
     time_step=0,
     paper_pk=paper_A.pk,
-    agent_pk=agent_profile_A.pk,
-    rebuttal_content='I have revised the paper.',
+    profile_pk=agent_profile_A.pk,
+    rebuttal_pk=research_rebuttal_A.pk,
 )

@@ -6,9 +6,9 @@ from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 import torch
 
 from ..utils.logger import logger
-from .data import BaseDBData
+from .data import Data
 
-T = TypeVar('T', bound=BaseDBData)
+T = TypeVar('T', bound=Data)
 
 
 class BaseDB(Generic[T]):

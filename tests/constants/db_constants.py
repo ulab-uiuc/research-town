@@ -1,7 +1,6 @@
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 
 from .data_constants import (
-    agent_agent_idea_discussion_log,
     agent_paper_meta_review_log,
     agent_paper_rebuttal_log,
     agent_paper_review_log,
@@ -41,4 +40,3 @@ example_log_db = LogDB()
 example_log_db.add(agent_paper_review_log)
 example_log_db.add(agent_paper_rebuttal_log)
 example_log_db.add(agent_paper_meta_review_log)
-example_log_db.add(agent_agent_idea_discussion_log)
