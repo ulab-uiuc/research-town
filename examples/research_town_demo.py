@@ -19,9 +19,9 @@ def run_sync_experiment(
         'Stefanie Jegelka',
         'Silvio Lattanzi',
         'Rex Ying',
-        'Tim Althoff',
-        'Christos Faloutsos',
-        'Julian McAuley',
+        # 'Tim Althoff',
+        # 'Christos Faloutsos',
+        # 'Julian McAuley',
     ]
     # if save path exists, then load
     config = Config(config_file_path)

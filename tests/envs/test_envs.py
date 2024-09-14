@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.configs import Config
-from research_town.dbs import Review
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
+from tests.constants.agent_constants import example_agent_manager
 from tests.constants.data_constants import agent_profile_A, research_proposal_A
 from tests.constants.db_constants import (
     example_log_db,
@@ -23,23 +23,22 @@ def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
         log_db=example_log_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
-        profile_db=example_profile_db,
         config=Config(),
+        agent_manager=example_agent_manager,
     )
-
+    leader = example_agent_manager.create_leader(agent_profile_A)
     env.on_enter(
-        time_step=0,
         proposal=research_proposal_A,
-        leader_profile=agent_profile_A,
+        leader=leader,
     )
-    env.run()
-    exit_status = env.on_exit()
+    run_result = env.run()
+    if run_result is not None:
+        for progress, agent in run_result:
+            pass
+    exit_status, exit_dict = env.on_exit()
 
     assert exit_status == 'proposal_accept'
-
-    assert isinstance(env.reviews, list)
-    assert len(env.reviews) == 1
-    assert isinstance(env.reviews[0], Review)
+    assert exit_dict['meta_review'] is not None
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -54,15 +53,19 @@ def test_proposal_writing_env(
         log_db=example_log_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
-        profile_db=example_profile_db,
         config=Config(),
+        agent_manager=example_agent_manager,
     )
+    leader = example_agent_manager.create_leader(agent_profile_A)
     env.on_enter(
-        time_step=0,
-        leader_profile=agent_profile_A,
+        leader=leader,
     )
-    env.run()
-    exit_status = env.on_exit()
-    assert env.proposal.abstract is not None
-    assert env.proposal.abstract == 'Paper abstract1'
+    run_result = env.run()
+    if run_result is not None:
+        for progress, agent in run_result:
+            pass
+    exit_status, exit_dict = env.on_exit()
+    proposal = exit_dict['proposal']
+    assert proposal.abstract is not None
+    assert proposal.abstract == 'Paper abstract1'
     assert exit_status == 'start_review'

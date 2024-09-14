@@ -10,7 +10,6 @@ from beartype.typing import Any, Dict, List
 from research_town.configs import Config
 from research_town.dbs import (
     Idea,
-    IdeaDiscussionLog,
     LogDB,
     MetaReviewWritingLog,
     Paper,
@@ -30,81 +29,49 @@ from ..constants.db_constants import example_profile_db
 def test_LogDB_basic() -> None:
     db = LogDB()
     review_log = ReviewWritingLog(
-        paper_pk='paper1',
-        agent_pk='agent1',
-        score=5,
-        summary='Good paper',
-        strength='Interesting',
-        weakness='None',
+        profile_pk='agent1',
+        review_pk='review1',
     )
     rebuttal_log = RebuttalWritingLog(
-        paper_pk='paper1',
-        agent_pk='agent1',
-        rebuttal_content='I disagree with the review',
+        profile_pk='agent1',
+        rebuttal_pk='rebuttal1',
     )
     meta_review_log = MetaReviewWritingLog(
-        paper_pk='paper1',
-        agent_pk='agent1',
-        decision=True,
-        summary='Good paper',
-        strength='Interesting',
-        weakness='None',
-    )
-    discussion_log = IdeaDiscussionLog(
-        agent_from_pk='agent1',
-        agent_from_name='Rex Ying',
-        agent_to_pk='agent2',
-        agent_to_name='John Doe',
-        message="Let's discuss this paper",
+        profile_pk='agent1',
+        meta_review_pk='meta_review1',
     )
 
     db.add(review_log)
     db.add(rebuttal_log)
     db.add(meta_review_log)
-    db.add(discussion_log)
 
     new_review_log = ReviewWritingLog(
-        paper_pk='paper1',
-        agent_pk='agent2',
-        score=4,
-        summary='Interesting paper',
-        strength='Good',
-        weakness='None',
+        profile_pk='agent1',
+        review_pk='review2',
     )
     db.add(new_review_log)
     assert new_review_log.pk in db.dbs['ReviewWritingLog'].data
     assert len(db.dbs['ReviewWritingLog'].data) == 2
 
-    conditions: Dict[str, Any] = {'paper_pk': 'paper1'}
+    conditions: Dict[str, Any] = {'profile_pk': 'agent1'}
     results = db.get(ReviewWritingLog, **conditions)
     assert len(results) == 2
-    assert results[0].summary == 'Good paper'
-    assert results[0].strength == 'Interesting'
-    assert results[0].weakness == 'None'
 
-    updates = {
-        'score': 3,
-        'summary': 'Bad paper',
-        'strength': 'None',
-        'weakness': 'Really?',
-    }
-    updated_conditions = {'paper_pk': 'paper1'}
+    updates = {'review_pk': 'review2'}
+    updated_conditions = {'profile_pk': 'agent1'}
     updated_count = db.update(ReviewWritingLog, updates, **updated_conditions)
     assert updated_count == 2
 
     updated_log = db.get(ReviewWritingLog, **conditions)[0]
 
-    assert updated_log.score == 3
-    assert updated_log.summary == 'Bad paper'
-    assert updated_log.strength == 'None'
-    assert updated_log.weakness == 'Really?'
+    assert updated_log.review_pk == 'review2'
 
-    delete_conditions = {'paper_pk': 'paper1', 'agent_pk': 'agent1'}
+    delete_conditions = {'profile_pk': 'agent1'}
     deleted_count = db.delete(ReviewWritingLog, **delete_conditions)
-    assert deleted_count == 1
+    assert deleted_count == 2
 
     results = db.get(ReviewWritingLog, **conditions)
-    assert len(results) == 1
+    assert len(results) == 0
 
     with TemporaryDirectory() as temp_dir:
         db.save_to_json(temp_dir)
@@ -112,14 +79,9 @@ def test_LogDB_basic() -> None:
         new_db = LogDB()
         new_db.load_from_json(temp_dir)
 
-        assert len(new_db.dbs['ReviewWritingLog'].data) == 1
+        assert len(new_db.dbs['ReviewWritingLog'].data) == 0
         assert len(new_db.dbs['RebuttalWritingLog'].data) == 1
         assert len(new_db.dbs['MetaReviewWritingLog'].data) == 1
-        assert len(new_db.dbs['IdeaDiscussionLog'].data) == 1
-        assert (
-            new_db.dbs['ReviewWritingLog'].data[new_review_log.pk].summary
-            == 'Bad paper'
-        )
 
 
 def test_progressdb_basic() -> None:
@@ -351,14 +313,14 @@ def test_agent_file() -> None:
     with open('data/test/ProfileDB.pkl', 'rb') as f:
         data_embed_test = pickle.load(f)
     assert db.data_embed.keys() == data_embed_test.keys()
-    for agent_pk in db.data_embed:
-        assert torch.equal(db.data_embed[agent_pk], data_embed_test[agent_pk])
+    for profile_pk in db.data_embed:
+        assert torch.equal(db.data_embed[profile_pk], data_embed_test[profile_pk])
     # load with embeddings
     db_test = ProfileDB()
     db_test.load_from_json('data/test', with_embed=True)
     assert db.data_embed.keys() == db_test.data_embed.keys()
-    for agent_pk in db.data_embed:
-        assert torch.equal(db.data_embed[agent_pk], db_test.data_embed[agent_pk])
+    for profile_pk in db.data_embed:
+        assert torch.equal(db.data_embed[profile_pk], db_test.data_embed[profile_pk])
     # delete test file
     shutil.rmtree('data/test')
 

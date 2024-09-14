@@ -1,9 +1,18 @@
 import os
-from collections import defaultdict
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Dict, List, Tuple
 
+from ..agents import Agent, AgentManager
 from ..configs import Config
 from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
+from ..dbs.data import Idea, Insight, MetaReview, Progress, Proposal, Rebuttal, Review
+from ..dbs.logs import (
+    IdeaBrainstormLog,
+    LiteratureReviewLog,
+    MetaReviewWritingLog,
+    ProposalWritingLog,
+    RebuttalWritingLog,
+    ReviewWritingLog,
+)
 from ..envs.env_base import BaseEnv
 
 
@@ -24,20 +33,19 @@ class BaseEngine:
         self.progress_db = progress_db
         self.log_db = log_db
         self.config = config
+        self.agent_manager = AgentManager(profile_db=profile_db, config=config)
         self.time_step = time_step
 
         self.envs: Dict[str, BaseEnv] = {}
-        self.transition_funcs: Dict[Tuple[str, str], Callable[..., Any]] = {}
-        self.transitions: Dict[Tuple[str, str], str] = defaultdict(str)
-        self.set_dbs()
+        self.transitions: Dict[Tuple[BaseEnv, str], BaseEnv] = {}
+        self._setup_dbs()
         self.set_envs()
         self.set_transitions()
-        self.set_transition_funcs()
 
-    def set_dbs(self) -> None:
+    def _setup_dbs(self) -> None:
         self.profile_db.reset_role_avaialbility()
-        self.log_db.set_project_name(self.project_name)
-        self.progress_db.set_project_name(self.project_name)
+        for db in [self.log_db, self.progress_db]:
+            db.set_project_name(self.project_name)
 
     def set_envs(self) -> None:
         pass
@@ -45,68 +53,56 @@ class BaseEngine:
     def set_transitions(self) -> None:
         pass
 
-    def set_transition_funcs(self) -> None:
-        pass
-
     def add_envs(self, envs: List[BaseEnv]) -> None:
-        for env in envs:
-            self.envs[env.name] = env
-
-    def add_transition_funcs(
-        self, funcs: List[Tuple[str, Callable[..., Any], str]]
-    ) -> None:
-        for src, func, dst in funcs:
-            self.transition_funcs[src, dst] = func
+        self.envs.update({env.name: env for env in envs})
 
     def add_transitions(self, transitions: List[Tuple[str, str, str]]) -> None:
         for src, trigger, dst in transitions:
-            self.transitions[src, trigger] = dst
+            self.transitions[self.envs[src], trigger] = self.envs[dst]
 
-    def start(self, task: str, env_name: str = 'start') -> None:
-        if env_name not in self.envs:
-            raise ValueError(f'env {env_name} not found')
-
-        self.curr_env_name = env_name
-        self.curr_env = self.envs[env_name]
-        self.curr_env.on_enter(
-            time_step=self.time_step,
-            kwargs={'task': task},
-        )
+    def start(self, task: str) -> None:
+        self.curr_env = self.envs['start']
+        self.curr_env.on_enter(task=task)
 
     def transition(self) -> None:
-        trigger = self.curr_env.on_exit()
-        next_env_name = self.transitions[self.curr_env_name, trigger]
-        if (self.curr_env_name, next_env_name) in self.transition_funcs:
-            input_data = self.transition_funcs[(self.curr_env_name, next_env_name)](
-                self.curr_env
-            )
-        else:
-            raise ValueError(
-                f'no transition function from {self.curr_env_name} to {next_env_name}'
-            )
-
-        self.curr_env_name = next_env_name
-        self.curr_env = self.envs[self.curr_env_name]
-        self.curr_env.on_enter(
-            time_step=self.time_step,
-            **input_data,
-        )
+        trigger, exit_data = self.curr_env.on_exit()
+        self.curr_env = self.transitions[(self.curr_env, trigger)]
+        self.curr_env.on_enter(**exit_data)
 
     def run(self, task: str) -> None:
         self.start(task=task)
-        while self.curr_env_name != 'end':
-            self.curr_env.run()
-            self.time_step += 1
-            self.transition()
+        self.transition()
+        while self.curr_env.name != 'end':
+            run_result = self.curr_env.run()
+            if run_result is not None:
+                for progress, agent in run_result:
+                    self.record(progress, agent)
+                    self.time_step += 1
 
     def save(self, save_file_path: str, with_embed: bool = False) -> None:
-        if not os.path.exists(save_file_path):
-            os.makedirs(save_file_path)
-
+        os.makedirs(save_file_path, exist_ok=True)
         self.profile_db.save_to_json(save_file_path, with_embed=with_embed)
+        self.log_db.save_to_json(save_file_path, with_embed=with_embed)
+        self.progress_db.save_to_json(save_file_path, with_embed=with_embed)
         self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
-        self.progress_db.save_to_json(save_file_path)
-        self.log_db.save_to_json(save_file_path)
 
-    def load(self) -> None:
-        pass
+    def record(self, progress: Progress, agent: Agent) -> None:
+        log_map = {
+            Insight: LiteratureReviewLog,
+            Idea: IdeaBrainstormLog,
+            Proposal: ProposalWritingLog,
+            Review: ReviewWritingLog,
+            Rebuttal: RebuttalWritingLog,
+            MetaReview: MetaReviewWritingLog,
+        }
+        log_class = log_map.get(type(progress))
+        if not log_class:
+            raise ValueError(f'Unrecognized progress type: {type(progress)}')
+
+        log = log_class(
+            time_step=self.time_step,
+            profile_pk=agent.profile.pk,
+            **{f'{progress.__class__.__name__.lower()}_pk': progress.pk},
+        )
+        self.progress_db.add(progress)
+        self.log_db.add(log)

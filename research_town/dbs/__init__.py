@@ -3,13 +3,14 @@ from .data import (
     ExperimentLog,
     Idea,
     IdeaBrainstormingLog,
-    IdeaDiscussionLog,
     Insight,
     LiteratureReviewLog,
+    Log,
     MetaReview,
     MetaReviewWritingLog,
     Paper,
     Profile,
+    Progress,
     Proposal,
     ProposalWritingLog,
     Rebuttal,
@@ -17,13 +18,14 @@ from .data import (
     Review,
     ReviewWritingLog,
 )
+from .db_base import BaseDB
 from .db_log import LogDB
 from .db_paper import PaperDB
 from .db_profile import ProfileDB
 from .db_progress import ProgressDB
 
 __all__ = [
-    'IdeaDiscussionLog',
+    'Log',
     'IdeaBrainstormingLog',
     'LiteratureReviewLog',
     'ProposalWritingLog',
@@ -31,6 +33,7 @@ __all__ = [
     'RebuttalWritingLog',
     'ReviewWritingLog',
     'ExperimentLog',
+    'Progress',
     'Paper',
     'Profile',
     'Idea',
@@ -44,4 +47,5 @@ __all__ = [
     'PaperDB',
     'ProfileDB',
     'ProgressDB',
+    'BaseDB',
 ]

@@ -1,9 +1,9 @@
 from typing import Any, Dict, List, Optional, Type, TypeVar, Union
 
-from .data import BaseDBData
+from .data import Data
 from .db_base import BaseDB
 
-T = TypeVar('T', bound=BaseDBData)
+T = TypeVar('T', bound=Data)
 
 
 class ComplexDB:
@@ -67,9 +67,9 @@ class ComplexDB:
         else:
             raise ValueError(f'Unsupported type: {class_name}')
 
-    def save_to_json(self, save_path: str) -> None:
+    def save_to_json(self, save_path: str, with_embed: bool = False) -> None:
         for class_name, db in self.dbs.items():
-            db.save_to_json(save_path, class_name=class_name)
+            db.save_to_json(save_path, with_embed=with_embed, class_name=class_name)
 
     def save_to_pkl(self, save_path: str) -> None:
         for class_name, db in self.dbs.items():

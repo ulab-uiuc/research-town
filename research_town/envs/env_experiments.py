@@ -8,7 +8,7 @@ from aider.io import InputOutput
 from aider.models import Model
 
 from ..configs import Config
-from ..dbs import Experiment, ExperimentLog, LogDB, PaperDB, ProgressDB, Proposal
+from ..dbs import Experiment, LogDB, PaperDB, ProgressDB, Proposal
 
 LogType = Union[List[Dict[str, str]], None]
 Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
@@ -180,11 +180,11 @@ class ExperimentEnv:
             exec_result=self.result,
         )
         self.progress_db.add(self.experiment)
-        self.log_db.add(
-            ExperimentLog(
-                time_step=time_step, paper_pk=paper_pk, experiment_pk=self.experiment.pk
-            )
-        )
+        # self.log_db.add(
+        #    ExperimentLog(
+        #        time_step=time_step, paper_pk=paper_pk, experiment_pk=self.experiment.pk
+        #    )
+        # )
 
         # return self.result
 
