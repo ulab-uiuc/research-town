@@ -1,5 +1,3 @@
-import re
-
 from beartype import beartype
 from beartype.typing import Dict, List, Literal, Optional
 
@@ -124,7 +122,7 @@ class Agent(object):
             print('write_proposal_strategy not supported, will use default')
             prompt_template = config.agent_prompt_template.write_proposal
 
-        proposal = write_proposal_prompting(
+        proposal, q5_result = write_proposal_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
@@ -134,8 +132,7 @@ class Agent(object):
             temperature=config.param.temperature,
             top_p=config.param.top_p,
             stream=config.param.stream,
-        )[0]
-        q5_result = self.prompting_parser(proposal)
+        )
         return Proposal(
             content=proposal,
             q1=q5_result.get('q1', ''),
@@ -247,26 +244,3 @@ class Agent(object):
             author_pk=self.profile.pk,
             content=rebuttal_content,
         )
-
-    @staticmethod
-    @beartype
-    def prompting_parser(proposal: str) -> Dict[str, str]:
-        """
-        Parses the research proposal abstract and returns the answers to the five core questions.
-
-        Args:
-        proposal (str): The research proposal abstract in the specified format.
-
-        Returns:
-        Dict[str, str]: A dictionary containing the answers to the five questions, keyed as 'Question1', 'Question2', etc.
-        """
-        pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
-        matches = re.findall(pattern, proposal, re.DOTALL)
-        results = {}
-
-        for match in matches:
-            question_number = f'q{match[0]}'
-            answer = match[1].strip()
-            results[question_number] = answer
-
-        return results

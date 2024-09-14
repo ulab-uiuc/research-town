@@ -122,7 +122,7 @@ class ProfileDB(BaseDB[Profile]):
     ) -> List[Profile]:
         reviewers = self.search_profiles(
             condition={'is_reviewer_candidate': True},
-            query=proposal.content,
+            query=proposal.content if proposal.content else '',
             num=reviewer_num,
             update_fields={
                 'is_leader_candidate': False,
