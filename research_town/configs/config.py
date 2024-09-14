@@ -399,6 +399,14 @@ class AgentPromptTemplateConfig(BaseModel):
     3. Why is it hard? - Discuss the challenges involved and why naive approaches may fail.
     4. Why hasn't it been solved before? - Identify any gaps in previous research or existing solutions.
     5. What are the key components of my approach and results? - Outline your methodology and expected outcomes, including any limitations.
+    Remember the following writing strategy for a successful proposal:
+    Writing Strategy:
+    
+    - Context: Begin by introducing the broader field to give readers an overview. Then, gradually narrow the focus to the specific problem or knowledge gap that this research addresses. A well-crafted context should clearly distinguish the study's contributions from the current literature, identifying what is missing (the specific gap) and why filling this gap is important in the broader context of the field.
+    
+    - Content: After establishing the context, explain how this study fills the identified gap. Begin with a description of the methods or approaches used, followed by a concise summary of the key findings.
+    
+    - Conclusion: Finally, interpret the results in a way that answers the research question posed in the context. If applicable, you may include a broader implications section that highlights how the findings advance the field or open new avenues for future research.
 
     Your goal is to ensure the proposal is clear, concise, and logically structured. 
     ''',
