@@ -1,9 +1,9 @@
-# frontend/backend/main.py
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, JSONResponse
+from typing import Union
 
-from backend.generator import run_engine
+from .generator_func import run_engine
 
 app = FastAPI()
 
@@ -15,13 +15,12 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-
 @app.post('/process')
-async def process_url(request: Request):
+async def process_url(request: Request) -> Response:
     data = await request.json()
     url = data.get('url')
     if not url:
-        return {'error': 'URL is required'}
+        return JSONResponse({'error': 'URL is required'}, status_code=400)
 
     generator = run_engine(url)
     return StreamingResponse(generator, media_type='text/plain')

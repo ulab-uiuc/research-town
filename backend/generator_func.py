@@ -1,13 +1,17 @@
 import os
 
+from typing import Generator
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_intro
 
 
-def run_engine(url: str):
+def run_engine(url: str) -> Generator[str, None, None]:
     intro = get_intro(url)
+    if intro is None:
+        yield 'Error: invalid URL\n'
+        return
     config_file_path = '../configs'
     save_file_path = '../examples/research_town_demo_log'
     agent_names = [
@@ -49,4 +53,3 @@ def run_engine(url: str):
                 yield 'hello, world\n'
                 engine.time_step += 1
         engine.transition()
-    return None
