@@ -131,7 +131,14 @@ class Agent(object):
             stream=config.param.stream,
         )[0]
         q5_result = self.prompting_parser(proposal)
-        return Proposal(content=proposal, q1=q5_result.get('q1', ''), q2=q5_result.get('q2', ''), q3=q5_result.get('q3', ''), q4=q5_result.get('q4', ''), q5=q5_result.get('q5', ''))
+        return Proposal(
+            content=proposal,
+            q1=q5_result.get('q1', ''),
+            q2=q5_result.get('q2', ''),
+            q3=q5_result.get('q3', ''),
+            q4=q5_result.get('q4', ''),
+            q5=q5_result.get('q5', ''),
+        )
 
     @beartype
     @reviewer_required
@@ -175,21 +182,23 @@ class Agent(object):
         serialized_reviews = self.serializer.serialize(reviews)
         serialized_rebuttals = self.serializer.serialize(rebuttals)
 
-        summary, strength, weakness, ethical_concerns, decision = write_metareview_prompting(
-            paper=serialized_paper,
-            reviews=serialized_reviews,
-            rebuttals=serialized_rebuttals,
-            model_name=self.model_name,
-            summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
-            strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
-            weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
-            ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
-            decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
-            return_num=config.param.return_num,
-            max_token_num=config.param.max_token_num,
-            temperature=config.param.temperature,
-            top_p=config.param.top_p,
-            stream=config.param.stream,
+        summary, strength, weakness, ethical_concerns, decision = (
+            write_metareview_prompting(
+                paper=serialized_paper,
+                reviews=serialized_reviews,
+                rebuttals=serialized_rebuttals,
+                model_name=self.model_name,
+                summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
+                strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
+                weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
+                ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
+                decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
+                return_num=config.param.return_num,
+                max_token_num=config.param.max_token_num,
+                temperature=config.param.temperature,
+                top_p=config.param.top_p,
+                stream=config.param.stream,
+            )
         )
 
         return MetaReview(
@@ -249,10 +258,10 @@ class Agent(object):
         pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
         matches = re.findall(pattern, proposal, re.DOTALL)
         results = {}
-        
+
         for match in matches:
-            question_number = f"q{match[0]}"
+            question_number = f'q{match[0]}'
             answer = match[1].strip()
             results[question_number] = answer
-        
+
         return results

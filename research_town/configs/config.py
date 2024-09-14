@@ -391,8 +391,8 @@ class AgentPromptTemplateConfig(BaseModel):
     }
 
     write_proposal: Dict[str, Union[str, List[str]]] = {
-        'intro': '''
-    You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data. 
+        'intro': """
+    You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
     The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
 
     Here are the five core questions:
@@ -402,20 +402,20 @@ class AgentPromptTemplateConfig(BaseModel):
     [Question 3] - Why is it hard? Discuss the challenges involved and why naive approaches may fail.
     [Question 4] - Why hasn't it been solved before? Identify any gaps in previous research or existing solutions.
     [Question 5] - What are the key components of my approach and results? Outline your methodology and expected outcomes, including any limitations.
-    
+
     Remember the following writing strategy for a successful proposal:
     Writing Strategy:
-    
+
     - Context: Begin by introducing the broader field to give readers an overview. Then, gradually narrow the focus to the specific problem or knowledge gap that this research addresses. A well-crafted context should clearly distinguish the study's contributions from the current literature, identifying what is missing (the specific gap) and why filling this gap is important in the broader context of the field.
-    
+
     - Content: After establishing the context, explain how this study fills the identified gap. Begin with a description of the methods or approaches used, followed by a concise summary of the key findings.
-    
+
     - Conclusion: Finally, interpret the results in a way that answers the research question posed in the context. If applicable, you may include a broader implications section that highlights how the findings advance the field or open new avenues for future research.
 
-    Your goal is to ensure the proposal is clear, concise, and logically structured. 
-    ''',
+    Your goal is to ensure the proposal is clear, concise, and logically structured.
+    """,
         'examples': ['', ''],
-        'template': 'Here is the idea: {idea}\nHere are the external data, which is a list of abstracts of related papers: {papers} . The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). For example, [Question 1]: ....\n [Question 2]: ....\n [Question 3]: ....\n [Question 4]: ....\n [Question 5]: ...., Now, let\'s begin:',
+        'template': "Here is the idea: {idea}\nHere are the external data, which is a list of abstracts of related papers: {papers} . The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). For example, [Question 1]: ....\n [Question 2]: ....\n [Question 3]: ....\n [Question 4]: ....\n [Question 5]: ...., Now, let's begin:",
     }
     write_proposal_cot: Dict[str, Union[str, List[str]]] = {
         'intro': "Please write a paper based on the following ideas and external data. You might use two or more of these ideas if they are related and work well together. Let's think step by step.",
@@ -500,7 +500,7 @@ class AgentPromptTemplateConfig(BaseModel):
     }
 
     write_review_ethical: Dict[str, Union[str, List[str]]] = {
-        'intro': '''Please conduct an ethical review of the following paper submission for an academic conference. Consider these key ethical concerns:
+        'intro': """Please conduct an ethical review of the following paper submission for an academic conference. Consider these key ethical concerns:
 
     1. Academic integrity: Check for any signs of plagiarism or improper citation. This is crucial for maintaining the integrity of academic research.
 
@@ -533,7 +533,7 @@ class AgentPromptTemplateConfig(BaseModel):
     - "This paper raises significant ethical concerns in the area(s) of [specific concern(s)]." OR
     - "This paper does not raise significant ethical concerns."
 
-    Provide a brief explanation for your conclusion, noting which specific guideline(s) informed your decision.''',
+    Provide a brief explanation for your conclusion, noting which specific guideline(s) informed your decision.""",
         'examples': ['', ''],
         'template': 'Here is the submission: {paper}\nHere is the summary of the paper: {summary}',
     }
@@ -559,7 +559,7 @@ class AgentPromptTemplateConfig(BaseModel):
         'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
     }
     write_metareview_ethical: Dict[str, Union[str, List[str]]] = {
-        'intro': '''Please write an ethical meta-review for the following submission to an academic conference. Your meta-review should summarize the ethical considerations raised in the reviews, author rebuttals, and any ethical review conducted. Consider the following aspects:
+        'intro': """Please write an ethical meta-review for the following submission to an academic conference. Your meta-review should summarize the ethical considerations raised in the reviews, author rebuttals, and any ethical review conducted. Consider the following aspects:
 
     1. Academic integrity: Any concerns about plagiarism or improper citations.
     2. Ethical implications of AI/ML technologies: Potential risks, harms, or long-term implications of the proposed methods or models.
@@ -573,7 +573,7 @@ class AgentPromptTemplateConfig(BaseModel):
     - "This paper has minor ethical concerns that should be addressed but do not prevent publication."
     - "This paper does not raise significant ethical concerns and is ethically sound for publication."
 
-    Provide a brief explanation for your conclusion, noting which specific ethical aspects informed your decision.''',
+    Provide a brief explanation for your conclusion, noting which specific ethical aspects informed your decision.""",
         'examples': ['', ''],
         'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
     }
