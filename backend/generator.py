@@ -5,6 +5,7 @@ from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_intro
 
+
 def run_engine(url: str):
     intro = get_intro(url)
     config_file_path = '../configs'

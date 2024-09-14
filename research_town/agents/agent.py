@@ -175,21 +175,23 @@ class Agent(object):
         serialized_reviews = self.serializer.serialize(reviews)
         serialized_rebuttals = self.serializer.serialize(rebuttals)
 
-        summary, strength, weakness, ethical_concerns, decision = write_metareview_prompting(
-            paper=serialized_paper,
-            reviews=serialized_reviews,
-            rebuttals=serialized_rebuttals,
-            model_name=self.model_name,
-            summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
-            strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
-            weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
-            ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
-            decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
-            return_num=config.param.return_num,
-            max_token_num=config.param.max_token_num,
-            temperature=config.param.temperature,
-            top_p=config.param.top_p,
-            stream=config.param.stream,
+        summary, strength, weakness, ethical_concerns, decision = (
+            write_metareview_prompting(
+                paper=serialized_paper,
+                reviews=serialized_reviews,
+                rebuttals=serialized_rebuttals,
+                model_name=self.model_name,
+                summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
+                strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
+                weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
+                ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
+                decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
+                return_num=config.param.return_num,
+                max_token_num=config.param.max_token_num,
+                temperature=config.param.temperature,
+                top_p=config.param.top_p,
+                stream=config.param.stream,
+            )
         )
 
         return MetaReview(
