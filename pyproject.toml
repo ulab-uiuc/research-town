@@ -23,7 +23,6 @@ lxml = { version = "*", optional = true }
 tqdm = { version = "*", optional = true }
 uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
-aider-chat = "=0.50.1"
 
 
 [tool.poetry.group.dev.dependencies]

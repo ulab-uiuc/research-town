@@ -28,7 +28,6 @@ class ParamConfig(BaseModel):
     temperature: Optional[float] = 0.0
     top_p: Optional[float] = None
     stream: Optional[bool] = None
-    experiment_model_name: Optional[str] = 'gpt-4o-mini'
     write_proposal_strategy: str = 'default'  # default, cot, react, reflexion
     max_env_run_num: int = 1
 
