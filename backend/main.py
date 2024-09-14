@@ -2,7 +2,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-from generator_function import data_generator
+from backend.generator import run_engine
 
 app = FastAPI()
 
@@ -21,5 +21,5 @@ async def process_url(request: Request):
     if not url:
         return {"error": "URL is required"}
 
-    generator = data_generator(url)
+    generator = run_engine(url)
     return StreamingResponse(generator, media_type="text/plain")

@@ -161,3 +161,14 @@ def get_paper_content(
     except requests.exceptions.RequestException:
         pass
     return section_contents, table_captions, figure_captions, bibliography
+
+
+def get_intro(url: str) -> Optional[str]:
+    contents = get_paper_content(url)
+    if contents is None or contents[0] is None:
+        return None
+    section_contents = contents[0]
+    for section_name, section_content in section_contents.items():
+        if 'Introduction' in section_name:
+            return section_content
+    return None
