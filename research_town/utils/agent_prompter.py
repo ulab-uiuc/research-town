@@ -223,13 +223,12 @@ def write_review_prompting(
         stream,
     )[0]
 
-
     score_template_input = {
         'paper': paper_str,
         'summary': summary,
         'strength': strength,
         'weakness': weakness,
-        'ethical_concerns': ethical_concerns
+        'ethical_concerns': ethical_concerns,
     }
     score_messages = openai_format_prompt_construct(
         score_prompt_template, score_template_input
@@ -355,7 +354,7 @@ def write_metareview_prompting(
         'summary': summary,
         'strength': strength,
         'weakness': weakness,
-        'ethical_concerns': ethical_concerns
+        'ethical_concerns': ethical_concerns,
     }
     decision_messages = openai_format_prompt_construct(
         decision_prompt_template, decision_template_input

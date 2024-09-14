@@ -177,21 +177,23 @@ class Agent(object):
         serialized_reviews = self.serializer.serialize(reviews)
         serialized_rebuttals = self.serializer.serialize(rebuttals)
 
-        summary, strength, weakness, ethical_concerns, decision = write_metareview_prompting(
-            paper=serialized_paper,
-            reviews=serialized_reviews,
-            rebuttals=serialized_rebuttals,
-            model_name=self.model_name,
-            summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
-            strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
-            weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
-            ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
-            decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
-            return_num=config.param.return_num,
-            max_token_num=config.param.max_token_num,
-            temperature=config.param.temperature,
-            top_p=config.param.top_p,
-            stream=config.param.stream,
+        summary, strength, weakness, ethical_concerns, decision = (
+            write_metareview_prompting(
+                paper=serialized_paper,
+                reviews=serialized_reviews,
+                rebuttals=serialized_rebuttals,
+                model_name=self.model_name,
+                summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
+                strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
+                weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
+                ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
+                decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
+                return_num=config.param.return_num,
+                max_token_num=config.param.max_token_num,
+                temperature=config.param.temperature,
+                top_p=config.param.top_p,
+                stream=config.param.stream,
+            )
         )
 
         return MetaReview(
@@ -244,23 +246,15 @@ class Agent(object):
 
         Args:
         proposal (str): The research proposal abstract in the specified format.
-
+        
         Returns:
         Dict[str, str]: A dictionary containing the answers to the five questions, keyed as 'Question1', 'Question2', etc.
         """
-        # Define the regex pattern to match the question blocks, including the end of the text (\Z)
         pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
-        
-        # Use the regex to find all matches
         matches = re.findall(pattern, proposal, re.DOTALL)
-        
-        # Prepare a dictionary to store the results
         results = {}
-        
-        # Iterate over the matches and store them in the dictionary
+
         for match in matches:
-            question_number = f"q{match[0]}"
-            answer = match[1].strip()  # strip leading/trailing whitespace
+            question_number = f'q{match[0]}'
+            answer = match[1].strip()
             results[question_number] = answer
-        
-        return results
