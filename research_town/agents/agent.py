@@ -127,7 +127,7 @@ class Agent(object):
             temperature=config.param.temperature,
             top_p=config.param.top_p,
             stream=config.param.stream,
-        )[0]
+        )
         return Proposal(
             content=proposal,
             q1=q5_result.get('q1', ''),
