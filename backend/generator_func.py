@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Dict, Generator
+from typing import Generator
 
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
@@ -9,7 +9,7 @@ from research_town.utils.paper_collector import get_intro
 from research_town.utils.serializer import Serializer
 
 
-def run_engine(url: str) -> Generator[Dict[str, str], None, None]:
+def run_engine(url: str) -> Generator[str, None, None]:
     intro = get_intro(url)
     if intro is None:
         yield 'Error: invalid URL\n'
