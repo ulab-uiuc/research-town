@@ -53,7 +53,7 @@ curl -sSL https://install.python-poetry.org | python3
 Then, install the requirements and this package with one command line:
 
 ```bash
-poetry install
+poetry install --extras "retriever collector logger"
 ```
 
 ### Configure API keys

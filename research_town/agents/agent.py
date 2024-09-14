@@ -135,20 +135,28 @@ class Agent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )[0]
-        proposal = self.prompting_parser(proposal, write_proposal_strategy)
-        return Proposal(abstract=proposal)
+        q5_result = self.prompting_parser(proposal)
+        return Proposal(
+            content=proposal,
+            q1=q5_result.get('q1', ''),
+            q2=q5_result.get('q2', ''),
+            q3=q5_result.get('q3', ''),
+            q4=q5_result.get('q4', ''),
+            q5=q5_result.get('q5', ''),
+        )
 
     @beartype
     @reviewer_required
     def write_review(self, paper: Proposal, config: Config) -> Review:
         serialized_paper = self.serializer.serialize(paper)
 
-        summary, strength, weakness, score = write_review_prompting(
+        summary, strength, weakness, ethical_concerns, score = write_review_prompting(
             paper=serialized_paper,
             model_name=self.model_name,
             summary_prompt_template=config.agent_prompt_template.write_review_summary,
             strength_prompt_template=config.agent_prompt_template.write_review_strength,
             weakness_prompt_template=config.agent_prompt_template.write_review_weakness,
+            ethical_prompt_template=config.agent_prompt_template.write_review_ethical,
             score_prompt_template=config.agent_prompt_template.write_review_score,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
@@ -162,6 +170,7 @@ class Agent(object):
             summary=summary,
             strength=strength,
             weakness=weakness,
+            ethical_concerns=ethical_concerns,
             score=score,
         )
 
@@ -178,20 +187,23 @@ class Agent(object):
         serialized_reviews = self.serializer.serialize(reviews)
         serialized_rebuttals = self.serializer.serialize(rebuttals)
 
-        summary, strength, weakness, decision = write_metareview_prompting(
-            paper=serialized_paper,
-            reviews=serialized_reviews,
-            rebuttals=serialized_rebuttals,
-            model_name=self.model_name,
-            summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
-            strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
-            weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
-            decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
-            return_num=config.param.return_num,
-            max_token_num=config.param.max_token_num,
-            temperature=config.param.temperature,
-            top_p=config.param.top_p,
-            stream=config.param.stream,
+        summary, strength, weakness, ethical_concerns, decision = (
+            write_metareview_prompting(
+                paper=serialized_paper,
+                reviews=serialized_reviews,
+                rebuttals=serialized_rebuttals,
+                model_name=self.model_name,
+                summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
+                strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
+                weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
+                ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
+                decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
+                return_num=config.param.return_num,
+                max_token_num=config.param.max_token_num,
+                temperature=config.param.temperature,
+                top_p=config.param.top_p,
+                stream=config.param.stream,
+            )
         )
 
         return MetaReview(
@@ -202,6 +214,7 @@ class Agent(object):
             summary=summary,
             strength=strength,
             weakness=weakness,
+            ethical_concerns=ethical_concerns,
             decision=decision,
         )
 
@@ -237,16 +250,23 @@ class Agent(object):
 
     @staticmethod
     @beartype
-    def prompting_parser(proposal: str, write_proposal_strategy: str) -> str:
-        if write_proposal_strategy == 'default':
-            return proposal.strip()
-        elif write_proposal_strategy in ['cot', 'react', 'reflexion']:
-            match = re.search(r'Abstract:\s*"(.*?)"', proposal, re.DOTALL)
-            if match:
-                return match.group(1).strip()
-        else:
-            print(f'Unsupported write_proposal_strategy: {write_proposal_strategy}')
-            return proposal.strip()
+    def prompting_parser(proposal: str) -> Dict[str, str]:
+        """
+        Parses the research proposal abstract and returns the answers to the five core questions.
 
-        print(f'Failed to extract abstract for strategy: {write_proposal_strategy}')
-        return proposal.strip()
+        Args:
+        proposal (str): The research proposal abstract in the specified format.
+
+        Returns:
+        Dict[str, str]: A dictionary containing the answers to the five questions, keyed as 'Question1', 'Question2', etc.
+        """
+        pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
+        matches = re.findall(pattern, proposal, re.DOTALL)
+        results = {}
+
+        for match in matches:
+            question_number = f'q{match[0]}'
+            answer = match[1].strip()
+            results[question_number] = answer
+
+        return results

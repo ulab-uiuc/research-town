@@ -87,9 +87,14 @@ class Idea(Progress):
 
 
 class Proposal(Progress):
-    abstract: str
+    content: str
+    q1: Optional[str] = Field(default=None)
+    q2: Optional[str] = Field(default=None)
+    q3: Optional[str] = Field(default=None)
+    q4: Optional[str] = Field(default=None)
+    q5: Optional[str] = Field(default=None)
+    abstract: str = Field(default='')
     title: Optional[str] = Field(default=None)
-    content: Optional[str] = Field(default=None)
     conference: Optional[str] = Field(default=None)
     model_config = ConfigDict(extra='allow')
 
@@ -100,6 +105,7 @@ class Review(Progress):
     summary: Optional[str] = Field(default=None)
     strength: Optional[str] = Field(default=None)
     weakness: Optional[str] = Field(default=None)
+    ethical_concerns: Optional[str] = Field(default=None)
     score: Optional[int] = Field(default=None)
     model_config = ConfigDict(extra='allow')
 
@@ -120,6 +126,7 @@ class MetaReview(Progress):
     summary: Optional[str] = Field(default=None)
     strength: Optional[str] = Field(default=None)
     weakness: Optional[str] = Field(default=None)
+    ethical_concerns: Optional[str] = Field(default=None)
     decision: bool = Field(default=False)
     model_config = ConfigDict(extra='allow')
 

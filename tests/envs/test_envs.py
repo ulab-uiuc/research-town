@@ -69,6 +69,6 @@ def test_proposal_writing_env(
             pass
     exit_status, exit_dict = env.on_exit()
     proposal = exit_dict['proposal']
-    assert proposal.abstract is not None
-    assert proposal.abstract == 'Paper abstract1'
+    assert proposal.content is not None
+    assert proposal.content == 'Paper abstract1'
     assert exit_status == 'start_review'
