@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from beartype.typing import List, Literal
+from beartype.typing import List
 
 from research_town.configs import Config
 from research_town.dbs import Profile, ProfileDB, Proposal
@@ -12,8 +12,6 @@ from tests.constants.db_constants import (
     example_progress_db,
 )
 from tests.mocks.mocking_func import mock_prompting
-
-Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')

@@ -1,12 +1,8 @@
 import os
 
-from beartype.typing import Literal
-
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.engines import Engine
-
-Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 def run_sync_experiment(
