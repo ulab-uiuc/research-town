@@ -20,14 +20,12 @@
 }
 
 .output-display {
+    flex: 1;
     text-align: left;
     margin: 0 auto;
     width: 80%;
-    max-height: 400px;
     overflow-y: auto;
-    background-color: #f8f8f8;
     padding: 15px;
-    border: 1px solid #ddd;
     white-space: pre-wrap;
 }
 
