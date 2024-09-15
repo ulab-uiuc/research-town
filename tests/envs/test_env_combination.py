@@ -56,8 +56,8 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
 
     assert isinstance(proposal, list) 
     assert all(isinstance(item, Proposal) for item in proposal)
-    for p in proposal:
-        assert p.content == 'Paper abstract1'
+    for idx, p in enumerate(proposal):
+        assert p.content == f'Paper abstract{idx + 1}'
 
     # Agent profiles and roles for peer review environment
     review_writing_agent_list: List[str] = [
