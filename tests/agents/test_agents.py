@@ -81,7 +81,8 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
         papers=[paper_A, paper_B],
         config=Config(),
     )
-    assert isinstance(paper, List[Proposal])
+    assert isinstance(paper, list)
+    assert all(isinstance(item, Proposal) for item in paper)
     for p in paper:
         assert p.content == 'Paper abstract1'
 

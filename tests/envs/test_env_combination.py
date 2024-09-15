@@ -54,7 +54,8 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     exit_status, exit_dict = proposal_writing_env.on_exit()
     proposal = exit_dict['proposal']
 
-    assert isinstance(proposal, List[Proposal])
+    assert isinstance(proposal, list) 
+    assert all(isinstance(item, Proposal) for item in proposal)
     for p in proposal:
         assert p.content == 'Paper abstract1'
 

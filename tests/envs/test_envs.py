@@ -69,6 +69,6 @@ def test_proposal_writing_env(
             pass
     exit_status, exit_dict = env.on_exit()
     proposal = exit_dict['proposal']
-    for p in proposal:
-        assert p.content == 'Paper abstract1'
+    for id, p in enumerate(proposal):
+        assert p.content == f'Paper abstract{id + 1}'
     assert exit_status == 'start_review'
