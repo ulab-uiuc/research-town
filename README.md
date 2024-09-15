@@ -50,10 +50,23 @@ conda activate research_town
 curl -sSL https://install.python-poetry.org | python3
 ```
 
-Then, install the requirements and this package with one command line:
+To run examples provided in the `examples`:
 
 ```bash
 poetry install --extras "retriever collector logger"
+```
+
+To develop the UI part (both frontend and backend):
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+```bash
+cd backend
+uvicorn main:app --reload
 ```
 
 ### Configure API keys
