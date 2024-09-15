@@ -396,11 +396,33 @@ class AgentPromptTemplateConfig(BaseModel):
 
     Here are the five core questions:
 
-    [Question 1] - What is the problem? Clearly state the research problem and its significance.
-    [Question 2] - Why is it interesting and important? Explain why solving this problem would matter to the broader research community or society.
-    [Question 3] - Why is it hard? Discuss the challenges involved and why naive approaches may fail.
-    [Question 4] - Why hasn't it been solved before? Identify any gaps in previous research or existing solutions.
-    [Question 5] - What are the key components of my approach and results? Outline your methodology and expected outcomes, including any limitations.
+    [Question 1] - What is the problem?
+
+    Formulate the specific research question you aim to address.
+    Provide a detailed description of this problem, including its background and significance.
+    Explain why this question is important to investigate.
+    Output in the final answer for question 1 should be a question format end with a question mark.
+    [Question 2] - Why is it interesting and important?
+
+    Explain the broader implications of solving this problem for the research community or society.
+    Discuss how addressing this question could advance knowledge or lead to practical applications.
+    Highlight any potential benefits or innovations that could result.
+    [Question 3] - Why is it hard?
+
+    Discuss the challenges and complexities involved in solving this problem.
+    Explain why naive or straightforward approaches may fail.
+    Identify any technical, theoretical, or practical obstacles that need to be overcome.
+    [Question 4] - Why hasn't it been solved before?
+
+    Identify gaps or limitations in previous research or existing solutions.
+    Discuss any barriers that have prevented this problem from being solved until now.
+    Explain how your approach differs from or improves upon prior work.
+    [Question 5] - What are the key components of my approach and results?
+
+    Outline your proposed methodology in detail, including the key components and steps.
+    Describe the expected outcomes and any preliminary results you have obtained.
+    Acknowledge any limitations or challenges that might affect your results.
+    Explain how you will evaluate the success of your approach.
 
     Remember the following writing strategy for a successful proposal:
     Writing Strategy:
