@@ -164,6 +164,7 @@ def write_proposal_prompting(
         answer = match[1].strip()
         q5_result[question_number] = answer
 
+    import pdb; pdb.set_trace()
     return proposal, q5_result
 
 
