@@ -1,10 +1,12 @@
+import json
+from typing import Generator
+
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from generator_func import run_engine
-from research_town.dbs import Insight, Idea, MetaReview, Proposal, Rebuttal, Review
-from typing import Dict, Generator
-import json
+
+from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 
 app = FastAPI()
 
@@ -23,7 +25,7 @@ async def process_url(request: Request) -> Response:
     url = data.get('url')
     if not url:
         return JSONResponse({'error': 'URL is required'}, status_code=400)
-    
+
     def post_process(generator) -> Generator[str, None, None]:
         for progress in generator:
             if isinstance(progress, Insight):
@@ -37,7 +39,7 @@ async def process_url(request: Request) -> Response:
                     'q2': progress.q2,
                     'q3': progress.q3,
                     'q4': progress.q4,
-                    'q5': progress.q5
+                    'q5': progress.q5,
                 }
             elif isinstance(progress, Review):
                 item = {
@@ -46,7 +48,7 @@ async def process_url(request: Request) -> Response:
                     'strength': progress.strength,
                     'weakness': progress.weakness,
                     'ethical_concerns': progress.ethical_concerns,
-                    'score': progress.score
+                    'score': progress.score,
                 }
             elif isinstance(progress, Rebuttal):
                 item = {'type': 'rebuttal', 'content': progress.content}
@@ -57,7 +59,7 @@ async def process_url(request: Request) -> Response:
                     'strength': progress.strength,
                     'weakness': progress.weakness,
                     'ethical_concerns': progress.ethical_concerns,
-                    'decision': 'accept' if progress.decision is True else 'reject'
+                    'decision': 'accept' if progress.decision is True else 'reject',
                 }
             else:
                 item = {'type': 'error'}

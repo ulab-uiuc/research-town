@@ -1,12 +1,10 @@
-import json
 import os
 from typing import Generator
 
 from research_town.configs import Config
-from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB, Progress
+from research_town.dbs import LogDB, PaperDB, ProfileDB, Progress, ProgressDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_intro
-from research_town.utils.serializer import Serializer
 
 
 def run_engine(url: str) -> Generator[Progress, None, None]:
@@ -26,7 +24,6 @@ def run_engine(url: str) -> Generator[Progress, None, None]:
         'Christos Faloutsos',
         'Julian McAuley',
     ]
-    serializer = Serializer()
     # Load or initialize databases
     config = Config(config_file_path)
     profile_db = ProfileDB()
