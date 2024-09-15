@@ -1,13 +1,10 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, Generator, List, Literal, Tuple, Union
+from beartype.typing import Any, Dict, Generator, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
 from ..dbs import Progress
 from .env_base import BaseEnv
-
-LogType = Union[List[Dict[str, str]], None]
-Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 class StartEnv(BaseEnv):
