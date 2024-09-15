@@ -10,7 +10,6 @@ from research_town.utils.paper_collector import get_intro
 def run_engine(url: str) -> Generator[Progress, None, None]:
     intro = get_intro(url)
     if intro is None:
-        yield 'Error: invalid URL\n'
         return
     config_file_path = '../configs'
     save_file_path = '../examples/research_town_demo_log'
