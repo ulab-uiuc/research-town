@@ -3,13 +3,13 @@ import os
 from typing import Generator
 
 from research_town.configs import Config
-from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
+from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB, Progress
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_intro
 from research_town.utils.serializer import Serializer
 
 
-def run_engine(url: str) -> Generator[str, None, None]:
+def run_engine(url: str) -> Generator[Progress, None, None]:
     intro = get_intro(url)
     if intro is None:
         yield 'Error: invalid URL\n'
@@ -52,9 +52,7 @@ def run_engine(url: str) -> Generator[str, None, None]:
     while engine.curr_env.name != 'end':
         run_result = engine.curr_env.run()
         if run_result is not None:
-            for progress, agent in run_result:
-                progress_dict = serializer.serialize(progress)
-                json_string = json.dumps(progress_dict)
-                yield json_string
+            for progress, _ in run_result:
+                yield progress
                 engine.time_step += 1
         engine.transition()
