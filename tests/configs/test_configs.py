@@ -39,7 +39,7 @@ def test_yaml_loading() -> None:
         tmpfile_path = os.path.dirname(tmpfile.name)
 
     config = Config(yaml_config_path=tmpfile_path)
-    assert config.param.related_paper_num == 10
+    assert config.param.related_paper_num == 5
     assert config.param.base_llm == 'some/other-LLM'
     assert config.param.member_num == 2
     assert config.agent_prompt_template.test1 == 'template1'  # type: ignore

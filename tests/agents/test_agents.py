@@ -83,8 +83,8 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
     )
     assert isinstance(paper, list)
     assert all(isinstance(item, Proposal) for item in paper)
-    for p in paper:
-        assert p.content == 'Paper abstract1'
+    for idx, p in enumerate(paper):
+        assert p.content == f'Paper abstract{idx + 1}'
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
