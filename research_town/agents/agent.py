@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, List, Literal, Optional
+from beartype.typing import Dict, List
 
 from ..configs import Config
 from ..dbs import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
@@ -19,8 +19,7 @@ from ..utils.role_verifier import (
     reviewer_required,
 )
 from ..utils.serializer import Serializer
-
-Role = Literal['reviewer', 'leader', 'member', 'chair']
+from .agent_role import Role
 
 
 class Agent(object):
@@ -28,11 +27,11 @@ class Agent(object):
         self,
         agent_profile: Profile,
         model_name: str,
-        agent_role: Optional[Role] = None,
+        agent_role: Role,
     ) -> None:
         self.profile: Profile = agent_profile
         self.memory: Dict[str, str] = {}
-        self.role: Role | None = agent_role
+        self.role: Role = agent_role
         self.model_name: str = model_name
         self.serializer = Serializer()
 

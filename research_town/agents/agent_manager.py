@@ -3,6 +3,7 @@ from typing import List
 from ..configs import Config
 from ..dbs import Profile, ProfileDB, Proposal
 from .agent import Agent
+from .agent_role import Role
 
 
 class AgentManager:
@@ -13,28 +14,28 @@ class AgentManager:
     def create_leader(self, leader_profile: Profile) -> Agent:
         return Agent(
             agent_profile=leader_profile,
-            agent_role='leader',
+            agent_role=Role.leader,
             model_name=self.config.param.base_llm,
         )
 
     def create_member(self, member_profile: Profile) -> Agent:
         return Agent(
             agent_profile=member_profile,
-            agent_role='member',
+            agent_role=Role.member,
             model_name=self.config.param.base_llm,
         )
 
     def create_chair(self, chair_profile: Profile) -> Agent:
         return Agent(
             agent_profile=chair_profile,
-            agent_role='chair',
+            agent_role=Role.chair,
             model_name=self.config.param.base_llm,
         )
 
     def create_reviewer(self, reviewer_profile: Profile) -> Agent:
         return Agent(
             agent_profile=reviewer_profile,
-            agent_role='reviewer',
+            agent_role=Role.reviewer,
             model_name=self.config.param.base_llm,
         )
 
