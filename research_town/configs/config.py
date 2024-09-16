@@ -507,17 +507,17 @@ class AgentPromptTemplateConfig(BaseModel):
     write_review_summary: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write a summary of the paper for the following submission you have made to an academic conference.',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}',
+        'template': 'Here is the proposal: {proposal}',
     }
     write_review_strength: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write the strength of the paper for the following submission you have made to an academic conference.',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere is the summary of the paper: {summary}',
+        'template': 'Here is the proposal: {proposal}\nHere is the summary of the paper: {summary}',
     }
     write_review_weakness: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write the weakness of the paper for the following submission you have made to an academic conference.',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere is the summary of the paper: {summary}',
+        'template': 'Here is the proposal: {proposal}\nHere is the summary of the paper: {summary}',
     }
 
     write_review_ethical: Dict[str, Union[str, List[str]]] = {
@@ -556,28 +556,28 @@ class AgentPromptTemplateConfig(BaseModel):
 
     Provide a brief explanation for your conclusion, noting which specific guideline(s) informed your decision.""",
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere is the summary of the paper: {summary}',
+        'template': 'Here is the proposal: {proposal}\nHere is the summary of the paper: {summary}',
     }
 
     write_review_score: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please provide a score for the following submission you have made to an academic conference. The score should be between 1 and 10, where 1 is the lowest and 10 is the highest.',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere is the summary of the paper: {summary}\nHere is the strength of the paper: {strength}\nHere is the ethical concern of the paper: {ethical_concerns}\nHere is the weakness of the paper: {weakness}',
+        'template': 'Here is the proposal: {proposal}\nHere is the summary of the paper: {summary}\nHere is the strength of the paper: {strength}\nHere is the ethical concern of the paper: {ethical_concerns}\nHere is the weakness of the paper: {weakness}',
     }
     write_metareview_summary: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write a summary of the reviews for the following submission you have made to an academic conference. Your summary should summarize the reviews and decisions to help the reviewers to make a decision.',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}',
+        'template': 'Here is the proposal: {proposal}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}',
     }
     write_metareview_strength: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write the strength of the submission for the following submission you have made to an academic conference. Your strength should summarize the reviews and decisions to help the reviewers to make a decision.',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
+        'template': 'Here is the proposal: {proposal}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
     }
     write_metareview_weakness: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write the weakness of the submission for the following submission you have made to an academic conference. Your weakness should summarize the reviews and decisions to help the reviewers to make a decision.',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
+        'template': 'Here is the proposal: {proposal}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
     }
     write_metareview_ethical: Dict[str, Union[str, List[str]]] = {
         'intro': """Please write an ethical meta-review for the following submission to an academic conference. Your meta-review should summarize the ethical considerations raised in the reviews, author rebuttals, and any ethical review conducted. Consider the following aspects:
@@ -596,17 +596,17 @@ class AgentPromptTemplateConfig(BaseModel):
 
     Provide a brief explanation for your conclusion, noting which specific ethical aspects informed your decision.""",
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
+        'template': 'Here is the proposal: {proposal}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}',
     }
     write_metareview_decision: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please make a review decision to decide whether the following submission should be accepted or rejected by an academic conference. If there are major ethical concerns about this paper, you should Reject the paper. Please indicate your review decision as accept or reject.',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}\nHere is the strength of the submission: {strength}\nHere is the weakness of the submission: {weakness}\nHere is the ethical concern of the submission: {ethical_concerns}',
+        'template': 'Here is the proposal: {proposal}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}\nHere is the strength of the submission: {strength}\nHere is the weakness of the submission: {weakness}\nHere is the ethical concern of the submission: {ethical_concerns}',
     }
     write_rebuttal: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please write a rebuttal for the following submission you have made to an academic conference. Your rebuttal should rebut the reviews to convince the reviewers to accept your submission.',
         'examples': ['', ''],
-        'template': 'Here is the submission: {paper}\nHere are the reviews: {review}',
+        'template': 'Here is the proposal: {proposal}\nHere are the reviews: {review}',
     }
     discuss: Dict[str, Union[str, List[str]]] = {
         'intro': 'Please continue in a conversation with other fellow researchers for me, where you will address their concerns in a scholarly way.',
@@ -660,7 +660,7 @@ class Config(BaseModel):
         eval_prompt_cfg = full_cfg.get('eval_prompt_template', {})
 
         config_file_path = os.path.join(yaml_config_path, 'config.yaml')
-        prompt_file_path = os.path.join(yaml_config_path, 'prompt.yaml')
+        prompt_file_path = os.path.join(yaml_config_path, 'agent_prompt.yaml')
         eval_prompt_file_path = os.path.join(yaml_config_path, 'eval_prompt.yaml')
 
         with open(config_file_path, 'w') as f:
@@ -678,7 +678,8 @@ class Config(BaseModel):
             if (
                 os.path.isfile(file_path)
                 and file_name.endswith('.yaml')
-                and file_name not in {'config.yaml', 'prompt.yaml', 'eval_prompt.yaml'}
+                and file_name
+                not in {'config.yaml', 'agent_prompt.yaml', 'eval_prompt.yaml'}
             ):
                 os.remove(file_path)
 
@@ -695,32 +696,37 @@ class Config(BaseModel):
             'write_proposal_cot': ['{idea}', '{papers}'],
             'write_proposal_react': ['{idea}', '{papers}'],
             'write_proposal_reflexion': ['{idea}', '{papers}'],
-            'write_review_summary': ['{paper}'],
-            'write_review_strength': ['{paper}', '{summary}'],
-            'write_review_weakness': ['{paper}', '{summary}'],
-            'write_review_score': ['{paper}', '{summary}', '{strength}', '{weakness}'],
-            'write_metareview_summary': ['{paper}', '{reviews}', '{rebuttals}'],
+            'write_review_summary': ['{proposal}'],
+            'write_review_strength': ['{proposal}', '{summary}'],
+            'write_review_weakness': ['{proposal}', '{summary}'],
+            'write_review_score': [
+                '{proposal}',
+                '{summary}',
+                '{strength}',
+                '{weakness}',
+            ],
+            'write_metareview_summary': ['{proposal}', '{reviews}', '{rebuttals}'],
             'write_metareview_strength': [
-                '{paper}',
+                '{proposal}',
                 '{reviews}',
                 '{rebuttals}',
                 '{summary}',
             ],
             'write_metareview_weakness': [
-                '{paper}',
+                '{proposal}',
                 '{reviews}',
                 '{rebuttals}',
                 '{summary}',
             ],
             'write_metareview_decision': [
-                '{paper}',
+                '{proposal}',
                 '{reviews}',
                 '{rebuttals}',
                 '{summary}',
                 '{strength}',
                 '{weakness}',
             ],
-            'write_rebuttal': ['{paper}', '{review}'],
+            'write_rebuttal': ['{proposal}', '{review}'],
         }
 
         for template_name, placeholders in required_placeholders.items():

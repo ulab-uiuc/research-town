@@ -10,7 +10,7 @@ from .string_mapper import (
     map_idea_to_str,
     map_insight_list_to_str,
     map_paper_list_to_str,
-    map_paper_to_str,
+    map_proposal_to_str,
     map_rebuttal_list_to_str,
     map_review_list_to_str,
     map_review_to_str,
@@ -169,7 +169,7 @@ def write_proposal_prompting(
 
 @beartype
 def write_review_prompting(
-    paper: Dict[str, str],
+    proposal: Dict[str, str],
     model_name: str,
     summary_prompt_template: Dict[str, Union[str, List[str]]],
     strength_prompt_template: Dict[str, Union[str, List[str]]],
@@ -182,8 +182,8 @@ def write_review_prompting(
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> Tuple[str, str, str, str, int]:
-    paper_str = map_paper_to_str(paper)
-    summary_template_input = {'paper': paper_str}
+    proposal_str = map_proposal_to_str(proposal)
+    summary_template_input = {'proposal': proposal_str}
     summary_messages = openai_format_prompt_construct(
         summary_prompt_template, summary_template_input
     )
@@ -197,15 +197,15 @@ def write_review_prompting(
         stream,
     )[0]
 
-    strength_template_input = {'paper': paper_str, 'summary': summary}
+    strength_template_input = {'proposal': proposal_str, 'summary': summary}
     strength_messages = openai_format_prompt_construct(
         strength_prompt_template, strength_template_input
     )
-    weakness_template_input = {'paper': paper_str, 'summary': summary}
+    weakness_template_input = {'proposal': proposal_str, 'summary': summary}
     weakness_messages = openai_format_prompt_construct(
         weakness_prompt_template, weakness_template_input
     )
-    ethical_template_input = {'paper': paper_str, 'summary': summary}
+    ethical_template_input = {'proposal': proposal_str, 'summary': summary}
     ethical_messages = openai_format_prompt_construct(
         ethical_prompt_template, ethical_template_input
     )
@@ -239,7 +239,7 @@ def write_review_prompting(
     )[0]
 
     score_template_input = {
-        'paper': paper_str,
+        'proposal': proposal_str,
         'summary': summary,
         'strength': strength,
         'weakness': weakness,
@@ -270,7 +270,7 @@ def write_review_prompting(
 
 @beartype
 def write_metareview_prompting(
-    paper: Dict[str, str],
+    proposal: Dict[str, str],
     reviews: List[Dict[str, Union[int, str]]],
     rebuttals: List[Dict[str, str]],
     model_name: str,
@@ -285,11 +285,11 @@ def write_metareview_prompting(
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> Tuple[str, str, str, str, bool]:
-    paper_str = map_paper_to_str(paper)
+    proposal_str = map_proposal_to_str(proposal)
     reviews_str = map_review_list_to_str(reviews)
     rebuttals_str = map_rebuttal_list_to_str(rebuttals)
     summary_template_input = {
-        'paper': paper_str,
+        'proposal': proposal_str,
         'reviews': reviews_str,
         'rebuttals': rebuttals_str,
     }
@@ -307,19 +307,19 @@ def write_metareview_prompting(
     )[0]
 
     strength_template_input = {
-        'paper': paper_str,
+        'proposal': proposal_str,
         'reviews': reviews_str,
         'rebuttals': rebuttals_str,
         'summary': summary,
     }
     weakness_template_input = {
-        'paper': paper_str,
+        'proposal': proposal_str,
         'reviews': reviews_str,
         'rebuttals': rebuttals_str,
         'summary': summary,
     }
     ethical_template_input = {
-        'paper': paper_str,
+        'proposal': proposal_str,
         'reviews': reviews_str,
         'rebuttals': rebuttals_str,
         'summary': summary,
@@ -363,7 +363,7 @@ def write_metareview_prompting(
     )[0]
 
     decision_template_input = {
-        'paper': paper_str,
+        'proposal': proposal_str,
         'reviews': reviews_str,
         'rebuttals': rebuttals_str,
         'summary': summary,
@@ -390,7 +390,7 @@ def write_metareview_prompting(
 
 @beartype
 def write_rebuttal_prompting(
-    paper: Dict[str, str],
+    proposal: Dict[str, str],
     review: Dict[str, Union[int, str]],
     model_name: str,
     prompt_template: Dict[str, Union[str, List[str]]],
@@ -400,9 +400,9 @@ def write_rebuttal_prompting(
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> List[str]:
-    paper_str = map_paper_to_str(paper)
+    proposal_str = map_proposal_to_str(proposal)
     review_str = map_review_to_str(review)
-    template_input = {'paper': paper_str, 'review': review_str}
+    template_input = {'proposal': proposal_str, 'review': review_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
     return model_prompting(
         model_name,

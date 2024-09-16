@@ -144,11 +144,11 @@ class Agent(object):
 
     @beartype
     @reviewer_required
-    def write_review(self, paper: Proposal, config: Config) -> Review:
-        serialized_paper = self.serializer.serialize(paper)
+    def write_review(self, proposal: Proposal, config: Config) -> Review:
+        serialized_proposal = self.serializer.serialize(proposal)
 
         summary, strength, weakness, ethical_concerns, score = write_review_prompting(
-            paper=serialized_paper,
+            proposal=serialized_proposal,
             model_name=self.model_name,
             summary_prompt_template=config.agent_prompt_template.write_review_summary,
             strength_prompt_template=config.agent_prompt_template.write_review_strength,
@@ -162,7 +162,7 @@ class Agent(object):
             stream=config.param.stream,
         )
         return Review(
-            paper_pk=paper.pk,
+            proposal_pk=proposal.pk,
             reviewer_pk=self.profile.pk,
             summary=summary,
             strength=strength,
@@ -175,18 +175,18 @@ class Agent(object):
     @chair_required
     def write_metareview(
         self,
-        paper: Proposal,
+        proposal: Proposal,
         reviews: List[Review],
         rebuttals: List[Rebuttal],
         config: Config,
     ) -> MetaReview:
-        serialized_paper = self.serializer.serialize(paper)
+        serialized_proposal = self.serializer.serialize(proposal)
         serialized_reviews = self.serializer.serialize(reviews)
         serialized_rebuttals = self.serializer.serialize(rebuttals)
 
         summary, strength, weakness, ethical_concerns, decision = (
             write_metareview_prompting(
-                paper=serialized_paper,
+                proposal=serialized_proposal,
                 reviews=serialized_reviews,
                 rebuttals=serialized_rebuttals,
                 model_name=self.model_name,
@@ -204,7 +204,7 @@ class Agent(object):
         )
 
         return MetaReview(
-            paper_pk=paper.pk,
+            proposal_pk=proposal.pk,
             chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
             author_pk=self.profile.pk,
@@ -219,15 +219,15 @@ class Agent(object):
     @leader_required
     def write_rebuttal(
         self,
-        paper: Proposal,
+        proposal: Proposal,
         review: Review,
         config: Config,
     ) -> Rebuttal:
-        serialized_paper = self.serializer.serialize(paper)
+        serialized_proposal = self.serializer.serialize(proposal)
         serialized_review = self.serializer.serialize(review)
 
         rebuttal_content = write_rebuttal_prompting(
-            paper=serialized_paper,
+            proposal=serialized_proposal,
             review=serialized_review,
             model_name=self.model_name,
             prompt_template=config.agent_prompt_template.write_rebuttal,
@@ -239,7 +239,7 @@ class Agent(object):
         )[0]
 
         return Rebuttal(
-            paper_pk=paper.pk,
+            proposal_pk=proposal.pk,
             reviewer_pk=review.reviewer_pk,
             author_pk=self.profile.pk,
             content=rebuttal_content,

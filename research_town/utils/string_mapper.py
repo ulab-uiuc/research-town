@@ -13,6 +13,18 @@ def map_idea_to_str(idea: Dict[str, str]) -> str:
     return f"{idea['content']}"
 
 
+def map_proposal_list_to_str(papers: List[Dict[str, str]]) -> str:
+    result = ''
+    for paper in papers:
+        result += map_proposal_to_str(paper)
+    return result
+
+
+def map_proposal_to_str(paper: Dict[str, str]) -> str:
+    assert 'content' in paper
+    return f"Proposal: {paper['content']}"
+
+
 def map_paper_list_to_str(papers: List[Dict[str, str]]) -> str:
     result = ''
     for paper in papers:

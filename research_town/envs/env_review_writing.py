@@ -53,24 +53,26 @@ class ReviewWritingEnv(BaseEnv):
         self.reviews: List[Review] = []
         for reviewer in self.reviewers:
             review = reviewer.write_review(
-                paper=self.proposal,
+                proposal=self.proposal,
                 config=self.config,
             )
+            self.reviews.append(review)
             yield review, reviewer
 
         # Rebuttal Submitting
         self.rebuttals: List[Rebuttal] = []
         for review in self.reviews:
             rebuttal = self.leader.write_rebuttal(
-                paper=self.proposal,
+                proposal=self.proposal,
                 review=review,
                 config=self.config,
             )
+            self.rebuttals.append(rebuttal)
             yield rebuttal, self.leader
 
         # Paper Meta Reviewing
         metareview = self.chair.write_metareview(
-            paper=self.proposal,
+            proposal=self.proposal,
             reviews=self.reviews,
             rebuttals=self.rebuttals,
             config=self.config,
