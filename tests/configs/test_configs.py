@@ -60,14 +60,14 @@ def test_merging_configurations() -> None:
             'write_rebuttal': {
                 'intro': 'hello',
                 'examples': ['a', 'b'],
-                'template': 'template2 {profile_bio} {domains}',
+                'template': 'template2 {bio} {domains}',
             }
         },
         'eval_prompt_template': {
             'idea_quality': {
                 'intro': 'hello',
                 'examples': ['a', 'b'],
-                'template': 'template2 {profile_bio} {domains}',
+                'template': 'template2 {bio} {domains}',
             }
         },
     }
@@ -87,12 +87,12 @@ def test_merging_configurations() -> None:
     assert config.agent_prompt_template.write_rebuttal == {
         'intro': 'hello',
         'examples': ['a', 'b'],
-        'template': 'template2 {profile_bio} {domains}',
+        'template': 'template2 {bio} {domains}',
     }
     assert config.eval_prompt_template.idea_quality == {
         'intro': 'hello',
         'examples': ['a', 'b'],
-        'template': 'template2 {profile_bio} {domains}',
+        'template': 'template2 {bio} {domains}',
     }
 
 

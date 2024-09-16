@@ -74,6 +74,7 @@ class Agent(object):
     def brainstorm_idea(self, insights: List[Insight], config: Config) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
         idea_content = brainstorm_idea_prompting(
+            bio=self.profile.bio,
             insights=serialized_insights,
             model_name=self.model_name,
             prompt_template=config.agent_prompt_template.brainstorm_idea,

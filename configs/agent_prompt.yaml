@@ -30,13 +30,13 @@ agent_prompt_template:
         Keywords - A set of keywords that highlights the key topics of the given literature.
         Insights - Possible directions for further research inspired from the given literature. It should be related to the profile biology.
         Your output format should be: Backgrounds: ... Keywords: ... Insights: ...
-    template: 'Here is my profile biology: {profile_bio}
+    template: 'Here is my profile biology: {bio}
 
       Here are the research domains: {domains}
 
       Here is the academic context: {contexts}
 
-      Here are some recent paper titles and abstracts: {papers}\n\nPlease begin summarizing research literature.'
+      Here are some recent paper titles and abstracts: {papers}\n\nPlease begin summarizing the insights that you can get from the contexts.'
   brainstorm_idea:
     examples:
     - "Here are the research background, keywords, and insights:  Background:\nThe research focuses on graph neural networks (GNNs) and machine learning, with a focus on developing and improving GNN architectures for various tasks. The research has made significant contributions to the understanding of GNNs and their applications in different fields, including the proposal of Position-aware Graph Neural Networks (P-GNNs) for computing position-aware node embeddings, the development of a novel graph-based representation of neural networks called relational graph, and the creation of Identity-aware Graph Neural Networks (ID-GNNs) with greater expressive power than the 1-Weisfeiler-Lehman (1-WL) graph isomorphism test. The research has also addressed the problem of applying GNNs to dynamic graphs with the proposal of ROLAND, an effective graph representation learning framework for real-world dynamic graphs.\n\nKeywords: graph neural networks (GNNs), machine learning, position-aware node embeddings, graph structure, neural networks, relational graph, message passing, graph isomorphism test, dynamic graphs, graph representation learning.\n\nInsights for further study:\n\n* Exploring the application of P-GNNs to other prediction tasks and comparing their performance to other GNN architectures.\n* Investigating the relationship between the graph structure of neural networks and their predictive performance in different types of neural networks.\n* Developing new methods for incorporating node feature information in GNNs.\n* Investigating the use of ID-GNNs for other challenging node, edge, and graph property prediction tasks, as well as on node and graph classification benchmarks and real-world link prediction tasks.\n* Exploring the use of ROLAND for other types of dynamic graphs and comparing its performance to other dynamic graph representation learning methods.\n* Investigating the use of GNNs for other types of graph-based tasks and comparing their performance to other machine learning methods.\n* Keeping up with the latest advancements in quantum computing and machine learning, and exploring the potential of applying GNNs to quantum computing.\n\nPlease begin brainstorming idea."
@@ -51,7 +51,7 @@ agent_prompt_template:
         Insights - A summary of recent research based on your profile as a researcher. It contains research backgrounds in this field, and insights of this field that can be further explored.
         To be successful, it is important to be innovative and provide novel ideas. It should have new thoughts that is not seen in previous literature and provide advancement to science. It is not that innovative to combine several algorithms to solve one problem. However, it is innovative to explore a new problem using tools at hand. It is also great to develop new solutions for an existing problem.
         To be successful, you should also put forth ideas that are grounded in reality. Ridiculous or unrealistic ideas can only lead to failure.
-    template: 'Here are the research background, keywords, and insights: {insights}\n\nPlease begin brainstorming idea.'
+    template: 'Here is your research background: {bio} and here are your research insights: {insights}\n\nPlease begin brainstorming idea conditioned on your research background.'
   discuss:
     examples:
     - ''
