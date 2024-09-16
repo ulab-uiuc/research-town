@@ -94,7 +94,7 @@ class Proposal(Progress):
 
 
 class Review(Progress):
-    paper_pk: Optional[str] = Field(default=None)
+    proposal_pk: Optional[str] = Field(default=None)
     reviewer_pk: Optional[str] = Field(default=None)
     summary: Optional[str] = Field(default=None)
     strength: Optional[str] = Field(default=None)
@@ -105,14 +105,14 @@ class Review(Progress):
 
 
 class Rebuttal(Progress):
-    paper_pk: Optional[str] = Field(default=None)
+    proposal_pk: Optional[str] = Field(default=None)
     reviewer_pk: Optional[str] = Field(default=None)
     author_pk: Optional[str] = Field(default=None)
     model_config = ConfigDict(extra='allow')
 
 
 class MetaReview(Progress):
-    paper_pk: Optional[str] = Field(default=None)
+    proposal_pk: Optional[str] = Field(default=None)
     chair_pk: Optional[str] = Field(default=None)
     reviewer_pks: List[str] = Field(default=[])
     author_pk: Optional[str] = Field(default=None)

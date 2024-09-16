@@ -95,7 +95,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
         agent_role='reviewer',
     )
     review = agent.write_review(
-        paper=research_proposal_A,
+        proposal=research_proposal_A,
         config=Config(),
     )
     assert isinstance(review, Review)
@@ -125,16 +125,16 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
         agent_role='leader',
     )
     review = agent_reviewer.write_review(
-        paper=research_proposal_A,
+        proposal=research_proposal_A,
         config=Config(),
     )
     rebuttal = agent_leader.write_rebuttal(
-        paper=research_proposal_A,
+        proposal=research_proposal_A,
         review=review,
         config=Config(),
     )
     metareview = agent_chair.write_metareview(
-        paper=research_proposal_A,
+        proposal=research_proposal_A,
         reviews=[review],
         rebuttals=[rebuttal],
         config=Config(),
@@ -162,11 +162,11 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         agent_role='leader',
     )
     review = agent_reviewer.write_review(
-        paper=research_proposal_A,
+        proposal=research_proposal_A,
         config=Config(),
     )
     rebuttal = agent_leader.write_rebuttal(
-        paper=research_proposal_A,
+        proposal=research_proposal_A,
         review=review,
         config=Config(),
     )
