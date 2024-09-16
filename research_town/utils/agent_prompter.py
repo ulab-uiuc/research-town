@@ -248,15 +248,6 @@ def write_review_prompting(
     score_messages = openai_format_prompt_construct(
         score_prompt_template, score_template_input
     )
-    raw_score_str = model_prompting(
-        model_name,
-        score_messages,
-        return_num,
-        max_token_num,
-        temperature,
-        top_p,
-        stream,
-    )
     score_str = (
         model_prompting(
             model_name,

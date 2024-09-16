@@ -678,7 +678,8 @@ class Config(BaseModel):
             if (
                 os.path.isfile(file_path)
                 and file_name.endswith('.yaml')
-                and file_name not in {'config.yaml', 'agent_prompt.yaml', 'eval_prompt.yaml'}
+                and file_name
+                not in {'config.yaml', 'agent_prompt.yaml', 'eval_prompt.yaml'}
             ):
                 os.remove(file_path)
 
@@ -698,7 +699,12 @@ class Config(BaseModel):
             'write_review_summary': ['{proposal}'],
             'write_review_strength': ['{proposal}', '{summary}'],
             'write_review_weakness': ['{proposal}', '{summary}'],
-            'write_review_score': ['{proposal}', '{summary}', '{strength}', '{weakness}'],
+            'write_review_score': [
+                '{proposal}',
+                '{summary}',
+                '{strength}',
+                '{weakness}',
+            ],
             'write_metareview_summary': ['{proposal}', '{reviews}', '{rebuttals}'],
             'write_metareview_strength': [
                 '{proposal}',
