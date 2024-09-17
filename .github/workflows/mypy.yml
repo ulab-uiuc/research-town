@@ -26,7 +26,7 @@ jobs:
     - name: install dependencies
       run: |
         curl -sSL https://install.python-poetry.org | python3
-        poetry install --with test
+        poetry install --with test --without torch,transformers,termcolor,arxiv,requests,bs4,lxml,tqdm
     - name: type-checking package with mypy
       run: |
         poetry run pip install types-protobuf==4.24.0.4
