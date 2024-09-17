@@ -32,7 +32,7 @@
 
 ## Get started
 
-### Install from pip (WIP)
+### Install from pip
 
 You can install `research_town` from `pypi` to use it as a package:
 
