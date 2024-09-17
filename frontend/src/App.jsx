@@ -3,8 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import InputForm from "./components/InputForm";
 import OutputDisplay from "./components/OutputDisplay";
 
-import "./styles/App.css";
-
 const Home = () => {
   const [url, setUrl] = useState("");
   const [output, setOutput] = useState([]);
