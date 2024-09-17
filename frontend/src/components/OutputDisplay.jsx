@@ -1,9 +1,22 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+import ExpandableCard from "./ExpandableCard";
+import GraphVisualizer from "./GraphVisualizer";
+import ProgressVisualizer from "./ProgressVisualizer";
 
 function OutputDisplay({ output }) {
+  const insightsList = [
+    { type: "Insight", summary: "Summary", content: "Content" },
+    { type: "Insight", summary: "Summary", content: "Content" },
+    { type: "Insight", summary: "Summary", content: "Content" },
+    { type: "Insight", summary: "Summary", content: "Content" },
+  ];
   return (
-    <div className="output-display">
+    <div>
       {output.map((item, index) => {
         switch (item.type) {
           case "insight":
@@ -76,6 +89,33 @@ function OutputDisplay({ output }) {
             );
         }
       })}
+
+      <Container>
+        <ProgressVisualizer />
+        <Row className="mb-3">
+          <Col>
+            <h2>Agents</h2>
+          </Col>
+        </Row>
+        <GraphVisualizer />
+        <Row className="mb-3">
+          <Col>
+            <h2>Insights</h2>
+          </Col>
+        </Row>
+        <Row>
+          {insightsList.map((insight, index) => (
+            <Col xs={4}>
+              <ExpandableCard
+                key={index}
+                type={insight.type}
+                summary={insight.summary}
+                content={insight.content}
+              />
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </div>
   );
 }
