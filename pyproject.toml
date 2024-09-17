@@ -42,9 +42,6 @@ pytest-asyncio = "*"
 mypy = "^1.11.2"
 
 [tool.poetry.extras]
-retriever = ["torch", "transformers"]
-collector = ["arxiv", "requests", "bs4", "lxml", "tqdm"]
-logger = ["termcolor"]
 humaneval = ["pandas"]
 backend = ["uvicorn", "fastapi"]
 
