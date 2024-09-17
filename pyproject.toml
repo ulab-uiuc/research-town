@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "research_town"
-version = "0.0.1-alpha"
+version = "0.0.1-beta"
 description = "project for research town"
 authors = ["Haofei Yu <haofeiy2@illinois.edu>"]
 license = "Apache 2.0 License"
