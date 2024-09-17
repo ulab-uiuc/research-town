@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "research_town"
-version = "0.0.1"
+version = "0.0.1-alpha"
 description = "project for research town"
-authors = ["Haofei Yu <yuhaofei44@gmail.com>"]
+authors = ["Haofei Yu <haofeiy2@illinois.edu>"]
 license = "Apache 2.0 License"
 readme = "README.md"
 
