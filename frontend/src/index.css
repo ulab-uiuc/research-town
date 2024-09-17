@@ -4,7 +4,10 @@
 }
 
 body {
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 12.5%;
+  margin-right: 12.5%;
   font-family: 'Source_Sans';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
