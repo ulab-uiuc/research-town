@@ -70,13 +70,7 @@ const GraphVisualizer = () => {
     <Container>
       <Row>
         <Col>
-          <div
-            style={{
-              border: "2px solid #ccc",
-              borderRadius: "10px",
-              overflowY: "auto",
-            }}
-          >
+          <div>
             <ForceGraph2D
               graphData={graphData}
               nodeCanvasObject={(node, ctx, globalScale) =>
