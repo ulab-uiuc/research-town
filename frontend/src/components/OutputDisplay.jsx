@@ -9,13 +9,19 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 import ExpandableCard from "./ExpandableCard";
 import GraphVisualizer from "./GraphVisualizer";
 import ProgressVisualizer from "./ProgressVisualizer";
 
 function OutputDisplay({ output }) {
-  const [key, setKey] = useState("home");
+  const [key, setKey] = useState("insights");
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const insightsList = [
     { type: "Insight", summary: "Summary", content: "Content" },
@@ -110,15 +116,48 @@ function OutputDisplay({ output }) {
           <Col xs={2}>
             <Card>
               <ListGroup variant="flush">
-                <ListGroup.Item>Agent 1</ListGroup.Item>
-                <ListGroup.Item>Agent 2</ListGroup.Item>
-                <ListGroup.Item>Agent 3</ListGroup.Item>
-                <ListGroup.Item>Agent 4</ListGroup.Item>
-                <ListGroup.Item>Agent 5</ListGroup.Item>
+                <ListGroup.Item>
+                  <Button variant="text" onClick={handleShow}>
+                    Agent 1
+                  </Button>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Button variant="text" onClick={handleShow}>
+                    Agent 2
+                  </Button>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Button variant="text" onClick={handleShow}>
+                    Agent 3
+                  </Button>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Button variant="text" onClick={handleShow}>
+                    Agent 4
+                  </Button>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Button variant="text" onClick={handleShow}>
+                    Agent 5
+                  </Button>
+                </ListGroup.Item>
               </ListGroup>
             </Card>
           </Col>
         </Row>
+        <>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Agent Information</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Agent Information</Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={handleClose}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
         <Tabs
           id="fill-tab-example"
           activeKey={key}
