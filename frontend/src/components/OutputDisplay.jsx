@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
 
 import ExpandableCard from "./ExpandableCard";
 import GraphVisualizer from "./GraphVisualizer";
@@ -14,6 +15,11 @@ function OutputDisplay({ output }) {
     { type: "Insight", summary: "Summary", content: "Content" },
     { type: "Insight", summary: "Summary", content: "Content" },
     { type: "Insight", summary: "Summary", content: "Content" },
+  ];
+
+  const ideaList = [
+    { type: "Idea", idea: ["Idea", "Idea"] },
+    { type: "Idea", idea: ["Idea", "Idea"] },
   ];
   return (
     <div>
@@ -112,6 +118,23 @@ function OutputDisplay({ output }) {
                 summary={insight.summary}
                 content={insight.content}
               />
+            </Col>
+          ))}
+        </Row>
+        <Row className="mb-3">
+          <Col>
+            <h2>Ideas</h2>
+          </Col>
+        </Row>
+        <Row>
+          {ideaList.map((idea, index) => (
+            <Col xs={4}>
+              <Card>
+                <Card.Body>
+                  <Card.Title>{idea.type}</Card.Title>
+                  <Card.Text>{idea.idea}</Card.Text>
+                </Card.Body>
+              </Card>
             </Col>
           ))}
         </Row>
