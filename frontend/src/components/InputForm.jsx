@@ -10,7 +10,7 @@ function InputForm({ url, setUrl, handleSubmit }) {
   return (
     <Container fluid="md">
       <Row>
-        <Col xs={8}>
+        <Col xs={10}>
           <InputGroup className="mb-3">
             <Form.Control
               value={url}
@@ -20,7 +20,7 @@ function InputForm({ url, setUrl, handleSubmit }) {
             />
           </InputGroup>
         </Col>
-        <Col xs={4}>
+        <Col xs={2}>
           <Button
             type="submit"
             onClick={handleSubmit}
