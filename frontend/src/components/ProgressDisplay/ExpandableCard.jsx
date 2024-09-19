@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { Card, Button, Collapse } from "react-bootstrap";
 
-const ExpandableCard = ({ type, summary, content }) => {
+const ExpandableCard = ({ index, type, summary, content }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
@@ -12,13 +13,17 @@ const ExpandableCard = ({ type, summary, content }) => {
     <Card>
       <Card.Body>
         <Card.Title>{type}</Card.Title>
-        <Card.Text>{summary}</Card.Text>
+        <Card.Text>
+          {summary}#{index}
+        </Card.Text>
         <Button onClick={toggleExpand}>
           {isExpanded ? "Collapse" : "Expand"}
         </Button>
         <Collapse in={isExpanded}>
-          <div>
-            <Card.Text className="mt-3">{content}</Card.Text>
+          <div style={{ textAlign: "left" }}>
+            <Card.Text className="mt-3">
+              <ReactMarkdown>{content}</ReactMarkdown>
+            </Card.Text>
           </div>
         </Collapse>
       </Card.Body>

@@ -2,8 +2,9 @@ import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import ReactMarkdown from "react-markdown";
 
-function ProposalDisplay() {
+function ProposalDisplay({ list }) {
   return (
     <>
       <Row className="mb-3">
@@ -12,23 +13,25 @@ function ProposalDisplay() {
         </Col>
       </Row>
       <Row>
-        <Card>
-          <Card.Body style={{ textAlign: "left" }}>
-            <b>What is the problem?</b> The increasing complexity of multi-table
-            databases presents significant challenges in effectively modeling
-            the intricate relationships among data entities. Traditional methods
-            often fail to capture the relational structure inherent in these
-            databases, leading to suboptimal performance in data retrieval and
-            analysis tasks. This research aims to investigate the application of
-            Graph Neural Networks (GNNs) to model these relationships,
-            specifically focusing on developing specialized architectures that
-            can effectively represent the relational dynamics. Given the
-            exponential growth of data in various domains, understanding and
-            leveraging these relationships is crucial for enhancing data-driven
-            decision-making processes. How can GNNs be effectively utilized to
-            model relationships in complex multi-table databases?
-          </Card.Body>
-        </Card>
+        {list.map((item, index) => {
+          return (
+            <Card
+              key={index}
+              style={{ textAlign: "left", margin: "1em", padding: "1em" }}
+            >
+              <Card.Title style={{ textAlign: "center" }}></Card.Title>
+              <Card.Body>
+                {["q1", "q2", "q3", "q4", "q5"].map((q) => (
+                  <div key={q}>
+                    <div>
+                      <ReactMarkdown>{q.toUpperCase() + item[q]}</ReactMarkdown>
+                    </div>
+                  </div>
+                ))}
+              </Card.Body>
+            </Card>
+          );
+        })}
       </Row>
     </>
   );
