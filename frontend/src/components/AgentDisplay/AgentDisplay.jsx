@@ -8,9 +8,6 @@ import GraphVisualizer from "./GraphVisualizer";
 function AgentDisplay() {
   return (
     <>
-      <Row className="mb-3" style={{ marginTop: "2em", marginBottom: "2em" }}>
-        <h2>Agents</h2>
-      </Row>
       <Row>
         <Col xs={10}>
           <GraphVisualizer />

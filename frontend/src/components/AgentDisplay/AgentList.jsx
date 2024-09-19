@@ -41,16 +41,6 @@ function AgentList() {
             Agent 3
           </Button>
         </ListGroup.Item>
-        <ListGroup.Item>
-          <Button variant="text" onClick={handleShow}>
-            Agent 4
-          </Button>
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <Button variant="text" onClick={handleShow}>
-            Agent 5
-          </Button>
-        </ListGroup.Item>
       </ListGroup>
     </Card>
   );

@@ -76,7 +76,7 @@ const GraphVisualizer = () => {
               nodeCanvasObject={(node, ctx, globalScale) =>
                 drawNode(node, ctx, globalScale)
               }
-              height={240}
+              height={160}
               linkCanvasObject={(link, ctx) => drawLink(link, ctx)}
               linkDirectionalParticles={2} // Optional: particles to show direction of relationships
               enableNodeDrag={true} // Enable node dragging

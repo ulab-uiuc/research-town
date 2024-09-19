@@ -52,6 +52,7 @@ function OutputDisplay({ output }) {
     <div>
       <Container>
         {/* <ProgressVisualizer style={{ marginTop: "2em", marginBottom: "2em" }} /> */}
+        <AgentDisplay />
         {output.length !== 0 ? (
           <div style={{ minHeight: "24em" }}>
             {" "}
@@ -111,8 +112,6 @@ function OutputDisplay({ output }) {
         ) : (
           <></>
         )}
-
-        <AgentDisplay />
       </Container>
     </div>
   );
