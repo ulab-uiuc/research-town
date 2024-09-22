@@ -176,3 +176,5 @@ examples/research_town_demo_log/*
 !examples/research_town_demo_log/PaperDB.pkl
 !examples/research_town_demo_log/ProfileDB.json
 !examples/research_town_demo_log/ProfileDB.pkl
+research_bench/data/arxiv_AI_papers/output_with_references.json"
+research_bench/data/arxiv_AI_papers/paper_info.json
