@@ -1,0 +1,141 @@
+@font-face {
+  font-family: "Source_Sans";
+  src: url(../../assets/fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf);
+}
+
+html {
+  font-size: 16px;
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+  scroll-behavior: smooth;
+}
+
+body {
+  margin-top: 2.5%;
+  margin-bottom: 2.5%;
+  margin-left: 12.5%;
+  margin-right: 12.5%;
+  font-family: "Source_Sans";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a:link { 
+  text-decoration: none; 
+} 
+a:visited { 
+  text-decoration: none; 
+} 
+a:hover { 
+  text-decoration: none; 
+} 
+a:active { 
+  text-decoration: none; 
+}
+
+code {
+  font-family:  "Courier New";
+}
+
+.bgstyle {
+  -webkit-animation: BackgroundAnimation 70s ease infinite;
+  -moz-animation: BackgroundAnimation 70s ease infinite;
+  -o-animation: BackgroundAnimation 70s ease infinite;
+  animation: BackgroundAnimation 70s ease infinite;
+  height: 100%;
+}
+
+.bg-gradient {
+  background: linear-gradient(rgba(245, 245, 245, 1), rgba(245, 245, 245, 0));
+}
+
+.navbar-transparent {
+  background-color: rgba(255, 255, 255, 0);
+  transition: background-color 0.2s;
+}
+.navbar-white {
+  background-color: rgba(234, 236, 239, 0.81);
+  transition: background-color 0.2s;
+}
+.brand {
+  color: #363636 !important;
+}
+.brand-white {
+  color: rgba(234, 236, 239, 0.81)!important;
+}
+.nav-item {
+  transition: color, 0.2s;
+}
+.toggler {
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  &:focus {
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.socialicons {
+  color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  transition: all 0.8s;
+  margin: 4px;
+  &:hover {
+    color: black;
+    padding-left: 5px;
+    padding-right: 5px;
+    transition: all 0.8s;
+    margin: 4px;
+  }
+}
+
+.title {
+  height: 100%;
+  left: 0;
+  right: 0;
+  color: #fff;
+  text-align: center;
+  margin-top: 0px;
+}
+
+.typist {
+  min-height: 6rem;
+  @media (min-width: 360px) {
+    min-height: 4rem;
+  }
+  @media (min-width: 768px) {
+    min-height: 2.5rem;
+  }
+}
+
+.card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  &:hover {
+    box-shadow: 0 2rem 3rem rgba($black, 0.175) !important;
+    transform: translateY(-2px);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+}
+.skills-tabs {
+  flex-grow: 1;
+}
+.skills-tab {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.progress {
+  transform-origin: left;
+  & > * {
+    transform: scaleX(0);
+  }
+}
+.progress-bar-animation {
+  @extend .progress;
+  & > * {
+    animation: progress 1.5s ease-in-out forwards;
+  }
+}
