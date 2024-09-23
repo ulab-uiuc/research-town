@@ -91,6 +91,12 @@ const config = {
             label: 'Gallery',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'moduleSidebar',
+            position: 'left',
+            label: 'Module',
+          },
+          {
             href: 'https://github.com/ulab-uiuc/research-town',
             label: 'GitHub',
             position: 'right',
