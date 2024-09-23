@@ -6,6 +6,7 @@ This website is built using [Docusaurus](https://docusaurus.io/), a modern stati
 ### Local Development
 
 ```
+$ npm install @docusaurus/core @docusaurus/preset-classic
 $ npm run start
 ```
 

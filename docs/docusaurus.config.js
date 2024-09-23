@@ -92,9 +92,9 @@ const config = {
           },
           {
             type: 'docSidebar',
-            sidebarId: 'moduleSidebar',
+            sidebarId: 'apirefSidebar',
             position: 'left',
-            label: 'Module',
+            label: 'API References',
           },
           {
             href: 'https://github.com/ulab-uiuc/research-town',
