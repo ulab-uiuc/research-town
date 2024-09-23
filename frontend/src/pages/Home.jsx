@@ -15,7 +15,7 @@ function Home() {
     setIsProcessing(true);
 
     try {
-      const response = await fetch("http://localhost:8000/process", {
+      const response = await fetch("http://54.198.150.196:8000/process", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
