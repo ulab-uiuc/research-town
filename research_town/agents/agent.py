@@ -91,6 +91,7 @@ class Agent(object):
     def discuss_idea(self, ideas: List[Idea], config: Config) -> Idea:
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized = discuss_idea_prompting(
+            bio=self.profile.bio,
             ideas=serialized_ideas,
             model_name=self.model_name,
             prompt_template=config.agent_prompt_template.discuss_idea,
