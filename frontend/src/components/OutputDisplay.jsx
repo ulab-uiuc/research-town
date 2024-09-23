@@ -5,14 +5,12 @@ import Container from "react-bootstrap/Container";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
-// import ProgressVisualizer from "./ProgressVisualizer";
 import IdeaDisplay from "./ProgressDisplay/IdeaDisplay";
 import InsightDisplay from "./ProgressDisplay/InsightDisplay";
 import ProposalDisplay from "./ProgressDisplay/ProposalDisplay";
 import ReviewDisplay from "./ProgressDisplay/ReviewDisplay";
 import RebuttalDisplay from "./ProgressDisplay/RebuttalDisplay";
 import MetareviewDisplay from "./ProgressDisplay/MetareviewDisplay";
-import AgentDisplay from "./AgentDisplay/AgentDisplay";
 
 function OutputDisplay({ output }) {
   const [key, setKey] = useState("insights");
@@ -51,8 +49,6 @@ function OutputDisplay({ output }) {
   return (
     <div>
       <Container>
-        {/* <ProgressVisualizer style={{ marginTop: "2em", marginBottom: "2em" }} /> */}
-        {/* <AgentDisplay /> */}
         {output.length !== 0 ? (
           <div style={{ minHeight: "24em" }}>
             {" "}
