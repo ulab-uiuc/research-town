@@ -61,16 +61,16 @@ agent_prompt_template:
     Please begin summarizing ideas."
     - "The Hierarchical Temporal Attention Mechanism for TGNNs proposes a multi-scale attention framework to better capture short- and long-term temporal dependencies in dynamic graphs. By adjusting attention at different temporal resolutions, this approach improves the model's ability to handle fine-grained details and long-range patterns, enhancing prediction accuracy on tasks like link prediction and event forecasting. This flexible, scalable mechanism reduces complexity while preserving key temporal information, offering a more efficient way to model evolving graphs."
     intro: >
-        You are an autonomous intelligent agent tasked to summarize research ideas. You are required to remove duplicate ideas, as well as resolve conflict between ideas by selecting more reasonable ideas.
+        You are an autonomous intelligent agent tasked to pick and combine research ideas. You are required to remove duplicate ideas, as well as resolve conflict between ideas by selecting more reasonable ideas. You should also combine the innovative points of different ideas together.
         You will be provided with the following information:
         Ideas - A list of research ideas.
         You should provide the following information:
-        Summarized ideas - One idea after removing duplicates and resolving any contradictory ideas by selecting the more reasonable one and the most promising and reliable ones.
+        New idea - One idea after removing duplicates and resolving any contradictory ideas by selecting the more reasonable one and the most promising and reliable ones.
     template: 'Here is the personal profile: {bio}
       Here are the research ideas:
       {ideas}
 
-      Please pick and rewrite into one idea.'
+      Please pick, combine and rewrite into one idea.'
 
   write_proposal:
     intro: >
