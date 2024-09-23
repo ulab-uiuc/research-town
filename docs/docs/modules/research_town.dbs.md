@@ -8,15 +8,15 @@
 
 Bases: `BaseModel`
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -31,15 +31,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`Progress`](#research_town.dbs.data.Progress)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -52,15 +52,15 @@ Bases: [`Log`](#research_town.dbs.data.Log)
 
 #### idea_pk *: str*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'idea_pk': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'idea_pk': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -71,15 +71,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`Progress`](#research_town.dbs.data.Progress)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -92,15 +92,15 @@ Bases: [`Log`](#research_town.dbs.data.Log)
 
 #### insight_pk *: str | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'insight_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'insight_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -111,15 +111,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`Data`](#research_town.dbs.data.Data)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -142,15 +142,15 @@ Bases: [`Progress`](#research_town.dbs.data.Progress)
 
 #### ethical_concerns *: str | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'chair_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'decision': FieldInfo(annotation=bool, required=False, default=False), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pks': FieldInfo(annotation=List[str], required=False, default=[]), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'chair_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'decision': FieldInfo(annotation=bool, required=False, default=False), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pks': FieldInfo(annotation=List[str], required=False, default=[]), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -173,15 +173,15 @@ Bases: [`Log`](#research_town.dbs.data.Log)
 
 #### metareview_pk *: str*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'metareview_pk': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'metareview_pk': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -210,15 +210,15 @@ Bases: [`Data`](#research_town.dbs.data.Data)
 
 #### keywords *: List[str] | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'abstract': FieldInfo(annotation=str, required=True), 'authors': FieldInfo(annotation=List[str], required=False, default=[]), 'award': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'bibliography': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'citation_count': FieldInfo(annotation=Union[int, NoneType], required=False, default=0), 'domain': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'figure_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'keywords': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'references': FieldInfo(annotation=Union[List[Dict[str, str]], NoneType], required=False, default=None), 'section_contents': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'table_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'timestamp': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'title': FieldInfo(annotation=str, required=True), 'url': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'abstract': FieldInfo(annotation=str, required=True), 'authors': FieldInfo(annotation=List[str], required=False, default=[]), 'award': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'bibliography': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'citation_count': FieldInfo(annotation=Union[int, NoneType], required=False, default=0), 'domain': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'figure_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'keywords': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'references': FieldInfo(annotation=Union[List[Dict[str, str]], NoneType], required=False, default=None), 'section_contents': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'table_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'timestamp': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'title': FieldInfo(annotation=str, required=True), 'url': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -257,15 +257,15 @@ Bases: [`Data`](#research_town.dbs.data.Data)
 
 #### is_reviewer_candidate *: bool | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'bio': FieldInfo(annotation=str, required=True), 'collaborators': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=[]), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'institute': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'is_chair_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_leader_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_member_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_reviewer_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'name': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'bio': FieldInfo(annotation=str, required=True), 'collaborators': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=[]), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'institute': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'is_chair_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_leader_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_member_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_reviewer_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'name': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -282,15 +282,15 @@ Bases: [`Data`](#research_town.dbs.data.Data)
 
 #### eval_score *: List[int] | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -305,15 +305,15 @@ Bases: [`Progress`](#research_town.dbs.data.Progress)
 
 #### conference *: str | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'abstract': FieldInfo(annotation=str, required=False, default=''), 'conference': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q1': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q2': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q3': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q4': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q5': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'title': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'abstract': FieldInfo(annotation=str, required=False, default=''), 'conference': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q1': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q2': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q3': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q4': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q5': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'title': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -336,15 +336,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`Log`](#research_town.dbs.data.Log)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -359,15 +359,15 @@ Bases: [`Progress`](#research_town.dbs.data.Progress)
 
 #### author_pk *: str | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -382,15 +382,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`Log`](#research_town.dbs.data.Log)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'rebuttal_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'rebuttal_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -405,15 +405,15 @@ Bases: [`Progress`](#research_town.dbs.data.Progress)
 
 #### ethical_concerns *: str | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'content': FieldInfo(annotation=str, required=False, default=''), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'score': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'score': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -436,15 +436,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`Log`](#research_town.dbs.data.Log)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'review_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'review_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -583,15 +583,15 @@ Bases: [`Progress`](#research_town.dbs.data.Progress)
 
 #### eval_score *: List[int] | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -608,15 +608,15 @@ Bases: [`Log`](#research_town.dbs.data.Log)
 
 #### idea_pk *: str*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'idea_pk': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'idea_pk': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -639,15 +639,15 @@ Bases: [`Progress`](#research_town.dbs.data.Progress)
 
 #### eval_score *: List[int] | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -664,15 +664,15 @@ Bases: [`Log`](#research_town.dbs.data.Log)
 
 #### insight_pk *: str | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'insight_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'insight_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -691,15 +691,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`Data`](#research_town.dbs.data.Data)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -734,15 +734,15 @@ Bases: [`Progress`](#research_town.dbs.data.Progress)
 
 #### eval_score *: List[int] | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'chair_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'decision': FieldInfo(annotation=bool, required=False, default=False), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pks': FieldInfo(annotation=List[str], required=False, default=[]), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'chair_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'decision': FieldInfo(annotation=bool, required=False, default=False), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pks': FieldInfo(annotation=List[str], required=False, default=[]), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -769,15 +769,15 @@ Bases: [`Log`](#research_town.dbs.data.Log)
 
 #### metareview_pk *: str*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'metareview_pk': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'metareview_pk': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -814,15 +814,15 @@ Bases: [`Data`](#research_town.dbs.data.Data)
 
 #### keywords *: List[str] | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'abstract': FieldInfo(annotation=str, required=True), 'authors': FieldInfo(annotation=List[str], required=False, default=[]), 'award': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'bibliography': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'citation_count': FieldInfo(annotation=Union[int, NoneType], required=False, default=0), 'domain': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'figure_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'keywords': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'references': FieldInfo(annotation=Union[List[Dict[str, str]], NoneType], required=False, default=None), 'section_contents': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'table_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'timestamp': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'title': FieldInfo(annotation=str, required=True), 'url': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'abstract': FieldInfo(annotation=str, required=True), 'authors': FieldInfo(annotation=List[str], required=False, default=[]), 'award': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'bibliography': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'citation_count': FieldInfo(annotation=Union[int, NoneType], required=False, default=0), 'domain': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'figure_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'keywords': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'references': FieldInfo(annotation=Union[List[Dict[str, str]], NoneType], required=False, default=None), 'section_contents': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'table_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'timestamp': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'title': FieldInfo(annotation=str, required=True), 'url': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -875,15 +875,15 @@ Bases: [`Data`](#research_town.dbs.data.Data)
 
 #### is_reviewer_candidate *: bool | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'bio': FieldInfo(annotation=str, required=True), 'collaborators': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=[]), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'institute': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'is_chair_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_leader_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_member_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_reviewer_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'name': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'bio': FieldInfo(annotation=str, required=True), 'collaborators': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=[]), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'institute': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'is_chair_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_leader_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_member_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'is_reviewer_candidate': FieldInfo(annotation=Union[bool, NoneType], required=False, default=True), 'name': FieldInfo(annotation=str, required=True), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -926,15 +926,15 @@ Bases: [`Data`](#research_town.dbs.data.Data)
 
 #### eval_score *: List[int] | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -961,15 +961,15 @@ Bases: [`Progress`](#research_town.dbs.data.Progress)
 
 #### eval_score *: List[int] | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'abstract': FieldInfo(annotation=str, required=False, default=''), 'conference': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q1': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q2': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q3': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q4': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q5': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'title': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'abstract': FieldInfo(annotation=str, required=False, default=''), 'conference': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q1': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q2': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q3': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q4': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'q5': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'title': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -996,15 +996,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`Log`](#research_town.dbs.data.Log)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -1031,15 +1031,15 @@ Bases: [`Progress`](#research_town.dbs.data.Progress)
 
 #### eval_score *: List[int] | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -1058,15 +1058,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`Log`](#research_town.dbs.data.Log)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'rebuttal_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'rebuttal_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -1093,15 +1093,15 @@ Bases: [`Progress`](#research_town.dbs.data.Progress)
 
 #### eval_score *: List[int] | None*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'content': FieldInfo(annotation=str, required=False, default=''), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'score': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'score': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -1128,15 +1128,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`Log`](#research_town.dbs.data.Log)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {}*
+#### model_config *: ClassVar[ConfigDict]* *=     *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'review_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'profile_pk': FieldInfo(annotation=str, required=True), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'review_pk': FieldInfo(annotation=str, required=True), 'timestep': FieldInfo(annotation=int, required=False, default=0)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].

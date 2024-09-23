@@ -30,15 +30,15 @@ Bases: `BaseModel`
 
 #### dimension_scores *: list[int]*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -57,15 +57,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOutput)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -76,15 +76,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOutput)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -95,15 +95,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOutput)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -114,15 +114,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOutput)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -133,15 +133,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOutput)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -152,15 +152,15 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOutput)
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -245,15 +245,15 @@ Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOut
 
 #### dimension_scores *: List[int]*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -276,15 +276,15 @@ Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOut
 
 #### dimension_scores *: List[int]*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -307,15 +307,15 @@ Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOut
 
 #### dimension_scores *: List[int]*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -342,15 +342,15 @@ Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOut
 
 #### dimension_scores *: List[int]*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -373,15 +373,15 @@ Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOut
 
 #### dimension_scores *: List[int]*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -404,15 +404,15 @@ Bases: [`BaseEvalOutput`](#research_town.evaluators.evaluator_output.BaseEvalOut
 
 #### dimension_scores *: List[int]*
 
-#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *= {}*
+#### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
 A dictionary of computed field names and their corresponding ComputedFieldInfo objects.
 
-#### model_config *: ClassVar[ConfigDict]* *= {'extra': 'allow'}*
+#### model_config *: ClassVar[ConfigDict]* *=   'extra': 'allow'  *
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *= {'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')}*
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'dimension_scores': FieldInfo(annotation=list[int], required=False, default=[]), 'overall_score': FieldInfo(annotation=int, required=False, default=-1), 'pk': FieldInfo(annotation=str, required=False, default='0')  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
