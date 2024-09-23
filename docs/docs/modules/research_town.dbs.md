@@ -16,7 +16,7 @@ A dictionary of computed field names and their corresponding ComputedFieldInfo o
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=<lambda>), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'pk': FieldInfo(annotation=str, required=False, default_factory=[lambda]), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
