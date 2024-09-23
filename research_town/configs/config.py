@@ -381,12 +381,12 @@ class AgentPromptTemplateConfig(BaseModel):
     brainstorm_idea: Dict[str, Union[str, List[str]]] = {
         'intro': 'Here is a high-level summarized insight of a research field. How do you view this field? Do you have any novel ideas or insights? Please give me 3 to 5 novel ideas and insights in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.',
         'examples': ['', ''],
-        'template': 'Here is the bio: {bio}, Here is the insight: {insights}',
+        'template': 'Here is the bio: {bio}. Here is the insight: {insights}',
     }
     discuss_idea: Dict[str, Union[str, List[str]]] = {
         'intro': 'Given a list of research ideas, please summarize them by removing duplicates and resolving any contradictory ideas by selecting the more reasonable one.',
         'examples': ['', ''],
-        'template': 'Here are the research ideas:\n{ideas}\n',
+        'template': 'Here is the bio: {bio}. Here are the research ideas:\n{ideas}\n',
     }
 
     write_proposal: Dict[str, Union[str, List[str]]] = {
