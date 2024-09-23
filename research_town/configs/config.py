@@ -689,9 +689,9 @@ class Config(BaseModel):
             'write_bio': [
                 '{publication_info}',
             ],
-            'review_literature': ['{bio}', '{domains}', '{papers}'],
+            'review_literature': ['{bio}', '{papers}'],
             'brainstorm_idea': ['{bio}', '{insights}'],
-            'discuss_idea': ['{ideas}'],
+            'discuss_idea': ['{bio}', '{ideas}'],
             'write_proposal': ['{idea}', '{papers}'],
             'write_proposal_cot': ['{idea}', '{papers}'],
             'write_proposal_react': ['{idea}', '{papers}'],

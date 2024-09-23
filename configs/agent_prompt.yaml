@@ -40,13 +40,15 @@ agent_prompt_template:
     - "Here are the insights: Innovations like Reshape Dimensions Network (ReDimNet), which optimizes neural architectures by reshaping feature maps, offer promising directions for reducing complexity and improving scalability in model design.\n\nPlease begin brainstorming a valuable idea with one paragraph."
     - "It is useful to extend Reshape Dimensions Network (ReDimNet) to temporal graph neural networks (TGNNs), allowing dynamic reshaping of feature maps to capture temporal dependencies more efficiently. This could reduce computational complexity in time-evolving networks, making models more scalable for large-scale, time-sensitive applications like social network analysis while maintaining high accuracy."
     intro: >
-        You are an autonomous intelligent agent tasked with generating novel ideas based on summarized insights. You will be given a high-level summarized insight of a research field. You are required to give 3 to 5 novel ideas in bullet points. Each bullet point should be concise, containing 2 or 3 sentences.
+        You are an autonomous intelligent agent tasked with generating novel ideas based on summarized insights. You will be given a high-level summarized insight of a research field. You are required to generate 1 novel idea with 2 or 3 sentences.
+
         You will be provided with the following information:
 
         Insights - A summary of recent research based on your profile as a researcher. It contains research backgrounds in this field, and insights of this field that can be further explored.
         To be successful, it is important to be innovative and provide novel ideas. It should have new thoughts that is not seen in previous literature and provide advancement to science. It is not that innovative to combine several algorithms to solve one problem. However, it is innovative to explore a new problem using tools at hand. It is also great to develop new solutions for an existing problem.
         To be successful, you should also put forth ideas that are grounded in reality. Ridiculous or unrealistic ideas can only lead to failure. Idea should just have one or two sentences.
     template: 'Here is your research background: {bio} and here are your research insights: {insights}\n\nPlease begin brainstorming idea conditioned on your research background.'
+
   discuss_idea:
     examples:
     - "Here are the research ideas:
@@ -82,37 +84,32 @@ agent_prompt_template:
         Formulate the specific research question you aim to address.
         Provide a detailed description of this problem, including its background and significance.
         Explain why this question is important to investigate.
-        Output in the final answer for question 1 should be a question format end with a question mark.
+        Output in the final answer for question 1 should be a question format end with a question mark. Only include one question for this problem, DO NOT ADD MORE THAN ONE QUESTION.
+
         [Question 2] - Why is it interesting and important?
 
         Explain the broader implications of solving this problem for the research community or society.
         Discuss how addressing this question could advance knowledge or lead to practical applications.
-        Highlight any potential benefits or innovations that could result.
+        Highlight any potential benefits or innovations that could result. EXPLAIN THE KEYPOINTS AND MAKE IT CLEAR.
+
         [Question 3] - Why is it hard?
 
         Discuss the challenges and complexities involved in solving this problem.
         Explain why naive or straightforward approaches may fail.
-        Identify any technical, theoretical, or practical obstacles that need to be overcome.
+        Identify any technical, theoretical, or practical obstacles that need to be overcome. EXPLAIN THE KEYPOINTS AND MAKE IT CLEAR.
+
         [Question 4] - Why hasn't it been solved before?
 
         Identify gaps or limitations in previous research or existing solutions.
         Discuss any barriers that have prevented this problem from being solved until now.
-        Explain how your approach differs from or improves upon prior work.
+        Explain how your approach differs from or improves upon prior work. EXPLAIN THE KEYPOINTS AND MAKE IT CLEAR.
+
         [Question 5] - What are the key components of my approach and results?
 
         Outline your proposed methodology in detail, including the key components and steps.
         Describe the expected outcomes and any preliminary results you have obtained.
         Acknowledge any limitations or challenges that might affect your results.
-        Explain how you will evaluate the success of your approach.
-
-        Remember the following writing strategy for a successful proposal:
-        Writing Strategy:
-
-        - Context: Begin by introducing the broader field to give readers an overview. Then, gradually narrow the focus to the specific problem or knowledge gap that this research addresses. A well-crafted context should clearly distinguish the study's contributions from the current literature, identifying what is missing (the specific gap) and why filling this gap is important in the broader context of the field.
-
-        - Content: After establishing the context, explain how this study fills the identified gap. Begin with a description of the methods or approaches used, followed by a concise summary of the key findings.
-
-        - Conclusion: Finally, interpret the results in a way that answers the research question posed in the context. If applicable, you may include a broader implications section that highlights how the findings advance the field or open new avenues for future research.
+        Explain how you will evaluate the success of your approach. EXPLAIN THE KEYPOINTS AND MAKE IT CLEAR.
 
         Your goal is to ensure the proposal is clear, concise, and logically structured.
     template: |
