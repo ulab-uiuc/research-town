@@ -1316,13 +1316,13 @@ test = ["ipykernel", "pre-commit", "pytest (<8)", "pytest-cov", "pytest-timeout"
 
 [[package]]
 name = "litellm"
-version = "1.46.8"
+version = "1.47.2"
 description = "Library to easily interface with LLM API providers"
 optional = false
 python-versions = "!=2.7.*,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,!=3.7.*,>=3.8"
 files = [
-    {file = "litellm-1.46.8-py3-none-any.whl", hash = "sha256:112acc854d67ced573dc5d60bbf8b493dea1e61244013685dace8c2d912aa1b3"},
-    {file = "litellm-1.46.8.tar.gz", hash = "sha256:443c67d33e1a264641b80bf170cad1ba42d6fa9816f86df5eaaaf10c1e21b551"},
+    {file = "litellm-1.47.2-py3-none-any.whl", hash = "sha256:85d510f3e367effc835a323dba10f22ba30d88b0aa5a690aba076b19addd9888"},
+    {file = "litellm-1.47.2.tar.gz", hash = "sha256:60e0e7e2c3be2d16ea8895d9147ade2f18ba19939f6a8483f150c04403648e60"},
 ]
 
 [package.dependencies]
