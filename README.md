@@ -52,6 +52,24 @@ cd examples
 python research_town_demo.py
 ```
 
+### Configure API keys
+
+OpenAI key is required to run the code. Please set the environment variable `OPENAI_API_KEY` to your key. The recommend way is to add the key to the conda environment:
+
+```
+conda env config vars set OPENAI_API_KEY=your_key
+```
+
+For some experiments, TogetherAI key is also needed to run the code. Please set the environment variable `TOGETHERAI_API_KEY` to your key (notice: not `TOGETHER_API_KEY`). The recommend way is to add the key to the conda environment:
+
+```
+conda env config vars set TOGETHER_API_KEY=your_key
+```
+
+## Developing
+
+#### Develop UI part
+
 To develop the UI part (both frontend and backend):
 
 ```bash
@@ -65,22 +83,6 @@ poetry install -E backend
 cd backend
 uvicorn main:app --reload
 ```
-
-### Configure API keys
-
-OpenAI key is required to run the code. Please set the environment variable `OPENAI_API_KEY` to your key. The recommend way is to add the key to the conda environment:
-
-```
-conda env config vars set OPENAI_API_KEY=your_key
-```
-
-For some experiments, TogetherAI key is required to run the code. Please set the environment variable `TOGETHERAI_API_KEY` to your key (notice: not `TOGETHER_API_KEY`). The recommend way is to add the key to the conda environment:
-
-```
-conda env config vars set TOGETHER_API_KEY=your_key
-```
-
-## Developing
 
 #### Install dev options
 
