@@ -12,9 +12,9 @@ const ExpandableCard = ({ index, type, summary, content, name }) => {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>#{index} {type} </Card.Title>
+        <Card.Title>{type} </Card.Title>
         <Card.Text>
-          {summary} from {name}
+          {summary}#{index} from {name}
         </Card.Text>
         <Button onClick={toggleExpand}>
           {isExpanded ? "Collapse" : "Expand"}
