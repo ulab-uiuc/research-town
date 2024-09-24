@@ -83,6 +83,7 @@ async def process_url(request: Request) -> Response:
             if agent is not None:
                 item['agent_name'] = agent.profile.name
 
+            print(item)
             yield json.dumps(item) + '\n'
 
     generator = run_engine(url)
