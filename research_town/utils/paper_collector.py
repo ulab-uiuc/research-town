@@ -158,7 +158,7 @@ def get_paper_content(
                         table_index += 1
                         table_tag = str(table_index)
                     table_captions[table_tag] = table_caption
-    except requests.exceptions.RequestException:
+    except Exception as e:
         pass
     return section_contents, table_captions, figure_captions, bibliography
 
