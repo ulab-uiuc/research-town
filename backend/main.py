@@ -29,7 +29,7 @@ app.add_middleware(
 )
 
 
-@app.post('/process')
+@app.post('/process') # type: ignore
 async def process_url(request: Request) -> Response:
     # Get URL from the request body
     data = await request.json()
