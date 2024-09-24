@@ -5,8 +5,6 @@ import ReactMarkdown from "react-markdown";
 import Accordion from "react-bootstrap/Accordion";
 
 function IdeaDisplay({ list }) {
-
-    const agentName = list.length > 0 ? list[0].agent_name : "Agent";
     return (
         <>
         <Row className="mb-3">
@@ -19,7 +17,7 @@ function IdeaDisplay({ list }) {
             {list.map((item, index) => (
                 <Accordion.Item key={index} eventKey="0">
                 <Accordion.Header>
-                    #{index + 1}{item.type} from {agentName}
+                    #{index + 1} {item.type} from {item.agent_name}
                 </Accordion.Header>
                 <Accordion.Body style={{ textAlign: "left" }}>
                     <p>

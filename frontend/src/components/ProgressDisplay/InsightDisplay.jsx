@@ -5,9 +5,6 @@ import Col from "react-bootstrap/Col";
 import ExpandableCard from "./ExpandableCard";
 
 function InsightDisplay({ list }) {
-
-    const agentName = list.length > 0 ? list[0].agent_name : "Agent";
-
     return (
         <>
         <Row className="mb-3">
@@ -24,7 +21,7 @@ function InsightDisplay({ list }) {
                 type={insight.type}
                 summary={""}
                 content={insight.content}
-                name={agentName}
+                name={insight.agent_name}
                 />
             </Col>
             ))}
