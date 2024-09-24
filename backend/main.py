@@ -1,5 +1,5 @@
 import json
-from typing import Generator, Tuple
+from typing import Generator, Optional, Tuple
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -41,7 +41,7 @@ async def process_url(request: Request) -> Response:
 
     # Helper function to process the generator output
     def format_response(
-        generator: Generator[Tuple[Progress, Agent], None, None],
+        generator: Generator[Tuple[Optional[Progress], Optional[Agent]], None, None],
     ) -> Generator[str, None, None]:
         for progress, agent in generator:
             item = {}
