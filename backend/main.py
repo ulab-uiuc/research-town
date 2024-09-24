@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from generator_func import run_engine
 
+from research_town.agents import Agent
 from research_town.dbs import (
     Idea,
     Insight,

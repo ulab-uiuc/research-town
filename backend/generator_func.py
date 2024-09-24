@@ -1,6 +1,7 @@
 import os
 from typing import Generator, Tuple
 
+from research_town.agents import Agent
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, Progress, ProgressDB
 from research_town.engines import Engine
