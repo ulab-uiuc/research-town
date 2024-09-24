@@ -4,11 +4,17 @@ from typing import Generator, Tuple
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
-
 from generator_func import run_engine
+
 from research_town.agents import Agent
 from research_town.dbs import (
-    Idea, Insight, MetaReview, Progress, Proposal, Rebuttal, Review
+    Idea,
+    Insight,
+    MetaReview,
+    Progress,
+    Proposal,
+    Rebuttal,
+    Review,
 )
 
 app = FastAPI()
@@ -22,12 +28,13 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
+
 @app.post('/process')
 async def process_url(request: Request) -> Response:
     # Get URL from the request body
     data = await request.json()
     url = data.get('url')
-    
+
     # Return error if URL is not provided
     if not url:
         return JSONResponse({'error': 'URL is required'}, status_code=400)
@@ -40,7 +47,10 @@ async def process_url(request: Request) -> Response:
             item = {}
 
             if progress is None or agent is None:
-                item = {'type': 'error', 'content': 'Failed to collect complete paper content from the link.'}
+                item = {
+                    'type': 'error',
+                    'content': 'Failed to collect complete paper content from the link.',
+                }
             elif isinstance(progress, Insight):
                 item = {'type': 'insight', 'content': progress.content}
             elif isinstance(progress, Idea):

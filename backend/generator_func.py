@@ -1,5 +1,5 @@
 import os
-from typing import Generator, Tuple, Optional
+from typing import Generator, Optional, Tuple
 
 from research_town.agents import Agent
 from research_town.configs import Config
@@ -7,10 +7,13 @@ from research_town.dbs import LogDB, PaperDB, ProfileDB, Progress, ProgressDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_intro
 
-def run_engine(url: str) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
+
+def run_engine(
+    url: str,
+) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
     # Get the introduction of the paper from the URL
     intro = get_intro(url)
-    
+
     # If no introduction found, return None
     if not intro:
         yield None, None
@@ -22,8 +25,14 @@ def run_engine(url: str) -> Generator[Tuple[Optional[Progress], Optional[Agent]]
 
     # List of agent names (researchers)
     agent_names = [
-        'Jiaxuan You', 'Jure Leskovec', 'Stefanie Jegelka', 'Silvio Lattanzi',
-        'Rex Ying', 'Tim Althoff', 'Christos Faloutsos', 'Julian McAuley'
+        'Jiaxuan You',
+        'Jure Leskovec',
+        'Stefanie Jegelka',
+        'Silvio Lattanzi',
+        'Rex Ying',
+        'Tim Althoff',
+        'Christos Faloutsos',
+        'Julian McAuley',
     ]
 
     # Load or initialize the research databases
