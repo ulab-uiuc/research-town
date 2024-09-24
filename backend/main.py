@@ -1,5 +1,5 @@
 import json
-from typing import Generator
+from typing import Generator, Tuple
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,6 +15,7 @@ from research_town.dbs import (
     Rebuttal,
     Review,
 )
+from research_town.agents import Agent
 
 app = FastAPI()
 
@@ -35,9 +36,9 @@ async def process_url(request: Request) -> Response:
         return JSONResponse({'error': 'URL is required'}, status_code=400)
 
     def post_process(
-        generator: Generator[Progress, None, None],
+        generator: Generator[Tuple[Progress, Agent], None, None],
     ) -> Generator[str, None, None]:
-        for progress in generator:
+        for progress, agent in generator:
             if isinstance(progress, Insight):
                 item = {'type': 'insight', 'content': progress.content}
             elif isinstance(progress, Idea):
@@ -77,6 +78,9 @@ async def process_url(request: Request) -> Response:
                 }
             else:
                 item = {'type': 'error'}
+
+            if agent is not None:
+                item['agent_name'] = agent.profile.name
 
             yield json.dumps(item) + '\n'
 
