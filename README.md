@@ -8,12 +8,6 @@
 
 [![Python 3.10](https://img.shields.io/badge/python-%E2%89%A53.10-blue)](https://www.python.org/downloads/release/python-3109/)
 [![GitHub pull request](https://img.shields.io/badge/PRs-welcome-orange)](https://github.com/hiyouga/LLaMA-Factory/pulls)
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com/)
-[![bear-ified](https://raw.githubusercontent.com/beartype/beartype-assets/main/badge/bear-ified.svg)](https://beartype.readthedocs.io)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Github Action](https://github.com/ulab-uiuc/research-town/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/ulab-uiuc/research-town/actions/workflows/pytest.yml/badge.svg?branch=main)
-[![Checked with mypy](https://github.com/ulab-uiuc/research-town/actions/workflows/mypy.yml/badge.svg?branch=main)](https://github.com/ulab-uiuc/research-town/actions/workflows/mypy.yml/badge.svg?branch=main)
-
 [![Arxiv](https://img.shields.io/badge/arXiv-Coming%20soon-b31b1b)](https://github.com/ulab-uiuc/research-town)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289da?logo=discord&logoColor=white)](https://discord.gg/TwXxGhMB)
 [![WeChat](https://img.shields.io/badge/WeChat-Join%20Us-09B83E?logo=wechat&logoColor=white)](assets/wechat.jpg)
@@ -45,15 +39,17 @@ pip install research_town
 Use a virtual environment, e.g. with anaconda3:
 
 ```bash
-conda create -n research_town python=3.10
-conda activate research_town
+conda create -n research-town python=3.10
+conda activate research-town
 curl -sSL https://install.python-poetry.org | python3
 ```
 
 To run examples provided in the `examples`:
 
 ```bash
-poetry install --extras "retriever collector logger"
+poetry install
+cd examples
+python research_town_demo.py
 ```
 
 To develop the UI part (both frontend and backend):
@@ -65,6 +61,7 @@ npm start
 ```
 
 ```bash
+poetry install -E backend
 cd backend
 uvicorn main:app --reload
 ```
