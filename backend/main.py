@@ -1,5 +1,5 @@
 import json
-from typing import Generator, Tuple
+from typing import Generator, Optional, Tuple
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,6 +20,7 @@ from research_town.agents import Agent
 
 app = FastAPI()
 
+# Enable CORS for all origins, credentials, methods, and headers
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['*'],
@@ -29,39 +30,48 @@ app.add_middleware(
 )
 
 
-@app.post('/process')  # type: ignore
+@app.post('/process') # type: ignore
 async def process_url(request: Request) -> Response:
+    # Get URL from the request body
     data = await request.json()
     url = data.get('url')
+
+    # Return error if URL is not provided
     if not url:
         return JSONResponse({'error': 'URL is required'}, status_code=400)
 
-    def post_process(
-        generator: Generator[Tuple[Progress, Agent], None, None],
+    # Helper function to process the generator output
+    def format_response(
+        generator: Generator[Tuple[Optional[Progress], Optional[Agent]], None, None],
     ) -> Generator[str, None, None]:
         for progress, agent in generator:
-            if isinstance(progress, Insight):
+            item = {}
+
+            if progress is None or agent is None:
+                item = {
+                    'type': 'error',
+                    'content': 'Failed to collect complete paper content from the link.',
+                }
+            elif isinstance(progress, Insight):
                 item = {'type': 'insight', 'content': progress.content}
             elif isinstance(progress, Idea):
                 item = {'type': 'idea', 'content': progress.content}
             elif isinstance(progress, Proposal):
                 item = {
                     'type': 'proposal',
-                    'q1': progress.q1 if progress.q1 else '',
-                    'q2': progress.q2 if progress.q2 else '',
-                    'q3': progress.q3 if progress.q3 else '',
-                    'q4': progress.q4 if progress.q4 else '',
-                    'q5': progress.q5 if progress.q5 else '',
+                    'q1': progress.q1 or '',
+                    'q2': progress.q2 or '',
+                    'q3': progress.q3 or '',
+                    'q4': progress.q4 or '',
+                    'q5': progress.q5 or '',
                 }
             elif isinstance(progress, Review):
                 item = {
                     'type': 'review',
-                    'summary': progress.summary if progress.summary else '',
-                    'strength': progress.strength if progress.strength else '',
-                    'weakness': progress.weakness if progress.weakness else '',
-                    'ethical_concerns': progress.ethical_concerns
-                    if progress.ethical_concerns
-                    else '',
+                    'summary': progress.summary or '',
+                    'strength': progress.strength or '',
+                    'weakness': progress.weakness or '',
+                    'ethical_concerns': progress.ethical_concerns or '',
                     'score': str(progress.score) if progress.score else '-1',
                 }
             elif isinstance(progress, Rebuttal):
@@ -69,22 +79,20 @@ async def process_url(request: Request) -> Response:
             elif isinstance(progress, MetaReview):
                 item = {
                     'type': 'metareview',
-                    'summary': progress.summary if progress.summary else '',
-                    'strength': progress.strength if progress.strength else '',
-                    'weakness': progress.weakness if progress.weakness else '',
-                    'ethical_concerns': progress.ethical_concerns
-                    if progress.ethical_concerns
-                    else '',
-                    'decision': 'accept' if progress.decision is True else 'reject',
+                    'summary': progress.summary or '',
+                    'strength': progress.strength or '',
+                    'weakness': progress.weakness or '',
+                    'ethical_concerns': progress.ethical_concerns or '',
+                    'decision': 'accept' if progress.decision else 'reject',
                 }
             else:
-                item = {'type': 'error'}
+                item = {'type': 'error', 'content': 'Unrecognized progress type'}
 
-            if agent is not None:
+            if agent:
                 item['agent_name'] = agent.profile.name
 
-            print(item)
             yield json.dumps(item) + '\n'
 
+    # Run the engine and stream the results back
     generator = run_engine(url)
-    return StreamingResponse(post_process(generator), media_type='application/json')
+    return StreamingResponse(format_response(generator), media_type='application/json')
