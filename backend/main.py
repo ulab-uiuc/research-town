@@ -16,7 +16,6 @@ from research_town.dbs import (
     Rebuttal,
     Review,
 )
-from research_town.agents import Agent
 
 app = FastAPI()
 
@@ -30,7 +29,7 @@ app.add_middleware(
 )
 
 
-@app.post('/process') # type: ignore
+@app.post('/process')  # type: ignore
 async def process_url(request: Request) -> Response:
     # Get URL from the request body
     data = await request.json()
