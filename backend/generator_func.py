@@ -6,7 +6,6 @@ from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, Progress, ProgressDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_intro
-from research_town.agents import Agent
 
 
 def run_engine(url: str) -> Generator[Tuple[Progress, Agent], None, None]:

@@ -16,7 +16,6 @@ from research_town.dbs import (
     Rebuttal,
     Review,
 )
-from research_town.agents import Agent
 
 app = FastAPI()
 
