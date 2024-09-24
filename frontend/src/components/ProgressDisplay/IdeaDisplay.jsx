@@ -19,7 +19,7 @@ function IdeaDisplay({ list }) {
             {list.map((item, index) => (
                 <Accordion.Item key={index} eventKey="0">
                 <Accordion.Header>
-                    {item.type}#{index + 1} from {agentName}
+                    #{index + 1}{item.type} from {agentName}
                 </Accordion.Header>
                 <Accordion.Body style={{ textAlign: "left" }}>
                     <p>
