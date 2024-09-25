@@ -120,7 +120,7 @@ class ProfileDB(BaseDB[Profile]):
         )
         # Update roles
         self._update_profile_roles(profiles, 'is_member_candidate')
-        return profiles 
+        return profiles
 
     def match_reviewer_profiles(
         self, proposal: Proposal, reviewer_num: int = 1
@@ -132,7 +132,7 @@ class ProfileDB(BaseDB[Profile]):
         )
         # Update roles
         self._update_profile_roles(profiles, 'is_reviewer_candidate')
-        return profiles 
+        return profiles
 
     def match_chair_profiles(
         self, proposal: Proposal, chair_num: int = 1
