@@ -1,0 +1,151 @@
+metareview_quality:
+  examples:
+  - ''
+  - ''
+  intro: 'Please evaluate the review based on the following dimensions. Finally,
+    give an overall score (0-100) and 10 dimension scores (for each dimension, provide
+    a rating (1-10)) as the evaluation for the review.
+
+
+    The details of rating are as follows:
+
+    1. Summarization
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Does the meta-review accurately summarize the strengths and weaknesses of
+    the original reviews?
+
+    - Are the key points of each review clearly and succinctly summarized?
+
+    - Are any discrepancies or misunderstandings among the reviews identified and
+    addressed?
+
+    2. Quality
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Are the strengths and weaknesses of the reviewed paper clearly identified
+    and appropriately critiqued?
+
+    - Do the critiques show a deep understanding of the paper''s content and contributions?
+
+    - Are the assessments fair and balanced?
+
+    3. Consistency and Fairness
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Is there consistency in evaluating different aspects of the reviewed paper
+    across the reviews?
+
+    - Are the assessments fair, avoiding significant bias towards any particular
+    aspect of the paper?
+
+    - Are any conflicting opinions among the reviews reconciled appropriately?
+
+    4. Constructiveness
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Are the critiques and suggestions provided in the meta-review constructive
+    and actionable?
+
+    - Do they offer meaningful insights for improving the reviewed paper or future
+    revisions?
+
+    - Are the recommendations clear and well-supported by evidence from the reviews?
+
+    5. Clarity
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Is the meta-review well-written and logically organized?
+
+    - Are the points expressed clearly and effectively?
+
+    - Is the language appropriate and professional?
+
+    6. Insightfulness
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Does the meta-review provide insightful commentary beyond summarizing individual
+    reviews?
+
+    - Are there novel observations or perspectives that enrich the understanding
+    of the reviewed paper?
+
+    7. Alignment with Review Criteria
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Does the meta-review align with the evaluation criteria provided by the submission
+    guidelines?
+
+    - Are all relevant aspects of the reviewed paper adequately covered in the meta-review?
+
+    8. Justification of Final Decision
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Is the final decision or recommendation based on a thorough analysis of the
+    reviews?
+
+    - Are the reasons for the recommendation clearly articulated and justified?
+
+    9. Ethical Considerations
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Are there any ethical considerations raised in the meta-review regarding the
+    reviewed paper or its reviews?
+
+    - Are potential biases or conflicts of interest addressed appropriately?
+
+    10. Overall Impression
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - What is your overall impression of the meta-review?
+
+    - Does it meet the standards expected for a meta-review in terms of thoroughness,
+    insightfulness, and clarity?
+
+    '
+  template: 'Here is the review to evaluate:
+
+    research insights: {insights}
+
+    idea: {idea}
+
+    paper: {paper}
+
+    reviews: {reviews}
+
+    rebuttals: {rebuttals}
+
+    meta_review: {meta_review}. The output format should follow these rules: Overall
+    Score of an insight (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6],
+    where di is the score of the i-th dimension. An example of output is: Overall
+    Score=89 Dimension Scores=[8,9,9,9,9,9].'

@@ -1,0 +1,22 @@
+discuss_idea:
+  examples:
+  - "Here are the research ideas:
+  It is useful to extend Reshape Dimensions Network (ReDimNet) to temporal graph neural networks (TGNNs), allowing dynamic reshaping of feature maps to capture temporal dependencies more efficiently.
+
+  Introduce adaptive feature pooling mechanisms that dynamically adjust the resolution of node embeddings over time, enabling temporal graph neural networks (TGNNs) to focus on critical time intervals while reducing unnecessary complexity for periods of lower importance.
+
+  Develop a hierarchical attention mechanism for TGNNs, where attention layers operate at multiple temporal scales, allowing the network to focus on both short-term and long-term temporal dependencies in evolving graphs, improving prediction performance on time-sensitive tasks.
+
+  Please begin summarizing ideas."
+  - "The Hierarchical Temporal Attention Mechanism for TGNNs proposes a multi-scale attention framework to better capture short- and long-term temporal dependencies in dynamic graphs. By adjusting attention at different temporal resolutions, this approach improves the model's ability to handle fine-grained details and long-range patterns, enhancing prediction accuracy on tasks like link prediction and event forecasting. This flexible, scalable mechanism reduces complexity while preserving key temporal information, offering a more efficient way to model evolving graphs."
+  intro: >
+      You are an autonomous intelligent agent tasked to pick and combine research ideas. You are required to remove duplicate ideas, as well as resolve conflict between ideas by selecting more reasonable ideas. You should also combine the innovative points of different ideas together.
+      You will be provided with the following information:
+      Ideas - A list of research ideas.
+      You should provide the following information:
+      New idea - One idea after removing duplicates and resolving any contradictory ideas by selecting the more reasonable one and the most promising and reliable ones.
+  template: 'Here is the personal profile: {bio}
+    Here are the research ideas:
+    {ideas}
+
+    Please pick, combine and rewrite into one idea.'

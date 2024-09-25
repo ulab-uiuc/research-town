@@ -1,0 +1,104 @@
+paper_quality:
+  examples:
+  - ''
+  - ''
+  intro: 'Please evaluate the paper draft based on the following dimensions. Finally,
+    give an overall score (0-100) and 6 dimension scores (for each dimension, provide
+    a rating (1-10)) as the evaluation for the draft.
+
+
+    The details of rating are as follows:
+
+    1. Novelty
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Does the paper introduce a novel problem or new perspective that has not been
+    explored before?
+
+    - Does it introduce new techniques or significant advancements compared to existing
+    methods?
+
+    - How does it align with or diverge from the innovations highlighted in the
+    insights?
+
+    2. Validity
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Does it include solid theoretical foundations, robust algorithms, and detailed
+    methodologies in addressing the research problem?
+
+    - Are the underlying principles well-defined and logically consistent?
+
+    3. Significance
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Evaluate the potential contribution and impact of the paper on the specific
+    domain of research community that the paper belongs to and beyond.
+
+    - How does it compare to existing works in terms of impact?
+
+    4. Rigorousness
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Are the research design and methods clearly described and justified?
+
+    - Is the methodology robust and suitable for addressing the research questions?
+
+    - Are the results well-analyzed and interpreted?
+
+    - Do the findings support the claims made in the paper?
+
+    5. Clarity
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Evaluate the clarity, organization, and presentation quality of the paper.
+
+    - How well do the title and abstract summarize the paper? Are they clear, concise,
+    and informative?
+
+    - Does it effectively convey the significance and main contributions of the
+    paper?
+
+    - How well do the title and abstract align with each other? Do they accurately
+    represent the core idea and content of the paper?
+
+    - Is the content well-structured and easy to follow?
+
+    6. Ethical Considerations
+
+    - Rating (1-10):
+
+    - Comments:
+
+    - Consider the ethical implications and societal impact of the paper.
+
+    - Does it adhere to ethical guidelines and responsible research practices?
+
+    - Are potential negative consequences or biases addressed?
+
+    '
+  template: 'Here is the paper draft to evaluate:
+
+    paper: {paper}
+
+    Idea: {idea}
+
+    Insights: {insights} The output format should follow these rules: Overall Score
+    of an insight (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where
+    di is the score of the i-th dimension. An example of output is: Overall Score=89
+    Dimension Scores=[8,9,9,9,9,9].'

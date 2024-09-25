@@ -1,7 +1,7 @@
 from beartype.typing import Any, Dict, List, Optional
 from pydantic import BaseModel
 
-from research_town.configs import AgentPromptTemplateConfig, EvalPromptTemplateConfig
+from research_town.configs import AgentPromptConfig, EvalPromptConfig
 
 
 def mock_papers(corpus: List[str], query: str, num: int) -> List[str]:
@@ -18,8 +18,8 @@ def mock_prompting(
     stream: Optional[bool] = None,
     mode: Optional[str] = None,
 ) -> List[str]:
-    agent_template_config = AgentPromptTemplateConfig()
-    eval_template_config = EvalPromptTemplateConfig()
+    agent_template_config = AgentPromptConfig()
+    eval_template_config = EvalPromptConfig()
     if prompt[0]['content'] == agent_template_config.write_bio['intro']:
         return ['Bio1', 'Bio2', 'Bio3']
     elif prompt[0]['content'] == agent_template_config.review_literature['intro']:
