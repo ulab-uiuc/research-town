@@ -67,6 +67,7 @@ def download_papers(
                         'paper_title': paper.title,
                         'arxiv_id': paper.get_short_id(),
                         'pdf_path': file_name,
+                        'authors': [author.name for author in paper.authors],
                     }
                 else:
                     print(

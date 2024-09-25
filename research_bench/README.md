@@ -15,7 +15,7 @@ This repository contains three Python scripts that automate the process of downl
 
 ## How to Run
 
-To automate the entire process, use the provided `run.sh` script, which will:
+To automate the entire process, use the provided `download_paper.sh` script, which will:
 
 1. Download ArXiv papers based on your search criteria.
 2. Fetch references for the downloaded papers.
@@ -23,16 +23,16 @@ To automate the entire process, use the provided `run.sh` script, which will:
 
 ### Usage
 
-First, make sure the `run.sh` script has execution permission:
+First, make sure the `download_paper.sh` script has execution permission:
 
 ```bash
-chmod +x run.sh
+chmod +x download_paper.sh
 ```
 
 Then, run the script with the following parameters:
 
 ```bash
-./run.sh [KEYWORDS] [START_DATE] [END_DATE] [SAVE_DIR]
+./download_paper.sh [KEYWORDS] [START_DATE] [END_DATE] [SAVE_DIR]
 ```
 
 ### Parameters:
@@ -43,7 +43,7 @@ Then, run the script with the following parameters:
 
 ### Example:
 ```bash
-./run.sh "agent" "20240801" "20240911" "../../data/arxiv_ai_papers"
+./download_paper.sh "agent" "20240801" "20240911" "../../data/arxiv_ai_papers"
 ```
 This will:
 Download papers with the keyword "agent" submitted between 2024-08-01 and 2024-09-11.
