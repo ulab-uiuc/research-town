@@ -1,7 +1,8 @@
 import os
 from typing import Any, Dict, List, Optional, Union
+
 import yaml
-from pydantic import BaseModel, root_validator, Field, ValidationError
+from pydantic import BaseModel, root_validator
 
 
 # ParamConfig definition for handling parameters
@@ -38,15 +39,30 @@ class EvalPromptTemplate(BaseModel):
             'idea_quality': ['{idea}', '{insights}'],
             'proposal_quality': ['{paper}', '{idea}', '{insights}'],
             'review_quality': ['{idea}', '{insights}', '{paper}', '{review}'],
-            'rebuttal_quality': ['{insights}', '{idea}', '{paper}', '{review}', '{rebuttal}'],
-            'metareview_quality': ['{insights}', '{idea}', '{paper}', '{reviews}', '{rebuttals}', '{metareview}'],
+            'rebuttal_quality': [
+                '{insights}',
+                '{idea}',
+                '{paper}',
+                '{review}',
+                '{rebuttal}',
+            ],
+            'metareview_quality': [
+                '{insights}',
+                '{idea}',
+                '{paper}',
+                '{reviews}',
+                '{rebuttals}',
+                '{metareview}',
+            ],
         }
 
         for template_name, placeholders in required_placeholders.items():
             template = values.get(template_name, {}).get('template', '')
             missing_placeholders = [p for p in placeholders if p not in template]
             if missing_placeholders:
-                raise ValueError(f"Template '{template_name}' is missing placeholders: {', '.join(missing_placeholders)}")
+                raise ValueError(
+                    f"Template '{template_name}' is missing placeholders: {', '.join(missing_placeholders)}"
+                )
 
         return values
 
@@ -82,12 +98,39 @@ class AgentPromptTemplate(BaseModel):
             'write_review_strength': ['{proposal}', '{summary}'],
             'write_review_weakness': ['{proposal}', '{summary}'],
             'write_review_ethical': ['{proposal}', '{summary}'],
-            'write_review_score': ['{proposal}', '{summary}', '{strength}', '{weakness}'],
+            'write_review_score': [
+                '{proposal}',
+                '{summary}',
+                '{strength}',
+                '{weakness}',
+            ],
             'write_metareview_summary': ['{proposal}', '{reviews}', '{rebuttals}'],
-            'write_metareview_strength': ['{proposal}', '{reviews}', '{rebuttals}', '{summary}'],
-            'write_metareview_weakness': ['{proposal}', '{reviews}', '{rebuttals}', '{summary}'],
-            'write_metareview_ethical': ['{proposal}', '{reviews}', '{rebuttals}', '{summary}'],
-            'write_metareview_decision': ['{proposal}', '{reviews}', '{rebuttals}', '{summary}', '{strength}', '{weakness}'],
+            'write_metareview_strength': [
+                '{proposal}',
+                '{reviews}',
+                '{rebuttals}',
+                '{summary}',
+            ],
+            'write_metareview_weakness': [
+                '{proposal}',
+                '{reviews}',
+                '{rebuttals}',
+                '{summary}',
+            ],
+            'write_metareview_ethical': [
+                '{proposal}',
+                '{reviews}',
+                '{rebuttals}',
+                '{summary}',
+            ],
+            'write_metareview_decision': [
+                '{proposal}',
+                '{reviews}',
+                '{rebuttals}',
+                '{summary}',
+                '{strength}',
+                '{weakness}',
+            ],
             'write_rebuttal': ['{proposal}', '{review}'],
         }
 
@@ -95,7 +138,9 @@ class AgentPromptTemplate(BaseModel):
             template = values.get(template_name, {}).get('template', '')
             missing_placeholders = [p for p in placeholders if p not in template]
             if missing_placeholders:
-                raise ValueError(f"Template '{template_name}' is missing placeholders: {', '.join(missing_placeholders)}")
+                raise ValueError(
+                    f"Template '{template_name}' is missing placeholders: {', '.join(missing_placeholders)}"
+                )
 
         return values
 
@@ -114,26 +159,32 @@ class Config(BaseModel):
     def _load_from_yaml(self, yaml_config_path: str) -> Dict[str, Any]:
         return {
             'param': self._load_yaml_file(os.path.join(yaml_config_path, 'param.yaml')),
-            'agent_prompt_template': self._load_prompt_configs(os.path.join(yaml_config_path, 'agent_prompts')),
-            'eval_prompt_template': self._load_prompt_configs(os.path.join(yaml_config_path, 'eval_prompts'))
+            'agent_prompt_template': self._load_prompt_configs(
+                os.path.join(yaml_config_path, 'agent_prompts')
+            ),
+            'eval_prompt_template': self._load_prompt_configs(
+                os.path.join(yaml_config_path, 'eval_prompts')
+            ),
         }
 
     def _load_yaml_file(self, file_path: str) -> Dict[str, Any]:
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"YAML file '{file_path}' does not exist.")
-        
+
         with open(file_path, 'r') as f:
             return yaml.safe_load(f)
 
     def _load_prompt_configs(self, directory: str) -> Dict[str, Any]:
         if not os.path.exists(directory):
             raise FileNotFoundError(f"Directory '{directory}' does not exist.")
-        
+
         prompt_configs = {}
         for file_name in os.listdir(directory):
             if file_name.endswith(('.yaml', '.yml')):
                 file_path = os.path.join(directory, file_name)
-                prompt_name = os.path.splitext(file_name)[0]  # Extract the file name without extension
+                prompt_name = os.path.splitext(file_name)[
+                    0
+                ]  # Extract the file name without extension
                 prompt_configs[prompt_name] = self._load_yaml_file(file_path)
 
         return prompt_configs
