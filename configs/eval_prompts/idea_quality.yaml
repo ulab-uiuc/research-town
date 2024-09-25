@@ -1,99 +1,98 @@
-idea_quality:
-  examples:
-  - ''
-  - ''
-  intro: 'Please evaluate the idea based on the following dimensions, considering
-    the current research insights within the research community. If the research
-    insights field is left blank, please use your common knowledge to assess the
-    insights. Finally, give an overall score (0-100) and 6 dimension scores (for
-    each dimension, provide a rating (1-10)) as the evaluation for the idea.
+examples:
+- ''
+- ''
+intro: 'Please evaluate the idea based on the following dimensions, considering
+  the current research insights within the research community. If the research
+  insights field is left blank, please use your common knowledge to assess the
+  insights. Finally, give an overall score (0-100) and 6 dimension scores (for
+  each dimension, provide a rating (1-10)) as the evaluation for the idea.
 
 
-    The details of rating are as follows:
+  The details of rating are as follows:
 
-    1. Novelty
+  1. Novelty
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - How original and unique is the idea?
+  - How original and unique is the idea?
 
-    - Does it introduce a new perspective or significant advancement compared to
-    existing methods?
+  - Does it introduce a new perspective or significant advancement compared to
+  existing methods?
 
-    - How does it align with or diverge from the innovations highlighted in the
-    insights?
+  - How does it align with or diverge from the innovations highlighted in the
+  insights?
 
-    2. Validity
+  2. Validity
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Does it include solid theoretical foundations, robust algorithms, and detailed
-    methodologies?
+  - Does it include solid theoretical foundations, robust algorithms, and detailed
+  methodologies?
 
-    - Is the method in line with the state-of-the-art techniques noted in the insights?
+  - Is the method in line with the state-of-the-art techniques noted in the insights?
 
-    - Are the underlying principles well-defined and logically consistent?
+  - Are the underlying principles well-defined and logically consistent?
 
-    - Does the idea demonstrate a deep understanding of relevant theories and concepts?
+  - Does the idea demonstrate a deep understanding of relevant theories and concepts?
 
-    3. Significance
+  3. Significance
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Evaluate the potential impact of the idea on the specific domain of research
-    community that the idea belongs to and beyond.
+  - Evaluate the potential impact of the idea on the specific domain of research
+  community that the idea belongs to and beyond.
 
-    - How significant is its contribution to advancing the field?
+  - How significant is its contribution to advancing the field?
 
-    - Does it address high-impact problems or gaps identified in the insights?
+  - Does it address high-impact problems or gaps identified in the insights?
 
-    - How applicable is it in practical settings and industry contexts?
+  - How applicable is it in practical settings and industry contexts?
 
-    4. Feasibility
+  4. Feasibility
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Assess the feasibility of implementing the idea.
+  - Assess the feasibility of implementing the idea.
 
-    - Is it practically applicable in real-world scenarios?
+  - Is it practically applicable in real-world scenarios?
 
-    - Does it consider efficiency and scalability, in line with the practical application
-    focus of the insights?
+  - Does it consider efficiency and scalability, in line with the practical application
+  focus of the insights?
 
-    5. Clarity
+  5. Clarity
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Assess the clarity, organization, and presentation quality of the idea.
+  - Assess the clarity, organization, and presentation quality of the idea.
 
-    - Is the idea communicated effectively, adhering to high presentation standards
-    seen in top-tier conferences?
+  - Is the idea communicated effectively, adhering to high presentation standards
+  seen in top-tier conferences?
 
-    6. Ethical Considerations
+  6. Ethical Considerations
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Consider the ethical implications and societal impact of the idea.
+  - Consider the ethical implications and societal impact of the idea.
 
-    - Does it adhere to the growing emphasis on ethical research practices as highlighted
-    in the insights?
+  - Does it adhere to the growing emphasis on ethical research practices as highlighted
+  in the insights?
 
-    '
-  template: 'Here is the idea to evaluate: {idea}.
+  '
+template: 'Here is the idea to evaluate: {idea}.
 
-    Here is the research insights: {insights}. The output format should follow these
-    rules: Overall Score of an insight (0-100), with 6 Dimension Scores: [d1, d2,
-    d3, ..., d6], where di is the score of the i-th dimension. An example of output
-    is: Overall Score=89 Dimension Scores=[8,9,9,9,9,9].'
+  Here is the research insights: {insights}. The output format should follow these
+  rules: Overall Score of an insight (0-100), with 6 Dimension Scores: [d1, d2,
+  d3, ..., d6], where di is the score of the i-th dimension. An example of output
+  is: Overall Score=89 Dimension Scores=[8,9,9,9,9,9].'

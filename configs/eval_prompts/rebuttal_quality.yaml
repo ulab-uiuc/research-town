@@ -1,122 +1,121 @@
-rebuttal_quality:
-  examples:
-  - ''
-  - ''
-  intro: 'Please evaluate the rebuttal based on the following dimensions. Finally,
-    give an overall score (0-100) and 10 dimension scores (for each dimension, provide
-    a rating (1-10)) as the evaluation for the review.
+examples:
+- ''
+- ''
+intro: 'Please evaluate the rebuttal based on the following dimensions. Finally,
+  give an overall score (0-100) and 10 dimension scores (for each dimension, provide
+  a rating (1-10)) as the evaluation for the review.
 
 
-    The details of rating are as follows:
+  The details of rating are as follows:
 
-    1. Clarity of Response
+  1. Clarity of Response
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Is the rebuttal clear in addressing the criticisms raised in the reviews?
+  - Is the rebuttal clear in addressing the criticisms raised in the reviews?
 
-    - Are the responses to each criticism well-structured and understandable?
+  - Are the responses to each criticism well-structured and understandable?
 
-    2. Accuracy and Justification
+  2. Accuracy and Justification
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Are the rebuttal claims and justifications adequately supported by evidence?
+  - Are the rebuttal claims and justifications adequately supported by evidence?
 
-    - Are any disagreements or discrepancies with the reviews addressed convincingly?
+  - Are any disagreements or discrepancies with the reviews addressed convincingly?
 
-    3. Responsiveness
+  3. Responsiveness
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Does the rebuttal address all major concerns and critiques raised in the reviews?
+  - Does the rebuttal address all major concerns and critiques raised in the reviews?
 
-    - Are the rebuttal responses thorough and comprehensive?
+  - Are the rebuttal responses thorough and comprehensive?
 
-    4. Persuasiveness
+  4. Persuasiveness
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - How persuasive are the arguments and explanations provided in the rebuttal?
+  - How persuasive are the arguments and explanations provided in the rebuttal?
 
-    - Are the rebuttal responses effective in mitigating concerns and defending
-    the paper?
+  - Are the rebuttal responses effective in mitigating concerns and defending
+  the paper?
 
-    5. Professionalism
+  5. Professionalism
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Is the tone and language of the rebuttal professional and respectful?
+  - Is the tone and language of the rebuttal professional and respectful?
 
-    - Are there any instances of defensive or dismissive language that need improvement?
+  - Are there any instances of defensive or dismissive language that need improvement?
 
-    6. Insightfulness
+  6. Insightfulness
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Does the rebuttal provide new insights or perspectives that were not fully
-    addressed in the original paper or reviews?
+  - Does the rebuttal provide new insights or perspectives that were not fully
+  addressed in the original paper or reviews?
 
-    7. Overall Improvement
+  7. Overall Improvement
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - How much does the rebuttal improve the overall perception and understanding
-    of the paper''s strengths and weaknesses?
+  - How much does the rebuttal improve the overall perception and understanding
+  of the paper''s strengths and weaknesses?
 
-    8. Clarity of Contributions
+  8. Clarity of Contributions
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Are the contributions of the paper clarified and emphasized in the rebuttal?
+  - Are the contributions of the paper clarified and emphasized in the rebuttal?
 
-    9. Ethical Considerations
+  9. Ethical Considerations
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Are there any ethical implications or considerations raised in the rebuttal?
+  - Are there any ethical implications or considerations raised in the rebuttal?
 
-    10. Balance and Fairness
+  10. Balance and Fairness
 
-    - Rating (1-10):
+  - Rating (1-10):
 
-    - Comments:
+  - Comments:
 
-    - Does the rebuttal acknowledge both strengths and weaknesses of the paper in
-    a balanced manner?
+  - Does the rebuttal acknowledge both strengths and weaknesses of the paper in
+  a balanced manner?
 
-    - Is there fairness in addressing criticisms without bias?
+  - Is there fairness in addressing criticisms without bias?
 
-    '
-  template: 'Here is the review to evaluate:
+  '
+template: 'Here is the review to evaluate:
 
-    research insights: {insights}
+  research insights: {insights}
 
-    idea: {idea}
+  idea: {idea}
 
-    paper: {paper}
+  paper: {paper}
 
-    reviews: {review}
+  reviews: {review}
 
-    rebuttal: {rebuttal}. The output format should follow these rules: Overall Score
-    of an insight (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where
-    di is the score of the i-th dimension. An example of output is: Overall Score=89
-    Dimension Scores=[8,9,9,9,9,9].'
+  rebuttal: {rebuttal}. The output format should follow these rules: Overall Score
+  of an insight (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where
+  di is the score of the i-th dimension. An example of output is: Overall Score=89
+  Dimension Scores=[8,9,9,9,9,9].'

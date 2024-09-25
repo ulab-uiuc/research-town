@@ -21,6 +21,7 @@ def run_sync_experiment(
     ]
     # if save path exists, then load
     config = Config(config_file_path)
+
     profile_db = ProfileDB()
     paper_db = PaperDB()
     if os.path.exists(save_file_path):
