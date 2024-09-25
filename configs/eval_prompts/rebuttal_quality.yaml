@@ -1,7 +1,7 @@
-examples:
+fewshot_examples:
 - ''
 - ''
-intro: 'Please evaluate the rebuttal based on the following dimensions. Finally,
+sys_prompt: 'Please evaluate the rebuttal based on the following dimensions. Finally,
   give an overall score (0-100) and 10 dimension scores (for each dimension, provide
   a rating (1-10)) as the evaluation for the review.
 

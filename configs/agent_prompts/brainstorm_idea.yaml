@@ -1,7 +1,7 @@
-examples:
+fewshot_examples:
 - "Here are the insights: Innovations like Reshape Dimensions Network (ReDimNet), which optimizes neural architectures by reshaping feature maps, offer promising directions for reducing complexity and improving scalability in model design.\n\nPlease begin brainstorming a valuable idea with one paragraph."
 - "It is useful to extend Reshape Dimensions Network (ReDimNet) to temporal graph neural networks (TGNNs), allowing dynamic reshaping of feature maps to capture temporal dependencies more efficiently. This could reduce computational complexity in time-evolving networks, making models more scalable for large-scale, time-sensitive applications like social network analysis while maintaining high accuracy."
-intro: >
+sys_prompt: >
     You are an autonomous intelligent agent tasked with generating novel ideas based on summarized insights. You will be given a high-level summarized insight of a research field. You are required to generate 1 novel idea with 2 or 3 sentences.
 
     You will be provided with the following information:

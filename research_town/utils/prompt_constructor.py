@@ -6,13 +6,13 @@ def openai_format_prompt_construct(
 ) -> List[Dict[str, str]]:
     messages = []
 
-    if 'intro' in template:
-        intro = template['intro']
-        assert isinstance(intro, str)
-        messages.append({'role': 'system', 'content': intro})
+    if 'sys_prompt' in template:
+        sys_prompt = template['sys_prompt']
+        assert isinstance(sys_prompt, str)
+        messages.append({'role': 'system', 'content': sys_prompt})
 
-    if 'examples' in template:
-        examples = template['examples']
+    if 'fewshot_examples' in template:
+        examples = template['fewshot_examples']
         assert len(examples) % 2 == 0
         for i, example in enumerate(examples):
             if i % 2 == 0:

@@ -1,7 +1,7 @@
-examples:
+fewshot_examples:
 - ''
 - ''
-intro: 'Please evaluate the idea based on the following dimensions, considering
+sys_prompt: 'Please evaluate the idea based on the following dimensions, considering
   the current research insights within the research community. If the research
   insights field is left blank, please use your common knowledge to assess the
   insights. Finally, give an overall score (0-100) and 6 dimension scores (for

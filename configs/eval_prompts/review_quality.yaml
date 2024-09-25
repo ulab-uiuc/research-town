@@ -1,7 +1,7 @@
-examples:
+fewshot_examples:
 - ''
 - ''
-intro: 'Please evaluate the review based on the following dimensions. You only
+sys_prompt: 'Please evaluate the review based on the following dimensions. You only
   need to give an overall score (0-100) and 10 dimension scores (for each dimension,
   provide a rating (1-10)) as the evaluation for the review. For these components
   that are left blank (for example: rebuttal, meta_review, etc), please provide
