@@ -5,10 +5,11 @@ import pytest
 import yaml
 
 from research_town.configs import Config
+from tests.constants.config_constants import example_config
 
 
 def test_default_initialization() -> None:
-    config = Config()
+    config = example_config
     assert config.param.related_paper_num == 10
     assert config.param.base_llm == 'mistralai/Mixtral-8x7B-Instruct-v0.1'
     assert config.param.member_num == 1
@@ -72,7 +73,7 @@ def test_merging_configurations() -> None:
         },
     }
 
-    config = Config()
+    config = example_config
     config.merge_from_other_cfg(base_config)
 
     assert config.param.related_paper_num == 10
@@ -97,7 +98,7 @@ def test_merging_configurations() -> None:
 
 
 def test_yaml_serialization() -> None:
-    config = Config()
+    config = example_config
     with NamedTemporaryFile(delete=False, suffix='.yaml') as tmpfile:
         tmpfile_path = os.path.dirname(tmpfile.name)
         config.save_to_yaml(tmpfile_path)
@@ -114,14 +115,14 @@ def test_yaml_serialization() -> None:
 
 
 def test_placeholder_check() -> None:
-    config = Config()
+    config = example_config
     config.check_agent_prompt_template_placeholder()
 
     config.agent_prompt_template.write_rebuttal['template'] = 'missing {test}'
     with pytest.raises(AssertionError):
         config.check_agent_prompt_template_placeholder()
 
-    config = Config()
+    config = example_config
     config.check_eval_prompt_template_placeholder()
 
     config.eval_prompt_template.insight_quality['template'] = 'missing {test}'

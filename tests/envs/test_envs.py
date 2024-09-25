@@ -11,6 +11,7 @@ from tests.constants.db_constants import (
     example_progress_db,
 )
 from tests.mocks.mocking_func import mock_prompting
+from tests.constants.config_constants import example_config
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -23,7 +24,7 @@ def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
         log_db=example_log_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
-        config=Config(),
+        config=example_config,
         agent_manager=example_agent_manager,
     )
     leader = example_agent_manager.create_leader(agent_profile_A)
@@ -53,7 +54,7 @@ def test_proposal_writing_env(
         log_db=example_log_db,
         progress_db=example_progress_db,
         paper_db=example_paper_db,
-        config=Config(),
+        config=example_config,
         agent_manager=example_agent_manager,
     )
     leader = example_agent_manager.create_leader(agent_profile_A)

@@ -99,7 +99,7 @@ class InsightQualityEvaluator(BaseQualityEvaluator):
             stream=self.config.param.stream if self.config else None,
             prompt_template=self.config.eval_prompt_template.insight_quality
             if self.config
-            else Config().eval_prompt_template.insight_quality,
+            else Config('../../configs').eval_prompt_template.insight_quality,
         )
         self.parsed_output = self.parse(raw_output, InsightEvalOutput)
 
@@ -131,7 +131,7 @@ class IdeaQualityEvaluator(BaseQualityEvaluator):
             stream=self.config.param.stream if self.config else None,
             prompt_template=self.config.eval_prompt_template.idea_quality
             if self.config
-            else Config().eval_prompt_template.idea_quality,
+            else Config('../../configs').eval_prompt_template.idea_quality,
         )
         self.parsed_output = self.parse(raw_output, IdeaEvalOutput)
 
@@ -164,7 +164,7 @@ class ProposalQualityEvaluator(BaseQualityEvaluator):
             stream=self.config.param.stream if self.config else None,
             prompt_template=self.config.eval_prompt_template.paper_quality
             if self.config
-            else Config().eval_prompt_template.paper_quality,
+            else Config('../../configs').eval_prompt_template.paper_quality,
         )
         self.parsed_output = self.parse(raw_output, ProposalEvalOutput)
 
@@ -198,7 +198,7 @@ class ReviewQualityEvaluator(BaseQualityEvaluator):
             stream=self.config.param.stream if self.config else None,
             prompt_template=self.config.eval_prompt_template.review_quality
             if self.config
-            else Config().eval_prompt_template.review_quality,
+            else Config('../../configs').eval_prompt_template.review_quality,
         )
         self.parsed_output = self.parse(raw_output, ReviewEvalOutput)
 
@@ -233,7 +233,7 @@ class RebuttalQualityEvaluator(BaseQualityEvaluator):
             stream=self.config.param.stream if self.config else None,
             prompt_template=self.config.eval_prompt_template.rebuttal_quality
             if self.config
-            else Config().eval_prompt_template.rebuttal_quality,
+            else Config('../../configs').eval_prompt_template.rebuttal_quality,
         )
         self.parsed_output = self.parse(raw_output, RebuttalEvalOutput)
 
@@ -269,7 +269,7 @@ class MetaReviewQualityEvaluator(BaseQualityEvaluator):
             stream=self.config.param.stream if self.config else None,
             prompt_template=self.config.eval_prompt_template.metareview_quality
             if self.config
-            else Config().eval_prompt_template.metareview_quality,
+            else Config('../../configs').eval_prompt_template.metareview_quality,
         )
         self.parsed_output = self.parse(raw_output, MetaReviewEvalOutput)
 

@@ -22,7 +22,7 @@ class ParamConfig(BaseModel):
     max_env_run_num: int
 
 
-# EvalPromptConfig for validation of eval-related prompts
+# EvalPromptTemplate for validation of eval-related prompts
 class EvalPromptTemplate(BaseModel):
     insight_quality: Dict[str, Union[str, List[str]]]
     idea_quality: Dict[str, Union[str, List[str]]]
@@ -67,7 +67,7 @@ class EvalPromptTemplate(BaseModel):
         return values
 
 
-# AgentPromptConfig for handling prompts related to the agent
+# AgentPromptTemplate for handling prompts related to the agent
 class AgentPromptTemplate(BaseModel):
     write_bio: Dict[str, Union[str, List[str]]]
     review_literature: Dict[str, Union[str, List[str]]]
