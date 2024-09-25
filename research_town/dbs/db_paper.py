@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, TypeVar
+from typing import Any, List, Optional, TypeVar
 
 import torch
 from transformers import BertModel, BertTokenizer
@@ -59,9 +59,7 @@ class PaperDB(BaseDB[Paper]):
             for paper in papers:
                 self.add(paper)
 
-    def match(
-        self, query: str, num: int = 1, **conditions: Dict[str, Any]
-    ) -> List[Paper]:
+    def match(self, query: str, num: int = 1, **conditions: Any) -> List[Paper]:
         self._initialize_retriever()
         papers = self.get(**conditions)
 

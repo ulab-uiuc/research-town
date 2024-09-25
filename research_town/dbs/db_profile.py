@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, TypeVar, get_type_hints
+from typing import Any, List, Optional, TypeVar, get_type_hints
 
 from transformers import BertModel, BertTokenizer
 
@@ -47,7 +47,7 @@ class ProfileDB(BaseDB[Profile]):
         self,
         query: str,
         num: int = 1,
-        **conditions: Dict[str, Any],
+        **conditions: Any,
     ) -> List[Profile]:
         self._initialize_retriever()
 
