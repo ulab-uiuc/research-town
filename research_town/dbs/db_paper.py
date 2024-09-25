@@ -63,7 +63,7 @@ class PaperDB(BaseDB[Paper]):
         self, query: str, num: int = 1, **conditions: Dict[str, Any]
     ) -> List[Paper]:
         self._initialize_retriever()
-        available_papers = self.get(**conditions)
+        papers = self.get(**conditions)
 
         query_embed = get_embed(
             instructions=[query],
@@ -72,7 +72,7 @@ class PaperDB(BaseDB[Paper]):
         )
         corpus_embed: List[torch.Tensor] = []
 
-        for paper in available_papers:
+        for paper in papers:
             if paper.pk in self.data_embed:
                 corpus_embed.append(self.data_embed[paper.pk])
             else:
@@ -86,7 +86,7 @@ class PaperDB(BaseDB[Paper]):
             query_embed=query_embed, corpus_embed=corpus_embed, num=num
         )
         indexes = [index for topk_index in topk_indexes for index in topk_index]
-        match_papers = [available_papers[index] for index in indexes]
+        match_papers = [papers[index] for index in indexes]
         logger.info(f'Matched papers: {match_papers}')
         return match_papers
 

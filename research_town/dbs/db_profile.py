@@ -36,12 +36,12 @@ class ProfileDB(BaseDB[Profile]):
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,
             )[0]
-            agent_profile = Profile(
+            profile = Profile(
                 name=name,
                 bio=bio,
                 collaborators=collaborators,
             )
-            self.add(agent_profile)
+            self.add(profile)
 
     def match(
         self,
@@ -53,7 +53,7 @@ class ProfileDB(BaseDB[Profile]):
         self._initialize_retriever()
 
         # Get agent profiles based on the provided conditions
-        agent_profiles = self.get(**conditions)
+        profiles = self.get(**conditions)
 
         query_embed = get_embed(
             instructions=[query],
@@ -62,12 +62,12 @@ class ProfileDB(BaseDB[Profile]):
         )
 
         corpus_embed = []
-        for agent_profile in agent_profiles:
-            if agent_profile.pk in self.data_embed:
-                corpus_embed.append(self.data_embed[agent_profile.pk])
+        for profile in profiles:
+            if profile.pk in self.data_embed:
+                corpus_embed.append(self.data_embed[profile.pk])
             else:
                 agent_embed = get_embed(
-                    instructions=[agent_profile.bio],
+                    instructions=[profile.bio],
                     retriever_tokenizer=self.retriever_tokenizer,
                     retriever_model=self.retriever_model,
                 )[0]
@@ -77,7 +77,7 @@ class ProfileDB(BaseDB[Profile]):
             query_embed=query_embed, corpus_embed=corpus_embed, num=num
         )
         indexes = [index for topk_index in topk_indexes for index in topk_index]
-        matched_profiles = [agent_profiles[index] for index in indexes]
+        matched_profiles = [profiles[index] for index in indexes]
 
         # Apply updates to the matched profiles if updates are provided
         if updates:
