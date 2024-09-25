@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, TypeVar
+from typing import Any, Dict, List, Optional, TypeVar, get_type_hints
 
 from transformers import BertModel, BertTokenizer
 
@@ -47,7 +47,6 @@ class ProfileDB(BaseDB[Profile]):
         self,
         query: str,
         num: int = 1,
-        updates: Optional[Dict[str, bool]] = None,
         **conditions: Dict[str, Any],
     ) -> List[Profile]:
         self._initialize_retriever()
@@ -79,13 +78,6 @@ class ProfileDB(BaseDB[Profile]):
         indexes = [index for topk_index in topk_indexes for index in topk_index]
         matched_profiles = [profiles[index] for index in indexes]
 
-        # Apply updates to the matched profiles if updates are provided
-        if updates:
-            for agent in matched_profiles:
-                for field, value in updates.items():
-                    setattr(agent, field, value)
-                self.update(pk=agent.pk, updates=agent.model_dump())
-
         logger.info(f'Matched agents: {matched_profiles}')
         return matched_profiles
 
@@ -106,20 +98,31 @@ class ProfileDB(BaseDB[Profile]):
             profile.is_chair_candidate = True
             self.update(pk=profile.pk, updates=profile.model_dump())
 
+    def _update_profile_roles(self, profiles: List[Profile], role_field: str) -> None:
+        # Dynamically get all role fields that are boolean and start with 'is_'
+        role_fields = [
+            field
+            for field, field_type in get_type_hints(Profile).items()
+            if field.startswith('is_') and field_type == bool
+        ]
+        for profile in profiles:
+            # Set all role fields to False
+            for field in role_fields:
+                setattr(profile, field, False)
+            # Set the specific role field to True
+            setattr(profile, role_field, True)
+            self.update(pk=profile.pk, updates=profile.model_dump())
+
     def match_member_profiles(
         self, leader: Profile, member_num: int = 1
     ) -> List[Profile]:
         members = self.match(
             query=leader.bio,
             num=member_num,
-            updates={
-                'is_leader_candidate': False,
-                'is_member_candidate': True,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': False,
-            },
             is_member_candidate=True,
         )
+        # Update roles
+        self._update_profile_roles(members, 'is_member_candidate')
         return members
 
     def match_reviewer_profiles(
@@ -128,14 +131,10 @@ class ProfileDB(BaseDB[Profile]):
         reviewers = self.match(
             query=proposal.content if proposal.content else '',
             num=reviewer_num,
-            updates={
-                'is_leader_candidate': False,
-                'is_member_candidate': False,
-                'is_reviewer_candidate': True,
-                'is_chair_candidate': False,
-            },
             is_reviewer_candidate=True,
         )
+        # Update roles
+        self._update_profile_roles(reviewers, 'is_reviewer_candidate')
         return reviewers
 
     def match_chair_profiles(
@@ -144,26 +143,18 @@ class ProfileDB(BaseDB[Profile]):
         chairs = self.match(
             query=proposal.content,
             num=chair_num,
-            updates={
-                'is_leader_candidate': False,
-                'is_member_candidate': False,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': True,
-            },
             is_chair_candidate=True,
         )
+        # Update roles
+        self._update_profile_roles(chairs, 'is_chair_candidate')
         return chairs
 
     def match_leader_profiles(self, query: str, leader_num: int = 1) -> List[Profile]:
         leaders = self.match(
             query=query,
             num=leader_num,
-            updates={
-                'is_leader_candidate': True,
-                'is_member_candidate': False,
-                'is_reviewer_candidate': False,
-                'is_chair_candidate': False,
-            },
             is_leader_candidate=True,
         )
+        # Update roles
+        self._update_profile_roles(leaders, 'is_leader_candidate')
         return leaders
