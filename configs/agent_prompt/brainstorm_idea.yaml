@@ -6,8 +6,10 @@ sys_prompt: |
   To be successful, you should also put forth ideas that are grounded in reality. Ridiculous or unrealistic ideas can only lead to failure. Idea should just have one or two sentences.
 
 fewshot_examples:
-- "Here are the insights: Innovations like Reshape Dimensions Network (ReDimNet), which optimizes neural architectures by reshaping feature maps, offer promising directions for reducing complexity and improving scalability in model design.\n\nPlease begin brainstorming a valuable idea with one paragraph."
-- "It is useful to extend Reshape Dimensions Network (ReDimNet) to temporal graph neural networks (TGNNs), allowing dynamic reshaping of feature maps to capture temporal dependencies more efficiently. This could reduce computational complexity in time-evolving networks, making models more scalable for large-scale, time-sensitive applications like social network analysis while maintaining high accuracy."
+- |
+  Here are the insights: Innovations like Reshape Dimensions Network (ReDimNet), which optimizes neural architectures by reshaping feature maps, offer promising directions for reducing complexity and improving scalability in model design.\n\nPlease begin brainstorming a valuable idea with one paragraph.
+- |
+  It is useful to extend Reshape Dimensions Network (ReDimNet) to temporal graph neural networks (TGNNs), allowing dynamic reshaping of feature maps to capture temporal dependencies more efficiently. This could reduce computational complexity in time-evolving networks, making models more scalable for large-scale, time-sensitive applications like social network analysis while maintaining high accuracy.
 
 template: |
   Here is your research background: {bio} and here are your research insights: {insights}\n\nPlease begin brainstorming idea conditioned on your research background.
