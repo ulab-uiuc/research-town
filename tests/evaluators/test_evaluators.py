@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 import pytest
 from beartype.typing import Any
 
-from research_town.configs import Config
 from research_town.evaluators.evaluator_quality import (
     IdeaQualityEvaluator,
     InsightQualityEvaluator,
@@ -12,6 +11,7 @@ from research_town.evaluators.evaluator_quality import (
     RebuttalQualityEvaluator,
     ReviewQualityEvaluator,
 )
+from tests.constants.config_constants import example_config
 from tests.constants.data_constants import (
     research_idea_A,
     research_insight_A,
@@ -32,7 +32,7 @@ def model_name(request: pytest.FixtureRequest) -> Any:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_insight(use_mock: bool, model_name: str) -> None:
-    config = Config()
+    config = example_config
     evaluator = InsightQualityEvaluator(model_name=model_name, config=config)
 
     insight = research_insight_A.model_dump()
@@ -60,7 +60,7 @@ def test_evaluator_eval_insight(use_mock: bool, model_name: str) -> None:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_idea(use_mock: bool, model_name: str) -> None:
-    config = Config()
+    config = example_config
     evaluator = IdeaQualityEvaluator(model_name=model_name, config=config)
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
@@ -88,7 +88,7 @@ def test_evaluator_eval_idea(use_mock: bool, model_name: str) -> None:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
-    config = Config()
+    config = example_config
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
     paper = research_proposal_A.model_dump()
@@ -118,7 +118,7 @@ def test_evaluator_eval_paper(use_mock: bool, model_name: str) -> None:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
-    config = Config()
+    config = example_config
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
     paper = research_proposal_A.model_dump()
@@ -151,7 +151,7 @@ def test_evaluator_eval_review(use_mock: bool, model_name: str) -> None:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
-    config = Config()
+    config = example_config
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
     paper = research_proposal_A.model_dump()
@@ -191,7 +191,7 @@ def test_evaluator_eval_rebuttal(use_mock: bool, model_name: str) -> None:
 
 @pytest.mark.parametrize('use_mock', [True])
 def test_evaluator_eval_metareview(use_mock: bool, model_name: str) -> None:
-    config = Config()
+    config = example_config
     insights = [research_insight_A.model_dump(), research_insight_B.model_dump()]
     idea = research_idea_A.model_dump()
     paper = research_proposal_A.model_dump()

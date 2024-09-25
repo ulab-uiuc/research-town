@@ -7,7 +7,6 @@ from unittest.mock import MagicMock, patch
 import torch
 from beartype.typing import Any, Dict, List
 
-from research_town.configs import Config
 from research_town.dbs import (
     Idea,
     LogDB,
@@ -20,10 +19,10 @@ from research_town.dbs import (
     RebuttalWritingLog,
     ReviewWritingLog,
 )
+from tests.constants.config_constants import example_config
+from tests.constants.data_constants import agent_profile_A, research_proposal_A
+from tests.constants.db_constants import example_profile_db
 from tests.mocks.mocking_func import mock_prompting
-
-from ..constants.data_constants import agent_profile_A, research_proposal_A
-from ..constants.db_constants import example_profile_db
 
 
 def test_LogDB_basic() -> None:
@@ -383,7 +382,7 @@ def test_pull_profiles(mock_model_prompting: MagicMock) -> None:
 
     db = ProfileDB()
     agent_names = ['Jiaxuan You', 'Jure Leskovec']
-    db.pull_profiles(agent_names=agent_names, config=Config())
+    db.pull_profiles(agent_names=agent_names, config=example_config)
     assert db.data.keys()
     assert len(db.data.keys()) == 2
     assert db.data.values()

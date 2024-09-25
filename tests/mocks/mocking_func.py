@@ -1,7 +1,7 @@
 from beartype.typing import Any, Dict, List, Optional
 from pydantic import BaseModel
 
-from research_town.configs import AgentPromptTemplateConfig, EvalPromptTemplateConfig
+from tests.constants.config_constants import example_config
 
 
 def mock_papers(corpus: List[str], query: str, num: int) -> List[str]:
@@ -18,48 +18,58 @@ def mock_prompting(
     stream: Optional[bool] = None,
     mode: Optional[str] = None,
 ) -> List[str]:
-    agent_template_config = AgentPromptTemplateConfig()
-    eval_template_config = EvalPromptTemplateConfig()
-    if prompt[0]['content'] == agent_template_config.write_bio['intro']:
+    agent_prompt_template = example_config.agent_prompt_template
+    eval_prompt_template = example_config.eval_prompt_template
+    if prompt[0]['content'] == agent_prompt_template.write_bio['sys_prompt']:
         return ['Bio1', 'Bio2', 'Bio3']
-    elif prompt[0]['content'] == agent_template_config.review_literature['intro']:
+    elif prompt[0]['content'] == agent_prompt_template.review_literature['sys_prompt']:
         return ['Insight1', 'Insight2', 'Insight3']
-    elif prompt[0]['content'] == agent_template_config.brainstorm_idea['intro']:
+    elif prompt[0]['content'] == agent_prompt_template.brainstorm_idea['sys_prompt']:
         return ['Idea1', 'Idea2', 'Idea3']
-    elif prompt[0]['content'] == agent_template_config.discuss_idea['intro']:
+    elif prompt[0]['content'] == agent_prompt_template.discuss_idea['sys_prompt']:
         return ['Summarized idea1', 'Summarized idea2', 'Summarized idea3']
-    elif prompt[0]['content'] == agent_template_config.write_proposal['intro']:
+    elif prompt[0]['content'] == agent_prompt_template.write_proposal['sys_prompt']:
         return ['Paper abstract1', 'Paper abstract2', 'Paper abstract3']
-    elif prompt[0]['content'] == agent_template_config.write_review_summary['intro']:
+    elif (
+        prompt[0]['content'] == agent_prompt_template.write_review_summary['sys_prompt']
+    ):
         return [
             'Summary of the paper1',
             'Summary of the paper2',
             'Summary of the paper3',
         ]
-    elif prompt[0]['content'] == agent_template_config.write_review_strength['intro']:
+    elif (
+        prompt[0]['content']
+        == agent_prompt_template.write_review_strength['sys_prompt']
+    ):
         return [
             'Strength of the paper1',
             'Strength of the paper2',
             'Strength of the paper3',
         ]
-    elif prompt[0]['content'] == agent_template_config.write_review_weakness['intro']:
+    elif (
+        prompt[0]['content']
+        == agent_prompt_template.write_review_weakness['sys_prompt']
+    ):
         return [
             'Weakness of the paper1',
             'Weakness of the paper2',
             'Weakness of the paper3',
         ]
-    elif prompt[0]['content'] == agent_template_config.write_review_score['intro']:
+    elif prompt[0]['content'] == agent_prompt_template.write_review_score['sys_prompt']:
         return [
             'Based on the given information, I would give this submission a score of 8 out of 10.',
             'Based on the given information, I would give this submission a score of 6 out of 10.',
             'Based on the given information, I would give this submission a score of 5 out of 10.',
         ]
     elif (
-        prompt[0]['content'] == agent_template_config.write_metareview_summary['intro']
+        prompt[0]['content']
+        == agent_prompt_template.write_metareview_summary['sys_prompt']
     ):
         return ['Meta review summary1', 'Meta review summary2', 'Meta review summary3']
     elif (
-        prompt[0]['content'] == agent_template_config.write_metareview_strength['intro']
+        prompt[0]['content']
+        == agent_prompt_template.write_metareview_strength['sys_prompt']
     ):
         return [
             'Meta review strength1',
@@ -67,7 +77,8 @@ def mock_prompting(
             'Meta review strength3',
         ]
     elif (
-        prompt[0]['content'] == agent_template_config.write_metareview_weakness['intro']
+        prompt[0]['content']
+        == agent_prompt_template.write_metareview_weakness['sys_prompt']
     ):
         return [
             'Meta review weakness1',
@@ -75,28 +86,23 @@ def mock_prompting(
             'Meta review weakness3',
         ]
     elif (
-        prompt[0]['content'] == agent_template_config.write_metareview_decision['intro']
+        prompt[0]['content']
+        == agent_prompt_template.write_metareview_decision['sys_prompt']
     ):
         return ['accept', 'accept', 'reject']
-    elif prompt[0]['content'] == agent_template_config.write_rebuttal['intro']:
+    elif prompt[0]['content'] == agent_prompt_template.write_rebuttal['sys_prompt']:
         return ['Rebuttal text1', 'Rebuttal text2', 'Rebuttal text3']
-    elif prompt[0]['content'] == agent_template_config.discuss['intro']:
-        return [
-            'Continued conversation1',
-            'Continued conversation2',
-            'Continued conversation3',
-        ]
-    elif prompt[0]['content'] == eval_template_config.insight_quality['intro']:
+    elif prompt[0]['content'] == eval_prompt_template.insight_quality['sys_prompt']:
         return ['Insight quality1', 'Insight quality2', 'Insight quality3']
-    elif prompt[0]['content'] == eval_template_config.idea_quality['intro']:
+    elif prompt[0]['content'] == eval_prompt_template.idea_quality['sys_prompt']:
         return ['Idea quality1', 'Idea quality2', 'Idea quality3']
-    elif prompt[0]['content'] == eval_template_config.paper_quality['intro']:
+    elif prompt[0]['content'] == eval_prompt_template.proposal_quality['sys_prompt']:
         return ['Paper quality1', 'Paper quality2', 'Paper quality3']
-    elif prompt[0]['content'] == eval_template_config.review_quality['intro']:
+    elif prompt[0]['content'] == eval_prompt_template.review_quality['sys_prompt']:
         return ['Review quality1', 'Review quality2', 'Review quality3']
-    elif prompt[0]['content'] == eval_template_config.rebuttal_quality['intro']:
+    elif prompt[0]['content'] == eval_prompt_template.rebuttal_quality['sys_prompt']:
         return ['Rebuttal quality1', 'Rebuttal quality2', 'Rebuttal quality3']
-    elif prompt[0]['content'] == eval_template_config.metareview_quality['intro']:
+    elif prompt[0]['content'] == eval_prompt_template.metareview_quality['sys_prompt']:
         return ['Meta review quality1', 'Meta review quality2', 'Meta review quality3']
 
     return ['Default response1', 'Default response2', 'Default response3']
