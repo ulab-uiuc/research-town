@@ -12,9 +12,9 @@ fewshot_examples:
   [Question 4]: ....
   [Question 5]: ....
   
-  Now, let's begin:
+  Now, let's begin:"
 
-  [Question 1]: Our research addresses the challenge of improving image classification accuracy while reducing model complexity. We aimed to develop a more efficient architecture that leverages the strengths of both CNNs and attention mechanisms.
+- "[Question 1]: Our research addresses the challenge of improving image classification accuracy while reducing model complexity. We aimed to develop a more efficient architecture that leverages the strengths of both CNNs and attention mechanisms.
 
   [Question 2]: This work is important because it has the potential to significantly reduce computational resources required for high-performance image classification, making advanced AI more accessible and environmentally friendly.
 
@@ -41,9 +41,9 @@ fewshot_examples:
   [Question 4]: ....
   [Question 5]: ....
   
-  Now, let's begin:
+  Now, let's begin:"
 
-  [Question 1]: Our research tackles the critical problem of making large language models more efficient and deployable in resource-constrained environments. We aimed to develop a method that can dynamically adjust model size based on input complexity, maintaining high performance while reducing computational costs.
+- "[Question 1]: Our research tackles the critical problem of making large language models more efficient and deployable in resource-constrained environments. We aimed to develop a method that can dynamically adjust model size based on input complexity, maintaining high performance while reducing computational costs.
 
   [Question 2]: This work is crucial as it addresses one of the main bottlenecks in deploying state-of-the-art NLP models in real-world applications. By making these models more efficient, we can expand their use in various domains and devices, potentially democratizing access to advanced AI technologies.
 

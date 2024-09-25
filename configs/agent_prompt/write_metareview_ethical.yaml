@@ -1,3 +1,63 @@
+fewshot_examples:
+- "Here is the proposal: We present a novel deep learning model for predicting criminal recidivism rates. Our model, CrimePredictAI, uses a combination of demographic data, criminal history, and social media activity to achieve state-of-the-art accuracy in predicting repeat offenses.
+
+  Here are the reviews: 
+  Reviewer 1: The paper presents an interesting approach, but raises serious ethical concerns about privacy and potential bias in the model.
+  Reviewer 2: While technically sound, the paper doesn't adequately address the ethical implications of using social media data without explicit consent.
+
+  Here are the rebuttals: We acknowledge the ethical concerns raised. We have added a section on data anonymization and discuss potential biases in our model. We argue that the public nature of social media data justifies its use in our research.
+
+  Here is the summary of the reviews: Both reviewers highlight ethical concerns regarding privacy, consent, and potential bias in the proposed model.
+
+  Please begin writing the ethical meta-review."
+
+- "Ethical Meta-Review:
+
+  This paper raises significant ethical concerns that need to be addressed before publication.
+
+  Summary of Ethical Considerations:
+  1. Academic Integrity: No concerns raised about plagiarism or improper citations.
+  2. Ethical Implications of AI/ML Technologies: The proposed CrimePredictAI model presents serious risks of perpetuating or amplifying biases in the criminal justice system. The use of demographic data in predicting criminal behavior is ethically fraught and could lead to discriminatory practices.
+  3. Human Subjects Research: While not directly involving human subjects, the use of individuals' data without explicit consent is problematic.
+  4. Data Usage and Rights: The use of social media data without explicit consent raises significant privacy concerns. The authors' argument that public data justifies its use without consent is not sufficient from an ethical standpoint.
+  5. Language and Content: No issues reported with offensive or culturally insensitive language.
+  6. Broader Ethical Considerations: The potential for this technology to be misused in law enforcement or judicial settings could have severe societal implications, potentially infringing on civil liberties and reinforcing systemic biases.
+
+  Conclusion: This paper raises significant ethical concerns that need to be addressed before publication. The primary issues are the potential for bias and discrimination, the use of personal data without explicit consent, and the broader societal implications of predictive policing technologies. While the authors have attempted to address some concerns in their rebuttal, the fundamental ethical issues with the approach remain unresolved. A more comprehensive ethical framework and safeguards against misuse need to be developed before this research can be considered for publication."
+
+- "Here is the proposal: Our paper introduces a new technique for generating synthetic human faces using advanced GANs. Our method, FaceGenPro, produces highly realistic faces that are indistinguishable from real photographs, with applications in entertainment, marketing, and privacy-preserving data generation.
+
+  Here are the reviews:
+  Reviewer 1: The technical contribution is impressive, but the paper lacks a thorough discussion of the ethical implications, particularly regarding deepfakes and potential misuse.
+  Reviewer 2: While the method is novel, there are concerns about the dataset used for training and the potential for this technology to be used maliciously.
+
+  Here are the rebuttals: We have added a section on ethical considerations, discussing potential misuse and proposing guidelines for responsible use. We've also provided more details on our training dataset, confirming all images were obtained from public domain sources.
+
+  Here is the summary of the reviews: Both reviewers acknowledge the technical merit but express concerns about ethical implications and potential misuse of the technology.
+
+  Please begin writing the ethical meta-review."
+
+- "Ethical Meta-Review:
+
+  This paper has minor ethical concerns that should be addressed but do not prevent publication.
+
+  Summary of Ethical Considerations:
+  1. Academic Integrity: No concerns raised about plagiarism or improper citations.
+  2. Ethical Implications of AI/ML Technologies: The FaceGenPro technology presents potential risks related to the creation of deepfakes and the erosion of trust in visual media. However, the authors have acknowledged these risks and proposed guidelines for responsible use.
+  3. Human Subjects Research: Not directly applicable, as the research uses synthetic data generation.
+  4. Data Usage and Rights: The authors have clarified that their training dataset consists of public domain images, addressing initial concerns about data sources.
+  5. Language and Content: No issues reported with offensive or culturally insensitive language.
+  6. Broader Ethical Considerations: The technology has potential dual-use implications. While it can be beneficial for entertainment and privacy-preserving data generation, it could also be misused for creating misleading or false content.
+
+  Conclusion: This paper has minor ethical concerns that should be addressed but do not prevent publication. The authors have made a commendable effort to address the ethical implications of their work in response to the reviewers' comments. They have added a discussion of potential misuse and proposed guidelines for responsible use, which partially mitigates the ethical concerns.
+
+  However, to strengthen the ethical stance of the paper, the authors should:
+  1. Expand on their proposed guidelines for responsible use, possibly including technical measures to detect synthetic images generated by their system.
+  2. Discuss potential legal and policy implications of their technology.
+  3. Consider adding a section on the limitations of their approach from an ethical perspective.
+
+  These additions would further demonstrate the authors' commitment to ethical AI development and provide valuable insights for the research community. With these minor revisions, the paper should be ethically sound for publication."
+
 sys_prompt: >
     Please write an ethical meta-review for the following submission to an academic conference. Your meta-review should summarize the ethical considerations raised in the reviews, author rebuttals, and any ethical review conducted. Consider the following aspects:
 
@@ -15,4 +75,12 @@ sys_prompt: >
 
     Provide a brief explanation for your conclusion, noting which specific ethical aspects informed your decision.
 template: |
-    Here is the proposal: {proposal}\nHere are the reviews: {reviews}\nHere are the rebuttals: {rebuttals}\nHere is the summary of the reviews: {summary}
+    Here is the proposal: {proposal}
+
+    Here are the reviews: {reviews}
+
+    Here are the rebuttals: {rebuttals}
+
+    Here is the summary of the reviews: {summary}
+
+    Please begin writing the ethical meta-review.
