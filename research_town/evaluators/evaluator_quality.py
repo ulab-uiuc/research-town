@@ -1,6 +1,6 @@
 import re
 
-from beartype.typing import Any, Optional, Type, TypeVar
+from beartype.typing import Any, Type, TypeVar
 
 from ..configs import Config
 from ..utils.error_handler import parsing_error_exponential_backoff

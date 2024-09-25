@@ -20,7 +20,9 @@ class PaperDB(BaseDB[Paper]):
 
     def _initialize_retriever(self):
         if self.retriever_tokenizer is None or self.retriever_model is None:
-            self.retriever_tokenizer = BertTokenizer.from_pretrained('facebook/contriever')
+            self.retriever_tokenizer = BertTokenizer.from_pretrained(
+                'facebook/contriever'
+            )
             self.retriever_model = BertModel.from_pretrained('facebook/contriever')
 
     def pull_papers(self, num: int, domain: str) -> None:
