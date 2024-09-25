@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 import pytest
 from beartype.typing import Any
 
-from research_town.configs import Config
 from research_town.evaluators.evaluator_quality import (
     IdeaQualityEvaluator,
     InsightQualityEvaluator,
@@ -12,6 +11,7 @@ from research_town.evaluators.evaluator_quality import (
     RebuttalQualityEvaluator,
     ReviewQualityEvaluator,
 )
+from tests.constants.config_constants import example_config
 from tests.constants.data_constants import (
     research_idea_A,
     research_insight_A,
@@ -23,7 +23,6 @@ from tests.constants.data_constants import (
     research_review_A,
     research_review_B,
 )
-from tests.constants.config_constants import example_config
 
 
 @pytest.fixture(params=['gpt-4o', 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1'])

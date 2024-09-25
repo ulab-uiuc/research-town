@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock, patch
 
-from research_town.configs import Config
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.agent_constants import example_agent_manager
+from tests.constants.config_constants import example_config
 from tests.constants.data_constants import agent_profile_A, research_proposal_A
 from tests.constants.db_constants import (
     example_log_db,
@@ -11,7 +11,6 @@ from tests.constants.db_constants import (
     example_progress_db,
 )
 from tests.mocks.mocking_func import mock_prompting
-from tests.constants.config_constants import example_config
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')

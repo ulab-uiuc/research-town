@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent import Agent
-from research_town.configs import Config
 from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
+from tests.constants.config_constants import example_config
 from tests.constants.data_constants import (
     agent_profile_A,
     agent_profile_B,
@@ -13,7 +13,6 @@ from tests.constants.data_constants import (
     research_insight_B,
     research_proposal_A,
 )
-from tests.constants.config_constants import example_config
 from tests.mocks.mocking_func import mock_prompting
 
 

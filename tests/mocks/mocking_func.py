@@ -1,7 +1,6 @@
 from beartype.typing import Any, Dict, List, Optional
 from pydantic import BaseModel
 
-from research_town.configs import AgentPromptTemplate, EvalPromptTemplate
 from tests.constants.config_constants import example_config
 
 
@@ -31,19 +30,27 @@ def mock_prompting(
         return ['Summarized idea1', 'Summarized idea2', 'Summarized idea3']
     elif prompt[0]['content'] == agent_prompt_template.write_proposal['sys_prompt']:
         return ['Paper abstract1', 'Paper abstract2', 'Paper abstract3']
-    elif prompt[0]['content'] == agent_prompt_template.write_review_summary['sys_prompt']:
+    elif (
+        prompt[0]['content'] == agent_prompt_template.write_review_summary['sys_prompt']
+    ):
         return [
             'Summary of the paper1',
             'Summary of the paper2',
             'Summary of the paper3',
         ]
-    elif prompt[0]['content'] == agent_prompt_template.write_review_strength['sys_prompt']:
+    elif (
+        prompt[0]['content']
+        == agent_prompt_template.write_review_strength['sys_prompt']
+    ):
         return [
             'Strength of the paper1',
             'Strength of the paper2',
             'Strength of the paper3',
         ]
-    elif prompt[0]['content'] == agent_prompt_template.write_review_weakness['sys_prompt']:
+    elif (
+        prompt[0]['content']
+        == agent_prompt_template.write_review_weakness['sys_prompt']
+    ):
         return [
             'Weakness of the paper1',
             'Weakness of the paper2',
@@ -56,11 +63,13 @@ def mock_prompting(
             'Based on the given information, I would give this submission a score of 5 out of 10.',
         ]
     elif (
-        prompt[0]['content'] == agent_prompt_template.write_metareview_summary['sys_prompt']
+        prompt[0]['content']
+        == agent_prompt_template.write_metareview_summary['sys_prompt']
     ):
         return ['Meta review summary1', 'Meta review summary2', 'Meta review summary3']
     elif (
-        prompt[0]['content'] == agent_prompt_template.write_metareview_strength['sys_prompt']
+        prompt[0]['content']
+        == agent_prompt_template.write_metareview_strength['sys_prompt']
     ):
         return [
             'Meta review strength1',
@@ -68,7 +77,8 @@ def mock_prompting(
             'Meta review strength3',
         ]
     elif (
-        prompt[0]['content'] == agent_prompt_template.write_metareview_weakness['sys_prompt']
+        prompt[0]['content']
+        == agent_prompt_template.write_metareview_weakness['sys_prompt']
     ):
         return [
             'Meta review weakness1',
@@ -76,7 +86,8 @@ def mock_prompting(
             'Meta review weakness3',
         ]
     elif (
-        prompt[0]['content'] == agent_prompt_template.write_metareview_decision['sys_prompt']
+        prompt[0]['content']
+        == agent_prompt_template.write_metareview_decision['sys_prompt']
     ):
         return ['accept', 'accept', 'reject']
     elif prompt[0]['content'] == agent_prompt_template.write_rebuttal['sys_prompt']:

@@ -1,10 +1,8 @@
 import os
 from tempfile import NamedTemporaryFile
 
-import pytest
 import yaml
 
-from research_town.configs import Config
 from tests.constants.config_constants import example_config
 
 

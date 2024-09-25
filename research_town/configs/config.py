@@ -186,7 +186,9 @@ class Config(BaseModel):
         for file_name in os.listdir(directory):
             if file_name.endswith(('.yaml', '.yml')):
                 file_path = os.path.join(directory, file_name)
-                prompt_name = os.path.splitext(file_name)[0]  # Extract the file name without extension
+                prompt_name = os.path.splitext(file_name)[
+                    0
+                ]  # Extract the file name without extension
                 prompt_configs[prompt_name] = self._load_yaml_file(file_path)
         return prompt_configs
 
@@ -196,11 +198,13 @@ class Config(BaseModel):
             yaml.dump(data, f)
 
     def save_all(self, directory: str) -> None:
-        self._save_yaml_file(os.path.join(directory, 'param.yaml'), self.param.model_dump())
-        
+        self._save_yaml_file(
+            os.path.join(directory, 'param.yaml'), self.param.model_dump()
+        )
+
         agent_prompt_dir = os.path.join(directory, 'agent_prompts')
         self.save_prompt_configs(agent_prompt_dir, self.agent_prompt_template)
-        
+
         eval_prompt_dir = os.path.join(directory, 'eval_prompts')
         self.save_prompt_configs(eval_prompt_dir, self.eval_prompt_template)
 

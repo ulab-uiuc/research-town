@@ -2,17 +2,16 @@ from unittest.mock import MagicMock, patch
 
 from beartype.typing import List
 
-from research_town.configs import Config
+from research_town.agents import AgentManager
 from research_town.dbs import Profile, ProfileDB, Proposal
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
-from research_town.agents import AgentManager
+from tests.constants.config_constants import example_config
 from tests.constants.db_constants import (
     example_log_db,
     example_paper_db,
     example_progress_db,
 )
 from tests.mocks.mocking_func import mock_prompting
-from tests.constants.config_constants import example_config
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
