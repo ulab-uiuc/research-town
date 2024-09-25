@@ -43,14 +43,11 @@ class ProposalWritingEnv(BaseEnv):
 
     @beartype
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
-        available_papers = list(self.paper_db.data.values())
-
         # Each member reviews literature
         all_insights = []
         for member in self.members:
             related_papers = self.paper_db.match(
                 query=member.profile.bio,
-                papers=available_papers,
                 num=2,
             )
             insights = member.review_literature(
@@ -78,7 +75,6 @@ class ProposalWritingEnv(BaseEnv):
         query = summarized_idea.content or self.leader.profile.bio
         related_papers = self.paper_db.match(
             query=query,
-            papers=available_papers,
             num=2,
         )
         proposal = self.leader.write_proposal(

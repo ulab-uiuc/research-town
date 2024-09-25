@@ -239,16 +239,16 @@ def test_Paperdb_basic() -> None:
 
 def test_agent_match() -> None:
     db = ProfileDB()
-    agent1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
-    agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
-    agent3 = Profile(name='Jane kid', bio='Expert in RL', institute='RL Lab')
-    agent_profile_l = [agent1, agent2, agent3]
-    lead_agent_profile = 'Profile in CV'
-    match_agent_profiles = db.match(
-        query=lead_agent_profile, agent_profiles=agent_profile_l, num=2
-    )
-    assert match_agent_profiles
-    assert len(match_agent_profiles) == 2
+    profile1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
+    profile2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
+    profile3 = Profile(name='Jane kid', bio='Expert in RL', institute='RL Lab')
+    db.add(profile1)
+    db.add(profile2)
+    db.add(profile3)
+    leader_profile = 'Profile in CV'
+    match_profiles = db.match(query=leader_profile, num=2)
+    assert match_profiles
+    assert len(match_profiles) == 2
 
 
 def test_paper_match() -> None:
@@ -273,7 +273,7 @@ def test_paper_match() -> None:
         domain='Physics',
         citation_count=5,
     )
-    paper_3 = Paper(
+    paper3 = Paper(
         title='Sample Paper 3',
         abstract='This is the abstract for paper 3',
         authors=['Author D'],
@@ -283,9 +283,11 @@ def test_paper_match() -> None:
         domain='Computer Science',
         citation_count=2,
     )
-    agent_profile_l = [paper1, paper2, paper_3]
+    db.add(paper1)
+    db.add(paper2)
+    db.add(paper3)
     lead_agent_profile = 'Profile in CV'
-    match_papers = db.match(query=lead_agent_profile, papers=agent_profile_l, num=2)
+    match_papers = db.match(query=lead_agent_profile, num=2)
     assert match_papers
     assert len(match_papers) == 2
 
@@ -397,7 +399,7 @@ def test_pull_papers() -> None:
 
 
 def test_agentdb_match_member_profiles() -> None:
-    example_profile_db.reset_role_avaialbility()
+    example_profile_db.reset_role_availability()
     agent_profile_A.is_leader_candidate = True
     members = example_profile_db.match_member_profiles(
         leader=agent_profile_A,
@@ -407,7 +409,7 @@ def test_agentdb_match_member_profiles() -> None:
 
 
 def test_agentdb_match_reviewer_profiles() -> None:
-    example_profile_db.reset_role_avaialbility()
+    example_profile_db.reset_role_availability()
     agent_profile_A.is_leader_candidate = True
     reviewers = example_profile_db.match_reviewer_profiles(
         proposal=research_proposal_A,
@@ -417,7 +419,7 @@ def test_agentdb_match_reviewer_profiles() -> None:
 
 
 def test_agentdb_match_chair() -> None:
-    example_profile_db.reset_role_avaialbility()
+    example_profile_db.reset_role_availability()
     agent_profile_A.is_leader_candidate = True
     chair = example_profile_db.match_chair_profiles(
         proposal=research_proposal_A,

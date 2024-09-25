@@ -50,7 +50,7 @@ class BaseEngine:
         self.set_transitions()
 
     def _setup_dbs(self) -> None:
-        self.profile_db.reset_role_avaialbility()
+        self.profile_db.reset_role_availability()
         for db in [self.log_db, self.progress_db]:
             db.set_project_name(self.project_name)
 
