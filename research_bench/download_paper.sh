@@ -2,8 +2,8 @@
 
 # Variables for downloading arXiv papers
 KEYWORDS="agent"
-START_DATE="20240801"
-END_DATE="20240911"
+START_DATE="20240915"
+END_DATE="20240925"
 SAVE_DIR="./data/arxiv_ai_papers"
 
 # Step 1: Download arXiv papers
