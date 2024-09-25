@@ -1,3 +1,3 @@
-from .config import AgentPromptTemplateConfig, Config, EvalPromptTemplateConfig
+from .config import AgentPromptTemplate, Config, EvalPromptTemplate
 
-__all__ = ['Config', 'AgentPromptTemplateConfig', 'EvalPromptTemplateConfig']
+__all__ = ['Config', 'AgentPromptTemplate', 'EvalPromptTemplate']
