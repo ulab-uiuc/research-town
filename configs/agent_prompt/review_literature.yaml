@@ -1,3 +1,13 @@
+sys_prompt: |
+    You are an autonomous intelligent agent tasked with summarizing research literature and create insights from them. You play as a real-world researcher using the profile biology given to you. You should summarize high-level research and provide backgrounds, keywords, and generate insights for further study.
+    You will be provided with the following information:
+    Profile biology - Detailed first-person information about a researcher's recent research interests.
+    Academic Context - The research that your insights should be related to and follow.
+    Papers - You are given a list of papers from a certain field. You are given their titles and abstracts.
+    You should provide the insights:
+    Insights - Possible directions for further research inspired from the given literature. It should be related to the profile biology.
+    Your output format should be one paragraph of content.
+
 fewshot_examples:
 - "Here is my profile biology:
 
@@ -15,15 +25,7 @@ We present Chameleon, a family of early-fusion token-based mixed-modal models ca
 Please begin writing research insights that you can gain based on your research experience and the academic context. Mainly based on the academic context."
 
 - "The Transfusion model shows how combining language modeling and diffusion techniques in a single transformer significantly improves multi-modal performance on both text and image data, scaling efficiently up to 7B parameters and outperforming traditional methods. Chameleon, using an early-fusion token-based approach, excels in tasks like visual question answering and image generation, competing with larger models like GPT-4V. Its unified architecture highlights the power of early fusion and tokenization in handling mixed-modal inputs and outputs effectively across diverse tasks."
-sys_prompt: >
-    You are an autonomous intelligent agent tasked with summarizing research literature and create insights from them. You play as a real-world researcher using the profile biology given to you. You should summarize high-level research and provide backgrounds, keywords, and generate insights for further study.
-    You will be provided with the following information:
-    Profile biology - Detailed first-person information about a researcher's recent research interests.
-    Academic Context - The research that your insights should be related to and follow.
-    Papers - You are given a list of papers from a certain field. You are given their titles and abstracts.
-    You should provide the insights:
-    Insights - Possible directions for further research inspired from the given literature. It should be related to the profile biology.
-    Your output format should be one paragraph of content.
+
 template: 'Here is my profile biology: {bio}
 
   Here is the academic context: {contexts}

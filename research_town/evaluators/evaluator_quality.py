@@ -85,7 +85,7 @@ class InsightQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, InsightEvalOutput, *args, **kwargs)
+        super().__init__(model_name, InsightEvalOutput, config, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> InsightEvalOutput:
@@ -97,9 +97,7 @@ class InsightQualityEvaluator(BaseQualityEvaluator):
             temperature=self.config.param.temperature if self.config else None,
             top_p=self.config.param.top_p if self.config else None,
             stream=self.config.param.stream if self.config else None,
-            prompt_template=self.config.eval_prompt_template.insight_quality
-            if self.config
-            else Config('../../configs').eval_prompt_template.insight_quality,
+            prompt_template=self.config.eval_prompt_template.insight_quality,
         )
         self.parsed_output = self.parse(raw_output, InsightEvalOutput)
 
@@ -116,7 +114,7 @@ class IdeaQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, IdeaEvalOutput, *args, **kwargs)
+        super().__init__(model_name, IdeaEvalOutput, config, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> IdeaEvalOutput:
@@ -129,9 +127,7 @@ class IdeaQualityEvaluator(BaseQualityEvaluator):
             temperature=self.config.param.temperature if self.config else None,
             top_p=self.config.param.top_p if self.config else None,
             stream=self.config.param.stream if self.config else None,
-            prompt_template=self.config.eval_prompt_template.idea_quality
-            if self.config
-            else Config('../../configs').eval_prompt_template.idea_quality,
+            prompt_template=self.config.eval_prompt_template.idea_quality,
         )
         self.parsed_output = self.parse(raw_output, IdeaEvalOutput)
 
@@ -148,7 +144,7 @@ class ProposalQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, ProposalEvalOutput, *args, **kwargs)
+        super().__init__(model_name, ProposalEvalOutput, config, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ProposalEvalOutput:
@@ -162,9 +158,7 @@ class ProposalQualityEvaluator(BaseQualityEvaluator):
             temperature=self.config.param.temperature if self.config else None,
             top_p=self.config.param.top_p if self.config else None,
             stream=self.config.param.stream if self.config else None,
-            prompt_template=self.config.eval_prompt_template.paper_quality
-            if self.config
-            else Config('../../configs').eval_prompt_template.paper_quality,
+            prompt_template=self.config.eval_prompt_template.proposal_quality,
         )
         self.parsed_output = self.parse(raw_output, ProposalEvalOutput)
 
@@ -181,7 +175,7 @@ class ReviewQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, ReviewEvalOutput, *args, **kwargs)
+        super().__init__(model_name, ReviewEvalOutput, config, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> ReviewEvalOutput:
@@ -196,9 +190,7 @@ class ReviewQualityEvaluator(BaseQualityEvaluator):
             temperature=self.config.param.temperature if self.config else None,
             top_p=self.config.param.top_p if self.config else None,
             stream=self.config.param.stream if self.config else None,
-            prompt_template=self.config.eval_prompt_template.review_quality
-            if self.config
-            else Config('../../configs').eval_prompt_template.review_quality,
+            prompt_template=self.config.eval_prompt_template.review_quality,
         )
         self.parsed_output = self.parse(raw_output, ReviewEvalOutput)
 
@@ -215,7 +207,7 @@ class RebuttalQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, RebuttalEvalOutput, *args, **kwargs)
+        super().__init__(model_name, RebuttalEvalOutput, config, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> RebuttalEvalOutput:
@@ -231,9 +223,7 @@ class RebuttalQualityEvaluator(BaseQualityEvaluator):
             temperature=self.config.param.temperature if self.config else None,
             top_p=self.config.param.top_p if self.config else None,
             stream=self.config.param.stream if self.config else None,
-            prompt_template=self.config.eval_prompt_template.rebuttal_quality
-            if self.config
-            else Config('../../configs').eval_prompt_template.rebuttal_quality,
+            prompt_template=self.config.eval_prompt_template.rebuttal_quality,
         )
         self.parsed_output = self.parse(raw_output, RebuttalEvalOutput)
 
@@ -250,7 +240,7 @@ class MetaReviewQualityEvaluator(BaseQualityEvaluator):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, MetaReviewEvalOutput, *args, **kwargs)
+        super().__init__(model_name, MetaReviewEvalOutput, config, *args, **kwargs)
 
     @parsing_error_exponential_backoff(retries=5, base_wait_time=1)
     def eval(self, *args: Any, **kwargs: Any) -> MetaReviewEvalOutput:
@@ -267,9 +257,7 @@ class MetaReviewQualityEvaluator(BaseQualityEvaluator):
             temperature=self.config.param.temperature if self.config else None,
             top_p=self.config.param.top_p if self.config else None,
             stream=self.config.param.stream if self.config else None,
-            prompt_template=self.config.eval_prompt_template.metareview_quality
-            if self.config
-            else Config('../../configs').eval_prompt_template.metareview_quality,
+            prompt_template=self.config.eval_prompt_template.metareview_quality,
         )
         self.parsed_output = self.parse(raw_output, MetaReviewEvalOutput)
 

@@ -5,7 +5,7 @@ from beartype.typing import List
 from research_town.configs import Config
 from research_town.dbs import Profile, ProfileDB, Proposal
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
-from tests.constants.agent_constants import example_agent_manager
+from research_town.agents import AgentManager
 from tests.constants.db_constants import (
     example_log_db,
     example_paper_db,
@@ -23,11 +23,16 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         Profile(name='Jiaxuan You', bio='A researcher in machine learning.'),
         Profile(name='Rex Ying', bio='A researcher in natural language processing.'),
         Profile(name='Rex Zhu', bio='A researcher in computer vision.'),
+        Profile(name='Rex Wang', bio='A researcher in computer vision.'),
+        Profile(name='Rex Li', bio='A researcher in computer vision.'),
+        Profile(name='Rex Yu', bio='A researcher in computer vision.'),
     ]
 
     temp_profile_db = ProfileDB()
     for profile in proposal_writing_agent_profiles:
         temp_profile_db.add(profile)
+
+    agent_manager = AgentManager(config=example_config, profile_db=temp_profile_db)
 
     # Create and run the paper submission environment
     proposal_writing_env = ProposalWritingEnv(
@@ -36,9 +41,9 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         log_db=example_log_db,
         progress_db=example_progress_db,
         config=example_config,
-        agent_manager=example_agent_manager,
+        agent_manager=agent_manager,
     )
-    leader = example_agent_manager.create_leader(proposal_writing_agent_profiles[0])
+    leader = agent_manager.create_leader(proposal_writing_agent_profiles[0])
     proposal_writing_env.on_enter(
         time_step=0,
         leader=leader,
@@ -78,9 +83,9 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         log_db=example_log_db,
         progress_db=example_progress_db,
         config=example_config,
-        agent_manager=example_agent_manager,
+        agent_manager=agent_manager,
     )
-    leader = example_agent_manager.create_leader(review_writing_agent_profiles[0])
+    leader = agent_manager.create_leader(review_writing_agent_profiles[0])
     review_writing_env.on_enter(
         time_step=0,
         proposal=proposal,

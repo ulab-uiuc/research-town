@@ -166,34 +166,47 @@ class Config(BaseModel):
         return {
             'param': self._load_yaml_file(os.path.join(yaml_config_path, 'param.yaml')),
             'agent_prompt_template': self._load_prompt_configs(
-                os.path.join(yaml_config_path, 'agent_prompts')
+                os.path.join(yaml_config_path, 'agent_prompt')
             ),
             'eval_prompt_template': self._load_prompt_configs(
-                os.path.join(yaml_config_path, 'eval_prompts')
+                os.path.join(yaml_config_path, 'eval_prompt')
             ),
         }
 
     def _load_yaml_file(self, file_path: str) -> Dict[str, Any]:
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"YAML file '{file_path}' does not exist.")
-
         with open(file_path, 'r') as f:
             return yaml.safe_load(f)
 
     def _load_prompt_configs(self, directory: str) -> Dict[str, Any]:
         if not os.path.exists(directory):
             raise FileNotFoundError(f"Directory '{directory}' does not exist.")
-
         prompt_configs = {}
         for file_name in os.listdir(directory):
             if file_name.endswith(('.yaml', '.yml')):
                 file_path = os.path.join(directory, file_name)
-                prompt_name = os.path.splitext(file_name)[
-                    0
-                ]  # Extract the file name without extension
+                prompt_name = os.path.splitext(file_name)[0]  # Extract the file name without extension
                 prompt_configs[prompt_name] = self._load_yaml_file(file_path)
-
         return prompt_configs
+
+    def _save_yaml_file(self, file_path: str, data: Dict[str, Any]) -> None:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, 'w') as f:
+            yaml.dump(data, f)
+
+    def save_all(self, directory: str) -> None:
+        self._save_yaml_file(os.path.join(directory, 'param.yaml'), self.param.model_dump())
+        
+        agent_prompt_dir = os.path.join(directory, 'agent_prompts')
+        self.save_prompt_configs(agent_prompt_dir, self.agent_prompt_template)
+        
+        eval_prompt_dir = os.path.join(directory, 'eval_prompts')
+        self.save_prompt_configs(eval_prompt_dir, self.eval_prompt_template)
+
+    def load_all(self, yaml_config_path: str) -> None:
+        loaded_data = self._load_from_yaml(yaml_config_path)
+        self.__dict__.update(loaded_data)
 
     def save_prompt_configs(self, directory: str, prompt_data: BaseModel) -> None:
         os.makedirs(directory, exist_ok=True)
@@ -201,8 +214,7 @@ class Config(BaseModel):
 
         for prompt_name, config in prompt_dict.items():
             file_path = os.path.join(directory, f'{prompt_name}.yaml')
-            with open(file_path, 'w') as f:
-                yaml.dump(config, f)
+            self._save_yaml_file(file_path, config)
 
     def remove_unused_yaml_files(self, yaml_config_path: str, keep_files: set) -> None:
         for file_name in os.listdir(yaml_config_path):
