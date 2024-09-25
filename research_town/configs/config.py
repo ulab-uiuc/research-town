@@ -74,6 +74,9 @@ class AgentPromptTemplate(BaseModel):
     brainstorm_idea: Dict[str, Union[str, List[str]]]
     discuss_idea: Dict[str, Union[str, List[str]]]
     write_proposal: Dict[str, Union[str, List[str]]]
+    write_proposal_cot: Dict[str, Union[str, List[str]]]
+    write_proposal_react: Dict[str, Union[str, List[str]]]
+    write_proposal_reflexion: Dict[str, Union[str, List[str]]]
     write_review_summary: Dict[str, Union[str, List[str]]]
     write_review_strength: Dict[str, Union[str, List[str]]]
     write_review_weakness: Dict[str, Union[str, List[str]]]
@@ -94,6 +97,9 @@ class AgentPromptTemplate(BaseModel):
             'brainstorm_idea': ['{bio}', '{insights}'],
             'discuss_idea': ['{bio}', '{ideas}'],
             'write_proposal': ['{idea}', '{papers}'],
+            'write_proposal_cot': ['{idea}', '{papers}'],
+            'write_proposal_react': ['{idea}', '{papers}'],
+            'write_proposal_reflexion': ['{idea}', '{papers}'],
             'write_review_summary': ['{proposal}'],
             'write_review_strength': ['{proposal}', '{summary}'],
             'write_review_weakness': ['{proposal}', '{summary}'],
