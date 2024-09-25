@@ -31,7 +31,7 @@ class BaseQualityEvaluator:
         self,
         model_name: str,
         output_model: Type[BaseEvalOutput],
-        config: Optional[Config] = None,
+        config: Config,
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -81,7 +81,7 @@ class InsightQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
-        config: Optional[Config] = None,
+        config: Config,
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -110,7 +110,7 @@ class IdeaQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
-        config: Optional[Config] = None,
+        config: Config,
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -140,7 +140,7 @@ class ProposalQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
-        config: Optional[Config] = None,
+        config: Config,
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -171,7 +171,7 @@ class ReviewQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
-        config: Optional[Config] = None,
+        config: Config,
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -203,7 +203,7 @@ class RebuttalQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
-        config: Optional[Config] = None,
+        config: Config,
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -236,7 +236,7 @@ class MetaReviewQualityEvaluator(BaseQualityEvaluator):
     def __init__(
         self,
         model_name: str,
-        config: Optional[Config] = None,
+        config: Config,
         *args: Any,
         **kwargs: Any,
     ) -> None:

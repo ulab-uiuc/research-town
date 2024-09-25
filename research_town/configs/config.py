@@ -33,7 +33,7 @@ class EvalPromptTemplate(BaseModel):
 
     # Validation to check placeholders
     @root_validator(pre=True)
-    def validate_placeholders(cls, values):
+    def validate_placeholders(cls: Any, values: Dict[str, Any]) -> Dict[str, Any]:
         required_placeholders = {
             'insight_quality': ['{insight}'],
             'idea_quality': ['{idea}', '{insights}'],
@@ -90,7 +90,7 @@ class AgentPromptTemplate(BaseModel):
     write_rebuttal: Dict[str, Union[str, List[str]]]
 
     @root_validator(pre=True)
-    def validate_placeholders(cls, values):
+    def validate_placeholders(cls: Any, values: Dict[str, Any]) -> Dict[str, Any]:
         required_placeholders = {
             'write_bio': ['{publication_info}'],
             'review_literature': ['{bio}', '{papers}'],
@@ -173,7 +173,7 @@ class Config(BaseModel):
             ),
         }
 
-    def _load_yaml_file(self, file_path: str) -> Dict[str, Any]:
+    def _load_yaml_file(self, file_path: str) -> Any:
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"YAML file '{file_path}' does not exist.")
         with open(file_path, 'r') as f:
@@ -219,8 +219,3 @@ class Config(BaseModel):
         for prompt_name, config in prompt_dict.items():
             file_path = os.path.join(directory, f'{prompt_name}.yaml')
             self._save_yaml_file(file_path, config)
-
-    def remove_unused_yaml_files(self, yaml_config_path: str, keep_files: set) -> None:
-        for file_name in os.listdir(yaml_config_path):
-            if file_name.endswith('.yaml') and file_name not in keep_files:
-                os.remove(os.path.join(yaml_config_path, file_name))
