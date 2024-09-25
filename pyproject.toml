@@ -13,6 +13,7 @@ litellm = ">1.40.0"
 beartype = "^0.18.5"
 numpy = "<2.0.0"
 
+torch = { version = "^2.2.1", source="torchcpu"}
 transformers = { version = "^4.44.2"}
 termcolor = { version = "^2.4.0"}
 arxiv = { version = "^2.1.0"}
@@ -44,8 +45,6 @@ mypy = "^1.11.2"
 [tool.poetry.extras]
 humaneval = ["pandas"]
 backend = ["uvicorn", "fastapi"]
-cpu = ["torch"]
-gpu = ["torch"]
 
 [build-system]
 requires = ["poetry-core"]
@@ -121,9 +120,4 @@ sidebar_top_level_label = "Documentation"
 [[tool.poetry.source]]
 name = "torchcpu"
 url = "https://download.pytorch.org/whl/cpu"
-priority = "explicit"
-
-[[tool.poetry.source]]
-name = "torch_cuda121"
-url = "https://download.pytorch.org/whl/cu121"
 priority = "explicit"
