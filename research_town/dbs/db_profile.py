@@ -113,45 +113,45 @@ class ProfileDB(BaseDB[Profile]):
     def match_member_profiles(
         self, leader: Profile, member_num: int = 1
     ) -> List[Profile]:
-        members = self.match(
+        profiles = self.match(
             query=leader.bio,
             num=member_num,
             is_member_candidate=True,
         )
         # Update roles
-        self._update_profile_roles(members, 'is_member_candidate')
-        return members
+        self._update_profile_roles(profiles, 'is_member_candidate')
+        return profiles 
 
     def match_reviewer_profiles(
         self, proposal: Proposal, reviewer_num: int = 1
     ) -> List[Profile]:
-        reviewers = self.match(
+        profiles = self.match(
             query=proposal.content if proposal.content else '',
             num=reviewer_num,
             is_reviewer_candidate=True,
         )
         # Update roles
-        self._update_profile_roles(reviewers, 'is_reviewer_candidate')
-        return reviewers
+        self._update_profile_roles(profiles, 'is_reviewer_candidate')
+        return profiles 
 
     def match_chair_profiles(
         self, proposal: Proposal, chair_num: int = 1
     ) -> List[Profile]:
-        chairs = self.match(
+        profiles = self.match(
             query=proposal.content,
             num=chair_num,
             is_chair_candidate=True,
         )
         # Update roles
-        self._update_profile_roles(chairs, 'is_chair_candidate')
-        return chairs
+        self._update_profile_roles(profiles, 'is_chair_candidate')
+        return profiles
 
     def match_leader_profiles(self, query: str, leader_num: int = 1) -> List[Profile]:
-        leaders = self.match(
+        profiles = self.match(
             query=query,
             num=leader_num,
             is_leader_candidate=True,
         )
         # Update roles
-        self._update_profile_roles(leaders, 'is_leader_candidate')
-        return leaders
+        self._update_profile_roles(profiles, 'is_leader_candidate')
+        return profiles
