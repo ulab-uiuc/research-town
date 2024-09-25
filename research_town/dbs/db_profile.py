@@ -99,17 +99,14 @@ class ProfileDB(BaseDB[Profile]):
             self.update(pk=profile.pk, updates=profile.model_dump())
 
     def _update_profile_roles(self, profiles: List[Profile], role_field: str) -> None:
-        # Dynamically get all role fields that are boolean and start with 'is_'
         role_fields = [
             field
             for field, field_type in get_type_hints(Profile).items()
-            if field.startswith('is_') and field_type == bool
+            if field.startswith('is_') and isinstance(field_type, bool)
         ]
         for profile in profiles:
-            # Set all role fields to False
             for field in role_fields:
                 setattr(profile, field, False)
-            # Set the specific role field to True
             setattr(profile, role_field, True)
             self.update(pk=profile.pk, updates=profile.model_dump())
 
