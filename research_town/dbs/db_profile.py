@@ -16,12 +16,13 @@ T = TypeVar('T', bound=Data)
 class ProfileDB(BaseDB[Profile]):
     def __init__(self, load_file_path: Optional[str] = None) -> None:
         super().__init__(Profile, load_file_path)
-        self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
-            'facebook/contriever'
-        )
-        self.retriever_model: BertModel = BertModel.from_pretrained(
-            'facebook/contriever'
-        )
+        self.retriever_tokenizer: Optional[BertTokenizer] = None
+        self.retriever_model: Optional[BertModel] = None
+
+    def _initialize_retriever(self):
+        if self.retriever_tokenizer is None or self.retriever_model is None:
+            self.retriever_tokenizer = BertTokenizer.from_pretrained('facebook/contriever')
+            self.retriever_model = BertModel.from_pretrained('facebook/contriever')
 
     def pull_profiles(self, agent_names: List[str], config: Config) -> None:
         for name in agent_names:
@@ -43,6 +44,8 @@ class ProfileDB(BaseDB[Profile]):
     def match(
         self, query: str, agent_profiles: List[Profile], num: int = 1
     ) -> List[Profile]:
+        self._initialize_retriever()
+
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,
@@ -69,6 +72,7 @@ class ProfileDB(BaseDB[Profile]):
         return match_agent_profiles
 
     def transform_to_embed(self) -> None:
+        self._initialize_retriever()
         for agent_pk in self.data:
             self.data_embed[agent_pk] = get_embed(
                 [self.data[agent_pk].bio],

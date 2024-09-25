@@ -15,12 +15,13 @@ T = TypeVar('T', bound=Data)
 class PaperDB(BaseDB[Paper]):
     def __init__(self, load_file_path: Optional[str] = None) -> None:
         super().__init__(Paper, load_file_path)
-        self.retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
-            'facebook/contriever'
-        )
-        self.retriever_model: BertModel = BertModel.from_pretrained(
-            'facebook/contriever'
-        )
+        self.retriever_tokenizer: Optional[BertTokenizer] = None
+        self.retriever_model: Optional[BertModel] = None
+
+    def _initialize_retriever(self):
+        if self.retriever_tokenizer is None or self.retriever_model is None:
+            self.retriever_tokenizer = BertTokenizer.from_pretrained('facebook/contriever')
+            self.retriever_model = BertModel.from_pretrained('facebook/contriever')
 
     def pull_papers(self, num: int, domain: str) -> None:
         data, _ = get_daily_papers(query=f'ti:{domain}', max_results=num)
@@ -57,6 +58,8 @@ class PaperDB(BaseDB[Paper]):
                 self.add(paper)
 
     def match(self, query: str, papers: List[Paper], num: int = 1) -> List[Paper]:
+        self._initialize_retriever()
+
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,
@@ -82,6 +85,8 @@ class PaperDB(BaseDB[Paper]):
         return match_papers
 
     def transform_to_embed(self) -> None:
+        self._initialize_retriever()
+
         for paper_pk in self.data:
             self.data_embed[paper_pk] = get_embed(
                 [self.data[paper_pk].abstract],
