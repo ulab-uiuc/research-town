@@ -44,9 +44,16 @@ class ProfileDB(BaseDB[Profile]):
             self.add(agent_profile)
 
     def match(
-        self, query: str, agent_profiles: List[Profile], num: int = 1
+        self,
+        query: str,
+        num: int = 1,
+        updates: Optional[Dict[str, bool]] = None,
+        **conditions: Dict[str, Any],
     ) -> List[Profile]:
         self._initialize_retriever()
+
+        # Get agent profiles based on the provided conditions
+        agent_profiles = self.get(**conditions)
 
         query_embed = get_embed(
             instructions=[query],
@@ -65,13 +72,22 @@ class ProfileDB(BaseDB[Profile]):
                     retriever_model=self.retriever_model,
                 )[0]
                 corpus_embed.append(agent_embed)
+
         topk_indexes = rank_topk(
             query_embed=query_embed, corpus_embed=corpus_embed, num=num
         )
         indexes = [index for topk_index in topk_indexes for index in topk_index]
-        match_agent_profiles = [agent_profiles[index] for index in indexes]
-        logger.info(f'Matched agents: {match_agent_profiles}')
-        return match_agent_profiles
+        matched_profiles = [agent_profiles[index] for index in indexes]
+
+        # Apply updates to the matched profiles if updates are provided
+        if updates:
+            for agent in matched_profiles:
+                for field, value in updates.items():
+                    setattr(agent, field, value)
+                self.update(pk=agent.pk, updates=agent.model_dump())
+
+        logger.info(f'Matched agents: {matched_profiles}')
+        return matched_profiles
 
     def transform_to_embed(self) -> None:
         self._initialize_retriever()
@@ -82,7 +98,7 @@ class ProfileDB(BaseDB[Profile]):
                 self.retriever_model,
             )[0]
 
-    def reset_role_avaialbility(self) -> None:
+    def reset_role_availability(self) -> None:
         for profile in self.data.values():
             profile.is_leader_candidate = True
             profile.is_member_candidate = True
@@ -90,81 +106,64 @@ class ProfileDB(BaseDB[Profile]):
             profile.is_chair_candidate = True
             self.update(pk=profile.pk, updates=profile.model_dump())
 
-    def search_profiles(
-        self,
-        condition: Dict[str, Any],
-        query: str,
-        num: int,
-        update_fields: Dict[str, bool],
-    ) -> List[Profile]:
-        candidates = self.get(**condition)
-        searched_profiles = self.match(query=query, agent_profiles=candidates, num=num)
-
-        for agent in searched_profiles:
-            for field, value in update_fields.items():
-                setattr(agent, field, value)
-            self.update(pk=agent.pk, updates=agent.model_dump())
-
-        return searched_profiles
-
     def match_member_profiles(
         self, leader: Profile, member_num: int = 1
     ) -> List[Profile]:
-        members = self.search_profiles(
-            condition={'is_member_candidate': True},
+        members = self.match(
             query=leader.bio,
             num=member_num,
-            update_fields={
+            updates={
                 'is_leader_candidate': False,
                 'is_member_candidate': True,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
             },
+            is_member_candidate=True,
         )
         return members
 
     def match_reviewer_profiles(
         self, proposal: Proposal, reviewer_num: int = 1
     ) -> List[Profile]:
-        reviewers = self.search_profiles(
-            condition={'is_reviewer_candidate': True},
+        reviewers = self.match(
             query=proposal.content if proposal.content else '',
             num=reviewer_num,
-            update_fields={
+            updates={
                 'is_leader_candidate': False,
                 'is_member_candidate': False,
                 'is_reviewer_candidate': True,
                 'is_chair_candidate': False,
             },
+            is_reviewer_candidate=True,
         )
         return reviewers
 
     def match_chair_profiles(
         self, proposal: Proposal, chair_num: int = 1
     ) -> List[Profile]:
-        chairs = self.search_profiles(
-            condition={'is_chair_candidate': True},
+        chairs = self.match(
             query=proposal.content,
             num=chair_num,
-            update_fields={
+            updates={
                 'is_leader_candidate': False,
                 'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': True,
             },
+            is_chair_candidate=True,
         )
         return chairs
 
     def match_leader_profiles(self, query: str, leader_num: int = 1) -> List[Profile]:
-        leaders = self.search_profiles(
-            condition={'is_leader_candidate': True},
+        leaders = self.match(
             query=query,
             num=leader_num,
-            update_fields={
+            updates={
                 'is_leader_candidate': True,
                 'is_member_candidate': False,
                 'is_reviewer_candidate': False,
                 'is_chair_candidate': False,
             },
+            is_leader_candidate=True,
         )
         return leaders

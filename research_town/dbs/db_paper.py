@@ -1,4 +1,4 @@
-from typing import List, Optional, TypeVar
+from typing import Any, Dict, List, Optional, TypeVar
 
 import torch
 from transformers import BertModel, BertTokenizer
@@ -59,8 +59,11 @@ class PaperDB(BaseDB[Paper]):
             for paper in papers:
                 self.add(paper)
 
-    def match(self, query: str, num: int = 1) -> List[Paper]:
+    def match(
+        self, query: str, num: int = 1, **conditions: Dict[str, Any]
+    ) -> List[Paper]:
         self._initialize_retriever()
+        available_papers = self.get(**conditions)
 
         query_embed = get_embed(
             instructions=[query],
@@ -68,7 +71,7 @@ class PaperDB(BaseDB[Paper]):
             retriever_model=self.retriever_model,
         )
         corpus_embed: List[torch.Tensor] = []
-        available_papers = list(self.data.values())
+
         for paper in available_papers:
             if paper.pk in self.data_embed:
                 corpus_embed.append(self.data_embed[paper.pk])
