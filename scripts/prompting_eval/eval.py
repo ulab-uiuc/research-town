@@ -11,7 +11,7 @@ from research_town.evaluators import (
 
 def main(
     model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-    config: Config = Config(),
+    config: Config = Config('../../configs'),
 ) -> None:
     insights = [
         {'content': 'insight1'},
