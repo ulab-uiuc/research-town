@@ -13,7 +13,7 @@ litellm = ">1.40.0"
 beartype = "^0.18.5"
 numpy = "<2.0.0"
 
-torch = { version = ">=2.1.0 <2.3.0"}
+torch = { version = "^2.2.1", source="torchcpu"}
 transformers = { version = "^4.44.2"}
 termcolor = { version = "^2.4.0"}
 arxiv = { version = "^2.1.0"}
@@ -116,3 +116,8 @@ type = "docusaurus"
 docs_base_path = "docs"
 relative_output_path = ""
 sidebar_top_level_label = "Documentation"
+
+[[tool.poetry.source]]
+name = "torchcpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
