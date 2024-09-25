@@ -17,7 +17,7 @@ from tests.mocks.mocking_func import mock_prompting
 def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    example_profile_db.reset_role_avaialbility()
+    example_profile_db.reset_role_availability()
     env = ReviewWritingEnv(
         name='review_writing',
         log_db=example_log_db,
@@ -47,7 +47,7 @@ def test_proposal_writing_env(
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    example_profile_db.reset_role_avaialbility()
+    example_profile_db.reset_role_availability()
     env = ProposalWritingEnv(
         name='proposal_writing',
         log_db=example_log_db,

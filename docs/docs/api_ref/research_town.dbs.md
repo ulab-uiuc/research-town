@@ -539,7 +539,7 @@ Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Profile`](#research_town.
 
 #### pull_profiles(agent_names: List[str], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → None
 
-#### reset_role_avaialbility() → None
+#### reset_role_availability() → None
 
 #### search_profiles(condition: Dict[str, Any], query: str, num: int, update_fields: Dict[str, bool]) → List[[Profile](#research_town.dbs.data.Profile)]
 
@@ -912,7 +912,7 @@ Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Profile`](#research_town.
 
 #### pull_profiles(agent_names: List[str], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → None
 
-#### reset_role_avaialbility() → None
+#### reset_role_availability() → None
 
 #### search_profiles(condition: Dict[str, Any], query: str, num: int, update_fields: Dict[str, bool]) → List[[Profile](#research_town.dbs.data.Profile)]
 
