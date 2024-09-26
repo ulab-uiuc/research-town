@@ -2,13 +2,13 @@
 
 [[package]]
 name = "aiohappyeyeballs"
-version = "2.4.0"
+version = "2.4.1"
 description = "Happy Eyeballs for asyncio"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "aiohappyeyeballs-2.4.0-py3-none-any.whl", hash = "sha256:7ce92076e249169a13c2f49320d1967425eaf1f407522d707d59cac7628d62bd"},
-    {file = "aiohappyeyeballs-2.4.0.tar.gz", hash = "sha256:55a1714f084e63d49639800f95716da97a1f173d46a16dfcfda0016abb93b6b2"},
+    {file = "aiohappyeyeballs-2.4.1-py3-none-any.whl", hash = "sha256:a53432f3a64c2e5924164b1a7f9e75531ecbc24f4bcf078d306c0613d482d32a"},
+    {file = "aiohappyeyeballs-2.4.1.tar.gz", hash = "sha256:f91ea6cf3c4a8f64de44876de94d723172e1eb5effe845bf5cad1c1a2af95c6a"},
 ]
 
 [[package]]
@@ -3749,4 +3749,4 @@ humaneval = ["pandas"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10, <3.12"
-content-hash = "fc4a121279a543b4a335cacf06fbb4043adf7c5da98fd7b78f826782dd200f12"
+content-hash = "69b96ffd78a1a9988ddf16eb40c9b40c47128a69839e1722046b46bb30d01ff1"
