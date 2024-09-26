@@ -77,7 +77,7 @@ def get_paper_content(
     figure_captions = None
     bibliography = None
     if 'arxiv' not in url:
-        return None
+        return None, None, None, None
     elif 'abs' in url:
         html_url = url.replace('abs', 'html')
     elif 'pdf' in url:
@@ -168,7 +168,7 @@ def get_paper_content(
                         table_tag = str(table_index)
                     table_captions[table_tag] = table_caption
     except Exception:
-        return None
+        return None, None, None, None
     return section_contents, table_captions, figure_captions, bibliography
 
 
