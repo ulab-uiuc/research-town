@@ -3,8 +3,8 @@ from unittest.mock import MagicMock, patch
 
 from research_town.utils.paper_collector import (
     get_daily_papers,
-    get_paper_introduction,
     get_paper_content_from_html,
+    get_paper_introduction,
 )
 
 
@@ -34,19 +34,10 @@ def test_get_daily_papers() -> None:
 
 
 def test_get_paper_content_from_html() -> None:
-    sections, table_captions, figure_captions, bibliography = (
-        get_paper_content_from_html('https://arxiv.org/html/2403.05534v1')
-    )
+    sections = get_paper_content_from_html('https://arxiv.org/html/2403.05534v1')
     assert sections is not None
     assert '1 Introduction' in sections
     assert len(sections['1 Introduction']) > 0
-    assert table_captions is None
-    assert figure_captions is not None
-    assert 'Figure 1: ' in figure_captions
-    assert len(figure_captions['Figure 1: ']) > 0
-    assert bibliography is not None
-    assert 'Arora and Huber (2001)' in bibliography
-    assert len(bibliography['Arora and Huber (2001)']) > 0
 
 
 def test_get_paper_introduction() -> None:
