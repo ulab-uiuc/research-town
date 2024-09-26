@@ -28,10 +28,10 @@
 
 ### Install from pip
 
-You can install `research_town` from `pypi` to use it as a package:
+You can install `research-town` from `pypi` to use it as a package:
 
 ```bash
-pip install research_town
+pip install research-town
 ```
 
 ### Install from scratch

@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "research_town"
+name = "research-town"
 version = "0.0.1b1"
-description = "package for research community simulation"
+description = "multi-agent environment for research community simulation"
 authors = ["Haofei Yu <haofeiy2@illinois.edu>"]
 license = "Apache 2.0 License"
 readme = "README.md"
