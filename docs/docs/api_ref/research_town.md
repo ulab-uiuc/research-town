@@ -758,7 +758,7 @@
     * [`brainstorm_idea_prompting()`](research_town.utils.md#research_town.utils.agent_prompter.brainstorm_idea_prompting)
     * [`discuss_idea_prompting()`](research_town.utils.md#research_town.utils.agent_prompter.discuss_idea_prompting)
     * [`review_literature_prompting()`](research_town.utils.md#research_town.utils.agent_prompter.review_literature_prompting)
-    * [`write_bio_prompting()`](research_town.utils.md#research_town.utils.agent_prompter.write_bio_prompting)
+    * [`write_bio_prompting()`](research_town.utils.md#research_town.utils.profile_collector.write_bio_prompting)
     * [`write_metareview_prompting()`](research_town.utils.md#research_town.utils.agent_prompter.write_metareview_prompting)
     * [`write_proposal_prompting()`](research_town.utils.md#research_town.utils.agent_prompter.write_proposal_prompting)
     * [`write_rebuttal_prompting()`](research_town.utils.md#research_town.utils.agent_prompter.write_rebuttal_prompting)
