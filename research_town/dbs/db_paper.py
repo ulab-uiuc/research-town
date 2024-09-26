@@ -39,10 +39,8 @@ class PaperDB(BaseDB[Paper]):
                     timestamp=int(timestamp),
                     sections=sections,
                     bibliography=bibliography,
-                    figure_captions=figure_captions,
-                    table_captions=table_captions,
                 )
-                for title, abstract, authors, url, domain, timestamp, sections, bibliography, figure_captions, table_captions in zip(
+                for title, abstract, authors, url, domain, timestamp, sections, bibliography in zip(
                     paper_data['title'],
                     paper_data['abstract'],
                     paper_data['authors'],
@@ -51,8 +49,6 @@ class PaperDB(BaseDB[Paper]):
                     paper_data['timestamp'],
                     paper_data['sections'],
                     paper_data['bibliography'],
-                    paper_data['figure_captions'],
-                    paper_data['table_captions'],
                 )
             ]
 
