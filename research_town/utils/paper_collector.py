@@ -185,26 +185,20 @@ def get_paper_intro_pdf(url: str) -> Optional[str]:
     text = ""
     for page in reader.pages:
         text += page.extract_text()
-    # print(text)  # 可用于调试
 
-    # 寻找“Introduction”开始的位置
     intro_pattern = re.compile(r'\bIntroduction\b', re.IGNORECASE)
     intro_match = intro_pattern.search(text)
     if intro_match:
         intro_start = intro_match.start()
-        # 定义可能的章节标题，用于寻找 Introduction 的结束位置
         section_titles = ['Abstract', 'Related Work', 'Background', 'Methods', 'Experiments',
                           'Results', 'Discussion', 'Conclusion', 'Conclusions', 'Acknowledgments', 'References', 'Appendix', 'Materials and Methods']
-        # 创建正则表达式模式来匹配章节标题
         section_pattern = re.compile(r'\b(' + '|'.join(section_titles) + r')\b', re.IGNORECASE)
-        # 在 Introduction 之后寻找下一个章节标题
         section_match = section_pattern.search(text, intro_start + 1)
         if section_match:
             intro_end = section_match.start()
             introduction_text = text[intro_start:intro_end].strip()
             return introduction_text
         else:
-            # 如果找不到下一个章节标题，提取从 Introduction 到文本结束的内容
             introduction_text = text[intro_start:].strip()
             return introduction_text
     else:
