@@ -2,13 +2,13 @@
 
 ## Submodules
 
-## research_town.utils.agent_collector module
+## research_town.utils.profile_collector module
 
-### research_town.utils.agent_collector.coauthor_filter(co_authors: dict[str, int], limit: int = 5) → list[str]
+### research_town.utils.profile_collector.coauthor_filter(co_authors: dict[str, int], limit: int = 5) → list[str]
 
-### research_town.utils.agent_collector.coauthor_frequency(author: str, author_list: list[str], co_authors: dict[str, int]) → dict[str, int]
+### research_town.utils.profile_collector.coauthor_frequency(author: str, author_list: list[str], co_authors: dict[str, int]) → dict[str, int]
 
-### research_town.utils.agent_collector.collect_publications_and_coauthors(author: str, paper_max_num: int = 10) → tuple[list[dict[str, Any]], list[str]]
+### research_town.utils.profile_collector.collect_publications_and_coauthors(author: str, paper_max_num: int = 10) → tuple[list[dict[str, Any]], list[str]]
 
 ## research_town.utils.agent_prompter module
 

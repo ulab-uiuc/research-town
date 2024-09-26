@@ -1,4 +1,4 @@
-from research_town.utils.agent_collector import (
+from research_town.utils.profile_collector import (
     coauthor_filter,
     coauthor_frequency,
     collect_publications_and_coauthors,

@@ -3,7 +3,7 @@ from typing import Any, List, Optional, TypeVar, get_type_hints
 from transformers import BertModel, BertTokenizer
 
 from ..configs import Config
-from ..utils.agent_collector import collect_publications_and_coauthors
+from ..utils.profile_collector import collect_publications_and_coauthors
 from ..utils.agent_prompter import write_bio_prompting
 from ..utils.logger import logger
 from ..utils.retriever import get_embed, rank_topk
