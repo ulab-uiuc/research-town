@@ -173,9 +173,8 @@ def get_paper_content(
 
 
 def get_paper_intro_pdf(url: str) -> Optional[str]:
-    if 'arxiv' not in url:
-        raise ValueError('Only arXiv papers url link are supported')
-    elif 'abs' in url:
+
+    if 'abs' in url:
         pdf_url = url.replace('abs', 'pdf')
     elif 'html' in url:
         pdf_url = url.replace('html', 'pdf')
@@ -188,6 +187,9 @@ def get_paper_intro_pdf(url: str) -> Optional[str]:
     text = ''
     for page in reader.pages:
         text += page.extract_text()
+    
+    if text == '':
+        return None
 
     intro_pattern = re.compile(r'\bIntroduction\b', re.IGNORECASE)
     intro_match = intro_pattern.search(text)
@@ -226,7 +228,7 @@ def get_paper_intro_pdf(url: str) -> Optional[str]:
 def get_intro(url: str) -> Optional[str]:
     contents = get_paper_content(url)
     if contents is None or contents[0] is None:
-        return
+        return get_paper_intro_pdf(url)
     section_contents = contents[0]
     for section_name, section_content in section_contents.items():
         if 'Introduction' in section_name:
