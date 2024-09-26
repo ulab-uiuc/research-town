@@ -188,7 +188,7 @@ mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
 
 This replaces Model._\_fields_\_ from Pydantic V1.
 
-### *class* research_town.dbs.data.Paper(\*, pk: str = None, project_name: str | None = None, authors: List[str] = [], title: str, abstract: str, url: str | None = None, timestamp: int | None = None, section_contents: Dict[str, str] | None = None, table_captions: Dict[str, str] | None = None, figure_captions: Dict[str, str] | None = None, bibliography: Dict[str, str] | None = None, keywords: List[str] | None = None, domain: str | None = None, references: List[Dict[str, str]] | None = None, citation_count: int | None = 0, award: str | None = None, embed: Any | None = None)
+### *class* research_town.dbs.data.Paper(\*, pk: str = None, project_name: str | None = None, authors: List[str] = [], title: str, abstract: str, url: str | None = None, timestamp: int | None = None, sections: Dict[str, str] | None = None, table_captions: Dict[str, str] | None = None, figure_captions: Dict[str, str] | None = None, bibliography: Dict[str, str] | None = None, keywords: List[str] | None = None, domain: str | None = None, references: List[Dict[str, str]] | None = None, citation_count: int | None = 0, award: str | None = None, embed: Any | None = None)
 
 Bases: [`Data`](#research_town.dbs.data.Data)
 
@@ -218,7 +218,7 @@ A dictionary of computed field names and their corresponding ComputedFieldInfo o
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'abstract': FieldInfo(annotation=str, required=True), 'authors': FieldInfo(annotation=List[str], required=False, default=[]), 'award': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'bibliography': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'citation_count': FieldInfo(annotation=Union[int, NoneType], required=False, default=0), 'domain': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'figure_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'keywords': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'references': FieldInfo(annotation=Union[List[Dict[str, str]], NoneType], required=False, default=None), 'section_contents': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'table_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'timestamp': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'title': FieldInfo(annotation=str, required=True), 'url': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'abstract': FieldInfo(annotation=str, required=True), 'authors': FieldInfo(annotation=List[str], required=False, default=[]), 'award': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'bibliography': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'citation_count': FieldInfo(annotation=Union[int, NoneType], required=False, default=0), 'domain': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'figure_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'keywords': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'references': FieldInfo(annotation=Union[List[Dict[str, str]], NoneType], required=False, default=None), 'sections': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'table_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'timestamp': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'title': FieldInfo(annotation=str, required=True), 'url': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -227,7 +227,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### references *: List[Dict[str, str]] | None*
 
-#### section_contents *: Dict[str, str] | None*
+#### sections *: Dict[str, str] | None*
 
 #### table_captions *: Dict[str, str] | None*
 
@@ -792,7 +792,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### timestep *: int*
 
-### *class* research_town.dbs.Paper(\*, pk: str = None, project_name: str | None = None, authors: List[str] = [], title: str, abstract: str, url: str | None = None, timestamp: int | None = None, section_contents: Dict[str, str] | None = None, table_captions: Dict[str, str] | None = None, figure_captions: Dict[str, str] | None = None, bibliography: Dict[str, str] | None = None, keywords: List[str] | None = None, domain: str | None = None, references: List[Dict[str, str]] | None = None, citation_count: int | None = 0, award: str | None = None, embed: Any | None = None)
+### *class* research_town.dbs.Paper(\*, pk: str = None, project_name: str | None = None, authors: List[str] = [], title: str, abstract: str, url: str | None = None, timestamp: int | None = None, sections: Dict[str, str] | None = None, table_captions: Dict[str, str] | None = None, figure_captions: Dict[str, str] | None = None, bibliography: Dict[str, str] | None = None, keywords: List[str] | None = None, domain: str | None = None, references: List[Dict[str, str]] | None = None, citation_count: int | None = 0, award: str | None = None, embed: Any | None = None)
 
 Bases: [`Data`](#research_town.dbs.data.Data)
 
@@ -822,7 +822,7 @@ A dictionary of computed field names and their corresponding ComputedFieldInfo o
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'abstract': FieldInfo(annotation=str, required=True), 'authors': FieldInfo(annotation=List[str], required=False, default=[]), 'award': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'bibliography': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'citation_count': FieldInfo(annotation=Union[int, NoneType], required=False, default=0), 'domain': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'figure_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'keywords': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'references': FieldInfo(annotation=Union[List[Dict[str, str]], NoneType], required=False, default=None), 'section_contents': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'table_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'timestamp': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'title': FieldInfo(annotation=str, required=True), 'url': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'abstract': FieldInfo(annotation=str, required=True), 'authors': FieldInfo(annotation=List[str], required=False, default=[]), 'award': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'bibliography': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'citation_count': FieldInfo(annotation=Union[int, NoneType], required=False, default=0), 'domain': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'embed': FieldInfo(annotation=Union[Any, NoneType], required=False, default=None), 'figure_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'keywords': FieldInfo(annotation=Union[List[str], NoneType], required=False, default=None), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'references': FieldInfo(annotation=Union[List[Dict[str, str]], NoneType], required=False, default=None), 'sections': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'table_captions': FieldInfo(annotation=Union[Dict[str, str], NoneType], required=False, default=None), 'timestamp': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'title': FieldInfo(annotation=str, required=True), 'url': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -835,7 +835,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### references *: List[Dict[str, str]] | None*
 
-#### section_contents *: Dict[str, str] | None*
+#### sections *: Dict[str, str] | None*
 
 #### table_captions *: Dict[str, str] | None*
 

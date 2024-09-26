@@ -9,6 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.10, <3.12"
 pydantic = ">=2.5.0"
+pypdf2 = ">=3.0.1"
 litellm = ">1.40.0"
 beartype = "^0.19.0"
 numpy = "<2.0.0"

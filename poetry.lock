@@ -2,13 +2,13 @@
 
 [[package]]
 name = "aiohappyeyeballs"
-version = "2.4.0"
+version = "2.4.1"
 description = "Happy Eyeballs for asyncio"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "aiohappyeyeballs-2.4.0-py3-none-any.whl", hash = "sha256:7ce92076e249169a13c2f49320d1967425eaf1f407522d707d59cac7628d62bd"},
-    {file = "aiohappyeyeballs-2.4.0.tar.gz", hash = "sha256:55a1714f084e63d49639800f95716da97a1f173d46a16dfcfda0016abb93b6b2"},
+    {file = "aiohappyeyeballs-2.4.1-py3-none-any.whl", hash = "sha256:a53432f3a64c2e5924164b1a7f9e75531ecbc24f4bcf078d306c0613d482d32a"},
+    {file = "aiohappyeyeballs-2.4.1.tar.gz", hash = "sha256:f91ea6cf3c4a8f64de44876de94d723172e1eb5effe845bf5cad1c1a2af95c6a"},
 ]
 
 [[package]]
@@ -1891,13 +1891,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.48.0"
+version = "1.49.0"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.7.1"
 files = [
-    {file = "openai-1.48.0-py3-none-any.whl", hash = "sha256:7c4af223f0bf615ce4a12453729952c9a8b04ffe8c78aa77981b12fd970149cf"},
-    {file = "openai-1.48.0.tar.gz", hash = "sha256:1d3b69ea62c287c4885a6f3ce840768564cd5f52c60ac5f890fef80d43cc4799"},
+    {file = "openai-1.49.0-py3-none-any.whl", hash = "sha256:6efcf09bde703b991086603bc9c770ddea01ad57f1ded9bd735fd607e6e84c3c"},
+    {file = "openai-1.49.0.tar.gz", hash = "sha256:965e5c7cdf59277a8422250b1a81e683c9e7b10d28d4262b8daeeba4238202d4"},
 ]
 
 [package.dependencies]
@@ -2300,6 +2300,24 @@ files = [
 
 [package.extras]
 windows-terminal = ["colorama (>=0.4.6)"]
+
+[[package]]
+name = "pypdf2"
+version = "3.0.1"
+description = "A pure-python PDF library capable of splitting, merging, cropping, and transforming PDF files"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "PyPDF2-3.0.1.tar.gz", hash = "sha256:a74408f69ba6271f71b9352ef4ed03dc53a31aa404d29b5d31f53bfecfee1440"},
+    {file = "pypdf2-3.0.1-py3-none-any.whl", hash = "sha256:d16e4205cfee272fbdc0568b68d82be796540b1537508cef59388f839c191928"},
+]
+
+[package.extras]
+crypto = ["PyCryptodome"]
+dev = ["black", "flit", "pip-tools", "pre-commit (<2.18.0)", "pytest-cov", "wheel"]
+docs = ["myst_parser", "sphinx", "sphinx_rtd_theme"]
+full = ["Pillow", "PyCryptodome"]
+image = ["Pillow"]
 
 [[package]]
 name = "pytest"
@@ -3731,4 +3749,4 @@ humaneval = ["pandas"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10, <3.12"
-content-hash = "6897ffd3b385507b1b2744925f8f508c317ab188a53402ab0287e1c0ae5bcc0f"
+content-hash = "69b96ffd78a1a9988ddf16eb40c9b40c47128a69839e1722046b46bb30d01ff1"

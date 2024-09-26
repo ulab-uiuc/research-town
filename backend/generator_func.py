@@ -5,14 +5,14 @@ from research_town.agents import Agent
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, Progress, ProgressDB
 from research_town.engines import Engine
-from research_town.utils.paper_collector import get_intro
+from research_town.utils.paper_collector import get_paper_introduction
 
 
 def run_engine(
     url: str,
 ) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
     # Get the introduction of the paper from the URL
-    intro = get_intro(url)
+    intro = get_paper_introduction(url)
 
     # If no introduction found, return None
     if not intro:

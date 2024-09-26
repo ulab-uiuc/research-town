@@ -27,7 +27,7 @@ class Paper(Data):
     abstract: str
     url: Optional[str] = Field(default=None)
     timestamp: Optional[int] = Field(default=None)
-    section_contents: Optional[Dict[str, str]] = Field(default=None)
+    sections: Optional[Dict[str, str]] = Field(default=None)
     table_captions: Optional[Dict[str, str]] = Field(default=None)
     figure_captions: Optional[Dict[str, str]] = Field(default=None)
     bibliography: Optional[Dict[str, str]] = Field(default=None)
