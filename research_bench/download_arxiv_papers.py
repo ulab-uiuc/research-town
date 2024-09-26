@@ -1,13 +1,10 @@
 import argparse
 import json
 import os
-import re
 from datetime import datetime, timedelta
-from io import BytesIO
 
 import arxiv
 import requests
-from PyPDF2 import PdfReader
 
 
 def download_papers(
