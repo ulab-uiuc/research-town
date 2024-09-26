@@ -12,21 +12,7 @@ fewshot_examples:
 
   Please begin writing the strength of the submission based on the review."
 
-- "Strength of the submission:
-
-  1. Innovation: The paper introduces a novel deep learning architecture, TransformerX, which represents a significant advancement in the field of natural language processing.
-
-  2. Performance: The proposed model achieves state-of-the-art performance on multiple benchmarks, demonstrating its effectiveness and potential impact on the field.
-
-  3. Efficiency: TransformerX requires significantly less computational resources compared to existing models, addressing an important challenge in the era of large language models.
-
-  4. Comprehensive Evaluation: The paper includes extensive experiments that clearly demonstrate the effectiveness of the proposed architecture across various tasks and datasets.
-
-  5. Clear Contributions: Both reviewers highlighted the clear contributions of the paper, indicating that the work represents a substantial step forward in NLP research.
-
-  6. Responsiveness to Feedback: The authors have addressed the minor concerns raised by reviewers, adding more rigorous theoretical analysis and ablation studies, which further strengthens the paper.
-
-  Overall, the submission presents a strong, innovative approach to NLP modeling with clear empirical advantages and thorough evaluation, making it a valuable contribution to the field."
+- "Strength of the submission: The submission presents a strong, innovative approach to NLP modeling with clear empirical advantages and thorough evaluation, making it a valuable contribution to the field."
 
 - "Here is the proposal: Our paper introduces a novel graph neural network algorithm, GraphFusion, for multi-modal data integration in bioinformatics. We demonstrate its effectiveness in predicting protein-protein interactions and drug-target affinities, outperforming existing methods on several benchmark datasets.
 
@@ -41,23 +27,7 @@ fewshot_examples:
 
   Please begin writing the strength of the submission based on the review."
 
-- "Strength of the submission:
-
-  1. Novelty: The paper introduces GraphFusion, a novel graph neural network algorithm specifically designed for multi-modal data integration in bioinformatics, representing an innovative approach in this field.
-
-  2. Performance: The proposed method outperforms existing approaches on several benchmark datasets for important bioinformatics tasks, including protein-protein interaction prediction and drug-target affinity estimation.
-
-  3. Interdisciplinary Impact: The work bridges the gap between advanced machine learning techniques (graph neural networks) and critical problems in bioinformatics, potentially advancing both fields.
-
-  4. Comprehensive Evaluation: The paper includes extensive experiments demonstrating the effectiveness of GraphFusion across various tasks and datasets in bioinformatics.
-
-  5. Practical Applications: The successful application to protein-protein interactions and drug-target affinities suggests significant potential for real-world impact in drug discovery and understanding biological systems.
-
-  6. Responsiveness to Feedback: The authors have addressed the reviewers' concerns by adding comparisons with recent methods, discussing scalability, and expanding the analysis of model interpretability, which strengthens the overall quality of the paper.
-
-  7. Solid Methodology: Reviewer 2 specifically noted that the GraphFusion algorithm is well-designed, indicating a strong theoretical foundation for the work.
-
-  Overall, the submission presents a novel and effective approach to multi-modal data integration in bioinformatics, with clear empirical advantages, comprehensive evaluation, and potential for significant impact in both theoretical and applied research in the field."
+- "Strength of the submission: The submission presents a novel and effective approach to multi-modal data integration in bioinformatics, with clear empirical advantages, comprehensive evaluation, and potential for significant impact in both theoretical and applied research in the field."
 
 sys_prompt: >
     You are an autonomous intelligent agent tasked to write the strength of the submission for the following submission you have made to an academic conference. Your summary of strength should summarize the reviews to help the reviewers to make a decision.
