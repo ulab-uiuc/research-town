@@ -173,7 +173,6 @@ def get_paper_content(
 
 
 def get_paper_intro_pdf(url: str) -> Optional[str]:
-
     if 'abs' in url:
         pdf_url = url.replace('abs', 'pdf')
     elif 'html' in url:
@@ -187,7 +186,7 @@ def get_paper_intro_pdf(url: str) -> Optional[str]:
     text = ''
     for page in reader.pages:
         text += page.extract_text()
-    
+
     if text == '':
         return None
 
