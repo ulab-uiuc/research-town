@@ -12,19 +12,7 @@ fewshot_examples:
 
   Please begin writing the weakness of the submission based on the review."
 
-- "Weakness of the submission:
-
-  1. Limited Theoretical Justification: The initial submission lacked a comprehensive theoretical foundation for the AdaptRL algorithm. This weakness was highlighted by Reviewer 1 and could potentially undermine the credibility of the proposed method.
-
-  2. Incomplete Comparison with Recent Methods: Both reviewers noted the absence of comparisons with some recent, relevant approaches in the field. This omission makes it difficult to fully assess the claimed superiority of AdaptRL.
-
-  3. Insufficient Ablation Studies: Reviewer 2 pointed out the need for more ablation studies. These are crucial for understanding the contribution of different components of the algorithm and validating design choices.
-
-  4. Limited Discussion on Real-World Applicability: The paper initially lacked a thorough discussion on how AdaptRL would perform in real-world scenarios, which is crucial for assessing its practical impact in robotics.
-
-  5. Potential Overfitting to Benchmarks: While not explicitly stated, the focus on benchmark performance without sufficient real-world validation raises concerns about the method's generalizability to practical applications.
-
-  It's worth noting that the authors have addressed these weaknesses in their rebuttal, expanding the theoretical analysis, adding comparisons with recent methods, including more ablation studies, and discussing real-world applicability. However, the effectiveness of these additions would need to be evaluated in the revised manuscript."
+- "Weakness of the submission: It's worth noting that the authors have addressed these weaknesses in their rebuttal, expanding the theoretical analysis, adding comparisons with recent methods, including more ablation studies, and discussing real-world applicability. However, the effectiveness of these additions would need to be evaluated in the revised manuscript."
 
 - "Here is the proposal: Our paper introduces a novel natural language processing model, MultiLingNLU, designed for multilingual natural language understanding. We demonstrate state-of-the-art performance on various NLU tasks across 100 languages, while maintaining a compact model size.
 
@@ -39,19 +27,7 @@ fewshot_examples:
 
   Please begin writing the weakness of the submission based on the review."
 
-- "Weakness of the submission:
-
-  1. Insufficient Analysis of Cross-Language Performance: The initial submission lacked a detailed analysis of how MultiLingNLU's performance varies across different language families. This is crucial for understanding the model's true multilingual capabilities and potential biases.
-
-  2. Inadequate Substantiation of Energy Efficiency Claims: While the compact model size is noted as impressive, the original paper did not provide sufficient evidence to support claims about energy efficiency. This is an important consideration for the practical application of the model.
-
-  3. Limited Ablation Studies: The lack of comprehensive ablation studies makes it difficult to understand the contribution of different components of the MultiLingNLU model and the reasons behind its performance.
-
-  4. Insufficient Discussion on Low-Resource Language Biases: The paper initially didn't adequately address potential biases in the model's performance on low-resource languages, which is a critical issue in multilingual NLP.
-
-  5. Potential Overfitting to High-Resource Languages: While not explicitly mentioned, the focus on overall performance across 100 languages raises concerns about whether the model might be biased towards high-resource languages at the expense of low-resource ones.
-
-  It's important to note that the authors have addressed these weaknesses in their rebuttal, adding analyses of performance across language families, providing energy consumption measurements, including ablation studies, and discussing biases in low-resource languages. The effectiveness of these additions would need to be evaluated in the revised manuscript."
+- "Weakness of the submission: It's important to note that the authors have addressed these weaknesses in their rebuttal, adding analyses of performance across language families, providing energy consumption measurements, including ablation studies, and discussing biases in low-resource languages. The effectiveness of these additions would need to be evaluated in the revised manuscript."
 
 sys_prompt: >
     You are an autonomous intelligent agent tasked to write the weakness of the submission for the following submission you have made to an academic conference. Your summary of weakness should summarize the reviews to help the reviewers to make a decision.

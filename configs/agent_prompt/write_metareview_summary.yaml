@@ -10,29 +10,7 @@ fewshot_examples:
 
   Please begin writing the summary of reviews."
 
-- "Summary of reviews:
-
-  The reviewers generally acknowledge the importance and novelty of the SecureFL algorithm for privacy-preserving federated learning. The paper's strengths include:
-
-  1. Addressing a crucial problem in federated learning
-  2. Providing provable privacy guarantees
-  3. Demonstrating resistance to adversarial attacks
-  4. Presenting a sound theoretical analysis
-
-  However, the reviewers identified several weaknesses:
-
-  1. Limited empirical evaluation
-  2. Missing comparisons with recent methods
-  3. Lack of experiments on real-world datasets
-  4. Insufficient discussion on computational overhead
-
-  The authors have addressed these weaknesses in their rebuttal:
-
-  1. Expanded empirical evaluation: The authors have added experiments on three additional real-world datasets, addressing the concern about limited evaluation and lack of real-world experiments.
-  2. Comparisons with recent methods: The rebuttal mentions the addition of comparisons with MethodX, MethodY, and MethodZ in Section 4.2, addressing the concern about missing comparisons.
-  3. Computational overhead analysis: The authors have included a detailed analysis of computational overhead in Section 3.4, addressing the concern about insufficient discussion on this aspect.
-
-  Overall, the rebuttal appears to address all the main weaknesses mentioned in the reviews. The expanded empirical evaluation and additional comparisons should strengthen the paper's contribution. The inclusion of a computational overhead analysis will provide readers with a more comprehensive understanding of the proposed method's practical implications."
+- "Summary of reviews: The rebuttal appears to address all the main weaknesses mentioned in the reviews. The expanded empirical evaluation and additional comparisons should strengthen the paper's contribution. The inclusion of a computational overhead analysis will provide readers with a more comprehensive understanding of the proposed method's practical implications."
 
 - "Here is the proposal: Our paper introduces a new approach to automatic music generation using a combination of transformer models and reinforcement learning. We demonstrate that our method, MusicAI, can generate coherent and aesthetically pleasing musical compositions in various genres, outperforming existing methods in human evaluation studies.
 
@@ -45,30 +23,7 @@ fewshot_examples:
 
   Please begin writing the summary of reviews."
 
-- "Summary of reviews:
-
-  The reviewers recognize the novelty and potential of the MusicAI approach for automatic music generation. The paper's strengths include:
-
-  1. Innovative combination of transformer models and reinforcement learning for music generation
-  2. Demonstration of coherent and aesthetically pleasing musical compositions in various genres
-  3. Use of human evaluation studies
-  4. Well-designed MusicAI architecture
-
-  However, the reviewers identified several weaknesses:
-
-  1. Insufficient justification of evaluation metrics
-  2. Inadequate comparison with state-of-the-art methods
-  3. Lack of discussion on ethical implications of AI-generated music
-  4. Need for more rigorous analysis of the RL component and its impact on music quality
-
-  The authors have addressed these weaknesses in their rebuttal:
-
-  1. Evaluation metrics: The authors have revised and provided justification for each evaluation metric in Section 4.1, addressing the concern about insufficient justification.
-  2. Comparison with SOTA methods: The rebuttal mentions expanded comparisons with MethodA, MethodB, and MethodC in Section 5.2, addressing the concern about inadequate comparisons.
-  3. Ethical implications: A discussion on ethical implications has been added in Section 6, addressing this missing aspect of the original submission.
-  4. RL component analysis: The authors have included an ablation study in Section 4.3 to demonstrate the impact of the RL component on music quality, addressing the need for more rigorous analysis.
-
-  Overall, the rebuttal appears to address all the main weaknesses mentioned in the reviews. The revised evaluation metrics, expanded comparisons, and added discussions on ethics and the RL component should significantly strengthen the paper. The inclusion of an ablation study for the RL component will provide readers with a better understanding of its contribution to the overall system."
+- "Summary of reviews: The rebuttal appears to address all the main weaknesses mentioned in the reviews. The revised evaluation metrics, expanded comparisons, and added discussions on ethics and the RL component should significantly strengthen the paper. The inclusion of an ablation study for the RL component will provide readers with a better understanding of its contribution to the overall system."
 
 sys_prompt: >
     You are an autonomous intelligent agent tasked to write a summary of the reviews for the following submission you have made to an academic conference. Your summary should summarize the reviews to help the reviewers to make a decision.

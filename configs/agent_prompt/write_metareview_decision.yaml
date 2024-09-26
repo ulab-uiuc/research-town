@@ -16,15 +16,7 @@ fewshot_examples:
 
   Please begin writing the decision of accept / reject."
 
-- "Decision: Accept
-
-  Rationale: The submission presents a novel and promising approach to sentiment analysis, combining the strengths of both transformer-based models and lexicon-based methods. The initial reviews highlighted strong points in terms of performance and interpretability, which are crucial in the field of sentiment analysis. 
-
-  The authors have addressed the main concerns raised by the reviewers in their rebuttal. They have added a detailed analysis of computational complexity, expanded comparisons with recent methods (including BERT-based models), conducted additional ablation studies, and extended their evaluation to include more large-scale datasets. These additions significantly strengthen the paper and address the primary weaknesses identified in the initial reviews.
-
-  The innovative nature of the hybrid approach, coupled with state-of-the-art performance and maintained interpretability, makes this work a valuable contribution to the field. The expanded evaluation and analysis provided in the rebuttal demonstrate the robustness and broader applicability of the method.
-
-  Given the novelty of the approach, the strong initial results, and the comprehensive response to reviewer concerns, I believe this paper will be of great interest to the conference audience and has the potential to inspire further research in this direction. Therefore, I recommend accepting this submission."
+- "Decision: Accept"
 
 - "Here is the proposal: This paper introduces a new graph neural network architecture, DynamicGNN, designed for temporal graph representation learning. Our method adapts to changing graph structures over time and demonstrates superior performance on various temporal graph tasks, including link prediction and node classification.
 
@@ -43,23 +35,7 @@ fewshot_examples:
 
   Please begin writing the decision of accept / reject."
 
-- "Decision: Reject
-
-  Rationale: After careful consideration of the initial submission, reviews, and the authors' rebuttal, I recommend rejecting this paper for the following reasons:
-
-  1. Insufficient Novelty: While the paper addresses an important problem in temporal graph learning, the reviewers have raised valid concerns about the novelty of the approach. The authors' rebuttal does not convincingly demonstrate how their method significantly differs from or improves upon existing techniques in the field.
-
-  2. Limited Experimental Evaluation: Despite the authors' efforts to expand their evaluation in the rebuttal, the initial submission had significant shortcomings in this area. Conference papers should present a comprehensive evaluation from the outset, and while improvements in the rebuttal are noted, they suggest that the work may not have been ready for submission.
-
-  3. Theoretical Foundations: The lack of thorough theoretical analysis in the original submission is a significant weakness for a paper proposing a new graph neural network architecture. While the authors have added some theoretical grounding in their rebuttal, this crucial component should have been present in the initial submission.
-
-  4. Clarity and Presentation: The reviewers noted issues with the clarity of writing, which can hinder the understanding and appreciation of the work. Although the authors claim to have improved this aspect, the need for such significant revisions suggests that the paper may benefit from further refinement before being ready for publication.
-
-  5. Low Review Scores: The initial review scores (6/10 and 5/10) are below the typical threshold for acceptance at most competitive conferences.
-
-  While the authors have made efforts to address the reviewers' concerns, the extent of the required changes and the fundamental issues with novelty and initial presentation suggest that this work would benefit from further development. I encourage the authors to address these issues comprehensively and consider submitting an improved version to a future conference or journal.
-
-  Therefore, based on the current state of the submission and the revisions proposed in the rebuttal, I recommend rejecting this paper for the current conference."
+- "Decision: Reject"
 
 sys_prompt: >
     You are an autonomous intelligent agent tasked to make a review decision. You need to decide whether the following submission should be accepted or rejected by an academic conference.
