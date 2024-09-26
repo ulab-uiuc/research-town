@@ -1,5 +1,5 @@
 <div style="width: 100%;">
-  <img src="assets/research_town.png" style="width: 100%;" alt="sotopia"></img>
+  <img src="assets/research_town.png" style="width: 100%;"></img>
 </div>
 
 <h1 align="center">Research Town: Simulator of Research Community</h1>
@@ -28,10 +28,10 @@
 
 ### Install from pip
 
-You can install `research_town` from `pypi` to use it as a package:
+You can install `research-town` from `pypi` to use it as a package:
 
 ```bash
-pip install research_town
+pip install research-town
 ```
 
 ### Install from scratch
