@@ -5,6 +5,9 @@ import requests
 from beartype.typing import Any, Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
 from tqdm import tqdm
+from PyPDF2 import PdfReader
+from io import BytesIO
+import re
 
 
 def get_daily_papers(
@@ -60,7 +63,6 @@ def get_daily_papers(
             content[publish_time]['bibliography'] = [paper_bibliography]
     return content, publish_time
 
-
 def get_paper_content(
     url: str,
 ) -> Tuple[
@@ -73,13 +75,19 @@ def get_paper_content(
     table_captions = None
     figure_captions = None
     bibliography = None
-    html_url = url.replace('abs', 'html')
+    if 'arxiv' not in url:
+        raise ValueError('Only arXiv papers are supported')
+    elif 'abs' in url:
+        html_url = url.replace('abs', 'html')
+    elif 'pdf' in url:
+        html_url = url.replace('pdf', 'html')
+    else:
+        html_url = url
     try:
         response = requests.get(html_url, timeout=60)
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, 'lxml')
             article = soup.find('article', class_='ltx_document')
-
             # section contents
             sections = article.find_all('section', class_='ltx_section')
             sections.extend(article.find_all('section', class_='ltx_appendix'))
@@ -159,14 +167,55 @@ def get_paper_content(
                         table_tag = str(table_index)
                     table_captions[table_tag] = table_caption
     except Exception:
-        pass
+        raise Exception('Could not fetch paper content')
     return section_contents, table_captions, figure_captions, bibliography
+
+def get_paper_intro_pdf(url: str) -> Optional[str]:
+    if 'arxiv' not in url:
+        raise ValueError('Only arXiv papers url link are supported')
+    elif 'abs' in url:
+        pdf_url = url.replace('abs', 'pdf')
+    elif 'html' in url:
+        pdf_url = url.replace('html', 'pdf')
+    else:
+        pdf_url = url
+    response = requests.get(pdf_url)
+    file_stream = BytesIO(response.content)
+    reader = PdfReader(file_stream)
+    
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text()
+    # print(text)  # 可用于调试
+
+    # 寻找“Introduction”开始的位置
+    intro_pattern = re.compile(r'\bIntroduction\b', re.IGNORECASE)
+    intro_match = intro_pattern.search(text)
+    if intro_match:
+        intro_start = intro_match.start()
+        # 定义可能的章节标题，用于寻找 Introduction 的结束位置
+        section_titles = ['Abstract', 'Related Work', 'Background', 'Methods', 'Experiments',
+                          'Results', 'Discussion', 'Conclusion', 'Conclusions', 'Acknowledgments', 'References', 'Appendix', 'Materials and Methods']
+        # 创建正则表达式模式来匹配章节标题
+        section_pattern = re.compile(r'\b(' + '|'.join(section_titles) + r')\b', re.IGNORECASE)
+        # 在 Introduction 之后寻找下一个章节标题
+        section_match = section_pattern.search(text, intro_start + 1)
+        if section_match:
+            intro_end = section_match.start()
+            introduction_text = text[intro_start:intro_end].strip()
+            return introduction_text
+        else:
+            # 如果找不到下一个章节标题，提取从 Introduction 到文本结束的内容
+            introduction_text = text[intro_start:].strip()
+            return introduction_text
+    else:
+        return "Introduction section not found."
 
 
 def get_intro(url: str) -> Optional[str]:
     contents = get_paper_content(url)
     if contents is None or contents[0] is None:
-        return None
+        return 
     section_contents = contents[0]
     for section_name, section_content in section_contents.items():
         if 'Introduction' in section_name:
