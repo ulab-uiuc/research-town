@@ -1,13 +1,12 @@
-import datetime
-
 import arxiv
-import requests
 from beartype.typing import Any, Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
-from tqdm import tqdm
-from PyPDF2 import PdfReader
+import datetime
 from io import BytesIO
+from PyPDF2 import PdfReader
 import re
+import requests
+from tqdm import tqdm
 
 
 def get_daily_papers(
