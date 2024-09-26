@@ -95,7 +95,7 @@ Select model via router in LiteLLM.
 
 ### research_town.utils.paper_collector.get_intro(url: str) → str | None
 
-### research_town.utils.paper_collector.get_paper_content(url: str) → tuple[dict[str, str] | None, dict[str, str] | None, dict[str, str] | None, dict[str, str] | None]
+### research_town.utils.paper_collector.get_paper_content_from_html(url: str) → tuple[dict[str, str] | None, dict[str, str] | None, dict[str, str] | None, dict[str, str] | None]
 
 ## research_town.utils.prompt_constructor module
 

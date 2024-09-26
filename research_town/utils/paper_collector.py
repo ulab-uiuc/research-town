@@ -32,11 +32,11 @@ def get_daily_papers(
             ).timestamp()
         )
         (
-            paper_section_contents,
+            paper_sections,
             paper_table_captions,
             paper_figure_captions,
             paper_bibliography,
-        ) = get_paper_content(paper_url)
+        ) = get_paper_content_from_html(paper_url)
 
         if publish_time in content:
             content[publish_time]['title'].append(paper_title)
@@ -45,7 +45,7 @@ def get_daily_papers(
             content[publish_time]['url'].append(paper_url)
             content[publish_time]['domain'].append(paper_domain)
             content[publish_time]['timestamp'].append(paper_timestamp)
-            content[publish_time]['section_contents'].append(paper_section_contents)
+            content[publish_time]['sections'].append(paper_sections)
             content[publish_time]['table_captions'].append(paper_table_captions)
             content[publish_time]['figure_captions'].append(paper_figure_captions)
             content[publish_time]['bibliography'].append(paper_bibliography)
@@ -57,14 +57,14 @@ def get_daily_papers(
             content[publish_time]['url'] = [paper_url]
             content[publish_time]['domain'] = [paper_domain]
             content[publish_time]['timestamp'] = [paper_timestamp]
-            content[publish_time]['section_contents'] = [paper_section_contents]
+            content[publish_time]['sections'] = [paper_sections]
             content[publish_time]['table_captions'] = [paper_table_captions]
             content[publish_time]['figure_captions'] = [paper_figure_captions]
             content[publish_time]['bibliography'] = [paper_bibliography]
     return content, publish_time
 
 
-def get_paper_content(
+def get_paper_content_from_html(
     url: str,
 ) -> Tuple[
     Optional[Dict[str, str]],
@@ -72,7 +72,7 @@ def get_paper_content(
     Optional[Dict[str, str]],
     Optional[Dict[str, str]],
 ]:
-    section_contents = None
+    sections = None
     table_captions = None
     figure_captions = None
     bibliography = None
@@ -93,7 +93,7 @@ def get_paper_content(
             sections = article.find_all('section', class_='ltx_section')
             sections.extend(article.find_all('section', class_='ltx_appendix'))
             if len(sections) > 0:
-                section_contents = {}
+                sections = {}
                 for section in sections:
                     section_tag_raw = section.find(
                         attrs={
@@ -108,7 +108,7 @@ def get_paper_content(
                     else:
                         continue
                     section_content = section.text
-                    section_contents[section_tag] = section_content
+                    sections[section_tag] = section_content
 
             # bibliography
             bibliography_raw = article.find('section', class_='ltx_bibliography')
@@ -169,16 +169,17 @@ def get_paper_content(
                     table_captions[table_tag] = table_caption
     except Exception:
         return None, None, None, None
-    return section_contents, table_captions, figure_captions, bibliography
+    return sections, table_captions, figure_captions, bibliography
 
 
-def get_paper_intro_pdf(url: str) -> Optional[str]:
+def get_paper_content_from_pdf(url: str) -> Optional[Dict[str, str]]:
     if 'abs' in url:
         pdf_url = url.replace('abs', 'pdf')
     elif 'html' in url:
         pdf_url = url.replace('html', 'pdf')
     else:
         pdf_url = url
+
     response = requests.get(pdf_url)
     file_stream = BytesIO(response.content)
     reader = PdfReader(file_stream)
@@ -190,46 +191,50 @@ def get_paper_intro_pdf(url: str) -> Optional[str]:
     if text == '':
         return None
 
-    intro_pattern = re.compile(r'\bIntroduction\b', re.IGNORECASE)
-    intro_match = intro_pattern.search(text)
-    if intro_match:
-        intro_start = intro_match.start()
-        section_titles = [
-            'Abstract',
-            'Related Work',
-            'Background',
-            'Methods',
-            'Experiments',
-            'Results',
-            'Discussion',
-            'Conclusion',
-            'Conclusions',
-            'Acknowledgments',
-            'References',
-            'Appendix',
-            'Materials and Methods',
-        ]
-        section_pattern = re.compile(
-            r'\b(' + '|'.join(section_titles) + r')\b', re.IGNORECASE
-        )
-        section_match = section_pattern.search(text, intro_start + 1)
-        if section_match:
-            intro_end = section_match.start()
-            introduction_text = text[intro_start:intro_end].strip()
-            return introduction_text
+    section_titles = [
+        'Abstract',
+        'Introduction',
+        'Related Work',
+        'Background',
+        'Methods',
+        'Experiments',
+        'Results',
+        'Discussion',
+        'Conclusion',
+        'Conclusions',
+        'Acknowledgments',
+        'References',
+        'Appendix',
+        'Materials and Methods',
+    ]
+
+    section_pattern = re.compile(
+        r'\b(' + '|'.join(re.escape(title) for title in section_titles) + r')\b',
+        re.IGNORECASE,
+    )
+
+    sections = {}
+    matches = list(section_pattern.finditer(text))
+
+    for i, match in enumerate(matches):
+        section_name = match.group()
+        section_start = match.start()
+
+        if i + 1 < len(matches):
+            section_end = matches[i + 1].start()
         else:
-            introduction_text = text[intro_start:].strip()
-            return introduction_text
-    else:
-        return 'Introduction section not found.'
+            section_end = len(text)
+
+        section_content = text[section_start:section_end].strip()
+        sections[section_name] = section_content
+
+    return sections
 
 
 def get_intro(url: str) -> Optional[str]:
-    contents = get_paper_content(url)
-    if contents is None or contents[0] is None:
-        return get_paper_intro_pdf(url)
-    section_contents = contents[0]
-    for section_name, section_content in section_contents.items():
+    sections, _, _, _ = get_paper_content_from_html(url)
+    sections = get_paper_content_from_pdf(url)
+    for section_name, section_content in sections.items():
         if 'Introduction' in section_name:
             return section_content
     return None
