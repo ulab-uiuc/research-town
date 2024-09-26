@@ -21,13 +21,13 @@ def coauthor_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
     return [name for name, _ in co_author_list[:limit]]
 
 
-def collect_proposals_and_coauthors(
+def collect_publications_and_coauthors(
     author: str, paper_max_num: int = 10
 ) -> Tuple[List[Dict[str, Any]], List[str]]:
     client = Client()
     abstracts = []
     co_authors: Dict[str, int] = {}
-    search = Search(query=f'au:{author}', max_results=10)
+    search = Search(query=f'au:{author}', max_results=paper_max_num)
     for result in tqdm(
         client.results(search), desc=f"Collecting {author}'s papers", unit='Paper'
     ):
