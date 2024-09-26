@@ -3,7 +3,7 @@ fewshot_examples:
 
   Here are the reviews:
   Reviewer 1 (Score: 7/10): The paper introduces an interesting approach to robotic manipulation. The results on benchmark tasks are impressive. However, the theoretical justification for the algorithm is somewhat lacking, and the comparison with some recent methods is missing.
-  
+
   Reviewer 2 (Score: 8/10): This is a solid contribution to reinforcement learning for robotics. The AdaptRL algorithm shows promise in terms of generalization. The paper could benefit from more ablation studies and a discussion on real-world applicability.
 
   Here are the rebuttals: We appreciate the reviewers' feedback. We have expanded our theoretical analysis in Section 3.2 and added comparisons with recent methods (MethodA, MethodB) in Section 4.3. We've also included additional ablation studies in Section 5.1 and a discussion on real-world applicability in Section 6.2.
@@ -18,7 +18,7 @@ fewshot_examples:
 
   Here are the reviews:
   Reviewer 1 (Score: 7/10): The paper presents an impressive multilingual NLU model. The performance across 100 languages is noteworthy. However, the paper lacks a detailed analysis of the model's performance variations across language families. The energy efficiency claims need more substantiation.
-  
+
   Reviewer 2 (Score: 8/10): This is a significant contribution to multilingual NLP. The compact model size is particularly impressive. The paper would benefit from more ablation studies and a discussion on potential biases in low-resource languages.
 
   Here are the rebuttals: We thank the reviewers for their insights. We've added a comprehensive analysis of performance across language families in Section 4.2. We've included detailed energy consumption measurements in Section 5.3 to support our efficiency claims. We've also added ablation studies in Section 4.4 and a discussion on potential biases and mitigation strategies for low-resource languages in Section 6.1.
