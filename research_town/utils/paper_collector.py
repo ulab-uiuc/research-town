@@ -231,9 +231,11 @@ def get_paper_content_from_pdf(url: str) -> Optional[Dict[str, str]]:
     return sections
 
 
-def get_intro(url: str) -> Optional[str]:
+def get_paper_introduction(url: str) -> Optional[str]:
     sections, _, _, _ = get_paper_content_from_html(url)
     sections = get_paper_content_from_pdf(url)
+    if not sections:
+        return None
     for section_name, section_content in sections.items():
         if 'Introduction' in section_name:
             return section_content

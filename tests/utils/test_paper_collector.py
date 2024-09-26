@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 from research_town.utils.paper_collector import (
     get_daily_papers,
-    get_intro,
+    get_paper_introduction,
     get_paper_content_from_html,
 )
 
@@ -49,13 +49,13 @@ def test_get_paper_content_from_html() -> None:
     assert len(bibliography['Arora and Huber (2001)']) > 0
 
 
-def test_get_intro() -> None:
+def test_get_paper_introduction() -> None:
     test_url1 = 'https://arxiv.org/pdf/2409.16928'
     test_url2 = 'https://openreview.net/pdf?id=NnMEadcdyD'
     test_url3 = 'https://arxiv.org/abs/2409.17012'
-    intro1 = get_intro(test_url1)
-    intro2 = get_intro(test_url2)
-    intro3 = get_intro(test_url3)
+    intro1 = get_paper_introduction(test_url1)
+    intro2 = get_paper_introduction(test_url2)
+    intro3 = get_paper_introduction(test_url3)
     assert (
         intro1
         == 'Introduction\nIn natural language processing, the two main challenges in developing new models are the difficulty in\nacquiring high-quality data and the extensive training times required to make models more expressive[ 1].\nThis work focuses on the latter issue. We experiment with unconventional computing architectures,\nthe goal being to assess if and how they can help accelerate training time to obtain more expressive\nmodels. To this purpose, our choice is architectures that develop Adiabatic Quantum Computing (AQC),\nwhere the technology proposed by D-Wave is considered a standard. The reason is twofold. On one\nside AQC by its very nature solves minimization problems in the QUBO form (Quadratic Unconstrained\nBinary Optimization). On the other, the core of many AI problems is minimizing some functions by\nlooking for the values of specific parameters.\nWe choose SVM[ 2] over more standard Transformers models because preliminary investigations on\nSVMs that leverage AQC already exist[ 3] and SVM share some similarities with the attention mechanism\nof Transformers[4].\nPrecalling that, among classification tasks in natural language processing, the binary version of\nSentiment Analysis (BSA) aims to separate sentences that convey “positive” emotions from those that\nconvey “negative” emotions. We reduced the BSA to QUBO and evaluated the following: 1) performance\nduring classification; 2) the time required to train the model; 3) the time required to classify new examples,\ncompared to more standard techniques implemented with heuristics and classical architectures. To\novercome the limited use of the quantum process unit (QPU) by the D-Wave hybrid solver, we also\nstarted to investigate algebraic-based alternatives to the proprietary mechanisms that split QUBO\nproblems between QPU and CPU.\n2. Quantum Support Vector Machine for Sentiment Analysis\nWe choose TweetEval[ 5] to verify the effectiveness of SVM for BSA. TweetEval is considered a standard\nfor comparing different models and contains a sufficiently large and representative number of examples,\ni.e. Tweets extracted from https://x.com/ and labelled automatically. The “sentiment” split of TweetEval\nBigHPC2024: Special Track on Big Data and High-Performance Computing, co-located with the 3rdItalian Conference on Big Data\nand Data Science, ITADATA2024, September 17 – 19, 2024, Pisa, Italy.\n/envel⌢pe-⌢penmario.bifulco@edu.unito.it (M. Bifulco); luca.roversi@unito.it (L. Roversi)\n/gl⌢behttps://github.com/TheFlonet/qsvm4sentanalysis (M. Bifulco); https://www.di.unito.it/~rover/ (L. Roversi)\n/orcid0000-0002-1871-6109 (L. Roversi)\n©2024 Copyright for this paper by its authors. Use permitted under Creative Commons License Attribution 4.0 International (CC BY 4.0).arXiv:2409.16928v1  [cs.AI]  25 Sep 2024includes three classes: positive, negative and neutral. We choose to discard all “neutral” samples to avoid\nintroducing errors during learning due to examples belonging to non-expressive classes. Additionally,\nwe normalize the quantity of elements in the positive and negative classes to ensure a balanced dataset.\nSince SVMs do not natively support text processing, it is necessary to compute embeddings. Among\nthe various possibilities, SentenceBert[ 6] allows for capturing the contextual information of the entire\nsentence by producing a single embedding.\nFor comparison with the classical counterpart, we choose: 1) the CPLEX[ 7] solver, a widely used\noptimizer for solving both linear and non-linear programming problems; 2) RoBERTa[ 8], a deep-learning\nmodel based on BERT[ 9] and the attention mechanism[ 10]. RoBERTa allows a fair comparison as the\nmodel we use[11] is fine-tuned on TweetEval.\nBelow are the'

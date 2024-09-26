@@ -781,7 +781,7 @@
     * [`model_prompting()`](research_town.utils.md#research_town.utils.model_prompting.model_prompting)
   * [research_town.utils.paper_collector module](research_town.utils.md#module-research_town.utils.paper_collector)
     * [`get_daily_papers()`](research_town.utils.md#research_town.utils.paper_collector.get_daily_papers)
-    * [`get_intro()`](research_town.utils.md#research_town.utils.paper_collector.get_intro)
+    * [`get_paper_introduction()`](research_town.utils.md#research_town.utils.paper_collector.get_paper_introduction)
     * [`_get_paper_content_from_html()`](research_town.utils.md#research_town.utils.paper_collector.get_paper_content_from_html)
   * [research_town.utils.prompt_constructor module](research_town.utils.md#module-research_town.utils.prompt_constructor)
     * [`openai_format_prompt_construct()`](research_town.utils.md#research_town.utils.prompt_constructor.openai_format_prompt_construct)

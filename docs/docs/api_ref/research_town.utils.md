@@ -93,7 +93,7 @@ Select model via router in LiteLLM.
 
 ### research_town.utils.paper_collector.get_daily_papers(query: str, max_results: int = 2) → tuple[dict[str, dict[str, list[str]]], str]
 
-### research_town.utils.paper_collector.get_intro(url: str) → str | None
+### research_town.utils.paper_collector.get_paper_introduction(url: str) → str | None
 
 ### research_town.utils.paper_collector.get_paper_content_from_html(url: str) → tuple[dict[str, str] | None, dict[str, str] | None, dict[str, str] | None, dict[str, str] | None]
 
