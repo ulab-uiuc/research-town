@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "research_town"
+name = "research-town"
 version = "0.0.1b1"
-description = "package for research community simulation"
+description = "multi-agent environment for research community simulation"
 authors = ["Haofei Yu <haofeiy2@illinois.edu>"]
 license = "Apache 2.0 License"
 readme = "README.md"
@@ -12,15 +12,14 @@ pydantic = ">=2.5.0"
 litellm = ">1.40.0"
 beartype = "^0.18.5"
 numpy = "<2.0.0"
-
-torch = { version = "^2.2.1", source="torchcpu"}
-transformers = { version = "^4.44.2"}
-termcolor = { version = "^2.4.0"}
-arxiv = { version = "^2.1.0"}
-requests = { version = "*"}
-bs4 = { version = "*"}
-lxml = { version = "*"}
-tqdm = { version = "*"}
+transformers = "^4.45.1"
+termcolor = "^2.4.0"
+arxiv = "^2.1.0"
+requests = "*"
+beautifulsoup4 = "*"
+lxml = "*"
+tqdm = "*"
+torch = { version = "^2.2.1", source = "torchcpu" }
 
 uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
