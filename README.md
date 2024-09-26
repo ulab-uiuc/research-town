@@ -1,5 +1,5 @@
 <div style="width: 100%;">
-  <img src="assets/research_town.png" style="width: 100%;" alt="sotopia"></img>
+  <img src="assets/research_town.png" style="width: 100%;"></img>
 </div>
 
 <h1 align="center">Research Town: Simulator of Research Community</h1>
