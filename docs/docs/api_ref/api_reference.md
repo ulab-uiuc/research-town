@@ -43,7 +43,7 @@
       * [Module contents](research_town.evaluators.md#module-research_town.evaluators)
     * [research_town.utils](research_town.utils.md)
       * [Submodules](research_town.utils.md#submodules)
-      * [research_town.utils.agent_collector](research_town.utils.md#module-research_town.utils.agent_collector)
+      * [research_town.utils.profile_collector](research_town.utils.md#module-research_town.utils.profile_collector)
       * [research_town.utils.agent_prompter](research_town.utils.md#module-research_town.utils.agent_prompter)
       * [research_town.utils.error_handler](research_town.utils.md#module-research_town.utils.error_handler)
       * [research_town.utils.eval_prompter](research_town.utils.md#module-research_town.utils.eval_prompter)

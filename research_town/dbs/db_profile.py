@@ -3,9 +3,11 @@ from typing import Any, List, Optional, TypeVar, get_type_hints
 from transformers import BertModel, BertTokenizer
 
 from ..configs import Config
-from ..utils.agent_collector import collect_proposals_and_coauthors
-from ..utils.agent_prompter import write_bio_prompting
 from ..utils.logger import logger
+from ..utils.profile_collector import (
+    collect_publications_and_coauthors,
+    write_bio_prompting,
+)
 from ..utils.retriever import get_embed, rank_topk
 from .data import Data, Profile, Proposal
 from .db_base import BaseDB
@@ -28,10 +30,10 @@ class ProfileDB(BaseDB[Profile]):
 
     def pull_profiles(self, agent_names: List[str], config: Config) -> None:
         for name in agent_names:
-            proposals, collaborators = collect_proposals_and_coauthors(
+            publications, collaborators = collect_publications_and_coauthors(
                 author=name, paper_max_num=10
             )
-            publication_info = '; '.join([f'{abstract}' for abstract in proposals])
+            publication_info = '; '.join([f'{abstract}' for abstract in publications])
             bio = write_bio_prompting(
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,
