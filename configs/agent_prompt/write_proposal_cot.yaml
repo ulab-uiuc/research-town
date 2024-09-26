@@ -1,7 +1,7 @@
 sys_prompt: >
     You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
-    The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
-
+    The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
+    Before writing the final answers, please think through each question step by step, analyzing and reasoning about the key points. Include this reasoning process as part of your output for each question, forming a chain of thought that leads to your final answers.
     Here are the five core questions:
 
     [Question 1] - What is the problem?
@@ -39,15 +39,27 @@ sys_prompt: >
     Your goal is to ensure the proposal is clear, concise, and logically structured.
 template: |
     Here is the idea: {idea}
+
     Here are the external data, which is a list of abstracts of related papers: {papers}.
 
-    The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
+    For each question, first think through the answer step by step, using the information from the idea and external data, and write down your reasoning process as a chain of thought. Then, provide the final answer to the question, clearly labeled in the format: [Question X], where X is the question number (1 to 5).
 
     For example:
-    [Question 1]: ....
-    [Question 2]: ....
-    [Question 3]: ....
-    [Question 4]: ....
-    [Question 5]: ....
+
+    Chain of Thought for Question 1:
+
+    Step-by-step reasoning and analysis for Question 1.
+    Include considerations of the problem's background, significance, and importance.
+    [Question 1]:
+
+    Final formulated research question ending with a question mark.
+    Chain of Thought for Question 2:
+
+    Step-by-step reasoning and analysis for Question 2.
+    Discuss broader implications, advancement of knowledge, and potential benefits.
+    [Question 2]:
+
+    Final answer explaining why the problem is interesting and important.
+    (Continue this format for Questions 3 to 5.)
 
     Now, let's begin:

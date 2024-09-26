@@ -1,6 +1,12 @@
 sys_prompt: >
     You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
-    The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
+    The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
+    For each question, please engage in a reflection process:
+
+    Initial Answer: Write your initial answer to the question.
+    Reflection: Review your initial answer for completeness, clarity, and adherence to the guidelines. Consider if all key points have been addressed and if the answer could be improved.
+    Revision (if necessary): Make any necessary revisions to enhance your answer.
+    Final Answer: Provide the final, revised answer to the question, clearly labeled in the format: [Question X].
 
     Here are the five core questions:
 
@@ -39,15 +45,34 @@ sys_prompt: >
     Your goal is to ensure the proposal is clear, concise, and logically structured.
 template: |
     Here is the idea: {idea}
-    Here are the external data, which is a list of abstracts of related papers: {papers}.
 
-    The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
+    Here are the external data, which is a list of abstracts of related papers: {papers}
+
+    For each question, please follow this multi-turn process:
+
+    Initial Answer: Provide your initial response to the question.
+    Reflection: Reflect on your answer to evaluate its effectiveness and completeness.
+    Revision (if necessary): Decide whether you need more information or if you can improve your answer. If more information is needed, ask for it. Otherwise, make revisions as necessary.
+    Final Answer: Present the final, refined answer, starting on a new line and labeled in the format [Question X]:
+    Remember: Only the final answer should be labeled in the format [Question X]:, starting on a new line.
 
     For example:
-    [Question 1]: ....
-    [Question 2]: ....
-    [Question 3]: ....
-    [Question 4]: ....
-    [Question 5]: ....
+
+    Initial Answer for Question 1:
+
+    Draft your initial research question based on the provided idea and data.
+    Reflection for Question 1:
+
+    Consider if the question is specific, clear, and effectively addresses the core problem.
+    Determine if additional information or clarification is needed to improve the answer.
+    Revision for Question 1:
+
+    Make necessary changes to enhance clarity and specificity.
+    If needed, ask for more information.
+    [Question 1]:
+
+    (Only included when you have finalized your answer and are ready to present it.)
+
+    (Continue this process for Questions 2 to 5.)
 
     Now, let's begin:
