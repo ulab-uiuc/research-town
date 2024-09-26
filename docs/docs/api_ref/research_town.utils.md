@@ -2,13 +2,13 @@
 
 ## Submodules
 
-## research_town.utils.agent_collector module
+## research_town.utils.profile_collector module
 
-### research_town.utils.agent_collector.coauthor_filter(co_authors: dict[str, int], limit: int = 5) → list[str]
+### research_town.utils.profile_collector.coauthor_filter(co_authors: dict[str, int], limit: int = 5) → list[str]
 
-### research_town.utils.agent_collector.coauthor_frequency(author: str, author_list: list[str], co_authors: dict[str, int]) → dict[str, int]
+### research_town.utils.profile_collector.coauthor_frequency(author: str, author_list: list[str], co_authors: dict[str, int]) → dict[str, int]
 
-### research_town.utils.agent_collector.collect_publications_and_coauthors(author: str, paper_max_num: int = 10) → tuple[list[dict[str, Any]], list[str]]
+### research_town.utils.profile_collector.collect_publications_and_coauthors(author: str, paper_max_num: int = 10) → tuple[list[dict[str, Any]], list[str]]
 
 ## research_town.utils.agent_prompter module
 
@@ -18,7 +18,7 @@
 
 ### research_town.utils.agent_prompter.review_literature_prompting(profile: dict[str, str], papers: list[dict[str, str]], domains: list[str], contexts: list[str], model_name: str, prompt_template: dict[str, str | list[str]], return_num: int | None = 1, max_token_num: int | None = 512, temperature: float | None = 0.0, top_p: float | None = None, stream: bool | None = None) → list[str]
 
-### research_town.utils.agent_prompter.write_bio_prompting(publication_info: str, prompt_template: dict[str, str | list[str]], model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1', return_num: int | None = 1, max_token_num: int | None = 512, temperature: float | None = 0.0, top_p: float | None = None, stream: bool | None = None) → list[str]
+### research_town.utils.profile_collector.write_bio_prompting(publication_info: str, prompt_template: dict[str, str | list[str]], model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1', return_num: int | None = 1, max_token_num: int | None = 512, temperature: float | None = 0.0, top_p: float | None = None, stream: bool | None = None) → list[str]
 
 Write bio based on personal research history
 

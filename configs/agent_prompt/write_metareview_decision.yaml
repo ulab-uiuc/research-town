@@ -1,9 +1,9 @@
 fewshot_examples:
 - "Here is the proposal: We present a novel approach to sentiment analysis using a hybrid model that combines transformer-based language models with traditional lexicon-based methods. Our method, named SentiHybrid, achieves state-of-the-art performance on multiple benchmark datasets while maintaining interpretability.
 
-  Here are the reviews: 
+  Here are the reviews:
   Reviewer 1 (Score: 7/10): The paper presents an interesting combination of deep learning and traditional methods. Strengths include improved performance and interpretability. Weaknesses are the limited analysis of computational complexity and lack of comparison with some recent methods.
-  
+
   Reviewer 2 (Score: 8/10): Novel approach with promising results. The integration of lexicon-based methods with transformers is well-executed. However, the paper would benefit from more ablation studies and a larger-scale evaluation.
 
   Here are the rebuttals: We thank the reviewers for their insightful comments. We have added a detailed analysis of computational complexity and comparisons with recent methods, including BERT-based models. We've also conducted additional ablation studies and expanded our evaluation to include two more large-scale datasets.

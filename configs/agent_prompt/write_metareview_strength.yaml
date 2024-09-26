@@ -3,7 +3,7 @@ fewshot_examples:
 
   Here are the reviews:
   Reviewer 1 (Score: 8/10): The paper presents an innovative approach to efficient NLP modeling. The results are impressive, showing both performance gains and reduced computational requirements. However, the theoretical analysis could be more rigorous.
-  
+
   Reviewer 2 (Score: 9/10): This is a strong paper with clear contributions. The TransformerX architecture is well-designed and the extensive experiments demonstrate its effectiveness. The paper could benefit from more ablation studies.
 
   Here are the rebuttals: We thank the reviewers for their positive feedback. We have added a more rigorous theoretical analysis in Section 3.2 and included additional ablation studies in Section 4.3 to address the reviewers' concerns.
@@ -18,7 +18,7 @@ fewshot_examples:
 
   Here are the reviews:
   Reviewer 1 (Score: 7/10): The paper presents an interesting approach to multi-modal data integration. The results on protein-protein interaction prediction are promising. However, the comparison with some recent methods is missing, and the scalability of the approach needs more discussion.
-  
+
   Reviewer 2 (Score: 8/10): This is a solid contribution to bioinformatics and graph neural networks. The GraphFusion algorithm is well-designed and the experiments are comprehensive. The paper would benefit from a more in-depth analysis of the model's interpretability.
 
   Here are the rebuttals: We appreciate the reviewers' feedback. We have added comparisons with three recent methods (MethodA, MethodB, MethodC) in Section 4.2. We've also included a discussion on scalability in Section 3.3 and expanded our analysis of model interpretability in Section 5.1.

@@ -4,14 +4,14 @@ fewshot_examples:
   Here are the reviews: The paper presents an interesting approach, but there are concerns about the novelty of combining CNNs with attention mechanisms. The experimental results are promising, but the comparison with existing methods is limited. The authors should clarify how their method differs from previous work and provide more comprehensive comparisons.
 
   The rebuttal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
-  
+
   For example:
   [Question 1]: ....
   [Question 2]: ....
   [Question 3]: ....
   [Question 4]: ....
   [Question 5]: ....
-  
+
   Now, let's begin:"
 
 - "[Question 1]: Our research addresses the challenge of improving image classification accuracy while reducing model complexity. We aimed to develop a more efficient architecture that leverages the strengths of both CNNs and attention mechanisms.
@@ -33,14 +33,14 @@ fewshot_examples:
   Here are the reviews: The idea of pruning language models is not new, and the authors should clarify how their method differs from existing pruning techniques. The performance claims are impressive, but more rigorous evaluations across diverse datasets are needed. The theoretical foundation for why this method works is also unclear.
 
   The rebuttal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
-  
+
   For example:
   [Question 1]: ....
   [Question 2]: ....
   [Question 3]: ....
   [Question 4]: ....
   [Question 5]: ....
-  
+
   Now, let's begin:"
 
 - "[Question 1]: Our research tackles the critical problem of making large language models more efficient and deployable in resource-constrained environments. We aimed to develop a method that can dynamically adjust model size based on input complexity, maintaining high performance while reducing computational costs.
@@ -63,8 +63,8 @@ sys_prompt: >
     You will be provided with the following information:
     1. Submission - Abstract of the paper that you have submitted.
     2. Review - Written by reviewers of that conference, highlighting any weaknesses or areas needing clarification.
-    
-    Your goal is to address and rebut the weaknesses mentioned in the review in a scientific manner, convincing the reviewers to accept your submission. 
+
+    Your goal is to address and rebut the weaknesses mentioned in the review in a scientific manner, convincing the reviewers to accept your submission.
     While preparing the rebuttal, structure your argument using the 5Q method below to ensure clarity and thoroughness:
 
     [Question 1] - What is the problem?
@@ -94,12 +94,12 @@ template: |
     Here are the reviews: {review}
 
     The rebuttal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
-    
+
     For example:
     [Question 1]: ....
     [Question 2]: ....
     [Question 3]: ....
     [Question 4]: ....
     [Question 5]: ....
-    
+
     Now, let's begin:

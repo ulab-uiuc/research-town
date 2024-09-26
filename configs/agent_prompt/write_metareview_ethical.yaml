@@ -1,7 +1,7 @@
 fewshot_examples:
 - "Here is the proposal: We present a novel deep learning model for predicting criminal recidivism rates. Our model, CrimePredictAI, uses a combination of demographic data, criminal history, and social media activity to achieve state-of-the-art accuracy in predicting repeat offenses.
 
-  Here are the reviews: 
+  Here are the reviews:
   Reviewer 1: The paper presents an interesting approach, but raises serious ethical concerns about privacy and potential bias in the model.
   Reviewer 2: While technically sound, the paper doesn't adequately address the ethical implications of using social media data without explicit consent.
 
