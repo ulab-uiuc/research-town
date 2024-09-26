@@ -753,7 +753,7 @@
   * [research_town.utils.agent_collector module](research_town.utils.md#module-research_town.utils.agent_collector)
     * [`coauthor_filter()`](research_town.utils.md#research_town.utils.agent_collector.coauthor_filter)
     * [`coauthor_frequency()`](research_town.utils.md#research_town.utils.agent_collector.coauthor_frequency)
-    * [`collect_proposals_and_coauthors()`](research_town.utils.md#research_town.utils.agent_collector.collect_proposals_and_coauthors)
+    * [`collect_publications_and_coauthors()`](research_town.utils.md#research_town.utils.agent_collector.collect_publications_and_coauthors)
   * [research_town.utils.agent_prompter module](research_town.utils.md#module-research_town.utils.agent_prompter)
     * [`brainstorm_idea_prompting()`](research_town.utils.md#research_town.utils.agent_prompter.brainstorm_idea_prompting)
     * [`discuss_idea_prompting()`](research_town.utils.md#research_town.utils.agent_prompter.discuss_idea_prompting)

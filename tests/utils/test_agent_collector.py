@@ -1,7 +1,7 @@
 from research_town.utils.agent_collector import (
     coauthor_filter,
     coauthor_frequency,
-    collect_proposals_and_coauthors,
+    collect_publications_and_coauthors,
 )
 
 
@@ -18,12 +18,12 @@ def test_coauthor_filter() -> None:
     assert coauthor_filter(co_authors, limit=3) == ['Bob', 'Eve', 'Charlie']
 
 
-def test_collect_proposals_and_coauthors() -> None:
-    proposals, co_author_names = collect_proposals_and_coauthors('Alice')
+def test_collect_publications_and_coauthors() -> None:
+    publications, co_author_names = collect_publications_and_coauthors('Rex Ying')
 
-    assert len(proposals) > 0
-    assert len(proposals) <= 10
-    for proposal in proposals:
-        assert proposal is not None
+    assert len(publications) > 0
+    assert len(publications) <= 10
+    for publication in publications:
+        assert publication is not None
 
     assert len(co_author_names) > 0
