@@ -1,6 +1,12 @@
 sys_prompt: >
     You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
-    The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
+    The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
+    For each question, please use the ReAct (Reasoning and Action) framework:
+
+    Observation: Begin by observing and extracting relevant information from the idea and external data.
+    Thought: Think through the answer step by step, reasoning about how the observed information addresses the question.
+    Action: Provide the final answer to the question, clearly labeled in the format: [Question X].
+    Include both your reasoning and actions in your output for each question.
 
     Here are the five core questions:
 
@@ -39,15 +45,33 @@ sys_prompt: >
     Your goal is to ensure the proposal is clear, concise, and logically structured.
 template: |
     Here is the idea: {idea}
-    Here are the external data, which is a list of abstracts of related papers: {papers}.
 
-    The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
+    Here are the external data, which is a list of abstracts of related papers: {papers}
+
+    For each question, please follow the multi-turn ReAct framework:
+
+    Observation: Observe and extract relevant information from the idea and external data.
+    Thought: Think through the answer step by step, reasoning about how the observed information addresses the question.
+    Action: Decide whether you need more information or if you can provide the final answer. If you need more information, ask for it. If you have enough information, proceed to the final answer.
+    Remember: Only the final answer should be labeled in the format [Question X]:, starting on a new line.
 
     For example:
-    [Question 1]: ....
-    [Question 2]: ....
-    [Question 3]: ....
-    [Question 4]: ....
-    [Question 5]: ....
+
+    Observation for Question 1:
+
+    Summarize key points from the idea and external data relevant to Question 1.
+    Thought for Question 1:
+
+    Analyze how this information forms the basis of the research problem.
+    Consider the background, significance, and importance of investigating this problem.
+    Action:
+
+    If more information is needed, ask for clarification or additional details.
+    If ready, proceed to provide the final answer.
+    [Question 1]:
+
+    (Only included if you have all the necessary information to answer the question.)
+
+    (Continue this process for Questions 2 to 5.)
 
     Now, let's begin:
