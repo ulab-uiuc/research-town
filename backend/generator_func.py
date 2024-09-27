@@ -11,25 +11,23 @@ from research_town.utils.paper_collector import get_paper_introduction
 def run_engine(
     url: str,
 ) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
-    # Get the introduction of the paper from the URL
     intro = get_paper_introduction(url)
 
-    # If no introduction found, return None
     if not intro:
         yield None, None
         return
 
     config_file_path = '../configs'
     profile_file_path = '../examples/profiles'
-    save_file_path = '../examples/research_town_demo_log'
+    paper_file_path = '../examples/papers'
 
     config = Config(config_file_path)
     profile_db = ProfileDB()
     paper_db = PaperDB()
 
-    if os.path.exists(save_file_path) and os.path.exists(profile_file_path):
+    if os.path.exists(paper_file_path) and os.path.exists(profile_file_path):
         profile_db.load_from_json(profile_file_path, with_embed=True)
-        paper_db.load_from_json(save_file_path, with_embed=True)
+        paper_db.load_from_json(paper_file_path, with_embed=True)
     else:
         raise FileNotFoundError('Profile and paper databases not found.')
 
