@@ -1,36 +1,7 @@
 fewshot_examples:
-- "Here is the proposal: We propose a novel deep learning architecture for image classification that combines convolutional neural networks with attention mechanisms. Our approach, called AttentionNet, achieves state-of-the-art performance on benchmark datasets while using fewer parameters than existing models.
+- "Here is the summary of the proposal: Since in context learning is proved to be extremely useful in large language models, we should utilize large scale pretraining to allow the creation of graph foundation model that has the ability to conduct in-context-learning on grpah.
 
-  Here are the reviews: The paper presents an interesting approach, but there are concerns about the novelty of combining CNNs with attention mechanisms. The experimental results are promising, but the comparison with existing methods is limited. The authors should clarify how their method differs from previous work and provide more comprehensive comparisons.
-
-  The rebuttal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
-
-  For example:
-  [Question 1]: ....
-  [Question 2]: ....
-  [Question 3]: ....
-  [Question 4]: ....
-  [Question 5]: ....
-
-  Now, let's begin:"
-
-- "[Question 1]: Our research addresses the challenge of improving image classification accuracy while reducing model complexity. We aimed to develop a more efficient architecture that leverages the strengths of both CNNs and attention mechanisms.
-
-  [Question 2]: This work is important because it has the potential to significantly reduce computational resources required for high-performance image classification, making advanced AI more accessible and environmentally friendly.
-
-  [Question 3]: Combining CNNs with attention mechanisms effectively is challenging due to the different nature of these components. Naive combinations often result in increased complexity without proportional performance gains.
-
-  [Question 4]: While both CNNs and attention mechanisms have been used separately, our novel integration method allows for more efficient feature extraction and focus. Previous attempts lacked our adaptive weighting system that optimizes the interaction between convolutional layers and attention modules.
-
-  [Question 5]: Key components of our approach include:
-  1. Adaptive attention integration: Our method dynamically adjusts the influence of attention mechanisms based on input complexity.
-  2. Efficient parameter sharing: We introduce a novel technique that reduces redundancy in the model architecture.
-  3. Comprehensive experiments: We have expanded our comparisons to include the latest SOTA models and conducted ablation studies to validate each component's contribution.
-  These enhancements address the reviewers' concerns about novelty and experimental thoroughness."
-
-- "Here is the proposal: This paper introduces a new approach to natural language processing called Dynamic Language Model Pruning (DLP). DLP adaptively reduces the size of large language models during inference, significantly improving efficiency without sacrificing performance on various NLP tasks.
-
-  Here are the reviews: The idea of pruning language models is not new, and the authors should clarify how their method differs from existing pruning techniques. The performance claims are impressive, but more rigorous evaluations across diverse datasets are needed. The theoretical foundation for why this method works is also unclear.
+  Here are the reviews: The paper presents an interesting approach, but there are concerns about the novelty of combining graph foundation model with the pretraining. Authors should clarify the difference between their methods and other efforts to use things like mixture-of-expert architecture to train graph foundation models.
 
   The rebuttal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
 
@@ -43,22 +14,14 @@ fewshot_examples:
 
   Now, let's begin:"
 
-- "[Question 1]: Our research tackles the critical problem of making large language models more efficient and deployable in resource-constrained environments. We aimed to develop a method that can dynamically adjust model size based on input complexity, maintaining high performance while reducing computational costs.
+- |
+  [Question 1]: Can we design mechanism to enable in context learning over graph?
+  [Question 2]: In-context learning is proved to be very useful in large language models. Therefore, extending this capacity to graph foundation model can allow few-shot prompting dramatically and the graphic model can be generalized to multiple domains.
+  [Question 3]: The mechanism of in-context learning in LLM is an open question now. To apply it to graph, graph tasks can be highly heterogeneous, making it difficult to design a unified framework that performs well across different graph types. Additionally, graph data lacks a standardized method for task representation across various tasks (e.g., node, edge, or graph-level classification).
+  [Question 4]: In-context learning in multiple tasks requires us to have a graph foundation model that has a large amount of data and generalize well on multiple domains. It is hard to achieve. Other methods like using mixture-of-experts to improve the generalization ability of graph foundation model does not directly improve the in-context learning ability. Those work just use more complicated architecture to allow the model fitting into different graph tasks.
+  [Question 5]: With the large scale pretraining of MAG240M and Wiki, it proposes a framework called PRODIGY that designs novel pretraining loss to allow in-context learning. Results show that PRODIGY outperforms contrastive pretraining methods by 18% and fine-tuning by 33%, demonstrating its ability to handle novel tasks across unseen graphs effectively.
 
-  [Question 2]: This work is crucial as it addresses one of the main bottlenecks in deploying state-of-the-art NLP models in real-world applications. By making these models more efficient, we can expand their use in various domains and devices, potentially democratizing access to advanced AI technologies.
-
-  [Question 3]: Developing an effective dynamic pruning method is challenging because it requires balancing multiple competing factors: maintaining model performance, reducing computational cost, and adapting to varying input complexities in real-time. Simple static pruning methods often fail to achieve this balance across diverse inputs.
-
-  [Question 4]: While pruning techniques exist, previous methods typically apply static pruning or require retraining. Our dynamic approach is novel in its ability to adapt the model size on-the-fly without any fine-tuning, which has not been successfully implemented before for large language models.
-
-  [Question 5]: Key components of our approach include:
-  1. Adaptive pruning algorithm: We've developed a novel method that assesses input complexity and determines optimal pruning levels in real-time.
-  2. Theoretical analysis: We provide a mathematical framework explaining why our method preserves performance, addressing the reviewer's concern about theoretical foundations.
-  3. Extensive evaluations: We've expanded our experiments to include a wider range of NLP tasks and datasets, demonstrating the robustness of our approach across diverse scenarios.
-  4. Comparative study: We've added detailed comparisons with existing pruning techniques, highlighting the unique advantages of our dynamic approach.
-  These additions address the reviewers' concerns about novelty, theoretical grounding, and comprehensive evaluation."
-
-sys_prompt: >
+sys_prompt: |
     You are an autonomous intelligent agent tasked with writing the rebuttal for a paper you have submitted to an academic conference.
     You will be provided with the following information:
     1. Submission - Abstract of the paper that you have submitted.
@@ -68,25 +31,31 @@ sys_prompt: >
     While preparing the rebuttal, structure your argument using the 5Q method below to ensure clarity and thoroughness:
 
     [Question 1] - What is the problem?
-    Reformulate the specific research question you aimed to address, based on your submission.
-    Restate the significance of this research and why it is crucial to resolve the problem outlined.
+
+    Formulate the specific research question you aim to address. Only output one question and do not include any more information.
 
     [Question 2] - Why is it interesting and important?
-    Explain the broader implications of solving this problem and how it could benefit the research community or society.
-    Highlight any potential innovations or advancements that could result from your findings.
+
+    Explain the broader implications of solving this problem for the research community.
+    Discuss how such paper will affect the future research.
+    Discuss how addressing this question could advance knowledge or lead to practical applications.
 
     [Question 3] - Why is it hard?
-    Explain the challenges involved in solving this problem and discuss why a naive or simple solution may not work.
-    Identify any technical or theoretical obstacles you overcame.
+
+    Discuss the challenges and complexities involved in solving this problem.
+    Explain why naive or straightforward approaches may fail.
+    Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.
 
     [Question 4] - Why hasn't it been solved before?
-    Identify any gaps in previous research and explain how your approach improves upon existing solutions.
-    Highlight how your approach differs from or is better than previous work.
+
+    Identify gaps or limitations in previous research or existing solutions.
+    Discuss any barriers that have prevented this problem from being solved until now.
+    Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.
 
     [Question 5] - What are the key components of my approach and results?
-    Provide a brief outline of your proposed methods and results, addressing any reviewer comments.
-    Discuss your methodology and how it supports your claims.
-    Address any potential limitations noted in the reviews and provide evidence or reasoning for your approach.
+
+    Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.
+    Describe the expected outcomes. MAKE IT CLEAR.
 
 template: |
     Here is the proposal: {proposal}
