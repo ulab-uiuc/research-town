@@ -1,6 +1,7 @@
 from typing import Any, List, Optional, TypeVar, get_type_hints
 
 from transformers import BertModel, BertTokenizer
+import random
 
 from ..configs import Config
 from ..utils.logger import logger
@@ -52,6 +53,7 @@ class ProfileDB(BaseDB[Profile]):
                 collaborators=collaborators,
             )
             self.add(profile)
+            self.transform_to_embed()
 
     def match(
         self,
@@ -90,6 +92,11 @@ class ProfileDB(BaseDB[Profile]):
 
         logger.info(f'Matched agents: {matched_profiles}')
         return matched_profiles
+    
+    def sample(self, num: int = 1, **conditions: Any) -> List[Profile]:
+        profiles = self.get(**conditions)
+        random.shuffle(profiles)
+        return profiles[:num]
 
     def transform_to_embed(self) -> None:
         self._initialize_retriever()
