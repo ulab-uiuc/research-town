@@ -1,7 +1,5 @@
-fewshot_examples:
-- ''
-- ''
-sys_prompt: 'Please evaluate the review based on the following dimensions. You only
+sys_prompt: |
+  Please evaluate the review based on the following dimensions. You only
   need to give an overall score (0-100) and 10 dimension scores (for each dimension,
   provide a rating (1-10)) as the evaluation for the review. For these components
   that are left blank (for example: rebuttal, meta_review, etc), please provide
@@ -136,8 +134,8 @@ sys_prompt: 'Please evaluate the review based on the following dimensions. You o
 
   - Do the scores reflect a reasonable and unbiased assessment of the paper?
 
-  '
-template: 'Here is the review to evaluate:
+template: |
+  Here is the review to evaluate:
 
   idea: {idea}
 
@@ -148,4 +146,4 @@ template: 'Here is the review to evaluate:
   review: {review}. The output format should follow these rules: Overall Score
   of an insight (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6], where
   di is the score of the i-th dimension. An example of output is: Overall Score=89
-  Dimension Scores=[8,9,9,9,9,9].'
+  Dimension Scores=[8,9,9,9,9,9].
