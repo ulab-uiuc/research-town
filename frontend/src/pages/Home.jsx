@@ -65,7 +65,6 @@ function Home() {
       <div style={{ marginTop: "2em", marginBottom: "2em" }}>
         <Typist>
           <h1>Research Town</h1>
-          <h2>Simulator of Human Research</h2>
         </Typist>
       </div>
       <InputForm url={url} setUrl={setUrl} handleSubmit={handleSubmit} />
