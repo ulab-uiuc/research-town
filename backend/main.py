@@ -92,7 +92,8 @@ async def process_url(request: Request) -> Response:
                     item['agent_domain'] = agent.profile.domain[0]
                 else:
                     item['agent_domain'] = "computer science"
-
+            print(item)
+            
             yield json.dumps(item) + '\n'
 
     # Run the engine and stream the results back
