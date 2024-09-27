@@ -70,6 +70,7 @@ class EvalPromptTemplate(BaseModel):
 # AgentPromptTemplate for handling prompts related to the agent
 class AgentPromptTemplate(BaseModel):
     write_bio: Dict[str, Union[str, List[str]]]
+    summarize_domain: Dict[str, Union[str, List[str]]]
     review_literature: Dict[str, Union[str, List[str]]]
     brainstorm_idea: Dict[str, Union[str, List[str]]]
     discuss_idea: Dict[str, Union[str, List[str]]]

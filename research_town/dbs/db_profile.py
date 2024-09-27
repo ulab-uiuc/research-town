@@ -7,6 +7,7 @@ from ..utils.logger import logger
 from ..utils.profile_collector import (
     collect_publications_and_coauthors,
     write_bio_prompting,
+    summarize_domain_prompting,
 )
 from ..utils.retriever import get_embed, rank_topk
 from .data import Data, Profile, Proposal
@@ -28,19 +29,26 @@ class ProfileDB(BaseDB[Profile]):
             )
             self.retriever_model = BertModel.from_pretrained('facebook/contriever')
 
-    def pull_profiles(self, agent_names: List[str], config: Config) -> None:
-        for name in agent_names:
+    def pull_profiles(self, names: List[str], config: Config) -> None:
+        for name in names:
             publications, collaborators = collect_publications_and_coauthors(
-                author=name, paper_max_num=10
+                author=name, paper_max_num=20
             )
             publication_info = '; '.join([f'{abstract}' for abstract in publications])
             bio = write_bio_prompting(
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,
-            )[0]
+                model_name=config.param.base_llm,
+            )
+            domain = summarize_domain_prompting(
+                publication_info=publication_info,
+                prompt_template=config.agent_prompt_template.summarize_domain,
+                model_name=config.param.base_llm,
+            )
             profile = Profile(
                 name=name,
                 bio=bio,
+                domain=domain,
                 collaborators=collaborators,
             )
             self.add(profile)

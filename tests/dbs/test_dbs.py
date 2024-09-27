@@ -383,8 +383,8 @@ def test_pull_profiles(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     db = ProfileDB()
-    agent_names = ['Jiaxuan You', 'Jure Leskovec']
-    db.pull_profiles(agent_names=agent_names, config=example_config)
+    names = ['Jiaxuan You', 'Jure Leskovec']
+    db.pull_profiles(names=names, config=example_config)
     assert db.data.keys()
     assert len(db.data.keys()) == 2
     assert db.data.values()
