@@ -71,6 +71,7 @@ def write_bio_prompting(
         stream=stream,
     )[0]
 
+
 @beartype
 def summarize_domain_prompting(
     publication_info: str,

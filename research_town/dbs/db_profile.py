@@ -6,8 +6,8 @@ from ..configs import Config
 from ..utils.logger import logger
 from ..utils.profile_collector import (
     collect_publications_and_coauthors,
-    write_bio_prompting,
     summarize_domain_prompting,
+    write_bio_prompting,
 )
 from ..utils.retriever import get_embed, rank_topk
 from .data import Data, Profile, Proposal
