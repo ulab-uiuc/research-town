@@ -45,7 +45,6 @@ async def process_url(request: Request) -> Response:
     ) -> Generator[str, None, None]:
         for progress, agent in generator:
             item = {}
-
             if progress is None or agent is None:
                 item = {
                     'type': 'error',
@@ -89,6 +88,10 @@ async def process_url(request: Request) -> Response:
 
             if agent:
                 item['agent_name'] = agent.profile.name
+                if len(agent.profile.domain) > 1:
+                    item['agent_domain'] = agent.profile.domain[0]
+                else:
+                    item['agent_domain'] = "computer science"
 
             yield json.dumps(item) + '\n'
 
