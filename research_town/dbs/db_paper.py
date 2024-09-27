@@ -1,3 +1,4 @@
+import random
 from typing import Any, List, Optional, TypeVar
 
 import torch
@@ -83,6 +84,11 @@ class PaperDB(BaseDB[Paper]):
         match_papers = [papers[index] for index in indexes]
         logger.info(f'Matched papers: {match_papers}')
         return match_papers
+
+    def sample(self, num: int = 1, **conditions: Any) -> List[Paper]:
+        papers = self.get(**conditions)
+        random.shuffle(papers)
+        return papers[:num]
 
     def transform_to_embed(self) -> None:
         self._initialize_retriever()

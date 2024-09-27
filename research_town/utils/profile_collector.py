@@ -49,13 +49,13 @@ def collect_publications_and_coauthors(
 def write_bio_prompting(
     publication_info: str,
     prompt_template: Dict[str, Union[str, List[str]]],
-    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+    model_name: str,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> List[str]:
+) -> str:
     """
     Write bio based on personal research history
     """
@@ -69,4 +69,33 @@ def write_bio_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
+    )[0]
+
+
+@beartype
+def summarize_domain_prompting(
+    publication_info: str,
+    prompt_template: Dict[str, Union[str, List[str]]],
+    model_name: str,
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = 0.0,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
+) -> List[str]:
+    """
+    Check domain based on personal research history
+    """
+    template_input = {'publication_info': publication_info}
+    messages = openai_format_prompt_construct(prompt_template, template_input)
+    domain_str = model_prompting(
+        model_name,
+        messages,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
     )
+    domains = domain_str[0].split(';')
+    return [domain.strip() for domain in domains]

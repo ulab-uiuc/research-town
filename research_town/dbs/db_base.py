@@ -87,7 +87,7 @@ class BaseDB(Generic[T]):
             pickle.dump(self.data_embed, pkl_file)
 
     def load_from_json(
-        self, save_path: str, with_embed: bool = False, class_name: Optional[str] = None
+        self, load_path: str, with_embed: bool = False, class_name: Optional[str] = None
     ) -> None:
         if class_name is None:
             file_name = f'{self.__class__.__name__}.json'
@@ -95,9 +95,9 @@ class BaseDB(Generic[T]):
             file_name = f'{class_name}.json'
 
         if with_embed:
-            self.load_from_pkl(save_path, class_name=class_name)
+            self.load_from_pkl(load_path, class_name=class_name)
 
-        with open(os.path.join(save_path, file_name), 'r') as f:
+        with open(os.path.join(load_path, file_name), 'r') as f:
             data: Dict[str, Any] = json.load(f)
             if with_embed:
                 for pk in data.keys():
@@ -105,10 +105,10 @@ class BaseDB(Generic[T]):
                         data[pk]['embed'] = self.data_embed[pk]
             self.data = {pk: self.data_class(**data) for pk, data in data.items()}
 
-    def load_from_pkl(self, save_path: str, class_name: Optional[str] = None) -> None:
+    def load_from_pkl(self, load_path: str, class_name: Optional[str] = None) -> None:
         if class_name is None:
             file_name = f'{self.__class__.__name__}.pkl'
         else:
             file_name = f'{class_name}.pkl'
-        with open(os.path.join(save_path, file_name), 'rb') as pkl_file:
+        with open(os.path.join(load_path, file_name), 'rb') as pkl_file:
             self.data_embed = pickle.load(pkl_file)

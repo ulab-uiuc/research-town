@@ -1,3 +1,4 @@
+import random
 from typing import Any, List, Optional, TypeVar, get_type_hints
 
 from transformers import BertModel, BertTokenizer
@@ -6,6 +7,7 @@ from ..configs import Config
 from ..utils.logger import logger
 from ..utils.profile_collector import (
     collect_publications_and_coauthors,
+    summarize_domain_prompting,
     write_bio_prompting,
 )
 from ..utils.retriever import get_embed, rank_topk
@@ -28,22 +30,30 @@ class ProfileDB(BaseDB[Profile]):
             )
             self.retriever_model = BertModel.from_pretrained('facebook/contriever')
 
-    def pull_profiles(self, agent_names: List[str], config: Config) -> None:
-        for name in agent_names:
+    def pull_profiles(self, names: List[str], config: Config) -> None:
+        for name in names:
             publications, collaborators = collect_publications_and_coauthors(
-                author=name, paper_max_num=10
+                author=name, paper_max_num=20
             )
             publication_info = '; '.join([f'{abstract}' for abstract in publications])
             bio = write_bio_prompting(
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,
-            )[0]
+                model_name=config.param.base_llm,
+            )
+            domain = summarize_domain_prompting(
+                publication_info=publication_info,
+                prompt_template=config.agent_prompt_template.summarize_domain,
+                model_name=config.param.base_llm,
+            )
             profile = Profile(
                 name=name,
                 bio=bio,
+                domain=domain,
                 collaborators=collaborators,
             )
             self.add(profile)
+            self.transform_to_embed()
 
     def match(
         self,
@@ -82,6 +92,11 @@ class ProfileDB(BaseDB[Profile]):
 
         logger.info(f'Matched agents: {matched_profiles}')
         return matched_profiles
+
+    def sample(self, num: int = 1, **conditions: Any) -> List[Profile]:
+        profiles = self.get(**conditions)
+        random.shuffle(profiles)
+        return profiles[:num]
 
     def transform_to_embed(self) -> None:
         self._initialize_retriever()

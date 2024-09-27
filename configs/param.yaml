@@ -9,6 +9,5 @@ reviewer_num: 1
 stream: null
 temperature: 0.0
 top_p: null
-experiment_model_name: gpt-4o-mini
 write_proposal_strategy: default
 max_env_run_num: 1
