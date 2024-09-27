@@ -1,7 +1,7 @@
+import random
 from typing import Any, List, Optional, TypeVar, get_type_hints
 
 from transformers import BertModel, BertTokenizer
-import random
 
 from ..configs import Config
 from ..utils.logger import logger
@@ -92,7 +92,7 @@ class ProfileDB(BaseDB[Profile]):
 
         logger.info(f'Matched agents: {matched_profiles}')
         return matched_profiles
-    
+
     def sample(self, num: int = 1, **conditions: Any) -> List[Profile]:
         profiles = self.get(**conditions)
         random.shuffle(profiles)
