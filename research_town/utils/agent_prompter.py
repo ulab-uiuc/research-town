@@ -374,7 +374,7 @@ def write_rebuttal_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> List[str]:
+) -> Tuple[str, Dict[str, str]]:
     proposal_str = map_proposal_to_str(proposal)
     review_str = map_review_to_str(review)
     template_input = {'proposal': proposal_str, 'review': review_str}
@@ -387,7 +387,7 @@ def write_rebuttal_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
+    )[0]
 
     pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
     matches = re.findall(pattern, rebuttal, re.DOTALL)
