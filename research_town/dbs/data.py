@@ -106,6 +106,11 @@ class Review(Progress):
 
 
 class Rebuttal(Progress):
+    q1: Optional[str] = Field(default=None)
+    q2: Optional[str] = Field(default=None)
+    q3: Optional[str] = Field(default=None)
+    q4: Optional[str] = Field(default=None)
+    q5: Optional[str] = Field(default=None)
     proposal_pk: Optional[str] = Field(default=None)
     reviewer_pk: Optional[str] = Field(default=None)
     author_pk: Optional[str] = Field(default=None)

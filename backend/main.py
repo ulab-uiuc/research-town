@@ -74,7 +74,14 @@ async def process_url(request: Request) -> Response:
                     'score': str(progress.score) if progress.score else '-1',
                 }
             elif isinstance(progress, Rebuttal):
-                item = {'type': 'rebuttal', 'content': progress.content}
+                item = {
+                    'type': 'rebuttal',
+                    'q1': progress.q1 or '',
+                    'q2': progress.q2 or '',
+                    'q3': progress.q3 or '',
+                    'q4': progress.q4 or '',
+                    'q5': progress.q5 or '',
+                }
             elif isinstance(progress, MetaReview):
                 item = {
                     'type': 'metareview',

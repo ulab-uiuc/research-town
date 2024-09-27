@@ -379,7 +379,7 @@ def write_rebuttal_prompting(
     review_str = map_review_to_str(review)
     template_input = {'proposal': proposal_str, 'review': review_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
-    return model_prompting(
+    rebuttal = model_prompting(
         model_name,
         messages,
         return_num=return_num,
@@ -388,3 +388,14 @@ def write_rebuttal_prompting(
         top_p=top_p,
         stream=stream,
     )
+
+    pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
+    matches = re.findall(pattern, rebuttal, re.DOTALL)
+    q5_result = {}
+
+    for match in matches:
+        question_number = f'q{match[0]}'
+        answer = match[1].strip()
+        q5_result[question_number] = answer
+
+    return rebuttal, q5_result
