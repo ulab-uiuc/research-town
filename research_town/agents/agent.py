@@ -228,7 +228,7 @@ class Agent(object):
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_review = self.serializer.serialize(review)
 
-        rebuttal_content = write_rebuttal_prompting(
+        rebuttal_content, q5_result = write_rebuttal_prompting(
             proposal=serialized_proposal,
             review=serialized_review,
             model_name=self.model_name,
@@ -238,11 +238,16 @@ class Agent(object):
             temperature=config.param.temperature,
             top_p=config.param.top_p,
             stream=config.param.stream,
-        )[0]
+        )
 
         return Rebuttal(
             proposal_pk=proposal.pk,
             reviewer_pk=review.reviewer_pk,
             author_pk=self.profile.pk,
             content=rebuttal_content,
+            q1=q5_result.get('q1', ''),
+            q2=q5_result.get('q2', ''),
+            q3=q5_result.get('q3', ''),
+            q4=q5_result.get('q4', ''),
+            q5=q5_result.get('q5', ''),
         )
