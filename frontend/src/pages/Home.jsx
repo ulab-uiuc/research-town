@@ -68,7 +68,7 @@ function Home() {
         </Typist>
       </div>
       <InputForm url={url} setUrl={setUrl} handleSubmit={handleSubmit} />
-      {isProcessing && <p>Processing...</p>}
+      {isProcessing && <p>Processing in 1 Minute ...</p>}
       <OutputDisplay output={output} />
     </div>
   );

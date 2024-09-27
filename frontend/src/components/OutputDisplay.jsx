@@ -10,7 +10,7 @@ import IdeaDisplay from "./ProgressDisplay/IdeaDisplay";
 import InsightDisplay from "./ProgressDisplay/InsightDisplay";
 import ProposalDisplay from "./ProgressDisplay/ProposalDisplay";
 import ReviewDisplay from "./ProgressDisplay/ReviewDisplay";
-import RebuttalDisplay from "./ProgressDisplay/RebuttalDisplay";
+// import RebuttalDisplay from "./ProgressDisplay/RebuttalDisplay";
 import MetareviewDisplay from "./ProgressDisplay/MetareviewDisplay";
 
 function OutputDisplay({ output }) {
