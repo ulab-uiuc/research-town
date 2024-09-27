@@ -1,16 +1,16 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import ReactMarkdown from "react-markdown";
 
 function MetareviewDisplay({ list }) {
   return (
     <>
-      <Row className="mb-3">
+      {/* <Row className="mb-3">
         <Col>
           <h2>Metareview</h2>
         </Col>
-      </Row>
+      </Row> */}
+      <br />
       <Row>
         {list.map((item, index) => {
           return (

@@ -45,7 +45,6 @@ async def process_url(request: Request) -> Response:
     ) -> Generator[str, None, None]:
         for progress, agent in generator:
             item = {}
-
             if progress is None or agent is None:
                 item = {
                     'type': 'error',
@@ -74,14 +73,11 @@ async def process_url(request: Request) -> Response:
                     'score': str(progress.score) if progress.score else '-1',
                 }
             elif isinstance(progress, Rebuttal):
-                item = {
-                    'type': 'rebuttal',
-                    'q1': progress.q1 or '',
+                item = {'type': 'rebuttal', 'q1': progress.q1 or '',
                     'q2': progress.q2 or '',
                     'q3': progress.q3 or '',
                     'q4': progress.q4 or '',
-                    'q5': progress.q5 or '',
-                }
+                    'q5': progress.q5 or ''}
             elif isinstance(progress, MetaReview):
                 item = {
                     'type': 'metareview',
@@ -96,7 +92,13 @@ async def process_url(request: Request) -> Response:
 
             if agent:
                 item['agent_name'] = agent.profile.name
-
+                if agent.profile.domain is not None:
+                    if len(agent.profile.domain) > 1:
+                        item['agent_domain'] = agent.profile.domain[0]
+                else:
+                    item['agent_domain'] = "computer science"
+            print(item)
+            
             yield json.dumps(item) + '\n'
 
     # Run the engine and stream the results back

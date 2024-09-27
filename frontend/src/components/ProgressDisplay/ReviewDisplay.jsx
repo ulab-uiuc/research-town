@@ -1,6 +1,5 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import ReactMarkdown from "react-markdown";
 
 function ReviewDisplay({ list }) {
@@ -8,11 +7,12 @@ function ReviewDisplay({ list }) {
   console.log(list);
   return (
     <>
-      <Row className="mb-3">
+      {/* <Row className="mb-3">
         <Col>
           <h2>Review</h2>
         </Col>
-      </Row>
+      </Row> */}
+      <br />
       <Row>
         {list.map((item, index) => {
           return (

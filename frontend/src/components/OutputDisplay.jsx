@@ -10,7 +10,7 @@ import IdeaDisplay from "./ProgressDisplay/IdeaDisplay";
 import InsightDisplay from "./ProgressDisplay/InsightDisplay";
 import ProposalDisplay from "./ProgressDisplay/ProposalDisplay";
 import ReviewDisplay from "./ProgressDisplay/ReviewDisplay";
-import RebuttalDisplay from "./ProgressDisplay/RebuttalDisplay";
+// import RebuttalDisplay from "./ProgressDisplay/RebuttalDisplay";
 import MetareviewDisplay from "./ProgressDisplay/MetareviewDisplay";
 
 function OutputDisplay({ output }) {
@@ -18,7 +18,8 @@ function OutputDisplay({ output }) {
 
   useEffect(() => {
     if (output && output.length > 0) {
-      setKey(output[output.length - 1].type);
+      if (output[output.length - 1].type === "rebuttal") setKey("proposal");
+      else setKey(output[output.length - 1].type);
     }
   }, [output]);
 
@@ -95,7 +96,10 @@ function OutputDisplay({ output }) {
                   title="Proposal"
                   disabled={proposalList.length === 0}
                 >
-                  <ProposalDisplay list={proposalList} />
+                  <ProposalDisplay
+                    list={proposalList}
+                    revision={rebuttalList}
+                  />
                 </Tab>
                 <Tab
                   eventKey="review"
@@ -104,13 +108,13 @@ function OutputDisplay({ output }) {
                 >
                   <ReviewDisplay list={reviewList} />
                 </Tab>
-                <Tab
+                {/* <Tab
                   eventKey="rebuttal"
                   title="Rebuttal"
                   disabled={rebuttalList.length === 0}
                 >
                   <RebuttalDisplay list={rebuttalList} />
-                </Tab>
+                </Tab> */}
                 <Tab
                   eventKey="metareview"
                   title="Metareview"
