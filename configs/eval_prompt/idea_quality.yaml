@@ -87,12 +87,12 @@ sys_prompt: |
   - Does it adhere to the growing emphasis on ethical research practices as highlighted
   in the insights?
 template: |
-  Here is the idea to evaluate: 
+  Here is the idea to evaluate:
   {idea}
 
-  Here is the research insights: 
+  Here is the research insights:
   {insights}
-  
+
   The output format should follow these
   rules: Overall Score of an insight (0-100), with 6 Dimension Scores: [d1, d2,
   d3, ..., d6], where di is the score of the i-th dimension. An example of output

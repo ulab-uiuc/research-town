@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import InputForm from "../components/InputForm";
 import OutputDisplay from "../components/OutputDisplay";
 import Typist from "react-typist-component";
+import Image from "react-bootstrap/Image";
 
 function Home() {
   const [url, setUrl] = useState("");
@@ -63,12 +64,20 @@ function Home() {
   return (
     <div className="app-container">
       <div style={{ marginTop: "2em", marginBottom: "2em" }}>
+        <Image
+          src={require("../assets/research_town_intro.jpg")}
+          style={{ marginBottom: "1em", marginTop: "1em", width: "25%" }}
+          rounded
+          fluid
+        />
         <Typist>
           <h1>Research Town</h1>
         </Typist>
       </div>
+      <div style={{ marginTop: "4em", marginBottom: "4em" }}> </div>
       <InputForm url={url} setUrl={setUrl} handleSubmit={handleSubmit} />
       {isProcessing && <p>Processing in 1 Minute ...</p>}
+      <div style={{ marginTop: "4em", marginBottom: "4em" }}> </div>
       <OutputDisplay output={output} />
     </div>
   );
