@@ -7,11 +7,12 @@ import Accordion from "react-bootstrap/Accordion";
 function IdeaDisplay({ list }) {
   return (
     <>
-      <Row className="mb-3">
+      {/* <Row className="mb-3">
         <Col>
           <h2>Ideas</h2>
         </Col>
-      </Row>
+      </Row> */}
+      <br />
       <Row>
         <Accordion>
           {list.map((item, index) => (

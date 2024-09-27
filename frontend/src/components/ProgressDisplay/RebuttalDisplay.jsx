@@ -6,11 +6,12 @@ import ReactMarkdown from "react-markdown";
 function RebuttalDisplay({ list }) {
   return (
     <>
-      <Row className="mb-3">
+      {/* <Row className="mb-3">
         <Col>
           <h2>Rebuttal</h2>
         </Col>
-      </Row>
+      </Row> */}
+      <br />
       <Row>
         {list.map((item, index) => {
           return (

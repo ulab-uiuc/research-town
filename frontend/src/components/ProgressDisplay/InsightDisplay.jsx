@@ -7,11 +7,12 @@ import ExpandableCard from "./ExpandableCard";
 function InsightDisplay({ list }) {
   return (
     <>
-      <Row className="mb-3">
+      {/* <Row className="mb-3">
         <Col>
           <h2>Insights</h2>
         </Col>
-      </Row>
+      </Row> */}
+      <br />
       <Row>
         {list.map((insight, index) => (
           <Col xs={4}>
