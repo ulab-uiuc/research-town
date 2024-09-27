@@ -92,8 +92,9 @@ async def process_url(request: Request) -> Response:
 
             if agent:
                 item['agent_name'] = agent.profile.name
-                if len(agent.profile.domain) > 1:
-                    item['agent_domain'] = agent.profile.domain[0]
+                if agent.profile.domain is not None:
+                    if len(agent.profile.domain) > 1:
+                        item['agent_domain'] = agent.profile.domain[0]
                 else:
                     item['agent_domain'] = "computer science"
             print(item)
