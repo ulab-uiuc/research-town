@@ -1,7 +1,5 @@
-fewshot_examples:
-- ''
-- ''
-sys_prompt: 'Please evaluate the review based on the following dimensions. Finally,
+sys_prompt: |
+  Please evaluate the review based on the following dimensions. Finally,
   give an overall score (0-100) and 10 dimension scores (for each dimension, provide
   a rating (1-10)) as the evaluation for the review.
 
@@ -131,8 +129,8 @@ sys_prompt: 'Please evaluate the review based on the following dimensions. Final
   - Does it meet the standards expected for a meta-review in terms of thoroughness,
   insightfulness, and clarity?
 
-  '
-template: 'Here is the review to evaluate:
+template: |
+  Here is the review to evaluate:
 
   research insights: {insights}
 
@@ -147,4 +145,4 @@ template: 'Here is the review to evaluate:
   metareview: {metareview}. The output format should follow these rules: Overall
   Score of an insight (0-100), with 6 Dimension Scores: [d1, d2, d3, ..., d6],
   where di is the score of the i-th dimension. An example of output is: Overall
-  Score=89 Dimension Scores=[8,9,9,9,9,9].'
+  Score=89 Dimension Scores=[8,9,9,9,9,9].
