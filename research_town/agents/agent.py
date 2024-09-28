@@ -45,7 +45,6 @@ class Agent(object):
     def review_literature(
         self,
         papers: List[Paper],
-        domains: List[str],
         contexts: List[str],
         config: Config,
     ) -> List[Insight]:
@@ -54,7 +53,6 @@ class Agent(object):
         insight_contents = review_literature_prompting(
             profile=serialized_profile,
             papers=serialized_papers,
-            domains=domains,
             contexts=contexts,
             model_name=self.model_name,
             prompt_template=config.agent_prompt_template.review_literature,
