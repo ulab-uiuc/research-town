@@ -26,7 +26,7 @@ jobs:
           cd ~/research-town/
           git stash
           git pull --no-rebase origin main
-          sed -i 's/localhost:8000/demo.auto-research.dev/g' ./frontend/src/pages/Home.jsx
+          sed -i 's|http://localhost:8000|https://demo.auto-research.dev|g' ./frontend/src/pages/Home.jsx
           cd ./frontend/
           export NVM_DIR="$HOME/.nvm"
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
