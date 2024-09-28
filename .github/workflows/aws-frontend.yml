@@ -22,7 +22,7 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ubuntu@ec2-3-87-192-184.compute-1.amazonaws.com << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i /tmp/UIUC.pem ubuntu@ubuntu@ec2-3-87-192-184.compute-1.amazonaws.com << 'EOF'
           cd ~/research-town/frontend/
           git pull origin main
           npm run build

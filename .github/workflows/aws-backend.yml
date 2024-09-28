@@ -22,7 +22,7 @@ jobs:
 
     - name: deploy to ec2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-89-143-231.compute-1.amazonaws.com << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i /tmp/UIUC.pem ubuntu@ec2-54-89-143-231.compute-1.amazonaws.com << 'EOF'
           cd ~/research-town/backend/
           conda activate research_town
           git pull origin main
