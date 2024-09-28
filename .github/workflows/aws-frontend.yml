@@ -27,13 +27,12 @@ jobs:
           cd ~/research-town/
           git pull origin main
           cd ./frontend/
-          which npm || echo "npm not found"
 
-          if ! npm --version; then
-            echo "npm is not installed, trying to install"
-            sudo apt-get update
-            sudo apt-get install -y npm
-          fi
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm use 22
+
+          npm --version || { echo "npm not found after nvm use"; exit 1; }
 
           echo "Running npm install to ensure dependencies"
           npm install
