@@ -14,7 +14,7 @@ const ExpandableCard = ({ index, type, summary, content, name }) => {
       <Card.Body>
         <Card.Title>
           {" "}
-          {type.charAt(0).toUpperCase() + type.slice(1)} #{index}
+          {type.charAt(0).toUpperCase() + type.slice(1)}{index}
         </Card.Title>
         <Card.Text>
           {summary} from {name}

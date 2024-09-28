@@ -22,7 +22,7 @@ function InsightDisplay({ list }) {
               type={insight.type}
               summary={""}
               content={insight.content}
-              name={insight.agent_domain + " Expert Agent"}
+              name={insight.agent_domain + " expert"}
             />
           </Col>
         ))}
