@@ -6,7 +6,7 @@ from tests.constants.data_constants import profile_A
 def test_serializer() -> None:
     agent = Agent(
         profile=profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        model_name='gpt-4o-mini',
         role='leader',
     )
     agent_serialized = Serializer.serialize(agent)

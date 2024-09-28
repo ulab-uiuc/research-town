@@ -10,7 +10,7 @@ from research_town.evaluators import (
 
 
 def main(
-    model_name: str = 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+    model_name: str = 'gpt-4o-mini',
     config: Config = Config('../../configs'),
 ) -> None:
     insights = [
