@@ -20,8 +20,6 @@ from research_town.dbs import (
     ReviewWritingLog,
 )
 from tests.constants.config_constants import example_config
-from tests.constants.data_constants import agent_profile_A, research_proposal_A
-from tests.constants.db_constants import example_profile_db
 from tests.mocks.mocking_func import mock_prompting
 
 
@@ -246,7 +244,7 @@ def test_agent_match() -> None:
     db.add(profile2)
     db.add(profile3)
     leader_profile = 'Profile in CV'
-    match_profiles = db.match(query=leader_profile, num=2)
+    match_profiles = db.match(query=leader_profile, num=2, role='leader')
     assert match_profiles
     assert len(match_profiles) == 2
 
@@ -286,8 +284,8 @@ def test_paper_match() -> None:
     db.add(paper1)
     db.add(paper2)
     db.add(paper3)
-    lead_agent_profile = 'Profile in CV'
-    match_papers = db.match(query=lead_agent_profile, num=2)
+    lead_profile = 'Profile in CV'
+    match_papers = db.match(query=lead_profile, num=2)
     assert match_papers
     assert len(match_papers) == 2
 
@@ -396,33 +394,3 @@ def test_pull_papers() -> None:
     assert db.data.keys()
     assert len(db.data.keys()) == 2
     assert db.data.values()
-
-
-def test_agentdb_match_member_profiles() -> None:
-    example_profile_db.reset_role_availability()
-    agent_profile_A.is_leader_candidate = True
-    members = example_profile_db.match_member_profiles(
-        leader=agent_profile_A,
-        member_num=2,
-    )
-    assert len(members) == 2
-
-
-def test_agentdb_match_reviewer_profiles() -> None:
-    example_profile_db.reset_role_availability()
-    agent_profile_A.is_leader_candidate = True
-    reviewers = example_profile_db.match_reviewer_profiles(
-        proposal=research_proposal_A,
-        reviewer_num=2,
-    )
-    assert len(reviewers) == 2
-
-
-def test_agentdb_match_chair() -> None:
-    example_profile_db.reset_role_availability()
-    agent_profile_A.is_leader_candidate = True
-    chair = example_profile_db.match_chair_profiles(
-        proposal=research_proposal_A,
-        chair_num=1,
-    )
-    assert chair is not None

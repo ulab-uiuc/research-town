@@ -1,8 +1,10 @@
-from typing import List
+from typing import List, Literal
 
 from ..configs import Config
 from ..dbs import Profile, ProfileDB, Proposal
 from .agent import Agent
+
+Role = Literal['reviewer', 'leader', 'member', 'chair']
 
 
 class AgentManager:
@@ -10,62 +12,58 @@ class AgentManager:
         self.config = config
         self.profile_db = profile_db
 
-    def create_leader(self, leader_profile: Profile) -> Agent:
+    def create_agent(self, profile: Profile, role: Role) -> Agent:
         return Agent(
-            agent_profile=leader_profile,
-            agent_role='leader',
+            profile=profile,
+            role=role,
             model_name=self.config.param.base_llm,
         )
 
-    def create_member(self, member_profile: Profile) -> Agent:
-        return Agent(
-            agent_profile=member_profile,
-            agent_role='member',
-            model_name=self.config.param.base_llm,
-        )
+    def find_agents(self, role: Role, query: str, num: int = 1) -> List[Agent]:
+        profiles = self.profile_db.match(query=query, role=role, num=num)
+        return [self.create_agent(profile, role) for profile in profiles]
 
-    def create_chair(self, chair_profile: Profile) -> Agent:
-        return Agent(
-            agent_profile=chair_profile,
-            agent_role='chair',
-            model_name=self.config.param.base_llm,
-        )
+    def sample_agents(self, role: Role, num: int = 1) -> List[Agent]:
+        profiles = self.profile_db.sample(role=role, num=num)
+        return [self.create_agent(profile, role) for profile in profiles]
 
-    def create_reviewer(self, reviewer_profile: Profile) -> Agent:
-        return Agent(
-            agent_profile=reviewer_profile,
-            agent_role='reviewer',
-            model_name=self.config.param.base_llm,
-        )
+    # Specific methods for roles
+    def find_leader(self, task: str) -> Agent:
+        agents = self.find_agents(role='leader', query=task, num=1)
+        assert agents is not None
+        return agents[0]
 
-    def find_members(self, profile: Profile) -> List[Agent]:
-        member_profiles = self.profile_db.match_member_profiles(
-            leader=profile,
-            member_num=self.config.param.member_num,
+    def sample_leader(self) -> Agent:
+        agents = self.sample_agents(role='leader', num=1)
+        assert agents is not None
+        return agents[0]
+
+    def find_members(self, leader_profile: Profile) -> List[Agent]:
+        agents = self.find_agents(
+            role='member', query=leader_profile.bio, num=self.config.param.member_num
         )
-        return [
-            self.create_member(member_profile) for member_profile in member_profiles
-        ]
+        return agents
+
+    def sample_members(self) -> List[Agent]:
+        agents = self.sample_agents(role='member', num=self.config.param.member_num)
+        return agents
 
     def find_reviewers(self, proposal: Proposal) -> List[Agent]:
-        reviewer_profiles = self.profile_db.match_reviewer_profiles(
-            proposal=proposal,
-            reviewer_num=self.config.param.reviewer_num,
+        agents = self.find_agents(
+            role='reviewer', query=proposal.content, num=self.config.param.reviewer_num
         )
-        return [
-            self.create_reviewer(reviewer_profile)
-            for reviewer_profile in reviewer_profiles
-        ]
+        return agents
+
+    def sample_reviewers(self) -> List[Agent]:
+        agents = self.sample_agents(role='reviewer', num=self.config.param.reviewer_num)
+        return agents
 
     def find_chair(self, proposal: Proposal) -> Agent:
-        chair_profile = self.profile_db.match_chair_profiles(
-            proposal=proposal,
-            chair_num=1,
-        )[0]
-        return self.create_chair(chair_profile)
+        agents = self.find_agents(role='chair', query=proposal.content, num=1)
+        assert agents is not None
+        return agents[0]
 
-    def find_leader(self, task: str) -> Agent:
-        leader_profile = self.profile_db.match_leader_profiles(
-            query=task, leader_num=1
-        )[0]
-        return self.create_leader(leader_profile)
+    def sample_chair(self) -> Agent:
+        agents = self.sample_agents(role='chair', num=1)
+        assert agents is not None
+        return agents[0]
