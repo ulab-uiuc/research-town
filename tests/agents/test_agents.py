@@ -4,10 +4,10 @@ from research_town.agents.agent import Agent
 from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from tests.constants.config_constants import example_config
 from tests.constants.data_constants import (
-    profile_A,
-    profile_B,
     paper_A,
     paper_B,
+    profile_A,
+    profile_B,
     research_idea_A,
     research_insight_A,
     research_insight_B,
