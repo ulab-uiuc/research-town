@@ -52,7 +52,6 @@ class ProposalWritingEnv(BaseEnv):
             )
             insights = member.review_literature(
                 papers=related_papers,
-                domains=['machine learning'],
                 contexts=self.contexts,
                 config=self.config,
             )

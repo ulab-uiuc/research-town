@@ -11,7 +11,6 @@ def test_default_initialization() -> None:
     assert config.param.related_paper_num == 10
     assert config.param.base_llm == 'gpt-4o-mini'
     assert config.param.member_num == 3
-    assert config.param.domain == 'computer_vision'
     assert config.param.reviewer_num == 1
 
 
