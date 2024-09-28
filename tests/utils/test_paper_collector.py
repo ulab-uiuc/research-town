@@ -1,6 +1,5 @@
 import datetime
 from unittest.mock import MagicMock, patch
-import pytest
 
 from research_town.utils.paper_collector import (
     get_daily_papers,
@@ -40,7 +39,6 @@ def test_get_paper_content_from_html() -> None:
     assert '1 Introduction' in sections
     assert len(sections['1 Introduction']) > 0
 
-@pytest.mark.intro
 def test_get_paper_introduction() -> None:
     test_url1 = 'https://arxiv.org/pdf/2409.16928'
     test_url2 = 'https://openreview.net/pdf?id=NnMEadcdyD'
