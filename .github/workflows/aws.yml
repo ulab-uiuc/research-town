@@ -1,0 +1,29 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main # 你可以设置为你想要的分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-89-143-231.compute-1.amazonaws.com << 'EOF'
+          cd ~/research-town/backend/
+          conda activate research_town
+          git pull origin main
+          pkill uvicorn || true
+          nohup uvicorn main:app --host 127.0.0.1 --port 8000
+        EOF
