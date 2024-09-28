@@ -24,7 +24,7 @@ class ProfileDB(BaseDB[Profile]):
         self.retriever_model: Optional[BertModel] = None
 
     def _initialize_retriever(self) -> None:
-        if self.retriever_tokenizer is None or self.retriever_model is None:
+        if not self.retriever_tokenizer or not self.retriever_model:
             self.retriever_tokenizer = BertTokenizer.from_pretrained(
                 'facebook/contriever'
             )
@@ -33,9 +33,10 @@ class ProfileDB(BaseDB[Profile]):
     def pull_profiles(self, names: List[str], config: Config) -> None:
         for name in names:
             publications, collaborators = collect_publications_and_coauthors(
-                author=name, paper_max_num=20
+                name, paper_max_num=20
             )
-            publication_info = '; '.join([f'{abstract}' for abstract in publications])
+            publication_info = '; '.join(publications)
+
             bio = write_bio_prompting(
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,
@@ -46,51 +47,31 @@ class ProfileDB(BaseDB[Profile]):
                 prompt_template=config.agent_prompt_template.summarize_domain,
                 model_name=config.param.base_llm,
             )
+
             profile = Profile(
-                name=name,
-                bio=bio,
-                domain=domain,
-                collaborators=collaborators,
+                name=name, bio=bio, domain=domain, collaborators=collaborators
             )
             self.add(profile)
-            self.transform_to_embed()
+        self.transform_to_embed()
 
-    def match(
-        self,
-        query: str,
-        num: int = 1,
-        **conditions: Any,
-    ) -> List[Profile]:
+    def match(self, query: str, num: int = 1, **conditions: Any) -> List[Profile]:
         self._initialize_retriever()
 
-        # Get agent profiles based on the provided conditions
         profiles = self.get(**conditions)
+        query_embed = get_embed([query], self.retriever_tokenizer, self.retriever_model)
 
-        query_embed = get_embed(
-            instructions=[query],
-            retriever_tokenizer=self.retriever_tokenizer,
-            retriever_model=self.retriever_model,
-        )
+        corpus_embed = [
+            self.data_embed.get(profile.pk)
+            or get_embed([profile.bio], self.retriever_tokenizer, self.retriever_model)[
+                0
+            ]
+            for profile in profiles
+        ]
 
-        corpus_embed = []
-        for profile in profiles:
-            if profile.pk in self.data_embed:
-                corpus_embed.append(self.data_embed[profile.pk])
-            else:
-                agent_embed = get_embed(
-                    instructions=[profile.bio],
-                    retriever_tokenizer=self.retriever_tokenizer,
-                    retriever_model=self.retriever_model,
-                )[0]
-                corpus_embed.append(agent_embed)
+        topk_indexes = rank_topk(query_embed, corpus_embed, num=num)
+        matched_profiles = [profiles[idx] for topk in topk_indexes for idx in topk]
 
-        topk_indexes = rank_topk(
-            query_embed=query_embed, corpus_embed=corpus_embed, num=num
-        )
-        indexes = [index for topk_index in topk_indexes for index in topk_index]
-        matched_profiles = [profiles[index] for index in indexes]
-
-        logger.info(f'Matched agents: {matched_profiles}')
+        logger.info(f'Matched profiles: {matched_profiles}')
         return matched_profiles
 
     def sample(self, num: int = 1, **conditions: Any) -> List[Profile]:
@@ -100,19 +81,16 @@ class ProfileDB(BaseDB[Profile]):
 
     def transform_to_embed(self) -> None:
         self._initialize_retriever()
-        for agent_pk in self.data:
-            self.data_embed[agent_pk] = get_embed(
-                [self.data[agent_pk].bio],
-                self.retriever_tokenizer,
-                self.retriever_model,
+        for pk, profile in self.data.items():
+            self.data_embed[pk] = get_embed(
+                [profile.bio], self.retriever_tokenizer, self.retriever_model
             )[0]
 
     def reset_role_availability(self) -> None:
         for profile in self.data.values():
-            profile.is_leader_candidate = True
-            profile.is_member_candidate = True
-            profile.is_reviewer_candidate = True
-            profile.is_chair_candidate = True
+            profile.update_roles(
+                is_leader=True, is_member=True, is_reviewer=True, is_chair=True
+            )
             self.update(pk=profile.pk, updates=profile.model_dump())
 
     def _update_profile_roles(self, profiles: List[Profile], role_field: str) -> None:
@@ -121,54 +99,54 @@ class ProfileDB(BaseDB[Profile]):
             for field, field_type in get_type_hints(Profile).items()
             if field.startswith('is_') and isinstance(field_type, bool)
         ]
+
         for profile in profiles:
             for field in role_fields:
                 setattr(profile, field, False)
             setattr(profile, role_field, True)
             self.update(pk=profile.pk, updates=profile.model_dump())
 
+    def match_profiles_by_role(
+        self, query: str, role: str, num: int = 1
+    ) -> List[Profile]:
+        return self.match(query=query, num=num, **{f'is_{role}_candidate': True})
+
+    def sample_profiles_by_role(self, role: str, num: int = 1) -> List[Profile]:
+        profiles = self.sample(num=num, **{f'is_{role}_candidate': True})
+        self._update_profile_roles(profiles, f'is_{role}_candidate')
+        return profiles
+
+    # Specific role matching functions
     def match_member_profiles(
         self, leader: Profile, member_num: int = 1
     ) -> List[Profile]:
-        profiles = self.match(
-            query=leader.bio,
-            num=member_num,
-            is_member_candidate=True,
-        )
-        # Update roles
-        self._update_profile_roles(profiles, 'is_member_candidate')
-        return profiles
+        return self.match_profiles_by_role(leader.bio, 'member', member_num)
 
     def match_reviewer_profiles(
         self, proposal: Proposal, reviewer_num: int = 1
     ) -> List[Profile]:
-        profiles = self.match(
-            query=proposal.content if proposal.content else '',
-            num=reviewer_num,
-            is_reviewer_candidate=True,
-        )
-        # Update roles
-        self._update_profile_roles(profiles, 'is_reviewer_candidate')
-        return profiles
+        return self.match_profiles_by_role(proposal.content, 'reviewer', reviewer_num)
 
     def match_chair_profiles(
         self, proposal: Proposal, chair_num: int = 1
     ) -> List[Profile]:
-        profiles = self.match(
-            query=proposal.content,
-            num=chair_num,
-            is_chair_candidate=True,
-        )
-        # Update roles
-        self._update_profile_roles(profiles, 'is_chair_candidate')
-        return profiles
+        return self.match_profiles_by_role(proposal.content, 'chair', chair_num)
 
     def match_leader_profiles(self, query: str, leader_num: int = 1) -> List[Profile]:
-        profiles = self.match(
-            query=query,
-            num=leader_num,
-            is_leader_candidate=True,
-        )
-        # Update roles
-        self._update_profile_roles(profiles, 'is_leader_candidate')
-        return profiles
+        return self.match_profiles_by_role(query, 'leader', leader_num)
+
+    # Specific role sampling functions
+    def sample_leader_profiles(self, leader_num: int = 1) -> List[Profile]:
+        return self.sample_profiles_by_role('leader', leader_num)
+
+    def sample_chair_profiles(self, chair_num: int = 1) -> List[Profile]:
+        return self.sample_profiles_by_role('chair', chair_num)
+
+    def sample_member_profiles(self, member_num: int = 1) -> List[Profile]:
+        return self.sample_profiles_by_role('member', member_num)
+
+    def sample_reviewer_profiles(self, reviewer_num: int = 1) -> List[Profile]:
+        return self.sample_profiles_by_role('reviewer', reviewer_num)
+
+    def sample_leader_profile(self) -> Profile:
+        return self.sample_leader_profiles(1)[0]
