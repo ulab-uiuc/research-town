@@ -14,9 +14,11 @@ jobs:
       uses: actions/checkout@v2
 
     - name: set up SSH
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+      run: |
+        echo "${{ secrets.EC2_SSH_KEY }}" > /tmp/UIUC.pem
+        chmod 600 /tmp/UIUC.pem
+        eval "$(ssh-agent -s)"
+        ssh-add /tmp/UIUC.pem
 
     - name: Deploy to EC2
       run: |
