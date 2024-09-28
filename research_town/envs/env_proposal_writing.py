@@ -31,7 +31,7 @@ class ProposalWritingEnv(BaseEnv):
         leader = context['leader']
         self.contexts = context['contexts']
         self.leader = leader
-        self.members = self.agent_manager.find_members(leader.profile)
+        self.members = self.agent_manager.sample_members()
 
     @beartype
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:

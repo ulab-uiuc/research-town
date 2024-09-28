@@ -4,7 +4,7 @@
 
 ## research_town.agents.agent module
 
-### *class* research_town.agents.agent.Agent(agent_profile: [Profile](research_town.dbs.md#research_town.dbs.data.Profile), model_name: str, agent_role: Literal['reviewer', 'leader', 'member', 'chair'] | None = None)
+### *class* research_town.agents.agent.Agent(profile: [Profile](research_town.dbs.md#research_town.dbs.data.Profile), model_name: str, role: Literal['reviewer', 'leader', 'member', 'chair'] | None = None)
 
 Bases: `object`
 
@@ -48,7 +48,7 @@ Bases: `object`
 
 ## Module contents
 
-### *class* research_town.agents.Agent(agent_profile: [Profile](research_town.dbs.md#research_town.dbs.data.Profile), model_name: str, agent_role: Literal['reviewer', 'leader', 'member', 'chair'] | None = None)
+### *class* research_town.agents.Agent(profile: [Profile](research_town.dbs.md#research_town.dbs.data.Profile), model_name: str, role: Literal['reviewer', 'leader', 'member', 'chair'] | None = None)
 
 Bases: `object`
 

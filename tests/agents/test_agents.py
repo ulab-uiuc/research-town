@@ -4,10 +4,10 @@ from research_town.agents.agent import Agent
 from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from tests.constants.config_constants import example_config
 from tests.constants.data_constants import (
-    agent_profile_A,
-    agent_profile_B,
     paper_A,
     paper_B,
+    profile_A,
+    profile_B,
     research_idea_A,
     research_insight_A,
     research_insight_B,
@@ -22,9 +22,9 @@ def test_review_literature(
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
     agent = Agent(
-        agent_profile=agent_profile_A,
+        profile=profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='leader',
+        role='leader',
     )
     research_insight = agent.review_literature(
         papers=[paper_A, paper_B],
@@ -52,9 +52,9 @@ def test_brainstorm_idea(
     mock_model_prompting.side_effect = mock_prompting
 
     agent = Agent(
-        agent_profile=agent_profile_A,
+        profile=profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='leader',
+        role='leader',
     )
     research_idea = agent.brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
@@ -70,9 +70,9 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     agent = Agent(
-        agent_profile=agent_profile_B,
+        profile=profile_B,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='leader',
+        role='leader',
     )
     paper = agent.write_proposal(
         idea=research_idea_A,
@@ -89,9 +89,9 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     agent = Agent(
-        agent_profile=agent_profile_A,
+        profile=profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='reviewer',
+        role='reviewer',
     )
     review = agent.write_review(
         proposal=research_proposal_A,
@@ -109,14 +109,14 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     agent_reviewer = Agent(
-        agent_profile=agent_profile_A,
+        profile=profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='reviewer',
+        role='reviewer',
     )
     agent_chair = Agent(
-        agent_profile=agent_profile_A,
+        profile=profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='chair',
+        role='chair',
     )
     review = agent_reviewer.write_review(
         proposal=research_proposal_A,
@@ -140,14 +140,14 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     agent_reviewer = Agent(
-        agent_profile=agent_profile_A,
+        profile=profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='reviewer',
+        role='reviewer',
     )
     agent_leader = Agent(
-        agent_profile=agent_profile_A,
+        profile=profile_A,
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='leader',
+        role='leader',
     )
     review = agent_reviewer.write_review(
         proposal=research_proposal_A,
