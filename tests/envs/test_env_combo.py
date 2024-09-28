@@ -42,7 +42,9 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         config=example_config,
         agent_manager=agent_manager,
     )
-    leader = agent_manager.create_leader(proposal_writing_agent_profiles[0])
+    leader = agent_manager.create_agent(
+        profile=proposal_writing_agent_profiles[0], role='leader'
+    )
     proposal_writing_env.on_enter(
         time_step=0,
         leader=leader,
@@ -84,7 +86,9 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         config=example_config,
         agent_manager=agent_manager,
     )
-    leader = agent_manager.create_leader(review_writing_agent_profiles[0])
+    leader = agent_manager.create_agent(
+        profile=review_writing_agent_profiles[0], role='leader'
+    )
     review_writing_env.on_enter(
         time_step=0,
         proposal=proposal,

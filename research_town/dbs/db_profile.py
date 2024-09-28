@@ -35,7 +35,7 @@ class ProfileDB(BaseDB[Profile]):
             publications, collaborators = collect_publications_and_coauthors(
                 name, paper_max_num=20
             )
-            publication_info = '; '.join(publications)
+            publication_info = '; '.join([f'{abstract}' for abstract in publications])
 
             bio = write_bio_prompting(
                 publication_info=publication_info,
@@ -88,9 +88,10 @@ class ProfileDB(BaseDB[Profile]):
 
     def reset_role_availability(self) -> None:
         for profile in self.data.values():
-            profile.update_roles(
-                is_leader=True, is_member=True, is_reviewer=True, is_chair=True
-            )
+            profile.is_leader_candidate = True
+            profile.is_member_candidate = True
+            profile.is_reviewer_candidate = True
+            profile.is_chair_candidate = True
             self.update(pk=profile.pk, updates=profile.model_dump())
 
     def _update_profile_roles(self, profiles: List[Profile], role_field: str) -> None:
