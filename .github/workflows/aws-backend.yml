@@ -1,24 +1,24 @@
-name: Deploy to AWS EC2
+name: deploy to aws ec2 backend
 
 on:
   push:
     branches:
-      - main # 你可以设置为你想要的分支
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: checkout code
       uses: actions/checkout@v2
 
-    - name: Set up SSH
+    - name: set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
         ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-    - name: Deploy to EC2
+    - name: deploy to ec2
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-89-143-231.compute-1.amazonaws.com << 'EOF'
           cd ~/research-town/backend/
