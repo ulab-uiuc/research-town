@@ -73,11 +73,14 @@ async def process_url(request: Request) -> Response:
                     'score': str(progress.score) if progress.score else '-1',
                 }
             elif isinstance(progress, Rebuttal):
-                item = {'type': 'rebuttal', 'q1': progress.q1 or '',
+                item = {
+                    'type': 'rebuttal',
+                    'q1': progress.q1 or '',
                     'q2': progress.q2 or '',
                     'q3': progress.q3 or '',
                     'q4': progress.q4 or '',
-                    'q5': progress.q5 or ''}
+                    'q5': progress.q5 or '',
+                }
             elif isinstance(progress, MetaReview):
                 item = {
                     'type': 'metareview',
@@ -96,9 +99,9 @@ async def process_url(request: Request) -> Response:
                     if len(agent.profile.domain) > 1:
                         item['agent_domain'] = agent.profile.domain[0]
                 else:
-                    item['agent_domain'] = "computer science"
+                    item['agent_domain'] = 'computer science'
             print(item)
-            
+
             yield json.dumps(item) + '\n'
 
     # Run the engine and stream the results back

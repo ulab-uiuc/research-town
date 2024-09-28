@@ -21,7 +21,6 @@ from .string_mapper import (
 def review_literature_prompting(
     profile: Dict[str, str],
     papers: List[Dict[str, str]],
-    domains: List[str],
     contexts: List[str],
     model_name: str,
     prompt_template: Dict[str, Union[str, List[str]]],
@@ -32,10 +31,8 @@ def review_literature_prompting(
     stream: Optional[bool] = None,
 ) -> List[str]:
     papers_str = map_paper_list_to_str(papers)
-    domains_str = '; '.join(domains)
     template_input = {
         'bio': profile['bio'],
-        'domains': domains_str,
         'contexts': contexts,
         'papers': papers_str,
     }
