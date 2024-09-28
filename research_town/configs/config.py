@@ -51,7 +51,6 @@ class EvalPromptTemplate(BaseModel):
                 '{idea}',
                 '{paper}',
                 '{reviews}',
-                '{rebuttals}',
                 '{metareview}',
             ],
         }
@@ -111,29 +110,25 @@ class AgentPromptTemplate(BaseModel):
                 '{strength}',
                 '{weakness}',
             ],
-            'write_metareview_summary': ['{proposal}', '{reviews}', '{rebuttals}'],
+            'write_metareview_summary': ['{proposal}', '{reviews}'],
             'write_metareview_strength': [
                 '{proposal}',
                 '{reviews}',
-                '{rebuttals}',
                 '{summary}',
             ],
             'write_metareview_weakness': [
                 '{proposal}',
                 '{reviews}',
-                '{rebuttals}',
                 '{summary}',
             ],
             'write_metareview_ethical': [
                 '{proposal}',
                 '{reviews}',
-                '{rebuttals}',
                 '{summary}',
             ],
             'write_metareview_decision': [
                 '{proposal}',
                 '{reviews}',
-                '{rebuttals}',
                 '{summary}',
                 '{strength}',
                 '{weakness}',

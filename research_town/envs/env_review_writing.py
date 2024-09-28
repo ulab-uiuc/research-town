@@ -74,7 +74,6 @@ class ReviewWritingEnv(BaseEnv):
         metareview = self.chair.write_metareview(
             proposal=self.proposal,
             reviews=self.reviews,
-            rebuttals=self.rebuttals,
             config=self.config,
         )
         yield metareview, self.chair

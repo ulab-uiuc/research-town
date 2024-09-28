@@ -179,18 +179,15 @@ class Agent(object):
         self,
         proposal: Proposal,
         reviews: List[Review],
-        rebuttals: List[Rebuttal],
         config: Config,
     ) -> MetaReview:
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_reviews = self.serializer.serialize(reviews)
-        serialized_rebuttals = self.serializer.serialize(rebuttals)
 
         summary, strength, weakness, ethical_concerns, decision = (
             write_metareview_prompting(
                 proposal=serialized_proposal,
                 reviews=serialized_reviews,
-                rebuttals=serialized_rebuttals,
                 model_name=self.model_name,
                 summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
                 strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
