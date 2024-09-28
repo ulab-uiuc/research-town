@@ -284,8 +284,8 @@ def test_paper_match() -> None:
     db.add(paper1)
     db.add(paper2)
     db.add(paper3)
-    lead_agent_profile = 'Profile in CV'
-    match_papers = db.match(query=lead_agent_profile, num=2)
+    lead_profile = 'Profile in CV'
+    match_papers = db.match(query=lead_profile, num=2)
     assert match_papers
     assert len(match_papers) == 2
 

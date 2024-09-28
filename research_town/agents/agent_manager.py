@@ -14,8 +14,8 @@ class AgentManager:
 
     def create_agent(self, profile: Profile, role: Role) -> Agent:
         return Agent(
-            agent_profile=profile,
-            agent_role=role,
+            profile=profile,
+            role=role,
             model_name=self.config.param.base_llm,
         )
 

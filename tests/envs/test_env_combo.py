@@ -18,7 +18,7 @@ from tests.mocks.mocking_func import mock_prompting
 def test_env_combo(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    proposal_writing_agent_profiles = [
+    proposal_writing_profiles = [
         Profile(name='Jiaxuan You', bio='A researcher in machine learning.'),
         Profile(name='Rex Ying', bio='A researcher in natural language processing.'),
         Profile(name='Rex Zhu', bio='A researcher in computer vision.'),
@@ -28,7 +28,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     ]
 
     temp_profile_db = ProfileDB()
-    for profile in proposal_writing_agent_profiles:
+    for profile in proposal_writing_profiles:
         temp_profile_db.add(profile)
 
     agent_manager = AgentManager(config=example_config, profile_db=temp_profile_db)
@@ -43,7 +43,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         agent_manager=agent_manager,
     )
     leader = agent_manager.create_agent(
-        profile=proposal_writing_agent_profiles[0], role='leader'
+        profile=proposal_writing_profiles[0], role='leader'
     )
     proposal_writing_env.on_enter(
         time_step=0,
@@ -68,13 +68,13 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         'Jure Leskovec',
         'Geoffrey Hinton',
     ]
-    review_writing_agent_profiles = [
+    review_writing_profiles = [
         Profile(name=agent, bio='A researcher in machine learning.')
         for agent in review_writing_agent_list
     ]
 
     temp_profile_db = ProfileDB()
-    for profile in review_writing_agent_profiles:
+    for profile in review_writing_profiles:
         temp_profile_db.add(profile)
 
     # Create and run the peer review environment
@@ -87,7 +87,7 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
         agent_manager=agent_manager,
     )
     leader = agent_manager.create_agent(
-        profile=review_writing_agent_profiles[0], role='leader'
+        profile=review_writing_profiles[0], role='leader'
     )
     review_writing_env.on_enter(
         time_step=0,

@@ -4,9 +4,9 @@ from .data_constants import (
     agent_paper_metareview_log,
     agent_paper_rebuttal_log,
     agent_paper_review_log,
-    agent_profile_A,
-    agent_profile_B,
-    agent_profile_C,
+    profile_A,
+    profile_B,
+    profile_C,
     paper_A,
     paper_B,
     paper_C,
@@ -19,9 +19,9 @@ from .data_constants import (
 )
 
 example_profile_db = ProfileDB()
-example_profile_db.add(agent_profile_A)
-example_profile_db.add(agent_profile_B)
-example_profile_db.add(agent_profile_C)
+example_profile_db.add(profile_A)
+example_profile_db.add(profile_B)
+example_profile_db.add(profile_C)
 
 example_paper_db = PaperDB()
 example_paper_db.add(paper_A)
