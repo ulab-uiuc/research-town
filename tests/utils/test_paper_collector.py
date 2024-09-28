@@ -46,6 +46,10 @@ def test_get_paper_introduction() -> None:
     intro1 = get_paper_introduction(test_url1)
     intro2 = get_paper_introduction(test_url2)
     intro3 = get_paper_introduction(test_url3)
+    assert(intro1 is not None)
+    assert(intro2 is not None)
+    assert(intro3 is not None)
+    
     assert('Introduction' in intro1)
     assert('Introduction' in intro2)
     assert('Introduction' in intro3)
