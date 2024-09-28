@@ -2,13 +2,13 @@ import datetime
 from unittest.mock import MagicMock, patch
 
 from research_town.utils.paper_collector import (
-    get_daily_papers,
     get_paper_content_from_html,
     get_paper_introduction,
+    get_recent_papers,
 )
 
 
-def test_get_daily_papers() -> None:
+def test_get_recent_papers() -> None:
     with patch('arxiv.Client') as mock_client:
         mock_client_instance = MagicMock()
         mock_client.return_value = mock_client_instance
@@ -27,7 +27,7 @@ def test_get_daily_papers() -> None:
 
         mock_client_instance.results.return_value = [mock_paper_1, mock_paper_2]
 
-        result, newest_day = get_daily_papers('test_topic')
+        result, newest_day = get_recent_papers('test_topic')
 
         assert len(result) == 2
         assert newest_day == datetime.date(2023, 7, 2)  # Compare to the date part only

@@ -5,7 +5,7 @@ import torch
 from transformers import BertModel, BertTokenizer
 
 from ..utils.logger import logger
-from ..utils.paper_collector import get_daily_papers
+from ..utils.paper_collector import get_recent_papers, get_related_paper
 from ..utils.retriever import get_embed, rank_topk
 from .data import Data, Paper
 from .db_base import BaseDB
@@ -26,35 +26,19 @@ class PaperDB(BaseDB[Paper]):
             )
             self.retriever_model = BertModel.from_pretrained('facebook/contriever')
 
-    def pull_papers(self, num: int, domain: str) -> None:
-        data, _ = get_daily_papers(query=f'ti:{domain}', max_results=num)
+    def pull_papers(self, num: int, domain: str) -> List[Paper]:
+        papers = get_recent_papers(domain=domain, max_results=num)
+        for paper in papers:
+            self.add(paper)
+        logger.info(f'Pulled papers: {papers}')
+        return papers
 
-        for paper_data in data.values():
-            papers = [
-                Paper(
-                    title=title,
-                    abstract=abstract,
-                    authors=authors,
-                    url=url,
-                    domain=domain,
-                    timestamp=int(timestamp),
-                    sections=sections,
-                    bibliography=bibliography,
-                )
-                for title, abstract, authors, url, domain, timestamp, sections, bibliography in zip(
-                    paper_data['title'],
-                    paper_data['abstract'],
-                    paper_data['authors'],
-                    paper_data['url'],
-                    paper_data['domain'],
-                    paper_data['timestamp'],
-                    paper_data['sections'],
-                    paper_data['bibliography'],
-                )
-            ]
-
-            for paper in papers:
-                self.add(paper)
+    def search_papers(self, query: str, domain: str, num: int) -> List[Paper]:
+        papers = get_related_paper(query=query, domain=domain, num_results=num)
+        for paper in papers:
+            self.add(paper)
+        logger.info(f'Searched papers: {papers}')
+        return papers
 
     def match(self, query: str, num: int = 1, **conditions: Any) -> List[Paper]:
         self._initialize_retriever()

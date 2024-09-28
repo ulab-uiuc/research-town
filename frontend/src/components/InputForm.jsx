@@ -24,7 +24,7 @@ function InputForm({ url, setUrl, handleSubmit }) {
           >
             <h5 style={{ marginBottom: "10px" }}>Welcome to Research Town!</h5>
             <p style={{ marginBottom: "5px" }}>
-              Enter a URL for a research paper to get started. 
+              Enter a URL for a research paper to get started.
               <br />
               <small>(e.g. https://arxiv.org/abs/1906.04817)</small>
             </p>
@@ -58,13 +58,13 @@ function InputForm({ url, setUrl, handleSubmit }) {
           <Button
             type="submit"
             onClick={handleSubmit}
-            style={{ 
-              width: "100%", 
-              padding: "12px", 
-              backgroundColor: "#007bff", 
-              color: "#fff", 
+            style={{
+              width: "100%",
+              padding: "12px",
+              backgroundColor: "#007bff",
+              color: "#fff",
               fontSize: "16px",
-              borderRadius: "5px", 
+              borderRadius: "5px",
             }}
           >
             Process

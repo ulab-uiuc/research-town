@@ -46,8 +46,9 @@ class ProposalWritingEnv(BaseEnv):
         # Each member reviews literature
         all_insights = []
         for member in self.members:
-            related_papers = self.paper_db.match(
-                query=member.profile.bio,
+            related_papers = self.paper_db.search_papers(
+                domain=member.profile.domain[0],
+                query=';'.join(self.contexts),
                 num=2,
             )
             insights = member.review_literature(
@@ -72,8 +73,9 @@ class ProposalWritingEnv(BaseEnv):
 
         # Write Proposal
         query = summarized_idea.content or self.leader.profile.bio
-        related_papers = self.paper_db.match(
+        related_papers = self.paper_db.search_papers(
             query=query,
+            domain=self.leader.profile.domain[0],
             num=2,
         )
         proposal = self.leader.write_proposal(

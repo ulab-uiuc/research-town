@@ -1,59 +1,83 @@
-import datetime
 import re
 from io import BytesIO
 
 import arxiv
 import requests
-from beartype.typing import Any, Dict, List, Optional, Tuple
+from beartype.typing import Dict, List, Optional
 from bs4 import BeautifulSoup
 from PyPDF2 import PdfReader
 from tqdm import tqdm
 
+from ..dbs.data import Paper
 
-def get_daily_papers(
-    query: str, max_results: int = 2
-) -> Tuple[Dict[str, Dict[str, List[str]]], str]:
+
+def get_related_paper(query: str, domain: str, num_results: int = 10) -> List[Paper]:
+    arxiv_query = f'({query}) AND cat:{domain}'
+
+    search = arxiv.Search(
+        query=arxiv_query,
+        max_results=num_results,
+        sort_by=arxiv.SortCriterion.Relevance,
+    )
+
+    papers_list = []
+
+    for result in search.results():
+        paper = Paper(
+            title=result.title,
+            abstract=result.summary,
+            authors=[author.name for author in result.authors],
+            url=result.entry_id,
+            domain=domain,
+            timestamp=int(result.published.timestamp()),
+            sections=[],  # Sections not provided by arXiv API
+            bibliography=[],  # Bibliography not provided by arXiv API
+        )
+        papers_list.append(paper)
+
+    return papers_list
+
+
+def get_recent_papers(domain: str, max_results: int = 2) -> List[Paper]:
+    arxiv_query = f'cat:{domain}'
     client = arxiv.Client()
     search = arxiv.Search(
-        query=query, max_results=max_results, sort_by=arxiv.SortCriterion.SubmittedDate
+        query=arxiv_query,
+        max_results=max_results,
+        sort_by=arxiv.SortCriterion.SubmittedDate,
+        sort_order=arxiv.SortOrder.Descending,
     )
     results = client.results(search)
-    content: Dict[str, Dict[str, Any]] = {}
-    for result in tqdm(results, desc=f'Collecting papers with "{query}"', unit='Paper'):
+    papers_list = []
+
+    for result in tqdm(
+        results, desc=f'Collecting recent papers in "{domain}"', unit='Paper'
+    ):
         paper_title = result.title
         paper_url = result.entry_id
-        proposal = result.summary.replace('\n', ' ')
+        paper_abstract = result.summary.replace('\n', ' ')
         paper_authors = [author.name for author in result.authors]
         paper_domain = result.primary_category
-        publish_time = result.published.date()
-        paper_timestamp = int(
-            datetime.datetime(
-                publish_time.year, publish_time.month, publish_time.day
-            ).timestamp()
-        )
+        publish_time = result.published
+        paper_timestamp = int(publish_time.timestamp())
+
+        # Get sections and bibliography if implemented
         paper_sections = get_paper_content_from_html(paper_url)
         paper_bibliography = get_paper_bibliography_from_html(paper_url)
 
-        if publish_time in content:
-            content[publish_time]['title'].append(paper_title)
-            content[publish_time]['abstract'].append(proposal)
-            content[publish_time]['authors'].append(paper_authors)
-            content[publish_time]['url'].append(paper_url)
-            content[publish_time]['domain'].append(paper_domain)
-            content[publish_time]['timestamp'].append(paper_timestamp)
-            content[publish_time]['sections'].append(paper_sections)
-            content[publish_time]['bibliography'].append(paper_bibliography)
-        else:
-            content[publish_time] = {}
-            content[publish_time]['title'] = [paper_title]
-            content[publish_time]['abstract'] = [proposal]
-            content[publish_time]['authors'] = [paper_authors]
-            content[publish_time]['url'] = [paper_url]
-            content[publish_time]['domain'] = [paper_domain]
-            content[publish_time]['timestamp'] = [paper_timestamp]
-            content[publish_time]['sections'] = [paper_sections]
-            content[publish_time]['bibliography'] = [paper_bibliography]
-    return content, publish_time
+        paper = Paper(
+            title=paper_title,
+            abstract=paper_abstract,
+            authors=paper_authors,
+            url=paper_url,
+            domain=paper_domain,
+            timestamp=paper_timestamp,
+            sections=paper_sections,
+            bibliography=paper_bibliography,
+        )
+        papers_list.append(paper)
+
+    return papers_list
 
 
 def fetch_html_content(url: str) -> Optional[BeautifulSoup]:
