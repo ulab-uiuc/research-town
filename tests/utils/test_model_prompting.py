@@ -24,7 +24,7 @@ def test_togetherai_mistral_call() -> None:
         }
     ]
     response = model_prompting(
-        'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1', prompt, mode='TEST'
+        'gpt-4o-mini', prompt, mode='TEST'
     )
     assert response is not None
     assert len(response) > 0

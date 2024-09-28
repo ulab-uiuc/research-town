@@ -2,7 +2,6 @@ base_llm: gpt-4o-mini
 max_token_num: 1024
 member_num: 3
 related_paper_num: 10
-result_path: Mixtral-8x7B
 return_num: 1
 reviewer_num: 1
 stream: null
