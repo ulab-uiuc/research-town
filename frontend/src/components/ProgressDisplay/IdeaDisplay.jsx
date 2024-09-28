@@ -17,8 +17,8 @@ function IdeaDisplay({ list }) {
           {list.map((item, index) => (
             <Accordion.Item key={index} eventKey="0">
               <Accordion.Header>
-                {item.type.charAt(0).toUpperCase() + item.type.slice(1)} #
-                {index + 1} from {item.agent_domain} Expert Agent
+                {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                {index + 1} from {item.agent_domain} expert
               </Accordion.Header>
               <Accordion.Body style={{ textAlign: "left" }}>
                 <p>
