@@ -14,13 +14,15 @@ jobs:
       uses: actions/checkout@v2
 
     - name: set up SSH
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+      run: |
+        echo "${{ secrets.EC2_SSH_KEY }}" > /tmp/UIUC.pem
+        chmod 600 /tmp/UIUC.pem
+        eval "$(ssh-agent -s)"
+        ssh-add /tmp/UIUC.pem
 
     - name: deploy to ec2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-89-143-231.compute-1.amazonaws.com << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i /tmp/UIUC.pem ubuntu@ec2-54-89-143-231.compute-1.amazonaws.com << 'EOF'
           cd ~/research-town/backend/
           conda activate research_town
           git pull origin main
