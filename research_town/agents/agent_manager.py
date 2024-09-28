@@ -73,9 +73,7 @@ class AgentManager:
             for member_profile in member_profiles
         ]
 
-    def find_reviewers(
-        self, proposal: Proposal, mode: str = 'sample'
-    ) -> List[Agent]:
+    def find_reviewers(self, proposal: Proposal, mode: str = 'sample') -> List[Agent]:
         reviewer_profiles = self.find_profiles(
             role='reviewer',
             proposal=proposal,
