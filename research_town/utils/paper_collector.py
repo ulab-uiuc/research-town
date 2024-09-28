@@ -11,7 +11,9 @@ from tqdm import tqdm
 from ..dbs.data import Paper
 
 
-def get_related_paper(query: str, domain: str, num_results: int = 10) -> List[Paper]:
+def get_related_paper(query: str, num_results: int, domain: Optional[str]) -> List[Paper]:
+    if domain is None:
+        arxiv_query = query
     arxiv_query = f'({query}) AND cat:{domain}'
 
     search = arxiv.Search(
@@ -38,8 +40,11 @@ def get_related_paper(query: str, domain: str, num_results: int = 10) -> List[Pa
     return papers_list
 
 
-def get_recent_papers(domain: str, max_results: int = 2) -> List[Paper]:
-    arxiv_query = f'cat:{domain}'
+def get_recent_papers(domain: Optional[str] = None, max_results: int = 2) -> List[Paper]:
+    if domain is None:
+        arxiv_query = f'cat:cs'
+    else:
+        arxiv_query = f'cat:{domain}'
     client = arxiv.Client()
     search = arxiv.Search(
         query=arxiv_query,

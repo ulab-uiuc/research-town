@@ -47,7 +47,7 @@ class ProposalWritingEnv(BaseEnv):
         all_insights = []
         for member in self.members:
             related_papers = self.paper_db.search_papers(
-                domain=member.profile.domain[0],
+                domain=member.profile.domain[0] if member.profile.domain else None,
                 query=';'.join(self.contexts),
                 num=2,
             )

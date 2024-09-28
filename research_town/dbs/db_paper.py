@@ -26,14 +26,14 @@ class PaperDB(BaseDB[Paper]):
             )
             self.retriever_model = BertModel.from_pretrained('facebook/contriever')
 
-    def pull_papers(self, num: int, domain: str) -> List[Paper]:
+    def pull_papers(self, num: int, domain: Optional[str] = None) -> List[Paper]:
         papers = get_recent_papers(domain=domain, max_results=num)
         for paper in papers:
             self.add(paper)
         logger.info(f'Pulled papers: {papers}')
         return papers
 
-    def search_papers(self, query: str, domain: str, num: int) -> List[Paper]:
+    def search_papers(self, num: int, query: str, domain: Optional[str] = None) -> List[Paper]:
         papers = get_related_paper(query=query, domain=domain, num_results=num)
         for paper in papers:
             self.add(paper)
