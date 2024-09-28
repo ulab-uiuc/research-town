@@ -1,5 +1,5 @@
 import random
-from typing import Any, List, Optional, TypeVar, get_type_hints
+from typing import List, Literal, Optional, TypeVar
 
 from transformers import BertModel, BertTokenizer
 
@@ -11,10 +11,12 @@ from ..utils.profile_collector import (
     write_bio_prompting,
 )
 from ..utils.retriever import get_embed, rank_topk
-from .data import Data, Profile, Proposal
+from .data import Data, Profile
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=Data)
+
+Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 class ProfileDB(BaseDB[Profile]):
@@ -54,10 +56,17 @@ class ProfileDB(BaseDB[Profile]):
             self.add(profile)
         self.transform_to_embed()
 
-    def match(self, query: str, num: int = 1, **conditions: Any) -> List[Profile]:
+    def transform_to_embed(self) -> None:
+        self._initialize_retriever()
+        for pk, profile in self.data.items():
+            self.data_embed[pk] = get_embed(
+                [profile.bio], self.retriever_tokenizer, self.retriever_model
+            )[0]
+
+    def match(self, query: str, role: Role, num: int = 1) -> List[Profile]:
         self._initialize_retriever()
 
-        profiles = self.get(**conditions)
+        profiles = self.get(**{f'is_{role}_candidate': True})
         query_embed = get_embed([query], self.retriever_tokenizer, self.retriever_model)
 
         corpus_embed = [
@@ -71,20 +80,14 @@ class ProfileDB(BaseDB[Profile]):
         topk_indexes = rank_topk(query_embed, corpus_embed, num=num)
         matched_profiles = [profiles[idx] for topk in topk_indexes for idx in topk]
 
-        logger.info(f'Matched profiles: {matched_profiles}')
+        logger.info(f'Matched profiles for role {role}: {matched_profiles}')
         return matched_profiles
 
-    def sample(self, num: int = 1, **conditions: Any) -> List[Profile]:
-        profiles = self.get(**conditions)
+    def sample(self, role: Role, num: int = 1) -> List[Profile]:
+        profiles = self.get(**{f'is_{role}_candidate': True})
         random.shuffle(profiles)
-        return profiles[:num]
-
-    def transform_to_embed(self) -> None:
-        self._initialize_retriever()
-        for pk, profile in self.data.items():
-            self.data_embed[pk] = get_embed(
-                [profile.bio], self.retriever_tokenizer, self.retriever_model
-            )[0]
+        sampled_profiles = profiles[:num]
+        return sampled_profiles
 
     def reset_role_availability(self) -> None:
         for profile in self.data.values():
@@ -93,61 +96,3 @@ class ProfileDB(BaseDB[Profile]):
             profile.is_reviewer_candidate = True
             profile.is_chair_candidate = True
             self.update(pk=profile.pk, updates=profile.model_dump())
-
-    def _update_profile_roles(self, profiles: List[Profile], role_field: str) -> None:
-        role_fields = [
-            field
-            for field, field_type in get_type_hints(Profile).items()
-            if field.startswith('is_') and isinstance(field_type, bool)
-        ]
-
-        for profile in profiles:
-            for field in role_fields:
-                setattr(profile, field, False)
-            setattr(profile, role_field, True)
-            self.update(pk=profile.pk, updates=profile.model_dump())
-
-    def match_profiles_by_role(
-        self, query: str, role: str, num: int = 1
-    ) -> List[Profile]:
-        return self.match(query=query, num=num, **{f'is_{role}_candidate': True})
-
-    def sample_profiles_by_role(self, role: str, num: int = 1) -> List[Profile]:
-        profiles = self.sample(num=num, **{f'is_{role}_candidate': True})
-        self._update_profile_roles(profiles, f'is_{role}_candidate')
-        return profiles
-
-    # Specific role matching functions
-    def match_member_profiles(
-        self, leader: Profile, member_num: int = 1
-    ) -> List[Profile]:
-        return self.match_profiles_by_role(leader.bio, 'member', member_num)
-
-    def match_reviewer_profiles(
-        self, proposal: Proposal, reviewer_num: int = 1
-    ) -> List[Profile]:
-        return self.match_profiles_by_role(proposal.content, 'reviewer', reviewer_num)
-
-    def match_chair_profiles(
-        self, proposal: Proposal, chair_num: int = 1
-    ) -> List[Profile]:
-        return self.match_profiles_by_role(proposal.content, 'chair', chair_num)
-
-    def match_leader_profiles(self, query: str, leader_num: int = 1) -> List[Profile]:
-        return self.match_profiles_by_role(query, 'leader', leader_num)
-
-    # Specific role sampling functions
-    def sample_leader_profiles(self, leader_num: int = 1) -> List[Profile]:
-        return self.sample_profiles_by_role('leader', leader_num)
-
-    def sample_chair_profiles(self, chair_num: int = 1) -> List[Profile]:
-        return self.sample_profiles_by_role('chair', chair_num)
-
-    def sample_member_profiles(self, member_num: int = 1) -> List[Profile]:
-        return self.sample_profiles_by_role('member', member_num)
-
-    def sample_reviewer_profiles(self, reviewer_num: int = 1) -> List[Profile]:
-        return self.sample_profiles_by_role('reviewer', reviewer_num)
-
-    def sample_leader_profile(self) -> Profile:
-        return self.sample_leader_profiles(1)[0]
