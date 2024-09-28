@@ -5,8 +5,6 @@ fewshot_examples:
   Reviewer 1: The paper presents an interesting approach, but raises serious ethical concerns about privacy and potential bias in the model.
   Reviewer 2: While technically sound, the paper doesn't adequately address the ethical implications of using social media data without explicit consent.
 
-  Here are the rebuttals: We acknowledge the ethical concerns raised. We have added a section on data anonymization and discuss potential biases in our model. We argue that the public nature of social media data justifies its use in our research.
-
   Here is the summary of the reviews: Both reviewers highlight ethical concerns regarding privacy, consent, and potential bias in the proposed model.
 
   Please begin writing the ethical meta-review."
@@ -18,8 +16,6 @@ fewshot_examples:
   Here are the reviews:
   Reviewer 1: The technical contribution is impressive, but the paper lacks a thorough discussion of the ethical implications, particularly regarding deepfakes and potential misuse.
   Reviewer 2: While the method is novel, there are concerns about the dataset used for training and the potential for this technology to be used maliciously.
-
-  Here are the rebuttals: We have added a section on ethical considerations, discussing potential misuse and proposing guidelines for responsible use. We've also provided more details on our training dataset, confirming all images were obtained from public domain sources.
 
   Here is the summary of the reviews: Both reviewers acknowledge the technical merit but express concerns about ethical implications and potential misuse of the technology.
 
@@ -47,8 +43,6 @@ template: |
     Here is the proposal: {proposal}
 
     Here are the reviews: {reviews}
-
-    Here are the rebuttals: {rebuttals}
 
     Here is the summary of the reviews: {summary}
 

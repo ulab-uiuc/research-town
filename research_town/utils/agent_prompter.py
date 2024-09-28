@@ -11,7 +11,6 @@ from .string_mapper import (
     map_insight_list_to_str,
     map_paper_list_to_str,
     map_proposal_to_str,
-    map_rebuttal_list_to_str,
     map_review_list_to_str,
     map_review_to_str,
 )
@@ -244,7 +243,6 @@ def write_review_prompting(
 def write_metareview_prompting(
     proposal: Dict[str, str],
     reviews: List[Dict[str, Union[int, str]]],
-    rebuttals: List[Dict[str, str]],
     model_name: str,
     summary_prompt_template: Dict[str, Union[str, List[str]]],
     strength_prompt_template: Dict[str, Union[str, List[str]]],
@@ -259,11 +257,9 @@ def write_metareview_prompting(
 ) -> Tuple[str, str, str, str, bool]:
     proposal_str = map_proposal_to_str(proposal)
     reviews_str = map_review_list_to_str(reviews)
-    rebuttals_str = map_rebuttal_list_to_str(rebuttals)
     summary_template_input = {
         'proposal': proposal_str,
         'reviews': reviews_str,
-        'rebuttals': rebuttals_str,
     }
     summary_messages = openai_format_prompt_construct(
         summary_prompt_template, summary_template_input
@@ -281,19 +277,16 @@ def write_metareview_prompting(
     strength_template_input = {
         'proposal': proposal_str,
         'reviews': reviews_str,
-        'rebuttals': rebuttals_str,
         'summary': summary,
     }
     weakness_template_input = {
         'proposal': proposal_str,
         'reviews': reviews_str,
-        'rebuttals': rebuttals_str,
         'summary': summary,
     }
     ethical_template_input = {
         'proposal': proposal_str,
         'reviews': reviews_str,
-        'rebuttals': rebuttals_str,
         'summary': summary,
     }
     strength_messages = openai_format_prompt_construct(
@@ -337,7 +330,6 @@ def write_metareview_prompting(
     decision_template_input = {
         'proposal': proposal_str,
         'reviews': reviews_str,
-        'rebuttals': rebuttals_str,
         'summary': summary,
         'strength': strength,
         'weakness': weakness,

@@ -6,8 +6,6 @@ fewshot_examples:
 
   Reviewer 2 (Score: 8/10): Novel approach with promising results. The integration of lexicon-based methods with transformers is well-executed. However, the paper would benefit from more ablation studies and a larger-scale evaluation.
 
-  Here are the rebuttals: We thank the reviewers for their insightful comments. We have added a detailed analysis of computational complexity and comparisons with recent methods, including BERT-based models. We've also conducted additional ablation studies and expanded our evaluation to include two more large-scale datasets.
-
   Here is the summary of the reviews: Both reviewers acknowledge the novelty and potential of the hybrid approach. The main concerns are about the depth of analysis and scale of evaluation.
 
   Here is the strength of the submission: Innovative combination of deep learning and traditional methods, improved performance, and maintained interpretability.
@@ -25,8 +23,6 @@ fewshot_examples:
 
   Reviewer 2 (Score: 5/10): While the idea is interesting, the novelty of the approach is questionable. The paper lacks a thorough theoretical analysis, and the empirical results are not convincing enough. The writing could also be improved for clarity.
 
-  Here are the rebuttals: We appreciate the reviewers' feedback. We have expanded our experimental evaluation to include more baseline methods and larger datasets. We've added a section on scalability analysis and improved the theoretical foundations of our approach. We've also worked on improving the clarity of our writing throughout the paper.
-
   Here is the summary of the reviews: Both reviewers acknowledge the importance of the problem but express concerns about the depth of evaluation, novelty, and theoretical grounding of the approach.
 
   Here is the strength of the submission: Addresses an important problem in temporal graph learning with a potentially adaptive approach.
@@ -42,7 +38,6 @@ sys_prompt: >
     You will be provided with the following information:
     Submission - The abstract of the paper submitted to this conference.
     Reviews - It typically contains the score, a short summary, strength, and weakness of the submission.
-    Rebuttals - Written by the author to address the weaknesses of the submission mentioned in the reviews.
     Summary of Reviews - A short summary of the review.
     Strength of Submission - Strength of the submission based on the review.
     Weakness of Submission - Weakness of the submission based on the review.
@@ -53,8 +48,6 @@ template: |
   Here is the proposal: {proposal}
 
   Here are the reviews: {reviews}
-
-  Here are the rebuttals: {rebuttals}
 
   Here is the summary of the reviews: {summary}
 

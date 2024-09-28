@@ -118,24 +118,13 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
         model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
         agent_role='chair',
     )
-    agent_leader = Agent(
-        agent_profile=agent_profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
-        agent_role='leader',
-    )
     review = agent_reviewer.write_review(
         proposal=research_proposal_A,
-        config=example_config,
-    )
-    rebuttal = agent_leader.write_rebuttal(
-        proposal=research_proposal_A,
-        review=review,
         config=example_config,
     )
     metareview = agent_chair.write_metareview(
         proposal=research_proposal_A,
         reviews=[review],
-        rebuttals=[rebuttal],
         config=example_config,
     )
     assert isinstance(metareview, MetaReview)

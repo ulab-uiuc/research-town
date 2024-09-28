@@ -6,8 +6,6 @@ fewshot_examples:
 
   Reviewer 2 (Score: 8/10): This is a solid contribution to privacy-preserving federated learning. The theoretical analysis is sound, and the privacy guarantees are well-established. The paper could benefit from more extensive experiments on real-world datasets and a discussion on computational overhead.
 
-  Here are the rebuttals: We appreciate the reviewers' feedback. We have expanded our empirical evaluation to include three additional real-world datasets and added comparisons with recent methods (MethodX, MethodY, MethodZ) in Section 4.2. We've also included a detailed analysis of computational overhead in Section 3.4.
-
   Please begin writing the summary of reviews."
 
 - "Summary of reviews: The rebuttal appears to address all the main weaknesses mentioned in the reviews. The expanded empirical evaluation and additional comparisons should strengthen the paper's contribution. The inclusion of a computational overhead analysis will provide readers with a more comprehensive understanding of the proposed method's practical implications."
@@ -19,8 +17,6 @@ fewshot_examples:
 
   Reviewer 2 (Score: 8/10): This is an innovative contribution to the field of AI-generated music. The MusicAI architecture is well-designed, and the human evaluation studies are a strong point. The paper would benefit from a more rigorous analysis of the RL component and its impact on the quality of generated music.
 
-  Here are the rebuttals: We thank the reviewers for their insightful comments. We have revised our evaluation metrics, providing justification for each in Section 4.1. We've expanded our comparison with SOTA methods, including MethodA, MethodB, and MethodC in Section 5.2. We've added a discussion on ethical implications in Section 6. Regarding the RL component, we've included an ablation study in Section 4.3 to demonstrate its impact on music quality.
-
   Please begin writing the summary of reviews."
 
 - "Summary of reviews: The rebuttal appears to address all the main weaknesses mentioned in the reviews. The revised evaluation metrics, expanded comparisons, and added discussions on ethics and the RL component should significantly strengthen the paper. The inclusion of an ablation study for the RL component will provide readers with a better understanding of its contribution to the overall system."
@@ -30,15 +26,12 @@ sys_prompt: >
     You will be provided with the following information:
     Submission - The abstract of the paper submitted to this conference.
     Reviews - It typically contains the score, a short summary, strength, and weakness of the submission.
-    Rebuttals - Written by the author to address the weaknesses of the submission mentioned in the reviews.
 
     You should provide the following information:
-    Summary - A summary of the reviews. You should check if each weakness mentioned is rebutted in the rebuttals.
+    Summary - A summary of the reviews.
 template: |
   Here is the proposal: {proposal}
 
   Here are the reviews: {reviews}
-
-  Here are the rebuttals: {rebuttals}
 
   Please begin writing the summary of reviews.
