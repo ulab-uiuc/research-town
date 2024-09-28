@@ -20,10 +20,21 @@ jobs:
         eval "$(ssh-agent -s)"
         ssh-add /tmp/UIUC.pem
 
-    - name: Deploy to EC2
+    - name: deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no -i /tmp/UIUC.pem ubuntu@ubuntu@ec2-3-87-192-184.compute-1.amazonaws.com << 'EOF'
-          cd ~/research-town/frontend/
+        ssh -o StrictHostKeyChecking=no -i /tmp/UIUC.pem ubuntu@ec2-3-87-192-184.compute-1.amazonaws.com << 'EOF'
+          set -x 
+          cd ~/research-town/
           git pull origin main
+          cd ./frontend/
+
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm use 22
+
+          npm --version || { echo "npm not found after nvm use"; exit 1; }
+
+          npm install
+
           npm run build
         EOF
