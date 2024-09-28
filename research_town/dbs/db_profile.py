@@ -1,5 +1,5 @@
 import random
-from typing import Any, List, Optional, TypeVar, get_type_hints
+from typing import List, Literal, Optional, TypeVar
 
 from transformers import BertModel, BertTokenizer
 
@@ -11,10 +11,12 @@ from ..utils.profile_collector import (
     write_bio_prompting,
 )
 from ..utils.retriever import get_embed, rank_topk
-from .data import Data, Profile, Proposal
+from .data import Data, Profile
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=Data)
+
+Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 class ProfileDB(BaseDB[Profile]):
@@ -24,7 +26,7 @@ class ProfileDB(BaseDB[Profile]):
         self.retriever_model: Optional[BertModel] = None
 
     def _initialize_retriever(self) -> None:
-        if self.retriever_tokenizer is None or self.retriever_model is None:
+        if not self.retriever_tokenizer or not self.retriever_model:
             self.retriever_tokenizer = BertTokenizer.from_pretrained(
                 'facebook/contriever'
             )
@@ -33,9 +35,10 @@ class ProfileDB(BaseDB[Profile]):
     def pull_profiles(self, names: List[str], config: Config) -> None:
         for name in names:
             publications, collaborators = collect_publications_and_coauthors(
-                author=name, paper_max_num=20
+                name, paper_max_num=20
             )
             publication_info = '; '.join([f'{abstract}' for abstract in publications])
+
             bio = write_bio_prompting(
                 publication_info=publication_info,
                 prompt_template=config.agent_prompt_template.write_bio,
@@ -46,66 +49,45 @@ class ProfileDB(BaseDB[Profile]):
                 prompt_template=config.agent_prompt_template.summarize_domain,
                 model_name=config.param.base_llm,
             )
+
             profile = Profile(
-                name=name,
-                bio=bio,
-                domain=domain,
-                collaborators=collaborators,
+                name=name, bio=bio, domain=domain, collaborators=collaborators
             )
             self.add(profile)
-            self.transform_to_embed()
-
-    def match(
-        self,
-        query: str,
-        num: int = 1,
-        **conditions: Any,
-    ) -> List[Profile]:
-        self._initialize_retriever()
-
-        # Get agent profiles based on the provided conditions
-        profiles = self.get(**conditions)
-
-        query_embed = get_embed(
-            instructions=[query],
-            retriever_tokenizer=self.retriever_tokenizer,
-            retriever_model=self.retriever_model,
-        )
-
-        corpus_embed = []
-        for profile in profiles:
-            if profile.pk in self.data_embed:
-                corpus_embed.append(self.data_embed[profile.pk])
-            else:
-                agent_embed = get_embed(
-                    instructions=[profile.bio],
-                    retriever_tokenizer=self.retriever_tokenizer,
-                    retriever_model=self.retriever_model,
-                )[0]
-                corpus_embed.append(agent_embed)
-
-        topk_indexes = rank_topk(
-            query_embed=query_embed, corpus_embed=corpus_embed, num=num
-        )
-        indexes = [index for topk_index in topk_indexes for index in topk_index]
-        matched_profiles = [profiles[index] for index in indexes]
-
-        logger.info(f'Matched agents: {matched_profiles}')
-        return matched_profiles
-
-    def sample(self, num: int = 1, **conditions: Any) -> List[Profile]:
-        profiles = self.get(**conditions)
-        random.shuffle(profiles)
-        return profiles[:num]
+        self.transform_to_embed()
 
     def transform_to_embed(self) -> None:
         self._initialize_retriever()
-        for agent_pk in self.data:
-            self.data_embed[agent_pk] = get_embed(
-                [self.data[agent_pk].bio],
-                self.retriever_tokenizer,
-                self.retriever_model,
+        for pk, profile in self.data.items():
+            self.data_embed[pk] = get_embed(
+                [profile.bio], self.retriever_tokenizer, self.retriever_model
             )[0]
+
+    def match(self, query: str, role: Role, num: int = 1) -> List[Profile]:
+        self._initialize_retriever()
+
+        profiles = self.get(**{f'is_{role}_candidate': True})
+        query_embed = get_embed([query], self.retriever_tokenizer, self.retriever_model)
+
+        corpus_embed = [
+            self.data_embed.get(profile.pk)
+            or get_embed([profile.bio], self.retriever_tokenizer, self.retriever_model)[
+                0
+            ]
+            for profile in profiles
+        ]
+
+        topk_indexes = rank_topk(query_embed, corpus_embed, num=num)
+        matched_profiles = [profiles[idx] for topk in topk_indexes for idx in topk]
+
+        logger.info(f'Matched profiles for role {role}: {matched_profiles}')
+        return matched_profiles
+
+    def sample(self, role: Role, num: int = 1) -> List[Profile]:
+        profiles = self.get(**{f'is_{role}_candidate': True})
+        random.shuffle(profiles)
+        sampled_profiles = profiles[:num]
+        return sampled_profiles
 
     def reset_role_availability(self) -> None:
         for profile in self.data.values():
@@ -114,61 +96,3 @@ class ProfileDB(BaseDB[Profile]):
             profile.is_reviewer_candidate = True
             profile.is_chair_candidate = True
             self.update(pk=profile.pk, updates=profile.model_dump())
-
-    def _update_profile_roles(self, profiles: List[Profile], role_field: str) -> None:
-        role_fields = [
-            field
-            for field, field_type in get_type_hints(Profile).items()
-            if field.startswith('is_') and isinstance(field_type, bool)
-        ]
-        for profile in profiles:
-            for field in role_fields:
-                setattr(profile, field, False)
-            setattr(profile, role_field, True)
-            self.update(pk=profile.pk, updates=profile.model_dump())
-
-    def match_member_profiles(
-        self, leader: Profile, member_num: int = 1
-    ) -> List[Profile]:
-        profiles = self.match(
-            query=leader.bio,
-            num=member_num,
-            is_member_candidate=True,
-        )
-        # Update roles
-        self._update_profile_roles(profiles, 'is_member_candidate')
-        return profiles
-
-    def match_reviewer_profiles(
-        self, proposal: Proposal, reviewer_num: int = 1
-    ) -> List[Profile]:
-        profiles = self.match(
-            query=proposal.content if proposal.content else '',
-            num=reviewer_num,
-            is_reviewer_candidate=True,
-        )
-        # Update roles
-        self._update_profile_roles(profiles, 'is_reviewer_candidate')
-        return profiles
-
-    def match_chair_profiles(
-        self, proposal: Proposal, chair_num: int = 1
-    ) -> List[Profile]:
-        profiles = self.match(
-            query=proposal.content,
-            num=chair_num,
-            is_chair_candidate=True,
-        )
-        # Update roles
-        self._update_profile_roles(profiles, 'is_chair_candidate')
-        return profiles
-
-    def match_leader_profiles(self, query: str, leader_num: int = 1) -> List[Profile]:
-        profiles = self.match(
-            query=query,
-            num=leader_num,
-            is_leader_candidate=True,
-        )
-        # Update roles
-        self._update_profile_roles(profiles, 'is_leader_candidate')
-        return profiles

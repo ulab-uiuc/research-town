@@ -26,13 +26,13 @@ Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 class Agent(object):
     def __init__(
         self,
-        agent_profile: Profile,
+        profile: Profile,
         model_name: str,
-        agent_role: Role = None,
+        role: Role = None,
     ) -> None:
-        self.profile: Profile = agent_profile
+        self.profile: Profile = profile
         self.memory: Dict[str, str] = {}
-        self.role: Role = agent_role
+        self.role: Role = role
         self.model_name: str = model_name
         self.serializer = Serializer()
 

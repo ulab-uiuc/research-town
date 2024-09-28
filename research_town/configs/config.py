@@ -11,7 +11,6 @@ class ParamConfig(BaseModel):
     base_llm: str
     member_num: int
     reviewer_num: int
-    result_path: str
     return_num: Optional[int] = None
     max_token_num: Optional[int] = None
     temperature: Optional[float] = None

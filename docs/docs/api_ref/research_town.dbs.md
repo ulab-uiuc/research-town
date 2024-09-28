@@ -527,7 +527,7 @@ Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Paper`](#research_town.db
 
 Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Profile`](#research_town.dbs.data.Profile)]
 
-#### match(query: str, agent_profiles: List[[Profile](#research_town.dbs.data.Profile)], num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match(query: str, profiles: List[[Profile](#research_town.dbs.data.Profile)], num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
 
 #### match_chair_profiles(proposal: [Proposal](#research_town.dbs.data.Proposal), chair_num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
 
@@ -900,7 +900,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Profile`](#research_town.dbs.data.Profile)]
 
-#### match(query: str, agent_profiles: List[[Profile](#research_town.dbs.data.Profile)], num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match(query: str, profiles: List[[Profile](#research_town.dbs.data.Profile)], num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
 
 #### match_chair_profiles(proposal: [Proposal](#research_town.dbs.data.Proposal), chair_num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
 
