@@ -23,9 +23,21 @@ jobs:
     - name: deploy to EC2
       run: |
         ssh -o StrictHostKeyChecking=no -i /tmp/UIUC.pem ubuntu@ec2-3-87-192-184.compute-1.amazonaws.com << 'EOF'
+          set -x 
           cd ~/research-town/
           git pull origin main
           cd ./frontend/
           which npm || echo "npm not found"
+
+          if ! npm --version; then
+            echo "npm is not installed, trying to install"
+            sudo apt-get update
+            sudo apt-get install -y npm
+          fi
+
+          echo "Running npm install to ensure dependencies"
+          npm install
+
+          echo "Building the frontend"
           npm run build
         EOF
