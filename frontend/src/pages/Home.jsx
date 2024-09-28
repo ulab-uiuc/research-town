@@ -76,7 +76,7 @@ function Home() {
       </div>
       <div style={{ marginTop: "4em", marginBottom: "4em" }}> </div>
       <InputForm url={url} setUrl={setUrl} handleSubmit={handleSubmit} />
-      {isProcessing && <p>Processing in 1 Minute ...</p>}
+      {isProcessing && <p>Agents are reading the paper. Wait around 1 Minute ...</p>}
       <div style={{ marginTop: "4em", marginBottom: "4em" }}> </div>
       <OutputDisplay output={output} />
     </div>
