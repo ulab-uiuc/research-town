@@ -25,7 +25,7 @@ from tests.constants.data_constants import (
 )
 
 
-@pytest.fixture(params=['gpt-4o', 'together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1'])
+@pytest.fixture(params=['gpt-4o', 'gpt-4o-mini'])
 def model_name(request: pytest.FixtureRequest) -> Any:
     return request.param
 

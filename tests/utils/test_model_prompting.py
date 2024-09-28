@@ -9,7 +9,7 @@ def test_openai_call() -> None:
             'content': 'Here is a high-level summarized insight of a research field Machine Learning. ',
         }
     ]
-    response = model_prompting('gpt-3.5-turbo', prompt, mode='TEST')
+    response = model_prompting('gpt-4o-mini', prompt, mode='TEST')
     assert response is not None
     assert len(response) > 0
     assert len(response[0]) > 0

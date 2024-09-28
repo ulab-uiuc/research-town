@@ -23,7 +23,7 @@ def test_review_literature(
     mock_model_prompting.side_effect = mock_prompting
     agent = Agent(
         profile=profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        model_name='gpt-4o-mini',
         role='leader',
     )
     research_insight = agent.review_literature(
@@ -53,7 +53,7 @@ def test_brainstorm_idea(
 
     agent = Agent(
         profile=profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        model_name='gpt-4o-mini',
         role='leader',
     )
     research_idea = agent.brainstorm_idea(
@@ -71,7 +71,7 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
 
     agent = Agent(
         profile=profile_B,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        model_name='gpt-4o-mini',
         role='leader',
     )
     paper = agent.write_proposal(
@@ -90,7 +90,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
 
     agent = Agent(
         profile=profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        model_name='gpt-4o-mini',
         role='reviewer',
     )
     review = agent.write_review(
@@ -110,12 +110,12 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
 
     agent_reviewer = Agent(
         profile=profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        model_name='gpt-4o-mini',
         role='reviewer',
     )
     agent_chair = Agent(
         profile=profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        model_name='gpt-4o-mini',
         role='chair',
     )
     review = agent_reviewer.write_review(
@@ -141,12 +141,12 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
 
     agent_reviewer = Agent(
         profile=profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        model_name='gpt-4o-mini',
         role='reviewer',
     )
     agent_leader = Agent(
         profile=profile_A,
-        model_name='together_ai/mistralai/Mixtral-8x7B-Instruct-v0.1',
+        model_name='gpt-4o-mini',
         role='leader',
     )
     review = agent_reviewer.write_review(

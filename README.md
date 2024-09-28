@@ -55,22 +55,17 @@ python research_town_demo.py
 ### Configure API keys
 
 OpenAI key is required to run the code. Please set the environment variable `OPENAI_API_KEY` to your key. The recommend way is to add the key to the conda environment:
-
 ```
-conda env config vars set OPENAI_API_KEY=your_key
-```
-
-For some experiments, TogetherAI key is also needed to run the code. Please set the environment variable `TOGETHERAI_API_KEY` to your key (notice: not `TOGETHER_API_KEY`). The recommend way is to add the key to the conda environment:
-
-```
-conda env config vars set TOGETHER_API_KEY=your_key
+export OPENAI_API_KEY=<your_key>
+# or if you want to make sure your key is auto-set each time you enter the environment
+conda env config vars set OPENAI_API_KEY=<your_key>
 ```
 
 ## Developing
 
-#### Develop UI part
+#### Develop Demo
 
-To develop the UI part (both frontend and backend):
+To develop the demo (both frontend and backend):
 
 ```bash
 cd frontend
