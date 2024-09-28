@@ -34,9 +34,7 @@ jobs:
 
           npm --version || { echo "npm not found after nvm use"; exit 1; }
 
-          echo "Running npm install to ensure dependencies"
           npm install
 
-          echo "Building the frontend"
           npm run build
         EOF
