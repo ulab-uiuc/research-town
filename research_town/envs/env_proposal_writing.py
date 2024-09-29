@@ -45,9 +45,9 @@ class ProposalWritingEnv(BaseEnv):
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         # Each member reviews literature
         all_insights = []
+        ideas = []
         for member in self.members:
             related_papers = self.paper_db.search_papers(
-                domain=member.profile.domain[0] if member.profile.domain else None,
                 query=';'.join(self.contexts),
                 num=2,
             )
@@ -56,14 +56,20 @@ class ProposalWritingEnv(BaseEnv):
                 contexts=self.contexts,
                 config=self.config,
             )
-            all_insights.extend(insights)
+            all_insights.append(insights)
             for insight in insights:
                 yield insight, member
 
-        # Brainstorm ideas
-        ideas = []
-        for member in self.members:
-            idea = member.brainstorm_idea(insights=all_insights, config=self.config)
+        for member, insights in zip(self.members, all_insights):
+            related_papers = self.paper_db.search_papers(
+                query=insight.content,
+                author=member.profile.name,
+                domain=member.profile.domain[0] if member.profile.domain else None,
+                num=2,
+            )
+            idea = member.brainstorm_idea(
+                papers=related_papers, insights=insights, config=self.config
+            )
             ideas.append(idea)
             yield idea, member
 

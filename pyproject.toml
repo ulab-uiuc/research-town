@@ -21,7 +21,8 @@ beautifulsoup4 = "*"
 lxml = "*"
 tqdm = "*"
 nltk = "*"
-torch = { version = "^2.2.1", source = "torchcpu" }
+keybert = "*"
+torch = { version = "2.2.1", source = "torchcpu", optional = true }
 
 uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }

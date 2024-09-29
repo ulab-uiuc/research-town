@@ -5,44 +5,88 @@ import arxiv
 import requests
 from beartype.typing import Dict, List, Optional
 from bs4 import BeautifulSoup
+from keybert import KeyBERT
 from PyPDF2 import PdfReader
 from tqdm import tqdm
 
 from ..dbs.data import Paper
 
-def get_related_paper(query: str, num_results: int, domain: Optional[str]) -> List[Paper]:
-    if domain is None:
-        arxiv_query = query
-    else:
-        arxiv_query = f'({query}) AND all:{domain}'
 
+def get_related_paper(
+    num_results: int,
+    query: Optional[str] = None,
+    domain: Optional[str] = None,
+    author: Optional[str] = None,
+) -> List[Paper]:
+    keyword = ''
+
+    if query is not None:
+        kw_model = KeyBERT()
+        extraction_results = kw_model.extract_keywords(
+            query, keyphrase_ngram_range=(1, 3), stop_words='english'
+        )
+        keyword = ' '.join([word for word, _ in extraction_results])
+
+    arxiv_query_parts = []
+
+    if keyword:
+        arxiv_query_parts.append(f'({keyword})')
+
+    if domain:
+        arxiv_query_parts.append(f'all:{domain}')
+
+    if author:
+        arxiv_query_parts.append(f'au:{author}')
+
+    if arxiv_query_parts:
+        arxiv_query = ' AND '.join(arxiv_query_parts)
+    else:
+        raise ValueError(
+            "At least one of 'query', 'domain', or 'author' must be provided."
+        )
+
+    client = arxiv.Client()
     search = arxiv.Search(
         query=arxiv_query,
         max_results=num_results,
         sort_by=arxiv.SortCriterion.Relevance,
     )
 
+    results = client.results(search)
     papers_list = []
 
-    for result in search.results():
+    for result in tqdm(results, desc='Collecting recent papers', unit='Paper'):
+        paper_title = result.title
+        paper_url = result.entry_id
+        paper_abstract = result.summary.replace('\n', ' ')
+        paper_authors = [author.name for author in result.authors]
+        paper_domain = result.primary_category
+        publish_time = result.published
+        paper_timestamp = int(publish_time.timestamp())
+
+        paper_sections = get_paper_content_from_html(paper_url)
+        paper_bibliography = get_paper_bibliography_from_html(paper_url)
+
         paper = Paper(
-            title=result.title,
-            abstract=result.summary,
-            authors=[author.name for author in result.authors],
-            url=result.entry_id,
-            domain=domain,
-            timestamp=int(result.published.timestamp()),
-            sections=[],  # Sections not provided by arXiv API
-            bibliography=[],  # Bibliography not provided by arXiv API
+            title=paper_title,
+            abstract=paper_abstract,
+            authors=paper_authors,
+            url=paper_url,
+            domain=paper_domain,
+            timestamp=paper_timestamp,
+            sections=paper_sections,
+            bibliography=paper_bibliography,
         )
         papers_list.append(paper)
 
     return papers_list
 
 
-def get_recent_papers(domain: Optional[str] = None, max_results: int = 2) -> List[Paper]:
+def get_recent_papers(
+    domain: Optional[str] = None, max_results: int = 2
+) -> List[Paper]:
     if domain is None:
-        arxiv_query = f'all:artificial intelligence'
+        arxiv_query = 'all:artificial intelligence'
     else:
         arxiv_query = f'all:{domain}'
 

@@ -58,6 +58,7 @@ def test_brainstorm_idea(
     )
     research_idea = agent.brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
+        papers=[paper_A, paper_B],
         config=example_config,
     )
     assert isinstance(research_idea, Idea)

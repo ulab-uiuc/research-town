@@ -33,8 +33,16 @@ class PaperDB(BaseDB[Paper]):
         logger.info(f'Pulled papers: {papers}')
         return papers
 
-    def search_papers(self, num: int, query: str, domain: Optional[str] = None) -> List[Paper]:
-        papers = get_related_paper(query=query, domain=domain, num_results=num)
+    def search_papers(
+        self,
+        num: int,
+        query: Optional[str] = None,
+        domain: Optional[str] = None,
+        author: Optional[str] = None,
+    ) -> List[Paper]:
+        papers = get_related_paper(
+            query=query, domain=domain, author=author, num_results=num
+        )
         for paper in papers:
             self.add(paper)
         logger.info(f'Searched papers: {papers}')
