@@ -52,6 +52,7 @@ def review_literature_prompting(
 def brainstorm_idea_prompting(
     bio: str,
     insights: List[Dict[str, str]],
+    papers: List[Dict[str, str]],
     model_name: str,
     prompt_template: Dict[str, Union[str, List[str]]],
     return_num: Optional[int] = 1,
@@ -61,7 +62,8 @@ def brainstorm_idea_prompting(
     stream: Optional[bool] = None,
 ) -> List[str]:
     insights_str = map_insight_list_to_str(insights)
-    template_input = {'bio': bio, 'insights': insights_str}
+    papers_str = map_paper_list_to_str(papers)
+    template_input = {'bio': bio, 'insights': insights_str, 'papers': papers_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
     return model_prompting(
         model_name,

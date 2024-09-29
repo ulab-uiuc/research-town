@@ -1,7 +1,8 @@
 from typing import List, Literal
 
 from ..configs import Config
-from ..dbs import Profile, ProfileDB, Proposal
+from ..data import Profile, Proposal
+from ..dbs import ProfileDB
 from .agent import Agent
 
 Role = Literal['reviewer', 'leader', 'member', 'chair']

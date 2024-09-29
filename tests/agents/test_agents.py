@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent import Agent
-from research_town.dbs import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
+from research_town.data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from tests.constants.config_constants import example_config
 from tests.constants.data_constants import (
     paper_A,
@@ -58,6 +58,7 @@ def test_brainstorm_idea(
     )
     research_idea = agent.brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
+        papers=[paper_A, paper_B],
         config=example_config,
     )
     assert isinstance(research_idea, Idea)
