@@ -2,9 +2,9 @@
 
 ## Submodules
 
-## research_town.dbs.data module
+## research_town.data module
 
-### *class* research_town.dbs.data.Data(\*, pk: str = None, project_name: str | None = None)
+### *class* research_town.data.Data(\*, pk: str = None, project_name: str | None = None)
 
 Bases: `BaseModel`
 
@@ -27,9 +27,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### project_name *: str | None*
 
-### *class* research_town.dbs.data.Idea(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], \*\*extra_data: Any)
+### *class* research_town.data.Idea(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -46,9 +46,9 @@ mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
 
 This replaces Model._\_fields_\_ from Pydantic V1.
 
-### *class* research_town.dbs.data.IdeaBrainstormLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, idea_pk: str)
+### *class* research_town.data.IdeaBrainstormLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, idea_pk: str)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### idea_pk *: str*
 
@@ -67,9 +67,9 @@ mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
 
 This replaces Model._\_fields_\_ from Pydantic V1.
 
-### *class* research_town.dbs.data.Insight(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], \*\*extra_data: Any)
+### *class* research_town.data.Insight(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -86,9 +86,9 @@ mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
 
 This replaces Model._\_fields_\_ from Pydantic V1.
 
-### *class* research_town.dbs.data.LiteratureReviewLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, insight_pk: str | None = None)
+### *class* research_town.data.LiteratureReviewLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, insight_pk: str | None = None)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### insight_pk *: str | None*
 
@@ -107,9 +107,9 @@ mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
 
 This replaces Model._\_fields_\_ from Pydantic V1.
 
-### *class* research_town.dbs.data.Log(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str)
+### *class* research_town.data.Log(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str)
 
-Bases: [`Data`](#research_town.dbs.data.Data)
+Bases: [`Data`](#research_town.data.Data)
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -130,9 +130,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### timestep *: int*
 
-### *class* research_town.dbs.data.MetaReview(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, chair_pk: str | None = None, reviewer_pks: List[str] = [], author_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concerns: str | None = None, decision: bool = False, \*\*extra_data: Any)
+### *class* research_town.data.MetaReview(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, chair_pk: str | None = None, reviewer_pks: List[str] = [], author_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concerns: str | None = None, decision: bool = False, \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### author_pk *: str | None*
 
@@ -167,9 +167,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### weakness *: str | None*
 
-### *class* research_town.dbs.data.MetaReviewWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, metareview_pk: str)
+### *class* research_town.data.MetaReviewWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, metareview_pk: str)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### metareview_pk *: str*
 
@@ -188,9 +188,9 @@ mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
 
 This replaces Model._\_fields_\_ from Pydantic V1.
 
-### *class* research_town.dbs.data.Paper(\*, pk: str = None, project_name: str | None = None, authors: List[str] = [], title: str, abstract: str, url: str | None = None, timestamp: int | None = None, sections: Dict[str, str] | None = None, table_captions: Dict[str, str] | None = None, figure_captions: Dict[str, str] | None = None, bibliography: Dict[str, str] | None = None, keywords: List[str] | None = None, domain: str | None = None, references: List[Dict[str, str]] | None = None, citation_count: int | None = 0, award: str | None = None, embed: Any | None = None)
+### *class* research_town.data.Paper(\*, pk: str = None, project_name: str | None = None, authors: List[str] = [], title: str, abstract: str, url: str | None = None, timestamp: int | None = None, sections: Dict[str, str] | None = None, table_captions: Dict[str, str] | None = None, figure_captions: Dict[str, str] | None = None, bibliography: Dict[str, str] | None = None, keywords: List[str] | None = None, domain: str | None = None, references: List[Dict[str, str]] | None = None, citation_count: int | None = 0, award: str | None = None, embed: Any | None = None)
 
-Bases: [`Data`](#research_town.dbs.data.Data)
+Bases: [`Data`](#research_town.data.Data)
 
 #### abstract *: str*
 
@@ -237,9 +237,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### url *: str | None*
 
-### *class* research_town.dbs.data.Profile(\*, pk: str = None, project_name: str | None = None, name: str, bio: str, collaborators: List[str] | None = [], institute: str | None = None, embed: Any | None = None, is_leader_candidate: bool | None = True, is_member_candidate: bool | None = True, is_reviewer_candidate: bool | None = True, is_chair_candidate: bool | None = True)
+### *class* research_town.data.Profile(\*, pk: str = None, project_name: str | None = None, name: str, bio: str, collaborators: List[str] | None = [], institute: str | None = None, embed: Any | None = None, is_leader_candidate: bool | None = True, is_member_candidate: bool | None = True, is_reviewer_candidate: bool | None = True, is_chair_candidate: bool | None = True)
 
-Bases: [`Data`](#research_town.dbs.data.Data)
+Bases: [`Data`](#research_town.data.Data)
 
 #### bio *: str*
 
@@ -274,9 +274,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### name *: str*
 
-### *class* research_town.dbs.data.Progress(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [])
+### *class* research_town.data.Progress(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [])
 
-Bases: [`Data`](#research_town.dbs.data.Data)
+Bases: [`Data`](#research_town.data.Data)
 
 #### content *: str*
 
@@ -297,9 +297,9 @@ mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
 
 This replaces Model._\_fields_\_ from Pydantic V1.
 
-### *class* research_town.dbs.data.Proposal(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], q1: str | None = None, q2: str | None = None, q3: str | None = None, q4: str | None = None, q5: str | None = None, abstract: str = '', title: str | None = None, conference: str | None = None, \*\*extra_data: Any)
+### *class* research_town.data.Proposal(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], q1: str | None = None, q2: str | None = None, q3: str | None = None, q4: str | None = None, q5: str | None = None, abstract: str = '', title: str | None = None, conference: str | None = None, \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### abstract *: str*
 
@@ -332,9 +332,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### title *: str | None*
 
-### *class* research_town.dbs.data.ProposalWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, proposal_pk: str)
+### *class* research_town.data.ProposalWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, proposal_pk: str)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -353,9 +353,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### proposal_pk *: str*
 
-### *class* research_town.dbs.data.Rebuttal(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, reviewer_pk: str | None = None, author_pk: str | None = None, \*\*extra_data: Any)
+### *class* research_town.data.Rebuttal(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, reviewer_pk: str | None = None, author_pk: str | None = None, \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### author_pk *: str | None*
 
@@ -378,9 +378,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### reviewer_pk *: str | None*
 
-### *class* research_town.dbs.data.RebuttalWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, rebuttal_pk: str)
+### *class* research_town.data.RebuttalWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, rebuttal_pk: str)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -399,9 +399,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### rebuttal_pk *: str*
 
-### *class* research_town.dbs.data.Review(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, reviewer_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concerns: str | None = None, score: int | None = None, \*\*extra_data: Any)
+### *class* research_town.data.Review(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, reviewer_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concerns: str | None = None, score: int | None = None, \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### ethical_concerns *: str | None*
 
@@ -432,9 +432,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### weakness *: str | None*
 
-### *class* research_town.dbs.data.ReviewWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, review_pk: str)
+### *class* research_town.data.ReviewWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, review_pk: str)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -513,9 +513,9 @@ Bases: [`ComplexDB`](#research_town.dbs.db_complex.ComplexDB)
 
 ### *class* research_town.dbs.db_paper.PaperDB(load_file_path: str | None = None)
 
-Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Paper`](#research_town.dbs.data.Paper)]
+Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Paper`](#research_town.data.Paper)]
 
-#### match(query: str, papers: List[[Paper](#research_town.dbs.data.Paper)], num: int = 1) → List[[Paper](#research_town.dbs.data.Paper)]
+#### match(query: str, papers: List[[Paper](#research_town.data.Paper)], num: int = 1) → List[[Paper](#research_town.data.Paper)]
 
 #### pull_papers(num: int, domain: str) → None
 
@@ -525,23 +525,23 @@ Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Paper`](#research_town.db
 
 ### *class* research_town.dbs.db_profile.ProfileDB(load_file_path: str | None = None)
 
-Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Profile`](#research_town.dbs.data.Profile)]
+Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Profile`](#research_town.data.Profile)]
 
-#### match(query: str, profiles: List[[Profile](#research_town.dbs.data.Profile)], num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match(query: str, profiles: List[[Profile](#research_town.data.Profile)], num: int = 1) → List[[Profile](#research_town.data.Profile)]
 
-#### match_chair_profiles(proposal: [Proposal](#research_town.dbs.data.Proposal), chair_num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match_chair_profiles(proposal: [Proposal](#research_town.data.Proposal), chair_num: int = 1) → List[[Profile](#research_town.data.Profile)]
 
-#### match_leader_profiles(query: str, leader_num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match_leader_profiles(query: str, leader_num: int = 1) → List[[Profile](#research_town.data.Profile)]
 
-#### match_member_profiles(leader: [Profile](#research_town.dbs.data.Profile), member_num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match_member_profiles(leader: [Profile](#research_town.data.Profile), member_num: int = 1) → List[[Profile](#research_town.data.Profile)]
 
-#### match_reviewer_profiles(proposal: [Proposal](#research_town.dbs.data.Proposal), reviewer_num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match_reviewer_profiles(proposal: [Proposal](#research_town.data.Proposal), reviewer_num: int = 1) → List[[Profile](#research_town.data.Profile)]
 
 #### pull_profiles(agent_names: List[str], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → None
 
 #### reset_role_availability() → None
 
-#### search_profiles(condition: Dict[str, Any], query: str, num: int, update_fields: Dict[str, bool]) → List[[Profile](#research_town.dbs.data.Profile)]
+#### search_profiles(condition: Dict[str, Any], query: str, num: int, update_fields: Dict[str, bool]) → List[[Profile](#research_town.data.Profile)]
 
 #### transform_to_embed() → None
 
@@ -577,7 +577,7 @@ Bases: `Generic`[`T`]
 
 ### *class* research_town.dbs.Idea(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### content *: str*
 
@@ -604,7 +604,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.IdeaBrainstormLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, idea_pk: str)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### idea_pk *: str*
 
@@ -633,7 +633,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.Insight(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### content *: str*
 
@@ -660,7 +660,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.LiteratureReviewLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, insight_pk: str | None = None)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### insight_pk *: str | None*
 
@@ -689,7 +689,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.Log(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str)
 
-Bases: [`Data`](#research_town.dbs.data.Data)
+Bases: [`Data`](#research_town.data.Data)
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -720,7 +720,7 @@ Bases: [`ComplexDB`](#research_town.dbs.db_complex.ComplexDB)
 
 ### *class* research_town.dbs.MetaReview(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, chair_pk: str | None = None, reviewer_pks: List[str] = [], author_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concerns: str | None = None, decision: bool = False, \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### author_pk *: str | None*
 
@@ -765,7 +765,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.MetaReviewWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, metareview_pk: str)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### metareview_pk *: str*
 
@@ -794,7 +794,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.Paper(\*, pk: str = None, project_name: str | None = None, authors: List[str] = [], title: str, abstract: str, url: str | None = None, timestamp: int | None = None, sections: Dict[str, str] | None = None, table_captions: Dict[str, str] | None = None, figure_captions: Dict[str, str] | None = None, bibliography: Dict[str, str] | None = None, keywords: List[str] | None = None, domain: str | None = None, references: List[Dict[str, str]] | None = None, citation_count: int | None = 0, award: str | None = None, embed: Any | None = None)
 
-Bases: [`Data`](#research_town.dbs.data.Data)
+Bases: [`Data`](#research_town.data.Data)
 
 #### abstract *: str*
 
@@ -847,9 +847,9 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.PaperDB(load_file_path: str | None = None)
 
-Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Paper`](#research_town.dbs.data.Paper)]
+Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Paper`](#research_town.data.Paper)]
 
-#### match(query: str, papers: List[[Paper](#research_town.dbs.data.Paper)], num: int = 1) → List[[Paper](#research_town.dbs.data.Paper)]
+#### match(query: str, papers: List[[Paper](#research_town.data.Paper)], num: int = 1) → List[[Paper](#research_town.data.Paper)]
 
 #### pull_papers(num: int, domain: str) → None
 
@@ -857,7 +857,7 @@ Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Paper`](#research_town.db
 
 ### *class* research_town.dbs.Profile(\*, pk: str = None, project_name: str | None = None, name: str, bio: str, collaborators: List[str] | None = [], institute: str | None = None, embed: Any | None = None, is_leader_candidate: bool | None = True, is_member_candidate: bool | None = True, is_reviewer_candidate: bool | None = True, is_chair_candidate: bool | None = True)
 
-Bases: [`Data`](#research_town.dbs.data.Data)
+Bases: [`Data`](#research_town.data.Data)
 
 #### bio *: str*
 
@@ -898,29 +898,29 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.ProfileDB(load_file_path: str | None = None)
 
-Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Profile`](#research_town.dbs.data.Profile)]
+Bases: [`BaseDB`](#research_town.dbs.db_base.BaseDB)[[`Profile`](#research_town.data.Profile)]
 
-#### match(query: str, profiles: List[[Profile](#research_town.dbs.data.Profile)], num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match(query: str, profiles: List[[Profile](#research_town.data.Profile)], num: int = 1) → List[[Profile](#research_town.data.Profile)]
 
-#### match_chair_profiles(proposal: [Proposal](#research_town.dbs.data.Proposal), chair_num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match_chair_profiles(proposal: [Proposal](#research_town.data.Proposal), chair_num: int = 1) → List[[Profile](#research_town.data.Profile)]
 
-#### match_leader_profiles(query: str, leader_num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match_leader_profiles(query: str, leader_num: int = 1) → List[[Profile](#research_town.data.Profile)]
 
-#### match_member_profiles(leader: [Profile](#research_town.dbs.data.Profile), member_num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match_member_profiles(leader: [Profile](#research_town.data.Profile), member_num: int = 1) → List[[Profile](#research_town.data.Profile)]
 
-#### match_reviewer_profiles(proposal: [Proposal](#research_town.dbs.data.Proposal), reviewer_num: int = 1) → List[[Profile](#research_town.dbs.data.Profile)]
+#### match_reviewer_profiles(proposal: [Proposal](#research_town.data.Proposal), reviewer_num: int = 1) → List[[Profile](#research_town.data.Profile)]
 
 #### pull_profiles(agent_names: List[str], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → None
 
 #### reset_role_availability() → None
 
-#### search_profiles(condition: Dict[str, Any], query: str, num: int, update_fields: Dict[str, bool]) → List[[Profile](#research_town.dbs.data.Profile)]
+#### search_profiles(condition: Dict[str, Any], query: str, num: int, update_fields: Dict[str, bool]) → List[[Profile](#research_town.data.Profile)]
 
 #### transform_to_embed() → None
 
 ### *class* research_town.dbs.Progress(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [])
 
-Bases: [`Data`](#research_town.dbs.data.Data)
+Bases: [`Data`](#research_town.data.Data)
 
 #### content *: str*
 
@@ -951,7 +951,7 @@ Bases: [`ComplexDB`](#research_town.dbs.db_complex.ComplexDB)
 
 ### *class* research_town.dbs.Proposal(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], q1: str | None = None, q2: str | None = None, q3: str | None = None, q4: str | None = None, q5: str | None = None, abstract: str = '', title: str | None = None, conference: str | None = None, \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### abstract *: str*
 
@@ -994,7 +994,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.ProposalWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, proposal_pk: str)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -1023,7 +1023,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.Rebuttal(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, reviewer_pk: str | None = None, author_pk: str | None = None, \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### author_pk *: str | None*
 
@@ -1056,7 +1056,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.RebuttalWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, rebuttal_pk: str)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -1085,7 +1085,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.Review(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, reviewer_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concerns: str | None = None, score: int | None = None, \*\*extra_data: Any)
 
-Bases: [`Progress`](#research_town.dbs.data.Progress)
+Bases: [`Progress`](#research_town.data.Progress)
 
 #### content *: str*
 
@@ -1126,7 +1126,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 ### *class* research_town.dbs.ReviewWritingLog(\*, pk: str = None, project_name: str | None = None, timestep: int = 0, profile_pk: str, review_pk: str)
 
-Bases: [`Log`](#research_town.dbs.data.Log)
+Bases: [`Log`](#research_town.data.Log)
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 

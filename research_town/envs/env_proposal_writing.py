@@ -81,7 +81,9 @@ class ProposalWritingEnv(BaseEnv):
         query = summarized_idea.content or self.leader.profile.bio
         related_papers = self.paper_db.search_papers(
             query=query,
-            domain=self.leader.profile.domain[0],
+            domain=self.leader.profile.domain[0]
+            if self.leader.profile.domain
+            else None,
             num=2,
         )
         proposal = self.leader.write_proposal(

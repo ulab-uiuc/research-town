@@ -9,7 +9,7 @@ from keybert import KeyBERT
 from PyPDF2 import PdfReader
 from tqdm import tqdm
 
-from ..dbs.data import Paper
+from ..data.data import Paper
 
 
 def get_related_paper(
@@ -83,7 +83,7 @@ def get_related_paper(
 
 
 def get_recent_papers(
-    domain: Optional[str] = None, max_results: int = 2
+    domain: Optional[str] = None, max_results: int = 1
 ) -> List[Paper]:
     if domain is None:
         arxiv_query = 'all:artificial intelligence'

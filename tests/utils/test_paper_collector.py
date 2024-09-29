@@ -17,17 +17,19 @@ def test_get_recent_papers() -> None:
         mock_paper_1.title = 'Paper 1'
         mock_paper_1.entry_id = 'http://example.com/1'
         mock_paper_1.summary = 'Summary 1'
+        mock_paper_1.primary_category = 'cs'
         mock_paper_1.published = datetime.datetime(2023, 7, 1)
 
         mock_paper_2 = MagicMock()
         mock_paper_2.title = 'Paper 2'
         mock_paper_2.entry_id = 'http://example.com/2'
         mock_paper_2.summary = 'Summary 2'
+        mock_paper_2.primary_category = 'cs'
         mock_paper_2.published = datetime.datetime(2023, 7, 2)
 
         mock_client_instance.results.return_value = [mock_paper_1, mock_paper_2]
 
-        result = get_recent_papers('test_topic')
+        result = get_recent_papers(max_results=2, domain='cs')
 
         assert len(result) == 2
 
