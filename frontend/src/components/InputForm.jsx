@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 
 function InputForm({ url, setUrl, handleSubmit }) {
   return (
-    <Container fluid="md" style={{ maxWidth: "600px", margin: "40px auto", padding: "20px"}}>
+    <Container fluid="md" style={{ maxWidth: "600px", margin: "20px auto 0px auto", padding: "0px"}}>
       {/* Instruction message */}
       <Row>
         <Col>
