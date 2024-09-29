@@ -2,7 +2,7 @@ from beartype import beartype
 from beartype.typing import Dict, List, Literal
 
 from ..configs import Config
-from ..dbs import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
+from ..data import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,

@@ -7,18 +7,15 @@ from unittest.mock import MagicMock, patch
 import torch
 from beartype.typing import Any, Dict, List
 
-from research_town.dbs import (
+from research_town.data import (
     Idea,
-    LogDB,
     MetaReviewWritingLog,
     Paper,
-    PaperDB,
     Profile,
-    ProfileDB,
-    ProgressDB,
     RebuttalWritingLog,
     ReviewWritingLog,
 )
+from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from tests.constants.config_constants import example_config
 from tests.mocks.mocking_func import mock_prompting
 
