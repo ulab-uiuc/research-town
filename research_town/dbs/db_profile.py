@@ -64,7 +64,7 @@ class ProfileDB(BaseDB[Profile]):
     def match(self, query: str, role: Role, num: int = 1) -> List[Profile]:
         self._initialize_retriever()
 
-        profiles = self.get(**{f'is_{role}_candidate': True})
+        profiles = self.get(**{'role': role})
         query_embed = get_embed([query], self.retriever_tokenizer, self.retriever_model)
 
         corpus_embed = [
@@ -82,15 +82,12 @@ class ProfileDB(BaseDB[Profile]):
         return matched_profiles
 
     def sample(self, role: Role, num: int = 1) -> List[Profile]:
-        profiles = self.get(**{f'is_{role}_candidate': True})
+        profiles = self.get(**{'role': role})
         random.shuffle(profiles)
         sampled_profiles = profiles[:num]
         return sampled_profiles
 
     def reset_role_availability(self) -> None:
         for profile in self.data.values():
-            profile.is_leader_candidate = True
-            profile.is_member_candidate = True
-            profile.is_reviewer_candidate = True
-            profile.is_chair_candidate = True
+            profile.role = Role.NONE
             self.update(pk=profile.pk, updates=profile.model_dump())

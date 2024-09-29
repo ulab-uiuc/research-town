@@ -36,7 +36,7 @@ class Agent(object):
         self,
         profile: Profile,
         model_name: str,
-        role: Role = Role.MEMBER,
+        role: Role = Role.NONE,
     ) -> None:
         self.profile: Profile = profile
         self.memory: Dict[str, str] = {}

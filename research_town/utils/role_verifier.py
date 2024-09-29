@@ -1,4 +1,5 @@
 from functools import wraps
+from ..data import Role
 
 from beartype.typing import Any, Callable, TypeVar, cast
 
@@ -8,9 +9,9 @@ F = TypeVar('F', bound=Callable[..., Any])
 def leader_required(method: F) -> F:
     @wraps(method)
     def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
-        if self.role is None:
+        if self.role == Role.NONE:
             raise PermissionError('Roles are not assigned for research agent.')
-        if self.role != 'leader':
+        if self.role != Role.LEADER:
             raise PermissionError("This operation is allowed only for 'leader' role.")
         return method(self, *args, **kwargs)
 
@@ -20,9 +21,9 @@ def leader_required(method: F) -> F:
 def reviewer_required(method: F) -> F:
     @wraps(method)
     def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
-        if self.role is None:
+        if self.role == Role.NONE:
             raise PermissionError('Roles are not assigned for research agent.')
-        if self.role != 'reviewer':
+        if self.role != Role.REVIEWER:
             raise PermissionError("This operation is allowed only for 'reviewer' role.")
         return method(self, *args, **kwargs)
 
@@ -32,9 +33,9 @@ def reviewer_required(method: F) -> F:
 def member_required(method: F) -> F:
     @wraps(method)
     def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
-        if self.role is None:
+        if self.role == Role.NONE:
             raise PermissionError('Roles are not assigned for research agent.')
-        if self.role != 'member' and self.role != 'leader':
+        if self.role != Role.MEMBER and self.role != Role.LEADER:
             raise PermissionError("This operation is allowed only for 'member' role.")
         return method(self, *args, **kwargs)
 
@@ -44,9 +45,9 @@ def member_required(method: F) -> F:
 def chair_required(method: F) -> F:
     @wraps(method)
     def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
-        if self.role is None:
+        if self.role == Role.NONE:
             raise PermissionError('Roles are not assigned for research agent.')
-        if self.role != 'chair':
+        if self.role != Role.CHAIR:
             raise PermissionError("This operation is allowed only for 'chair' role.")
         return method(self, *args, **kwargs)
 

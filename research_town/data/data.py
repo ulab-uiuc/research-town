@@ -6,10 +6,24 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class Role(Enum):
+    NONE = None
     REVIEWER = 'reviewer'
     LEADER = 'leader'
     MEMBER = 'member'
     CHAIR = 'chair'
+
+    def __str__(self):
+        return self.value
+
+    def __json__(self):
+        return self.value
+
+    @classmethod
+    def from_json(cls, value):
+        for member in cls:
+            if member.value == value:
+                return member
+        raise ValueError(f"{value} is not a valid Role")
 
 
 class Data(BaseModel):
@@ -24,10 +38,7 @@ class Profile(Data):
     domain: Optional[List[str]] = Field(default=[])
     institute: Optional[str] = Field(default=None)
     embed: Optional[Any] = Field(default=None)
-    is_leader_candidate: Optional[bool] = Field(default=True)
-    is_member_candidate: Optional[bool] = Field(default=True)
-    is_reviewer_candidate: Optional[bool] = Field(default=True)
-    is_chair_candidate: Optional[bool] = Field(default=True)
+    role: Optional[Role] = Field(default=Role.NONE)
 
 
 class Paper(Data):
