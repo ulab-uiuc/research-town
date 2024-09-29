@@ -15,9 +15,11 @@ from ..data.data import (
     RebuttalWritingLog,
     Review,
     ReviewWritingLog,
+    Role,
 )
 
 __all__ = [
+    'Role',
     'Log',
     'IdeaBrainstormLog',
     'LiteratureReviewLog',

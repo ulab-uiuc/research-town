@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 from beartype.typing import List
 
 from research_town.agents import AgentManager
-from research_town.data import Profile, Proposal
+from research_town.data import Profile, Proposal, Role
 from research_town.dbs import ProfileDB
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.config_constants import example_config
@@ -64,7 +64,7 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
         agent_manager=agent_manager,
     )
     leader = agent_manager.create_agent(
-        profile=proposal_writing_profiles[0], role='leader'
+        profile=proposal_writing_profiles[0], role=Role.LEADER
     )
     proposal_writing_env.on_enter(
         time_step=0,
@@ -106,7 +106,7 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
         agent_manager=agent_manager,
     )
     leader = agent_manager.create_agent(
-        profile=review_writing_profiles[0], role='leader'
+        profile=review_writing_profiles[0], role=Role.LEADER
     )
     review_writing_env.on_enter(
         time_step=0,

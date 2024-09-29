@@ -1,7 +1,15 @@
 import uuid
+from enum import Enum
 from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
+
+
+class Role(Enum):
+    REVIEWER = 'reviewer'
+    LEADER = 'leader'
+    MEMBER = 'member'
+    CHAIR = 'chair'
 
 
 class Data(BaseModel):

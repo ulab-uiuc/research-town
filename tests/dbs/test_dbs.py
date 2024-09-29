@@ -14,6 +14,7 @@ from research_town.data import (
     Profile,
     RebuttalWritingLog,
     ReviewWritingLog,
+    Role,
 )
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from tests.constants.config_constants import example_config
@@ -241,7 +242,7 @@ def test_agent_match() -> None:
     db.add(profile2)
     db.add(profile3)
     leader_profile = 'Profile in CV'
-    match_profiles = db.match(query=leader_profile, num=2, role='leader')
+    match_profiles = db.match(query=leader_profile, num=2, role=Role.LEADER)
     assert match_profiles
     assert len(match_profiles) == 2
 

@@ -1,7 +1,15 @@
 from unittest.mock import MagicMock, patch
 
 from research_town.agents.agent import Agent
-from research_town.data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
+from research_town.data import (
+    Idea,
+    Insight,
+    MetaReview,
+    Proposal,
+    Rebuttal,
+    Review,
+    Role,
+)
 from tests.constants.config_constants import example_config
 from tests.constants.data_constants import (
     paper_A,
@@ -24,7 +32,7 @@ def test_review_literature(
     agent = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        role='leader',
+        role=Role.LEADER,
     )
     research_insight = agent.review_literature(
         papers=[paper_A, paper_B],
@@ -54,7 +62,7 @@ def test_brainstorm_idea(
     agent = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        role='leader',
+        role=Role.LEADER,
     )
     research_idea = agent.brainstorm_idea(
         insights=[research_insight_A, research_insight_B],
@@ -73,7 +81,7 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
     agent = Agent(
         profile=profile_B,
         model_name='gpt-4o-mini',
-        role='leader',
+        role=Role.LEADER,
     )
     paper = agent.write_proposal(
         idea=research_idea_A,
@@ -92,7 +100,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
     agent = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        role='reviewer',
+        role=Role.REVIEWER,
     )
     review = agent.write_review(
         proposal=research_proposal_A,
@@ -112,12 +120,12 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
     agent_reviewer = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        role='reviewer',
+        role=Role.REVIEWER,
     )
     agent_chair = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        role='chair',
+        role=Role.CHAIR,
     )
     review = agent_reviewer.write_review(
         proposal=research_proposal_A,
@@ -143,12 +151,12 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     agent_reviewer = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        role='reviewer',
+        role=Role.REVIEWER,
     )
     agent_leader = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        role='leader',
+        role=Role.LEADER,
     )
     review = agent_reviewer.write_review(
         proposal=research_proposal_A,

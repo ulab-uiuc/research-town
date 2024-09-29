@@ -1,11 +1,9 @@
-from typing import List, Literal
+from typing import List
 
 from ..configs import Config
-from ..data import Profile, Proposal
+from ..data import Profile, Proposal, Role
 from ..dbs import ProfileDB
 from .agent import Agent
-
-Role = Literal['reviewer', 'leader', 'member', 'chair']
 
 
 class AgentManager:
@@ -30,41 +28,45 @@ class AgentManager:
 
     # Specific methods for roles
     def find_leader(self, task: str) -> Agent:
-        agents = self.find_agents(role='leader', query=task, num=1)
+        agents = self.find_agents(role=Role.LEADER, query=task, num=1)
         assert agents is not None
         return agents[0]
 
     def sample_leader(self) -> Agent:
-        agents = self.sample_agents(role='leader', num=1)
+        agents = self.sample_agents(role=Role.LEADER, num=1)
         assert agents is not None
         return agents[0]
 
     def find_members(self, leader_profile: Profile) -> List[Agent]:
         agents = self.find_agents(
-            role='member', query=leader_profile.bio, num=self.config.param.member_num
+            role=Role.MEMBER, query=leader_profile.bio, num=self.config.param.member_num
         )
         return agents
 
     def sample_members(self) -> List[Agent]:
-        agents = self.sample_agents(role='member', num=self.config.param.member_num)
+        agents = self.sample_agents(role=Role.MEMBER, num=self.config.param.member_num)
         return agents
 
     def find_reviewers(self, proposal: Proposal) -> List[Agent]:
         agents = self.find_agents(
-            role='reviewer', query=proposal.content, num=self.config.param.reviewer_num
+            role=Role.REVIEWER,
+            query=proposal.content,
+            num=self.config.param.reviewer_num,
         )
         return agents
 
     def sample_reviewers(self) -> List[Agent]:
-        agents = self.sample_agents(role='reviewer', num=self.config.param.reviewer_num)
+        agents = self.sample_agents(
+            role=Role.REVIEWER, num=self.config.param.reviewer_num
+        )
         return agents
 
     def find_chair(self, proposal: Proposal) -> Agent:
-        agents = self.find_agents(role='chair', query=proposal.content, num=1)
+        agents = self.find_agents(role=Role.CHAIR, query=proposal.content, num=1)
         assert agents is not None
         return agents[0]
 
     def sample_chair(self) -> Agent:
-        agents = self.sample_agents(role='chair', num=1)
+        agents = self.sample_agents(role=Role.CHAIR, num=1)
         assert agents is not None
         return agents[0]

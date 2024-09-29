@@ -1,8 +1,18 @@
 from beartype import beartype
-from beartype.typing import Dict, List, Literal
+from beartype.typing import Dict, List
 
 from ..configs import Config
-from ..data import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
+from ..data import (
+    Idea,
+    Insight,
+    MetaReview,
+    Paper,
+    Profile,
+    Proposal,
+    Rebuttal,
+    Review,
+    Role,
+)
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
@@ -20,15 +30,13 @@ from ..utils.role_verifier import (
 )
 from ..utils.serializer import Serializer
 
-Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
-
 
 class Agent(object):
     def __init__(
         self,
         profile: Profile,
         model_name: str,
-        role: Role = None,
+        role: Role = Role.MEMBER,
     ) -> None:
         self.profile: Profile = profile
         self.memory: Dict[str, str] = {}
