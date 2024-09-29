@@ -6,7 +6,7 @@ from transformers import BertModel, BertTokenizer
 
 from ..data.data import Data, Paper
 from ..utils.logger import logger
-from ..utils.paper_collector import get_recent_papers, get_related_paper
+from ..utils.paper_collector import get_recent_papers, get_related_papers
 from ..utils.retriever import get_embed, rank_topk
 from .db_base import BaseDB
 
@@ -40,7 +40,7 @@ class PaperDB(BaseDB[Paper]):
         domain: Optional[str] = None,
         author: Optional[str] = None,
     ) -> List[Paper]:
-        papers = get_related_paper(
+        papers = get_related_papers(
             query=query, domain=domain, author=author, num_results=num
         )
         for paper in papers:
