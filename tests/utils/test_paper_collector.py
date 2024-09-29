@@ -10,7 +10,7 @@ from research_town.utils.paper_collector import (
 
 
 @patch('arxiv.Client')
-def test_get_recent_paper(mock_client: MagicMock):
+def test_get_recent_paper(mock_client: MagicMock) -> None:
     # Create mock client instance and configure mock papers
     mock_client_instance = MagicMock()
     mock_client.return_value = mock_client_instance
@@ -48,7 +48,7 @@ def test_get_recent_paper(mock_client: MagicMock):
 
 
 @patch('arxiv.Client')
-def test_get_related_papers(mock_client: MagicMock):
+def test_get_related_papers(mock_client: MagicMock) -> None:
     # Create mock client instance and configure mock papers
     mock_client_instance = MagicMock()
     mock_client.return_value = mock_client_instance
