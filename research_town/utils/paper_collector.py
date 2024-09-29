@@ -1,4 +1,5 @@
 import re
+import time
 from io import BytesIO
 
 import arxiv
@@ -10,6 +11,29 @@ from PyPDF2 import PdfReader
 from tqdm import tqdm
 
 from ..data.data import Paper
+
+
+def perform_arxiv_search(
+    search: arxiv.Search,
+    max_retries: int = 5,
+    delay_between_retries: int = 2,
+) -> arxiv.Result:
+    client = arxiv.Client()
+    for attempt in range(max_retries):
+        try:
+            results = client.results(search)
+            return results
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(
+                    f'Connection error occurred: {e}. Retrying ({attempt + 1}/{max_retries})...'
+                )
+                time.sleep(delay_between_retries)
+            else:
+                print(
+                    'Failed to fetch results after multiple retries due to connection issues.'
+                )
+                raise e
 
 
 def get_related_papers(
@@ -45,14 +69,15 @@ def get_related_papers(
             "At least one of 'query', 'domain', or 'author' must be provided."
         )
 
-    client = arxiv.Client()
     search = arxiv.Search(
         query=arxiv_query,
         max_results=num_results,
         sort_by=arxiv.SortCriterion.Relevance,
     )
 
-    results = client.results(search)
+    # Use the independent arXiv search function with retry logic
+    results = perform_arxiv_search(search)
+
     papers_list = []
 
     for result in tqdm(results, desc='Collecting related papers', unit='Paper'):
@@ -90,14 +115,16 @@ def get_recent_papers(
     else:
         arxiv_query = f'all:{domain}'
 
-    client = arxiv.Client()
     search = arxiv.Search(
         query=arxiv_query,
         max_results=max_results,
         sort_by=arxiv.SortCriterion.SubmittedDate,
         sort_order=arxiv.SortOrder.Descending,
     )
-    results = client.results(search)
+
+    # Use the independent arXiv search function with retry logic
+    results = perform_arxiv_search(search)
+
     papers_list = []
 
     for result in tqdm(
@@ -111,7 +138,6 @@ def get_recent_papers(
         publish_time = result.published
         paper_timestamp = int(publish_time.timestamp())
 
-        # Get sections and bibliography if implemented
         paper_sections = get_paper_content_from_html(paper_url)
         paper_bibliography = get_paper_bibliography_from_html(paper_url)
 
