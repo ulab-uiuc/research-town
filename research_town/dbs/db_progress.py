@@ -1,6 +1,6 @@
 from typing import Optional
 
-from .data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
+from ..data.data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from .db_complex import ComplexDB
 
 

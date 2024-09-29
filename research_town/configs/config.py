@@ -92,7 +92,7 @@ class AgentPromptTemplate(BaseModel):
         required_placeholders = {
             'write_bio': ['{publication_info}'],
             'review_literature': ['{bio}', '{papers}'],
-            'brainstorm_idea': ['{bio}', '{insights}'],
+            'brainstorm_idea': ['{bio}', '{insights}', '{papers}'],
             'discuss_idea': ['{bio}', '{ideas}'],
             'write_proposal': ['{idea}', '{papers}'],
             'write_proposal_cot': ['{idea}', '{papers}'],

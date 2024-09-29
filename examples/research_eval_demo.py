@@ -1,13 +1,6 @@
 from research_town.configs import Config
-from research_town.dbs import (
-    Idea,
-    Insight,
-    MetaReview,
-    ProgressDB,
-    Proposal,
-    Rebuttal,
-    Review,
-)
+from research_town.data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
+from research_town.dbs import ProgressDB
 from research_town.evaluators import BaseEvaluator
 
 

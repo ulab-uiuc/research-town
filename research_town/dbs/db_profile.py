@@ -4,6 +4,7 @@ from typing import List, Literal, Optional, TypeVar
 from transformers import BertModel, BertTokenizer
 
 from ..configs import Config
+from ..data.data import Data, Profile
 from ..utils.logger import logger
 from ..utils.profile_collector import (
     collect_publications_and_coauthors,
@@ -11,7 +12,6 @@ from ..utils.profile_collector import (
     write_bio_prompting,
 )
 from ..utils.retriever import get_embed, rank_topk
-from .data import Data, Profile
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=Data)

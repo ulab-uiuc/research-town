@@ -3,8 +3,7 @@ from typing import Dict, List, Tuple, Type
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from ..dbs.data import (
+from ..data.data import (
     Idea,
     IdeaBrainstormLog,
     Insight,
@@ -20,6 +19,7 @@ from ..dbs.data import (
     Review,
     ReviewWritingLog,
 )
+from ..dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from ..envs.env_base import BaseEnv
 
 

@@ -3,7 +3,8 @@ from beartype.typing import Any, Dict, Generator, List, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..dbs import LogDB, PaperDB, Progress, ProgressDB, Rebuttal, Review
+from ..data import Progress, Rebuttal, Review
+from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
 

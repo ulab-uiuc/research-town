@@ -22,7 +22,7 @@ Bases: `object`
 
 #### add_transitions(transitions: List[Tuple[str, str, str]]) → None
 
-#### record(progress: [Progress](research_town.dbs.md#research_town.dbs.data.Progress), agent: [Agent](research_town.agents.md#research_town.agents.agent.Agent)) → None
+#### record(progress: [Progress](research_town.dbs.md#research_town.data.Progress), agent: [Agent](research_town.agents.md#research_town.agents.agent.Agent)) → None
 
 #### run(contexts: List[str]) → None
 
@@ -46,7 +46,7 @@ Bases: `object`
 
 #### add_transitions(transitions: List[Tuple[str, str, str]]) → None
 
-#### record(progress: [Progress](research_town.dbs.md#research_town.dbs.data.Progress), agent: [Agent](research_town.agents.md#research_town.agents.agent.Agent)) → None
+#### record(progress: [Progress](research_town.dbs.md#research_town.data.Progress), agent: [Agent](research_town.agents.md#research_town.agents.agent.Agent)) → None
 
 #### run(contexts: List[str]) → None
 

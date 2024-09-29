@@ -1,9 +1,11 @@
+import datetime
 from unittest.mock import MagicMock, patch
 
 from beartype.typing import List
 
 from research_town.agents import AgentManager
-from research_town.dbs import Profile, ProfileDB, Proposal
+from research_town.data import Profile, Proposal
+from research_town.dbs import ProfileDB
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.config_constants import example_config
 from tests.constants.db_constants import (
@@ -15,8 +17,28 @@ from tests.mocks.mocking_func import mock_prompting
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_env_combo(mock_model_prompting: MagicMock) -> None:
+@patch('arxiv.Client')
+def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
+
+    mock_client_instance = MagicMock()
+    mock_client.return_value = mock_client_instance
+
+    mock_paper_1 = MagicMock()
+    mock_paper_1.title = 'Paper 1'
+    mock_paper_1.entry_id = 'http://example.com/1'
+    mock_paper_1.summary = 'Summary 1'
+    mock_paper_1.primary_category = 'cs'
+    mock_paper_1.published = datetime.datetime(2023, 7, 1)
+
+    mock_paper_2 = MagicMock()
+    mock_paper_2.title = 'Paper 2'
+    mock_paper_2.entry_id = 'http://example.com/2'
+    mock_paper_2.summary = 'Summary 2'
+    mock_paper_2.primary_category = 'cs'
+    mock_paper_2.published = datetime.datetime(2023, 7, 2)
+
+    mock_client_instance.results.return_value = [mock_paper_1, mock_paper_2]
 
     proposal_writing_profiles = [
         Profile(name='Jiaxuan You', bio='A researcher in machine learning.'),
@@ -33,7 +55,6 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
 
     agent_manager = AgentManager(config=example_config, profile_db=temp_profile_db)
 
-    # Create and run the paper submission environment
     proposal_writing_env = ProposalWritingEnv(
         name='proposal_writing',
         paper_db=example_paper_db,
@@ -62,7 +83,6 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     assert isinstance(proposal, Proposal)
     assert proposal.content == 'Paper abstract1'
 
-    # Agent profiles and roles for peer review environment
     review_writing_agent_list: List[str] = [
         'Jiaxuan You',
         'Jure Leskovec',
@@ -77,7 +97,6 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
     for profile in review_writing_profiles:
         temp_profile_db.add(profile)
 
-    # Create and run the peer review environment
     review_writing_env = ReviewWritingEnv(
         name='review_writing',
         paper_db=example_paper_db,
@@ -100,8 +119,9 @@ def test_env_combo(mock_model_prompting: MagicMock) -> None:
             pass
     exit_status, _ = review_writing_env.on_exit()
 
-    # Assertions for peer review environment
     assert exit_status == 'proposal_accept'
 
     metareview = review_writing_env.metareview
     assert metareview is not None
+
+    assert len(mock_client_instance.results.return_value) == 2

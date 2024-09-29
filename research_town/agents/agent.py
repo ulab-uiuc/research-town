@@ -2,7 +2,7 @@ from beartype import beartype
 from beartype.typing import Dict, List, Literal
 
 from ..configs import Config
-from ..dbs import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
+from ..data import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
@@ -69,11 +69,15 @@ class Agent(object):
 
     @beartype
     @member_required
-    def brainstorm_idea(self, insights: List[Insight], config: Config) -> Idea:
+    def brainstorm_idea(
+        self, insights: List[Insight], papers: List[Paper], config: Config
+    ) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
+        serialized_papers = self.serializer.serialize(papers)
         idea_content = brainstorm_idea_prompting(
             bio=self.profile.bio,
             insights=serialized_insights,
+            papers=serialized_papers,
             model_name=self.model_name,
             prompt_template=config.agent_prompt_template.brainstorm_idea,
             return_num=config.param.return_num,
