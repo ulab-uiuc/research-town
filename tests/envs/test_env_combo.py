@@ -1,6 +1,8 @@
-from unittest.mock import MagicMock, patch
 import datetime
+from unittest.mock import MagicMock, patch
+
 from beartype.typing import List
+
 from research_town.agents import AgentManager
 from research_town.data import Profile, Proposal
 from research_town.dbs import ProfileDB

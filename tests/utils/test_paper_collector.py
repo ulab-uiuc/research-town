@@ -34,7 +34,7 @@ def test_get_recent_paper(mock_client: MagicMock):
     mock_client_instance.results.return_value = [mock_paper_1, mock_paper_2]
 
     # Call the function you're testing
-    result_papers = get_recent_papers(max_results=2, domain="cs.AI")
+    result_papers = get_recent_papers(max_results=2, domain='cs.AI')
 
     # Assertions
     assert len(result_papers) == 2
@@ -45,6 +45,7 @@ def test_get_recent_paper(mock_client: MagicMock):
 
     # Check if mock client was called
     mock_client.assert_called_once()
+
 
 @patch('arxiv.Client')
 def test_get_related_papers(mock_client: MagicMock):
@@ -71,7 +72,7 @@ def test_get_related_papers(mock_client: MagicMock):
     mock_client_instance.results.return_value = [mock_paper_1, mock_paper_2]
 
     # Call the function you're testing
-    result_papers = get_related_papers(num_results=2, query="test", domain="cs.AI")
+    result_papers = get_related_papers(num_results=2, query='test', domain='cs.AI')
 
     # Assertions
     assert len(result_papers) == 2
@@ -82,6 +83,7 @@ def test_get_related_papers(mock_client: MagicMock):
 
     # Check if mock client was called
     mock_client.assert_called_once()
+
 
 def test_get_paper_content_from_html() -> None:
     sections = get_paper_content_from_html('https://arxiv.org/html/2403.05534v1')
