@@ -3,7 +3,8 @@ from beartype.typing import Any, Dict, Generator, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..dbs import LogDB, PaperDB, Progress, ProgressDB
+from ..data import Progress
+from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
 
@@ -45,9 +46,10 @@ class ProposalWritingEnv(BaseEnv):
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         # Each member reviews literature
         all_insights = []
+        ideas = []
         for member in self.members:
-            related_papers = self.paper_db.match(
-                query=member.profile.bio,
+            related_papers = self.paper_db.search_papers(
+                query=';'.join(self.contexts),
                 num=2,
             )
             insights = member.review_literature(
@@ -55,14 +57,20 @@ class ProposalWritingEnv(BaseEnv):
                 contexts=self.contexts,
                 config=self.config,
             )
-            all_insights.extend(insights)
+            all_insights.append(insights)
             for insight in insights:
                 yield insight, member
 
-        # Brainstorm ideas
-        ideas = []
-        for member in self.members:
-            idea = member.brainstorm_idea(insights=all_insights, config=self.config)
+        for member, insights in zip(self.members, all_insights):
+            related_papers = self.paper_db.search_papers(
+                query=insight.content,
+                author=member.profile.name,
+                domain=member.profile.domain[0] if member.profile.domain else None,
+                num=2,
+            )
+            idea = member.brainstorm_idea(
+                papers=related_papers, insights=insights, config=self.config
+            )
             ideas.append(idea)
             yield idea, member
 
@@ -72,8 +80,11 @@ class ProposalWritingEnv(BaseEnv):
 
         # Write Proposal
         query = summarized_idea.content or self.leader.profile.bio
-        related_papers = self.paper_db.match(
+        related_papers = self.paper_db.search_papers(
             query=query,
+            domain=self.leader.profile.domain[0]
+            if self.leader.profile.domain
+            else None,
             num=2,
         )
         proposal = self.leader.write_proposal(

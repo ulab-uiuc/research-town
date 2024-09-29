@@ -1,6 +1,6 @@
 from typing import Optional
 
-from .data import (
+from ..data.data import (
     IdeaBrainstormLog,
     LiteratureReviewLog,
     MetaReviewWritingLog,

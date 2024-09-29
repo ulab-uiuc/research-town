@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Optional, Type, TypeVar, Union
 
-from .data import Data
+from ..data.data import Data
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=Data)

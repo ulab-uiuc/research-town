@@ -13,7 +13,7 @@
       * [Module contents](research_town.configs.md#module-research_town.configs)
     * [research_town.dbs](research_town.dbs.md)
       * [Submodules](research_town.dbs.md#submodules)
-      * [research_town.dbs.data](research_town.dbs.md#module-research_town.dbs.data)
+      * [research_town.data](research_town.dbs.md#module-research_town.data)
       * [research_town.dbs.db_base](research_town.dbs.md#module-research_town.dbs.db_base)
       * [research_town.dbs.db_complex](research_town.dbs.md#module-research_town.dbs.db_complex)
       * [research_town.dbs.db_log](research_town.dbs.md#module-research_town.dbs.db_log)
