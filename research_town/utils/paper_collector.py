@@ -12,7 +12,7 @@ from tqdm import tqdm
 from ..data.data import Paper
 
 
-def get_related_paper(
+def get_related_papers(
     num_results: int,
     query: Optional[str] = None,
     domain: Optional[str] = None,
@@ -55,7 +55,7 @@ def get_related_paper(
     results = client.results(search)
     papers_list = []
 
-    for result in tqdm(results, desc='Collecting recent papers', unit='Paper'):
+    for result in tqdm(results, desc='Collecting related papers', unit='Paper'):
         paper_title = result.title
         paper_url = result.entry_id
         paper_abstract = result.summary.replace('\n', ' ')
