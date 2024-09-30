@@ -75,7 +75,7 @@ class ProposalWritingEnv(BaseEnv):
             yield idea, member
 
         # Leader discusses ideas
-        summarized_idea = self.leader.discuss_idea(ideas=ideas, config=self.config)
+        summarized_idea = self.leader.discuss_idea(ideas=ideas, contexts=self.contexts, config=self.config)
         yield summarized_idea, self.leader
 
         # Write Proposal
