@@ -46,6 +46,7 @@ class ProposalWritingEnv(BaseEnv):
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         # Each member reviews literature
         insights = []
+        keywords = []
         ideas = []
         for member in self.members:
             related_papers = self.paper_db.search_papers(
@@ -59,12 +60,15 @@ class ProposalWritingEnv(BaseEnv):
             )
             yield insight, member
             insights.append(insight)
+            keywords.extend(keywords)
+        
+        keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
 
         for member in self.members:
             related_papers = self.paper_db.search_papers(
                 query=insight.content,
                 author=member.profile.name,
-                domain=member.profile.domain[0] if member.profile.domain else None,
+                domain=keywords[0] + member.profile.domain[0] if member.profile.domain else keywords[0],
                 num=2,
             )
             idea = member.brainstorm_idea(
