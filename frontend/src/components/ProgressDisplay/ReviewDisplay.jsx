@@ -3,8 +3,6 @@ import Row from "react-bootstrap/Row";
 import ReactMarkdown from "react-markdown";
 
 function ReviewDisplay({ list }) {
-  console.log("Review");
-  console.log(list);
   return (
     <>
       {/* <Row className="mb-3">

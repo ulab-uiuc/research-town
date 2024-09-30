@@ -4,29 +4,28 @@ import ReactMarkdown from "react-markdown";
 import Accordion from "react-bootstrap/Accordion";
 
 function IdeaDisplay({ list }) {
+  console.log(list);
   return (
     <>
-      {/* <Row className="mb-3">
-        <Col>
-          <h2>Ideas</h2>
-        </Col>
-      </Row> */}
       <br />
       <Row>
         <Accordion>
-          {list.map((item, index) => (
-            <Accordion.Item key={index} eventKey="0">
-              <Accordion.Header>
-                {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
-                {index + 1} from {item.agent_domain} expert
-              </Accordion.Header>
-              <Accordion.Body style={{ textAlign: "left" }}>
-                <p>
-                  <ReactMarkdown>{item.content}</ReactMarkdown>
-                </p>
-              </Accordion.Body>
-            </Accordion.Item>
-          ))}
+          {list.map((item, index) => {
+            return (
+              <Accordion.Item key={index} eventKey={index.toString()}>
+                <Accordion.Header>
+                  {agentRole === "leader"
+                    ? `Discussed idea from ${item.agent_domain} expert agent`
+                    : `Idea from ${item.agent_domain} expert agent`}
+                </Accordion.Header>
+                <Accordion.Body style={{ textAlign: "left" }}>
+                  <p>
+                    <ReactMarkdown>{item.content}</ReactMarkdown>
+                  </p>
+                </Accordion.Body>
+              </Accordion.Item>
+            );
+          })}
         </Accordion>
       </Row>
     </>
