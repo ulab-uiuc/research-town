@@ -176,13 +176,7 @@ examples/research_town_demo_log/*
 !examples/research_town_demo_log/PaperDB.pkl
 !examples/research_town_demo_log/ProfileDB.json
 !examples/research_town_demo_log/ProfileDB.pkl
-<<<<<<< HEAD
 research_bench/data/arxiv_ai_papers/output_with_downloaded_references.json
 research_bench/data/arxiv_ai_papers/output_with_references.json
 research_bench/data/arxiv_ai_papers/paper_info.json
-=======
->>>>>>> e472efa5996486cd3d4ccfe1bb7acab8ff0b3fb5
 research_bench/data/arxiv_AI_papers/output_with_references.json"
-research_bench/data/arxiv_AI_papers/paper_info.json
-research_bench/data/arxiv_AI_papers/output_with_downloaded_references.json
-research_bench/data/arxiv_AI_papers/output_with_references.json
