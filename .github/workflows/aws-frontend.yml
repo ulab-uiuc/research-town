@@ -24,10 +24,10 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no -i /tmp/UIUC.pem ubuntu@ec2-3-87-192-184.compute-1.amazonaws.com << 'EOF'
           cd ~/research-town/
-          git stash
-          git pull --no-rebase origin main
+          git fetch origin
+          git reset --hard origin/main
           sed -i 's|http://localhost:8000|https://demo.auto-research.dev|g' ./frontend/src/pages/Home.jsx
-
+          
           cd ./frontend/
           export NVM_DIR="$HOME/.nvm"
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"

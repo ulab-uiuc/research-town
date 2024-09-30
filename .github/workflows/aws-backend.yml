@@ -23,10 +23,22 @@ jobs:
     - name: deploy to ec2
       run: |
         ssh -o StrictHostKeyChecking=no -i /tmp/UIUC.pem ubuntu@ec2-54-89-143-231.compute-1.amazonaws.com << 'EOF'
-          cd ~/research-town/backend/
+          cd ~/research-town/
+          git fetch origin
+          git reset --hard origin/main
+          sed -i 's|^base_llm:.*|base_llm: together_ai/Qwen/Qwen1.5-72B-Chat|' ~/research-town/configs/param.yaml
+          cd backend/
+          source ~/.bashrc
           conda activate research_town
-          git pull origin main
-          tmux send-keys -t 0 C-c
-          sleep 5
+          tmux has-session -t 0 2>/dev/null
+          if [ $? != 0 ]; then
+            echo "No active tmux session 0, starting a new one"
+            tmux new-session -d -s 0
+          else
+            echo "Tmux session 0 exists, stopping existing uvicorn process"
+            tmux send-keys -t 0 C-c  # Stop the current running process
+            sleep 5  # Allow time for the process to stop
+          fi
           tmux send-keys -t 0 "uvicorn main:app --host 127.0.0.1 --port 8000" C-m
+
         EOF
