@@ -91,8 +91,6 @@ class Agent(object):
     @beartype
     @member_required
     def discuss_idea(self, ideas: List[Idea], config: Config) -> Idea:
-        print(self.profile)
-        import pdb; pdb.set_trace()
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized = discuss_idea_prompting(
             bio=self.profile.bio,

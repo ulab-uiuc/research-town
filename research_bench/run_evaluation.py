@@ -31,8 +31,9 @@ Ensure that the OpenAI API key is set in the environment if using OpenAI's model
 import argparse
 import json
 import logging
+import os
 from typing import Any, Dict, List, Optional, Literal
-
+from bert_score import score
 import nltk
 from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 from rouge_score import rouge_scorer
@@ -231,6 +232,25 @@ def compute_rouge_l(reference: str, hypothesis: str) -> float:
         logger.error(f"Error computing ROUGE-L score: {e}")
         return 0.0
 
+def compute_bertscore(reference: str, hypothesis: str) -> float:
+    """
+    Computes the BERTScore between reference and hypothesis texts.
+
+    Args:
+        reference (str): Reference text.
+        hypothesis (str): Hypothesis text.
+
+    Returns:
+        float: BERTScore F1 score.
+    """
+    try:
+        # Compute BERTScore
+        P, R, F1 = score([hypothesis], [reference], lang='en', rescale_with_baseline=True)
+        return F1.mean().item()
+    except Exception as e:
+        logger.error(f"Error computing BERTScore: {e}")
+        return 0.0
+
 
 def compute_gpt_metric(current_5q: str, proposal_5q: str) -> Optional[float]:
     """
@@ -253,7 +273,7 @@ def compute_gpt_metric(current_5q: str, proposal_5q: str) -> Optional[float]:
                     f"{current_5q}\n\n"
                     "Proposal 5Q:\n"
                     f"{proposal_5q}\n\n"
-                    "Please provide a similarity score between 0 and 1, where 1 means highly aligned and 0 means no alignment."
+                    "Please provide a similarity score 0 or 1, where 1 means the two proposals somewhat alignment to each other, especially the method part, and 0 means no alignment. Only output the score, without any additional information."
                 ),
             }
         ]
@@ -346,15 +366,17 @@ def process_paper(paper_key: str, paper_data: Dict[str, Any]) -> Optional[Dict[s
         bleu = compute_bleu(current_5q, proposal_5q)
         rouge_l = compute_rouge_l(current_5q, proposal_5q)
         gpt_metric = compute_gpt_metric(current_5q, proposal_5q)
+        bert_score = compute_bertscore(current_5q, proposal_5q)
 
         evaluation_result = {
             "paper_key": paper_key,
             "current_5q": current_5q,
             "proposal_5q": proposal_5q,
+            "referenced_intros": intros,  # Optional: Include referenced intros in the result
             "bleu": bleu,
             "rouge_l": rouge_l,
             "gpt_metric_score": gpt_metric,
-            "referenced_intros": intros  # Optional: Include referenced intros in the result
+            "bert_score": bert_score
         }
 
         return evaluation_result
@@ -383,6 +405,7 @@ def main(input_json: str, output_jsonl: str) -> None:
         bleu_scores = []
         rouge_l_scores = []
         gpt_metric_scores = []
+        bert_scores = []
 
         # Open output JSONL file
         with open(output_jsonl, 'w', encoding='utf-8') as outfile:
@@ -397,6 +420,7 @@ def main(input_json: str, output_jsonl: str) -> None:
                     # Accumulate metrics for averaging
                     bleu_scores.append(evaluation.get("bleu", 0.0))
                     rouge_l_scores.append(evaluation.get("rouge_l", 0.0))
+                    bert_scores.append(evaluation.get("bert_score", 0.0))
                     gpt_score = evaluation.get("gpt_metric_score")
                     if gpt_score is not None:
                         gpt_metric_scores.append(gpt_score)
@@ -407,10 +431,12 @@ def main(input_json: str, output_jsonl: str) -> None:
         avg_bleu = sum(bleu_scores) / len(bleu_scores) if bleu_scores else 0.0
         avg_rouge_l = sum(rouge_l_scores) / len(rouge_l_scores) if rouge_l_scores else 0.0
         avg_gpt_metric = sum(gpt_metric_scores) / len(gpt_metric_scores) if gpt_metric_scores else 0.0
+        avg_bert_score = sum(bert_scores) / len(bert_scores) if bert_scores else 0.0
 
         logger.info(f"Average BLEU score: {avg_bleu:.4f}")
         logger.info(f"Average ROUGE-L score: {avg_rouge_l:.4f}")
         logger.info(f"Average GPT-based metric score: {avg_gpt_metric:.4f}")
+        logger.info(f"Average BERTScore: {avg_bert_score:.4f}")
 
     except Exception as e:
         logger.error(f"An error occurred in the main execution: {e}")

@@ -18,12 +18,13 @@ numpy = "<2.0.0"
 transformers = "^4.45.1"
 termcolor = "^2.4.0"
 arxiv = "^2.1.0"
+bert_score = ">=0.3.13"
 requests = "*"
 beautifulsoup4 = "*"
 lxml = "*"
 tqdm = "*"
 keybert = "*"
-torch = { version = "2.2.2", source = "torchcpu", optional = true}
+
 
 uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
