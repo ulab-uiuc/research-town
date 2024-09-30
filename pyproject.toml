@@ -11,14 +11,11 @@ python = ">=3.10, <3.12"
 pydantic = ">=2.5.0"
 pypdf2 = ">=3.0.1"
 litellm = ">1.40.0"
-rouge_score = ">=0.1.2"
-nltk = ">=3.9.1"
 beartype = "^0.19.0"
 numpy = "<2.0.0"
 transformers = "^4.45.1"
 termcolor = "^2.4.0"
 arxiv = "^2.1.0"
-bert_score = ">=0.3.13"
 requests = "*"
 beautifulsoup4 = "*"
 lxml = "*"
@@ -26,6 +23,9 @@ tqdm = "*"
 keybert = "*"
 torch = { version = "^2.2.1", source = "torchcpu" }
 
+bert_score = { version = ">=0.3.13", optional = true }
+nltk = { version = ">=3.9.1", optional = true }
+rouge_score = { version = ">=0.1.2", optional = true }
 uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
 pandas = { version = "*", optional = true }
@@ -49,6 +49,7 @@ mypy = "^1.11.2"
 [tool.poetry.extras]
 humaneval = ["pandas"]
 backend = ["uvicorn", "fastapi"]
+bench = ["nltk", "rouge_score", "bert_score"]
 
 [build-system]
 requires = ["poetry-core"]
