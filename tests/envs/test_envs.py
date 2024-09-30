@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.agent_constants import example_agent_manager
 from tests.constants.config_constants import example_config
-from tests.constants.data_constants import agent_profile_A, research_proposal_A
+from tests.constants.data_constants import profile_A, research_proposal_A
 from tests.constants.db_constants import (
     example_log_db,
     example_paper_db,
@@ -26,7 +26,7 @@ def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
         config=example_config,
         agent_manager=example_agent_manager,
     )
-    leader = example_agent_manager.create_leader(agent_profile_A)
+    leader = example_agent_manager.create_agent(profile=profile_A, role="leader")
     env.on_enter(
         proposal=research_proposal_A,
         leader=leader,
@@ -56,7 +56,7 @@ def test_proposal_writing_env(
         config=example_config,
         agent_manager=example_agent_manager,
     )
-    leader = example_agent_manager.create_agent(profile=agent_profile_A, role="leader")
+    leader = example_agent_manager.create_agent(profile=profile_A, role="leader")
     env.on_enter(
         leader=leader,
         contexts=[
