@@ -131,4 +131,26 @@ function OutputDisplay({ output }) {
   );
 }
 
-export default OutputDisplay;
+function GetCurrentStatus({ output }) {
+  if (output.length === 0) return "Matching agents";
+
+  const lastItem = output[output.length - 1];
+  switch (lastItem.type) {
+    case "insight":
+      return "Generating insights";
+    case "idea":
+      return "Generating ideas";
+    case "proposal":
+      return "Writing proposals";
+    case "review":
+      return "Writing reviews";
+    case "metareview":
+      return "Writing etareviews";
+    case "error":
+      return "Errors detected. Please check the error messages.";
+    default:
+      return "Unknown status.";
+  }
+}
+
+export { OutputDisplay, GetCurrentStatus };

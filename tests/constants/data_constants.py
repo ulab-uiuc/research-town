@@ -1,4 +1,4 @@
-from research_town.dbs import (
+from research_town.data import (
     Idea,
     Insight,
     MetaReview,

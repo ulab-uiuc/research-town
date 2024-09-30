@@ -1,59 +1,159 @@
-import datetime
 import re
+import time
 from io import BytesIO
 
 import arxiv
 import requests
-from beartype.typing import Any, Dict, List, Optional, Tuple
+from beartype.typing import Dict, List, Optional
 from bs4 import BeautifulSoup
+from keybert import KeyBERT
 from PyPDF2 import PdfReader
 from tqdm import tqdm
 
+from ..data.data import Paper
 
-def get_daily_papers(
-    query: str, max_results: int = 2
-) -> Tuple[Dict[str, Dict[str, List[str]]], str]:
+
+def perform_arxiv_search(
+    search: arxiv.Search,
+    max_retries: int = 5,
+    delay_between_retries: int = 2,
+) -> arxiv.Result:
     client = arxiv.Client()
+    for attempt in range(max_retries):
+        try:
+            results = client.results(search)
+            return results
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(
+                    f'Connection error occurred: {e}. Retrying ({attempt + 1}/{max_retries})...'
+                )
+                time.sleep(delay_between_retries)
+            else:
+                print(
+                    'Failed to fetch results after multiple retries due to connection issues.'
+                )
+                raise e
+
+
+def get_related_papers(
+    num_results: int,
+    query: Optional[str] = None,
+    domain: Optional[str] = None,
+    author: Optional[str] = None,
+) -> List[Paper]:
+    keyword = ''
+
+    if query is not None:
+        kw_model = KeyBERT()
+        extraction_results = kw_model.extract_keywords(
+            query, keyphrase_ngram_range=(1, 3), stop_words='english'
+        )
+        keyword = ' '.join([word for word, _ in extraction_results])
+
+    arxiv_query_parts = []
+
+    if keyword:
+        arxiv_query_parts.append(f'({keyword})')
+
+    if domain:
+        arxiv_query_parts.append(f'all:{domain}')
+
+    if author:
+        arxiv_query_parts.append(f'au:{author}')
+
+    if arxiv_query_parts:
+        arxiv_query = ' AND '.join(arxiv_query_parts)
+    else:
+        raise ValueError(
+            "At least one of 'query', 'domain', or 'author' must be provided."
+        )
+
     search = arxiv.Search(
-        query=query, max_results=max_results, sort_by=arxiv.SortCriterion.SubmittedDate
+        query=arxiv_query,
+        max_results=num_results,
+        sort_by=arxiv.SortCriterion.Relevance,
     )
-    results = client.results(search)
-    content: Dict[str, Dict[str, Any]] = {}
-    for result in tqdm(results, desc=f'Collecting papers with "{query}"', unit='Paper'):
+
+    # Use the independent arXiv search function with retry logic
+    results = perform_arxiv_search(search)
+
+    papers_list = []
+
+    for result in tqdm(results, desc='Collecting related papers', unit='Paper'):
         paper_title = result.title
         paper_url = result.entry_id
-        proposal = result.summary.replace('\n', ' ')
+        paper_abstract = result.summary.replace('\n', ' ')
         paper_authors = [author.name for author in result.authors]
         paper_domain = result.primary_category
-        publish_time = result.published.date()
-        paper_timestamp = int(
-            datetime.datetime(
-                publish_time.year, publish_time.month, publish_time.day
-            ).timestamp()
-        )
+        publish_time = result.published
+        paper_timestamp = int(publish_time.timestamp())
+
         paper_sections = get_paper_content_from_html(paper_url)
         paper_bibliography = get_paper_bibliography_from_html(paper_url)
 
-        if publish_time in content:
-            content[publish_time]['title'].append(paper_title)
-            content[publish_time]['abstract'].append(proposal)
-            content[publish_time]['authors'].append(paper_authors)
-            content[publish_time]['url'].append(paper_url)
-            content[publish_time]['domain'].append(paper_domain)
-            content[publish_time]['timestamp'].append(paper_timestamp)
-            content[publish_time]['sections'].append(paper_sections)
-            content[publish_time]['bibliography'].append(paper_bibliography)
-        else:
-            content[publish_time] = {}
-            content[publish_time]['title'] = [paper_title]
-            content[publish_time]['abstract'] = [proposal]
-            content[publish_time]['authors'] = [paper_authors]
-            content[publish_time]['url'] = [paper_url]
-            content[publish_time]['domain'] = [paper_domain]
-            content[publish_time]['timestamp'] = [paper_timestamp]
-            content[publish_time]['sections'] = [paper_sections]
-            content[publish_time]['bibliography'] = [paper_bibliography]
-    return content, publish_time
+        paper = Paper(
+            title=paper_title,
+            abstract=paper_abstract,
+            authors=paper_authors,
+            url=paper_url,
+            domain=paper_domain,
+            timestamp=paper_timestamp,
+            sections=paper_sections,
+            bibliography=paper_bibliography,
+        )
+        papers_list.append(paper)
+
+    return papers_list
+
+
+def get_recent_papers(
+    domain: Optional[str] = None, max_results: int = 1
+) -> List[Paper]:
+    if domain is None:
+        arxiv_query = 'all:artificial intelligence'
+    else:
+        arxiv_query = f'all:{domain}'
+
+    search = arxiv.Search(
+        query=arxiv_query,
+        max_results=max_results,
+        sort_by=arxiv.SortCriterion.SubmittedDate,
+        sort_order=arxiv.SortOrder.Descending,
+    )
+
+    # Use the independent arXiv search function with retry logic
+    results = perform_arxiv_search(search)
+
+    papers_list = []
+
+    for result in tqdm(
+        results, desc=f'Collecting recent papers in "{domain}"', unit='Paper'
+    ):
+        paper_title = result.title
+        paper_url = result.entry_id
+        paper_abstract = result.summary.replace('\n', ' ')
+        paper_authors = [author.name for author in result.authors]
+        paper_domain = result.primary_category
+        publish_time = result.published
+        paper_timestamp = int(publish_time.timestamp())
+
+        paper_sections = get_paper_content_from_html(paper_url)
+        paper_bibliography = get_paper_bibliography_from_html(paper_url)
+
+        paper = Paper(
+            title=paper_title,
+            abstract=paper_abstract,
+            authors=paper_authors,
+            url=paper_url,
+            domain=paper_domain,
+            timestamp=paper_timestamp,
+            sections=paper_sections,
+            bibliography=paper_bibliography,
+        )
+        papers_list.append(paper)
+
+    return papers_list
 
 
 def fetch_html_content(url: str) -> Optional[BeautifulSoup]:
@@ -264,12 +364,29 @@ def get_paper_content_from_pdf(url: str) -> Optional[Dict[str, str]]:
 
 
 def get_paper_introduction(url: str) -> Optional[str]:
+    intro_length = 512
     sections = get_paper_content_from_html(url)
     if not sections:
         sections = get_paper_content_from_pdf(url)
     if not sections:
         return None
-    for section_name, section_content in sections.items():
-        if 'Introduction' in section_name:
-            return section_content
-    return section_content
+
+    sections_keys = list(sections.keys())
+    on_and_after_introduction = False
+
+    introduction_text = ''
+    for section_name in sections_keys:
+        if 'introduction' in section_name.lower():
+            on_and_after_introduction = True
+        if on_and_after_introduction:
+            introduction_text += ' ' + sections[section_name]
+
+    if on_and_after_introduction:
+        introduction_text = ' '.join(introduction_text.split(' ')[:intro_length])
+        return introduction_text
+    else:
+        for idx, section_name in enumerate(sections_keys):
+            if idx != 0 or (idx == 0 and len(sections_keys) >= 2):
+                introduction_text += sections[section_name]
+        introduction_text = ' '.join(introduction_text.split(' ')[:intro_length])
+        return introduction_text

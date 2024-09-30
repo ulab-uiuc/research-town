@@ -3,7 +3,7 @@ from typing import Any, Dict, Generator, Tuple
 
 from ..agents import Agent
 from ..configs import Config
-from ..dbs import Progress
+from ..data import Progress
 
 
 class BaseEnv(ABC):

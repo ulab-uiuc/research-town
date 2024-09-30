@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from generator_func import run_engine
 
 from research_town.agents import Agent
-from research_town.dbs import (
+from research_town.data import (
     Idea,
     Insight,
     MetaReview,
@@ -100,8 +100,17 @@ async def process_url(request: Request) -> Response:
                         item['agent_domain'] = agent.profile.domain[0].lower()
                 else:
                     item['agent_domain'] = 'computer science'
-            print(item)
 
+                if agent.role == 'chair':
+                    item['agent_role'] = 'chair'
+                elif agent.role == 'reviewer':
+                    item['agent_role'] = 'reviewer'
+                elif agent.role == 'leader':
+                    item['agent_role'] = 'leader'
+                elif agent.role == 'member':
+                    item['agent_role'] = 'member'
+                else:
+                    item['agent_role'] = 'none'
             yield json.dumps(item) + '\n'
 
     # Run the engine and stream the results back

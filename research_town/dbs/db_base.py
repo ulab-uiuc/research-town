@@ -5,8 +5,8 @@ from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 import torch
 
+from ..data.data import Data
 from ..utils.logger import logger
-from .data import Data
 
 T = TypeVar('T', bound=Data)
 

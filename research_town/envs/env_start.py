@@ -3,7 +3,7 @@ from beartype.typing import Any, Dict, Generator, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..dbs import Progress
+from ..data import Progress
 from .env_base import BaseEnv
 
 
@@ -29,7 +29,7 @@ class StartEnv(BaseEnv):
         contexts_to_text = ''
         for idx, context in enumerate(self.contexts):
             contexts_to_text += f'Paper {idx + 1}: \n\n{context}\n\n'
-        self.leader = self.agent_manager.sample_leader()
+        self.leader = self.agent_manager.find_leader(task=contexts_to_text)
 
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         if False:
