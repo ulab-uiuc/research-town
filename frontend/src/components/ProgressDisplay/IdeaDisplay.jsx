@@ -15,10 +15,11 @@ function IdeaDisplay({ list }) {
       <Row>
         <Accordion>
           {list.map((item, index) => (
-            <Accordion.Item key={index} eventKey="0">
+            <Accordion.Item key={index} eventKey={index.toString()}>
               <Accordion.Header>
-                {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
-                {index + 1} from {item.agent_domain} expert
+                {item.agent_role === "leader"
+                  ? `Finalized Idea after discussion for proposal writing`
+                  : `Idea from ${item.agent_domain} expert agent`}
               </Accordion.Header>
               <Accordion.Body style={{ textAlign: "left" }}>
                 <p>

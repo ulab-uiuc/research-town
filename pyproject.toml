@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "research-town"
-version = "0.0.1b2"
+version = "0.0.1b3"
 description = "multi-agent environment for research community simulation"
 authors = ["Haofei Yu <haofeiy2@illinois.edu>"]
 license = "Apache 2.0 License"
