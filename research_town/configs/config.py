@@ -91,9 +91,9 @@ class AgentPromptTemplate(BaseModel):
     def validate_placeholders(cls: Any, values: Dict[str, Any]) -> Dict[str, Any]:
         required_placeholders = {
             'write_bio': ['{publication_info}'],
-            'review_literature': ['{bio}', '{papers}'],
+            'review_literature': ['{bio}', '{papers}', '{contexts}'],
             'brainstorm_idea': ['{bio}', '{insights}', '{papers}'],
-            'discuss_idea': ['{bio}', '{ideas}'],
+            'discuss_idea': ['{bio}', '{ideas}', '{contexts}'],
             'write_proposal': ['{idea}', '{papers}'],
             'write_proposal_cot': ['{idea}', '{papers}'],
             'write_proposal_react': ['{idea}', '{papers}'],

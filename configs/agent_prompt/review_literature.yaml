@@ -1,27 +1,57 @@
 sys_prompt: |
-    You are an autonomous intelligent agent tasked with summarizing research literature and create insights from them. You play as a real-world researcher using the profile biology given to you. You should summarize high-level research and provide backgrounds, keywords, and generate insights for further study.
-    You will be provided with the following information:
-    Profile biology - Detailed first-person information about a researcher's recent research interests.
-    Academic Context - The research that your insights should be related to and follow.
-    Papers - You are given a list of papers from a certain field. You are given their titles and abstracts.
-    You should provide the insights:
-    Insights - Possible directions for further research inspired from the given literature. It should be related to the profile biology.
-    Your output format should be one paragraph of content.
+ You are an autonomous intelligent agent tasked with summarizing research literature and create insights from them. You play as a real-world researcher using the profile biology given to you. You should summarize high-level research and provide backgrounds, keywords, and generate insights for further study.
+ You will be provided with the following information:
+ Profile biology - Detailed first-person information about a researcher's recent research interests.
+ Target Paper - The research that your insights should be related to and follow.
+ Related Papers - You are given a list of papers from a certain field. You are given their titles and abstracts.
+ You should provide the insights:
+ Summary of Target Paper
+ Keywords of Target Paper - 1 to 5 keywords that describes the target paper.
+ Valuable Points from Target Paper - Possible directions for further research inspired from the given literature. It should be related to the profile biology.
+ Your output format should be one paragraph of content.
 
 fewshot_examples:
 - |
-  Here is my profile biology:
-  I am a researcher focused on advancing graph neural networks (GNNs) and machine learning. My key contributions include Position-aware GNNs (P-GNNs) for capturing node positions, Identity-aware GNNs (ID-GNNs) with greater expressive power, and the ROLAND framework for dynamic graph learning. I also study the relationship between neural network structures and their performance using relational graphs, and have explored a vast GNN design space to enhance predictive capabilities across diverse tasks.
-  Here is the academic context:
-  We introduce Transfusion, a recipe for training a multi-modal model over discrete and continuous data. Transfusion combines the language modeling loss function (next token prediction) with diffusion to train a single transformer over mixedmodality sequences. We pretrain multiple Transfusion models up to 7B parameters from scratch on a mixture of text and image data, establishing scaling laws with respect to a variety of uni- and cross-modal benchmarks. Our experiments show that Transfusion scales significantly better than quantizing images and training a language model over discrete image tokens. By introducing modality-specific encoding and decoding layers, we can further improve the performance of Transfusion models, and even compress each image to just 16 patches. We further demonstrate that scaling our Transfusion recipe to 7B parameters and 2T multi-modal tokens produces a model that can generate images and text on a par with similar scale diffusion models and language models, reaping the benefits of both worlds.
-  Here are some recent paper abstracts:
-  We present Chameleon, a family of early-fusion token-based mixed-modal models capable of understanding and generating images and text in any arbitrary sequence. We outline a stable training approach from inception, an alignment recipe, and an architectural parameterization tailored for the early-fusion, token-based, mixed-modal setting. The models are evaluated on a comprehensive range of tasks, including visual question answering, image captioning, text generation, image generation, and long-form mixed modal generation. Chameleon demonstrates broad and general capabilities, including state-of-the-art performance in image captioning tasks, outperforms Llama-2 in text-only tasks while being competitive with models such as Mixtral 8x7B and Gemini-Pro, and performs non-trivial image generation, all in a single model. It also matches or exceeds the performance of much larger models, including Gemini Pro and GPT-4V, according to human judgments on a new long-form mixed-modal generation evaluation, where either the prompt or outputs contain mixed sequences of both images and text. Chameleon marks a significant step forward in a unified modeling of full multimodal documents.
-  Please begin writing research insights that you can gain based on your research experience and the academic context. Mainly based on the academic context.
+ Here is my profile biology:
+ I am a researcher focused on advancing graph neural networks (GNNs) and machine learning. My key contributions include Position-aware GNNs (P-GNNs) for capturing node positions, Identity-aware GNNs (ID-GNNs) with greater expressive power, and the ROLAND framework for dynamic graph learning. I also study the relationship between neural network structures and their performance using relational graphs, and have explored a vast GNN design space to enhance predictive capabilities across diverse tasks.
+ Here are the related papers:
+ We present Chameleon, a family of early-fusion token-based mixed-modal models capable of understanding and generating images and text in any arbitrary sequence. We outline a stable training approach from inception, an alignment recipe, and an architectural parameterization tailored for the early-fusion, token-based, mixed-modal setting. The models are evaluated on a comprehensive range of tasks, including visual question answering, image captioning, text generation, image generation, and long-form mixed modal generation. Chameleon demonstrates broad and general capabilities, including state-of-the-art performance in image captioning tasks, outperforms Llama-2 in text-only tasks while being competitive with models such as Mixtral 8x7B and Gemini-Pro, and performs non-trivial image generation, all in a single model. It also matches or exceeds the performance of much larger models, including Gemini Pro and GPT-4V, according to human judgments on a new long-form mixed-modal generation evaluation, where either the prompt or outputs contain mixed sequences of both images and text. Chameleon marks a significant step forward in a unified modeling of full multimodal documents.
+ Please begin writing research insights that you can gain based on your research experience and the academic context. Mainly based on the academic context. Please make sure it is only two to three sentences.
+ Your research MUST STRICTLY BE A FOLLOW-UP of this paper:
+ We introduce Transfusion, a recipe for training a multi-modal model over discrete and continuous data. Transfusion combines the language modeling loss function (next token prediction) with diffusion to train a single transformer over mixedmodality sequences. We pretrain multiple Transfusion models up to 7B parameters from scratch on a mixture of text and image data, establishing scaling laws with respect to a variety of uni- and cross-modal benchmarks. Our experiments show that Transfusion scales significantly better than quantizing images and training a language model over discrete image tokens. By introducing modality-specific encoding and decoding layers, we can further improve the performance of Transfusion models, and even compress each image to just 16 patches. We further demonstrate that scaling our Transfusion recipe to 7B parameters and 2T multi-modal tokens produces a model that can generate images and text on a par with similar scale diffusion models and language models, reaping the benefits of both worlds.
+ YOU SHOULD REFER TO IT FIRST!
 - |
-  The Transfusion model shows how combining language modeling and diffusion techniques in a single transformer. Chameleon, using an early-fusion token-based approach, competes with larger models like GPT-4V. Its unified architecture highlights the power of early fusion and tokenization in handling mixed-modal inputs and outputs effectively across diverse tasks.
+ Summary of Target Paper:
+ The Transfusion paper presents a multimodal model that combines language modeling and diffusion techniques to process image and text data. With up to 7B parameters and trained on 2T multimodal tokens, it generates high-quality outputs, matching advanced models.
+ Keywords of Target Paper:
+ Multimodal Models, Language Modeling, Diffusion Techniques, Image Generation, Text Generation
+ Valuable Points from Target Paper:
+ The Transfusion model’s mixed-modality approach, combined with diffusion techniques, can inspire new research directions in code attribution and obfuscation detection by applying multimodal models to detect obfuscation patterns in mixed data formats, such as code, documentation, and visual representations (e.g., flowcharts). Inspired by Chameleon's token-based mixed-modality fusion, one could investigate the use of early-fusion models for code snippets, comments, and diagrams to improve obfuscation detection. These multimodal models could be trained to identify obfuscated patterns by analyzing both structural (AST-based) and semantic (natural language) features simultaneously. Furthermore, leveraging modality-specific encoding and decoding layers, as demonstrated in Transfusion, could enhance the ability to scale detection systems across different programming languages and obfuscation techniques.
+- |
+ Here is my profile biology:
+ As a researcher, I explore a wide range of topics in artificial intelligence, decision theory, game theory, and ethics, with a recent focus on the implications of superintelligent AI and its associated risks and benefits. I examine the ethical dimensions of AI decision-making, seeking ways to train AI for morally sound choices despite the absence of a precise ethical framework. My work includes challenging existing theories in decision theory, analyzing strategic equivalence in game theory, and investigating multi-agent interactions to enhance cooperation among AI agents. Additionally, I address practical applications like improving kidney exchange algorithms and tackling manipulation in academic conference bidding, aiming to bridge theoretical insights with real-world benefits for society.
+ Here are some recent paper abstracts:
+ Recent studies on language model (LM) watermarking techniques reveal that while distortion-free watermarks aim to embed signals without compromising content quality, key collisions in pseudo-random sampling can lead to significant distribution bias, making perfect distortion-free watermarks unattainable. Additionally, new evaluation methods for watermarking algorithms indicate that current techniques are easily detectable and can negatively impact text coherence and depth. These findings emphasize the trade-off between watermark robustness and text quality, underscoring the need for more informative assessment metrics.
+ Please begin writing research insights that you can gain based on your research experience and the academic context. Mainly based on the academic context. Please make sure it is only two to three sentences.
+ Your research MUST STRICTLY BE A FOLLOW-UP of the target paper:
+ The emergence of language models capable of generating human-like text has heightened the need for content provenance, prompting platforms like StackOverflow to ban AI-generated answers to combat misinformation. A watermarking protocol is proposed, where a trusted language model provider embeds a signal in the generated text, allowing a detector to identify the source, while ensuring the watermark is distortion-free, agnostic, and robust against text modifications. This methodology involves a deterministic generation method and a detection method, both coordinated through a shared key, ensuring that the watermarked text remains indistinguishable from original content while facilitating effective attribution.
+ YOU SHOULD REFER TO IT FIRST!
+- |
+ Summary of Target Paper:
+ The target paper discusses a watermarking protocol for language models aimed at ensuring content provenance. It proposes a method where a trusted provider embeds a signal in generated text to allow for effective detection of the source while maintaining the quality of the text, ensuring that the watermark remains indistinguishable from the original content.
+ Keywords of Target Paper:
+ Content Provenance, Watermarking Protocol, AI-generated Text, Text Attribution, Robustness Against Modifications
+ Valuable Points from Target Paper:
+ The challenges highlighted in watermarking techniques, particularly the trade-off between robustness and text quality, can inspire further research into ethical AI decision-making frameworks. By exploring how watermarking can be integrated into AI systems to ensure accountability in AI-generated content, researchers could develop methods that enhance cooperation among AI agents while maintaining ethical standards. Additionally, investigating the implications of detectable watermarks on user trust and the ethical responsibilities of AI developers may yield valuable insights into the societal impacts of AI technologies.
 
 template: |
-  Here is my profile biology: {bio}
-  Here is the academic context: {contexts}
-  Here are some recent paper abstracts: {papers}
-  Please begin writing research insights that you can gain based on your research experience and the academic context. Mainly based on the academic context. Please make sure it is only two to three sentences.
+ Here is my profile biology: 
+ {bio}
+
+ Here are some recent papers: 
+ {papers}
+
+ Please begin writing research insights that you can gain based on your research experience and the academic context. Mainly based on the academic context. Please make sure it is only two to three sentences.
+
+ Your research MUST STRICTLY BE A FOLLOW-UP of the target paper: {contexts}
+ YOU SHOULD REFER TO IT FIRST!

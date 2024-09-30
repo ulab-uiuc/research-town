@@ -28,7 +28,7 @@ def review_literature_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> List[str]:
+) -> Tuple[str, List[str], str]:
     papers_str = map_paper_list_to_str(papers)
     template_input = {
         'bio': profile['bio'],
@@ -37,7 +37,7 @@ def review_literature_prompting(
     }
     messages = openai_format_prompt_construct(prompt_template, template_input)
 
-    return model_prompting(
+    insight = model_prompting(
         model_name,
         messages,
         return_num,
@@ -45,7 +45,26 @@ def review_literature_prompting(
         temperature,
         top_p,
         stream,
+    )[0]
+
+    summary_pattern = r'Summary of Target Paper:(.*?)Keywords of Target Paper:'
+    keywords_pattern = (
+        r'Keywords of Target Paper:(.*?)Valuable Points from Target Paper:'
     )
+    valuable_points_pattern = r'Valuable Points from Target Paper:(.*)'
+
+    summary_match = re.search(summary_pattern, insight, re.DOTALL)
+    keywords_match = re.search(keywords_pattern, insight, re.DOTALL)
+    valuable_points_match = re.search(valuable_points_pattern, insight, re.DOTALL)
+
+    summary = summary_match.group(1).strip() if summary_match else ''
+    keywords = keywords_match.group(1).strip() if keywords_match else ''
+    keywords = keywords.split(',')
+    keywords = [keyword.strip() for keyword in keywords]
+    valuable_points = (
+        valuable_points_match.group(1).strip() if valuable_points_match else ''
+    )
+    return summary, keywords, valuable_points
 
 
 @beartype
@@ -79,6 +98,7 @@ def brainstorm_idea_prompting(
 @beartype
 def discuss_idea_prompting(
     bio: str,
+    contexts: List[str],
     ideas: List[Dict[str, str]],
     model_name: str,
     prompt_template: Dict[str, Union[str, List[str]]],
@@ -89,7 +109,7 @@ def discuss_idea_prompting(
     stream: Optional[bool] = None,
 ) -> List[str]:
     ideas_str = map_idea_list_to_str(ideas)
-    template_input = {'bio': bio, 'ideas': ideas_str}
+    template_input = {'bio': bio, 'ideas': ideas_str, 'contexts': contexts}
     messages = openai_format_prompt_construct(prompt_template, template_input)
     return model_prompting(
         model_name,

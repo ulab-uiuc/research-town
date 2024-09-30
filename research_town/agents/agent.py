@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, List, Literal
+from beartype.typing import Dict, List, Literal, Tuple
 
 from ..configs import Config
 from ..data import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
@@ -47,10 +47,10 @@ class Agent(object):
         papers: List[Paper],
         contexts: List[str],
         config: Config,
-    ) -> List[Insight]:
+    ) -> Tuple[str, List[str], Insight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
-        insight_contents = review_literature_prompting(
+        summary, keywords, valuable_points = review_literature_prompting(
             profile=serialized_profile,
             papers=serialized_papers,
             contexts=contexts,
@@ -62,10 +62,8 @@ class Agent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )
-        insights: List[Insight] = []
-        for content in insight_contents:
-            insights.append(Insight(content=content))
-        return insights
+        insight = Insight(content=valuable_points)
+        return summary, keywords, insight
 
     @beartype
     @member_required
@@ -90,10 +88,13 @@ class Agent(object):
 
     @beartype
     @member_required
-    def discuss_idea(self, ideas: List[Idea], config: Config) -> Idea:
+    def discuss_idea(
+        self, ideas: List[Idea], contexts: List[str], config: Config
+    ) -> Idea:
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized = discuss_idea_prompting(
             bio=self.profile.bio,
+            contexts=contexts,
             ideas=serialized_ideas,
             model_name=self.model_name,
             prompt_template=config.agent_prompt_template.discuss_idea,

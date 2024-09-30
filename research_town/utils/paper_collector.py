@@ -364,12 +364,29 @@ def get_paper_content_from_pdf(url: str) -> Optional[Dict[str, str]]:
 
 
 def get_paper_introduction(url: str) -> Optional[str]:
+    intro_length = 512
     sections = get_paper_content_from_html(url)
     if not sections:
         sections = get_paper_content_from_pdf(url)
     if not sections:
         return None
-    for section_name, section_content in sections.items():
-        if 'Introduction' in section_name:
-            return section_content
-    return section_content
+
+    sections_keys = list(sections.keys())
+    on_and_after_introduction = False
+
+    introduction_text = ''
+    for section_name in sections_keys:
+        if 'introduction' in section_name.lower():
+            on_and_after_introduction = True
+        if on_and_after_introduction:
+            introduction_text += ' ' + sections[section_name]
+
+    if on_and_after_introduction:
+        introduction_text = ' '.join(introduction_text.split(' ')[:intro_length])
+        return introduction_text
+    else:
+        for idx, section_name in enumerate(sections_keys):
+            if idx != 0 or (idx == 0 and len(sections_keys) >= 2):
+                introduction_text += sections[section_name]
+        introduction_text = ' '.join(introduction_text.split(' ')[:intro_length])
+        return introduction_text
