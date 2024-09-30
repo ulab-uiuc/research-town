@@ -1,6 +1,7 @@
 import random
 from typing import List, Literal, Optional, TypeVar
 
+import requests
 from transformers import BertModel, BertTokenizer
 
 from ..configs import Config
@@ -20,6 +21,8 @@ Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 class ProfileDB(BaseDB[Profile]):
+    SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/author/search'
+
     def __init__(self, load_file_path: Optional[str] = None) -> None:
         super().__init__(Profile, load_file_path)
         self.retriever_tokenizer: Optional[BertTokenizer] = None
@@ -63,7 +66,9 @@ class ProfileDB(BaseDB[Profile]):
                 [profile.bio], self.retriever_tokenizer, self.retriever_model
             )[0]
 
-    def match(self, query: str, role: Role, num: int = 1) -> List[Profile]:
+    def match_offline(
+        self, query: str, role: Optional[Role], num: int = 1
+    ) -> List[Profile]:
         self._initialize_retriever()
 
         profiles = self.get(**{f'is_{role}_candidate': True})
@@ -82,6 +87,99 @@ class ProfileDB(BaseDB[Profile]):
 
         logger.info(f'Matched profiles for role {role}: {matched_profiles}')
         return matched_profiles
+
+    def match_online(
+        self,
+        query: Optional[str] = None,
+        name: Optional[str] = None,
+        domain: Optional[str] = None,
+        num: int = 1,
+    ) -> List[Profile]:
+        if not query and not name:
+            logger.warning('No query or name provided for online matching.')
+            return []
+
+        search_query = query if query else name
+        params = {
+            'query': search_query,
+            'fields': 'name,publications,affiliations',
+            'limit': num,
+        }
+
+        try:
+            response = requests.get(self.SEMANTIC_SCHOLAR_API_URL, params=params)
+            response.raise_for_status()
+            data = response.json()
+            logger.debug('Received response from Semantic Scholar API.')
+        except requests.exceptions.RequestException as e:
+            logger.error(f'Semantic Scholar API request failed: {e}')
+            return []
+
+        matched_profiles = []
+        for author in data.get('data', []):
+            if domain:
+                papers = author.get('publications', [])
+                if not any(
+                    domain.lower() in paper.get('title', '').lower()
+                    or domain.lower() in paper.get('abstract', '').lower()
+                    for paper in papers
+                ):
+                    continue
+
+            try:
+                affiliations = [
+                    aff.get('name', '') for aff in author.get('affiliations', [])
+                ]
+                bio = (
+                    f"Affiliations: {', '.join(affiliations)}"
+                    if affiliations
+                    else 'No affiliations listed.'
+                )
+
+                profile = Profile(
+                    name=author.get('name', 'Unknown'),
+                    bio=bio,
+                    domain=domain or 'Unknown',
+                    collaborators=[],
+                )
+                matched_profiles.append(profile)
+            except Exception as e:
+                logger.error(
+                    f'Failed to construct or add profile from online data: {e}'
+                )
+                continue
+
+            if len(matched_profiles) >= num:
+                break
+
+        logger.info(f'Matched profiles (online): {matched_profiles}')
+        return matched_profiles
+
+    def match(
+        self,
+        query: Optional[str] = None,
+        name: Optional[str] = None,
+        domain: Optional[str] = None,
+        role: Optional[str] = None,
+        num: int = 1,
+    ) -> List[Profile]:
+        if query:
+            offline_results = self.match_offline(query=query, role=role, num=num)
+        elif name:
+            offline_results = self.match_offline(query=name, role=role, num=num)
+        else:
+            offline_results = []
+
+        if len(offline_results) >= num:
+            return offline_results[:num]
+
+        remaining = num - len(offline_results)
+        online_results = self.match_online(
+            query=query, name=name, domain=domain, num=remaining
+        )
+
+        combined_results = offline_results + online_results
+        return combined_results[:num]
 
     def sample(self, role: Role, num: int = 1) -> List[Profile]:
         profiles = self.get(**{f'is_{role}_candidate': True})

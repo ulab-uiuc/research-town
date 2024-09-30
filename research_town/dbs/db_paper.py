@@ -1,6 +1,7 @@
 import random
 from typing import Any, List, Optional, TypeVar
 
+import requests
 import torch
 from transformers import BertModel, BertTokenizer
 
@@ -14,6 +15,8 @@ T = TypeVar('T', bound=Data)
 
 
 class PaperDB(BaseDB[Paper]):
+    SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/search'
+
     def __init__(self, load_file_path: Optional[str] = None) -> None:
         super().__init__(Paper, load_file_path)
         self.retriever_tokenizer: Optional[BertTokenizer] = None
@@ -26,12 +29,35 @@ class PaperDB(BaseDB[Paper]):
             )
             self.retriever_model = BertModel.from_pretrained('facebook/contriever')
 
-    def pull_papers(self, num: int, domain: Optional[str] = None) -> List[Paper]:
-        papers = get_recent_papers(domain=domain, max_results=num)
-        for paper in papers:
-            self.add(paper)
-        logger.info(f'Pulled {num} papers')
-        return papers
+    def pull_papers(self, num: int, domain: str) -> None:
+        data, _ = get_recent_papers(max_results=num)
+
+        for paper_data in data.values():
+            papers = [
+                Paper(
+                    title=title,
+                    abstract=abstract,
+                    authors=authors,
+                    url=url,
+                    domain=domain,
+                    timestamp=int(timestamp),
+                    sections=sections,
+                    bibliography=bibliography,
+                )
+                for title, abstract, authors, url, domain, timestamp, sections, bibliography in zip(
+                    paper_data['title'],
+                    paper_data['abstract'],
+                    paper_data['authors'],
+                    paper_data['url'],
+                    paper_data['domain'],
+                    paper_data['timestamp'],
+                    paper_data['sections'],
+                    paper_data['bibliography'],
+                )
+            ]
+
+            for paper in papers:
+                self.add(paper)
 
     def search_papers(
         self,
@@ -48,7 +74,7 @@ class PaperDB(BaseDB[Paper]):
         logger.info(f'Searched {num} papers')
         return papers
 
-    def match(self, query: str, num: int = 1, **conditions: Any) -> List[Paper]:
+    def match_offline(self, query: str, num: int = 1, **conditions: Any) -> List[Paper]:
         self._initialize_retriever()
         papers = self.get(**conditions)
 
@@ -69,13 +95,89 @@ class PaperDB(BaseDB[Paper]):
                     retriever_model=self.retriever_model,
                 )[0]
                 corpus_embed.append(paper_embed)
+                self.data_embed[paper.pk] = paper_embed
+
         topk_indexes = rank_topk(
             query_embed=query_embed, corpus_embed=corpus_embed, num=num
         )
         indexes = [index for topk_index in topk_indexes for index in topk_index]
         match_papers = [papers[index] for index in indexes]
-        logger.info(f'Matched papers: {match_papers}')
+
+        logger.info(f'Matched papers (offline): {match_papers}')
         return match_papers
+
+    def match_online(
+        self,
+        query: Optional[str] = None,
+        name: Optional[str] = None,
+        domain: Optional[str] = None,
+        num: int = 1,
+    ) -> List[Paper]:
+        if not query and not name:
+            logger.warning('No query or name provided for online matching.')
+            return []
+
+        search_query = query if query else name
+        params = {
+            'query': search_query,
+            'fields': 'title, authors, abstract, url, domain, timestamp, sections, bibliography',
+            'limit': num,
+        }
+
+        try:
+            response = requests.get(self.SEMANTIC_SCHOLAR_API_URL, params=params)
+            response.raise_for_status()
+            data = response.json()
+        except requests.exceptions.RequestException as e:
+            logger.error(f'Semantic Scholar API request failed: {e}')
+            return []
+
+        matched_papers = []
+        for paper_data in data.get('data', []):
+            paper_fields = paper_data.get('fieldsOfStudy', [])
+            if domain and domain not in paper_fields:
+                continue
+
+            paper = Paper(
+                title=paper_data.get('title', ''),
+                abstract=paper_data.get('abstract', ''),
+                authors=[author['name'] for author in paper_data.get('authors', [])],
+                url=paper_data.get('url', ''),
+                domain=domain if domain else ', '.join(paper_fields),
+                timestamp=paper_data.get('year', 0),
+                sections=None,
+                bibliography=None,
+            )
+            matched_papers.append(paper)
+
+            self.add(paper)
+        logger.info(f'Matched papers (online): {matched_papers}')
+        return matched_papers
+
+    def match(
+        self,
+        query: Optional[str] = None,
+        name: Optional[str] = None,
+        domain: Optional[str] = None,
+        num: int = 1,
+        **conditions: Any,
+    ) -> List[Paper]:
+        results = []
+        if query or name:
+            offline_results = self.match_offline(
+                query=query or name, num=num, **conditions
+            )
+            results.extend(offline_results)
+            if len(results) >= num:
+                return results[:num]
+
+            online_results = self.match_online(
+                query=query, name=name, domain=domain, num=num - len(results)
+            )
+            results.extend(online_results)
+
+        logger.info(f'Total matched papers: {results}')
+        return results[:num]
 
     def sample(self, num: int = 1, **conditions: Any) -> List[Paper]:
         papers = self.get(**conditions)
