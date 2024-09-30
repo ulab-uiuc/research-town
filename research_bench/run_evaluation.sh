@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INPUT="./data/arxiv_ai_papers/test_paper.json"
-OUTPUT="./results/test_results.jsonl"
+INPUT="./benchmark/benchmark_0930.json"
+OUTPUT="./results/research_bench_result.jsonl"
 
 poetry run python run_evaluation.py --input "$INPUT" --output "$OUTPUT"

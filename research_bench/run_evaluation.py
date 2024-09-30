@@ -111,7 +111,7 @@ def get_current_5q(intro: str) -> Optional[str]:
         return None
 
 
-def get_proposal_5q(authors: List[str], intros: List[str]) -> Optional[str]:
+def get_proposal_5q(authors: List[str], intros: List[str], keyword:str) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on the provided authors and existing proposals
     using the ProposalWritingEnv environment.
@@ -123,71 +123,67 @@ def get_proposal_5q(authors: List[str], intros: List[str]) -> Optional[str]:
     Returns:
         Optional[str]: Generated proposal as a string if successful, else None.
     """
-    try:
+    #try:
         # Initialize ProfileDB and add profiles based on the authors
 
-        config = Config('../configs')
-        profile_db = ProfileDB()
-        if os.path.exists('./profiles'):
-            profile_db.load_from_json('./profiles')
-        else:
-            profile_db.pull_profiles(names=authors, config=config)
-            profile_db.save_to_json('./profiles')
-        # Initialize other databases using default instances
-        log_db = LogDB()
-        progress_db = ProgressDB()
-        paper_db = PaperDB()  # Assuming existing papers are handled elsewhere
-        paper_db.pull_papers(num=2, domain='multi-agent')
-        # Initialize ProposalWritingEnv with the required databases and configuration
-        agent_manager = AgentManager(config=config, profile_db=profile_db)
-        env = ProposalWritingEnv(
-            name='proposal_writing',
-            log_db=log_db,
-            progress_db=progress_db,
-            paper_db=paper_db,
-            config=config,
-            agent_manager=agent_manager,
-        )
-        logger.info('Initialized ProposalWritingEnv.')
+    config = Config('../configs')
+    profile_db = ProfileDB()
+    profile_db.pull_profiles(names=authors, config=config)
+    # Initialize other databases using default instances
+    log_db = LogDB()
+    progress_db = ProgressDB()
+    paper_db = PaperDB()  # Assuming existing papers are handled elsewhere
+    paper_db.pull_papers(num=3, domain=keyword)
+    # Initialize ProposalWritingEnv with the required databases and configuration
+    agent_manager = AgentManager(config=config, profile_db=profile_db)
+    env = ProposalWritingEnv(
+        name='proposal_writing',
+        log_db=log_db,
+        progress_db=progress_db,
+        paper_db=paper_db,
+        config=config,
+        agent_manager=agent_manager,
+    )
+    logger.info('Initialized ProposalWritingEnv.')
 
-        # Create a leader agent (assuming `create_leader` requires a profile)
-        leader_profile = profile_db.get(name=authors[0])[0]
-        print('leader_profile', leader_profile)
-        leader = agent_manager.create_agent(leader_profile, role='leader')
-        if not leader_profile:
-            logger.error('No valid leader profile found.')
-            return None
-        logger.info('Created leader agent for profile')
-
-        # Prepare the context from existing proposals
-        # Assuming that the context should be a list of proposal strings
-        env.on_enter(
-            leader=leader,
-            contexts=intros,
-        )
-        logger.info('Entered ProposalWritingEnv with provided proposals as context.')
-
-        # Run the environment to generate the proposal
-        run_result = env.run()
-        if run_result is not None:
-            for progress, agent in run_result:
-                # Process progress and agent if needed
-                pass
-        logger.info('Ran ProposalWritingEnv.')
-
-        # Exit the environment and retrieve the generated proposal
-        exit_status, exit_dict = env.on_exit()
-        proposal = exit_dict.get('proposal')
-        if proposal and proposal.content:
-            logger.info('Successfully generated proposal.')
-            return str(proposal.content)
-        else:
-            logger.warning('Proposal generation returned no content.')
-            return None
-
-    except Exception as e:
-        logger.error(f'Error generating proposal_5q: {e}')
+    # Create a leader agent (assuming `create_leader` requires a profile)
+    leader_profile = profile_db.get(name=authors[0])[0]
+    print('leader_profile', leader_profile)
+    leader = agent_manager.create_agent(leader_profile, role='leader')
+    if not leader_profile:
+        logger.error('No valid leader profile found.')
         return None
+    logger.info('Created leader agent for profile')
+
+    # Prepare the context from existing proposals
+    # Assuming that the context should be a list of proposal strings
+    env.on_enter(
+        leader=leader,
+        contexts=intros,
+    )
+    logger.info('Entered ProposalWritingEnv with provided proposals as context.')
+
+    # Run the environment to generate the proposal
+    run_result = env.run()
+    if run_result is not None:
+        for progress, agent in run_result:
+            # Process progress and agent if needed
+            pass
+    logger.info('Ran ProposalWritingEnv.')
+
+    # Exit the environment and retrieve the generated proposal
+    exit_status, exit_dict = env.on_exit()
+    proposal = exit_dict.get('proposal')
+    if proposal and proposal.content:
+        logger.info('Successfully generated proposal.')
+        return str(proposal.content)
+    else:
+        logger.warning('Proposal generation returned no content.')
+        return None
+
+    # except Exception as e:
+    #     logger.error(f'Error generating proposal_5q: {e}')
+    #     return None
 
 
 def compute_bleu(reference: str, hypothesis: str) -> float:
@@ -273,12 +269,16 @@ def compute_gpt_metric(current_5q: str, proposal_5q: str) -> Optional[float]:
             {
                 'role': 'user',
                 'content': (
-                    'Evaluate the following two sets of five core research questions for alignment.\n\n'
-                    'Current 5Q:\n'
+                    'Evaluate the alignment between the following two sets of five core research questions, with a particular emphasis on their objectives, methodologies, and expected outcomes.\n\n'
+                    'Alignment Criteria Definitions:\n'
+                    '1. **Objectives**: Do both sets of questions aim to address the same or complementary research goals?\n'
+                    '2. **Methodologies**: Are the proposed methods similar, compatible, or capable of being effectively integrated?\n'
+                    '3. **Expected Outcomes**: Are the anticipated research results and impacts consistent or mutually supportive?\n\n'
+                    'Current Five Research Questions (Current 5Q):\n'
                     f'{current_5q}\n\n'
-                    'Proposal 5Q:\n'
+                    'Proposed Five Research Questions (Proposal 5Q):\n'
                     f'{proposal_5q}\n\n'
-                    'Please provide a similarity score 0 or 1, where 1 means the two proposals somewhat alignment to each other, especially the method part, and 0 means no alignment. Only output the score, without any additional information.'
+                    'Based on the above alignment criteria, especially focusing on the methodologies, please provide a similarity score: **1** indicates alignment, and **0** indicates no alignment. **Only output the score without any additional information.**'
                 ),
             }
         ]
@@ -315,86 +315,89 @@ def process_paper(
     Returns:
         Optional[Dict[str, Any]]: A dictionary containing evaluation results, or None if processing fails.
     """
-    try:
-        arxiv_id = paper_data.get('arxiv_id')
-        authors = paper_data.get('authors', [])
-        references = paper_data.get('references', [])
+    #try:
+    arxiv_id = paper_data.get('arxiv_id')
+    authors = paper_data.get('authors', [])
+    references = paper_data.get('references', [])
+    keyword = paper_data.get('keyword', '')
 
-        if not arxiv_id:
-            logger.warning(f'Missing arxiv_id for paper: {paper_key}')
-            return None
-
-        # Form the main paper URL
-        main_paper_url = f'https://arxiv.org/pdf/{arxiv_id}'
-        logger.info(f'Fetching introduction for main paper: {main_paper_url}')
-
-        # Step 1: Get the paper introduction using the updated function
-        intro = get_paper_introduction(main_paper_url)
-        if not intro:
-            logger.warning(f'Introduction not found for paper: {paper_key}')
-            return None
-
-        # Step 2: Generate current 5Q
-        current_5q = get_current_5q(intro)
-        if not current_5q:
-            logger.warning(f'current_5q generation failed for paper: {paper_key}')
-            return None
-        logger.info(f'Generated current_5q for paper: {current_5q}')
-
-        # Step 3: Extract proposals from references with ArXiv externalIds
-        proposals = []
-        intros = []
-        for ref in references:
-            external_ids = ref.get('externalIds', {})
-            arxiv_ref_id = external_ids.get('ArXiv')
-            if arxiv_ref_id:
-                ref_url = f'https://arxiv.org/pdf/{arxiv_ref_id}'
-                logger.info(f'Fetching introduction for referenced paper: {ref_url}')
-                ref_intro = get_paper_introduction(ref_url)
-                if ref_intro:
-                    intros.append(ref_intro)
-                else:
-                    logger.warning(
-                        f'Introduction not found for referenced paper: {ref_url}'
-                    )
-            # Collect proposal titles regardless of ArXiv presence
-            proposal_title = ref.get('title', '')
-            if proposal_title:
-                proposals.append(proposal_title)
-
-        # Optionally, you can use the collected intros for further processing
-        # For example, passing them to get_proposal_5q or other functions
-        # Currently, get_proposal_5q only uses authors and proposals
-        # If intros are needed in get_proposal_5q, modify the function accordingly
-
-        # Step 4: Generate proposal 5Q
-        proposal_5q = get_proposal_5q(authors, intros)
-        if not proposal_5q:
-            logger.warning(f'proposal_5q generation failed for paper: {paper_key}')
-            return None
-
-        # Step 5: Compute evaluation metrics
-        bleu = compute_bleu(current_5q, proposal_5q)
-        rouge_l = compute_rouge_l(current_5q, proposal_5q)
-        gpt_metric = compute_gpt_metric(current_5q, proposal_5q)
-        bert_score = compute_bertscore(current_5q, proposal_5q)
-
-        evaluation_result = {
-            'paper_key': paper_key,
-            'current_5q': current_5q,
-            'proposal_5q': proposal_5q,
-            'referenced_intros': intros,  # Optional: Include referenced intros in the result
-            'bleu': bleu,
-            'rouge_l': rouge_l,
-            'gpt_metric_score': gpt_metric,
-            'bert_score': bert_score,
-        }
-
-        return evaluation_result
-
-    except Exception as e:
-        logger.error(f'Error processing paper {paper_key}: {e}')
+    if not arxiv_id:
+        logger.warning(f'Missing arxiv_id for paper: {paper_key}')
         return None
+
+    # Form the main paper URL
+    main_paper_url = f'https://arxiv.org/pdf/{arxiv_id}'
+    logger.info(f'Fetching introduction for main paper: {main_paper_url}')
+
+    # Step 1: Get the paper introduction using the updated function
+    intro = get_paper_introduction(main_paper_url)
+    if not intro:
+        logger.warning(f'Introduction not found for paper: {paper_key}')
+        return None
+
+    # Step 2: Generate current 5Q
+    current_5q = get_current_5q(intro)
+    if not current_5q:
+        logger.warning(f'current_5q generation failed for paper: {paper_key}')
+        return None
+    logger.info(f'Generated current_5q for paper: {current_5q}')
+
+    # Step 3: Extract proposals from references with ArXiv externalIds
+    proposals = []
+    intros = []
+    for ref in references:
+        print('ref', ref)
+        external_ids = ref.get('externalIds', {})
+        print('external_ids', external_ids)
+        arxiv_ref_id = external_ids.get('ArXiv')
+        if arxiv_ref_id:
+            ref_url = f'https://arxiv.org/pdf/{arxiv_ref_id}'
+            logger.info(f'Fetching introduction for referenced paper: {ref_url}')
+            ref_intro = get_paper_introduction(ref_url)
+            if ref_intro:
+                intros.append(ref_intro)
+            else:
+                logger.warning(
+                    f'Introduction not found for referenced paper: {ref_url}'
+                )
+        # Collect proposal titles regardless of ArXiv presence
+        proposal_title = ref.get('title', '')
+        if proposal_title:
+            proposals.append(proposal_title)
+
+    # Optionally, you can use the collected intros for further processing
+    # For example, passing them to get_proposal_5q or other functions
+    # Currently, get_proposal_5q only uses authors and proposals
+    # If intros are needed in get_proposal_5q, modify the function accordingly
+
+    # Step 4: Generate proposal 5Q
+    proposal_5q = get_proposal_5q(authors, intros, keyword)
+    if not proposal_5q:
+        logger.warning(f'proposal_5q generation failed for paper: {paper_key}')
+        return None
+
+    # Step 5: Compute evaluation metrics
+    bleu = compute_bleu(current_5q, proposal_5q)
+    rouge_l = compute_rouge_l(current_5q, proposal_5q)
+    gpt_metric = compute_gpt_metric(current_5q, proposal_5q)
+    bert_score = compute_bertscore(current_5q, proposal_5q)
+
+    evaluation_result = {
+        'paper_key': paper_key,
+        'current_5q': current_5q,
+        'proposal_5q': proposal_5q,
+        'referenced_intros': intros,  # Optional: Include referenced intros in the result
+        'bleu': bleu,
+        'rouge_l': rouge_l,
+        'gpt_metric_score': gpt_metric,
+        'bert_score': bert_score,
+    }
+
+    return evaluation_result
+
+    # except Exception as e:
+    #     logger.error(f'Error processing paper {paper_key}: {e}')
+    #     return None
 
 
 def main(input_json: str, output_jsonl: str) -> None:
@@ -405,61 +408,71 @@ def main(input_json: str, output_jsonl: str) -> None:
         input_json (str): Path to the input JSON file.
         output_jsonl (str): Path to the output JSONL file.
     """
-    try:
+    #try:
         # Load input JSON
-        with open(input_json, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+    with open(input_json, 'r', encoding='utf-8') as f:
+        data = json.load(f)
 
-        papers = data.keys()
-        logger.info(f'Found {len(papers)} papers to process.')
+    papers = data.keys()
+    logger.info(f'Found {len(papers)} papers to process.')
 
-        # Initialize lists to store evaluation metrics
-        bleu_scores = []
-        rouge_l_scores = []
-        gpt_metric_scores = []
-        bert_scores = []
+    # Initialize lists to store evaluation metrics
+    bleu_scores = []
+    rouge_l_scores = []
+    gpt_metric_scores = []
+    bert_scores = []
 
-        # Open output JSONL file
-        with open(output_jsonl, 'w', encoding='utf-8') as outfile:
-            # Iterate over each paper with a progress bar
-            for paper_key in tqdm(papers, desc='Processing papers'):
-                paper_data = data[paper_key]
-                evaluation = process_paper(paper_key, paper_data)
-                if evaluation:
-                    # Write the evaluation result as a JSON line
-                    outfile.write(json.dumps(evaluation) + '\n')
+    # Open output JSONL file
+    # with open(output_jsonl, 'w', encoding='utf-8') as outfile:
+    #     # Iterate over each paper with a progress bar
+    try:
+        with open(output_jsonl, 'r', encoding='utf-8') as outfile:
+            num_lines = sum(1 for _ in outfile)
+            if num_lines > 0:
+                papers = papers[num_lines:]
+                logger.info(f'Skipping {num_lines} papers already processed.')
+    except:
+        pass
 
-                    # Accumulate metrics for averaging
-                    bleu_scores.append(evaluation.get('bleu', 0.0))
-                    rouge_l_scores.append(evaluation.get('rouge_l', 0.0))
-                    bert_scores.append(evaluation.get('bert_score', 0.0))
-                    gpt_score = evaluation.get('gpt_metric_score')
-                    if gpt_score is not None:
-                        gpt_metric_scores.append(gpt_score)
-                else:
-                    logger.warning(
-                        f'Skipping paper due to failed processing: {paper_key}'
-                    )
+    for paper_key in tqdm(papers, desc='Processing papers'):
+        paper_data = data[paper_key]
+        evaluation = process_paper(paper_key, paper_data)
+        if evaluation:
+            # Write the evaluation result as a JSON line
+            with open(output_jsonl, 'a', encoding='utf-8') as outfile:
+                outfile.write(json.dumps(evaluation) + '\n')
+                outfile.flush()
+            # Accumulate metrics for averaging
+            bleu_scores.append(evaluation.get('bleu', 0.0))
+            rouge_l_scores.append(evaluation.get('rouge_l', 0.0))
+            bert_scores.append(evaluation.get('bert_score', 0.0))
+            gpt_score = evaluation.get('gpt_metric_score')
+            if gpt_score is not None:
+                gpt_metric_scores.append(gpt_score)
+        else:
+            logger.warning(
+                f'Skipping paper due to failed processing: {paper_key}'
+            )
 
-        # Compute and log average metrics
-        avg_bleu = sum(bleu_scores) / len(bleu_scores) if bleu_scores else 0.0
-        avg_rouge_l = (
-            sum(rouge_l_scores) / len(rouge_l_scores) if rouge_l_scores else 0.0
-        )
-        avg_gpt_metric = (
-            sum(gpt_metric_scores) / len(gpt_metric_scores)
-            if gpt_metric_scores
-            else 0.0
-        )
-        avg_bert_score = sum(bert_scores) / len(bert_scores) if bert_scores else 0.0
+    # Compute and log average metrics
+    avg_bleu = sum(bleu_scores) / len(bleu_scores) if bleu_scores else 0.0
+    avg_rouge_l = (
+        sum(rouge_l_scores) / len(rouge_l_scores) if rouge_l_scores else 0.0
+    )
+    avg_gpt_metric = (
+        sum(gpt_metric_scores) / len(gpt_metric_scores)
+        if gpt_metric_scores
+        else 0.0
+    )
+    avg_bert_score = sum(bert_scores) / len(bert_scores) if bert_scores else 0.0
 
-        logger.info(f'Average BLEU score: {avg_bleu:.4f}')
-        logger.info(f'Average ROUGE-L score: {avg_rouge_l:.4f}')
-        logger.info(f'Average GPT-based metric score: {avg_gpt_metric:.4f}')
-        logger.info(f'Average BERTScore: {avg_bert_score:.4f}')
+    logger.info(f'Average BLEU score: {avg_bleu:.4f}')
+    logger.info(f'Average ROUGE-L score: {avg_rouge_l:.4f}')
+    logger.info(f'Average GPT-based metric score: {avg_gpt_metric:.4f}')
+    logger.info(f'Average BERTScore: {avg_bert_score:.4f}')
 
-    except Exception as e:
-        logger.error(f'An error occurred in the main execution: {e}')
+    # except Exception as e:
+    #     logger.error(f'An error occurred in the main execution: {e}')
 
 
 if __name__ == '__main__':
