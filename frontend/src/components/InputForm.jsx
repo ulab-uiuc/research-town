@@ -44,7 +44,7 @@ function InputForm({ url, setUrl, handleSubmit }) {
             <Form.Control
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="Enter URL for paper link"
+              placeholder="Enter URL for PDF paper or arXiv paper"
               required
               style={{
                 padding: "12px",

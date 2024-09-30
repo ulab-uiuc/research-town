@@ -69,13 +69,17 @@ class ProfileDB(BaseDB[Profile]):
         profiles = self.get(**{f'is_{role}_candidate': True})
         query_embed = get_embed([query], self.retriever_tokenizer, self.retriever_model)
 
-        corpus_embed = [
-            self.data_embed.get(profile.pk)
-            or get_embed([profile.bio], self.retriever_tokenizer, self.retriever_model)[
-                0
-            ]
-            for profile in profiles
-        ]
+        corpus_embed = []
+        for profile in profiles:
+            if profile.pk in self.data_embed:
+                corpus_embed.append(self.data_embed[profile.pk])
+            else:
+                profile_embed = get_embed(
+                    instructions=[profile.bio],
+                    retriever_tokenizer=self.retriever_tokenizer,
+                    retriever_model=self.retriever_model,
+                )[0]
+                corpus_embed.append(profile_embed)
 
         topk_indexes = rank_topk(query_embed, corpus_embed, num=num)
         matched_profiles = [profiles[idx] for topk in topk_indexes for idx in topk]
