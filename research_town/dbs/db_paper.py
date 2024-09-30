@@ -1,5 +1,5 @@
 import random
-from typing import Any, List, Optional, TypeVar
+from typing import Any, List, Literal, Optional, TypeVar
 
 import requests
 import torch
@@ -12,6 +12,8 @@ from ..utils.retriever import get_embed, rank_topk
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=Data)
+
+Role = Literal['reviewer', 'leader', 'member', 'chair'] | None
 
 
 class PaperDB(BaseDB[Paper]):
@@ -29,35 +31,12 @@ class PaperDB(BaseDB[Paper]):
             )
             self.retriever_model = BertModel.from_pretrained('facebook/contriever')
 
-    def pull_papers(self, num: int, domain: str) -> None:
-        data, _ = get_recent_papers(max_results=num)
-
-        for paper_data in data.values():
-            papers = [
-                Paper(
-                    title=title,
-                    abstract=abstract,
-                    authors=authors,
-                    url=url,
-                    domain=domain,
-                    timestamp=int(timestamp),
-                    sections=sections,
-                    bibliography=bibliography,
-                )
-                for title, abstract, authors, url, domain, timestamp, sections, bibliography in zip(
-                    paper_data['title'],
-                    paper_data['abstract'],
-                    paper_data['authors'],
-                    paper_data['url'],
-                    paper_data['domain'],
-                    paper_data['timestamp'],
-                    paper_data['sections'],
-                    paper_data['bibliography'],
-                )
-            ]
-
-            for paper in papers:
-                self.add(paper)
+    def pull_papers(self, num: int, domain: Optional[str] = None) -> List[Paper]:
+        papers = get_recent_papers(domain=domain, max_results=num)
+        for paper in papers:
+            self.add(paper)
+        logger.info(f'Pulled {num} papers')
+        return papers
 
     def search_papers(
         self,
@@ -162,15 +141,23 @@ class PaperDB(BaseDB[Paper]):
         num: int = 1,
         **conditions: Any,
     ) -> List[Paper]:
-        results = []
-        if query or name:
+        results: List[Paper] = []
+
+        if query:
+            offline_results = self.match_offline(query=query, num=num, **conditions)
+            results.extend(offline_results)
+            if len(results) >= num:
+                return results[:num]
+
+        if name:
             offline_results = self.match_offline(
-                query=query or name, num=num, **conditions
+                query=name, num=num - len(results), **conditions
             )
             results.extend(offline_results)
             if len(results) >= num:
                 return results[:num]
 
+        if len(results) < num and (query or name):
             online_results = self.match_online(
                 query=query, name=name, domain=domain, num=num - len(results)
             )

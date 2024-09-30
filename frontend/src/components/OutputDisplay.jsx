@@ -133,7 +133,11 @@ function OutputDisplay({ output }) {
 
 function GetCurrentStatus({ output }) {
   if (output.length === 0) return "Matching agents";
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> main
   const lastItem = output[output.length - 1];
   switch (lastItem.type) {
     case "insight":

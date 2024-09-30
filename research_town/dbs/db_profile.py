@@ -160,7 +160,7 @@ class ProfileDB(BaseDB[Profile]):
         query: Optional[str] = None,
         name: Optional[str] = None,
         domain: Optional[str] = None,
-        role: Optional[str] = None,
+        role: Optional[Role] = None,
         num: int = 1,
     ) -> List[Profile]:
         if query:
