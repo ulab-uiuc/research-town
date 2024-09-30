@@ -90,7 +90,9 @@ class Agent(object):
 
     @beartype
     @member_required
-    def discuss_idea(self, ideas: List[Idea], contexts: List[str], config: Config) -> Idea:
+    def discuss_idea(
+        self, ideas: List[Idea], contexts: List[str], config: Config
+    ) -> Idea:
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized = discuss_idea_prompting(
             bio=self.profile.bio,

@@ -28,12 +28,12 @@ fewshot_examples:
  Valuable Points from Target Paper:
  The Transfusion model’s mixed-modality approach, combined with diffusion techniques, can inspire new research directions in code attribution and obfuscation detection by applying multimodal models to detect obfuscation patterns in mixed data formats, such as code, documentation, and visual representations (e.g., flowcharts). Inspired by Chameleon's token-based mixed-modality fusion, one could investigate the use of early-fusion models for code snippets, comments, and diagrams to improve obfuscation detection. These multimodal models could be trained to identify obfuscated patterns by analyzing both structural (AST-based) and semantic (natural language) features simultaneously. Furthermore, leveraging modality-specific encoding and decoding layers, as demonstrated in Transfusion, could enhance the ability to scale detection systems across different programming languages and obfuscation techniques.
 - |
- Here is my profile biology: 
+ Here is my profile biology:
  As a researcher, I explore a wide range of topics in artificial intelligence, decision theory, game theory, and ethics, with a recent focus on the implications of superintelligent AI and its associated risks and benefits. I examine the ethical dimensions of AI decision-making, seeking ways to train AI for morally sound choices despite the absence of a precise ethical framework. My work includes challenging existing theories in decision theory, analyzing strategic equivalence in game theory, and investigating multi-agent interactions to enhance cooperation among AI agents. Additionally, I address practical applications like improving kidney exchange algorithms and tackling manipulation in academic conference bidding, aiming to bridge theoretical insights with real-world benefits for society.
- Here are some recent paper abstracts: 
+ Here are some recent paper abstracts:
  Recent studies on language model (LM) watermarking techniques reveal that while distortion-free watermarks aim to embed signals without compromising content quality, key collisions in pseudo-random sampling can lead to significant distribution bias, making perfect distortion-free watermarks unattainable. Additionally, new evaluation methods for watermarking algorithms indicate that current techniques are easily detectable and can negatively impact text coherence and depth. These findings emphasize the trade-off between watermark robustness and text quality, underscoring the need for more informative assessment metrics.
  Please begin writing research insights that you can gain based on your research experience and the academic context. Mainly based on the academic context. Please make sure it is only two to three sentences.
- Your research MUST STRICTLY BE A FOLLOW-UP of the target paper: 
+ Your research MUST STRICTLY BE A FOLLOW-UP of the target paper:
  The emergence of language models capable of generating human-like text has heightened the need for content provenance, prompting platforms like StackOverflow to ban AI-generated answers to combat misinformation. A watermarking protocol is proposed, where a trusted language model provider embeds a signal in the generated text, allowing a detector to identify the source, while ensuring the watermark is distortion-free, agnostic, and robust against text modifications. This methodology involves a deterministic generation method and a detection method, both coordinated through a shared key, ensuring that the watermarked text remains indistinguishable from original content while facilitating effective attribution.
  YOU SHOULD REFER TO IT FIRST!
 - |
@@ -48,5 +48,5 @@ template: |
  Here is my profile biology: {bio}
  Here are some recent paper abstracts: {papers}
  Please begin writing research insights that you can gain based on your research experience and the academic context. Mainly based on the academic context. Please make sure it is only two to three sentences.
- Your research MUST STRICTLY BE A FOLLOW-UP of the target paper: {contexts} 
+ Your research MUST STRICTLY BE A FOLLOW-UP of the target paper: {contexts}
  YOU SHOULD REFER TO IT FIRST!

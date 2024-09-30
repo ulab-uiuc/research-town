@@ -370,24 +370,23 @@ def get_paper_introduction(url: str) -> Optional[str]:
         sections = get_paper_content_from_pdf(url)
     if not sections:
         return None
-    
+
     sections_keys = list(sections.keys())
     on_and_after_introduction = False
 
-    introduction_text = ""
+    introduction_text = ''
     for section_name in sections_keys:
         if 'introduction' in section_name.lower():
             on_and_after_introduction = True
         if on_and_after_introduction:
-            introduction_text += " " + sections[section_name]
-    
+            introduction_text += ' ' + sections[section_name]
+
     if on_and_after_introduction:
-        introduction_text = " ".join(introduction_text.split(" ")[:intro_length])
+        introduction_text = ' '.join(introduction_text.split(' ')[:intro_length])
         return introduction_text
-    else:        
+    else:
         for idx, section_name in enumerate(sections_keys):
-            if idx != 0 or (idx == 0 and len(sections_keys) >= 2):            
+            if idx != 0 or (idx == 0 and len(sections_keys) >= 2):
                 introduction_text += sections[section_name]
-        introduction_text = " ".join(introduction_text.split(" ")[:intro_length])
+        introduction_text = ' '.join(introduction_text.split(' ')[:intro_length])
         return introduction_text
-    
