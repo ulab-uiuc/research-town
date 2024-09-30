@@ -17,7 +17,7 @@ from research_town.utils.string_mapper import (
 
 def test_map_idea_list_to_str() -> None:
     ideas = [{'content': 'Idea 1'}, {'content': 'Idea 2'}, {'content': 'Idea 3'}]
-    expected_result = 'Idea 1Idea 2Idea 3'
+    expected_result = '1th idea: Idea 1\n2th idea: Idea 2\n3th idea: Idea 3\n'
     assert map_idea_list_to_str(ideas) == expected_result
 
 
@@ -33,7 +33,7 @@ def test_map_paper_list_to_str() -> None:
         {'abstract': 'Abstract 2'},
         {'abstract': 'Abstract 3'},
     ]
-    expected_result = 'Paper: Abstract 1Paper: Abstract 2Paper: Abstract 3'
+    expected_result = '1th paper: Abstract 1\n2th paper: Abstract 2\n3th paper: Abstract 3\n'
     assert map_paper_list_to_str(papers) == expected_result
 
 
@@ -64,13 +64,13 @@ def test_map_review_list_to_str() -> None:
 
 def test_map_paper_to_str() -> None:
     paper = {'abstract': 'This is a paper abstract'}
-    expected_result = 'Paper: This is a paper abstract'
+    expected_result = 'This is a paper abstract'
     assert map_paper_to_str(paper) == expected_result
 
 
 def test_map_rebuttal_to_str() -> None:
     rebuttal = {'content': 'This is a rebuttal'}
-    expected_result = 'Rebuttal: This is a rebuttal'
+    expected_result = 'This is a rebuttal'
     assert map_rebuttal_to_str(rebuttal) == expected_result
 
 
@@ -129,7 +129,7 @@ def test_map_insight_list_to_str() -> None:
         {'content': 'Insight 2'},
         {'content': 'Insight 3'},
     ]
-    expected_result = 'Insight 1Insight 2Insight 3'
+    expected_result = '1th insight: Insight 1\n2th insight: Insight 2\n3th insight: Insight 3\n'
     assert map_insight_list_to_str(insights) == expected_result
 
 

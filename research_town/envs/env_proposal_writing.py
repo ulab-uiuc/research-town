@@ -1,9 +1,9 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, Generator, Tuple
+from beartype.typing import Any, Dict, Generator, List, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..data import Progress
+from ..data import Idea, Insight, Progress
 from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
@@ -45,28 +45,33 @@ class ProposalWritingEnv(BaseEnv):
     @beartype
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         # Each member reviews literature
-        all_insights = []
-        ideas = []
+        insights: List[Insight] = []
+        keywords: List[str] = []
+        ideas: List[Idea] = []
         for member in self.members:
             related_papers = self.paper_db.search_papers(
                 query=';'.join(self.contexts),
                 num=2,
             )
-            insights = member.review_literature(
+            summary, keywords, insight = member.review_literature(
                 papers=related_papers,
                 contexts=self.contexts,
                 config=self.config,
             )
-            all_insights.append(insights)
-            for insight in insights:
-                yield insight, member
+            yield insight, member
+            insights.append(insight)
+            keywords.extend(keywords)
 
-        for member, insights in zip(self.members, all_insights):
+        keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
+
+        for member in self.members:
             related_papers = self.paper_db.search_papers(
                 query=insight.content,
                 author=member.profile.name,
-                domain=member.profile.domain[0] if member.profile.domain else None,
-                num=2,
+                domain=keywords[0] + member.profile.domain[0]
+                if member.profile.domain
+                else keywords[0],
+                num=7,
             )
             idea = member.brainstorm_idea(
                 papers=related_papers, insights=insights, config=self.config
