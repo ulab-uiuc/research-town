@@ -69,7 +69,7 @@ class ProposalWritingEnv(BaseEnv):
                 query=insight.content,
                 author=member.profile.name,
                 domain=keywords[0] + member.profile.domain[0] if member.profile.domain else keywords[0],
-                num=2,
+                num=7,
             )
             idea = member.brainstorm_idea(
                 papers=related_papers, insights=insights, config=self.config

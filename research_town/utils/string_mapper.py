@@ -4,7 +4,7 @@ from beartype.typing import Dict, List, Union
 def map_idea_list_to_str(ideas: List[Dict[str, str]]) -> str:
     result = ''
     for i, idea in enumerate(ideas):
-        result += map_idea_to_str(idea)
+        result += f'{i}th idea:' + map_idea_to_str(idea) + '\n'
     return result
 
 
@@ -13,28 +13,21 @@ def map_idea_to_str(idea: Dict[str, str]) -> str:
     return f"{idea['content']}"
 
 
-def map_proposal_list_to_str(papers: List[Dict[str, str]]) -> str:
-    result = ''
-    for paper in papers:
-        result += map_proposal_to_str(paper)
-    return result
-
-
 def map_proposal_to_str(paper: Dict[str, str]) -> str:
     assert 'content' in paper
-    return f"Proposal: {paper['content']}"
+    return f"{paper['content']}"
 
 
 def map_paper_list_to_str(papers: List[Dict[str, str]]) -> str:
     result = ''
-    for paper in papers:
-        result += map_paper_to_str(paper)
+    for i, paper in enumerate(papers):
+        result += f"{i}th paper: " + map_paper_to_str(paper) + '\n'
     return result
 
 
 def map_paper_to_str(paper: Dict[str, str]) -> str:
     assert 'abstract' in paper
-    return f"Paper: {paper['abstract']}"
+    return f"{paper['abstract']}"
 
 
 def map_review_list_to_str(reviews: List[Dict[str, Union[int, str]]]) -> str:
@@ -89,8 +82,8 @@ def map_metareview_to_str(metareview: Dict[str, str]) -> str:
 
 def map_insight_list_to_str(insights: List[Dict[str, str]]) -> str:
     result = ''
-    for insight in insights:
-        result += map_insight_to_str(insight)
+    for i, insight in enumerate(insights):
+        result += f'{i}th insight: ' + map_insight_to_str(insight) + '\n'
     return result
 
 
