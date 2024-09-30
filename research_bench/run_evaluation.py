@@ -44,7 +44,7 @@ from research_town.agents import AgentManager
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.envs import ProposalWritingEnv
-from research_town.utils.agent_prompter import model_prompting
+from research_town.utils.model_prompting import model_prompting
 from research_town.utils.paper_collector import get_paper_introduction
 
 # Initialize NLTK resources
@@ -180,7 +180,7 @@ def get_proposal_5q(authors: List[str], intros: List[str]) -> Optional[str]:
         proposal = exit_dict.get('proposal')
         if proposal and proposal.content:
             logger.info('Successfully generated proposal.')
-            return proposal.content
+            return str(proposal.content)
         else:
             logger.warning('Proposal generation returned no content.')
             return None
@@ -208,7 +208,7 @@ def compute_bleu(reference: str, hypothesis: str) -> float:
         bleu_score = sentence_bleu(
             [reference_tokens], hypothesis_tokens, smoothing_function=smoothie
         )
-        return bleu_score
+        return float(bleu_score)
     except Exception as e:
         logger.error(f'Error computing BLEU score: {e}')
         return 0.0
@@ -229,7 +229,7 @@ def compute_rouge_l(reference: str, hypothesis: str) -> float:
         scorer = rouge_scorer.RougeScorer(['rougeL'], use_stemmer=True)
         scores = scorer.score(reference, hypothesis)
         rouge_l_f1 = scores['rougeL'].fmeasure
-        return rouge_l_f1
+        return float(rouge_l_f1)
     except Exception as e:
         logger.error(f'Error computing ROUGE-L score: {e}')
         return 0.0
@@ -251,7 +251,7 @@ def compute_bertscore(reference: str, hypothesis: str) -> float:
         P, R, F1 = score(
             [hypothesis], [reference], lang='en', rescale_with_baseline=True
         )
-        return F1.mean().item()
+        return float(F1.mean().item())
     except Exception as e:
         logger.error(f'Error computing BERTScore: {e}')
         return 0.0
