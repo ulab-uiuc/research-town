@@ -1,9 +1,9 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, Generator, Tuple, List
+from beartype.typing import Any, Dict, Generator, List, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..data import Progress, Insight, Idea
+from ..data import Idea, Insight, Progress
 from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
@@ -61,14 +61,16 @@ class ProposalWritingEnv(BaseEnv):
             yield insight, member
             insights.append(insight)
             keywords.extend(keywords)
-        
+
         keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
 
         for member in self.members:
             related_papers = self.paper_db.search_papers(
                 query=insight.content,
                 author=member.profile.name,
-                domain=keywords[0] + member.profile.domain[0] if member.profile.domain else keywords[0],
+                domain=keywords[0] + member.profile.domain[0]
+                if member.profile.domain
+                else keywords[0],
                 num=7,
             )
             idea = member.brainstorm_idea(

@@ -61,7 +61,9 @@ def review_literature_prompting(
     keywords = keywords_match.group(1).strip() if keywords_match else ''
     keywords = keywords.split(',')
     keywords = [keyword.strip() for keyword in keywords]
-    valuable_points = valuable_points_match.group(1).strip() if valuable_points_match else ''
+    valuable_points = (
+        valuable_points_match.group(1).strip() if valuable_points_match else ''
+    )
     return summary, keywords, valuable_points
 
 

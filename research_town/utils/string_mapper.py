@@ -21,7 +21,7 @@ def map_proposal_to_str(paper: Dict[str, str]) -> str:
 def map_paper_list_to_str(papers: List[Dict[str, str]]) -> str:
     result = ''
     for i, paper in enumerate(papers):
-        result += f"{i}th paper: " + map_paper_to_str(paper) + '\n'
+        result += f'{i}th paper: ' + map_paper_to_str(paper) + '\n'
     return result
 
 
