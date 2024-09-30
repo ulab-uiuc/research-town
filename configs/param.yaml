@@ -10,3 +10,4 @@ top_p: null
 write_proposal_strategy: default
 max_env_run_num: 1
 proposal_num: 1
+idea_sample_num: 1

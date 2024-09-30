@@ -109,8 +109,8 @@ class Agent(object):
     @beartype
     @member_required
     def write_proposal(
-        self, idea: Idea, papers: List[Paper], config: Config, proposal_num:int = 1
-    ) -> List[Proposal]:
+        self, idea: Idea, papers: List[Paper], config: Config,
+    ) -> Proposal:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
 
@@ -127,9 +127,6 @@ class Agent(object):
             print('write_proposal_strategy not supported, will use default')
             prompt_template = config.agent_prompt_template.write_proposal
 
-        proposals = []
-
-        for _ in range(proposal_num):
             proposal, q5_result = write_proposal_prompting(
                 idea=serialized_idea,
                 papers=serialized_papers,
@@ -141,15 +138,14 @@ class Agent(object):
                 top_p=config.param.top_p,
                 stream=config.param.stream,
             )
-            proposals.append(Proposal(
+            return Proposal(
                 content=proposal,
                 q1=q5_result.get('q1', ''),
                 q2=q5_result.get('q2', ''),
                 q3=q5_result.get('q3', ''),
                 q4=q5_result.get('q4', ''),
                 q5=q5_result.get('q5', ''),
-            ))
-        return proposals
+            )
     
     @beartype
     @reviewer_required

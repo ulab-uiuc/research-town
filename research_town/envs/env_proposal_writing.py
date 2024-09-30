@@ -1,5 +1,8 @@
 from beartype import beartype
 from beartype.typing import Any, Dict, Generator, List, Tuple
+import math
+import random
+import itertools
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
@@ -80,26 +83,65 @@ class ProposalWritingEnv(BaseEnv):
             yield idea, member
 
         # Leader discusses ideas
-        summarized_idea = self.leader.discuss_idea(
-            ideas=ideas, contexts=self.contexts, config=self.config
-        )
-        yield summarized_idea, self.leader
+         
+        # Sampling Proposals
+        idea_sample_num = self.config.param.idea_sample_num
+        proposal_num = self.config.param.proposal_num
+        
+        total_ideas = len(ideas)
+        
+        # Error Handling
+        if idea_sample_num > total_ideas:
+            raise ValueError(
+                f"idea_sample_num ({idea_sample_num}) cannot be greater than the number of available ideas ({total_ideas})."
+            )
+        
+        # Calculate the total number of possible unique combinations
+        total_combinations = math.comb(total_ideas, idea_sample_num)
+        
+        if proposal_num > total_combinations:
+            raise ValueError(
+                f"proposal_num ({proposal_num}) cannot be greater than the total number of unique combinations ({total_combinations})."
+            )
+        
+        # Generate all possible unique combinations
+        all_combinations = list(itertools.combinations(ideas, idea_sample_num))
+        
+        # Randomly sample the required number of unique combinations
+        sampled_combinations = random.sample(all_combinations, proposal_num)
+        
 
-        # Write Proposal
-        query = summarized_idea.content or self.leader.profile.bio
-        related_papers = self.paper_db.search_papers(
-            query=query,
-            domain=self.leader.profile.domain[0]
-            if self.leader.profile.domain
-            else None,
-            num=2,
-        )
-        proposal = self.leader.write_proposal(
-            idea=summarized_idea,
-            papers=related_papers,
-            config=self.config,
-            proposal_num=self.config.param.proposal_num,
-        )
-        yield proposal, self.leader
+        proposals = []
 
-        self.proposal = proposal  # Store the proposal for use in on_exit
+        for _, idea_subset in enumerate(sampled_combinations, 1):
+            # Leader discusses the subset of ideas to generate a summarized idea
+            summarized_idea = self.leader.discuss_idea(
+                ideas=idea_subset,
+                contexts=self.contexts,
+                config=self.config
+            )
+            yield summarized_idea, self.leader
+            
+
+            # Write Proposal
+            query = summarized_idea.content or self.leader.profile.bio
+            related_papers = self.paper_db.search_papers(
+                query=query,
+                domain=self.leader.profile.domain[0]
+                if self.leader.profile.domain
+                else None,
+                num=2,
+            )
+            proposal = self.leader.write_proposal(
+                idea=summarized_idea,
+                papers=related_papers,
+                config=self.config,
+                proposal_num=self.config.param.proposal_num,
+            )
+            # Add the generated proposal to the proposals list
+            proposals.append(proposal)
+            yield proposal, self.leader
+            
+        
+        # Assign the list of proposals to self.proposal
+        self.proposal = proposals
