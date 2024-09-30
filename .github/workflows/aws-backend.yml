@@ -28,7 +28,11 @@ jobs:
           git reset --hard origin/main
           sed -i 's|^base_llm:.*|base_llm: together_ai/Qwen/Qwen1.5-72B-Chat|' ~/research-town/configs/param.yaml
           cd backend/
-          source ~/.bashrc
+          if [ -f "/home/ubuntu/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "/home/ubuntu/miniconda3/etc/profile.d/conda.sh"
+          else
+            export PATH="/home/ubuntu/miniconda3/bin:$PATH"
+          fi
           conda activate research_town
           tmux has-session -t 0 2>/dev/null
           if [ $? != 0 ]; then
