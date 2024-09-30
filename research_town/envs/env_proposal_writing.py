@@ -98,6 +98,7 @@ class ProposalWritingEnv(BaseEnv):
             idea=summarized_idea,
             papers=related_papers,
             config=self.config,
+            proposal_num=self.config.param.proposal_num,
         )
         yield proposal, self.leader
 

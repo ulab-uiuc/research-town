@@ -1,5 +1,5 @@
 import json
-from typing import Generator, Optional, Tuple
+from typing import Generator, Optional, Tuple, List
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -89,6 +89,33 @@ async def process_url(request: Request) -> Response:
                     'weakness': progress.weakness or '',
                     'ethical_concerns': progress.ethical_concerns or '',
                     'decision': 'accept' if progress.decision else 'reject',
+                }
+            elif isinstance(progress, List[Review]):
+                item = {
+                    'type': 'review',
+                    'summary': progress[0].summary or '',
+                    'strength': progress[0].strength or '',
+                    'weakness': progress[0].weakness or '',
+                    'ethical_concerns': progress[0].ethical_concerns or '',
+                    'score': str(progress[0].score) if progress[0].score else '-1',
+                }
+            elif isinstance(progress, List[Rebuttal]):
+                item = {
+                    'type': 'rebuttal',
+                    'q1': progress[0].q1 or '',
+                    'q2': progress[0].q2 or '',
+                    'q3': progress[0].q3 or '',
+                    'q4': progress[0].q4 or '',
+                    'q5': progress[0].q5 or '',
+                }
+            elif isinstance(progress, List[MetaReview]):
+                item = {
+                    'type': 'metareview',
+                    'summary': progress[0].summary or '',
+                    'strength': progress[0].strength or '',
+                    'weakness': progress[0].weakness or '',
+                    'ethical_concerns': progress[0].ethical_concerns or '',
+                    'decision': 'accept' if progress[0].decision else 'reject',
                 }
             else:
                 item = {'type': 'error', 'content': 'Unrecognized progress type'}
