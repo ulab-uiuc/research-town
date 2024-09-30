@@ -33,15 +33,6 @@ function ProposalDisplay({ list, revision }) {
               }}>
                 <i>Revised Proposal</i>
               </Card.Title>
-              {/* <Card.Body>
-                {["q1", "q2", "q3", "q4", "q5"].map((q) => (
-                  <div key={q}>
-                    <div>
-                      <ReactMarkdown>{q.toUpperCase() + item[q]}</ReactMarkdown>
-                    </div>
-                  </div>
-                ))}
-              </Card.Body> */}
               <Card.Body>
                 {[
                     { key: "q1", title: "What is the problem?" },
@@ -84,15 +75,6 @@ function ProposalDisplay({ list, revision }) {
               }}>
                 Initial Proposal
               </Card.Title>
-              {/* <Card.Body>
-                {["q1", "q2", "q3", "q4", "q5"].map((q) => (
-                  <div key={q}>
-                    <div>
-                      <ReactMarkdown>{q.toUpperCase() + item[q]}</ReactMarkdown>
-                    </div>
-                  </div>
-                ))}
-              </Card.Body> */}
               <Card.Body>
                 {[
                     { key: "q1", title: "What is the problem?" },
