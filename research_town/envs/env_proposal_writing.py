@@ -45,23 +45,22 @@ class ProposalWritingEnv(BaseEnv):
     @beartype
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         # Each member reviews literature
-        all_insights = []
+        insights = []
         ideas = []
         for member in self.members:
             related_papers = self.paper_db.search_papers(
                 query=';'.join(self.contexts),
                 num=2,
             )
-            insights = member.review_literature(
+            summary, keywords, insight = member.review_literature(
                 papers=related_papers,
                 contexts=self.contexts,
                 config=self.config,
             )
-            all_insights.append(insights)
-            for insight in insights:
-                yield insight, member
+            yield insight, member
+            insights.append(insight)
 
-        for member, insights in zip(self.members, all_insights):
+        for member in self.members:
             related_papers = self.paper_db.search_papers(
                 query=insight.content,
                 author=member.profile.name,
