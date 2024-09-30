@@ -57,13 +57,11 @@ def review_literature_prompting(
     keywords_match = re.search(keywords_pattern, insight, re.DOTALL)
     valuable_points_match = re.search(valuable_points_pattern, insight, re.DOTALL)
 
-    summary = summary_match.group(1).strip() if summary_match else None
-    keywords = keywords_match.group(1).strip() if keywords_match else None
-    keywords = keywords.split(',') if keywords else None
-    keywords = [keyword.strip() for keyword in keywords] if keywords else None
-    valuable_points = (
-        valuable_points_match.group(1).strip() if valuable_points_match else None
-    )
+    summary = summary_match.group(1).strip()
+    keywords = keywords_match.group(1).strip()
+    keywords = keywords.split(',')
+    keywords = [keyword.strip() for keyword in keywords]
+    valuable_points = valuable_points_match.group(1).strip()
     return summary, keywords, valuable_points
 
 
