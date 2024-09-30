@@ -18,7 +18,7 @@ function IdeaDisplay({ list }) {
             <Accordion.Item key={index} eventKey={index.toString()}>
               <Accordion.Header>
                 {item.agent_role === "leader"
-                  ? `Idea after discussion from ${item.agent_domain} expert agent`
+                  ? `Idea for proposal writing`
                   : `Idea from ${item.agent_domain} expert agent`}
               </Accordion.Header>
               <Accordion.Body style={{ textAlign: "left" }}>
