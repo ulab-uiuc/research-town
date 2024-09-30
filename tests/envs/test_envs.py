@@ -56,7 +56,7 @@ def test_proposal_writing_env(
         config=example_config,
         agent_manager=example_agent_manager,
     )
-    leader = example_agent_manager.create_leader(agent_profile_A)
+    leader = example_agent_manager.create_agent(profile=agent_profile_A, role="leader")
     env.on_enter(
         leader=leader,
         contexts=[
