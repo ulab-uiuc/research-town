@@ -74,7 +74,8 @@ def process_papers(input_file: str, output_file: str, base_save_dir: str) -> Non
 
     # Process each paper in the JSON file
     for title, data in tqdm(output_data.items(), desc='Processing papers'):
-        arxiv_id = extract_arxiv_id(data.get('pdf_path'))
+        # arxiv_id = extract_arxiv_id(data.get('pdf_path'))
+        arxiv_id = data.get('arxiv_id')
         data['arxiv_id'] = arxiv_id
 
         if not arxiv_id:

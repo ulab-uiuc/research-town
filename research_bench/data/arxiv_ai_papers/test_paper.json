@@ -1,0 +1,415 @@
+{
+    "Automated test generation to evaluate tool-augmented LLMs as conversational AI agents": {
+        "paper_title": "Automated test generation to evaluate tool-augmented LLMs as conversational AI agents",
+        "arxiv_id": "2409.15934v1",
+        "pdf_path": "./data/arxiv_ai_papers/2409.15934v1.pdf",
+        "authors": [
+            "Samuel Arcadinho",
+            "David Aparicio",
+            "Mariana Almeida"
+        ],
+        "references": [
+            {
+                "title": "Towards Robust QA Evaluation via Open LLMs",
+                "abstract": "Instruction-tuned large language models (LLMs) have been shown to be viable surrogates for the widely used, albeit overly rigid, lexical matching metrics in evaluating question answering (QA) models. However, these LLM-based evaluation methods are invariably based on proprietary LLMs. Despite their remarkable capabilities, proprietary LLMs are costly and subject to internal changes that can affect their output, which inhibits the reproducibility of their results and limits the widespread adoption of LLM-based evaluation. In this demo, we aim to use publicly available LLMs for standardizing LLM-based QA evaluation. However, open-source LLMs lag behind their proprietary counterparts. We overcome this gap by adopting chain-of-thought prompting with self-consistency to build a reliable evaluation framework. We demonstrate that our evaluation framework, based on 750M and 7B open LLMs, correlates competitively with human judgment, compared to most recent GPT-3 and GPT-4 models. Our codebase and data are available at https://github.com/castorini/qa-eval.",
+                "year": 2024,
+                "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+                "authors": [
+                    "Ehsan Kamalloo",
+                    "Shivani Upadhyay",
+                    "Jimmy Lin"
+                ],
+                "externalIds": {
+                    "DBLP": "conf/sigir/KamallooUL24",
+                    "DOI": "10.1145/3626772.3657675",
+                    "CorpusId": 271038526
+                },
+                "url": "https://www.semanticscholar.org/paper/24e6787a7858bbb93b0a564de20e36a9df470507",
+                "referenceCount": 40,
+                "citationCount": 1,
+                "influentialCitationCount": 0,
+                "isOpenAccess": false,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "AgentInstruct: Toward Generative Teaching with Agentic Flows",
+                "abstract": "Synthetic data is becoming increasingly important for accelerating the development of language models, both large and small. Despite several successful use cases, researchers also raised concerns around model collapse and drawbacks of imitating other models. This discrepancy can be attributed to the fact that synthetic data varies in quality and diversity. Effective use of synthetic data usually requires significant human effort in curating the data. We focus on using synthetic data for post-training, specifically creating data by powerful models to teach a new skill or behavior to another model, we refer to this setting as Generative Teaching. We introduce AgentInstruct, an extensible agentic framework for automatically creating large amounts of diverse and high-quality synthetic data. AgentInstruct can create both the prompts and responses, using only raw data sources like text documents and code files as seeds. We demonstrate the utility of AgentInstruct by creating a post training dataset of 25M pairs to teach language models different skills, such as text editing, creative writing, tool usage, coding, reading comprehension, etc. The dataset can be used for instruction tuning of any base model. We post-train Mistral-7b with the data. When comparing the resulting model Orca-3 to Mistral-7b-Instruct (which uses the same base model), we observe significant improvements across many benchmarks. For example, 40% improvement on AGIEval, 19% improvement on MMLU, 54% improvement on GSM8K, 38% improvement on BBH and 45% improvement on AlpacaEval. Additionally, it consistently outperforms other models such as LLAMA-8B-instruct and GPT-3.5-turbo.",
+                "year": 2024,
+                "venue": "arXiv.org",
+                "authors": [
+                    "Arindam Mitra",
+                    "Luciano Del Corro",
+                    "Guoqing Zheng",
+                    "Shweti Mahajan",
+                    "Dany Rouhana",
+                    "Andres Codas",
+                    "Yadong Lu",
+                    "Wei-ge Chen",
+                    "Olga Vrousgos",
+                    "Corby Rosset",
+                    "Fillipe Silva",
+                    "Hamed Khanpour",
+                    "Yash Lara",
+                    "Ahmed Awadallah"
+                ],
+                "externalIds": {
+                    "ArXiv": "2407.03502",
+                    "DBLP": "journals/corr/abs-2407-03502",
+                    "DOI": "10.48550/arXiv.2407.03502",
+                    "CorpusId": 271039486
+                },
+                "url": "https://www.semanticscholar.org/paper/809911e5238a84a8f8a9d96d6be2879c198edfde",
+                "referenceCount": 62,
+                "citationCount": 3,
+                "influentialCitationCount": 0,
+                "isOpenAccess": false,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "APIGen: Automated Pipeline for Generating Verifiable and Diverse Function-Calling Datasets",
+                "abstract": "The advancement of function-calling agent models requires diverse, reliable, and high-quality datasets. This paper presents APIGen, an automated data generation pipeline designed to synthesize verifiable high-quality datasets for function-calling applications. We leverage APIGen and collect 3,673 executable APIs across 21 different categories to generate diverse function-calling datasets in a scalable and structured manner. Each data in our dataset is verified through three hierarchical stages: format checking, actual function executions, and semantic verification, ensuring its reliability and correctness. We demonstrate that models trained with our curated datasets, even with only 7B parameters, can achieve state-of-the-art performance on the Berkeley Function-Calling Benchmark, outperforming multiple GPT-4 models. Moreover, our 1B model achieves exceptional performance, surpassing GPT-3.5-Turbo and Claude-3 Haiku. We release a dataset containing 60,000 high-quality entries, aiming to advance the field of function-calling agent domains. The dataset is available on Huggingface: https://huggingface.co/datasets/Salesforce/xlam-function-calling-60k and the project homepage: https://apigen-pipeline.github.io/",
+                "year": 2024,
+                "venue": "arXiv.org",
+                "authors": [
+                    "Zuxin Liu",
+                    "Thai Hoang",
+                    "Jianguo Zhang",
+                    "Ming Zhu",
+                    "Tian Lan",
+                    "Shirley Kokane",
+                    "Juntao Tan",
+                    "Weiran Yao",
+                    "Zhiwei Liu",
+                    "Yihao Feng",
+                    "Rithesh Murthy",
+                    "Liangwei Yang",
+                    "Silvio Savarese",
+                    "Juan Carlos Niebles",
+                    "Huan Wang",
+                    "Shelby Heinecke",
+                    "Caiming Xiong"
+                ],
+                "externalIds": {
+                    "DBLP": "journals/corr/abs-2406-18518",
+                    "ArXiv": "2406.18518",
+                    "DOI": "10.48550/arXiv.2406.18518",
+                    "CorpusId": 270738094
+                },
+                "url": "https://www.semanticscholar.org/paper/264c5cea78011bbadd1757f6a81d65edafc8fdd2",
+                "referenceCount": 50,
+                "citationCount": 5,
+                "influentialCitationCount": 0,
+                "isOpenAccess": false,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "Leveraging Intent Detection and Generative AI for Enhanced Customer Support",
+                "abstract": "Customer support plays a pivotal role in shaping customer satisfaction and fostering loyalty within any business. This paper delves into how the integration of intent detection and generative AI (GenAI) can transform customer support systems. At the core of this transformation is the ability to understand user intent, which is essential for directing customers effectively through the support funnel to the appropriate services. By employing sophisticated natural language processing (NLP) techniques, training LLM to perform RAG and machine learning models, businesses can precisely discern customer intents. This capability allows for the delivery of tailored, immediate responses. The paper further explores the methodologies employed, the advantages gained, and the challenges faced in the adoption of these advanced technologies in customer support systems.",
+                "year": 2024,
+                "venue": "Journal of Artificial Intelligence General science (JAIGS) ISSN:3006-4023",
+                "authors": [
+                    "Vamsi Katragadda"
+                ],
+                "externalIds": {
+                    "DOI": "10.60087/jaigs.v5i1.178",
+                    "CorpusId": 270783322
+                },
+                "url": "https://www.semanticscholar.org/paper/9827c3a2694efa5d305b2048d646eef18d3cee2a",
+                "referenceCount": 0,
+                "citationCount": 11,
+                "influentialCitationCount": 0,
+                "isOpenAccess": true,
+                "fieldsOfStudy": null
+            },
+            {
+                "title": "A Complete Survey on LLM-based AI Chatbots",
+                "abstract": "The past few decades have witnessed an upsurge in data, forming the foundation for data-hungry, learning-based AI technology. Conversational agents, often referred to as AI chatbots, rely heavily on such data to train large language models (LLMs) and generate new content (knowledge) in response to user prompts. With the advent of OpenAI's ChatGPT, LLM-based chatbots have set new standards in the AI community. This paper presents a complete survey of the evolution and deployment of LLM-based chatbots in various sectors. We first summarize the development of foundational chatbots, followed by the evolution of LLMs, and then provide an overview of LLM-based chatbots currently in use and those in the development phase. Recognizing AI chatbots as tools for generating new knowledge, we explore their diverse applications across various industries. We then discuss the open challenges, considering how the data used to train the LLMs and the misuse of the generated knowledge can cause several issues. Finally, we explore the future outlook to augment their efficiency and reliability in numerous applications. By addressing key milestones and the present-day context of LLM-based chatbots, our survey invites readers to delve deeper into this realm, reflecting on how their next generation will reshape conversational AI.",
+                "year": 2024,
+                "venue": "arXiv.org",
+                "authors": [
+                    "Sumit Kumar Dam",
+                    "Choong-Seon Hong",
+                    "Yu Qiao",
+                    "Chaoning Zhang"
+                ],
+                "externalIds": {
+                    "ArXiv": "2406.16937",
+                    "DBLP": "journals/corr/abs-2406-16937",
+                    "DOI": "10.48550/arXiv.2406.16937",
+                    "CorpusId": 270711050
+                },
+                "url": "https://www.semanticscholar.org/paper/42c08dc83138732377eb2e427cc793ccc1edfc42",
+                "referenceCount": 207,
+                "citationCount": 4,
+                "influentialCitationCount": 0,
+                "isOpenAccess": false,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "Exploring and Evaluating Hallucinations in LLM-Powered Code Generation",
+                "abstract": "The rise of Large Language Models (LLMs) has significantly advanced many applications on software engineering tasks, particularly in code generation. Despite the promising performance, LLMs are prone to generate hallucinations, which means LLMs might produce outputs that deviate from users' intent, exhibit internal inconsistencies, or misalign with the factual knowledge, making the deployment of LLMs potentially risky in a wide range of applications. Existing work mainly focuses on investing the hallucination in the domain of natural language generation (NLG), leaving a gap in understanding the types and extent of hallucinations in the context of code generation. To bridge the gap, we conducted a thematic analysis of the LLM-generated code to summarize and categorize the hallucinations present in it. Our study established a comprehensive taxonomy of hallucinations in LLM-generated code, encompassing 5 primary categories of hallucinations depending on the conflicting objectives and varying degrees of deviation observed in code generation. Furthermore, we systematically analyzed the distribution of hallucinations, exploring variations among different LLMs and their correlation with code correctness. Based on the results, we proposed HalluCode, a benchmark for evaluating the performance of code LLMs in recognizing hallucinations. Hallucination recognition and mitigation experiments with HalluCode and HumanEval show existing LLMs face great challenges in recognizing hallucinations, particularly in identifying their types, and are hardly able to mitigate hallucinations. We believe our findings will shed light on future research about hallucination evaluation, detection, and mitigation, ultimately paving the way for building more effective and reliable code LLMs in the future.",
+                "year": 2024,
+                "venue": "arXiv.org",
+                "authors": [
+                    "Fang Liu",
+                    "Yang Liu",
+                    "Lin Shi",
+                    "Houkun Huang",
+                    "Ruifeng Wang",
+                    "Zhen Yang",
+                    "Li Zhang"
+                ],
+                "externalIds": {
+                    "ArXiv": "2404.00971",
+                    "DBLP": "journals/corr/abs-2404-00971",
+                    "DOI": "10.48550/arXiv.2404.00971",
+                    "CorpusId": 268819908
+                },
+                "url": "https://www.semanticscholar.org/paper/da9b51050a8574c4e03e5eb8e9e17cb640e27324",
+                "referenceCount": 39,
+                "citationCount": 23,
+                "influentialCitationCount": 3,
+                "isOpenAccess": false,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "Personal LLM Agents: Insights and Survey about the Capability, Efficiency and Security",
+                "abstract": "Since the advent of personal computing devices, intelligent personal assistants (IPAs) have been one of the key technologies that researchers and engineers have focused on, aiming to help users efficiently obtain information and execute tasks, and provide users with more intelligent, convenient, and rich interaction experiences. With the development of smartphones and IoT, computing and sensing devices have become ubiquitous, greatly expanding the boundaries of IPAs. However, due to the lack of capabilities such as user intent understanding, task planning, tool using, and personal data management etc., existing IPAs still have limited practicality and scalability. Recently, the emergence of foundation models, represented by large language models (LLMs), brings new opportunities for the development of IPAs. With the powerful semantic understanding and reasoning capabilities, LLM can enable intelligent agents to solve complex problems autonomously. In this paper, we focus on Personal LLM Agents, which are LLM-based agents that are deeply integrated with personal data and personal devices and used for personal assistance. We envision that Personal LLM Agents will become a major software paradigm for end-users in the upcoming era. To realize this vision, we take the first step to discuss several important questions about Personal LLM Agents, including their architecture, capability, efficiency and security. We start by summarizing the key components and design choices in the architecture of Personal LLM Agents, followed by an in-depth analysis of the opinions collected from domain experts. Next, we discuss several key challenges to achieve intelligent, efficient and secure Personal LLM Agents, followed by a comprehensive survey of representative solutions to address these challenges.",
+                "year": 2024,
+                "venue": "arXiv.org",
+                "authors": [
+                    "Yuanchun Li",
+                    "Hao Wen",
+                    "Weijun Wang",
+                    "Xiangyu Li",
+                    "Yizhen Yuan",
+                    "Guohong Liu",
+                    "Jiacheng Liu",
+                    "Wenxing Xu",
+                    "Xiang Wang",
+                    "Yi Sun",
+                    "Rui Kong",
+                    "Yile Wang",
+                    "Hanfei Geng",
+                    "Jian Luan",
+                    "Xuefeng Jin",
+                    "Zi-Liang Ye",
+                    "Guanjing Xiong",
+                    "Fan Zhang",
+                    "Xiang Li",
+                    "Mengwei Xu",
+                    "Zhijun Li",
+                    "Peng Li",
+                    "Yang Liu",
+                    "Yaqiong Zhang",
+                    "Yunxin Liu"
+                ],
+                "externalIds": {
+                    "DBLP": "journals/corr/abs-2401-05459",
+                    "ArXiv": "2401.05459",
+                    "DOI": "10.48550/arXiv.2401.05459",
+                    "CorpusId": 266933252
+                },
+                "url": "https://www.semanticscholar.org/paper/06d860a5bbb99a4eafdbbb2d5f6aa8dd5fd32cf4",
+                "referenceCount": 0,
+                "citationCount": 57,
+                "influentialCitationCount": 1,
+                "isOpenAccess": false,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "GAIA: a benchmark for General AI Assistants",
+                "abstract": "We introduce GAIA, a benchmark for General AI Assistants that, if solved, would represent a milestone in AI research. GAIA proposes real-world questions that require a set of fundamental abilities such as reasoning, multi-modality handling, web browsing, and generally tool-use proficiency. GAIA questions are conceptually simple for humans yet challenging for most advanced AIs: we show that human respondents obtain 92\\% vs. 15\\% for GPT-4 equipped with plugins. This notable performance disparity contrasts with the recent trend of LLMs outperforming humans on tasks requiring professional skills in e.g. law or chemistry. GAIA's philosophy departs from the current trend in AI benchmarks suggesting to target tasks that are ever more difficult for humans. We posit that the advent of Artificial General Intelligence (AGI) hinges on a system's capability to exhibit similar robustness as the average human does on such questions. Using GAIA's methodology, we devise 466 questions and their answer. We release our questions while retaining answers to 300 of them to power a leader-board available at https://huggingface.co/gaia-benchmark.",
+                "year": 2023,
+                "venue": "arXiv.org",
+                "authors": [
+                    "Grégoire Mialon",
+                    "Clémentine Fourrier",
+                    "Craig Swift",
+                    "Thomas Wolf",
+                    "Yann LeCun",
+                    "Thomas Scialom"
+                ],
+                "externalIds": {
+                    "DBLP": "journals/corr/abs-2311-12983",
+                    "ArXiv": "2311.12983",
+                    "DOI": "10.48550/arXiv.2311.12983",
+                    "CorpusId": 265351664
+                },
+                "url": "https://www.semanticscholar.org/paper/ab8169d6e4dfabfe7c30ebec1bb871bf3e1551cd",
+                "referenceCount": 40,
+                "citationCount": 64,
+                "influentialCitationCount": 9,
+                "isOpenAccess": false,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "AgentTuning: Enabling Generalized Agent Abilities for LLMs",
+                "abstract": "Open large language models (LLMs) with great performance in various tasks have significantly advanced the development of LLMs. However, they are far inferior to commercial models such as ChatGPT and GPT-4 when acting as agents to tackle complex tasks in the real world. These agent tasks employ LLMs as the central controller responsible for planning, memorization, and tool utilization, necessitating both fine-grained prompting methods and robust LLMs to achieve satisfactory performance. Though many prompting methods have been proposed to complete particular agent tasks, there is lack of research focusing on improving the agent capabilities of LLMs themselves without compromising their general abilities. In this work, we present AgentTuning, a simple and general method to enhance the agent abilities of LLMs while maintaining their general LLM capabilities. We construct AgentInstruct, a lightweight instruction-tuning dataset containing high-quality interaction trajectories. We employ a hybrid instruction-tuning strategy by combining AgentInstruct with open-source instructions from general domains. AgentTuning is used to instruction-tune the Llama 2 series, resulting in AgentLM. Our evaluations show that AgentTuning enables LLMs' agent capabilities without compromising general abilities. The AgentLM-70B is comparable to GPT-3.5-turbo on unseen agent tasks, demonstrating generalized agent capabilities. We open source the AgentInstruct and AgentLM-7B, 13B, and 70B models at https://github.com/THUDM/AgentTuning, serving open and powerful alternatives to commercial LLMs for agent tasks.",
+                "year": 2023,
+                "venue": "Annual Meeting of the Association for Computational Linguistics",
+                "authors": [
+                    "Aohan Zeng",
+                    "Mingdao Liu",
+                    "Rui Lu",
+                    "Bowen Wang",
+                    "Xiao Liu",
+                    "Yuxiao Dong",
+                    "Jie Tang"
+                ],
+                "externalIds": {
+                    "DBLP": "conf/acl/ZengLLWLD024",
+                    "ArXiv": "2310.12823",
+                    "DOI": "10.48550/arXiv.2310.12823",
+                    "CorpusId": 264306101
+                },
+                "url": "https://www.semanticscholar.org/paper/46fe9ce789408b8a50fb4259e6bf0cc5855f4ed5",
+                "referenceCount": 33,
+                "citationCount": 93,
+                "influentialCitationCount": 16,
+                "isOpenAccess": false,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs",
+                "abstract": "Despite the advancements of open-source large language models (LLMs), e.g., LLaMA, they remain significantly limited in tool-use capabilities, i.e., using external tools (APIs) to fulfill human instructions. The reason is that current instruction tuning largely focuses on basic language tasks but ignores the tool-use domain. This is in contrast to the excellent tool-use capabilities of state-of-the-art (SOTA) closed-source LLMs, e.g., ChatGPT. To bridge this gap, we introduce ToolLLM, a general tool-use framework encompassing data construction, model training, and evaluation. We first present ToolBench, an instruction-tuning dataset for tool use, which is constructed automatically using ChatGPT. Specifically, the construction can be divided into three stages: (i) API collection: we collect 16,464 real-world RESTful APIs spanning 49 categories from RapidAPI Hub; (ii) instruction generation: we prompt ChatGPT to generate diverse instructions involving these APIs, covering both single-tool and multi-tool scenarios; (iii) solution path annotation: we use ChatGPT to search for a valid solution path (chain of API calls) for each instruction. To enhance the reasoning capabilities of LLMs, we develop a novel depth-first search-based decision tree algorithm. It enables LLMs to evaluate multiple reasoning traces and expand the search space. Moreover, to evaluate the tool-use capabilities of LLMs, we develop an automatic evaluator: ToolEval. Based on ToolBench, we fine-tune LLaMA to obtain an LLM ToolLLaMA, and equip it with a neural API retriever to recommend appropriate APIs for each instruction. Experiments show that ToolLLaMA demonstrates a remarkable ability to execute complex instructions and generalize to unseen APIs, and exhibits comparable performance to ChatGPT. Our ToolLLaMA also demonstrates strong zero-shot generalization ability in an out-of-distribution tool-use dataset: APIBench.",
+                "year": 2023,
+                "venue": "International Conference on Learning Representations",
+                "authors": [
+                    "Yujia Qin",
+                    "Shi Liang",
+                    "Yining Ye",
+                    "Kunlun Zhu",
+                    "Lan Yan",
+                    "Ya-Ting Lu",
+                    "Yankai Lin",
+                    "Xin Cong",
+                    "Xiangru Tang",
+                    "Bill Qian",
+                    "Sihan Zhao",
+                    "Runchu Tian",
+                    "Ruobing Xie",
+                    "Jie Zhou",
+                    "M. Gerstein",
+                    "Dahai Li",
+                    "Zhiyuan Liu",
+                    "Maosong Sun"
+                ],
+                "externalIds": {
+                    "DBLP": "journals/corr/abs-2307-16789",
+                    "ArXiv": "2307.16789",
+                    "DOI": "10.48550/arXiv.2307.16789",
+                    "CorpusId": 260334759
+                },
+                "url": "https://www.semanticscholar.org/paper/0bfc804e31eecfd77f45e4ee7f4d629fffdcd628",
+                "referenceCount": 65,
+                "citationCount": 358,
+                "influentialCitationCount": 68,
+                "isOpenAccess": true,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "ToolQA: A Dataset for LLM Question Answering with External Tools",
+                "abstract": "Large Language Models (LLMs) have demonstrated impressive performance in various NLP tasks, but they still suffer from challenges such as hallucination and weak numerical reasoning. To overcome these challenges, external tools can be used to enhance LLMs' question-answering abilities. However, current evaluation methods do not distinguish between questions that can be answered using LLMs' internal knowledge and those that require external information through tool use. To address this issue, we introduce a new dataset called ToolQA, which is designed to faithfully evaluate LLMs' ability to use external tools for question answering. Our development of ToolQA involved a scalable, automated process for dataset curation, along with 13 specialized tools designed for interaction with external knowledge in order to answer questions. Importantly, we strive to minimize the overlap between our benchmark data and LLMs' pre-training data, enabling a more precise evaluation of LLMs' tool-use reasoning abilities. We conducted an in-depth diagnosis of existing tool-use LLMs to highlight their strengths, weaknesses, and potential improvements. Our findings set a new benchmark for evaluating LLMs and suggest new directions for future advancements. Our data and code are freely available to the broader scientific community on GitHub.",
+                "year": 2023,
+                "venue": "Neural Information Processing Systems",
+                "authors": [
+                    "Yuchen Zhuang",
+                    "Yue Yu",
+                    "Kuan Wang",
+                    "Haotian Sun",
+                    "Chao Zhang"
+                ],
+                "externalIds": {
+                    "DBLP": "conf/nips/ZhuangYWSZ23",
+                    "ArXiv": "2306.13304",
+                    "DOI": "10.48550/arXiv.2306.13304",
+                    "CorpusId": 259243960
+                },
+                "url": "https://www.semanticscholar.org/paper/c12b80b44d9acfe6cd92fdf965264c4b706c367c",
+                "referenceCount": 103,
+                "citationCount": 106,
+                "influentialCitationCount": 5,
+                "isOpenAccess": true,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "Gorilla: Large Language Model Connected with Massive APIs",
+                "abstract": "Large Language Models (LLMs) have seen an impressive wave of advances recently, with models now excelling in a variety of tasks, such as mathematical reasoning and program synthesis. However, their potential to effectively use tools via API calls remains unfulfilled. This is a challenging task even for today's state-of-the-art LLMs such as GPT-4, largely due to their inability to generate accurate input arguments and their tendency to hallucinate the wrong usage of an API call. We release Gorilla, a finetuned LLaMA-based model that surpasses the performance of GPT-4 on writing API calls. When combined with a document retriever, Gorilla demonstrates a strong capability to adapt to test-time document changes, enabling flexible user updates or version changes. It also substantially mitigates the issue of hallucination, commonly encountered when prompting LLMs directly. To evaluate the model's ability, we introduce APIBench, a comprehensive dataset consisting of HuggingFace, TorchHub, and TensorHub APIs. The successful integration of the retrieval system with Gorilla demonstrates the potential for LLMs to use tools more accurately, keep up with frequently updated documentation, and consequently increase the reliability and applicability of their outputs. Gorilla's code, model, data, and demo are available at https://gorilla.cs.berkeley.edu",
+                "year": 2023,
+                "venue": "arXiv.org",
+                "authors": [
+                    "Shishir G. Patil",
+                    "Tianjun Zhang",
+                    "Xin Wang",
+                    "Joseph E. Gonzalez"
+                ],
+                "externalIds": {
+                    "DBLP": "journals/corr/abs-2305-15334",
+                    "ArXiv": "2305.15334",
+                    "DOI": "10.48550/arXiv.2305.15334",
+                    "CorpusId": 258865184
+                },
+                "url": "https://www.semanticscholar.org/paper/7d8905a1fd288068f12c8347caeabefd36d0dd6c",
+                "referenceCount": 48,
+                "citationCount": 311,
+                "influentialCitationCount": 41,
+                "isOpenAccess": true,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            },
+            {
+                "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation Framework",
+                "abstract": "This technical report presents AutoGen , 1 a new framework that enables development of LLM applications using multiple agents that can converse with each other to solve tasks. AutoGen agents are customizable, conversable , and seamlessly allow human participation. They can operate in various modes that employ combinations of LLMs, human inputs, and tools. AutoGen ’s design offers multiple advantages: a) it gracefully navigates the strong but imperfect generation and reasoning abilities of these LLMs; b) it leverages human understanding and intelligence, while providing valuable automation through conversations between agents; c) it simplifies and unifies the implementation of complex LLM workflows as automated agent chats. We provide many diverse examples of how developers can easily use AutoGen to effectively solve tasks or build applications, ranging from coding, mathematics, operations research, entertainment, online decision-making, question answering, etc.",
+                "year": 2023,
+                "venue": "arXiv.org",
+                "authors": [
+                    "Qingyun Wu",
+                    "Gagan Bansal",
+                    "Jieyu Zhang",
+                    "Yiran Wu",
+                    "Shaokun Zhang",
+                    "Erkang Zhu",
+                    "Beibin Li",
+                    "Li Jiang",
+                    "Xiaoyun Zhang",
+                    "Chi Wang"
+                ],
+                "externalIds": {
+                    "DBLP": "journals/corr/abs-2308-08155",
+                    "DOI": "10.48550/arXiv.2308.08155",
+                    "CorpusId": 260925901
+                },
+                "url": "https://www.semanticscholar.org/paper/1a4c6856292b8c64d19a812a77f0aa6fd47cb96c",
+                "referenceCount": 61,
+                "citationCount": 319,
+                "influentialCitationCount": 27,
+                "isOpenAccess": true,
+                "fieldsOfStudy": [
+                    "Computer Science"
+                ]
+            }
+        ]
+    }
+}

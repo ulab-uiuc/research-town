@@ -11,6 +11,8 @@ python = ">=3.10, <3.12"
 pydantic = ">=2.5.0"
 pypdf2 = ">=3.0.1"
 litellm = ">1.40.0"
+rouge_score = ">=0.1.2"
+nltk = ">=3.9.1"
 beartype = "^0.19.0"
 numpy = "<2.0.0"
 transformers = "^4.45.1"
@@ -21,7 +23,7 @@ beautifulsoup4 = "*"
 lxml = "*"
 tqdm = "*"
 keybert = "*"
-torch = { version = "^2.2.1", source = "torchcpu" }
+torch = { version = "2.2.2", source = "torchcpu", optional = true}
 
 uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
