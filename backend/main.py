@@ -1,5 +1,5 @@
 import json
-from typing import Generator, Optional, Tuple, List
+from typing import Generator, List, Optional, Tuple
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware

@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, Generator, List, Tuple, Optional
+from beartype.typing import Any, Dict, Generator, List, Optional, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
