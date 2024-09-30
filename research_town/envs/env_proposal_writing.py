@@ -1,9 +1,9 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, Generator, Tuple
+from beartype.typing import Any, Dict, Generator, Tuple, List
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..data import Progress
+from ..data import Progress, Insight, Idea
 from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
@@ -45,9 +45,9 @@ class ProposalWritingEnv(BaseEnv):
     @beartype
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         # Each member reviews literature
-        insights = []
-        keywords = []
-        ideas = []
+        insights: List[Insight] = []
+        keywords: List[str] = []
+        ideas: List[Idea] = []
         for member in self.members:
             related_papers = self.paper_db.search_papers(
                 query=';'.join(self.contexts),
