@@ -109,6 +109,85 @@ def get_current_5q(intro: str) -> Optional[str]:
     except Exception as e:
         logger.error(f'Error generating current_5q: {e}')
         return None
+    
+def get_single_agent_proposal_5q(intros: List[str]) -> Optional[str]:
+    """
+    Generates a five-question proposal for future research ideas based on the provided introductions using an LLM.
+    
+    Args:
+        intros (List[str]): A list of introduction texts from various sources.
+    
+    Returns:
+        Optional[str]: Generated five core research questions as a string, or None if generation fails.
+    """
+    try:
+        # Combine all introduction texts into a single string separated by two newlines for clarity
+        combined_intro = "\n\n".join(intros)
+        prompt = [
+            {
+                'role': 'user',
+                'content': """You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
+The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
+
+Here are the five core questions:
+
+[Question 1] - What is the problem?
+
+Formulate the specific research question you aim to address. Only output one question and do not include any more information.
+
+[Question 2] - Why is it interesting and important?
+
+Explain the broader implications of solving this problem for the research community.
+Discuss how such paper will affect the future research.
+Discuss how addressing this question could advance knowledge or lead to practical applications.
+
+[Question 3] - Why is it hard?
+
+Discuss the challenges and complexities involved in solving this problem.
+Explain why naive or straightforward approaches may fail.
+Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.
+
+[Question 4] - Why hasn't it been solved before?
+
+Identify gaps or limitations in previous research or existing solutions.
+Discuss any barriers that have prevented this problem from being solved until now.
+Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.
+
+[Question 5] - What are the key components of my approach and results?
+
+Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.
+Describe the expected outcomes. MAKE IT CLEAR.
+
+Your goal is to ensure the proposal is clear, concise, and logically structured.
+Now you will be given a set of introduction texts from various sources. Please use this information to generate a comprehensive research proposal based on the introductions, you need to look into what future research directions, topics or methods could be use for the proposal writing.
+Here are the introduction texts: {combined_intro}
+The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
+
+For example:
+[Question 1]: ....
+[Question 2]: ....
+[Question 3]: ....
+[Question 4]: ....
+[Question 5]: ....
+
+Now, let's begin:
+                """,
+            }
+        ]
+        
+        # Replace 'model_prompting' with your actual function or API call to interact with the language model
+        response = model_prompting('gpt-4o-mini', prompt, mode='TEST')
+        
+        if response and len(response) > 0 and len(response[0]) > 0:
+            return response[0]
+        else:
+            logger.warning(
+                'Received empty response from model_prompting for get_single_agent_proposal_5q.'
+            )
+            return None
+    except Exception as e:
+        logger.error(f'Error generating get_single_agent_proposal_5q: {e}')
+        return None
 
 
 def get_proposal_5q(authors: List[str], intros: List[str], keyword:str, id:int) -> Optional[str]:
@@ -308,7 +387,7 @@ def compute_gpt_metric(current_5q: str, proposal_5q: str) -> Optional[float]:
 
 
 def process_paper(
-    paper_key: str, paper_data: Dict[str, Any], id:int
+    args:argparse.ArgumentParser, paper_key: str, paper_data: Dict[str, Any], id:int, intro_log_jsonl: Optional[str] = None
 ) -> Optional[Dict[str, Any]]:
     """
     Processes a single paper to generate evaluations.
@@ -335,42 +414,57 @@ def process_paper(
     logger.info(f'Fetching introduction for main paper: {main_paper_url}')
 
     # Step 1: Get the paper introduction using the updated function
-    intro = get_paper_introduction(main_paper_url)
-    if not intro:
-        logger.warning(f'Introduction not found for paper: {paper_key}')
-        return None
+    if intro_log_jsonl:
+        with open(intro_log_jsonl, 'r', encoding='utf-8') as infile:
+            for line in infile:
+                intro_data = json.loads(line)
+                if intro_data.get('paper_key') == paper_key:
+                    current_5q = intro_data.get('current_5q')
+                    logger.info(f'Found current_5q for paper: {paper_key}')
+                    break
 
-    # Step 2: Generate current 5Q
-    current_5q = get_current_5q(intro)
     if not current_5q:
-        logger.warning(f'current_5q generation failed for paper: {paper_key}')
-        return None
-    logger.info(f'Generated current_5q for paper: {current_5q}')
+        intro = get_paper_introduction(main_paper_url)
+        if not intro:
+            logger.warning(f'Introduction not found for paper: {paper_key}')
+            return None
+
+        # Step 2: Generate current 5Q
+        current_5q = get_current_5q(intro)
+        if not current_5q:
+            logger.warning(f'current_5q generation failed for paper: {paper_key}')
+            return None
+        logger.info(f'Generated current_5q for paper: {current_5q}')
 
     # Step 3: Extract proposals from references with ArXiv externalIds
-    proposals = []
-    intros = []
-    for ref in references:
-        print('ref', ref)
-        external_ids = ref.get('externalIds', {})
-        if not external_ids:
-            continue
-        print('external_ids', external_ids)
-        arxiv_ref_id = external_ids.get('ArXiv')
-        if arxiv_ref_id:
-            ref_url = f'https://arxiv.org/pdf/{arxiv_ref_id}'
-            logger.info(f'Fetching introduction for referenced paper: {ref_url}')
-            ref_intro = get_paper_introduction(ref_url)
-            if ref_intro:
-                intros.append(ref_intro)
-            else:
-                logger.warning(
-                    f'Introduction not found for referenced paper: {ref_url}'
-                )
-        # Collect proposal titles regardless of ArXiv presence
-        proposal_title = ref.get('title', '')
-        if proposal_title:
-            proposals.append(proposal_title)
+    intros = None
+    if intro_log_jsonl:
+        with open(intro_log_jsonl, 'r', encoding='utf-8') as infile:
+            for line in infile:
+                intro_data = json.loads(line)
+                if intro_data.get('paper_key') == paper_key:
+                    intros = intro_data.get('referenced_intros', None)
+                    logger.info(f'Found referenced intros for paper: {paper_key}')
+                    break
+    if not intros:
+        logger.info(f'No referenced intros found for paper: {paper_key}')
+        for ref in references:
+            print('ref', ref)
+            external_ids = ref.get('externalIds', {})
+            if not external_ids:
+                continue
+            print('external_ids', external_ids)
+            arxiv_ref_id = external_ids.get('ArXiv')
+            if arxiv_ref_id:
+                ref_url = f'https://arxiv.org/pdf/{arxiv_ref_id}'
+                logger.info(f'Fetching introduction for referenced paper: {ref_url}')
+                ref_intro = get_paper_introduction(ref_url)
+                if ref_intro:
+                    intros.append(ref_intro)
+                else:
+                    logger.warning(
+                        f'Introduction not found for referenced paper: {ref_url}'
+                    )
 
     # Optionally, you can use the collected intros for further processing
     # For example, passing them to get_proposal_5q or other functions
@@ -378,7 +472,10 @@ def process_paper(
     # If intros are needed in get_proposal_5q, modify the function accordingly
 
     # Step 4: Generate proposal 5Q
-    proposal_5q = get_proposal_5q(authors, intros, keyword, id)
+    if args.test_single_agent:
+        proposal_5q = get_single_agent_proposal_5q(intros)
+    else:
+        proposal_5q = get_proposal_5q(authors, intros, keyword, id)
     if not proposal_5q:
         logger.warning(f'proposal_5q generation failed for paper: {paper_key}')
         return None
@@ -407,7 +504,7 @@ def process_paper(
     #     return None
 
 
-def main(input_json: str, output_jsonl: str) -> None:
+def main(args:argparse.ArgumentParser, input_json: str, output_jsonl: str, intro_log_jsonl:str=None) -> None:
     """
     Main function to perform evaluation on all papers in the input JSON.
 
@@ -444,7 +541,7 @@ def main(input_json: str, output_jsonl: str) -> None:
 
     for id, paper_key in enumerate(tqdm(papers, desc='Processing papers'), start=1 + num_lines):
         paper_data = data[paper_key]
-        evaluation = process_paper(paper_key, paper_data, id)
+        evaluation = process_paper(args, paper_key, paper_data, id, intro_log_jsonl)
         if evaluation:
             # Write the evaluation result as a JSON line
             with open(output_jsonl, 'a', encoding='utf-8') as outfile:
@@ -493,6 +590,13 @@ if __name__ == '__main__':
     parser.add_argument(
         '--output', type=str, required=True, help='Path to the output JSONL file.'
     )
+    parser.add_argument(
+        '--intro_log', type=str, required=False, help='Path to the introduction log JSONL file.'
+    )
+    parser.add_argument(
+    '--test-single-agent', action='store_true',
+    help='If set, run a test for a single agent using sample introductions.'
+    )
     args = parser.parse_args()
 
-    main(args.input, args.output)
+    main(args, args.input, args.output, args.intro_log)
