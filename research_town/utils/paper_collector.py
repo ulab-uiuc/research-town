@@ -1,5 +1,6 @@
 import re
 import time
+import random
 from io import BytesIO
 
 import arxiv
@@ -12,6 +13,7 @@ from tqdm import tqdm
 
 from ..data.data import Paper
 
+REQUEST_COUNT = 0
 
 def perform_arxiv_search(
     search: arxiv.Search,
@@ -305,6 +307,8 @@ def get_paper_bibliography_from_html(url: str) -> Optional[Dict[str, str]]:
 
 
 def get_paper_content_from_pdf(url: str) -> Optional[Dict[str, str]]:
+    global REQUEST_COUNT
+    
     if 'abs' in url:
         pdf_url = url.replace('abs', 'pdf')
     elif 'html' in url:
@@ -312,7 +316,20 @@ def get_paper_content_from_pdf(url: str) -> Optional[Dict[str, str]]:
     else:
         pdf_url = url
 
-    response = requests.get(pdf_url)
+    pdf_url = pdf_url.replace("arxiv.org", "export.arxiv.org")
+
+    # Define headers to fake a Chrome browser on Windows 10
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36'
+    }
+
+    # Make the request with the defined headers
+    response = requests.get(pdf_url, headers=headers)
+    if (REQUEST_COUNT + 1) % 4 == 0:
+        time.sleep(1)
+    REQUEST_COUNT += 1
+    print(f"Current Request Count: {REQUEST_COUNT}")
+
     file_stream = BytesIO(response.content)
     reader = PdfReader(file_stream)
 
