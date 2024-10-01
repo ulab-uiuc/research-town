@@ -111,7 +111,7 @@ def get_current_5q(intro: str) -> Optional[str]:
         return None
 
 
-def get_proposal_5q(authors: List[str], intros: List[str], keyword:str) -> Optional[str]:
+def get_proposal_5q(authors: List[str], intros: List[str], keyword:str, id:int) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on the provided authors and existing proposals
     using the ProposalWritingEnv environment.
@@ -127,8 +127,13 @@ def get_proposal_5q(authors: List[str], intros: List[str], keyword:str) -> Optio
         # Initialize ProfileDB and add profiles based on the authors
 
     config = Config('../configs')
-    profile_db = ProfileDB()
-    profile_db.pull_profiles(names=authors, config=config)
+    if os.path.exists(f'./profile_dbs/profile_{id}'):
+        profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
+    else:
+        profile_db = ProfileDB()
+        profile_db.pull_profiles(names=authors, config=config)
+        profile_db.save_to_json(f'./profile_dbs/profile_{id}')
+    
     # Initialize other databases using default instances
     log_db = LogDB()
     progress_db = ProgressDB()
@@ -303,7 +308,7 @@ def compute_gpt_metric(current_5q: str, proposal_5q: str) -> Optional[float]:
 
 
 def process_paper(
-    paper_key: str, paper_data: Dict[str, Any]
+    paper_key: str, paper_data: Dict[str, Any], id:int
 ) -> Optional[Dict[str, Any]]:
     """
     Processes a single paper to generate evaluations.
@@ -373,7 +378,7 @@ def process_paper(
     # If intros are needed in get_proposal_5q, modify the function accordingly
 
     # Step 4: Generate proposal 5Q
-    proposal_5q = get_proposal_5q(authors, intros, keyword)
+    proposal_5q = get_proposal_5q(authors, intros, keyword, id)
     if not proposal_5q:
         logger.warning(f'proposal_5q generation failed for paper: {paper_key}')
         return None
@@ -423,7 +428,7 @@ def main(input_json: str, output_jsonl: str) -> None:
     rouge_l_scores = []
     gpt_metric_scores = []
     bert_scores = []
-
+    num_lines = 0
     # Open output JSONL file
     # with open(output_jsonl, 'w', encoding='utf-8') as outfile:
     #     # Iterate over each paper with a progress bar
@@ -437,9 +442,9 @@ def main(input_json: str, output_jsonl: str) -> None:
         logger.error(f'Error reading output JSONL file: {e}')
         pass
 
-    for paper_key in tqdm(papers, desc='Processing papers'):
+    for id, paper_key in enumerate(tqdm(papers, desc='Processing papers'), start=1 + num_lines):
         paper_data = data[paper_key]
-        evaluation = process_paper(paper_key, paper_data)
+        evaluation = process_paper(paper_key, paper_data, id)
         if evaluation:
             # Write the evaluation result as a JSON line
             with open(output_jsonl, 'a', encoding='utf-8') as outfile:
