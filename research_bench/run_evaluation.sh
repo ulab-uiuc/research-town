@@ -2,9 +2,9 @@
 
 # Define input and output file paths
 INPUT="./benchmark/benchmark_0930.json"
-OUTPUT="./results/research_bench_result_single_agent.jsonl"
+OUTPUT="./results/research_bench_result_4o.jsonl"
 INTRO_LOG="./results/intro_logging.jsonl"
-TEST_SINGLE_AGENT="--test-single-agent"
+TEST_SINGLE_AGENT="" #"--test-single-agent"
 
 # Function to get the number of lines in the output file
 get_line_count() {
