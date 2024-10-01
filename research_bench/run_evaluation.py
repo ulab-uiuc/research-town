@@ -348,6 +348,8 @@ def process_paper(
     for ref in references:
         print('ref', ref)
         external_ids = ref.get('externalIds', {})
+        if not external_ids:
+            continue
         print('external_ids', external_ids)
         arxiv_ref_id = external_ids.get('ArXiv')
         if arxiv_ref_id:
