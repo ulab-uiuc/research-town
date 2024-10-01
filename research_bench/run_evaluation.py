@@ -415,7 +415,7 @@ def main(input_json: str, output_jsonl: str) -> None:
     with open(input_json, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    papers = data.keys()
+    papers = list(data.keys())
     logger.info(f'Found {len(papers)} papers to process.')
 
     # Initialize lists to store evaluation metrics
@@ -429,11 +429,12 @@ def main(input_json: str, output_jsonl: str) -> None:
     #     # Iterate over each paper with a progress bar
     try:
         with open(output_jsonl, 'r', encoding='utf-8') as outfile:
-            num_lines = sum(1 for _ in outfile)
-            if num_lines > 0:
-                papers = papers[num_lines:]
-                logger.info(f'Skipping {num_lines} papers already processed.')
-    except:
+            
+            num_lines = sum(1 for line in outfile)
+            papers = papers[num_lines:]
+            logger.info(f'Skipping {num_lines} papers already processed.')
+    except Exception as e:
+        logger.error(f'Error reading output JSONL file: {e}')
         pass
 
     for paper_key in tqdm(papers, desc='Processing papers'):
