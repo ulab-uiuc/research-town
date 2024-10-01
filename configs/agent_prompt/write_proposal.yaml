@@ -49,7 +49,6 @@ few-shot-examples:
 
 template: |
     Here is the idea: {idea}
-    Here are the external data, which is a list of abstracts of related papers: {papers}.
 
     The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
 

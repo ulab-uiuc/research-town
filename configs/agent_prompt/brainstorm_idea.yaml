@@ -26,7 +26,4 @@ template: |
   Here are the research insights: 
   {insights}
 
-  Here are the related works: 
-  {papers}
-
   Please begin brainstorming idea conditioned on your research background. Please keep it within one to two sentences. Your idea should be different from those in the related papers.

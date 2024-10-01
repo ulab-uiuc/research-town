@@ -48,9 +48,6 @@ template: |
  Here is my profile biology: 
  {bio}
 
- Here are some recent papers: 
- {papers}
-
  Please begin writing research insights that you can gain based on your research experience and the academic context. Mainly based on the academic context. Please make sure it is only two to three sentences.
 
  Your research MUST STRICTLY BE A FOLLOW-UP of the target paper: {contexts}

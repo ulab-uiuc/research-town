@@ -44,15 +44,12 @@ class Agent(object):
     @member_required
     def review_literature(
         self,
-        papers: List[Paper],
         contexts: List[str],
         config: Config,
     ) -> Tuple[str, List[str], Insight]:
-        serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
         summary, keywords, valuable_points = review_literature_prompting(
             profile=serialized_profile,
-            papers=serialized_papers,
             contexts=contexts,
             model_name=self.model_name,
             prompt_template=config.agent_prompt_template.review_literature,
@@ -68,14 +65,12 @@ class Agent(object):
     @beartype
     @member_required
     def brainstorm_idea(
-        self, insights: List[Insight], papers: List[Paper], config: Config
+        self, insights: List[Insight], config: Config
     ) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
-        serialized_papers = self.serializer.serialize(papers)
         idea_content = brainstorm_idea_prompting(
             bio=self.profile.bio,
             insights=serialized_insights,
-            papers=serialized_papers,
             model_name=self.model_name,
             prompt_template=config.agent_prompt_template.brainstorm_idea,
             return_num=config.param.return_num,
@@ -109,10 +104,9 @@ class Agent(object):
     @beartype
     @member_required
     def write_proposal(
-        self, idea: Idea, papers: List[Paper], config: Config
+        self, idea: Idea, config: Config
     ) -> Proposal:
         serialized_idea = self.serializer.serialize(idea)
-        serialized_papers = self.serializer.serialize(papers)
 
         write_proposal_strategy = config.param.write_proposal_strategy
         if write_proposal_strategy == 'default':
@@ -129,7 +123,6 @@ class Agent(object):
 
         proposal, q5_result = write_proposal_prompting(
             idea=serialized_idea,
-            papers=serialized_papers,
             model_name=self.model_name,
             prompt_template=prompt_template,
             return_num=config.param.return_num,

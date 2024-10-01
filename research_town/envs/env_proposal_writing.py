@@ -49,12 +49,7 @@ class ProposalWritingEnv(BaseEnv):
         keywords: List[str] = []
         ideas: List[Idea] = []
         for member in self.members:
-            related_papers = self.paper_db.search_papers(
-                query=';'.join(self.contexts),
-                num=2,
-            )
             summary, keywords, insight = member.review_literature(
-                papers=related_papers,
                 contexts=self.contexts,
                 config=self.config,
             )
@@ -65,16 +60,8 @@ class ProposalWritingEnv(BaseEnv):
         keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
 
         for member in self.members:
-            related_papers = self.paper_db.search_papers(
-                query=insight.content,
-                author=member.profile.name,
-                domain=keywords[0] + member.profile.domain[0]
-                if member.profile.domain
-                else keywords[0],
-                num=7,
-            )
             idea = member.brainstorm_idea(
-                papers=related_papers, insights=insights, config=self.config
+                insights=insights, config=self.config
             )
             ideas.append(idea)
             yield idea, member
@@ -87,16 +74,8 @@ class ProposalWritingEnv(BaseEnv):
 
         # Write Proposal
         query = summarized_idea.content or self.leader.profile.bio
-        related_papers = self.paper_db.search_papers(
-            query=query,
-            domain=self.leader.profile.domain[0]
-            if self.leader.profile.domain
-            else None,
-            num=2,
-        )
         proposal = self.leader.write_proposal(
             idea=summarized_idea,
-            papers=related_papers,
             config=self.config,
         )
         yield proposal, self.leader
