@@ -130,25 +130,25 @@ class Agent(object):
             print('write_proposal_strategy not supported, will use default')
             prompt_template = config.agent_prompt_template.write_proposal
 
-            proposal, q5_result = write_proposal_prompting(
-                idea=serialized_idea,
-                papers=serialized_papers,
-                model_name=self.model_name,
-                prompt_template=prompt_template,
-                return_num=config.param.return_num,
-                max_token_num=config.param.max_token_num,
-                temperature=config.param.temperature,
-                top_p=config.param.top_p,
-                stream=config.param.stream,
-            )
-            return Proposal(
-                content=proposal,
-                q1=q5_result.get('q1', ''),
-                q2=q5_result.get('q2', ''),
-                q3=q5_result.get('q3', ''),
-                q4=q5_result.get('q4', ''),
-                q5=q5_result.get('q5', ''),
-            )
+        proposal, q5_result = write_proposal_prompting(
+            idea=serialized_idea,
+            papers=serialized_papers,
+            model_name=self.model_name,
+            prompt_template=prompt_template,
+            return_num=config.param.return_num,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
+            top_p=config.param.top_p,
+            stream=config.param.stream,
+        )
+        return Proposal(
+            content=proposal,
+            q1=q5_result.get('q1', ''),
+            q2=q5_result.get('q2', ''),
+            q3=q5_result.get('q3', ''),
+            q4=q5_result.get('q4', ''),
+            q5=q5_result.get('q5', ''),
+        )
 
     @beartype
     @reviewer_required
@@ -175,7 +175,7 @@ class Agent(object):
             )
             reviews.append(
                 Review(
-                    proposal_pk=proposal.pk,
+                    proposal_pk=prop.pk,
                     reviewer_pk=self.profile.pk,
                     summary=summary,
                     strength=strength,
@@ -219,9 +219,9 @@ class Agent(object):
 
             metareviews.append(
                 MetaReview(
-                    proposal_pk=proposal.pk,
+                    proposal_pk=prop.pk,
                     chair_pk=self.profile.pk,
-                    reviewer_pks=[review.reviewer_pk for review in reviews],
+                    reviewer_pks=[rev.reviewer_pk for rev in review],
                     author_pk=self.profile.pk,
                     summary=summary,
                     strength=strength,
@@ -230,6 +230,7 @@ class Agent(object):
                     decision=decision,
                 )
             )
+        return metareviews
 
     @beartype
     @leader_required
@@ -258,8 +259,8 @@ class Agent(object):
 
             rebuttals.append(
                 Rebuttal(
-                    proposal_pk=proposal.pk,
-                    reviewer_pk=review.reviewer_pk,
+                    proposal_pk=prop.pk,
+                    reviewer_pk=rev.reviewer_pk,
                     author_pk=self.profile.pk,
                     content=rebuttal_content,
                     q1=q5_result.get('q1', ''),

@@ -18,6 +18,8 @@ class ParamConfig(BaseModel):
     stream: Optional[bool] = None
     write_proposal_strategy: str
     max_env_run_num: int
+    idea_sample_num: int
+    proposal_num: int
 
 
 # EvalPromptTemplate for validation of eval-related prompts

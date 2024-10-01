@@ -118,7 +118,7 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
     )[0]
     metareview = agent_chair.write_metareview(
         proposal=[research_proposal_A],
-        reviews=[review],
+        reviews=[[review]],
         config=example_config,
     )[0]
     assert isinstance(metareview, MetaReview)

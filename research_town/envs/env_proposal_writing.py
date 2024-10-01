@@ -3,11 +3,11 @@ import math
 import random
 
 from beartype import beartype
-from beartype.typing import Any, Dict, Generator, List, Tuple
+from beartype.typing import Any, Dict, Generator, List, Tuple, Union
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..data import Idea, Insight, Progress
+from ..data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
@@ -47,7 +47,23 @@ class ProposalWritingEnv(BaseEnv):
             return 'start_review', {'proposal': self.proposal, 'leader': self.leader}
 
     @beartype
-    def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
+    def run(
+        self,
+    ) -> Generator[
+        Tuple[
+            Union[
+                List[Insight],
+                List[Idea],
+                List[Proposal],
+                List[Review],
+                List[Rebuttal],
+                List[MetaReview],
+            ],
+            Agent,
+        ],
+        None,
+        None,
+    ]:
         # Each member reviews literature
         insights: List[Insight] = []
         keywords: List[str] = []
@@ -62,7 +78,7 @@ class ProposalWritingEnv(BaseEnv):
                 contexts=self.contexts,
                 config=self.config,
             )
-            yield insight, member
+            yield [insight], member
             insights.append(insight)
             keywords.extend(keywords)
 
@@ -81,7 +97,7 @@ class ProposalWritingEnv(BaseEnv):
                 papers=related_papers, insights=insights, config=self.config
             )
             ideas.append(idea)
-            yield idea, member
+            yield [idea], member
 
         # Leader discusses ideas
 

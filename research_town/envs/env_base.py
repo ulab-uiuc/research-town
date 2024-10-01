@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Generator, Tuple
+from typing import Any, Dict, Generator, List, Tuple, Union
 
 from ..agents import Agent
 from ..configs import Config
-from ..data import Progress
+from ..data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 
 
 class BaseEnv(ABC):
@@ -17,7 +17,23 @@ class BaseEnv(ABC):
         pass
 
     @abstractmethod
-    def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
+    def run(
+        self,
+    ) -> Generator[
+        Tuple[
+            Union[
+                List[Insight],
+                List[Idea],
+                List[Proposal],
+                List[Review],
+                List[Rebuttal],
+                List[MetaReview],
+            ],
+            Agent,
+        ],
+        None,
+        None,
+    ]:
         pass
 
     @abstractmethod

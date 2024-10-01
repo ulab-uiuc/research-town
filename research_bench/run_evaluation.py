@@ -177,7 +177,9 @@ def get_proposal_5q(authors: List[str], intros: List[str]) -> Optional[str]:
 
         # Exit the environment and retrieve the generated proposal
         exit_status, exit_dict = env.on_exit()
-        proposal = exit_dict.get('proposal')[0]
+        proposal_list = exit_dict.get('proposal')
+        if isinstance(proposal_list, List):
+            proposal = proposal_list[0]
         if proposal and proposal.content:
             logger.info('Successfully generated proposal.')
             return str(proposal.content)

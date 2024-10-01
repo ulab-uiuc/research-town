@@ -1,5 +1,5 @@
 import os
-from typing import Dict, List, Tuple, Type
+from typing import Dict, List, Tuple, Type, Union
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
@@ -8,10 +8,8 @@ from ..data.data import (
     IdeaBrainstormLog,
     Insight,
     LiteratureReviewLog,
-    Log,
     MetaReview,
     MetaReviewWritingLog,
-    Progress,
     Proposal,
     ProposalWritingLog,
     Rebuttal,
@@ -93,8 +91,31 @@ class BaseEngine:
         self.progress_db.save_to_json(save_file_path, with_embed=with_embed)
         self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
 
-    def record(self, progress: Progress, agent: Agent) -> None:
-        log_map: Dict[Type[Progress], Type[Log]] = {
+    def record(
+        self,
+        progress: Union[
+            List[Insight],
+            List[Idea],
+            List[Proposal],
+            List[Review],
+            List[Rebuttal],
+            List[MetaReview],
+        ],
+        agent: Agent,
+    ) -> None:
+        log_map: Dict[
+            Type[Union[Insight, Idea, Proposal, Review, Rebuttal, MetaReview]],
+            Type[
+                Union[
+                    LiteratureReviewLog,
+                    IdeaBrainstormLog,
+                    ProposalWritingLog,
+                    ReviewWritingLog,
+                    RebuttalWritingLog,
+                    MetaReviewWritingLog,
+                ]
+            ],
+        ] = {
             Insight: LiteratureReviewLog,
             Idea: IdeaBrainstormLog,
             Proposal: ProposalWritingLog,
@@ -102,14 +123,15 @@ class BaseEngine:
             Rebuttal: RebuttalWritingLog,
             MetaReview: MetaReviewWritingLog,
         }
-        log_class = log_map.get(type(progress))
-        if not log_class:
-            raise ValueError(f'Unrecognized progress type: {type(progress)}')
+        for prog in progress:
+            log_class = log_map.get(type(prog))
+            if not log_class:
+                raise ValueError(f'Unrecognized progress type: {type(prog)}')
 
-        log = log_class(
-            time_step=self.time_step,
-            profile_pk=agent.profile.pk,
-            **{f'{progress.__class__.__name__.lower()}_pk': progress.pk},
-        )
-        self.progress_db.add(progress)
-        self.log_db.add(log)
+            log = log_class(
+                time_step=self.time_step,
+                profile_pk=agent.profile.pk,
+                **{f'{prog.__class__.__name__.lower()}_pk': prog.pk},
+            )
+            self.progress_db.add(prog)
+            self.log_db.add(log)
