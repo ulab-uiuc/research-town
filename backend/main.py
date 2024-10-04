@@ -31,10 +31,10 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-active_processes = {}
+active_processes: dict[str, multiprocessing.Process] = {}
 
 
-def stop_process(user_id):
+def stop_process(user_id: str) -> None:
     if user_id in active_processes:
         process = active_processes[user_id]
         process.terminate()  # Safely terminate the process
@@ -43,7 +43,9 @@ def stop_process(user_id):
         print(f'Process for user {user_id} stopped.')
 
 
-def background_task(url: str, child_conn):
+def background_task(
+    url: str, child_conn: multiprocessing.connection.Connection
+) -> None:
     generator = run_engine(url)
     try:
         for progress, agent in generator:
@@ -129,7 +131,7 @@ def format_response(
         yield json.dumps(item) + '\n'
 
 
-@app.post('/process')  # This remains unchanged as per your request
+@app.post('/process')
 async def process_url(request: Request) -> Response:
     # Get URL from the request body
     data = await request.json()
@@ -159,22 +161,18 @@ async def process_url(request: Request) -> Response:
             while True:
                 if await request.is_disconnected():
                     print(f'Client disconnected for user {user_id}. Cancelling task.')
-                    stop_process(user_id)  # Stop the background process
+                    stop_process(user_id)
                     break
 
                 if parent_conn.poll():
                     result = parent_conn.recv()
                     if result is None:
-                        break  # End of data
+                        break
 
-                    # Now pass the result into the format_response function
-                    # Yield formatted response to client
-                    print('reuslt')
-                    print(result)
                     for formatted_output in format_response(iter([result])):
                         yield formatted_output
                 else:
-                    await asyncio.sleep(0.1)  # Avoid busy-waiting
+                    await asyncio.sleep(0.1)
         finally:
             print('TRUE')
             stop_process(user_id)  # Ensure process is stopped on function exit
