@@ -373,7 +373,7 @@ def test_paper_file() -> None:
     shutil.rmtree('data/test')
 
 
-@patch('research_town.utils.agent_prompter.model_prompting')
+@patch('research_town.utils.profile_collector.model_prompting')
 def test_pull_profiles(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
