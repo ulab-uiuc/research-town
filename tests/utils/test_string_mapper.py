@@ -33,7 +33,9 @@ def test_map_paper_list_to_str() -> None:
         {'abstract': 'Abstract 2'},
         {'abstract': 'Abstract 3'},
     ]
-    expected_result = '1th paper: Abstract 1\n2th paper: Abstract 2\n3th paper: Abstract 3\n'
+    expected_result = (
+        '1th paper: Abstract 1\n2th paper: Abstract 2\n3th paper: Abstract 3\n'
+    )
     assert map_paper_list_to_str(papers) == expected_result
 
 
@@ -129,7 +131,9 @@ def test_map_insight_list_to_str() -> None:
         {'content': 'Insight 2'},
         {'content': 'Insight 3'},
     ]
-    expected_result = '1th insight: Insight 1\n2th insight: Insight 2\n3th insight: Insight 3\n'
+    expected_result = (
+        '1th insight: Insight 1\n2th insight: Insight 2\n3th insight: Insight 3\n'
+    )
     assert map_insight_list_to_str(insights) == expected_result
 
 

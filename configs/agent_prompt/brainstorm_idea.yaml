@@ -20,13 +20,13 @@ fewshot_examples:
   Develop a graph-based reinforcement learning framework that leverages node embeddings to represent states and actions, enabling more efficient exploration and value function approximation in environments with complex relational structures, while incorporating boundary-invariant analyses to ensure optimality guarantees regardless of how the agent-environment boundary is defined.
 
 template: |
-  Here is your research background: 
+  Here is your research background:
   {bio}
 
-  Here are the research insights: 
+  Here are the research insights:
   {insights}
 
-  Here are the related works: 
+  Here are the related works:
   {papers}
 
   Please begin brainstorming idea conditioned on your research background. Please keep it within one to two sentences. Your idea should be different from those in the related papers.
