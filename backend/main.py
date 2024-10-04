@@ -4,7 +4,7 @@ import multiprocessing
 import uuid
 from typing import Generator, Optional, Tuple
 
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from generator_func import run_engine
@@ -132,7 +132,7 @@ def format_response(
 
 
 @app.post('/process')
-async def process_url(request: Request) -> Response:
+async def process_url(request: Request) -> StreamingResponse:
     # Get URL from the request body
     data = await request.json()
     url = data.get('url')
@@ -155,7 +155,7 @@ async def process_url(request: Request) -> Response:
     active_processes[user_id] = process
     print(f'Task for user {user_id} started.')
 
-    async def stream_response():
+    async def stream_response() -> Generator[str, None, None]:
         try:
             # Fetch results from the pipe and format them
             while True:
@@ -174,7 +174,6 @@ async def process_url(request: Request) -> Response:
                 else:
                     await asyncio.sleep(0.1)
         finally:
-            print('TRUE')
             stop_process(user_id)  # Ensure process is stopped on function exit
 
     # Return the StreamingResponse
