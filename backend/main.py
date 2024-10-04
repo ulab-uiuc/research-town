@@ -137,7 +137,7 @@ def format_response(
         yield json.dumps(item) + '\n'
 
 
-@app.post('/process')
+@app.post('/process')  # type: ignore
 async def process_url(request: Request) -> StreamingResponse:
     # Get URL from the request body
     data = await request.json()
@@ -163,7 +163,6 @@ async def process_url(request: Request) -> StreamingResponse:
 
     async def stream_response() -> AsyncGenerator[str, None]:
         try:
-            # Fetch results from the pipe and format them
             while True:
                 if await request.is_disconnected():
                     print(f'Client disconnected for user {user_id}. Cancelling task.')
