@@ -57,6 +57,12 @@ def background_task(
         child_conn.close()
 
 
+def generator_wrapper(
+    result: Tuple[Optional[Progress], Optional[Agent]],
+) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
+    yield result
+
+
 def format_response(
     generator: Generator[Tuple[Optional[Progress], Optional[Agent]], None, None],
 ) -> Generator[str, None, None]:
@@ -169,7 +175,7 @@ async def process_url(request: Request) -> StreamingResponse:
                     if result is None:
                         break
 
-                    for formatted_output in format_response(iter([result])):
+                    for formatted_output in format_response(generator_wrapper(result)):
                         yield formatted_output
                 else:
                     await asyncio.sleep(0.1)
