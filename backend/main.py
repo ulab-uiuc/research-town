@@ -2,7 +2,7 @@ import asyncio
 import json
 import multiprocessing
 import uuid
-from typing import Generator, Optional, Tuple
+from typing import AsyncGenerator, Generator, Optional, Tuple
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -155,7 +155,7 @@ async def process_url(request: Request) -> StreamingResponse:
     active_processes[user_id] = process
     print(f'Task for user {user_id} started.')
 
-    async def stream_response() -> Generator[str, None, None]:
+    async def stream_response() -> AsyncGenerator[str, None]:
         try:
             # Fetch results from the pipe and format them
             while True:
