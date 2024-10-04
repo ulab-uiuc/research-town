@@ -45,10 +45,10 @@ fewshot_examples:
  The challenges highlighted in watermarking techniques, particularly the trade-off between robustness and text quality, can inspire further research into ethical AI decision-making frameworks. By exploring how watermarking can be integrated into AI systems to ensure accountability in AI-generated content, researchers could develop methods that enhance cooperation among AI agents while maintaining ethical standards. Additionally, investigating the implications of detectable watermarks on user trust and the ethical responsibilities of AI developers may yield valuable insights into the societal impacts of AI technologies.
 
 template: |
- Here is my profile biology: 
+ Here is my profile biology:
  {bio}
 
- Here are some recent papers: 
+ Here are some recent papers:
  {papers}
 
  Please begin writing research insights that you can gain based on your research experience and the academic context. Mainly based on the academic context. Please make sure it is only two to three sentences.
