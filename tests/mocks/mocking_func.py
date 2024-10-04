@@ -22,6 +22,8 @@ def mock_prompting(
     eval_prompt_template = example_config.eval_prompt_template
     if prompt[0]['content'] == agent_prompt_template.write_bio['sys_prompt']:
         return ['Bio1', 'Bio2', 'Bio3']
+    elif prompt[0]['content'] == agent_prompt_template.summarize_domain['sys_prompt']:
+        return ['Domain1; Domain2', 'Domain3; Domain4', 'Domain5; Domain6']
     elif prompt[0]['content'] == agent_prompt_template.review_literature['sys_prompt']:
         return [
             'Summary of Target Paper: Summary1. Keywords of Target Paper: keyword1. Valuable Points from Target Paper: Insight1',
