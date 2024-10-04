@@ -305,62 +305,70 @@ def get_paper_bibliography_from_html(url: str) -> Optional[Dict[str, str]]:
 
 
 def get_paper_content_from_pdf(url: str) -> Optional[Dict[str, str]]:
-    if 'abs' in url:
-        pdf_url = url.replace('abs', 'pdf')
-    elif 'html' in url:
-        pdf_url = url.replace('html', 'pdf')
-    else:
-        pdf_url = url
-
-    response = requests.get(pdf_url)
-    file_stream = BytesIO(response.content)
-    reader = PdfReader(file_stream)
-
-    text = ''
-    for page in reader.pages:
-        text += page.extract_text()
-
-    if text == '':
-        return None
-
-    section_titles = [
-        'Abstract',
-        'Introduction',
-        'Related Work',
-        'Background',
-        'Methods',
-        'Experiments',
-        'Results',
-        'Discussion',
-        'Conclusion',
-        'Conclusions',
-        'Acknowledgments',
-        'References',
-        'Appendix',
-        'Materials and Methods',
-    ]
-
-    section_pattern = re.compile(
-        r'\b(' + '|'.join(re.escape(title) for title in section_titles) + r')\b',
-        re.IGNORECASE,
-    )
-
-    sections = {}
-    matches = list(section_pattern.finditer(text))
-
-    for i, match in enumerate(matches):
-        section_name = match.group()
-        section_start = match.start()
-
-        if i + 1 < len(matches):
-            section_end = matches[i + 1].start()
+    try:
+        if 'abs' in url:
+            pdf_url = url.replace('abs', 'pdf')
+        elif 'html' in url:
+            pdf_url = url.replace('html', 'pdf')
         else:
-            section_end = len(text)
+            pdf_url = url
 
-        section_content = text[section_start:section_end].strip()
-        sections[section_name] = section_content
+        response = requests.get(pdf_url)
+        file_stream = BytesIO(response.content)
+        reader = PdfReader(file_stream)
 
-    return sections
+        text = ''
+        for page in reader.pages:
+            text += page.extract_text()
+
+        if text == '':
+            return None
+
+        section_titles = [
+            'Abstract',
+            'Introduction',
+            'Related Work',
+            'Background',
+            'Methods',
+            'Experiments',
+            'Results',
+            'Discussion',
+            'Conclusion',
+            'Conclusions',
+            'Acknowledgments',
+            'References',
+            'Appendix',
+            'Materials and Methods',
+        ]
+
+        section_pattern = re.compile(
+            r'\b(' + '|'.join(re.escape(title) for title in section_titles) + r')\b',
+            re.IGNORECASE,
+        )
+
+        sections = {}
+        matches = list(section_pattern.finditer(text))
+
+        for i, match in enumerate(matches):
+            section_name = match.group()
+            section_start = match.start()
+
+            if i + 1 < len(matches):
+                section_end = matches[i + 1].start()
+            else:
+                section_end = len(text)
+
+            section_content = text[section_start:section_end].strip()
+            sections[section_name] = section_content
+
+        return sections
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching the PDF from the URL: {e}")
+        return None
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return None
 
 
 def get_paper_introduction(url: str) -> Optional[str]:
