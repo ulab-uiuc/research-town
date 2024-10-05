@@ -2,7 +2,7 @@ import asyncio
 import json
 import multiprocessing
 import uuid
-from typing import AsyncGenerator, Generator, Optional, Tuple
+from typing import AsyncGenerator, Generator, Optional, Tuple, Union, List
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,6 +13,7 @@ from research_town.agents import Agent
 from research_town.data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 
 app = FastAPI()
+ProgressList = Union[List[Insight], List[Idea], List[Proposal], List[Review], List[Rebuttal], List[MetaReview]]
 
 # Enable CORS for all origins, credentials, methods, and headers
 app.add_middleware(
@@ -50,13 +51,13 @@ def background_task(
 
 
 def generator_wrapper(
-    result: Tuple[Optional[Progress], Optional[Agent]],
-) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
+    result: Tuple[Optional[ProgressList], Optional[Agent]],
+) -> Generator[Tuple[Optional[ProgressList], Optional[Agent]], None, None]:
     yield result
 
 
 def format_response(
-    generator: Generator[Tuple[Optional[Progress], Optional[Agent]], None, None],
+    generator: Generator[Tuple[Optional[ProgressList], Optional[Agent]], None, None],
 ) -> Generator[str, None, None]:
     for progress, agent in generator:
         item = {}
