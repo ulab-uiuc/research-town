@@ -1,4 +1,3 @@
-import json
 import os
 from typing import Any, Dict, List, Union
 
@@ -34,7 +33,11 @@ def save_prompt_to_json(
 ) -> None:
     file_name = f'{template_name}.log'
     directory_path = os.path.join('..', 'data', 'prompt_data')
+
+    if not os.path.exists(directory_path):
+        os.makedirs(directory_path)
+
     file_path = os.path.join(directory_path, file_name)
 
     with open(file_path, 'w') as log_file:
-        json.dump(messages, log_file, indent=4)
+        log_file.write(str(messages))

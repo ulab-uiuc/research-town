@@ -63,7 +63,6 @@ def background_task(
 
     finally:
         child_conn.send(None)
-        print('Finish Generation')
         child_conn.close()
 
 
@@ -75,11 +74,11 @@ def generator_wrapper(
 
 def clean_prompt_data() -> None:
     directory = os.path.join('..', 'data', 'prompt_data')
-    print(f'Cleaning prompt data in {directory}')
     if os.path.exists(directory):
         for filename in os.listdir(directory):
             file_path = os.path.join(directory, filename)
-            os.remove(file_path)
+            with open(file_path, 'w'):
+                pass
     else:
         os.makedirs(directory)
 
