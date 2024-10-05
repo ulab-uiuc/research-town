@@ -52,9 +52,6 @@ def background_task(
         for progress, agent in generator:
             child_conn.send((progress, agent))
 
-        print(
-            'Generation complete. Background task is now idle and waiting for manual termination.'
-        )
         while True:
             if child_conn.poll():
                 msg = child_conn.recv()
