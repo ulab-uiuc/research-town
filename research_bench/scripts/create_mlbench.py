@@ -5,7 +5,7 @@ import json
 import logging
 import os
 import time
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set, Union
 
 import arxiv
 import requests
@@ -105,8 +105,10 @@ def fetch_references(
     if 'v' in arxiv_id:
         arxiv_id = arxiv_id.split('v')[0]
     url = f'{SEMANTIC_SCHOLAR_API_URL}ARXIV:{arxiv_id}/references'
-    fields = 'title,abstract,year,venue,authors,externalIds,url,referenceCount,citationCount,influentialCitationCount,isOpenAccess,fieldsOfStudy'
-    params = {'limit': 100, 'fields': fields}
+    params: Dict[str, Union[int, str]] = {
+        'limit': 100,
+        'fields': 'title,abstract,year,venue,authors,externalIds,url,referenceCount,citationCount,influentialCitationCount,isOpenAccess,fieldsOfStudy',
+    }
 
     for attempt in range(1, max_retry + 1):
         try:
