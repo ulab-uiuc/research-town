@@ -1,0 +1,622 @@
+{
+  "937979c5-d453-4de2-b091-e2a5bc8b3cb2": {
+    "pk": "937979c5-d453-4de2-b091-e2a5bc8b3cb2",
+    "project_name": null,
+    "name": "Evangelia Christodoulou",
+    "bio": "I am a researcher dedicated to bridging the gap between machine learning and clinical applications, particularly in the realm of medical image analysis. My recent work has focused on addressing the critical issue of prevalence shifts in algorithm deployment, which can significantly impact the performance of machine learning models in real-world settings. I have developed a workflow for prevalence-aware image classification that allows for the adjustment of classifiers to new environments without the need for additional annotated data, demonstrating its effectiveness across 30 medical classification tasks.\n\nIn addition to my work in medical imaging, I have a strong background in astrophysics, particularly in understanding mass loss in stellar evolution. Through the ASSESS project, I have led a large observational campaign that has resulted in the discovery of new B[e] supergiants and Luminous Blue Variables, contributing to our understanding of these unique stellar phenomena.\n\nI am also passionate about improving validation metrics in clinical settings, as evidenced by my winning solution in the Endoscopy computer vision challenge for colon cancer detection. My research highlights the sensitivity of commonly used metrics to hyperparameters and emphasizes the need for clinically relevant localization criteria. Overall, my work aims to enhance the reliability and applicability of machine learning methods in both medical and astrophysical contexts, ensuring that they can be effectively translated into practice.",
+    "collaborators": [
+      "Patrick Godau",
+      "Annika Reinke",
+      "Lena Maier-Hein",
+      "Grigoris Maravelias",
+      "Stephan de Wit",
+      "Alceste Z. Bonanos",
+      "Frank Tramper",
+      "Piotr Kalinowski",
+      "Minu Tizabi",
+      "Luciana Ferrer"
+    ],
+    "domain": [
+      "Medical Image Analysis",
+      "Machine Learning",
+      "Stellar Evolution",
+      "Validation Metrics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "afcd35d5-4149-4307-aa97-94b6f6923862": {
+    "pk": "afcd35d5-4149-4307-aa97-94b6f6923862",
+    "project_name": null,
+    "name": "Annika Reinke",
+    "bio": "I am a researcher dedicated to enhancing the field of medical image analysis through rigorous benchmarking and innovative methodologies. My work primarily focuses on the reproducibility and quality of biomedical challenges, as evidenced by my analysis of the 2019 Robust Medical Image Segmentation Challenge, where I highlighted significant discrepancies in challenge rankings due to reproducibility issues. \n\nI have developed the open-source framework challengeR, which provides comprehensive methods for analyzing and visualizing results from biomedical challenges, addressing the critical need for high-quality design and reporting in this rapidly growing field. My research also delves into the impact of prevalence shifts on machine learning algorithms in clinical settings, proposing a workflow for prevalence-aware image classification that improves classifier decisions without requiring additional annotated data.\n\nAdditionally, I have contributed to neuroscience by releasing the FlyLight Instance Segmentation Benchmark (FISBe), the first publicly available dataset for multi-neuron light microscopy with pixel-wise annotations. This dataset aims to facilitate advancements in instance segmentation methodologies and promote scientific discovery in neuroscience. Through my work, I strive to bridge the gap between machine learning and clinical applications, ensuring that our algorithms are robust, reliable, and ready for real-world deployment.",
+    "collaborators": [
+      "Lena Maier-Hein",
+      "Georg Grab",
+      "Manuel Wiesenfarth",
+      "Bennett A. Landman",
+      "Manuel Jorge Cardoso",
+      "Annette Kopp-Schneider",
+      "Patrick Godau",
+      "Piotr Kalinowski",
+      "Evangelia Christodoulou",
+      "Minu Tizabi"
+    ],
+    "domain": [
+      "Biomedical Image Analysis",
+      "Machine Learning",
+      "Instance Segmentation",
+      "Reproducibility"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "923bd1e4-4a1f-40ac-a173-b745168bf2aa": {
+    "pk": "923bd1e4-4a1f-40ac-a173-b745168bf2aa",
+    "project_name": null,
+    "name": "Rola Houhou",
+    "bio": "As a researcher in the field of medical imaging, I am deeply committed to enhancing the integration of artificial intelligence into healthcare. My recent work critically examines the performance reporting practices in medical imaging literature, particularly focusing on segmentation methods presented at the MICCAI conference. I have found that a significant number of studies fail to assess performance variability, which can lead to misleading conclusions about the efficacy of different models. \n\nIn my analysis of 221 MICCAI segmentation papers from 2023, I discovered that over half did not report any performance variability, and only a mere 0.5% included confidence intervals. To address this gap, I developed a method to approximate the unreported standard deviation of model performance using a second-order polynomial function of the mean Dice similarity coefficient. This innovative approach allows for the reconstruction of confidence intervals based on existing data, providing a more nuanced understanding of model performance.\n\nMy findings reveal that the median confidence interval width is significantly larger than the performance gap between top-ranked methods, indicating that many models may not be as distinct in their effectiveness as previously thought. I am passionate about advocating for more rigorous performance reporting standards in medical imaging research, as I believe this is essential for ensuring that the most effective methods are translated into clinical practice.",
+    "collaborators": [
+      "Evangelia Christodoulou",
+      "Annika Reinke",
+      "Piotr Kalinowski",
+      "Selen Erkan",
+      "Carole H. Sudre",
+      "Ninon Burgos",
+      "Sofi\u00e8ne Boutaj",
+      "Sophie Loizillon",
+      "Ma\u00eblys Solal",
+      "Nicola Rieke"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Performance Evaluation",
+      "Healthcare AI",
+      "Statistical Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "136e8b24-e9af-48bd-9290-ca0e0dbbf2a4": {
+    "pk": "136e8b24-e9af-48bd-9290-ca0e0dbbf2a4",
+    "project_name": null,
+    "name": "Piotr Kalinowski",
+    "bio": "I am a researcher dedicated to enhancing the application of machine learning, particularly convolutional neural networks (CNNs), in medical image analysis. My work primarily focuses on ultrasound imaging, where I have explored the vulnerabilities of CNNs to adversarial attacks. I developed a novel adversarial attack that manipulates image reconstruction parameters, demonstrating how subtle perturbations can significantly impact diagnostic accuracy, particularly in fatty liver disease diagnosis.\n\nIn addition to adversarial robustness, I am deeply concerned with the challenges posed by domain gaps in clinical settings. My recent research highlights the critical importance of prevalence shifts in the deployment of machine learning algorithms. I have empirically shown how discrepancies in class frequencies can lead to miscalibrated models and suboptimal decision thresholds. To address this, I proposed a workflow for prevalence-aware image classification that allows for the adjustment of classifiers to new environments without the need for additional annotated data. This approach has been validated across 30 diverse medical classification tasks, showcasing its potential to improve classifier decisions and enhance the reliability of performance estimates.\n\nThrough my research, I aim to bridge the gap between advanced machine learning techniques and their practical applications in healthcare, ensuring that these technologies can be effectively and safely integrated into clinical practice.",
+    "collaborators": [
+      "Michal Byra",
+      "Grzegorz Styczynski",
+      "Cezary Szmigielski",
+      "Lukasz Michalowski",
+      "Rafal Paluszkiewicz",
+      "Bogna Ziarkiewicz-Wroblewska",
+      "Krzysztof Zieniewicz",
+      "Andrzej Nowicki",
+      "Patrick Godau",
+      "Evangelia Christodoulou"
+    ],
+    "domain": [
+      "Medical Image Analysis",
+      "Adversarial Attacks",
+      "Machine Learning",
+      "Domain Adaptation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "af3bf3d0-adf7-480b-a461-b9ce5957422d": {
+    "pk": "af3bf3d0-adf7-480b-a461-b9ce5957422d",
+    "project_name": null,
+    "name": "Selen Erkan",
+    "bio": "As a researcher in the field of medical imaging, I am deeply committed to enhancing the integration of artificial intelligence into healthcare. My recent work critically examines the performance reporting practices in medical imaging literature, particularly focusing on segmentation methods presented at the MICCAI conference. I have found that a significant number of studies fail to assess performance variability, which can lead to misleading conclusions about the efficacy of different models. \n\nIn my analysis of 221 MICCAI segmentation papers from 2023, I discovered that over half did not report any performance variability, and only a mere 0.5% included confidence intervals. To address this gap, I proposed a novel approach to approximate the unreported standard deviation of model performance using a second-order polynomial function of the mean Dice similarity coefficient. This method allows for the reconstruction of confidence intervals based on existing data, providing a more nuanced understanding of model performance.\n\nMy findings reveal that the median confidence interval width is significantly larger than the performance gap between top-ranked methods, suggesting that many models may not be as distinct in their effectiveness as previously thought. I am passionate about advocating for more rigorous performance reporting standards in medical imaging research to ensure that the most promising AI methods can be effectively translated into clinical practice.",
+    "collaborators": [
+      "Evangelia Christodoulou",
+      "Annika Reinke",
+      "Rola Houhou",
+      "Piotr Kalinowski",
+      "Carole H. Sudre",
+      "Ninon Burgos",
+      "Sofi\u00e8ne Boutaj",
+      "Sophie Loizillon",
+      "Ma\u00eblys Solal",
+      "Nicola Rieke"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Performance Evaluation",
+      "Healthcare AI",
+      "Statistical Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "85b98e31-0bef-4f0e-86e3-16bb383dc96e": {
+    "pk": "85b98e31-0bef-4f0e-86e3-16bb383dc96e",
+    "project_name": null,
+    "name": "Carole H. Sudre",
+    "bio": "I am a researcher dedicated to advancing the field of medical imaging through innovative deep learning techniques. My work primarily focuses on automating quality control (QC) processes in medical imaging, particularly MRI, to enhance the accuracy and efficiency of downstream analyses like segmentation. I have developed probabilistic networks that leverage heteroscedastic noise models to estimate uncertainty in image quality, enabling more robust segmentation predictions.\n\nOne of my notable contributions is the introduction of the Permutation Invariant Multi-Modal Segmentation (PIMMS) technique, which allows for effective inference over sets of MRI scans without relying on modality labels. This approach has shown promising results, often outperforming traditional models that depend on labeled modalities. Additionally, I have explored the nuances of image quality from both visual and algorithmic perspectives, emphasizing the importance of understanding how different types of data degradation affect model performance.\n\nMy research also delves into the complexities of joint tissue and lesion segmentation, addressing the challenges posed by heterogeneous imaging modalities and domain shifts. I advocate for the use of test-time unsupervised domain adaptation to improve model generalization across varying acquisition protocols.\n\nThrough my work, I aim to bridge the gap between advanced machine learning techniques and practical clinical applications, ensuring that our algorithms can operate effectively in real-world healthcare settings. I am passionate about leveraging big data and citizen science, as exemplified by my involvement in the Covid Symptom Study, to drive impactful research that can transform patient care.",
+    "collaborators": [
+      "M. Jorge Cardoso",
+      "Sebastien Ourselin",
+      "Thomas Varsavsky",
+      "Parashkev Nachev",
+      "Richard Shaw",
+      "Mark S. Graham",
+      "Zach Eaton-Rosen",
+      "Beatriz Gomez Anson",
+      "Silvia Ingala",
+      "Chris D. Lane"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Deep Learning",
+      "Uncertainty Estimation",
+      "Domain Adaptation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "354a4154-cedd-4e7a-93c5-fb21c6342bba": {
+    "pk": "354a4154-cedd-4e7a-93c5-fb21c6342bba",
+    "project_name": null,
+    "name": "Ninon Burgos",
+    "bio": "I am a dedicated researcher specializing in the intersection of machine learning and neuroimaging, with a particular focus on developing robust methodologies for the analysis and interpretation of medical imaging data. My work addresses critical challenges in the field, such as the interpretability of deep learning models, reproducibility of research findings, and the effective detection of anomalies in neuroimaging data.\n\nIn my recent publications, I have explored various interpretability methods to ensure the reliability of deep learning models in neuroimaging, emphasizing the importance of understanding how these models make decisions. I have also contributed to the development of frameworks that enhance reproducibility in machine learning experiments, particularly in the context of Alzheimer's disease classification, where I have established a modular architecture for benchmarking different feature extraction and classification techniques.\n\nMy research has led to innovative approaches for unsupervised anomaly detection, leveraging generative models to identify abnormalities in neuroimaging data without the need for extensive annotations. Additionally, I have focused on quality control in clinical data warehouses, creating automated solutions to assess the quality of MRI images, which is crucial for utilizing large datasets effectively.\n\nThrough my work, I aim to bridge the gap between advanced machine learning techniques and practical applications in medical imaging, ensuring that our findings are not only accurate but also interpretable and reproducible. I am passionate about advancing the field and contributing to the development of tools that can improve patient care and diagnostic processes.",
+    "collaborators": [
+      "Olivier Colliot",
+      "Didier Dormont",
+      "Simona Bottani",
+      "Elina Thibeau-Sutre",
+      "Stanley Durrleman",
+      "Sabrina Fontanella",
+      "Sophie Loizillon",
+      "Junhao Wen",
+      "Alexandre Routier",
+      "Ma\u00eblys Solal"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Machine Learning",
+      "Neuroimaging",
+      "Deep Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "73f538dd-96d4-4374-b11a-23f5329f5d61": {
+    "pk": "73f538dd-96d4-4374-b11a-23f5329f5d61",
+    "project_name": null,
+    "name": "Sofi\u00e8ne Boutaj",
+    "bio": "As a researcher in the field of medical imaging, I am deeply committed to enhancing the integration of artificial intelligence into healthcare. My recent work critically examines the performance reporting practices in medical imaging literature, particularly focusing on segmentation methods presented at the MICCAI conference. I have found that a significant number of studies fail to assess performance variability, which can lead to misleading conclusions about the efficacy of different models. \n\nIn my analysis of 221 MICCAI segmentation papers from 2023, I discovered that over half did not report any performance variability, and only a mere 0.5% included confidence intervals. To address this gap, I developed a method to approximate the unreported standard deviation of model performance using a second-order polynomial function of the mean Dice similarity coefficient. This innovative approach allows for the reconstruction of confidence intervals based on existing data, providing a more nuanced understanding of model performance.\n\nMy findings reveal that the median confidence interval width is significantly larger than the performance gap between top-ranked methods, suggesting that many models may not be as distinct in their effectiveness as previously thought. Ultimately, my work aims to foster more rigorous performance reporting in medical imaging research, ensuring that only the most reliable methods are considered for clinical application.",
+    "collaborators": [
+      "Evangelia Christodoulou",
+      "Annika Reinke",
+      "Rola Houhou",
+      "Piotr Kalinowski",
+      "Selen Erkan",
+      "Carole H. Sudre",
+      "Ninon Burgos",
+      "Sophie Loizillon",
+      "Ma\u00eblys Solal",
+      "Nicola Rieke"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Performance Evaluation",
+      "Healthcare AI",
+      "Statistical Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a6b7fbaa-a22f-41c6-8189-aa392d9af82c": {
+    "pk": "a6b7fbaa-a22f-41c6-8189-aa392d9af82c",
+    "project_name": null,
+    "name": "Sophie Loizillon",
+    "bio": "I am a researcher dedicated to enhancing the early diagnosis and treatment of parkinsonian syndromes through advanced imaging techniques. My work primarily focuses on the segmentation of critical brain structures, such as the red nucleus, using multimodal iron-sensitive magnetic resonance imaging (MRI). I have developed innovative models that integrate prior knowledge from various MRI contrasts to improve segmentation accuracy, even with limited annotated data. \n\nOne of my notable contributions is a frequency-domain disentanglement training method that leverages the inherent properties of deep learning models to enhance performance in challenging scenarios, particularly with less common imaging modalities like Quantitative Susceptibility Mapping (QSM). This approach has shown significant improvements in segmenting the red and dentate nuclei, which are vital for understanding parkinsonian disorders.\n\nAdditionally, I have addressed the challenges posed by clinical data warehouses (CDWs) by creating an automated quality control system for MRI images. By employing transfer learning and artefact simulation, I developed a robust framework that effectively identifies and categorizes corrupted images, ensuring that the vast amounts of clinical data can be utilized for research purposes. My work aims to bridge the gap between clinical practice and research, ultimately improving patient care and advancing our understanding of neurological disorders.",
+    "collaborators": [
+      "Didier Dormont",
+      "Ninon Burgos",
+      "Olivier Colliot",
+      "Guanghui Fu",
+      "Gabriel Jimenez",
+      "Lydia Chougar",
+      "Romain Valabregue",
+      "St\u00e9phane Leh\u00e9ricy",
+      "Daniel Racoceanu",
+      "the ICEBERG Study Group"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Deep Learning",
+      "Segmentation",
+      "Transfer Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "09f8e428-417d-4b28-a02f-6560cfc3f815": {
+    "pk": "09f8e428-417d-4b28-a02f-6560cfc3f815",
+    "project_name": null,
+    "name": "Ma\u00eblys Solal",
+    "bio": "I am a researcher dedicated to advancing our understanding of aerosol-cloud interactions and their implications for climate science, as well as improving methodologies in medical imaging through machine learning. My recent work employs causal machine learning techniques to estimate the effects of aerosols on cloud properties, addressing the significant uncertainties in climate models. I have also developed innovative approaches for unsupervised anomaly detection in neuroimaging, particularly for identifying Alzheimer's disease-related anomalies using FDG PET scans.\n\nMy research emphasizes the importance of robust statistical methods, such as the continuous treatment-effect marginal sensitivity model (CMSM), to derive meaningful insights from observational data while accounting for hidden confounding factors. I am particularly interested in the intersection of AI and healthcare, advocating for better performance reporting in medical imaging studies. My analysis of segmentation papers from the MICCAI conference revealed a critical gap in performance variability reporting, prompting me to propose methods for reconstructing confidence intervals that can guide clinical practice.\n\nThrough my work, I aim to bridge the gap between complex data analysis and practical applications, ensuring that our findings can effectively inform both climate science and healthcare advancements. I am passionate about leveraging machine learning to tackle real-world challenges and contribute to the ongoing transformation of these fields.",
+    "collaborators": [
+      "Ninon Burgos",
+      "Andrew Jesson",
+      "Yarin Gal",
+      "Alyson Douglas",
+      "Ravi Hassanaly",
+      "Olivier Colliot",
+      "Peter Manshausen",
+      "Nicolai Meinshausen",
+      "Philip Stier",
+      "Uri Shalit"
+    ],
+    "domain": [
+      "Causal Inference",
+      "Medical Imaging",
+      "Anomaly Detection",
+      "Climate Science"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "70eea621-a6d5-46a1-8e41-aeb50787c365": {
+    "pk": "70eea621-a6d5-46a1-8e41-aeb50787c365",
+    "project_name": null,
+    "name": "Nicola Rieke",
+    "bio": "I am a researcher dedicated to enhancing computer-assisted interventions through innovative approaches in real-time instrument tracking and medical image segmentation. My work focuses on the intersection of deep learning and medical imaging, where I have developed novel methods that leverage the interdependency between localization and segmentation tasks. For instance, I introduced a heatmap regression technique for surgical tool pose estimation, which significantly outperformed existing methods in benchmarks like the Retinal Microsurgery and MICCAI EndoVis Challenge.\n\nI have also explored advanced architectures for image segmentation, proposing the Coarse-to-Fine Context Memory (CFCM) model that utilizes a deep residual learning framework combined with convolutional Long Short Term Memory (LSTM) networks. This approach has shown remarkable improvements in integrating multi-scale features, as demonstrated on datasets such as the Montgomery County lung segmentation and the EndoVis 2015 challenge.\n\nAdditionally, I am passionate about the potential of Intraoperative Optical Coherence Tomography (iOCT) in surgical settings. My research includes developing methods for tracking surgical needles using iOCT data, achieving robust pose estimation with minimal latency. I am also actively investigating the role of Federated Learning in overcoming data silos in healthcare, aiming to harness the vast amounts of medical data while addressing privacy concerns. My goal is to bridge the gap between research and clinical practice, ensuring that machine learning can truly transform digital health.",
+    "collaborators": [
+      "Nassir Navab",
+      "Abouzar Eslami",
+      "Fausto Milletari",
+      "Maximilian Baust",
+      "Iro Laina",
+      "Christian Rupprecht",
+      "Josu\u00e9 Page Vizca\u00edno",
+      "Federico Tombari",
+      "Marco Esposito",
+      "Jakob Weiss"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Deep Learning",
+      "Federated Learning",
+      "Instrument Tracking"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c78746d8-290d-456c-9e2d-a570ba145171": {
+    "pk": "c78746d8-290d-456c-9e2d-a570ba145171",
+    "project_name": null,
+    "name": "Veronika Cheplygina",
+    "bio": "I am a researcher dedicated to advancing the field of medical image analysis through innovative machine learning techniques. My work primarily focuses on transfer learning, multiple instance learning (MIL), and the challenges associated with medical datasets. I have explored the effectiveness of using diverse source datasets for training models, demonstrating that even seemingly unrelated data, like images of cats, can enhance model robustness for tasks such as lung CT classification.\n\nIn my recent publications, I have critically examined the biases in medical imaging research, advocating for improved practices in dataset selection, evaluation metrics, and publication strategies. I have also delved into the nuances of annotator disagreement, showing that capturing this variability can provide valuable insights for model training.\n\nMy contributions extend to developing frameworks for predictive maintenance in industrial applications, as well as investigating the stability of instance labels in MIL classifiers, particularly in the context of computer-aided diagnosis. I am passionate about leveraging crowdsourced annotations and multi-task learning to enhance model performance, and I actively promote reproducibility in research by sharing datasets and code.\n\nThrough my work, I aim to bridge the gap between machine learning and medical imaging, fostering a deeper understanding of how to effectively utilize data for improved patient outcomes. I believe that by addressing the challenges in this field, we can unlock the full potential of machine learning to transform healthcare.",
+    "collaborators": [
+      "David M. J. Tax",
+      "Marco Loog",
+      "Dovile Juodelyte",
+      "Josien P. W. Pluim",
+      "Marleen de Bruijne",
+      "Amelia Jim\u00e9nez-S\u00e1nchez",
+      "Ga\u00ebl Varoquaux",
+      "Nikolaj Kj\u00f8ller Bjerregaard",
+      "Stefan Heinrich",
+      "Tom van Sonsbeek"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Transfer Learning",
+      "Multiple Instance Learning",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "399bce93-aba7-409e-81a4-91dc796b5246": {
+    "pk": "399bce93-aba7-409e-81a4-91dc796b5246",
+    "project_name": null,
+    "name": "Michela Antonelli",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identities during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research doesn't stop at static graphs; I proposed the ROLAND framework to effectively handle dynamic graphs, allowing for scalable and efficient learning in real-world applications.\n\nIn addition to architectural innovations, I have explored the design space of GNNs, systematically studying over 315,000 designs to provide guidelines for optimizing performance across different tasks. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the process of finding optimal model designs by leveraging prior knowledge and enhancing search efficiency.\n\nThrough these contributions, I strive to push the boundaries of what GNNs can achieve, fostering a deeper understanding of their structure and performance while making them more accessible for diverse applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "3467fec1-60a4-4cb8-8495-3537c239b3c0": {
+    "pk": "3467fec1-60a4-4cb8-8495-3537c239b3c0",
+    "project_name": null,
+    "name": "Leon D. Mayer",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research doesn't stop at static graphs; I proposed the ROLAND framework to effectively handle dynamic graphs, allowing for scalable and efficient learning in real-world applications.\n\nIn addition to architectural innovations, I have explored the design space of GNNs, creating a systematic approach to identify optimal architectures for specific tasks. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the process of finding effective neural architectures by leveraging prior knowledge and enhancing search efficiency.\n\nOverall, my research is driven by a passion for understanding and improving the interplay between graph structures and machine learning, with the goal of making these technologies more accessible and effective across diverse applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d46b7107-8e7c-48cd-9de9-db2f5d2ca764": {
+    "pk": "d46b7107-8e7c-48cd-9de9-db2f5d2ca764",
+    "project_name": null,
+    "name": "Minu D. Tizabi",
+    "bio": "I am a researcher dedicated to enhancing the quality and efficacy of biomedical image analysis through rigorous evaluation and innovative methodologies. My recent work has focused on the critical role of high-quality reference annotations, particularly in the context of AI-based image analysis. I have conducted extensive studies comparing the performance of annotation companies to crowdsourcing platforms like Amazon Mechanical Turk, revealing that while annotation companies generally outperform MTurk, the true gains in annotation quality come from optimizing labeling instructions rather than solely relying on internal quality assurance processes.\n\nIn addition to annotation quality, I have explored the potential of photoacoustic imaging and tomography, developing novel approaches that leverage deep learning and generative adversarial networks to synthesize realistic training data and facilitate the clinical translation of this technology. My work on 3D reconstruction of photoacoustic data, known as Tattoo tomography, exemplifies my commitment to integrating advanced imaging techniques into clinical workflows without the need for complex external systems.\n\nI am also passionate about improving performance reporting in medical imaging research. My analysis of segmentation papers has highlighted the need for better assessment of performance variability, advocating for more transparent reporting practices to ensure that the most effective methods are identified for clinical application. Through my contributions to the emerging field of Surgical Data Science, I aim to bridge the gap between data-driven research and practical clinical applications, ultimately enhancing the quality of interventional healthcare.",
+    "collaborators": [
+      "Lena Maier-Hein",
+      "Annika Reinke",
+      "Alexander Seitel",
+      "Annette Kopp-Schneider",
+      "Melanie Schellenberg",
+      "Janek Gr\u00f6hl",
+      "Niklas Holzwarth",
+      "Tim R\u00e4dsch",
+      "Vivienn Weru",
+      "Fabian Isensee"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Data Annotation",
+      "Machine Learning",
+      "Image Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "714d8c0d-3399-454f-a70b-3a1442b9abff": {
+    "pk": "714d8c0d-3399-454f-a70b-3a1442b9abff",
+    "project_name": null,
+    "name": "M. Jorge Cardoso",
+    "bio": "I am a researcher dedicated to advancing the field of medical imaging through deep learning and artificial intelligence. My work primarily focuses on developing innovative methodologies for image segmentation, quality control, and multimodal analysis in medical imaging, particularly using Magnetic Resonance Imaging (MRI) and Computed Tomography (CT). \n\nIn my recent projects, I have explored the integration of multimodal approaches for metal artifact reduction, proposing unsupervised deep learning techniques that leverage complementary information from both CT and MRI to enhance image quality. I have also developed automated systems for cardiac MRI segmentation, achieving high accuracy in challenging anatomical structures like the right ventricle.\n\nMy research emphasizes the importance of uncertainty quantification in medical imaging, where I have implemented Bayesian neural networks to provide reliable confidence intervals for tumor volume estimations. This work aims to enhance the safety and efficacy of deep learning applications in clinical settings.\n\nAdditionally, I have investigated the challenges posed by varying MRI acquisition protocols and developed methods to ensure robustness in segmentation tasks across different imaging conditions. My contributions also include pioneering techniques for joint modality imputation and segmentation, which improve the accuracy of vascular pathology detection.\n\nThrough my work, I strive to bridge the gap between advanced computational techniques and practical clinical applications, ensuring that AI-driven solutions can be effectively integrated into healthcare systems to improve patient outcomes.",
+    "collaborators": [
+      "Sebastien Ourselin",
+      "S\u00e9bastien Ourselin",
+      "Thomas Varsavsky",
+      "Parashkev Nachev",
+      "Carole H. Sudre",
+      "Tom Vercauteren",
+      "Zach Eaton-Rosen",
+      "Marc Modat",
+      "Maria A. Zuluaga",
+      "Wenqi Li"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Deep Learning",
+      "Segmentation",
+      "Uncertainty Quantification"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "52ba7f36-c0c4-4343-b895-fcc1f6762fa1": {
+    "pk": "52ba7f36-c0c4-4343-b895-fcc1f6762fa1",
+    "project_name": null,
+    "name": "Amber Simpson",
+    "bio": "I am a researcher dedicated to enhancing survival modeling in histopathology, particularly in the context of cancer prognosis. My recent work focuses on addressing two critical challenges in this field: the need for effective risk stratification of cancer patients and the limitations of traditional two-stage survival modeling approaches. I developed EPIC-Survival, an innovative end-to-end framework that integrates encoding and aggregation, allowing for a more comprehensive utilization of the vast data contained in digitized whole slide images.\n\nThrough EPIC-Survival, I aim to not only optimize survival rankings but also to enhance the model's ability to discriminate between distinct risk groups, a crucial aspect for clinical applicability. My research has demonstrated significant improvements in modeling intrahepatic cholangiocarcinoma, a notoriously challenging cancer type, achieving a concordance index of 0.880 on a held-out test set. Additionally, I have identified specific histologic features that differentiate low and high-risk groups, contributing valuable insights to the field. My work strives to bridge the gap between computational modeling and clinical relevance, ultimately aiming to improve patient outcomes through better risk stratification.",
+    "collaborators": [
+      "Hassan Muhammad",
+      "Chensu Xie",
+      "Carlie S. Sigel",
+      "Michael Doukas",
+      "Lindsay Alpert",
+      "William R. Jarnagin",
+      "Thomas J. Fuchs"
+    ],
+    "domain": [
+      "Survival Analysis",
+      "Histopathology",
+      "Machine Learning",
+      "Medical Imaging"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "4e65eda5-edbe-4070-8611-8d1fbda6761d": {
+    "pk": "4e65eda5-edbe-4070-8611-8d1fbda6761d",
+    "project_name": null,
+    "name": "Paul F. J\u00e4ger",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identities during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research doesn't stop at static graphs; I proposed the ROLAND framework to effectively adapt static GNNs for dynamic graphs, enabling real-time updates and scalable training methods.\n\nIn addition to architectural innovations, I have explored the design space of GNNs, systematically analyzing over 315,000 configurations to provide guidelines for optimal model selection across diverse tasks. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the search for effective neural architectures by leveraging prior knowledge and enhancing efficiency.\n\nThrough these contributions, I strive to push the boundaries of what GNNs can achieve, fostering a deeper understanding of their structure and performance while making them more accessible for real-world applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a4e80ac7-a23c-4ce6-be2a-0866eb63903f": {
+    "pk": "a4e80ac7-a23c-4ce6-be2a-0866eb63903f",
+    "project_name": null,
+    "name": "Annette Kopp-Schneider",
+    "bio": "As a researcher in the field of biomedical statistics and image analysis, my work focuses on enhancing the rigor and reliability of clinical trials and benchmarking competitions. I am particularly interested in the borrowing of information from historical or external data to inform current trials, especially in the context of precision medicine where patient cohorts are often small. My recent publications explore the frequentist operating characteristics of these borrowing methods, specifically addressing type I error rates and power comparisons. I propose a novel procedure that calibrates tests to ensure fair comparisons between analyses with and without external data, which is crucial for maintaining the integrity of clinical findings.\n\nIn addition to my work on statistical methodologies, I have also identified significant gaps in the design and reporting of biomedical challenges. To address these issues, I developed an open-source framework called challengeR, which provides comprehensive methods for analyzing and visualizing results from both single-task and multi-task challenges. This framework not only enhances the understanding of algorithm performance but also promotes transparency and reproducibility in the field of biomedical image analysis. My goal is to contribute to the advancement of methodologies that improve the quality and interpretability of research outcomes, ultimately benefiting the broader scientific community.",
+    "collaborators": [
+      "Manuel Wiesenfarth",
+      "Leonhard Held",
+      "Silvia Calderazzo",
+      "Annika Reinke",
+      "Bennett A. Landman",
+      "Manuel Jorge Cardoso",
+      "Lena Maier-Hein"
+    ],
+    "domain": [
+      "Biostatistics",
+      "Biomedical Image Analysis",
+      "Precision Medicine"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "73eac572-1b43-47d8-8cb8-6541bd054971": {
+    "pk": "73eac572-1b43-47d8-8cb8-6541bd054971",
+    "project_name": null,
+    "name": "Ga\u00ebl Varoquaux",
+    "bio": "I am a researcher deeply engaged in the intersection of neuroimaging and machine learning, with a particular focus on functional connectivity and brain decoding. My work has explored various methodologies for analyzing functional magnetic resonance imaging (fMRI) data, including the development of probabilistic models for inter-subject comparisons of functional connectivity matrices. This research has significant implications for identifying biomarkers of brain pathologies and understanding cognitive mechanisms.\n\nI have contributed to the advancement of techniques such as Canonical Independent Component Analysis (CanICA), which enhances the reproducibility of patterns extracted from fMRI data. My recent work emphasizes the importance of robust statistical methods in neuroimaging, as seen in my development of a new ICA-based procedure that ensures specificity in feature detection.\n\nIn addition to my neuroimaging research, I have a strong background in computational tools, having contributed to the design and implementation of libraries like Scikit-learn and Mayavi. These tools aim to make machine learning and scientific visualization more accessible and efficient for researchers.\n\nOverall, my research is driven by a commitment to improving the methodologies used in neuroimaging and machine learning, with the goal of enhancing our understanding of the brain and its complexities. I strive to bridge the gap between theoretical advancements and practical applications, ensuring that my work has a meaningful impact on both scientific inquiry and clinical practice.",
+    "collaborators": [
+      "Bertrand Thirion",
+      "Jean Baptiste Poline",
+      "Stefan Van Der Walt",
+      "S. Chris Colbert",
+      "R. C. Craddock",
+      "Sepideh Sadaghiani",
+      "Merlin Keller",
+      "Philippe Ciuciu",
+      "Flore Baronnet",
+      "Andreas Kleinschmidt"
+    ],
+    "domain": [
+      "Neuroimaging",
+      "Machine Learning",
+      "Functional Connectivity",
+      "Data Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "82d81c3e-906a-4709-9977-6a901a667229": {
+    "pk": "82d81c3e-906a-4709-9977-6a901a667229",
+    "project_name": null,
+    "name": "Olivier Colliot",
+    "bio": "I am a researcher dedicated to advancing the field of machine learning, particularly in the context of medical imaging and neuroimaging. My work spans a variety of topics, including the development of frameworks for automatic classification of patients using multimodal genetic and brain imaging data, and the exploration of deep learning interpretability methods to ensure the reliability of models in neuroimaging applications.\n\nI have a strong focus on reproducibility in research, addressing the ongoing reproducibility crisis in science by providing guidelines and frameworks that enhance the reliability of machine learning experiments in medical imaging. My contributions also include innovative methods for estimating the precision of algorithm performance, particularly in medical image segmentation studies, and the development of mixed-effects models to analyze spatiotemporal patterns in brain data.\n\nMy research has led to the creation of tools that facilitate the integration of diverse data modalities, such as genetic and imaging data, to improve diagnostic predictions for conditions like Alzheimer\u2019s disease. I am particularly interested in how structural brain networks influence large-scale brain activity and how these dynamics change with age and disease.\n\nThrough my work, I aim to bridge the gap between complex machine learning methodologies and practical applications in healthcare, ensuring that our findings are not only robust but also reproducible and clinically relevant. I am committed to making my research accessible, as evidenced by my public code repositories that support the community in benchmarking and advancing the field.",
+    "collaborators": [
+      "Ninon Burgos",
+      "Stanley Durrleman",
+      "Elina Thibeau-Sutre",
+      "Kuldeep Kumar",
+      "Christian Desrosiers",
+      "Johann Faouzi",
+      "Pascal Lu",
+      "Sasha Collin",
+      "Rosana El Jurdi",
+      "Laurent Chauvin"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Medical Imaging",
+      "Alzheimer's Disease",
+      "Interpretability"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "829e41b1-57a1-4225-a4c1-4922f5278d70": {
+    "pk": "829e41b1-57a1-4225-a4c1-4922f5278d70",
+    "project_name": null,
+    "name": "Lena Maier-Hein",
+    "bio": "As a researcher in the emerging field of Surgical Data Science, I am dedicated to enhancing the quality and value of interventional healthcare through the effective capture, organization, analysis, and modeling of complex data. My work began with the organization of an international workshop that brought together leading experts in computer and robot-assisted interventions. This collaborative effort led to a consensus definition of Surgical Data Science and highlighted the challenges and opportunities within the field.\n\nI am particularly focused on the intersection of data science and machine learning techniques in improving decision-making and quality improvement in surgical practices. My research emphasizes the importance of rigorous validation in biomedical image analysis, where I have conducted a comprehensive analysis of existing challenges. I advocate for best practice guidelines to enhance reproducibility and interpretation of results, addressing critical issues that can impact the scientific community.\n\nThrough my work, I aim to pave the way for a new generation of analytics in interventional medicine, fostering collaboration and innovation to tackle the complexities of surgical data. I believe that by harnessing the power of data, we can significantly improve patient outcomes and advance the field of surgical science.",
+    "collaborators": [
+      "Matthias Eisenmann",
+      "Keno M\u00e4rz",
+      "Danail Stoyanov",
+      "Stefanie Speidel",
+      "Nassir Navab",
+      "Ron Kikinis",
+      "Adrian Park",
+      "Hubertus Feussner",
+      "Germain Forestier",
+      "Stamatia Giannarou"
+    ],
+    "domain": [
+      "Surgical Data Science",
+      "Biomedical Image Analysis",
+      "Machine Learning",
+      "Data Analytics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

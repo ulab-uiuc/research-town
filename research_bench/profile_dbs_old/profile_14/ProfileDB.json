@@ -1,0 +1,164 @@
+{
+  "1794ac9c-93a2-438e-8b43-1f21367ae7b7": {
+    "pk": "1794ac9c-93a2-438e-8b43-1f21367ae7b7",
+    "project_name": null,
+    "name": "Xin Cai",
+    "bio": "I am a researcher dedicated to advancing methodologies in dense pixelwise prediction and distributed optimization, with a strong focus on practical applications in computer vision and multi-agent systems. My recent work introduces the Flattening Module, which enhances Fully Convolutional Networks (FCNs) for high-resolution predictions without the complexity of traditional architectures. This innovation has shown promising results in human pose estimation, semantic segmentation, and object detection.\n\nIn the realm of remote sensing, I developed the Pyramid Time-Series Transformer (PTST), a novel approach that efficiently processes high-resolution satellite image time series for crop classification. This framework not only reduces GPU memory consumption but also integrates semi-supervised learning techniques to enhance performance with limited labeled data.\n\nMy research also delves into distributed algorithms for resource allocation in multi-agent systems, particularly under adversarial conditions such as false data injection attacks. I propose resilient algorithms that ensure optimal resource allocation while maintaining stability, even in the presence of malicious interference.\n\nAdditionally, I explore aggregative games over networks, focusing on Nash equilibria and the dynamics of multi-integrator agents. My work emphasizes the importance of communication efficiency, proposing discrete-time schemes that allow agents to converge to equilibrium without real-time interaction.\n\nThrough these contributions, I aim to bridge theoretical advancements with practical implementations, providing robust solutions to complex problems in machine learning and distributed systems.",
+    "collaborators": [
+      "Feng Xiao",
+      "Bo Wei",
+      "Yi-Fei Pu",
+      "Yaxin Bi",
+      "Peter Nicholl",
+      "Xinyuan Nan",
+      "Binpeng Gao",
+      "Aiping Wang",
+      "Guang Lin",
+      "Jinglai Li"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Distributed Systems",
+      "Optimization",
+      "Game Theory"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "32b5441a-fa63-4ac6-b194-b7f6736d9a04": {
+    "pk": "32b5441a-fa63-4ac6-b194-b7f6736d9a04",
+    "project_name": null,
+    "name": "Zhiyuan You",
+    "bio": "I am a researcher specializing in the field of dynamical systems, particularly focusing on differentiable systems with dominated splittings. My work primarily revolves around understanding the intricate relationships between measure-theoretic tail entropy and Lyapunov exponents. In my recent research, I have developed upper estimates that provide insights into these connections, which are crucial for analyzing the stability and behavior of dynamical systems. A significant aspect of my contributions is the verification of upper semi-continuity of metric entropy across various settings characterized by domination. Through this work, I aim to deepen our understanding of dynamical systems and their underlying structures, ultimately contributing to the broader field of mathematical analysis and its applications.",
+    "collaborators": [
+      "Yongluo Cao",
+      "Gang Liao"
+    ],
+    "domain": [
+      "Dynamical Systems",
+      "Lyapunov Exponents",
+      "Entropy Theory"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2bc6866c-9200-4d5c-9e75-86489b1e1212": {
+    "pk": "2bc6866c-9200-4d5c-9e75-86489b1e1212",
+    "project_name": null,
+    "name": "Hailong Zhang",
+    "bio": "I am a researcher dedicated to exploring the applications of deep learning in financial market prediction, particularly focusing on intra-day predictions at the minute scale. The rapid fluctuations in stock prices and trading volumes present unique challenges, and I strive to develop innovative solutions to enhance prediction accuracy. My recent work centers around the Informer model, an advanced architecture built on the Transformer framework, which offers reduced computational complexity and improved performance for longer prediction horizons.\n\nIn my research, I have conducted extensive experiments comparing Informer with traditional models like LSTM, Transformer, and BERT across various stock and market indices. The results consistently demonstrate that Informer outperforms these models in terms of prediction accuracy, as measured by metrics such as MAE, RMSE, and MAPE. A key finding from my work is the significant impact of the global time stamp mechanism, which enhances the model's ability to capture time series characteristics, leading to superior predictive capabilities.\n\nAdditionally, I have explored the transfer learning capabilities of Informer, confirming its robustness and adaptability for real-world trading scenarios. My goal is to bridge the gap between advanced machine learning techniques and practical financial applications, ultimately providing investors and researchers with powerful tools for market analysis and decision-making.",
+    "collaborators": [
+      "Yuze Lu",
+      "Qiwen Guo"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Financial Prediction",
+      "Time Series Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "95a1c999-9e53-4728-aaf6-e520339182e3": {
+    "pk": "95a1c999-9e53-4728-aaf6-e520339182e3",
+    "project_name": null,
+    "name": "Wentao Liu",
+    "bio": "I am a researcher with a diverse background in computer vision, physics, and mathematical modeling, focusing on human pose estimation, person re-identification, and the study of black hole dynamics. My recent work has centered on addressing the challenges of human pose estimation in long-tailed datasets, where I developed the Pose Transformation Module (PTM) to enhance the diversity of training samples, particularly for rare poses. This method has shown significant improvements in generalization capabilities.\n\nIn the realm of person re-identification, I proposed a novel framework that leverages identity invariance across video tracklets, achieving remarkable performance improvements on a large-scale benchmark dataset. My unified approach for multi-person pose estimation and tracking integrates spatial and temporal components, resulting in state-of-the-art accuracy in pose tracking tasks.\n\nAdditionally, I have explored the intersection of vision science and engineering through image quality assessment (IQA), providing a Bayesian perspective that unifies various IQA methods. My research also extends into theoretical physics, where I investigate the quasinormal modes of black holes in Lorentz-violating gravity, revealing insights into the effects of rotation and anisotropic fields on black hole dynamics.\n\nOverall, my work aims to bridge theoretical concepts with practical applications, contributing to advancements in both computer vision and fundamental physics. I am passionate about developing innovative solutions that enhance our understanding of complex systems and improve real-world applications.",
+    "collaborators": [
+      "Sheng Jin",
+      "Chen Qian",
+      "Xiongjun Fang",
+      "Jiliang Jing",
+      "Jieci Wang",
+      "Wentao Jiang",
+      "Ping Luo",
+      "Si Liu",
+      "Michael Chapwanya",
+      "John M. Stockie"
+    ],
+    "domain": [
+      "Human Pose Estimation",
+      "Image Quality Assessment",
+      "Black Hole Physics",
+      "Data Augmentation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "56441e19-c70b-48e7-94c6-dc689894cbb0": {
+    "pk": "56441e19-c70b-48e7-94c6-dc689894cbb0",
+    "project_name": null,
+    "name": "Jinwei Gu",
+    "bio": "I am a researcher dedicated to advancing the field of computer vision, with a particular focus on optimizing power consumption and enhancing image processing techniques. My work explores innovative approaches, such as computational cameras that output binary gradient images, which can significantly reduce power usage while maintaining or even improving accuracy in tasks like object recognition and gesture detection.\n\nI have developed deep learning methods to tackle real-world challenges, such as separating reflected and transmitted light in images affected by reflections, and I introduced a novel HDR video reconstruction method that effectively addresses motion blur and noise. My research also delves into RAW image reconstruction, where I proposed a state-of-the-art methodology that enhances computational photography tasks by refining sensor readings.\n\nIn my recent work, I introduced AdaCode, a flexible framework for class-agnostic image restoration that learns adaptive codebooks, and I developed a semantic-aware image codec that optimizes perception quality alongside traditional rate-distortion metrics. Additionally, I have tackled the complex problem of image denoising with my Reconstruct-and-Generate Diffusion Model (RnG), which balances visual appeal and fidelity.\n\nThrough these contributions, I aim to bridge the gap between traditional computer vision techniques and modern deep learning methodologies, ultimately enhancing the performance and efficiency of visual systems in real-world applications.",
+    "collaborators": [
+      "Orazio Gallo",
+      "Jan Kautz",
+      "Yitong Jiang",
+      "Inchang Choi",
+      "Jun Jiang",
+      "Suren Jayasuriya",
+      "Patrick Wieschollek",
+      "Jinha Kim",
+      "Kechun Liu",
+      "Shiyu Duan"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Deep Learning",
+      "Image Processing",
+      "Denoising"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e45a3d21-1cd6-4e3d-8c05-862a0e3297ae": {
+    "pk": "e45a3d21-1cd6-4e3d-8c05-862a0e3297ae",
+    "project_name": null,
+    "name": "Tianfan Xue",
+    "bio": "I am a researcher specializing in computer vision and image processing, with a particular focus on innovative techniques for 3D reconstruction, image restoration, and motion analysis. My recent work includes the development of Obj-NeRF, a pipeline that effectively extracts 3D geometry from multi-view images, addressing challenges like occlusion and background complexity. I also introduced the Reconstruct-and-Generate Diffusion Model (RnG) to enhance image denoising by balancing visual appeal and fidelity, and AutoDIR, an all-in-one image restoration system that automatically identifies and restores images with unknown degradations.\n\nMy research extends to improving Neural Radiance Fields (NeRF) by disentangling image signal processing effects during training, and I have pioneered methods for real-time HDR video reconstruction with HDRFlow. Additionally, I have explored the potential of lensless cameras for privacy-preserving face verification and developed a dual-camera system for video motion magnification, which leverages both event and RGB cameras.\n\nI am passionate about advancing the field of image processing through novel frameworks and methodologies, such as the 3D Generative Adversarial Network (3D-GAN) for 3D object generation and the Best-Buddies Similarity (BBS) for robust template matching. My work aims to bridge the gap between theoretical advancements and practical applications, ultimately enhancing the capabilities of computer vision technologies in real-world scenarios.",
+    "collaborators": [
+      "Jinwei Gu",
+      "William T. Freeman",
+      "Jiajun Wu",
+      "Jonathan T. Barron",
+      "Yujin Wang",
+      "Lingen Li",
+      "Jiawen Chen",
+      "Katherine L. Bouman",
+      "Zhiyuan You",
+      "Xin Cai"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Image Processing",
+      "3D Reconstruction",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

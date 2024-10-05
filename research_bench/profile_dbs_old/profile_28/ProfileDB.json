@@ -1,0 +1,154 @@
+{
+  "fe8982a1-7c1e-4561-ab12-5c1bc633f8c3": {
+    "pk": "fe8982a1-7c1e-4561-ab12-5c1bc633f8c3",
+    "project_name": null,
+    "name": "Xingping Xian",
+    "bio": "I am a researcher deeply engaged in the study of information cascades and graph neural networks (GNNs). My work primarily focuses on understanding the dynamics of information diffusion in social networks, where I developed the FScaleCP framework to predict cascade dynamics in real-time, moving beyond traditional methods that only assess final cascade sizes. \n\nIn addition to cascade dynamics, I have explored the interpretability of GNNs through my novel method, GraphGI, which identifies key interactions within graphs to explain model predictions. I believe that understanding the underlying mechanisms of GNNs is crucial for their application in safety-critical scenarios, which led me to investigate their vulnerabilities to adversarial attacks. My research has yielded guidelines for enhancing GNN robustness and introduced the concept of model repair through GraphMU, a framework designed to fine-tune poisoned GNNs without complete retraining.\n\nMoreover, I have contributed to the field of link prediction by proposing GraphLP, a generative approach that leverages network reconstruction theory to improve link prediction accuracy. My work emphasizes the importance of understanding network structures and dynamics, aiming to bridge theoretical insights with practical applications in areas such as viral marketing and rumor prevention. Through my research, I strive to advance the capabilities of GNNs while ensuring their reliability and interpretability in real-world applications.",
+    "collaborators": [
+      "Tao Wu",
+      "Lin Yuan",
+      "Chao Wang",
+      "Shaojie Qiao",
+      "Yanbing Liu",
+      "Canyixing Cui",
+      "Leiting Chen",
+      "Yuxiao Guo",
+      "Jianlu Liu",
+      "Baiyun Chen"
+    ],
+    "domain": [
+      "Graph Neural Network",
+      "Link Prediction",
+      "Adversarial Robustness",
+      "Network Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d033d67e-490e-488a-9bb3-22b1ff551383": {
+    "pk": "d033d67e-490e-488a-9bb3-22b1ff551383",
+    "project_name": null,
+    "name": "Jianlu Liu",
+    "bio": "I am a researcher dedicated to enhancing the interpretability of Graph Neural Networks (GNNs), a field that has seen remarkable growth and application across various domains. My recent work focuses on addressing the black-box nature of GNNs, which often obscures the mechanisms behind their predictions. I developed a novel explanatory method called GraphGI, which identifies the coalition of nodes and edges with the highest interaction strength to create an explanatory subgraph. This approach leverages game-theoretic principles to assess how different features interact, rather than treating them in isolation.\n\nThrough GraphGI, I aim to provide clearer insights into model predictions by gradually incorporating significant edges into the subgraph, ensuring that each addition maximizes interaction strength. My method not only enhances the fidelity and sparsity of explanations but also maintains a level of interpretability that is crucial for practical applications. By employing effective approximation techniques for calculating Shapley values, I strive to make the process computationally efficient while delivering meaningful insights. My goal is to bridge the gap between complex GNN models and their users, fostering a deeper understanding of how these powerful tools make decisions.",
+    "collaborators": [
+      "Xingping Xian",
+      "Tao Wu",
+      "Lin Yuan",
+      "Chao Wang",
+      "Baiyun Chen"
+    ],
+    "domain": [
+      "Graph Neural Network",
+      "Explainable AI",
+      "Game Theory"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "04653577-670b-42f2-8ec2-f741456d2d55": {
+    "pk": "04653577-670b-42f2-8ec2-f741456d2d55",
+    "project_name": null,
+    "name": "Tao Wu",
+    "bio": "I am an astrophysicist specializing in asteroseismology and the study of stellar evolution. My research focuses on leveraging high-precision oscillation data to probe the interiors of stars and determine their fundamental parameters. I have employed the \u03c7\u00b2-minimization method to analyze solar-like oscillating stars, such as KIC 6225718, and have demonstrated the importance of time resolution in high-precision asteroseismic analysis. My work has led to the accurate measurement of the acoustic radius, revealing critical insights into stellar structure.\n\nIn addition to my work in asteroseismology, I have explored the dynamics of evolving networks, proposing a structured-dependent index to enhance link prediction methods. This approach models the evolutionary dynamics of nodes' similarities, significantly improving prediction accuracy across various real-world networks.\n\nI have also investigated the evolutionary status of Blue Large-Amplitude Pulsators (BLAPs) using theoretical models of stellar evolution, concluding that many of these stars are likely in the core helium burning phase. My research extends to developing innovative models like the retrospective higher-order Markov process (RHOMP) to predict user behavior in dynamic systems, showcasing my versatility in applying statistical methods to diverse fields.\n\nOverall, my work aims to deepen our understanding of stellar structures and evolutionary processes while also contributing to advancements in predictive modeling across various domains.",
+    "collaborators": [
+      "Yan Li",
+      "Leiting Chen",
+      "David Gleich"
+    ],
+    "domain": [
+      "Asteroseismology",
+      "Evolving Networks",
+      "Predictive Modeling",
+      "Stellar Evolution"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "66467289-3f6a-47a8-92cf-d3763047a407": {
+    "pk": "66467289-3f6a-47a8-92cf-d3763047a407",
+    "project_name": null,
+    "name": "Lin Yuan",
+    "bio": "I am a researcher dedicated to advancing the fields of temporal action segmentation (TAS) and abstractive dialog summarization. My recent work focuses on addressing the challenges of few-shot TAS, where I developed an efficient framework that includes a novel data augmentation method based on motion interpolation. This approach significantly increases the number of available samples by synthesizing action sequences, while my integration of a Connectionist Temporal Classification (CTC) layer enhances the temporal alignment of predictions, leading to improved segmentation performance.\n\nIn addition to TAS, I am passionate about dialog summarization, particularly in real-world applications like customer service and healthcare. Recognizing the lack of suitable datasets for this task, I created an abstractive dialog summarization dataset based on MultiWOZ. To tackle the unique challenges of summarizing dialogues, I introduced the Scaffold Pointer Network (SPNet), which leverages semantic scaffolds to preserve critical entities and ensure coherence across different dialog domains. My work has demonstrated significant improvements over existing methods, as evidenced by superior performance on both automatic and human evaluation metrics.\n\nThrough my research, I aim to bridge the gap between theoretical advancements and practical applications, ultimately contributing to more effective and efficient systems in action recognition and natural language processing.",
+    "collaborators": [
+      "Leiyang Xu",
+      "Qiang Wang",
+      "Xiaotian Lin",
+      "Zhou Yu"
+    ],
+    "domain": [
+      "Action Segmentation",
+      "Abstractive Summarization",
+      "Deep Learning",
+      "Natural Language Processing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "56e600f9-643e-4557-b35a-f47fb1d3abb2": {
+    "pk": "56e600f9-643e-4557-b35a-f47fb1d3abb2",
+    "project_name": null,
+    "name": "Chao Wang",
+    "bio": "I am a researcher with a diverse background in machine learning, computer vision, and mathematical modeling, focusing on practical applications that enhance efficiency and accuracy in various domains. My recent work includes developing an automatic pectoral muscle identification algorithm for mammograms, which addresses the limitations of traditional methods by accurately identifying curved boundaries. I have also explored the robustness of deep reinforcement learning (DRL) policies against adversarial attacks, proposing innovative attack and defense algorithms that enhance policy resilience.\n\nIn the realm of computer vision, I introduced an unsupervised algorithm for identifying frontal views in facial images, leveraging Locally Linear Embedding (LLE) to effectively manage pose variations without requiring training samples. My research extends to multi-turn compositional image generation, where I proposed a diffusion-based method that outperforms existing generative adversarial networks (GANs) in generating high-quality images based on iterative modifications.\n\nAdditionally, I have delved into mathematical frameworks, such as the hydrostatic approximation for the Navier-Stokes system and the classification of extendable automorphisms of surfaces, contributing to both theoretical and applied mathematics. My work is characterized by a commitment to bridging theoretical insights with practical implementations, aiming to solve real-world challenges through innovative algorithms and models. I am passionate about advancing knowledge in my fields and continuously seek to explore new research avenues that can lead to impactful solutions.",
+    "collaborators": [
+      "Weibiao Wang",
+      "Yuxi Wang",
+      "Chen Wang",
+      "Ruifeng Qiu",
+      "Mei Ming",
+      "Xiaohu Guo",
+      "Richard Gerlach"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Machine Learning",
+      "Game Theory",
+      "Reinforcement Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "8609e22b-6d64-41c1-a5f9-83f384fceb84": {
+    "pk": "8609e22b-6d64-41c1-a5f9-83f384fceb84",
+    "project_name": null,
+    "name": "Baiyun Chen",
+    "bio": "I am a researcher dedicated to enhancing the interpretability of Graph Neural Networks (GNNs), a field that has gained significant traction across various domains. My recent work focuses on addressing the black-box nature of GNNs, which often obscures the mechanisms behind their predictions. I developed a novel explanatory method called GraphGI, which identifies the coalition of nodes and edges with the highest interaction strength to provide meaningful insights into model predictions. \n\nBy leveraging game-theoretic principles, I assess the interaction strength of edges as they are incorporated into an explanatory subgraph, ensuring that the resulting explanations are both faithful and interpretable. My approach not only emphasizes the importance of interactions among features but also employs efficient approximation techniques for calculating Shapley values, enhancing computational efficiency. \n\nThrough empirical evaluations, I have demonstrated that GraphGI achieves superior fidelity and sparsity, making it a valuable tool for understanding GNN predictions. My goal is to bridge the gap between complex model outputs and human comprehension, ultimately fostering trust and transparency in machine learning applications.",
+    "collaborators": [
+      "Xingping Xian",
+      "Jianlu Liu",
+      "Tao Wu",
+      "Lin Yuan",
+      "Chao Wang"
+    ],
+    "domain": [
+      "Graph Neural Network",
+      "Explainable AI",
+      "Game Theory"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

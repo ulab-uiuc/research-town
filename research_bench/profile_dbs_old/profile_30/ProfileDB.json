@@ -1,0 +1,170 @@
+{
+  "269b72e9-eeef-423a-9f48-bf5fe5d66815": {
+    "pk": "269b72e9-eeef-423a-9f48-bf5fe5d66815",
+    "project_name": null,
+    "name": "Zeyu Zhu",
+    "bio": "I am a researcher specializing in deep imitation learning and its applications in autonomous driving, with a particular focus on navigating complex environments like crowded intersections. My recent work has led to the development of a multi-task conditional imitation learning framework that enhances both lateral and longitudinal control tasks, significantly improving interaction safety with pedestrians. I also created the IntersectNav benchmark, which provides human demonstrations to facilitate research in this area.\n\nIn addition to my work on imitation learning, I have conducted a comprehensive survey of deep reinforcement learning (DRL) and deep imitation learning (DIL) techniques for deriving driving policies in autonomous vehicles. This survey not only categorizes existing literature but also addresses critical issues such as driving safety and environmental uncertainty, providing insights that can guide future research.\n\nMoreover, I have explored the realm of remote sensing image processing, specifically focusing on pansharpening. I developed a novel probability-based global cross-modal upsampling method (PGCU) that leverages both local and global information from low-resolution multispectral images and guiding panchromatic images. My experiments demonstrate that PGCU outperforms existing methods and enhances the performance of state-of-the-art deep learning approaches in pansharpening.\n\nThrough my research, I aim to bridge the gap between advanced machine learning techniques and real-world applications, contributing to safer and more efficient autonomous systems.",
+    "collaborators": [
+      "Huijing Zhao",
+      "Xiangyong Cao",
+      "Man Zhou",
+      "Junhao Huang",
+      "Deyu Meng"
+    ],
+    "domain": [
+      "Autonomous Driving",
+      "Deep Learning",
+      "Imitation Learning",
+      "Remote Sensing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d506e81d-b250-491c-beba-af8b5ff0a291": {
+    "pk": "d506e81d-b250-491c-beba-af8b5ff0a291",
+    "project_name": null,
+    "name": "Peisong Wang",
+    "bio": "I am a researcher dedicated to advancing the efficiency and effectiveness of deep neural networks (DNNs) in computer vision and related fields. My work primarily focuses on optimizing DNNs for deployment on resource-constrained devices, such as smartphones, where computational intensity and memory usage pose significant challenges. \n\nIn my recent publications, I introduced Fixed-point Factorized Networks (FFNs) to reduce computational complexity while maintaining accuracy, and developed Binary Weight Networks via Hashing (BWNH) to enhance performance with low-bit representations. I also explored innovative quantization techniques, such as the Q-ViT framework for vision transformers, which allows for learnable quantization parameters, and the Soft Threshold Ternary Networks (STTN) that automatically determine quantization intervals.\n\nMy research extends to the realm of privacy in machine learning, where I proposed frameworks that balance user-level differential privacy with model performance, and I have investigated the integration of location information into semantic segmentation tasks to improve accuracy. Additionally, I am exploring zero-shot transfer learning in graph data, introducing the ZeroG framework to facilitate cross-dataset generalization.\n\nThrough my work, I aim to bridge the gap between cutting-edge deep learning techniques and practical applications, ensuring that advanced models can be effectively utilized in real-world scenarios. I am passionate about pushing the boundaries of what is possible in machine learning while maintaining a focus on efficiency and accessibility.",
+    "collaborators": [
+      "Jian Cheng",
+      "Xiangyu He",
+      "Qinghao Hu",
+      "Qiang Chen",
+      "Anda Cheng",
+      "Weixiang Xu",
+      "Xi Sheryl Zhang",
+      "Weihan Chen",
+      "Zhexin Li",
+      "Tong Yang"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Neural Network Quantization",
+      "Computer Vision",
+      "Transfer Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d041ba58-96fa-4556-bfa6-d0efe7d74f1f": {
+    "pk": "d041ba58-96fa-4556-bfa6-d0efe7d74f1f",
+    "project_name": null,
+    "name": "Qinghao Hu",
+    "bio": "I am a dedicated researcher specializing in deep learning, particularly in the realms of computer vision and neural network optimization. My work has focused on addressing the challenges of deploying deep convolutional neural networks (CNNs) on resource-constrained devices, leading to innovations such as Binary Weight Networks via Hashing (BWNH) and the PArallel Low-precision Quantization (PalQuant) method. These contributions have significantly improved model efficiency without sacrificing accuracy, making advanced neural networks more accessible for mobile applications.\n\nI have also explored novel loss functions, such as Li-ArcFace, to enhance face recognition performance, and developed data-free quantization techniques that leverage intrinsic Batch Normalization statistics. My research extends to optimizing resource management in deep learning datacenters, where I introduced a framework that improves job scheduling and energy efficiency.\n\nRecently, I have been investigating the intersection of spiking neural networks and neural radiance fields, proposing SpikingNeRF to reduce energy consumption while maintaining high-quality 3D scene rendering. Additionally, I have contributed to the development of FastGL, a GPU-efficient framework for accelerating sampling-based training of Graph Neural Networks (GNNs) on large-scale graphs.\n\nThrough my work, I aim to push the boundaries of deep learning technologies, making them more efficient and applicable across various domains, while also addressing the practical challenges of deployment in real-world scenarios.",
+    "collaborators": [
+      "Jian Cheng",
+      "Peisong Wang",
+      "Xiangyu He",
+      "Qiang Chen",
+      "Gang Li",
+      "Cong Leng",
+      "Peng Sun",
+      "Yonggang Wen",
+      "Tianwei Zhang",
+      "Qiman Wu"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Deep Learning",
+      "Neural Networks",
+      "Model Compression"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "59ca042d-f8dc-4ce4-bbf5-95e31286705d": {
+    "pk": "59ca042d-f8dc-4ce4-bbf5-95e31286705d",
+    "project_name": null,
+    "name": "Gang Li",
+    "bio": "I am a researcher specializing in differential geometry and mathematical physics, with a particular focus on Riemannian manifolds and their curvature properties. My recent work has explored the compactness of metrics in conformal classes with prescribed positive $Q$-curvature, demonstrating significant results in dimensions 5, 6, and 7. I have developed flow approaches to tackle the generalized Loewner-Nirenberg problem, establishing unique solutions to the $\\sigma_k$-Ricci equation on compact manifolds with boundary.\n\nMy research also delves into the uniqueness of conformally compact Einstein metrics, particularly for Berger metrics on spheres and their higher-dimensional analogs. I have shown that these metrics are unique up to isometries, contributing to our understanding of the relationship between curvature and conformal structures. Additionally, I have investigated the existence of asymptotically hyperbolic metrics and their implications in spectral theory.\n\nBeyond geometry, I have ventured into the realm of condensed matter physics, studying correlated electron systems and the Kondo-Lattice model. My work employs advanced computational techniques, such as the dual-fermion approach, to analyze the effects of spatial fluctuations in these systems.\n\nOverall, my research aims to bridge the gap between abstract mathematical theories and their practical applications in physics, providing insights that advance both fields. I am passionate about exploring the intricate connections between geometry, topology, and physical phenomena, and I look forward to further contributions in these areas.",
+    "collaborators": [
+      "Gang Liu",
+      "Tao Wang",
+      "Valery Pokrovsky"
+    ],
+    "domain": [
+      "Riemannian Geometry",
+      "Conformal Geometry",
+      "Mathematical Physics",
+      "Quantum Mechanics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "7d6666fc-7c9c-4b25-8820-8dcb91c26dc1": {
+    "pk": "7d6666fc-7c9c-4b25-8820-8dcb91c26dc1",
+    "project_name": null,
+    "name": "Xiaoyao Liang",
+    "bio": "I am a researcher dedicated to enhancing the efficiency and performance of neural networks, particularly in the context of approximate computing and graph neural networks (GNNs). My recent work has focused on developing innovative architectures and methodologies that address the challenges of energy efficiency, computational redundancy, and memory consumption in deep learning applications.\n\nOne of my notable contributions is AXNet, a unified neural network structure that integrates approximators and predictors into a single end-to-end trainable model, significantly improving invocation rates and reducing training time. I also introduced the Multiclass-Classifier and Multiple Approximators (MCMA) architecture, which optimizes the invocation of approximators for better energy efficiency.\n\nIn the realm of GNNs, I have developed FastGL, a GPU-efficient framework that accelerates sampling-based training by optimizing memory I/O, computation, and subgraph sampling phases. My work on the Memory-Efficient GNN Accelerator (MEGA) further explores algorithm-hardware co-design, employing degree-aware mixed-precision quantization to enhance performance while minimizing memory usage.\n\nAdditionally, I have investigated the potential of resistive random-access memory (ReRAM) for deep learning, proposing novel architectures that leverage its in-memory computing capabilities to improve training efficiency and robustness against weight drifting.\n\nThrough my research, I aim to bridge the gap between theoretical advancements and practical applications, ensuring that deep learning technologies can be effectively deployed in resource-constrained environments. My work not only contributes to the academic community but also has the potential to impact real-world applications across various domains.",
+    "collaborators": [
+      "Li Jiang",
+      "Naifeng Jing",
+      "Zhuoran Song",
+      "Zhezhi He",
+      "Zeyu Zhu",
+      "Qinghao Hu",
+      "Gang Li",
+      "Jian Cheng",
+      "Zhenghao Peng",
+      "Chengwen Xu"
+    ],
+    "domain": [
+      "Neural Networks",
+      "Approximate Computing",
+      "Graph Neural Network",
+      "Hardware Acceleration"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "210d4235-9eec-4711-9de1-b6bd517bc8d8": {
+    "pk": "210d4235-9eec-4711-9de1-b6bd517bc8d8",
+    "project_name": null,
+    "name": "Jian Cheng",
+    "bio": "I am a researcher dedicated to advancing the fields of deep learning and computer vision, with a particular focus on optimizing neural network architectures for efficiency and performance. My recent work includes the development of Fixed-point Factorized Networks (FFN), which significantly reduce computational complexity and storage requirements for deep neural networks, making them more suitable for embedded systems like smartphones. \n\nI have also tackled the challenges of visible-thermal cross-modality person re-identification (VT Re-ID) by proposing an approach that enhances discriminative feature learning through innovative techniques such as skip-connections and dual-modality triplet loss. My research extends to super-resolution, where I introduced a probabilistic model that improves image restoration by addressing the non-uniqueness of high-resolution candidates.\n\nIn the realm of time series classification, I developed the Self-Attentive Recurrent Convolutional Networks (SARCoN), which effectively learn multi-faceted representations and provide interpretability in identifying key features. Additionally, I have explored reinforcement learning for adaptive control in electric and connected vehicles, demonstrating significant energy savings while maintaining travel efficiency.\n\nMy work in federated learning has led to the creation of a Hyperparameter Network (HPN) that personalizes hyperparameter choices for heterogeneous clients while preserving data privacy. I have also contributed to probabilistic inference in Bayesian networks through innovative sampling algorithms, enhancing the precision of posterior probability estimates.\n\nOverall, my research aims to bridge the gap between advanced machine learning techniques and practical applications, ensuring that these technologies are both effective and accessible in real-world scenarios.",
+    "collaborators": [
+      "Marek J. Druzdzel",
+      "Peisong Wang",
+      "Haijun Liu",
+      "Xiangyu He",
+      "Zhenyu Liu",
+      "Xing Lan",
+      "Qinghao Hu",
+      "Qiang Chen",
+      "Jian Xue",
+      "Xia Jiang"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Computer Vision",
+      "Time Series Analysis",
+      "Reinforcement Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

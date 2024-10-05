@@ -1,0 +1,233 @@
+{
+  "75b53d7d-ce66-4093-946b-20ab256edbef": {
+    "pk": "75b53d7d-ce66-4093-946b-20ab256edbef",
+    "project_name": null,
+    "name": "Qinzhuo Wu",
+    "bio": "I am a researcher dedicated to enhancing the capabilities of language models and their applications in real-world scenarios. My recent work focuses on tool-augmented large language models (LLMs) and their interaction with external tools. I developed the MGToolBench dataset to bridge the gap between overly detailed training instructions and the more natural, user-centric instructions found in practice. This led to the creation of ToolPlanner, a two-stage reinforcement learning framework that significantly improves task completion and instruction-following capabilities.\n\nIn addition, I have explored the potential of vision-language models (VLMs) in mobile AI agents. I recognized the limitations of existing VLMs, which often lack the ability to understand specific UI elements and inter-UI relationships. To address this, I introduced MobileVLM, which incorporates additional pre-training stages and a large dataset, Mobile3M, to enhance the model's understanding of mobile interfaces.\n\nFurthermore, I have developed TextFlint, a multilingual robustness evaluation platform for NLP tasks. This tool allows for comprehensive analysis of model robustness through various methodologies, ensuring that models are evaluated not just on performance but also on their resilience to different challenges. My work emphasizes the importance of robustness in NLP, advocating for its inclusion in standard model evaluations to foster the responsible advancement of technology. Through these contributions, I aim to bridge the gap between theoretical advancements and practical applications in the field of AI.",
+    "collaborators": [
+      "Wei Liu",
+      "Jian Luan",
+      "Bin Wang",
+      "Weikai Xu",
+      "Tao Tan",
+      "Jianfeng Liu",
+      "Ang Li",
+      "Shuo Shang",
+      "Tao Gui",
+      "Xiao Wang"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Reinforcement Learning",
+      "Visual Language Model",
+      "Robustness Evaluation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "23ecbad4-50f2-4ff9-a838-33be63172703": {
+    "pk": "23ecbad4-50f2-4ff9-a838-33be63172703",
+    "project_name": null,
+    "name": "Weikai Xu",
+    "bio": "I am a researcher dedicated to advancing the capabilities of large language models (LLMs) and their applications in mobile AI agents. My recent work has focused on addressing the limitations of existing methods, particularly in reasoning tasks and mobile interactions. I developed PMSS (Pre-trained Matrices Skeleton Selection), which enhances low-rank adaptation techniques by enabling high-rank updates while maintaining efficiency, achieving significant performance improvements on complex benchmarks.\n\nIn my exploration of reasoning processes, I introduced DetermLR, a novel framework that redefines reasoning as a progression from indeterminacy to determinacy. This approach not only improves accuracy but also streamlines the reasoning process, demonstrating superior efficiency across various logical reasoning benchmarks.\n\nRecognizing the challenges faced by vision-language models (VLMs) in mobile contexts, I created MobileVLM, which incorporates specialized pre-training tasks to enhance understanding of user interfaces and interactions. Additionally, I established Mobile-Bench, a comprehensive benchmark designed to evaluate LLM-based mobile agents, addressing the need for more robust assessment metrics and task complexity categorization.\n\nThrough these contributions, I aim to bridge the gap between theoretical advancements and practical applications, enhancing the performance and usability of AI systems in real-world scenarios. My work reflects a commitment to pushing the boundaries of what is possible with LLMs and mobile AI, ensuring they are equipped to handle the complexities of human-computer interaction.",
+    "collaborators": [
+      "Wei Liu",
+      "Jian Luan",
+      "Bin Wang",
+      "Shuo Shang",
+      "Hongda Sun",
+      "Rui Yan",
+      "Tao Tan",
+      "Jianfeng Liu",
+      "Ang Li",
+      "Qibin Wang"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Mobile AI",
+      "Large Language Models",
+      "Reasoning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "22da7364-fd58-4dcd-a141-936ddde51e5b": {
+    "pk": "22da7364-fd58-4dcd-a141-936ddde51e5b",
+    "project_name": null,
+    "name": "Wei Liu",
+    "bio": "I am a researcher with a diverse background in applied mathematics, physics, and engineering, focusing on the intersection of nonlinear dynamics, magnetohydrodynamics, and stochastic processes. My recent work has delved into the complexities of magnetorotational instability (MRI) in liquid metals, where I have conducted extensive simulations to understand its nonlinear evolution and implications for angular momentum transport. \n\nIn addition to my work on MRI, I have explored the existence and uniqueness of solutions for nonlinear evolution equations in Banach spaces, contributing to the understanding of monotone operators and their applications in various partial differential equations. My research also extends to the realm of wireless communication, where I have developed quaternion-valued signal processing algorithms to enhance channel equalization and beamforming.\n\nI am particularly interested in the application of advanced mathematical techniques to real-world problems, such as cooperative perception in autonomous driving, where I have proposed strategies to improve decision-making through enhanced situational awareness. My work on the Freidlin-Wentzell large deviation principle has further enriched my understanding of stochastic evolution equations, allowing me to derive significant results applicable to various types of stochastic partial differential equations.\n\nOverall, my research is characterized by a commitment to bridging theoretical insights with practical applications, and I am dedicated to advancing our understanding of complex systems through rigorous mathematical analysis and innovative computational methods.",
+    "collaborators": [],
+    "domain": [
+      "Mathematics",
+      "Signal Processing",
+      "Magnetohydrodynamics",
+      "Stochastic Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0e0a025c-0d60-44d0-8115-b29c359db359": {
+    "pk": "0e0a025c-0d60-44d0-8115-b29c359db359",
+    "project_name": null,
+    "name": "Tao Tan",
+    "bio": "I am a researcher dedicated to advancing image reconstruction and domain adaptation techniques in the field of computer vision. My recent work, DiffSteISR, introduces a novel framework for reconstructing high-quality stereo images from low-resolution inputs. By leveraging the capabilities of pre-trained text-to-image models, I developed a time-aware stereo cross attention mechanism that ensures high texture consistency between the generated left and right views. This work also includes a stereo omni attention control network to enhance the alignment of super-resolved images with ground truth data, as well as a stereo semantic extractor that captures both soft and hard semantic information, significantly improving the semantic accuracy of the outputs.\n\nIn addition to my work on image reconstruction, I have explored unsupervised domain adaptation for medical imaging, specifically targeting vestibular schwannoma and cochlea segmentation. By learning shared representations from different imaging modalities, I have successfully addressed the challenges of modality recovery and consistency in image structures. My approach has demonstrated strong performance in competitive settings, achieving high rankings in segmentation and prediction tasks.\n\nThrough my research, I aim to bridge the gap between theoretical advancements and practical applications, contributing to the fields of computer vision and medical imaging with innovative solutions that enhance image quality and predictive accuracy.",
+    "collaborators": [
+      "Yuanbo Zhou",
+      "Xinlin Zhang",
+      "Wei Deng",
+      "Tao Wang",
+      "Qinquan Gao",
+      "Tong Tong",
+      "Luyi Han",
+      "Yunzhi Huang",
+      "Ritse Mann"
+    ],
+    "domain": [
+      "Image Reconstruction",
+      "Domain Adaptation",
+      "Semantic Segmentation",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "ad998ede-4dd6-4b17-a1a0-a7365a1f197a": {
+    "pk": "ad998ede-4dd6-4b17-a1a0-a7365a1f197a",
+    "project_name": null,
+    "name": "Jianfeng Liu",
+    "bio": "I am a researcher dedicated to enhancing the capabilities of chatbots, particularly in the realm of goal-oriented dialogue systems. My recent work introduces the GoChat framework, which leverages hierarchical reinforcement learning (HRL) to enable chatbots to engage in purposeful conversations. Unlike traditional systems that often depend on rigid rules or extensive labeled datasets, GoChat facilitates end-to-end training, allowing chatbots to maximize long-term returns from offline multi-turn dialogue datasets.\n\nIn my research, I focus on developing a high-level policy that guides conversations toward specific goals by establishing sub-goals, while a low-level policy generates appropriate responses to achieve those sub-goals. This innovative approach has shown significant improvements in both the quality of generated responses and the success rate of achieving conversational objectives, as demonstrated in experiments with real-world datasets, such as those used in anti-fraud scenarios in finance.\n\nI am passionate about pushing the boundaries of conversational AI, striving to create chatbots that not only understand language but also engage in meaningful, goal-directed interactions. My work aims to bridge the gap between human-like conversation and practical application, making chatbots more effective and user-friendly in various domains.",
+    "collaborators": [
+      "Feiyang Pan",
+      "Ling Luo"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Reinforcement Learning",
+      "Chatbot Development"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "dd3ea95b-02fa-43e3-ad54-5e357ef0462b": {
+    "pk": "dd3ea95b-02fa-43e3-ad54-5e357ef0462b",
+    "project_name": null,
+    "name": "Ang Li",
+    "bio": "I am a researcher with a diverse background in theoretical computer science, causal inference, and photonics, focusing on the intersection of these fields to address complex problems. My recent work has explored the intricacies of Kolmogorov complexity, where I demonstrated the existence of deep 1-generic sets, contributing to our understanding of randomness and complexity. I have also delved into the realm of causal inference, particularly in the context of unit selection problems, where I developed methods to estimate causal effects and probabilities of causation for non-binary treatments, enhancing decision-making frameworks.\n\nIn addition to theoretical advancements, I have applied my expertise to practical challenges in computer vision and photonics. My work on occlusion detection using convolutional neural networks has led to state-of-the-art results, while my research on ultra-compact spectrometers has pushed the boundaries of silicon photonics technology. I am particularly interested in reconfigurable antennas and MIMO systems, where I leverage deep learning to optimize channel estimation methods, significantly reducing pilot overheads.\n\nOverall, my research is characterized by a commitment to bridging theory and application, with a focus on developing innovative solutions that can be applied across various domains, from computational theory to advanced photonic systems. I am passionate about exploring new frontiers in these fields and contributing to the ongoing dialogue in the scientific community.",
+    "collaborators": [
+      "Judea Pearl",
+      "Zejian Yuan",
+      "Yeshaiahu Fainman",
+      "Xinle Shang",
+      "Xu Gao",
+      "Jianmin Dong",
+      "Christos Masouros",
+      "Wim Bogaerts",
+      "Simon Su",
+      "Mu Liang"
+    ],
+    "domain": [
+      "Causal Inference",
+      "Machine Learning",
+      "Graph Theory",
+      "Neural Networks"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9cda3d66-592a-4441-8a23-df9224b9361a": {
+    "pk": "9cda3d66-592a-4441-8a23-df9224b9361a",
+    "project_name": null,
+    "name": "Jian Luan",
+    "bio": "I am a researcher specializing in speech synthesis, natural language processing, and machine learning. My work primarily focuses on developing advanced models for singing voice synthesis, multi-speaker speech synthesis, and text-to-speech (TTS) systems. I have pioneered several innovative frameworks, such as XiaoiceSing, which integrates spectrum, F0, and duration modeling to produce high-quality singing voices, and Msdtron, which enhances multi-speaker synthesis by leveraging harmonic structures and speaker-specific information.\n\nMy recent research also delves into improving the naturalness and efficiency of TTS systems through novel approaches like PAMA-TTS, which combines flexible attention mechanisms with explicit duration control. Additionally, I have explored the challenges of bilingual TTS, creating systems that effectively model pronunciation and intonation across languages.\n\nBeyond speech synthesis, I am actively engaged in enhancing large language models (LLMs) for various applications, including tool-augmented interactions and long-term memory conversations. My work on the Mixture of Diverse Size Experts (MoDSE) architecture addresses the scalability of LLMs, while my contributions to structured pruning and low-rank adaptation techniques aim to optimize model efficiency without sacrificing performance.\n\nI am passionate about bridging the gap between theoretical advancements and practical applications, and I strive to create systems that not only perform well but also resonate with users in real-world scenarios. My research is driven by a commitment to pushing the boundaries of what is possible in speech and language technologies.",
+    "collaborators": [
+      "Bin Wang",
+      "Wei Liu",
+      "Yujun Wang",
+      "Jie Wu",
+      "Fengyu Yang",
+      "Qinghua Wu",
+      "Quanbo Shen",
+      "YuJun Wang",
+      "Yunchao He",
+      "Jingyi Wang"
+    ],
+    "domain": [
+      "Speech Synthesis",
+      "Natural Language Processing",
+      "Machine Learning",
+      "Audio Processing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "84cba9d7-7b0c-4b9a-b6f1-bb7306a4732b": {
+    "pk": "84cba9d7-7b0c-4b9a-b6f1-bb7306a4732b",
+    "project_name": null,
+    "name": "Bin Wang",
+    "bio": "As a researcher deeply engaged in algebraic geometry and mathematical physics, my work primarily revolves around the intricate relationships between curves, hypersurfaces, and deformation theory. I have made significant strides in addressing longstanding conjectures, such as Clemens' conjecture, demonstrating the finiteness of smooth rational curves in generic quintic threefolds through a series of papers that explore both geometric obstructions and deformation techniques.\n\nMy recent investigations have also delved into the realm of Whittaker modules for graded Lie algebras, where I established a bijective correspondence that parallels classical results, contributing to the classification of simple modules. Additionally, I have explored the implications of perturbations around black holes, linking theoretical frameworks to astrophysical observations, particularly in the context of gravitational waves.\n\nI am particularly interested in the interplay between geometry and topology, as evidenced by my work on curvature estimates for star-shaped hypersurfaces in warped product manifolds. My research not only seeks to solve specific mathematical problems but also aims to develop broader frameworks that can be applied across various domains, including the study of noncoding DNA sequences through innovative entropy measures.\n\nThrough my work, I strive to bridge theoretical insights with practical applications, fostering a deeper understanding of complex mathematical structures and their implications in both pure and applied mathematics.",
+    "collaborators": [],
+    "domain": [
+      "Algebraic Geometry",
+      "Deformation Theory",
+      "Mathematical Physics",
+      "Curvature Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "8cc858a4-3272-4af4-823d-d4a2b429c64c": {
+    "pk": "8cc858a4-3272-4af4-823d-d4a2b429c64c",
+    "project_name": null,
+    "name": "Shuo Shang",
+    "bio": "As a researcher dedicated to enhancing the field of session-based recommendation (SR), my work primarily focuses on bridging the gap between model accuracy and explainability. I recognize that while many SR models excel in predictive performance, they often fall short in providing clear, interpretable insights into their recommendations. To address this, I developed a novel framework called PR4SR, which leverages path reasoning through a generalized hierarchical reinforcement learning approach.\n\nIn PR4SR, I designed a dual-agent system that intelligently selects items based on their significance within a session and performs path reasoning to generate explanations. My innovative multi-target reward mechanism adapts to the unique skip behaviors inherent in sequential patterns, while the introduction of path midpoint rewards enhances exploration efficiency within knowledge graphs. Additionally, I enrich the knowledge graph by incorporating extracted feature information from images, which diversifies the paths used for explanations.\n\nThrough extensive experimentation with five state-of-the-art SR models, I have demonstrated the effectiveness of PR4SR in both recommendation and explanation tasks across multiple datasets. My goal is to not only improve the accuracy of recommendations but also to provide users with meaningful insights that enhance their understanding of the underlying processes, ultimately fostering trust in automated systems.",
+    "collaborators": [
+      "Yang Cao",
+      "Jun Wang",
+      "Wei Zhang"
+    ],
+    "domain": [
+      "Recommendation Systems",
+      "Explainable AI",
+      "Reinforcement Learning",
+      "Knowledge Graphs"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

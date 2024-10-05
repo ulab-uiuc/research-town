@@ -1,0 +1,92 @@
+{
+  "012801ee-7669-43f1-b8a6-f4d031bf2a32": {
+    "pk": "012801ee-7669-43f1-b8a6-f4d031bf2a32",
+    "project_name": null,
+    "name": "Guanyi Mou",
+    "bio": "I am a researcher dedicated to addressing pressing societal issues through advanced machine learning techniques, particularly in the realms of hate speech detection, wildlife trafficking, and human activity recognition. My recent work focuses on developing robust frameworks that not only enhance detection accuracy but also ensure fairness and resilience against adversarial attacks. For instance, I designed a novel hate speech detection framework that leverages Bidirectional Quaternion-Quasi-LSTM layers, achieving remarkable performance across multiple datasets while addressing model uncertainty and bias.\n\nIn addition to hate speech detection, I have tackled the challenge of identifying wildlife trafficking behaviors in online platforms. By creating a scalable dataset and employing a human-in-the-loop approach, I developed a practical framework that effectively identifies suspicious posts, contributing to the fight against illegal wildlife trade.\n\nMy research also delves into the complexities of human activity recognition, where I introduced the Deep Heterogeneous Contrastive Hyper-Graph Learning framework. This innovative approach captures the nuances of context-aware data, significantly outperforming existing models.\n\nI am passionate about making my work accessible to the research community, sharing code and datasets to foster collaboration and further exploration. My goal is to leverage machine learning to create impactful solutions that address real-world challenges, ultimately contributing to a more equitable and sustainable society.",
+    "collaborators": [
+      "Kyumin Lee",
+      "Yun Yue",
+      "Ziming Zhang",
+      "Wen Ge",
+      "Emmanuel O. Agu",
+      "Pengyi Ye",
+      "Yichuan Li",
+      "Fangzhou Lin",
+      "Devin Coughlin",
+      "Maylee Gagnon"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Machine Learning",
+      "Graph Neural Network",
+      "Human Activity Recognition"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "8b8a509e-885d-4b80-a88c-94148e0296a3": {
+    "pk": "8b8a509e-885d-4b80-a88c-94148e0296a3",
+    "project_name": null,
+    "name": "Yichuan Li",
+    "bio": "I am a researcher dedicated to addressing pressing challenges in the realms of misinformation, communication networks, and machine learning. My recent work has focused on combating the spread of fake news, particularly during the COVID-19 pandemic, where I developed the MM-COVID dataset to facilitate multilingual fake news detection. This dataset, comprising over 10,000 pieces of content in multiple languages, serves as a vital resource for understanding and mitigating the impact of misinformation.\n\nIn addition to my work on fake news, I have explored the potential of advanced text generation methods, creating FactGen to generate high-quality news content while ensuring consistency and factual accuracy. My research also extends to the telecommunications sector, where I have critically evaluated analogue radio over fiber (A-RoF) techniques for next-generation radio access networks, proposing innovative architectures to enhance connectivity for high-speed trains.\n\nI am particularly interested in the intersection of self-supervised learning and graph neural networks, exemplified by my development of GRENADE, a model that effectively captures both textual semantics and structural context in text-attributed graphs. Furthermore, I have contributed to federated learning protocols, introducing FedADMM to improve communication efficiency and adaptability in heterogeneous environments.\n\nMy work is driven by a commitment to advancing technology for societal benefit, and I strive to create solutions that enhance data quality, improve model performance, and ultimately contribute to a more informed and connected world.",
+    "collaborators": [
+      "Kaize Ding",
+      "Kyumin Lee",
+      "Kai Shu",
+      "Huan Liu",
+      "Mohammed El-Hajjar",
+      "Nikolaos M. Freris",
+      "Bohan Jiang",
+      "Qijie Xie",
+      "Lajos Hanzo",
+      "Salman Ghafoor"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Federated Learning",
+      "Data Augmentation",
+      "Graph Neural Network"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "3ed9fdfe-af6a-4e71-a3a5-8a0b08ac4618": {
+    "pk": "3ed9fdfe-af6a-4e71-a3a5-8a0b08ac4618",
+    "project_name": null,
+    "name": "Kyumin Lee",
+    "bio": "I am a researcher dedicated to understanding and mitigating the impact of misinformation and hate speech in online environments. My work spans various domains, including crowdfunding, social media analysis, and automated fact-checking systems. I have conducted extensive studies on the characteristics of on-time and late reward delivery in crowdfunding projects, revealing key factors that influence project success.\n\nIn the realm of misinformation, I have developed innovative models such as the Hierarchical Multi-head Attentive Network for fact-checking and a novel fact-checking URL recommendation system to enhance user engagement in combating fake news. My research also delves into the dynamics of social media during health crises, analyzing public reactions and information propagation patterns.\n\nI am particularly passionate about creating robust frameworks for hate speech detection, employing advanced techniques like Bidirectional Quaternion-Quasi-LSTM layers to ensure fairness and effectiveness. My recent work on self-supervised representation learning on text-attributed graphs, through the GRENADE model, showcases my commitment to advancing the field of natural language processing and graph neural networks.\n\nOverall, my research aims to bridge the gap between technology and societal challenges, providing actionable insights and tools to foster a more informed and responsible online community.",
+    "collaborators": [
+      "Nguyen Vo",
+      "Thanh Tran",
+      "Guanyi Mou",
+      "Yichuan Li",
+      "Kaize Ding",
+      "Shyam Subramanian",
+      "Steve Webb",
+      "Hancheng Ge",
+      "Yiming Liao",
+      "Dongwon Lee"
+    ],
+    "domain": [
+      "Fake News Detection",
+      "Crowdfunding",
+      "Hate Speech Detection",
+      "Recommendation Systems"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

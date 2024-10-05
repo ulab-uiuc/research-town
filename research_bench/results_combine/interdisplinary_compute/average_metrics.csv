@@ -1,0 +1,3 @@
+filename,average_bleu,average_rouge_l,average_bertscore,average_gpt_score
+research_bench_result_4o_mini_interdisplinary.jsonl,0.000000,0.000000,0.000000,0.000000
+research_bench_result_4o_mini_interdisplinary_single_agent.jsonl,0.000000,0.000000,0.000000,0.000000

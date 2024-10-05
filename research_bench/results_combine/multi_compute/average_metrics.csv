@@ -1,0 +1,5 @@
+filename,average_bleu,average_rouge_l,average_bertscore,average_gpt_score
+research_bench_result_4o_mini_proposal_3.jsonl,0.172952,0.311804,0.290957,0.480000
+research_bench_result_4o_mini_proposal_1.jsonl,0.159041,0.300566,0.267072,0.395000
+research_bench_result_4o_mini_proposal_5.jsonl,0.176562,0.316401,0.300296,0.525000
+research_bench_result_4o_mini_proposal_10.jsonl,0.180368,0.321542,0.307161,0.530000

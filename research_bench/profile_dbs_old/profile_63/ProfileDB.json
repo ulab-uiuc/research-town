@@ -1,0 +1,56 @@
+{
+  "851f806c-ab01-4635-b790-83dd6a1dd577": {
+    "pk": "851f806c-ab01-4635-b790-83dd6a1dd577",
+    "project_name": null,
+    "name": "Razin Farhan Hussain",
+    "bio": "I am a researcher dedicated to advancing the intersection of deep learning, federated learning, and fog computing, particularly in the context of Industry 4.0 applications. My work addresses critical challenges such as data privacy, class imbalance, and the stochastic nature of inference times in cloud environments. I have developed innovative solutions like a federated learning framework that enhances model robustness by addressing class imbalance at the local level and employing dynamic worker selection strategies.\n\nMy research also delves into the complexities of vehicular networks, where I focus on creating robust Vehicle-to-Infrastructure (V2I) systems capable of handling unpredictable service requests. By implementing uncertainty-aware resource allocation methods, I aim to ensure timely responses for autonomous vehicles, significantly reducing service miss rates.\n\nAdditionally, I explore the deployment of machine learning applications in fog computing environments, proposing statistical resource allocation methods that enhance the resilience of industrial operations during peak demands. My approach emphasizes the importance of understanding application architectures, particularly in micro-service workflows, to optimize resource distribution effectively.\n\nThrough my work, I strive to contribute to the development of agile, reliable, and privacy-preserving solutions that can transform industries reliant on real-time data processing and decision-making. My goal is to enable seamless integration of AI technologies in resource-constrained environments, ultimately enhancing operational efficiency and safety in critical sectors.",
+    "collaborators": [
+      "Mohsen Amini Salehi",
+      "Omid Semiari",
+      "Alireza Pakravan",
+      "Anna Kovalenko"
+    ],
+    "domain": [
+      "Federated Learning",
+      "Fog Computing",
+      "Deep Learning",
+      "Industry 4.0"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "db4a7a6f-46c9-493e-bcc1-d6ccada33942": {
+    "pk": "db4a7a6f-46c9-493e-bcc1-d6ccada33942",
+    "project_name": null,
+    "name": "Mohsen Amini Salehi",
+    "bio": "I am a researcher dedicated to advancing cloud computing, particularly in the realms of security, efficiency, and usability. My work primarily focuses on addressing the challenges associated with data privacy in cloud environments, where I have developed innovative solutions such as S3BD, a system that enables real-time searching over encrypted big data without exposing sensitive information. I have also explored the intricacies of serverless computing, proposing the Object-as-a-Service (OaaS) paradigm to streamline cloud-native application development by encapsulating both application logic and data.\n\nMy research extends to enhancing the robustness of heterogeneous computing systems, where I have introduced task pruning mechanisms to improve Quality of Service (QoS) in oversubscribed environments. I have also investigated the performance of deep learning applications in cloud and edge systems, revealing critical insights into deployment configurations that optimize end-to-end inference times.\n\nIn addition to these contributions, I have developed ClustCrypt, a method for efficient topic-based clustering of encrypted data, which significantly improves search accuracy and reduces overhead. My work aims to bridge the gap between security and functionality in cloud services, ensuring that users can leverage the full potential of cloud computing while maintaining the confidentiality of their data. Through my research, I strive to create more efficient, secure, and user-friendly cloud computing solutions that meet the evolving needs of businesses and individuals alike.",
+    "collaborators": [
+      "Chavit Denninnart",
+      "SM Zobaed",
+      "Pawissanutt Lertpongrujikorn",
+      "Jason Woodworth",
+      "James Gentry",
+      "Thanawat Chanikaphon",
+      "Ali Mokhtari",
+      "Razin Farhan Hussain",
+      "Hoang Pham",
+      "Connor Rawls"
+    ],
+    "domain": [
+      "Cloud Computing",
+      "Security",
+      "Distributed Systems",
+      "Serverless Computing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

@@ -412,7 +412,7 @@ def process_paper(
     # Form the main paper URL
     main_paper_url = f'https://arxiv.org/pdf/{arxiv_id}'
     logger.info(f'Fetching introduction for main paper: {main_paper_url}')
-
+    current_5q = None
     # Step 1: Get the paper introduction using the updated function
     if intro_log_jsonl:
         with open(intro_log_jsonl, 'r', encoding='utf-8') as infile:
@@ -447,6 +447,7 @@ def process_paper(
                     logger.info(f'Found referenced intros for paper: {paper_key}')
                     break
     if not intros:
+        intros = []
         logger.info(f'No referenced intros found for paper: {paper_key}')
         for ref in references:
             print('ref', ref)

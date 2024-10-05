@@ -1,0 +1,160 @@
+{
+  "ca324bd6-f121-494b-b4f0-af358fa1cedb": {
+    "pk": "ca324bd6-f121-494b-b4f0-af358fa1cedb",
+    "project_name": null,
+    "name": "Yukun Huang",
+    "bio": "I am a researcher with a keen interest in the dynamical evolution of celestial bodies within our Solar System, particularly focusing on transneptunian objects (TNOs), asteroids, and their interactions with planetary systems. My recent work has delved into the stability of orbits in the Earth-Mars belt, revealing a narrower region where small bodies can survive over 4.5 billion years. I have also explored the intriguing dynamics of sednoids, uncovering a primordial alignment that suggests significant events during the planet formation epoch.\n\nIn addition to my studies on TNOs, I have investigated the unique dynamics of retrograde mean-motion resonances, particularly with Jupiter and Saturn, and have identified potential candidates for retrograde co-orbital resonance with Saturn. My research employs advanced numerical simulations and analytical tools to understand the complex interactions and stability of binary planets within star clusters, contributing to our understanding of the formation and evolution of celestial systems.\n\nBeyond planetary dynamics, I have ventured into the realm of natural language processing, developing innovative techniques like MetaPT for prompt tuning in language models and Atomic Self-Consistency (ASC) to enhance the recall of relevant information in long-form responses. My interdisciplinary approach combines astrophysics and machine learning, aiming to uncover the underlying principles governing both celestial mechanics and artificial intelligence. Through my work, I strive to bridge the gap between these fields, contributing to a deeper understanding of our universe and the technologies we create.",
+    "collaborators": [
+      "Brett Gladman",
+      "Zhou Yu",
+      "Miao Li",
+      "Shengping Gong",
+      "Junfeng Li",
+      "Yanda Chen",
+      "Kathleen McKeown",
+      "Wei Zhu",
+      "Eiichiro Kokubo",
+      "Kathryn Volk"
+    ],
+    "domain": [
+      "Astrophysics",
+      "Dynamical Systems",
+      "Natural Language Processing",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9973c4db-2e4f-4be4-a5e8-0bb53809c3b6": {
+    "pk": "9973c4db-2e4f-4be4-a5e8-0bb53809c3b6",
+    "project_name": null,
+    "name": "Jianan Wang",
+    "bio": "I am a researcher deeply engaged in the intersection of quantum computing, optimization, and machine learning. My recent work has focused on applying the stabilizer formalism to various complex problems, such as the Maximum Cut problem and molecular simulations, where I developed innovative heuristics and methods that enhance performance and efficiency. For instance, my greedy construction heuristic for the Maximum Cut problem elegantly synthesizes existing approaches, achieving a solid approximation ratio and demonstrating impressive results on larger graphs.\n\nIn the realm of quantum chemistry, I have explored the application of stabilizer states to challenging molecules, revealing their potential as reference states for systems with strong static correlations. My research also extends to the optimization of deep learning models, where I analyze the challenges of gradient vanishing and exploding, proposing strategies to improve gradient flow and model stability.\n\nAdditionally, I have contributed to advancements in contrastive learning through the development of DisCo-CLIP, a memory-efficient training approach that significantly reduces GPU memory consumption while maintaining computational accuracy. My work on modular learning and generalization in artificial intelligence highlights the importance of task segmentation and memory-based ensembling, showcasing competitive performance in continual learning scenarios.\n\nOverall, my research aims to bridge theoretical insights with practical applications, fostering advancements in both quantum computing and machine learning. I am passionate about exploring new methodologies that enhance our understanding and capabilities in these rapidly evolving fields.",
+    "collaborators": [
+      "Chuixiong Wu",
+      "Fen Zuo",
+      "Lei Zhang",
+      "Xianbiao Qi",
+      "Boshi Tang",
+      "Zhiyong Wu",
+      "Yihao Chen",
+      "Xinying Li",
+      "Eren Sezener",
+      "David Budden"
+    ],
+    "domain": [
+      "Quantum Computing",
+      "Graph Theory",
+      "Deep Learning",
+      "Continual Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b49510e8-25b1-4ad5-89ad-b3aa0a377855": {
+    "pk": "b49510e8-25b1-4ad5-89ad-b3aa0a377855",
+    "project_name": null,
+    "name": "Ailing Zeng",
+    "bio": "I am a researcher deeply engaged in the intersection of computer vision and time series analysis, with a particular focus on developing innovative models that enhance performance across various tasks. My recent work challenges the prevailing reliance on Transformer-based architectures for long-term time series forecasting, demonstrating that simpler linear models can outperform these complex solutions. This finding has sparked new discussions about the validity of Transformer applications in time series analysis.\n\nI have also pioneered the T-WaveNet, a tree-structured wavelet neural network that effectively captures essential features from sensor data, achieving state-of-the-art results in activity recognition and gesture recognition tasks. My work extends to developing FITS, a lightweight model for time series analysis that operates in the complex frequency domain, showcasing the potential for efficient deployment in edge devices.\n\nIn the realm of human pose estimation, I have introduced several frameworks, including DWPose and X-Pose, which leverage multi-modal prompts and innovative architectures to improve accuracy and efficiency. My research emphasizes the importance of robust data representation and the integration of diverse data sources, as seen in my work on the Human-Art dataset and the development of DPoser, a versatile human pose prior based on diffusion models.\n\nThrough my contributions, I aim to bridge gaps in existing methodologies, enhance model generalization, and push the boundaries of what is achievable in both time series forecasting and human-centric computer vision tasks. My work is driven by a commitment to advancing the field and providing practical solutions that can be readily applied in real-world scenarios.",
+    "collaborators": [
+      "Qiang Xu",
+      "Minhao Liu",
+      "Lei Zhang",
+      "Xuan Ju",
+      "Muxi Chen",
+      "Qiuxia Lai",
+      "Zhijian Xu",
+      "Yu Li",
+      "Lei Yang",
+      "Jie Yang"
+    ],
+    "domain": [
+      "Time Series Analysis",
+      "Human Pose Estimation",
+      "Graph Neural Network",
+      "Deep Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c0bb9f03-fc09-49db-a177-885dd1a4ad96": {
+    "pk": "c0bb9f03-fc09-49db-a177-885dd1a4ad96",
+    "project_name": null,
+    "name": "Zheng-Jun Zha",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance on tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research doesn't stop at static graphs; I proposed the ROLAND framework to effectively handle dynamic graphs, allowing for scalable and efficient learning in real-world applications.\n\nIn addition to architectural innovations, I have explored the design space of GNNs, systematically studying over 315,000 designs to provide guidelines for optimizing performance across different tasks. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the process of finding optimal model designs by leveraging prior knowledge and enhancing search efficiency.\n\nThrough these contributions, I strive to push the boundaries of what GNNs can achieve, fostering a deeper understanding of their structure and performance while making them more accessible for diverse applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "3cf462f7-3001-419d-83ce-18b02133e8c2": {
+    "pk": "3cf462f7-3001-419d-83ce-18b02133e8c2",
+    "project_name": null,
+    "name": "Lei Zhang",
+    "bio": "I am a mathematician specializing in algebraic geometry and its connections to number theory and representation theory. My research primarily focuses on minimal surfaces, algebraic stacks, and the interplay between algebraic and topological properties of varieties. I have made significant contributions to the understanding of bicanonical maps, particularly in the context of minimal surfaces of general type, where I established conditions under which the degree of the bicanonical map is either 1 or 2.\n\nMy work also extends to the homotopy sequences of fundamental groups, where I have explored exactness conditions and their implications for classical theorems. I have investigated the abundance of 3-folds with non-trivial Albanese maps, providing insights into their structure and classification. Additionally, I have delved into the spectral properties of linear operators and their applications in various mathematical contexts.\n\nIn my recent studies, I have generalized key results in the theory of ample line bundles on Abelian varieties and contributed to the understanding of Kodaira dimensions in fibrations. My research often bridges different areas of mathematics, such as the relationship between algebraic geometry and representation theory, exemplified by my work on automorphic representations and their analytic properties.\n\nOverall, my goal is to deepen our understanding of complex algebraic structures and their geometric implications, while also exploring new connections between seemingly disparate areas of mathematics.",
+    "collaborators": [],
+    "domain": [
+      "Algebraic Geometry",
+      "Minimal Surfaces",
+      "Automorphic Forms",
+      "Homotopy Theory"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "fd04868a-01b4-4eb3-9b97-7de3b1dfbf26": {
+    "pk": "fd04868a-01b4-4eb3-9b97-7de3b1dfbf26",
+    "project_name": null,
+    "name": "Xihui Liu",
+    "bio": "I am a researcher deeply engaged in the intersection of computer vision and machine learning, with a particular focus on image and 3D scene understanding. My recent work has revolved around developing innovative frameworks and methodologies that enhance the capabilities of models in various tasks, such as pedestrian attribute recognition, image generation, and 3D point cloud processing.\n\nOne of my notable contributions is the Localization Guided Network, which improves pedestrian attribute classification by effectively localizing features specific to each attribute. I also introduced ArtBench-10, a high-quality dataset for benchmarking artwork generation, which addresses the limitations of previous datasets by ensuring class balance and clean annotations.\n\nIn the realm of image generation, I developed GenArtist, a unified system that leverages a multimodal large language model to tackle complex generation and editing tasks. My work on PointContrast and the Masked Scene Contrast framework has advanced unsupervised 3D representation learning, enabling efficient and effective extraction of 3D features.\n\nI am also pioneering research in compositional text-to-image and text-to-video generation, exemplified by T2I-CompBench and T2V-CompBench, which provide comprehensive benchmarks for evaluating generative models. My approach to integrating natural language descriptions into person re-identification has shown significant improvements in feature learning.\n\nOverall, my research aims to push the boundaries of what is possible in visual understanding and generation, leveraging the latest advancements in multimodal learning and deep learning architectures. I am committed to creating tools and datasets that facilitate further exploration and innovation in these fields.",
+    "collaborators": [
+      "Xiaogang Wang",
+      "Hongsheng Li",
+      "Jing Shao",
+      "Hengshuang Zhao",
+      "Zhenguo Li",
+      "Xiaoyang Wu",
+      "Junjie Yan",
+      "Zihao Wang",
+      "Dapeng Chen",
+      "Yixing Lao"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Image Generation",
+      "Multimodal Learning",
+      "3D Representation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

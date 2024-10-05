@@ -1,0 +1,83 @@
+{
+  "165a2bf8-5ad5-4339-b170-f463c9ede563": {
+    "pk": "165a2bf8-5ad5-4339-b170-f463c9ede563",
+    "project_name": null,
+    "name": "Dingrui Wang",
+    "bio": "I am a researcher dedicated to advancing the field of autonomous driving through innovative frameworks and predictive models. My recent work centers around DualAD, a novel autonomous driving system that emulates human reasoning. This framework integrates a rule-based motion planner with a text encoder that translates driving scenarios into natural language, allowing a large language model (LLM) to make informed driving decisions. This dual-layer approach not only enhances routine driving tasks but also improves decision-making in critical situations, demonstrating significant performance gains over traditional rule-based systems.\n\nIn addition to DualAD, I have tackled the challenges of long-term prediction in emergency driving scenarios through the development of the Extro-Spective Prediction (ESP) dataset. This dataset addresses the complexities of predicting rare but critical events, and I introduced a flexible feature encoder that seamlessly integrates with various prediction methods. My work also includes the creation of a new evaluation metric, clamped temporal error (CTE), which provides a nuanced assessment of prediction performance in time-sensitive situations.\n\nI am passionate about bridging the gap between machine learning and real-world applications in autonomous driving, and I am committed to sharing my findings with the community by making datasets and benchmarks publicly available. My research aims to enhance the safety and reliability of autonomous systems, paving the way for a future where autonomous vehicles can navigate complex environments with human-like reasoning.",
+    "collaborators": [
+      "Johannes Betz",
+      "Marc Kaufeld",
+      "Zheyuan Lai",
+      "Yuda Li",
+      "Yi Wu",
+      "Yuexin Ma",
+      "Ruigang Yang",
+      "Wei Li"
+    ],
+    "domain": [
+      "Autonomous Driving",
+      "Machine Learning",
+      "Natural Language Processing",
+      "Safety Prediction"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "663e3439-5a02-4f9e-a573-14099e58e615": {
+    "pk": "663e3439-5a02-4f9e-a573-14099e58e615",
+    "project_name": null,
+    "name": "Marc Kaufeld",
+    "bio": "I am a researcher dedicated to advancing the field of autonomous vehicles, particularly in the realm of simulation and decision-making frameworks. My recent work has focused on developing innovative validation methods that go beyond traditional data recording and functional checks. I introduced a synchronous multi-agent simulation framework that allows for the exploration of complex driving scenarios, emphasizing the importance of vehicle interactions in enhancing autonomous driving systems. This platform not only integrates various planning methodologies but also provides a comprehensive set of evaluation metrics to assess driving behavior.\n\nAdditionally, I have developed DualAD, a novel autonomous driving framework that mimics human reasoning. By combining a rule-based motion planner with a text encoder that leverages large language models, DualAD enhances decision-making in critical situations, significantly outperforming conventional rule-based planners. My research aims to bridge the gap between human-like reasoning and autonomous driving, paving the way for more sophisticated algorithms in this rapidly evolving field. I am committed to sharing my findings and tools with the community, making my frameworks and benchmarks publicly available to foster further research and development in autonomous vehicle technology.",
+    "collaborators": [
+      "Johannes Betz",
+      "Rainer Trauth",
+      "Dingrui Wang"
+    ],
+    "domain": [
+      "Autonomous Vehicles",
+      "Simulation",
+      "Machine Learning",
+      "Human-Computer Interaction"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "5e6ae424-fd3c-4a97-8e43-c0dd267584ed": {
+    "pk": "5e6ae424-fd3c-4a97-8e43-c0dd267584ed",
+    "project_name": null,
+    "name": "Johannes Betz",
+    "bio": "I am a researcher dedicated to advancing the field of autonomous driving, with a particular focus on enhancing safety, performance, and adaptability in dynamic environments. My work spans a range of topics, including simulation-based testing for autonomous racing, trajectory planning, and the integration of machine learning techniques into motion planning algorithms. I have developed innovative frameworks such as DualAD, which mimics human reasoning in driving scenarios, and a novel multi-agent simulation platform that facilitates the evaluation of autonomous driving behaviors in complex interactions.\n\nMy research also delves into the intricacies of path planning and decision-making for overtaking maneuvers, as well as the optimization of autonomous systems through gradient-free methods. I am particularly interested in the intersection of human expertise and autonomous algorithms, having conducted studies with professional racing drivers to glean insights that can inform the development of more adaptive driving software.\n\nThrough my work, I aim to bridge the gap between traditional automotive systems and the emerging landscape of software-defined vehicles, ensuring that our autonomous systems are not only efficient but also capable of handling the unpredictable nature of real-world driving. I am committed to open-source collaboration, making my research accessible to the community to foster innovation and accelerate advancements in autonomous vehicle technology.",
+    "collaborators": [
+      "Hongrui Zheng",
+      "Rahul Mangharam",
+      "Tim Stahl",
+      "Markus Lienkamp",
+      "Rainer Trauth",
+      "Marc Kaufeld",
+      "Jayanth Bhargav",
+      "Melina Lutwitzi",
+      "Steven Peters",
+      "Tobias Betz"
+    ],
+    "domain": [
+      "Autonomous Driving",
+      "Motion Planning",
+      "Reinforcement Learning",
+      "Simulation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

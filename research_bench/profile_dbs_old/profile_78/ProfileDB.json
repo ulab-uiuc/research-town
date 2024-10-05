@@ -1,0 +1,109 @@
+{
+  "09d22884-2af9-4f23-ab44-2d08532f3c32": {
+    "pk": "09d22884-2af9-4f23-ab44-2d08532f3c32",
+    "project_name": null,
+    "name": "Mohammadamin Moradi",
+    "bio": "I am a researcher dedicated to advancing our understanding of complex and nonlinear dynamical systems through innovative machine-learning techniques. My work primarily focuses on developing model-free, data-driven frameworks that enable accurate tracking of time-varying parameters from partial state observations. I have explored the potential of reservoir computing and random forests to enhance parameter tracking and weak signal detection, particularly in challenging environments like magnetic navigation.\n\nOne of my significant contributions is a general model-discovery framework that overcomes the limitations of sparse optimization, allowing for the analysis of dynamical systems that do not adhere to sparsity conditions. This framework has revealed the non-uniqueness of models that can accurately represent system dynamics, which has profound implications for understanding chaotic systems.\n\nIn the realm of control engineering, I have developed a machine-learning framework for nonlinear tracking control of robotic manipulators, demonstrating its effectiveness in real-time applications with partially observed states. My recent research also addresses critical environmental issues, such as predicting tipping points in the Atlantic Meridional Overturning Circulation, where I apply machine-learning methods to forecast potential system collapses due to climate change.\n\nThrough my work, I aim to bridge the gap between theoretical dynamical systems and practical applications, contributing to fields ranging from robotics to climate science. My research not only enhances our predictive capabilities but also provides valuable insights into the underlying mechanisms of complex systems.",
+    "collaborators": [
+      "Ying-Cheng Lai",
+      "Zheng-Meng Zhai",
+      "Bryan Glaz",
+      "Mulugeta Haile",
+      "Shirin Panahi",
+      "Ling-Wei Kong",
+      "Erik M. Bollt",
+      "Aaron Nielsen"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Dynamical Systems",
+      "Control Engineering",
+      "Data-driven Modeling"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0b81431c-9149-41d5-a7fc-16bbf54e05f1": {
+    "pk": "0b81431c-9149-41d5-a7fc-16bbf54e05f1",
+    "project_name": null,
+    "name": "Shirin Panahi",
+    "bio": "I am a researcher deeply engaged in the study of synchronization phenomena in complex networks, particularly focusing on group and cluster synchronization. My work explores the stability of these synchronization patterns under various conditions, including parameter mismatches and the presence of different coupling types. I have developed innovative methods, such as simultaneous block diagonalization, to simplify the stability analysis of complex systems, allowing for a more nuanced understanding of how different network structures influence synchronization behavior.\n\nMy recent research has expanded into the realm of ecological systems, where I investigate rate-induced tipping points and their implications for environmental stability. By employing a global dynamics approach, I have introduced a probability framework for understanding how gradual changes can lead to catastrophic outcomes, emphasizing the importance of considering the entire phase space.\n\nAdditionally, I have contributed to the field of data-driven model discovery, challenging traditional sparse optimization methods by demonstrating that complex dynamical systems can be effectively modeled even when they do not adhere to sparsity conditions. My work aims to bridge theoretical insights with practical applications, including predicting tipping points in systems like the Atlantic Meridional Overturning Circulation and exploring transitions between chimera and coherent states in coupled oscillators.\n\nThrough my research, I strive to uncover the intricate relationships between network dynamics and stability, providing valuable insights that can inform both theoretical advancements and real-world applications.",
+    "collaborators": [
+      "Francesco Sorrentino",
+      "Isaac Klickstein",
+      "Ying-Cheng Lai",
+      "Amirhossein Nazerian",
+      "Nelson Amaya",
+      "Galen Novello",
+      "Mohammadamin Moradi",
+      "Matteo Lodi",
+      "Marco Storace",
+      "Younghae Do"
+    ],
+    "domain": [
+      "Network Synchronization",
+      "Dynamical Systems",
+      "Machine Learning",
+      "Complex Networks"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0b5fa342-8746-4724-b43c-0efd37a65702": {
+    "pk": "0b5fa342-8746-4724-b43c-0efd37a65702",
+    "project_name": null,
+    "name": "Erik M. Bollt",
+    "bio": "I am a researcher deeply engaged in the study of dynamical systems, complex networks, and their interplay with information theory. My work primarily focuses on understanding the underlying structures and behaviors of systems, whether they are autonomous or influenced by external factors. I have developed innovative metrics, such as the Forecastability Quality Metric (FQM), to assess the predictability of chaotic systems, and I have explored the dynamics of Moving Neighborhood Networks to analyze emergent behaviors in swarms.\n\nMy research also delves into the intricacies of synchronization in coupled oscillators, where I have derived master stability functions that account for parameter mismatches across various network architectures. I bridge local geometric analysis with global operator-theoretic approaches, particularly through the lens of Koopman analysis, to uncover the relationships between dynamical behaviors and their underlying structures.\n\nIn addition, I have tackled the challenges of inferring causality in nonlinear time series, proposing measures like causation entropy to enhance the reliability of coupling structure identification. My work extends to dimensionality reduction techniques, where I aim to create smooth geodesics for high-dimensional data, ensuring faithful representations even in the presence of noise.\n\nOverall, my research is driven by a desire to uncover the fundamental principles governing complex systems, providing insights that can lead to better modeling and understanding of both natural and engineered systems. I am excited about the potential applications of my findings in fields ranging from ecology to engineering, and I continuously seek to bridge theoretical advancements with practical implementations.",
+    "collaborators": [
+      "Jie Sun",
+      "Takashi Nishikawa",
+      "Daniel ben-Avraham",
+      "Kelum Gajamannage",
+      "Joseph D. Skufca",
+      "Shane D. Ross",
+      "Sean Kramer",
+      "Adam Giammarese",
+      "Kamal Rana",
+      "Nishant Malik"
+    ],
+    "domain": [
+      "Dynamical Systems",
+      "Information Theory",
+      "Network Analysis",
+      "Causality"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "6c59241a-8955-402b-9a12-c2039d7849a0": {
+    "pk": "6c59241a-8955-402b-9a12-c2039d7849a0",
+    "project_name": null,
+    "name": "Ying-Cheng Lai",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, which has proven effective in various prediction tasks, achieving significant performance improvements.\n\nI am particularly interested in the interplay between graph structures and predictive performance, as demonstrated in my work on relational graphs that reveal a \"sweet spot\" for optimizing neural network architectures. This exploration has led to the creation of Identity-aware GNNs (ID-GNNs), which enhance the expressive power of message-passing frameworks by incorporating node identities.\n\nAdditionally, I have tackled the challenges posed by dynamic graphs through the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments. My research also extends to automated machine learning (AutoML), where I introduced FALCON and AutoTransfer to streamline the search for optimal model designs across various tasks, significantly reducing computational costs.\n\nOverall, my goal is to push the boundaries of GNN research, providing scalable solutions and insights that can be applied across a wide range of domains, from social networks to biological systems. I am passionate about fostering a deeper understanding of how these models can be designed and utilized effectively, paving the way for future innovations in machine learning.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "AutoML",
+      "Multi-task Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

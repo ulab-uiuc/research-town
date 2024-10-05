@@ -1,0 +1,230 @@
+{
+  "7bff6294-e6ae-4a57-a922-a9469155600f": {
+    "pk": "7bff6294-e6ae-4a57-a922-a9469155600f",
+    "project_name": null,
+    "name": "Junyang Zhang",
+    "bio": "I am a researcher with a strong focus on group theory, combinatorial structures, and their applications in graph theory and machine learning. My work spans a variety of topics, including the classification of shuffle groups, the study of perfect codes in graphs, and the development of efficient algorithms for drone detection using advanced deep learning techniques.\n\nIn my recent research, I have made significant contributions to the understanding of shuffle groups, particularly proving the 2-transitivity of the shuffle group \\( G_{3,3n} \\) for multiples of 3, which leads to a complete classification of these groups. I have also explored the concept of perfect codes in finite groups, establishing necessary and sufficient conditions for subgroup perfect codes and applying these results to various group classes, including projective special linear groups.\n\nAdditionally, I have investigated the application of Vision Transformers in drone detection, demonstrating their superiority over traditional CNN models in specific scenarios. My work emphasizes the importance of understanding the underlying structures of both mathematical groups and machine learning models, aiming to bridge the gap between theoretical research and practical applications.\n\nThrough my research, I strive to contribute to the broader mathematical community by providing insights and tools that facilitate further exploration in these interconnected fields.",
+    "collaborators": [
+      "Sanming Zhou",
+      "Yuting Wang",
+      "Shaofei Du",
+      "Yanhong Zhu",
+      "Binzhou Xia",
+      "Zhishuo Zhang",
+      "Wenying Zhu",
+      "Naer Wang",
+      "Kan Hu",
+      "Kai Yuan"
+    ],
+    "domain": [
+      "Group Theory",
+      "Graph Theory",
+      "Combinatorics",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "fef34f59-62b8-4cfd-84ce-065d776a2694": {
+    "pk": "fef34f59-62b8-4cfd-84ce-065d776a2694",
+    "project_name": null,
+    "name": "Mu Yuan",
+    "bio": "I am a researcher with a strong focus on finite fields, permutation polynomials, and their applications in cryptography and coding theory. My recent work has delved into the intricate relationships between two-to-one mappings and involutions, where I developed a criterion for constructing new mappings and derived several classes of involutions without fixed points. I have also explored the efficiency of secure Transformer-based services, proposing the STIP protocol, which significantly enhances security without sacrificing inference accuracy.\n\nIn addition to my work on mappings and security protocols, I have investigated permutation trinomials and their connections to known polynomial forms, contributing to the understanding of their structure over finite fields. My research extends to subfield codes, where I have generalized weight distribution results for codes derived from perfect nonlinear functions, showcasing optimal parameters for these codes.\n\nI am particularly passionate about addressing practical challenges in data labeling through my Adaptive Model Scheduling framework, which leverages deep reinforcement learning to optimize the execution of multiple deep learning models. This innovative approach not only maximizes the value of model outputs but also adapts to resource constraints, demonstrating my commitment to bridging theoretical research with real-world applications. Overall, my work aims to advance the understanding of finite fields while providing practical solutions in cryptography, coding theory, and machine learning.",
+    "collaborators": [
+      "Dabin Zheng",
+      "Lan Zhang",
+      "Xiang-Yang Li",
+      "Yanping Wang",
+      "Long Yu",
+      "Xiaoqiang Wang",
+      "Yayao Li",
+      "Hui Xiong",
+      "Nian Li",
+      "Lei Hu"
+    ],
+    "domain": [
+      "Finite Fields",
+      "Cryptography",
+      "Deep Learning",
+      "Reinforcement Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "f9609628-4ae5-4f05-b76b-b98703f7bf90": {
+    "pk": "f9609628-4ae5-4f05-b76b-b98703f7bf90",
+    "project_name": null,
+    "name": "Ruiguang Zhong",
+    "bio": "I am a researcher specializing in the intersection of computer vision and natural language processing, particularly through the lens of Large Vision-Language Models (LVLMs). My recent work focuses on enhancing the efficiency of these models during inference, which is crucial given their substantial resource demands. I have developed a novel adaptive attention mechanism, A-VL, specifically designed for LVLMs. This approach recognizes the distinct attention patterns required for visual and language inputs, allowing for a more tailored management of resources. By optimizing how attention is allocated\u2014storing critical visual information while prioritizing local language context\u2014I have demonstrated significant reductions in memory usage and computational load without sacrificing performance. My research aims to push the boundaries of what LVLMs can achieve, making them more accessible and efficient for a variety of applications.",
+    "collaborators": [
+      "Junyang Zhang",
+      "Mu Yuan",
+      "Puhan Luo",
+      "Huiyou Zhan",
+      "Ningkang Zhang",
+      "Chengchen Hu",
+      "Xiangyang Li"
+    ],
+    "domain": [
+      "Vision-Language Model",
+      "Adaptive Attention",
+      "Natural Language Processing",
+      "Computer Vision"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "107b13e2-d944-4466-9d2d-afba52271c88": {
+    "pk": "107b13e2-d944-4466-9d2d-afba52271c88",
+    "project_name": null,
+    "name": "Puhan Luo",
+    "bio": "I am a researcher dedicated to the intersection of computer vision and natural language processing, particularly through the lens of Large Vision-Language Models (LVLMs). My recent work focuses on enhancing the efficiency of these models during inference, which is crucial given their substantial resource demands. I have developed a novel adaptive attention mechanism, A-VL, specifically designed for LVLMs. This approach recognizes the distinct attention patterns required for visual and language inputs, allowing for a more tailored management of resources. By optimizing how we handle attention for different modalities\u2014storing critical visual information while prioritizing local language context\u2014I have demonstrated significant improvements in memory usage and computational efficiency across various vision-language tasks. My research aims to push the boundaries of what LVLMs can achieve while making them more accessible and practical for real-world applications.",
+    "collaborators": [
+      "Junyang Zhang",
+      "Mu Yuan",
+      "Ruiguang Zhong",
+      "Huiyou Zhan",
+      "Ningkang Zhang",
+      "Chengchen Hu",
+      "Xiangyang Li"
+    ],
+    "domain": [
+      "Vision-Language Model",
+      "Adaptive Attention",
+      "Natural Language Processing",
+      "Computer Vision"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "cc5ba515-c4a6-48b0-984c-cd451d4bee05": {
+    "pk": "cc5ba515-c4a6-48b0-984c-cd451d4bee05",
+    "project_name": null,
+    "name": "Huiyou Zhan",
+    "bio": "I am a researcher dedicated to enhancing the efficiency of Large Vision-Language Models (LVLMs) by integrating advanced techniques from both computer vision and natural language processing. My recent work focuses on addressing the significant resource demands of these models during inference. I have developed A-VL, a novel adaptive attention mechanism specifically designed for LVLMs, which intelligently manages attention across different modalities\u2014visual and textual. \n\nBy recognizing that these modalities exhibit distinct attention patterns, I tailored A-VL to optimize memory usage and computational load. My approach involves caching critical visual information while prioritizing local language context, leading to substantial improvements in efficiency without sacrificing performance. Through extensive evaluations across multiple vision-language tasks and datasets, I have demonstrated that A-VL outperforms existing adaptive attention methods, paving the way for more resource-efficient applications of LVLMs. My research aims to push the boundaries of what is possible in the intersection of vision and language, making advanced AI systems more accessible and practical for real-world applications.",
+    "collaborators": [
+      "Junyang Zhang",
+      "Mu Yuan",
+      "Ruiguang Zhong",
+      "Puhan Luo",
+      "Ningkang Zhang",
+      "Chengchen Hu",
+      "Xiangyang Li"
+    ],
+    "domain": [
+      "Vision-Language Model",
+      "Adaptive Attention",
+      "Natural Language Processing",
+      "Computer Vision"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "fb588c5a-a5c8-43ab-ba6a-a7316320608b": {
+    "pk": "fb588c5a-a5c8-43ab-ba6a-a7316320608b",
+    "project_name": null,
+    "name": "Ningkang Zhang",
+    "bio": "I am a researcher dedicated to enhancing the efficiency of Large Vision-Language Models (LVLMs) by integrating advanced adaptive attention techniques. My recent work focuses on addressing the substantial resource demands of these models during inference. I have developed a novel approach, A-VL, which tailors adaptive attention mechanisms specifically for LVLMs by managing attention for visual and language inputs separately. \n\nThrough my observations of distinct attention patterns in different modalities, I designed A-VL to optimize memory usage and computational load while maintaining performance. My extensive evaluations across various vision-language tasks and datasets demonstrate the effectiveness of this approach, showcasing significant improvements over existing adaptive attention methods. I am passionate about pushing the boundaries of what LVLMs can achieve, making them more accessible and efficient for real-world applications.",
+    "collaborators": [
+      "Junyang Zhang",
+      "Mu Yuan",
+      "Ruiguang Zhong",
+      "Puhan Luo",
+      "Huiyou Zhan",
+      "Chengchen Hu",
+      "Xiangyang Li"
+    ],
+    "domain": [
+      "Vision-Language Model",
+      "Adaptive Attention",
+      "Natural Language Processing",
+      "Computer Vision"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2cd13ce6-8178-4280-96b6-8b9f6f843252": {
+    "pk": "2cd13ce6-8178-4280-96b6-8b9f6f843252",
+    "project_name": null,
+    "name": "Chengchen Hu",
+    "bio": "I am a researcher specializing in blockchain technologies and their intersection with network performance and machine learning. My recent work has focused on optimizing Hyperledger Fabric, where I re-architected the validation phase to achieve significant performance improvements, including a 2x speedup for CouchDB. I have also explored the security implications of software-defined networks (SDN) and OpenFlow, proposing a novel inference attack model that highlights the limitations of flow table capacities, achieving over 80% accuracy in inferring network parameters.\n\nIn addition to these contributions, I have developed the Blockchain Machine, a hardware accelerator designed to enhance the scalability of Hyperledger Fabric. This innovation demonstrated up to a 12x speedup in block validation, showcasing the potential of hardware acceleration in permissioned blockchains.\n\nMy research also extends into the realm of vision-language models, where I have created A-VL, an adaptive attention mechanism tailored for large vision-language models. This work addresses the unique attention patterns of different modalities, leading to reduced memory usage and computational load while maintaining performance across various tasks. Through these projects, I aim to bridge the gap between theoretical advancements and practical applications, driving innovation in both blockchain and machine learning domains.",
+    "collaborators": [
+      "Haris Javaid",
+      "Gordon Brebner",
+      "Junyuan Leng",
+      "Yadong Zhou",
+      "Junjie Zhang",
+      "Ji Yang",
+      "Nathania Santoso",
+      "Mohit Upadhyay",
+      "Sundararajarao Mohan",
+      "Junyang Zhang"
+    ],
+    "domain": [
+      "Blockchain",
+      "Software-Defined Networking",
+      "Vision-Language Models",
+      "Hardware Acceleration"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "1c75d4ac-996f-4870-92fe-60849a24963a": {
+    "pk": "1c75d4ac-996f-4870-92fe-60849a24963a",
+    "project_name": null,
+    "name": "Xiangyang Li",
+    "bio": "I am a researcher dedicated to advancing the fields of computer vision and machine learning, with a particular focus on developing innovative methodologies that enhance model performance across various tasks. My recent work includes the introduction of 'FenceMask,' a novel data augmentation technique that simulates object occlusion to improve performance in fine-grained visual categorization and object detection tasks. This method has demonstrated significant improvements over existing approaches on datasets like CIFAR10, ImageNet, and COCO2017.\n\nIn addition to my work in computer vision, I have explored unsupervised text style transfer through the development of DAML-ATM, which leverages domain adaptive meta-learning to generalize across low-resource domains effectively. My research also addresses the challenges of scale-induced dataset bias in multi-scale CNN architectures, proposing scale-specific feature extractors that enhance recognition accuracy.\n\nI have systematically investigated the factors influencing fine-tuning in visual recognition, providing insights that guide the effective transfer of knowledge from source to target datasets. Furthermore, I have developed CTRL, a novel framework for click-through rate prediction that integrates collaborative and semantic signals efficiently, outperforming state-of-the-art models in both academic and industrial settings.\n\nMy interdisciplinary approach extends to quantum mechanics, where I have examined the relationship between entanglement and nonlocality in two-qubit systems, contributing to the theoretical understanding of these fundamental concepts. Through my research, I aim to bridge gaps between theory and application, driving advancements in both machine learning and quantum information science.",
+    "collaborators": [
+      "Xiang Long",
+      "Luis Herranz",
+      "Shuqiang Jiang",
+      "Pu Li",
+      "Yu Xia",
+      "Sujian Li",
+      "Bo Chen",
+      "Lu Hou",
+      "Ruiming Tang",
+      "Zhaofeng Su"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Text Style Transfer",
+      "Fine-tuning",
+      "Quantum Information"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

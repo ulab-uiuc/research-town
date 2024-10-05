@@ -1,0 +1,7 @@
+filename,average_bleu,average_rouge_l,average_bertscore,average_gpt_score
+research_bench_result_4o_single_agent.jsonl,0.185949,0.308869,0.266528,0.079000
+research_bench_result_4o.jsonl,0.156547,0.274340,0.223113,0.493000
+research_bench_result_llama3.1_72b_single_agent.jsonl,0.183175,0.304318,0.261098,0.061000
+research_bench_result_4o_mini_single_agent.jsonl,0.188034,0.310477,0.267995,0.078000
+research_bench_result_4o_mini.jsonl,0.161221,0.299208,0.268526,0.467000
+research_bench_result_llama3.1_72b.jsonl,0.122490,0.250678,0.189218,0.614000

@@ -1,0 +1,159 @@
+{
+  "16ec7662-1913-4e56-aed3-88320e597e39": {
+    "pk": "16ec7662-1913-4e56-aed3-88320e597e39",
+    "project_name": null,
+    "name": "Fengrun Zhang",
+    "bio": "I am a researcher dedicated to advancing the fields of sound detection, speech recognition, and voice conversion through innovative machine learning techniques. My recent work includes developing Anomalous Sound Detection based on Diffusion Models (ASD-Diffusion), which effectively identifies anomalies in factory environments by reconstructing acoustic features and employing a novel post-processing filter. This method has shown a significant performance improvement in real-world applications.\n\nI am also passionate about addressing challenges in Automatic Speech Recognition (ASR), particularly in code-switching scenarios. My approach integrates a speech-conditioned Large Language Model (LLM) with a Mixture of Experts (MoE) architecture, utilizing a unique Insertion and Deletion of Interruption Token (IDIT) mechanism to enhance text generation capabilities. This work has yielded substantial improvements over existing models.\n\nIn the realm of voice conversion, I have pioneered a Zero-Shot any-to-any Singing Voice Conversion method that leverages a clustering-based phoneme representation, allowing for precise manipulation of voice characteristics. My research emphasizes the importance of sound quality and timbre accuracy, contributing to advancements in voice conversion technology.\n\nAdditionally, I have made strides in multimodal emotion recognition, achieving first place in the MER2024-SEMI challenge with my EmoVCLIP model, which enhances video-based emotion recognition through innovative prompt learning techniques. My work in cross-age speaker verification focuses on disentangled representation learning, addressing the challenges posed by aging in voice recognition systems.\n\nOverall, my research aims to push the boundaries of audio and speech technologies, making them more robust and applicable in real-world scenarios.",
+    "collaborators": [
+      "Wang Geng",
+      "He Qu",
+      "Wangjin Zhou",
+      "Yiming Liu",
+      "Xiang Xie",
+      "Kai Guo",
+      "Hukai Huang",
+      "Cheng Yi",
+      "Wenhao Guan",
+      "Yi Zhao"
+    ],
+    "domain": [
+      "Anomaly Detection",
+      "Speech Recognition",
+      "Voice Conversion",
+      "Emotion Recognition"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "764a3644-813e-494e-b5ef-1bc7ba1f4ead": {
+    "pk": "764a3644-813e-494e-b5ef-1bc7ba1f4ead",
+    "project_name": null,
+    "name": "Wangjin Zhou",
+    "bio": "I am a researcher specializing in voice conversion, speech synthesis, and audio generation technologies. My recent work has focused on developing innovative methods for Zero-Shot Singing Voice Conversion (SVC), where I introduced a clustering-based phoneme representation that effectively separates content, timbre, and singing style. This advancement not only enhances voice characteristic manipulation but also significantly improves sound quality and timbre accuracy, as evidenced by extensive testing on over 10,000 hours of singing data.\n\nIn addition to SVC, I have explored the application of Mean Opinion Score (MOS) prediction in Fake Audio Detection (FAD), demonstrating how MOS can enhance training data selection and model fusion. My participation in the 2022 MOS prediction challenge led to a top-ranking performance, showcasing my ability to leverage self-supervised learning models for improved accuracy.\n\nI am also passionate about integrating supervised and unsupervised approaches for MOS prediction, resulting in a novel fusion model that has achieved remarkable success in various challenges. My research extends to the application of diffusion models in audio generation, where I have developed methods to enhance sample quality while reducing synthesis time.\n\nFurthermore, I am addressing the challenges of cross-age speaker verification through a disentangled representation learning framework, which has shown promising results in creating age-invariant speaker embeddings. My work aims to push the boundaries of voice technology, contributing to advancements in both academic research and practical applications.",
+    "collaborators": [
+      "Yi Zhao",
+      "Sheng Li",
+      "Fengrun Zhang",
+      "Yiming Liu",
+      "Wenhao Guan",
+      "Zhengdong Yang",
+      "Chenhui Chu",
+      "Raj Dabre",
+      "He Qu",
+      "Tatsuya Kawahara"
+    ],
+    "domain": [
+      "Speech Synthesis",
+      "Voice Conversion",
+      "Machine Learning",
+      "Audio Processing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0c7d22a7-3ad2-4148-9365-714c3e608b2e": {
+    "pk": "0c7d22a7-3ad2-4148-9365-714c3e608b2e",
+    "project_name": null,
+    "name": "Yiming Liu",
+    "bio": "I am a researcher with a strong focus on the intersection of materials science, astrophysics, and wireless communication technologies. My work delves into the intricate details of solar cell performance, particularly how variations in conduction and valence band-edge properties, along with localized defect states, influence device efficiency. By employing numerical modeling techniques, I have successfully integrated these factors into simulations that enhance our understanding of solar cell behavior.\n\nIn astrophysics, I explore the dynamics of neutron stars in the context of axion wind interactions, contributing to our understanding of pulsar timing arrays and their implications for axion-nucleon coupling. This research not only sheds light on fundamental physics but also connects theoretical predictions with observational data.\n\nMore recently, I have shifted my focus to wireless communication systems, particularly the role of intelligent reflecting surfaces (IRS) in enhancing energy efficiency. My work addresses the challenges posed by hardware impairments, providing analytical frameworks for optimizing system performance. I have developed models that improve wireless localization accuracy, even in obstructed environments, leveraging reconfigurable intelligent surfaces to achieve centimeter-level precision.\n\nThrough my diverse research endeavors, I aim to bridge theoretical insights with practical applications, driving advancements in renewable energy, fundamental physics, and next-generation communication technologies.",
+    "collaborators": [
+      "Erwu Liu",
+      "Rui Wang",
+      "Stephen Fonash",
+      "Jinneng Luo",
+      "Sichun Sun"
+    ],
+    "domain": [
+      "Solar Cell Performance",
+      "Wireless Communication",
+      "Neutron Stars",
+      "Intelligent Reflecting Surface"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "cde589bc-bf69-472b-a88f-29c085cea64d": {
+    "pk": "cde589bc-bf69-472b-a88f-29c085cea64d",
+    "project_name": null,
+    "name": "Wang Geng",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions.\n\nOne of my notable contributions is the development of Position-aware GNNs (P-GNNs), which effectively capture the positional context of nodes within a graph, significantly improving performance in tasks like link prediction and community detection. I also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of message-passing frameworks by incorporating node identities, leading to substantial accuracy improvements across various prediction tasks.\n\nRecognizing the challenges posed by dynamic graphs, I proposed the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments, enhancing scalability and real-world applicability. My research also delves into the architectural design space of GNNs, where I systematically analyze over 315,000 designs to provide guidelines for optimizing performance across different tasks.\n\nIn addition to my work on GNNs, I have explored automated machine learning (AutoML) techniques, developing methods like FALCON and AutoTransfer to improve the efficiency of model design searches. These innovations not only streamline the process of finding optimal architectures but also facilitate knowledge transfer across tasks, ultimately advancing the field of machine learning.\n\nThrough my research, I aim to bridge the gap between theoretical advancements and practical applications, contributing to a deeper understanding of graph-based learning and its potential in various domains.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "1be6de0c-940a-4c6b-94a4-f0aab2042426": {
+    "pk": "1be6de0c-940a-4c6b-94a4-f0aab2042426",
+    "project_name": null,
+    "name": "Yahui Shan",
+    "bio": "I am a researcher specializing in acoustic modeling and speaker verification, with a strong focus on leveraging contextual information to enhance performance in speech recognition tasks. My recent work includes the development of the minimal gated recurrent unit with input projection (mGRUIP) model, which effectively utilizes future context through a temporal convolution module. The revised version, mGRUIP-Ctx, demonstrates significant improvements over traditional LSTM models, achieving up to 38% better performance while maintaining low latency and computational costs.\n\nIn addition to my work on RNNs, I have explored the Mixture of Experts (MoE) approach, introducing the Dynamic Language Group-based MoE (DLG-MoE) tailored for bilingual and code-switching scenarios. This model employs a hierarchical routing mechanism that enhances flexibility and performance, achieving state-of-the-art results while allowing for efficient parameter pruning.\n\nMy research also addresses the challenges of cross-age speaker verification (CASV). I proposed a disentangled representation learning framework that minimizes mutual information between age- and identity-related embeddings, resulting in age-invariant speaker representations. This innovative approach has shown promising results across multiple test sets, highlighting my commitment to advancing the field of speaker verification.\n\nOverall, my work aims to push the boundaries of acoustic modeling and speaker verification, focusing on practical applications and real-world challenges in speech technology.",
+    "collaborators": [
+      "Jie Li",
+      "Xiaorui Wang",
+      "Yan Li",
+      "Hukai Huang",
+      "Shenghui Lu",
+      "He Qu",
+      "Wenhao Guan",
+      "Qingyang Hong",
+      "Lin Li",
+      "Fengrun Zhang"
+    ],
+    "domain": [
+      "Speech Recognition",
+      "Machine Learning",
+      "Disentangled Representation",
+      "Speaker Verification"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "be1f5bdb-a8ab-432d-b3f0-284e15ce045c": {
+    "pk": "be1f5bdb-a8ab-432d-b3f0-284e15ce045c",
+    "project_name": null,
+    "name": "Chen Zhang",
+    "bio": "I am a researcher with a diverse background in theoretical physics, artificial intelligence, and machine learning. My recent work has focused on the intersection of these fields, particularly in understanding complex systems and enhancing AI capabilities. I have explored the stability of Chern-Simons gauge theories, revealing insights into scale symmetry breaking, and investigated the properties of quark stars, contributing to our understanding of compact astrophysical objects and their gravitational wave signatures.\n\nIn the realm of AI, I have developed innovative models that improve task execution efficiency through a work state-centric approach, utilizing \"work notes\" to enhance task management. My research on Large Language Models (LLMs) addresses the critical balance between creativity and factual accuracy, introducing a user-controllable mechanism that allows for dynamic adjustments in response generation. This work demonstrates my commitment to advancing AI systems that are not only powerful but also reliable and adaptable.\n\nAdditionally, I have contributed to motion forecasting in autonomous driving, achieving top rankings in competitive challenges by integrating comprehensive vector map information into my models. My interdisciplinary approach combines theoretical insights with practical applications, aiming to push the boundaries of knowledge in both physics and AI. I am passionate about exploring new frontiers and fostering innovation in these rapidly evolving fields.",
+    "collaborators": [
+      "Honglin Sun",
+      "Chen Chen",
+      "Yandong Guo"
+    ],
+    "domain": [
+      "Quantum Field Theory",
+      "Graph Neural Network",
+      "AI Agents",
+      "Motion Forecasting"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

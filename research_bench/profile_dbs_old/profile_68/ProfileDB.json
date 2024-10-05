@@ -1,0 +1,152 @@
+{
+  "a9197c18-5c2b-41ea-8d4a-4388d27885d9": {
+    "pk": "a9197c18-5c2b-41ea-8d4a-4388d27885d9",
+    "project_name": null,
+    "name": "Sunny Gupta",
+    "bio": "I am a researcher dedicated to advancing the field of federated learning (FL) and its applications, particularly in healthcare and privacy-sensitive environments. My recent work focuses on addressing the challenges posed by cross-client variations in medical image data through innovative approaches like Cross-Client Variations Adaptive Federated Learning (CCVA-FL). This method transforms images into a common feature space, enabling effective model training while preserving privacy.\n\nIn addition to my work in federated learning, I have explored the intersection of data security and information hiding, providing a comprehensive review of techniques that enhance data protection. My research also delves into the realm of big data, where I analyze technologies that facilitate the processing and storage of vast datasets.\n\nMy interests extend to materials science, where I investigate excitonic condensation in 2D semiconductor heterostructures, proposing stable platforms for this phenomenon. I have also contributed to the understanding of 1D strongly correlated systems by developing methods to create flat bands in 2D materials.\n\nMost recently, I introduced Federated Learning with Enhanced Nesterov-Newton Sketch (FLeNS), a method that optimizes communication efficiency in federated settings while maintaining rapid convergence. This work highlights my commitment to bridging theoretical advancements with practical applications, particularly in edge-computing scenarios.\n\nThrough my research, I aim to push the boundaries of machine learning and materials science, fostering innovations that address real-world challenges while ensuring privacy and security.",
+    "collaborators": [
+      "Amit Sethi",
+      "Richa Gupta",
+      "Anuradha Singhal",
+      "Boris I. Yakobson",
+      "Alex Kutana",
+      "Henry Yu",
+      "Xiaochen Yang",
+      "Gerbrand Ceder",
+      "Mohit",
+      "Pankhi Kashyap"
+    ],
+    "domain": [
+      "Federated Learning",
+      "Data Security",
+      "Big Data",
+      "Quantum Materials"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "5dab6c8c-fc18-4c82-8c55-857b1293e61f": {
+    "pk": "5dab6c8c-fc18-4c82-8c55-857b1293e61f",
+    "project_name": null,
+    "name": "Mohit",
+    "bio": "I am a researcher with a diverse background in identity assurance, algorithm development, and applied mathematics. My work spans various domains, including the evolution of digital identity frameworks, where I propose a Digital Identity Zone Model (DIZM) to address the complexities of identity management in a rapidly changing technological landscape. I have also explored innovative algorithms for exploratory projection pursuit, enhancing the applicability of data analysis techniques across different datasets.\n\nMy research delves into number theory, particularly in establishing bounds for class numbers in quadratic fields, and I have contributed to the understanding of optimal transport problems through the development of efficient algorithms. I am particularly interested in the intersection of theory and application, as demonstrated in my work on low-density parity-check codes over Markov noise channels and the analysis of caching networks through partition theory.\n\nAdditionally, I have investigated the role of attention and memory in complex reasoning tasks, proposing a cognitive architecture that integrates these elements to improve performance in visual reasoning challenges. My recent studies also focus on the geometric and algebraic aspects of disjunctive programming, providing new relaxation hierarchies that unify various problem classes.\n\nOverall, my research is driven by a commitment to advancing theoretical foundations while addressing practical challenges in technology and data science, with a keen interest in fostering innovation through interdisciplinary collaboration.",
+    "collaborators": [
+      "Mohit Mishra",
+      "Mohit Singh",
+      "Mohit Bansil",
+      "Mohit Kumar",
+      "Mohit Daga",
+      "Mohit Kohli",
+      "Mohit Dayal",
+      "Mohit Thakur",
+      "Mohit Gola",
+      "Mohit Mayank"
+    ],
+    "domain": [
+      "Identity Management",
+      "Optimal Transport",
+      "Machine Learning",
+      "Graph Theory"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0db01e01-6ae5-41fb-9bbc-d3fd749fd25c": {
+    "pk": "0db01e01-6ae5-41fb-9bbc-d3fd749fd25c",
+    "project_name": null,
+    "name": "Pankhi Kashyap",
+    "bio": "I am a researcher dedicated to advancing the fields of federated learning and machine learning for structural health monitoring. My recent work focuses on addressing the critical challenge of communication efficiency in federated learning, particularly through the development of Federated Learning with Enhanced Nesterov-Newton Sketch (FLeNS). This innovative method combines the acceleration of Nesterov's approach with adaptive Hessian sketching, allowing for super-linear convergence rates while significantly reducing communication overhead. My theoretical analysis and extensive empirical evaluations demonstrate FLeNS's state-of-the-art performance, especially in privacy-sensitive and edge-computing scenarios.\n\nIn addition to federated learning, I am passionate about applying machine learning to real-world problems, such as ultrasonic guided wave structural health monitoring (GW-SHM). I have explored the potential of TinyML to create lightweight models that can be deployed directly on embedded edge devices, overcoming the limitations posed by traditional deep learning models. My work includes developing an unsupervised learning framework for damage detection in honeycomb composite sandwich structures, validated through both simulations and experiments across varying temperatures. By integrating these solutions with hardware like the Xilinx Artix-7 FPGA, I aim to bridge the gap between advanced machine learning techniques and practical applications in structural health monitoring.",
+    "collaborators": [
+      "Sunny Gupta",
+      "Mohit",
+      "Pranav Jeevan",
+      "Amit Sethi",
+      "Kajal Shivgan",
+      "Sheetal Patil",
+      "Ramana Raja B",
+      "Sagar Mahajan",
+      "Sauvik Banerjee",
+      "Siddharth Tallur"
+    ],
+    "domain": [
+      "Federated Learning",
+      "Machine Learning",
+      "Edge Computing",
+      "TinyML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "08b85dc0-881e-4a20-8e25-89cc6b373d58": {
+    "pk": "08b85dc0-881e-4a20-8e25-89cc6b373d58",
+    "project_name": null,
+    "name": "Pranav Jeevan",
+    "bio": "I am a researcher dedicated to advancing the field of computer vision through innovative neural architectures that prioritize efficiency and generalization. My recent work has focused on developing hybrid models that combine the strengths of convolutional neural networks (CNNs) and vision transformers (ViTs) while addressing their computational limitations. For instance, I introduced Convolutional X-formers for Vision (CXV), which utilizes linear attention mechanisms to significantly reduce GPU usage while maintaining high classification accuracy.\n\nI have also explored the potential of wavelet transforms in my WaveMix architecture, which leverages multi-scale 2D discrete wavelet transforms for spatial token mixing. This approach has proven effective in various tasks, including image super-resolution and inpainting, achieving state-of-the-art results while requiring fewer resources than traditional transformer models.\n\nMy research extends to evaluating lightweight, pre-trained CNN backbones across diverse domains, providing insights that help practitioners select the most suitable models for specific applications, especially in scenarios with limited data. Additionally, I have investigated the robustness of deep learning architectures in medical image analysis, particularly in breast cancer histopathology, where I employed graph neural networks to capture spatial relationships within images.\n\nThrough my work, I aim to democratize access to advanced computer vision techniques, making them more accessible to researchers and practitioners with limited computational resources. I am passionate about pushing the boundaries of what is possible in machine learning, particularly in the context of healthcare and real-world applications.",
+    "collaborators": [
+      "Amit Sethi",
+      "Ravi Kant Gupta",
+      "Nikhil Cherian Kurian",
+      "Amit sethi",
+      "Dharshan Sampath Kumar",
+      "Akella Srinidhi",
+      "Pasunuri Prathiba",
+      "Neeraj Nixon",
+      "Ashish Prasad",
+      "Kavitha Viswanathan"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Neural Networks",
+      "Graph Neural Network",
+      "Federated Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "bfba0927-d90e-4ffd-bcf3-16ed1939f4e4": {
+    "pk": "bfba0927-d90e-4ffd-bcf3-16ed1939f4e4",
+    "project_name": null,
+    "name": "Amit Sethi",
+    "bio": "I am a researcher dedicated to advancing the field of computer vision and deep learning, with a particular focus on developing efficient neural architectures and enhancing model interpretability. My recent work includes the introduction of WaveMix, a novel architecture that leverages multi-scale discrete wavelet transforms for spatial token mixing, providing a resource-efficient alternative to traditional vision transformers and CNNs. This architecture has demonstrated competitive performance across various datasets while significantly reducing computational requirements.\n\nI am also passionate about improving the interpretability of neural networks. My research on network inversion techniques has provided insights into the decision-making processes of these models, making them more trustworthy, especially in safety-critical applications. Additionally, I have explored the challenges of federated learning in healthcare, proposing methods to address cross-client variations in medical image data while preserving privacy.\n\nMy systematic evaluations of lightweight CNN backbones have yielded actionable insights for practitioners, particularly in scenarios involving small datasets. I have also contributed to the development of graph convolutional networks for cancer classification, emphasizing the importance of spatial relationships in histopathology images.\n\nThrough my work, I aim to bridge the gap between high-performance deep learning models and practical applications, ensuring that they are not only effective but also interpretable and accessible for real-world use. My commitment to advancing the field is reflected in my continuous exploration of innovative solutions that address the complexities of modern computer vision tasks.",
+    "collaborators": [
+      "Deepak Anand",
+      "Pranav Jeevan",
+      "Pirzada Suhail",
+      "Shrey Gadiya",
+      "Sunny Gupta",
+      "Himanshu Pradeep Aswani",
+      "Goutham Ramakrishnan",
+      "Yaman Dang",
+      "Mookund Sureka",
+      "Abhijeet Patil"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Deep Learning",
+      "Neural Networks",
+      "Federated Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

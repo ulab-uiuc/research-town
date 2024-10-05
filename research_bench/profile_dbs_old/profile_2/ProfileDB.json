@@ -1,0 +1,122 @@
+{
+  "b5dedb57-64b7-4c6f-a74e-cd38c23dc76e": {
+    "pk": "b5dedb57-64b7-4c6f-a74e-cd38c23dc76e",
+    "project_name": null,
+    "name": "Myles Foley",
+    "bio": "I am a researcher dedicated to enhancing network security through the application of advanced machine learning techniques, particularly in the realm of autonomous agents and reinforcement learning. My work addresses the inherent challenges faced by defenders in the cybersecurity landscape, where attackers only need to succeed once while defenders must thwart every attempt. I have developed novel reinforcement learning agents capable of effectively defending against sophisticated attacks, including those from advanced persistent threats (APTs).\n\nIn my recent projects, I have introduced an end-to-end methodology for studying attack strategies and designing defense agents, achieving significant performance improvements over previous approaches. I also explore the implications of generative large language models (LLMs) in terms of accountability and copyright issues, proposing methods to trace the origins of fine-tuned models back to their pre-trained bases.\n\nAdditionally, I have investigated the resilience of communication networks in disaster relief scenarios, particularly when faced with compromised drones. By leveraging multi-agent deep reinforcement learning, I have developed strategies that maximize communication bandwidth despite ongoing adversarial interference. My research emphasizes the importance of information-rich observations, expert-guided learning, and reward optimization to enhance the performance of learning-based agents.\n\nThrough my work, I aim to bridge the gap between theoretical advancements in machine learning and practical applications in network defense, ultimately contributing to more robust and autonomous cybersecurity solutions.",
+    "collaborators": [
+      "Chris Hicks",
+      "Vasilios Mavroudis",
+      "Kate Highnam",
+      "Mia Wang",
+      "Zoe M",
+      "Ambrish Rawat",
+      "Taesung Lee",
+      "Yufang Hou",
+      "Gabriele Picco",
+      "Giulio Zizzo"
+    ],
+    "domain": [
+      "Reinforcement Learning",
+      "Network Security",
+      "Autonomous Agents",
+      "Generative Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "030b0a03-3eaa-458c-bd2b-44ca3e1ea485": {
+    "pk": "030b0a03-3eaa-458c-bd2b-44ca3e1ea485",
+    "project_name": null,
+    "name": "Chris Hicks",
+    "bio": "I am a researcher dedicated to leveraging advanced technologies to address pressing societal challenges, particularly in the realms of public health and cybersecurity. My recent work has focused on developing privacy-preserving solutions for contact tracing during the COVID-19 pandemic, where I proposed innovative methods that balance user privacy with the need for effective data sharing. I have also explored the accessibility of digital identity solutions for users with legacy mobile devices, ensuring that vulnerable populations are not left behind in the digital age.\n\nIn the field of machine learning, I have investigated the adversarial contextual bandit problem and developed algorithms that enhance decision-making efficiency in dynamic environments. My research extends to deep reinforcement learning, where I study the impact of reward structures on training autonomous agents for network defense tasks. I have also tackled the challenge of detecting backdoors in deep reinforcement learning policies, proposing novel detection methods that enhance security.\n\nMy work on immunity passports and health tokens reflects my commitment to ethical technology use, aiming to create non-discriminatory systems that protect public health while minimizing individual risk. Through my research, I strive to contribute to a future where technology serves as a force for good, addressing critical issues while respecting individual rights and privacy.",
+    "collaborators": [
+      "Vasilios Mavroudis",
+      "Jon Crowcroft",
+      "Stephen Pasteris",
+      "David Butler",
+      "Myles Foley",
+      "James Bell",
+      "Carsten Maple",
+      "Kate Highnam",
+      "Elizabeth Bates",
+      "Alberto Caron"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Network Security",
+      "Privacy-Preserving Protocols",
+      "Reinforcement Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "46304792-0cdf-42aa-9c1e-dae446acfb84": {
+    "pk": "46304792-0cdf-42aa-9c1e-dae446acfb84",
+    "project_name": null,
+    "name": "Kate Highnam",
+    "bio": "I am a researcher specializing in network security, particularly in the detection of malicious activities and the development of autonomous defense mechanisms. My recent work has focused on combating domain generation algorithms (DGAs) used by botnets and malware. I developed a hybrid neural network model, Bilbo, which combines convolutional neural networks (CNNs) and long short-term memory (LSTM) networks for effective DGA detection. This model has proven to outperform existing architectures in various classification tasks, successfully identifying potential threats in real-time network traffic.\n\nIn addition to DGA detection, I explore the application of reinforcement learning in network defense. I designed a novel agent capable of defending against advanced persistent threats in a simulated network environment, demonstrating its effectiveness in countering continual attacks. My research also delves into the visualization of symmetries in neural networks through an efficient algorithm called GENNI, which enhances our understanding of model identifiability and optimization.\n\nI am particularly interested in establishing causal relationships in intrusion research, employing adaptive designs inspired by clinical trials to improve the accuracy of our findings. My work in this area has led to significant improvements in honeypot deployment studies, allowing for more efficient data collection and analysis.\n\nLastly, I investigate the resilience of communication networks in hostile environments, utilizing multi-agent deep reinforcement learning to develop strategies that maximize bandwidth despite adversarial interference. My goal is to contribute to the advancement of network security through innovative methodologies and practical applications.",
+    "collaborators": [
+      "Nicholas R. Jennings",
+      "Myles Foley",
+      "Chris Hicks",
+      "Vasilios Mavroudis",
+      "Domenic Puzio",
+      "Song Luo",
+      "Daniel Lengyel",
+      "Janith Petangoda",
+      "Isak Falk",
+      "Michalis Lazarou"
+    ],
+    "domain": [
+      "Network Security",
+      "Deep Learning",
+      "Reinforcement Learning",
+      "Causal Inference"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e0b6df62-8316-4397-9105-4c046c71764f": {
+    "pk": "e0b6df62-8316-4397-9105-4c046c71764f",
+    "project_name": null,
+    "name": "Vasilios Mavroudis",
+    "bio": "I am a researcher dedicated to addressing complex challenges in the fields of cybersecurity, financial technology, and machine learning. My work spans a variety of topics, including the intricacies of order matching systems in equity exchanges, where I investigate market manipulation techniques and propose technical solutions to enhance market fairness. I have developed frameworks like Libra, which aim to create resilient market policies, and Snappy, a novel approach for enabling fast and secure payments on permissionless blockchains.\n\nIn addition to my work in finance, I focus on the security of digital communications, particularly in the context of webpage fingerprinting and the vulnerabilities of the TLS protocol. My research has led to the development of methodologies that enhance the security of JavaCard applications and improve access to cryptographic primitives for resource-constrained devices.\n\nI am also deeply engaged in the realm of autonomous network defense, utilizing deep reinforcement learning to create agents capable of defending against sophisticated cyber threats. My studies on adversarial contextual bandits and out-of-distribution sample detection further contribute to the understanding of machine learning in dynamic environments.\n\nThrough my research, I strive to bridge the gap between theoretical frameworks and practical applications, ensuring that my findings not only advance academic knowledge but also provide tangible benefits to industries and communities. My commitment to open-source solutions and collaborative methodologies reflects my belief in the importance of transparency and accessibility in technology.",
+    "collaborators": [
+      "Chris Hicks",
+      "Stephen Pasteris",
+      "Petr Svenda",
+      "Myles Foley",
+      "Hayden Melton",
+      "Jamie Hayes",
+      "Jon Crowcroft",
+      "Michael Veale",
+      "Kate Highnam",
+      "Elizabeth Bates"
+    ],
+    "domain": [
+      "Cybersecurity",
+      "Financial Technology",
+      "Machine Learning",
+      "Blockchain"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

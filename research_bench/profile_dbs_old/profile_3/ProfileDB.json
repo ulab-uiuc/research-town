@@ -1,0 +1,148 @@
+{
+  "dbe23508-3619-4a3c-b78b-46219a139f27": {
+    "pk": "dbe23508-3619-4a3c-b78b-46219a139f27",
+    "project_name": null,
+    "name": "Peilin Wu",
+    "bio": "I am a researcher dedicated to exploring innovative solutions in speaker diarization, reinforcement learning, and blockchain technology. My recent work has focused on enhancing text-based speaker diarization by developing new evaluation metrics\u2014Text-based Diarization Error Rate and Diarization F1\u2014that incorporate contextual information for a more comprehensive analysis of errors. This research is complemented by tools like align4d and TranscribeView, which facilitate high-quality data creation for dialogue systems.\n\nIn the realm of reinforcement learning, I have introduced LoopSR, a lifelong policy adaptation framework that leverages transformer-based encoders and contrastive learning to improve legged locomotion through sim-to-real transfer. This approach addresses the challenges posed by the No Free Lunch theorem, ensuring robust performance in diverse environments while maintaining data efficiency.\n\nAdditionally, I have investigated the critical aspects of blockchain technology, particularly the \"Blockchain Trilemma,\" by evaluating leading proof-of-stake systems like Algorand and Ethereum 2.0. My research provides insights into decentralization, security, and scalability, contributing to a deeper understanding of blockchain's role in the digital economy and metaverse.\n\nThrough my work, I aim to bridge theoretical advancements with practical applications, fostering innovation across these dynamic fields.",
+    "collaborators": [
+      "Chen Gong",
+      "Jinho D. Choi",
+      "Weiji Xie",
+      "Jiahang Cao",
+      "Hang Lai",
+      "Weinan Zhang",
+      "Yihang Fu",
+      "Mingwei Jing",
+      "Jiaolun Zhou",
+      "Ye Wang"
+    ],
+    "domain": [
+      "Speaker Diarization",
+      "Reinforcement Learning",
+      "Blockchain Technology",
+      "Evaluation Metrics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "7d69c5fe-4814-4229-9efd-cdc3b4620362": {
+    "pk": "7d69c5fe-4814-4229-9efd-cdc3b4620362",
+    "project_name": null,
+    "name": "Weiji Xie",
+    "bio": "I am a researcher specializing in reinforcement learning (RL), particularly in the context of legged locomotion and multi-agent systems. My recent work focuses on bridging the gap between simulation and real-world applications, as exemplified by my development of LoopSR, a lifelong policy adaptation framework. This innovative approach leverages transformer-based encoders and contrastive learning to enhance data efficiency and improve performance in both sim-to-sim and sim-to-real environments.\n\nIn addition to my work on sim-to-real transfer, I have tackled the challenges of offline multi-agent RL, particularly in competitive settings. My algorithm, Off-FSP, is the first practical model-free offline RL method designed for competitive games. By simulating interactions with various opponents and employing an Offline Self-Play framework, I have demonstrated the potential to approximate Nash equilibrium in partially covered datasets, significantly outperforming existing baselines in games like Leduc Hold'em Poker.\n\nThrough my research, I aim to push the boundaries of RL applications, ensuring that policies not only adapt to diverse environments but also excel in specific real-world scenarios. My work reflects a commitment to advancing the field of RL while addressing practical challenges in dynamic and competitive settings.",
+    "collaborators": [
+      "Weinan Zhang",
+      "Peilin Wu",
+      "Jiahang Cao",
+      "Hang Lai",
+      "Jingxiao Chen",
+      "Yong yu",
+      "Ying Wen"
+    ],
+    "domain": [
+      "Reinforcement Learning",
+      "Multi-Agent Systems",
+      "Sim-to-Real Transfer"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "db15e0cf-de02-452e-aaad-c67c267a6a07": {
+    "pk": "db15e0cf-de02-452e-aaad-c67c267a6a07",
+    "project_name": null,
+    "name": "Jiahang Cao",
+    "bio": "I am a dedicated researcher specializing in the intersection of spiking neural networks (SNNs), reinforcement learning (RL), and knowledge graph embeddings (KGE). My recent work has focused on enhancing the performance and efficiency of SNNs, particularly through innovative models like the Adaptive-Firing Neuron Model (AdaFire) and the Spiking Denoising Diffusion Probabilistic Models (SDDPM). I am passionate about exploring the generative potential of SNNs, demonstrating their capabilities in high-quality sample generation while maintaining energy efficiency.\n\nIn the realm of reinforcement learning, I have developed frameworks such as LoopSR, which leverages lifelong policy adaptation to improve sim-to-real transfer, and the World Model-based Perception (WMP) method, which builds a world model for better decision-making in legged locomotion. My research also delves into the robustness of large vision-language models (LVLMs) against typographic attacks, where I introduced a comprehensive Typographic Dataset to assess vulnerabilities and improve model resilience.\n\nI am particularly interested in the mathematical foundations of KGE techniques, having conducted a systematic review that categorizes models based on algebraic, geometric, and analytical perspectives. My goal is to inspire future research by highlighting the importance of representation spaces in designing effective KGE models.\n\nThrough my work, I aim to push the boundaries of what is possible in AI, focusing on energy-efficient solutions and robust models that can thrive in real-world applications. I am excited about the potential of my research to contribute to advancements in robotics, generative modeling, and multimodal learning.",
+    "collaborators": [
+      "Renjing Xu",
+      "Hao Cheng",
+      "Ziqing Wang",
+      "Qiang Zhang",
+      "Erjia Xiao",
+      "Jize Zhang",
+      "Kaidi Xu",
+      "Yuetong Fang",
+      "Jiaxu Wang",
+      "Jingkai Sun"
+    ],
+    "domain": [
+      "Spiking Neural Networks",
+      "Reinforcement Learning",
+      "Knowledge Graph Embedding",
+      "Multimodal Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "72f913dc-8b0a-4a07-ae25-5f0fb496a3af": {
+    "pk": "72f913dc-8b0a-4a07-ae25-5f0fb496a3af",
+    "project_name": null,
+    "name": "Hang Lai",
+    "bio": "I am a researcher deeply engaged in the intersection of agent-based modeling, reinforcement learning, and robotics. My work explores innovative approaches to simulate complex systems, including the modeling of interstellar societies within a relativistic framework through my open-source project, \"Relativitization.\" I have developed novel methodologies such as Bidirectional Model-based Policy Optimization (BMPO), which enhances sample efficiency and performance by integrating both forward and backward dynamics models.\n\nRecognizing the challenges of transferring learned policies from simulation to real-world applications, I introduced the Historical Information Bottleneck (HIB) method. This approach distills privileged knowledge from historical trajectories, significantly narrowing the sim-to-real gap and improving generalizability in robotic control tasks. Additionally, I have pioneered a lifelong policy adaptation framework, LoopSR, which leverages transformer-based encoders and continual training to optimize performance across diverse environments.\n\nMy research is driven by a passion for creating robust, adaptable systems that can thrive in complex, dynamic settings, and I am committed to advancing the field of reinforcement learning to bridge the gap between simulated and real-world applications.",
+    "collaborators": [
+      "Weinan Zhang",
+      "Kwun Hang Lai",
+      "Jian Shen",
+      "Yong Yu",
+      "Haoran He",
+      "Chenjia Bai",
+      "Lingxiao Wang",
+      "Peilin Wu",
+      "Weiji Xie",
+      "Jiahang Cao"
+    ],
+    "domain": [
+      "Reinforcement Learning",
+      "Agent-based Modeling",
+      "Simulation",
+      "Robotics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "057cd341-b131-4d8b-a21a-9597ea59baa6": {
+    "pk": "057cd341-b131-4d8b-a21a-9597ea59baa6",
+    "project_name": null,
+    "name": "Weinan Zhang",
+    "bio": "I am a researcher with a diverse background in algebra, machine learning, and information retrieval, focusing on the intersection of theoretical frameworks and practical applications. My recent work has delved into the realm of $\\imath$quantum groups, where I have contributed to the development of current presentations and explored the symmetries of these structures through relative braid group actions. This has allowed me to establish significant properties and applications of $\\imath$quantum groups, particularly in the context of Kac-Moody types.\n\nIn addition to my algebraic research, I have a strong interest in the application of generative adversarial networks (GANs) to discrete data fitting, particularly in information retrieval scenarios. I have developed frameworks like IRGAN and explored sequential data generation, demonstrating the versatility of GANs beyond traditional continuous data applications.\n\nMy work also extends to practical challenges in online advertising, where I have formulated innovative approaches to real-time bidding and user behavior targeting. By leveraging statistical arbitrage mining and deep learning techniques, I aim to optimize advertising strategies and improve user response predictions.\n\nOverall, my research is characterized by a commitment to bridging theoretical advancements with real-world applications, particularly in the fields of quantum algebra and machine learning. I am passionate about exploring new methodologies and frameworks that can enhance our understanding and capabilities in these areas.",
+    "collaborators": [
+      "Jun Wang",
+      "Kang Lu",
+      "Weiqiang Wang",
+      "Ting Liu",
+      "Kan Ren",
+      "Ming Lu",
+      "Ruiqi Yang",
+      "Han Zhang",
+      "Quan Gan",
+      "David Wipf"
+    ],
+    "domain": [
+      "Quantum Groups",
+      "Machine Learning",
+      "Information Retrieval",
+      "Multi-Agent Systems"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

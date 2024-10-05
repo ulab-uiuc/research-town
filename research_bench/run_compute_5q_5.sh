@@ -1,0 +1,1 @@
+python compute_metric_5q.py ./results_combine/main_table/research_bench_result_llama3.1_72b.jsonl ./results_combine/main_compute_5q/research_bench_result_llama3.1_72b.jsonl

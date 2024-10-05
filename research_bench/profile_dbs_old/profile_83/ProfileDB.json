@@ -1,0 +1,194 @@
+{
+  "9bf76800-d7ad-43c8-8a8b-e1c3612fae3a": {
+    "pk": "9bf76800-d7ad-43c8-8a8b-e1c3612fae3a",
+    "project_name": null,
+    "name": "Mao Ye",
+    "bio": "I am a researcher dedicated to advancing the fields of operating systems, machine learning, and vehicular ad-hoc networks (VANETs). My recent work focuses on optimizing the integration of emerging non-volatile memory (NVM) technologies into operating systems, particularly through my development of the FOX auditing scheme, which balances performance and security in direct-access file systems. I have also explored efficient statistical methods for uncertainty quantification in machine learning, proposing innovative approaches that enhance the performance of bootstrap methods and multi-task learning.\n\nIn the realm of deep learning, I have contributed to the understanding of model pruning and the development of First Hitting Diffusion Models (FHDM), which improve data generation processes across various domains. My research extends to natural language processing, where I have developed certified robust methods to enhance model security against adversarial attacks.\n\nAdditionally, I have a strong focus on VANETs, where I have designed novel routing protocols and scheduling algorithms to improve communication efficiency and reliability in dynamic environments. My work in this area aims to enhance vehicle-to-everything (V2X) communication, ultimately contributing to safer and more efficient transportation systems.\n\nThrough my research, I strive to bridge theoretical advancements with practical applications, ensuring that my contributions not only push the boundaries of knowledge but also have a meaningful impact on real-world systems.",
+    "collaborators": [
+      "Qiang Liu",
+      "Lin Guan",
+      "Lemeng Wu",
+      "Yong Zhang",
+      "Mohammed Quddus",
+      "Tongzheng Ren",
+      "Chengyue Gong",
+      "Haitao Wang",
+      "Zheqian Chen",
+      "Chunyan Wang"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Network Security",
+      "Vehicular Networks",
+      "Uncertainty Quantification"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b1fc4a87-0f52-4eee-affe-a6e9e56851cc": {
+    "pk": "b1fc4a87-0f52-4eee-affe-a6e9e56851cc",
+    "project_name": null,
+    "name": "Gregory P. Meyer",
+    "bio": "I am a researcher dedicated to enhancing object detection systems, particularly in the context of autonomous driving. My work primarily focuses on improving the robustness and efficiency of deep learning models through innovative approaches to loss functions, uncertainty estimation, and model architecture. \n\nIn my recent research, I proposed a novel probabilistic interpretation of the Huber loss, linking it to Kullback-Leibler divergence between Laplace distributions. This insight allows for a more intuitive selection of hyper-parameters based on the noise characteristics of the data, which I demonstrated through case studies involving advanced object detectors like Faster R-CNN and RetinaNet.\n\nI also developed methods to quantify uncertainty in object detection, recognizing that reliable uncertainty estimates are crucial for autonomous systems to make informed decisions. My approach not only enhances the accuracy of learned distributions but also improves overall detection performance.\n\nBalancing efficiency and accuracy is a key challenge in deploying deep learning models for real-time applications. To address this, I introduced a dynamic token halting mechanism for transformer-based 3D object detectors, which optimizes the trade-off between performance and computational efficiency. This work culminated in the development of LaserNet, a computationally efficient method for 3D object detection from LiDAR data, which leverages the native range view of the sensor to achieve state-of-the-art performance while significantly reducing runtime.\n\nThrough my research, I aim to contribute to the advancement of safe and reliable autonomous driving technologies.",
+    "collaborators": [
+      "Niranjan Thakurdesai",
+      "Mao Ye",
+      "Yuning Chai",
+      "Qiang Liu",
+      "Ankit Laddha",
+      "Eric Kee",
+      "Carlos Vallespi-Gonzalez",
+      "Carl K. Wellington"
+    ],
+    "domain": [
+      "Object Detection",
+      "Deep Learning",
+      "Autonomous Driving",
+      "Uncertainty Estimation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "44980d89-ab4f-474a-964d-3af5fa543598": {
+    "pk": "44980d89-ab4f-474a-964d-3af5fa543598",
+    "project_name": null,
+    "name": "Zaiwei Zhang",
+    "bio": "I am a researcher dedicated to advancing the field of 3D computer vision and deep learning. My recent work has focused on developing innovative models and techniques for 3D object detection, reconstruction, and scene synthesis. One of my notable contributions is H3DNet, which effectively predicts oriented object bounding boxes from colorless 3D point clouds, achieving state-of-the-art results on datasets like ScanNet and SUN RGB-D. \n\nI have also explored self-supervised pretraining methods for 3D recognition tasks, demonstrating that they can outperform traditional supervised approaches, particularly in scenarios with limited labeled data. My work on the HM3D-ABO dataset aims to bridge the gap between synthetic and real-world data, providing a valuable resource for various 3D vision tasks.\n\nIn addition to object detection, I have investigated joint learning across diverse datasets, optimizing neural networks to leverage shared information for improved performance. My research on path-invariance in directed map networks has introduced novel self-supervision constraints that enhance 3D semantic segmentation.\n\nI am passionate about creating robust models that can handle the complexities of real-world data, as evidenced by my work on FvOR, which refines 3D geometry and camera pose estimation from noisy inputs. My recent endeavors also include knowledge distillation from vision-language models, which has shown promising results in enhancing visual recognition tasks.\n\nOverall, my research aims to push the boundaries of 3D vision, making significant strides in both theoretical understanding and practical applications.",
+    "collaborators": [
+      "Qixing Huang",
+      "Bo Sun",
+      "Haitao Yang",
+      "Zhenpei Yang",
+      "Xiangru Huang",
+      "Chongyang Ma",
+      "Li Erran Li",
+      "Chandrajit Bajaj",
+      "Gregory P. Meyer",
+      "Rohit Girdhar"
+    ],
+    "domain": [
+      "3D Object Detection",
+      "Computer Vision",
+      "Deep Learning",
+      "Knowledge Distillation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9009e459-5ccd-4146-a753-d12386d11d4b": {
+    "pk": "9009e459-5ccd-4146-a753-d12386d11d4b",
+    "project_name": null,
+    "name": "Dennis Park",
+    "bio": "I am a researcher specializing in 3D object detection from single images, with a particular focus on leveraging monocular depth estimation to enhance detection accuracy. My recent work has led to the development of DD3D, an innovative end-to-end, single-stage monocular 3D object detector that effectively integrates depth estimation and 3D detection. This architecture allows for seamless information transfer, enabling us to harness large-scale unlabeled pre-training data without the complexities and overfitting issues associated with traditional two-stage methods.\n\nI am passionate about pushing the boundaries of 3D detection techniques, particularly in how depth representation can be aligned with target domains in unsupervised settings. By utilizing readily available LiDAR and RGB video data, I have demonstrated significant improvements in 3D detection performance on challenging benchmarks like KITTI and NuScenes. My multi-task learning approach not only enhances the robustness of depth representations but also maintains the efficiency of single-task networks during inference.\n\nThrough my research, I aim to bridge the gap between traditional lidar-based methods and monocular approaches, ultimately contributing to more effective and scalable solutions in the field of computer vision.",
+    "collaborators": [
+      "Vitor Guizilini",
+      "Jie Li",
+      "Adrien Gaidon",
+      "Rares Ambrus",
+      "Dian Chen"
+    ],
+    "domain": [
+      "3D Object Detection",
+      "Monocular Depth Estimation",
+      "Self-Supervised Learning",
+      "Computer Vision"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "f5190ac7-fcd3-4d05-8ff8-9c1ad8209666": {
+    "pk": "f5190ac7-fcd3-4d05-8ff8-9c1ad8209666",
+    "project_name": null,
+    "name": "Siva Karthik Mustikovela",
+    "bio": "I am a researcher dedicated to advancing the fields of computer vision and deep learning, with a particular focus on integrating real and synthetic data to enhance model performance. My recent work includes the development of a novel-view augmentation (NOVA) strategy for training Neural Radiance Fields (NeRFs), which significantly reduces blending artifacts in dynamic object composition within static scenes. I have also pioneered methods that leverage virtual objects to augment real-world imagery, improving semantic instance segmentation and object detection without the need for extensive manual labeling.\n\nMy research extends into self-supervised learning, where I have explored the potential of using unlabelled image collections to train viewpoint estimation networks, achieving competitive results against fully supervised methods. I introduced the Self-Supervised Object Detection (SSOD) framework, which utilizes controllable GANs to synthesize and detect objects from real-world images, further pushing the boundaries of self-supervised learning.\n\nAdditionally, I have tackled challenges in 6D pose estimation for partly occluded objects and developed a geometry-aware image generation method that combines the strengths of deep learning with traditional graphics rendering techniques. My work on multimodal models has also led to the creation of a user-friendly interface for region-specific comprehension in visual tasks.\n\nThrough these contributions, I aim to bridge the gap between synthetic and real data, making machine learning models more robust and efficient in real-world applications. My code and datasets are publicly available to foster collaboration and further research in these exciting areas.",
+    "collaborators": [
+      "Carsten Rother",
+      "Yuning Chai",
+      "Hassan Abu Alhaija",
+      "Andreas Geiger",
+      "Varun Jampani",
+      "Shalini De Mello",
+      "Sifei Liu",
+      "Umar Iqbal",
+      "Jan Kautz",
+      "Dennis Park"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Neural Rendering",
+      "Self-Supervised Learning",
+      "3D Scene Understanding"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "be39e239-ad5f-4d9c-88c1-bc72f75c8436": {
+    "pk": "be39e239-ad5f-4d9c-88c1-bc72f75c8436",
+    "project_name": null,
+    "name": "Yuning Chai",
+    "bio": "I am a researcher dedicated to advancing the fields of computer vision and machine learning, particularly in the context of autonomous systems. My recent work focuses on developing efficient algorithms for real-time object detection, segmentation, and motion forecasting, with a strong emphasis on balancing accuracy and computational efficiency. \n\nOne of my notable contributions is the introduction of a hard attention mechanism that significantly reduces latency in video processing by selectively focusing on sub-windows of frames, while also recovering lost context through specialized memory cells. I also developed MultiPath, a model that predicts multi-modal future distributions for human behavior, enhancing trajectory prediction in complex environments.\n\nIn the realm of 3D object detection, I proposed Range Sparse Net (RSN), which efficiently detects objects from LiDAR data, achieving state-of-the-art performance while maintaining high processing speeds. My work on Occupancy Flow Fields has further advanced motion forecasting by integrating occupancy and flow predictions, allowing for better handling of occlusions in dynamic environments.\n\nAdditionally, I have explored innovative approaches to multi-object tracking and the generation of high-definition maps for autonomous driving, demonstrating the effectiveness of my methods through extensive experiments on large-scale datasets. My research aims to push the boundaries of what is possible in autonomous systems, ensuring they operate reliably and efficiently in real-world scenarios.",
+    "collaborators": [
+      "Dragomir Anguelov",
+      "Jiquan Ngiam",
+      "Henrik Kretzschmar",
+      "Benjamin Caine",
+      "Vijay Vasudevan",
+      "Pei Sun",
+      "Weiyue Wang",
+      "Xiao Zhang",
+      "Benjamin Sapp",
+      "Mayank Bansal"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Autonomous Driving",
+      "Deep Learning",
+      "Object Detection"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "006c8cb5-6fec-4e0f-8c64-adc1501f2ccd": {
+    "pk": "006c8cb5-6fec-4e0f-8c64-adc1501f2ccd",
+    "project_name": null,
+    "name": "Eric M Wolff",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, which has proven effective in various prediction tasks, achieving significant performance improvements.\n\nI am particularly interested in the interplay between graph structures and predictive performance, as demonstrated in my work on relational graphs that reveal a \"sweet spot\" for optimizing neural network architectures. This exploration has led to the creation of Identity-aware GNNs (ID-GNNs), which enhance the expressive power of message-passing frameworks by incorporating node identities.\n\nIn addition to static graphs, I have tackled the challenges posed by dynamic graphs through the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments. My research also extends to automated machine learning (AutoML), where I introduced FALCON and AutoTransfer to streamline the search for optimal model designs across various tasks, significantly reducing computational costs.\n\nOverall, my work aims to bridge theoretical insights with practical applications, providing scalable solutions that advance the state of the art in graph-based learning. I am passionate about exploring new frontiers in this rapidly evolving field and contributing to the development of more efficient and effective machine learning models.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

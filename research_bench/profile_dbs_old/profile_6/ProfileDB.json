@@ -1,0 +1,59 @@
+{
+  "3adda390-9f70-455a-a1fb-4e48c1696a86": {
+    "pk": "3adda390-9f70-455a-a1fb-4e48c1696a86",
+    "project_name": null,
+    "name": "Georgios Feretzakis",
+    "bio": "I am a researcher dedicated to advancing the intersection of machine learning, data privacy, and healthcare. My work primarily focuses on developing innovative methodologies to protect sensitive information while leveraging data for decision-making. For instance, I have explored record augmentation techniques to conceal sensitive patterns in decision trees, ensuring that raw data remains usable for public applications without compromising privacy.\n\nIn the realm of natural language processing, I have proposed a framework for embedding trust mechanisms into large language models (LLMs), which is crucial for their deployment in sensitive sectors like healthcare and finance. This framework balances data utility and privacy by dynamically controlling the disclosure of sensitive information based on user trust levels.\n\nMy research also extends to healthcare diagnostics, where I have applied machine learning techniques to predict hospital admissions in emergency departments. By analyzing various biomarkers, I developed robust prognostic models that could significantly enhance clinical decision-making.\n\nAdditionally, I have utilized deep learning approaches to identify pulmonary embolism in CTPA scans, achieving high accuracy and providing a fast-track prototype solution for the research community. My goal is to create practical, efficient systems that improve patient outcomes while ensuring the privacy and security of sensitive data. I am committed to exploring new methodologies that bridge the gap between advanced technology and real-world applications in healthcare.",
+    "collaborators": [
+      "Dimitris Kalles",
+      "Vassilios S. Verykios",
+      "Evangelos Loupelis",
+      "Aikaterini Sakagianni",
+      "Athanasios Papagelis",
+      "George Karlis",
+      "Rea Chatzikyriakou",
+      "Nikolaos Trakas",
+      "Eugenia Karakou",
+      "Lazaros Tzelves"
+    ],
+    "domain": [
+      "Privacy-Preserving Machine Learning",
+      "Natural Language Processing",
+      "Medical Imaging",
+      "Deep Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a4ce53de-89a1-4336-8e92-911bba50b714": {
+    "pk": "a4ce53de-89a1-4336-8e92-911bba50b714",
+    "project_name": null,
+    "name": "Vassilios S. Verykios",
+    "bio": "I am a researcher dedicated to the intersection of data privacy and machine learning, with a particular focus on Privacy-Preserving Record Linkage (PPRL) and the secure deployment of Large Language Models (LLMs). My work addresses the critical challenges of linking sensitive data across organizations while safeguarding personal identifying information. I have developed frameworks that embed trust mechanisms into LLMs, ensuring that sensitive information is disclosed appropriately based on user trust levels, which is essential in high-stakes environments like healthcare and finance.\n\nIn addition to my work on LLMs, I have explored innovative methods for preserving privacy in decision tree induction. By employing record augmentation techniques, I aim to hide sensitive classification rules while maintaining the usability of the underlying data. My research also delves into the frequent itemset hiding problem, where I have created a toolbox that implements various algorithms to protect sensitive patterns mined from transactional databases.\n\nThrough my research, I strive to balance data utility and privacy, contributing to the development of robust solutions that enable organizations to share and analyze data without compromising sensitive information. I am committed to advancing the field of privacy-preserving data analysis and look forward to exploring new methodologies and applications in this critical area.",
+    "collaborators": [
+      "Georgios Feretzakis",
+      "Dimitris Kalles",
+      "Dinusha Vatsalan",
+      "Dimitrios Karapiperis",
+      "Athanasios Papagelis",
+      "Vasileios Kagklis",
+      "Elias C. Stavropoulos"
+    ],
+    "domain": [
+      "Privacy-Preserving Data Mining",
+      "Natural Language Processing",
+      "Data Security",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

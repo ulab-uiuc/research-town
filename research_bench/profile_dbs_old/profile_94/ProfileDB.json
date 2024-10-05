@@ -1,0 +1,78 @@
+{
+  "e29d3fab-09f5-4a54-865b-ab9f04c1bf4d": {
+    "pk": "e29d3fab-09f5-4a54-865b-ab9f04c1bf4d",
+    "project_name": null,
+    "name": "Sudipto Baral",
+    "bio": "I am a researcher dedicated to addressing the challenges posed by the exponential growth of internet traffic and the complexities of cybersecurity in the Internet of Things (IoT) landscape. My recent work focuses on developing advanced predictive models for internet traffic volume estimation, utilizing deep sequence methods combined with Empirical Mode Decomposition (EMD) and K-Nearest Neighbour (KNN) techniques. This innovative approach not only enhances the accuracy of traffic predictions but also aids Internet Service Providers (ISPs) in making informed decisions regarding network planning and investments.\n\nIn addition to traffic forecasting, I am passionate about creating robust security frameworks for IoT environments. My latest research introduces a comprehensive real-time attack detection and response system that integrates Machine Learning, Explainable AI (XAI), and Large Language Models (LLMs). By leveraging XAI techniques like SHAP and LIME, I ensure that our framework provides interpretable and actionable insights for system administrators, bridging the gap between model development and real-world application.\n\nThrough my work, I aim to contribute to the fields of network management and cybersecurity, providing scalable and interpretable solutions that can adapt to the evolving challenges of the digital landscape. My research not only addresses immediate technical needs but also emphasizes the importance of understanding and interpreting machine learning models in practical settings.",
+    "collaborators": [
+      "Sajal Saha",
+      "Anwar Haque"
+    ],
+    "domain": [
+      "Internet of Things",
+      "Cybersecurity",
+      "Machine Learning",
+      "Explainable AI"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9d1465ed-1a5e-4277-83a7-6471016754df": {
+    "pk": "9d1465ed-1a5e-4277-83a7-6471016754df",
+    "project_name": null,
+    "name": "Sajal Saha",
+    "bio": "I am a researcher dedicated to advancing the field of internet traffic prediction and network management through innovative machine learning techniques. My work primarily focuses on developing robust models that can effectively handle the complexities and anomalies present in real-world network traffic data. I have explored various regression models, including ensemble methods, to enhance prediction accuracy while addressing the significant impact of outliers on traffic forecasting.\n\nIn my recent studies, I have investigated deep learning approaches, particularly deep sequence models like LSTM and GRU, to predict anomalous traffic patterns. I have also pioneered hybrid models that integrate advanced techniques such as wavelet decomposition and transfer learning to improve performance in scenarios with limited data availability. My research emphasizes the importance of outlier detection and mitigation, demonstrating how these processes can significantly enhance model learning and prediction quality.\n\nAdditionally, I have developed a comprehensive framework for real-time IoT attack detection, leveraging machine learning and explainable AI to provide interpretable insights into security threats. My work aims to bridge the gap between theoretical advancements and practical applications, ensuring that our models not only perform well in controlled environments but also adapt effectively to the dynamic nature of real-world data.\n\nThrough my research, I strive to contribute to the proactive management of telecommunications networks, ultimately enhancing their efficiency and reliability in an increasingly interconnected world.",
+    "collaborators": [
+      "Anwar Haque",
+      "Greg Sidebottom",
+      "Sudipto Baral",
+      "Saikat Das",
+      "Glaucio H. S. Carvalho",
+      "Wang Wumian"
+    ],
+    "domain": [
+      "Network Traffic Prediction",
+      "Machine Learning",
+      "Deep Learning",
+      "Reinforcement Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b934fb54-9ea7-417a-89f8-0074bb8c63da": {
+    "pk": "b934fb54-9ea7-417a-89f8-0074bb8c63da",
+    "project_name": null,
+    "name": "Anwar Haque",
+    "bio": "I am a researcher dedicated to advancing the fields of network security, traffic prediction, and energy management through innovative machine learning techniques. My recent work focuses on developing robust network intrusion detection systems (NIDS) using deep learning and transfer learning, achieving impressive classification accuracies in both resource-rich and resource-scarce environments. I have also explored the integration of demand response strategies in smart grid systems, leveraging data analytics to encourage energy-efficient behaviors among consumers.\n\nIn the realm of vehicular technology, I have investigated the efficient placement of Vehicle-to-Everything (V2X) services using edge computing, addressing the challenges of low-latency communication and resource constraints. My research extends to predicting network traffic behavior, where I have analyzed various regression models and deep sequence models to enhance prediction accuracy, particularly in the presence of outliers.\n\nI am particularly passionate about the intersection of IoT and cybersecurity, where I have developed a comprehensive framework for real-time attack detection and response. This framework integrates machine learning with explainable AI techniques, ensuring that security measures are not only effective but also interpretable for system administrators.\n\nThrough my work, I aim to contribute to the development of scalable, efficient, and interpretable solutions that address the pressing challenges in network management and cybersecurity, ultimately enhancing the resilience of modern digital infrastructures.",
+    "collaborators": [
+      "Sajal Saha",
+      "Greg Sidebottom",
+      "Abdelkareem Jaradat",
+      "Hanan Lutfiyya",
+      "Sudipto Baral",
+      "Harsh Dhillon",
+      "Ibrahim Shaer",
+      "Abdallah Shami"
+    ],
+    "domain": [
+      "Network Security",
+      "Machine Learning",
+      "Internet of Things",
+      "Traffic Prediction"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "5e61c974-7ee1-42f9-8066-59c8126db9ce": {
+    "pk": "5e61c974-7ee1-42f9-8066-59c8126db9ce",
+    "project_name": null,
+    "name": "Kyle Stein",
+    "bio": "I am a researcher dedicated to enhancing cybersecurity through innovative malware detection techniques, particularly in the realm of Deep Packet Inspection (DPI). My work focuses on leveraging advanced deep learning methodologies, including transformers and large language models (LLMs), to improve the detection of malicious network traffic. As cyber threats evolve, I recognize the limitations of traditional anomaly-based and signature-based detection methods, which often struggle to generalize to new attacks.\n\nIn my recent publications, I have developed a transformer-based DPI algorithm that effectively analyzes raw payload bytes to distinguish between benign and malicious traffic. This approach has demonstrated promising results, achieving an average accuracy of 79% in binary classification tasks. Additionally, I have explored self-supervised and few-shot learning techniques to enhance the adaptability of malware detection systems, allowing them to recognize novel attack types with minimal labeled data. My research has shown that by training models on vast amounts of unlabeled data, we can create robust representations that generalize well to unseen threats.\n\nI am passionate about pushing the boundaries of what is possible in network security, and I strive to contribute to the development of more effective and efficient intrusion detection systems that can keep pace with the ever-evolving landscape of cyber threats. My goal is to create solutions that not only detect known malware but also adapt to new and emerging threats, ensuring the safety and integrity of interconnected networks.",
+    "collaborators": [
+      "Guillermo Francia III",
+      "Eman El-Sheikh",
+      "Arash Mahyari",
+      "Andrew A. Mahyari"
+    ],
+    "domain": [
+      "Cybersecurity",
+      "Deep Learning",
+      "Malware Detection",
+      "Self-Supervised Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0c50515b-9ad9-43ed-a8e2-81339bfb95ce": {
+    "pk": "0c50515b-9ad9-43ed-a8e2-81339bfb95ce",
+    "project_name": null,
+    "name": "Arash Mahyari",
+    "bio": "I am a researcher dedicated to advancing the fields of deep reinforcement learning, cybersecurity, and health technology through innovative algorithm development and deep learning techniques. My recent work has focused on creating effective exploration strategies in reinforcement learning, exemplified by my introduction of the Policy Augmentation algorithm, which enhances agent performance by augmenting unexplored state-action pairs.\n\nIn the realm of cybersecurity, I have developed deep learning approaches for detecting software vulnerabilities from LLVM IR representations, achieving high accuracy in identifying flaws that could lead to cyberattacks. My research also extends to intrusion detection systems, where I proposed a transformer-based deep packet inspection algorithm that effectively distinguishes between malicious and benign network traffic.\n\nAdditionally, I am passionate about promoting healthier lifestyles through technology. I have designed exercise recommendation systems that leverage recurrent neural networks to personalize workout suggestions and predict individual success rates. My work emphasizes the importance of real-time feedback and active learning in improving the accuracy of these systems.\n\nOverall, my research aims to bridge the gap between complex algorithmic solutions and practical applications, whether in enhancing cybersecurity measures or supporting individuals in achieving their health goals. I am committed to exploring new methodologies that can adapt to the evolving challenges in these domains.",
+    "collaborators": [
+      "Peter Pirolli",
+      "Kyle Stein",
+      "Guillermo Francia III",
+      "Eman El-Sheikh",
+      "Jacqueline A. LeBlanc"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Reinforcement Learning",
+      "Cybersecurity",
+      "Recommendation Systems"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "22768a15-b375-437e-b923-5aa8a536982f": {
+    "pk": "22768a15-b375-437e-b923-5aa8a536982f",
+    "project_name": null,
+    "name": "Guillermo Francia III",
+    "bio": "I am a researcher dedicated to enhancing cybersecurity through innovative malware detection techniques, particularly in the realm of Deep Packet Inspection (DPI). My work focuses on leveraging advanced deep learning methodologies, including transformers and large language models (LLMs), to improve the detection of malicious network traffic. As cyber threats evolve, I recognize the limitations of traditional anomaly-based and signature-based detection methods, which often struggle to generalize to new attacks.\n\nIn my recent publications, I have developed a transformer-based DPI algorithm that effectively analyzes raw payload bytes to distinguish between benign and malicious traffic. This approach has demonstrated promising results, achieving an average accuracy of 79% in binary classification tasks. Additionally, I have explored self-supervised and few-shot learning techniques to enhance the adaptability of malware detection systems, allowing them to recognize novel attack types with minimal labeled data. My research has shown that by training models on vast amounts of unlabeled data, we can create robust representations that generalize well to unseen threats.\n\nI am passionate about pushing the boundaries of what is possible in network security, and I strive to contribute to the development of more effective and efficient intrusion detection systems that can keep pace with the ever-evolving landscape of cyber threats. My goal is to create solutions that not only detect known malware but also adapt to new and emerging threats, ensuring the safety and integrity of interconnected networks.",
+    "collaborators": [
+      "Kyle Stein",
+      "Eman El-Sheikh",
+      "Arash Mahyari",
+      "Andrew A. Mahyari"
+    ],
+    "domain": [
+      "Cybersecurity",
+      "Deep Learning",
+      "Malware Detection",
+      "Deep Packet Inspection"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a482c88a-8a97-499a-a649-60246b102c73": {
+    "pk": "a482c88a-8a97-499a-a649-60246b102c73",
+    "project_name": null,
+    "name": "Eman El-Sheikh",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, which has proven effective in various prediction tasks, achieving significant performance improvements.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This innovation has led to substantial accuracy gains across multiple prediction benchmarks. Recognizing the challenges posed by dynamic graphs, I proposed the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments, enhancing scalability and real-world applicability.\n\nIn addition to architectural advancements, I have explored the intricate relationship between neural network structures and their predictive performance through relational graphs. My work aims to systematically study the design space of GNNs, providing guidelines for optimizing architectures across various tasks. I am also passionate about improving the efficiency of automated machine learning (AutoML) methods, as demonstrated by my development of FALCON and AutoTransfer, which leverage design graphs to streamline the search for optimal model architectures.\n\nOverall, my research is driven by a desire to push the boundaries of what GNNs can achieve, making them more effective and accessible for a wide range of applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

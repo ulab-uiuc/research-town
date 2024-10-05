@@ -1,0 +1,144 @@
+{
+  "386aae06-be51-4cac-9e04-52e9b15c0614": {
+    "pk": "386aae06-be51-4cac-9e04-52e9b15c0614",
+    "project_name": null,
+    "name": "James Sharpnack",
+    "bio": "I am a researcher dedicated to advancing statistical methodologies and machine learning techniques, particularly in the realms of anomaly detection, contextual bandits, and high-dimensional data analysis. My recent work has focused on developing innovative approaches for detecting anomalous patterns in various data types, including images and tensors, using multiscale scan statistics. I have also explored the challenges posed by biased sampling and missing data, proposing robust methods like nearest neighbor matching (NNM) to improve estimates in these contexts.\n\nMy research extends to high-dimensional heteroscedastic regression, where I have introduced non-convex penalized estimators that achieve oracle properties, and I have developed methods for change-point detection in graphs, leveraging generalized likelihood ratio statistics. I am particularly interested in the intersection of graph theory and statistical inference, as evidenced by my work on the graph Fourier scan statistic, which provides a powerful tool for detecting localized activations in noisy environments.\n\nIn addition to theoretical advancements, I have applied my methodologies to practical problems, such as improving recommendation systems through listwise collaborative ranking and enhancing the robustness of contextual bandit algorithms against adversarial attacks. My goal is to create scalable, efficient algorithms that not only perform well in theory but also translate effectively to real-world applications, ultimately contributing to the fields of data science and machine learning.",
+    "collaborators": [
+      "Aarti Singh",
+      "Cho-Jui Hsieh",
+      "Alessandro Rinaldo",
+      "Akshay Krishnamurthy",
+      "Mladen Kolar",
+      "Liwei Wu",
+      "Qin Ding",
+      "Robert Bassett",
+      "Ery Arias-Castro",
+      "Shitong Wei"
+    ],
+    "domain": [
+      "Anomaly Detection",
+      "Graph Theory",
+      "Machine Learning",
+      "Statistical Inference"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d6a901dd-9723-478e-91b7-9840ce647d8d": {
+    "pk": "d6a901dd-9723-478e-91b7-9840ce647d8d",
+    "project_name": null,
+    "name": "Phoebe Mulcaire",
+    "bio": "I am a researcher dedicated to advancing the field of natural language processing (NLP) through innovative approaches to multilingual understanding and model adaptation. My work has focused on leveraging the similarities between languages to improve semantic dependency parsing and semantic role labeling, particularly in low-resource settings. I introduced Rosita, a method for creating multilingual contextual word representations, which has shown significant performance improvements across various NLP tasks.\n\nI have also explored the challenges of adapting language models to new domains, proposing a fully compositional output embedding layer that enhances model performance, especially for low-frequency words. My research extends into the realm of item response theory, where I developed a multistage fitting procedure that streamlines the scoring of language proficiency tests, demonstrating superior calibration and predictive performance.\n\nIn addition to these technical contributions, I am deeply concerned about the societal implications of technology, particularly regarding misinformation. My collaborative work in this area has led to insights on how technology can both propagate and mitigate false information.\n\nRecently, I have focused on improving evaluation methodologies in NLP by introducing contrast sets, which help identify systematic gaps in datasets and provide a more accurate assessment of model capabilities. Through my research, I aim to bridge the gap between theoretical advancements and practical applications, ensuring that NLP technologies are both effective and responsible.",
+    "collaborators": [
+      "Noah A. Smith",
+      "Jungo Kasai",
+      "Swabha Swayamdipta",
+      "Noah Smith",
+      "Nikolaos Pappas",
+      "James Sharpnack",
+      "Klinton Bicknell",
+      "Geoff LaFlair",
+      "Kevin Yancey",
+      "John Akers"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Multilingual Learning",
+      "Machine Learning",
+      "Dependency Parsing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "654b8c31-566b-4a2a-be33-29bc521d60aa": {
+    "pk": "654b8c31-566b-4a2a-be33-29bc521d60aa",
+    "project_name": null,
+    "name": "Klinton Bicknell",
+    "bio": "I am a researcher dedicated to exploring the intersection of language processing, machine learning, and educational technology. My work has primarily focused on understanding how various statistical properties of language influence sentence processing, particularly through the lens of surprisal theory. I have provided evidence that local statistics, such as word bigram and trigram probabilities, play a significant role in processing difficulty, challenging the notion that only conditional probabilities matter.\n\nIn addition to theoretical insights, I have developed practical applications aimed at enhancing language learning experiences. My recent project, mHyER, addresses the challenge of zero-shot exercise retrieval, leveraging large language models to synthesize personalized exercises based on learners' natural language queries. This innovative approach bridges the semantic gap between learner input and exercise content, significantly improving retrieval effectiveness.\n\nI am also passionate about making language models more accessible for non-proficient users. My work on CALM (CEFR-Aligned Language Model) demonstrates how to control the difficulty of text generated by large language models, achieving superior performance at a fraction of the cost of existing models.\n\nFurthermore, I have contributed to the field of item response theory (IRT) by proposing a multistage fitting procedure that integrates seamlessly with automated machine learning tools. This approach enhances the calibration and predictive performance of language proficiency tests, exemplified by my work on the Duolingo English Test.\n\nThrough my research, I aim to bridge theoretical insights with practical applications, ultimately enhancing language learning and assessment methodologies.",
+    "collaborators": [
+      "Adam Goodkind",
+      "Austin Xu",
+      "Will Monroe",
+      "Ali Malik",
+      "Stephen Mayhew",
+      "Chris Piech",
+      "James Sharpnack",
+      "Phoebe Mulcaire",
+      "Geoff LaFlair",
+      "Kevin Yancey"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Machine Learning",
+      "Educational Technology",
+      "Item Response Theory"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e1f97742-b8a9-40d1-a937-ef558f6d7704": {
+    "pk": "e1f97742-b8a9-40d1-a937-ef558f6d7704",
+    "project_name": null,
+    "name": "Geoff LaFlair",
+    "bio": "I am a researcher specializing in the intersection of item response theory (IRT) and machine learning, particularly in the context of computerized adaptive testing (CAT). My recent work focuses on enhancing the modeling workflow for scoring tests, exemplified by my development of a multistage fitting procedure that integrates seamlessly with automated machine learning (AutoML) tools. This approach leverages a Monte Carlo EM (MCEM) outer loop combined with a two-stage inner loop, allowing for efficient training of both non-parametric and item-specific parametric models.\n\nOne of my significant contributions is the application of this methodology to the Duolingo English Test, where I demonstrated that our model not only improves calibration but also achieves superior predictive performance compared to traditional IRT models and neural network extensions like BERT-IRT. I am passionate about making advanced statistical methods more accessible and effective in real-world applications, and I continuously explore innovative ways to enhance the accuracy and reliability of educational assessments. My work aims to bridge the gap between complex statistical theories and practical implementations, ultimately contributing to more effective and fair testing practices.",
+    "collaborators": [
+      "James Sharpnack",
+      "Phoebe Mulcaire",
+      "Klinton Bicknell",
+      "Kevin Yancey"
+    ],
+    "domain": [
+      "Item Response Theory",
+      "Automated Machine Learning",
+      "Educational Assessment",
+      "Neural Networks"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9d6536d2-433a-41e1-9907-f47ce520cdb3": {
+    "pk": "9d6536d2-433a-41e1-9907-f47ce520cdb3",
+    "project_name": null,
+    "name": "Kevin Yancey",
+    "bio": "I am a researcher dedicated to enhancing the field of educational assessment through the integration of advanced statistical models and artificial intelligence. My work primarily revolves around Item Response Theory (IRT) and its applications in computerized adaptive testing (CAT), particularly in high-stakes environments like the Duolingo English Test. I have developed innovative methodologies, such as a multistage fitting procedure that leverages Automated Machine Learning (AutoML) tools, significantly improving the efficiency and accuracy of scoring tests. \n\nIn my recent research, I have explored the intersection of AI and assessment, emphasizing the importance of Responsible AI (RAI) practices. I believe that while AI offers transformative potential for item generation and scoring, it also introduces risks that must be managed to ensure fairness and quality in testing. My work includes a comprehensive examination of RAI standards and their application to the Duolingo English Test, where I aim to uphold ethical principles such as validity, reliability, and transparency. Through my research, I strive to contribute to a more equitable and effective assessment landscape, ensuring that all test takers receive fair and accurate evaluations.",
+    "collaborators": [
+      "James Sharpnack",
+      "Phoebe Mulcaire",
+      "Klinton Bicknell",
+      "Geoff LaFlair",
+      "Jill Burstein",
+      "Geoffrey T. LaFlair",
+      "Alina A. von Davier",
+      "Ravit Dotan"
+    ],
+    "domain": [
+      "Item Response Theory",
+      "Automated Machine Learning",
+      "Responsible AI",
+      "Educational Assessment"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

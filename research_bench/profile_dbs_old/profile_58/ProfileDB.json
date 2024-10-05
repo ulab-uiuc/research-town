@@ -1,0 +1,77 @@
+{
+  "0afa7020-7011-4a1b-ba0f-b468c3e28777": {
+    "pk": "0afa7020-7011-4a1b-ba0f-b468c3e28777",
+    "project_name": null,
+    "name": "Janek Haberer",
+    "bio": "I am a researcher dedicated to enhancing the efficiency and adaptability of machine learning models, particularly in the realm of Vision Transformers (ViTs) and image compression techniques. My recent work, HydraViT, addresses the significant hardware demands of ViTs by introducing a scalable architecture that dynamically adjusts the size of embedded dimensions and the number of attention heads during training. This innovative approach allows for the creation of multiple subnetworks, enabling deployment across a variety of hardware environments without sacrificing performance. \n\nAdditionally, I have developed ProgDTD, a novel training method that transforms traditional non-progressive image compression models into progressive ones. By prioritizing the information stored in the bottleneck of compression models, ProgDTD enhances user experience in scenarios with slow network connections, allowing images to load progressively in higher resolutions. My research aims to bridge the gap between model performance and practical deployment, ensuring that advanced machine learning techniques can be effectively utilized in real-world applications.",
+    "collaborators": [
+      "Ali Hojjat",
+      "Olaf Landsiedel"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Image Compression",
+      "Neural Networks",
+      "Transformers"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "bed8efd2-801e-43be-9ffc-0d701edad02e": {
+    "pk": "bed8efd2-801e-43be-9ffc-0d701edad02e",
+    "project_name": null,
+    "name": "Ali Hojjat",
+    "bio": "I am a researcher dedicated to enhancing navigation systems and image processing technologies, with a particular focus on accessibility and efficiency. My work spans various domains, including indoor navigation for visually impaired individuals, where I have evaluated and compared existing systems such as ultrasonic and RFID-based solutions. I aim to bridge the gap in navigation technology, ensuring that those with visual impairments can navigate their environments more effectively.\n\nIn the realm of image compression, I developed ProgDTD, a novel training method that transforms traditional non-progressive image compression models into progressive ones. This innovation allows images to load in low resolution and gradually improve, significantly enhancing user experience, especially in low-bandwidth scenarios.\n\nAdditionally, I have explored the intricacies of bipartite networks, introducing a new measure called H.H to identify influential nodes in community formation. This measure provides insights that traditional centrality metrics overlook, demonstrating its effectiveness in real-world datasets.\n\nMost recently, I have focused on Vision Transformers (ViTs) and their deployment challenges on resource-constrained devices. My work on HydraViT introduces a scalable architecture that adapts to varying hardware environments, achieving superior performance without the need for multiple separate models. Through these contributions, I strive to push the boundaries of technology, making it more accessible and efficient for diverse applications.",
+    "collaborators": [
+      "Janek Haberer",
+      "Olaf Landsiedel",
+      "Ghazaleh Haddad"
+    ],
+    "domain": [
+      "Indoor Navigation",
+      "Image Compression",
+      "Network Analysis",
+      "Vision Transformers"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "1675865a-54e5-4802-8d2f-b68320bcf2e9": {
+    "pk": "1675865a-54e5-4802-8d2f-b68320bcf2e9",
+    "project_name": null,
+    "name": "Olaf Landsiedel",
+    "bio": "I am a researcher specializing in wireless communication technologies, particularly Bluetooth and Bluetooth Low Energy (BLE), and their applications in the Internet of Things (IoT). My work focuses on enhancing the reliability and efficiency of communication protocols in dynamic environments. One of my notable contributions is the development of eAFH, a mechanism that intelligently manages channel exclusion and inclusion in Adaptive Frequency Hopping, achieving remarkable link-layer reliability even in the presence of dynamic interference.\n\nI have also explored Two-Way Ranging techniques to enable scalable localization of passive tags without the need for synchronized anchors, significantly improving distance estimation accuracy. My research extends to self-adaptive protocols like Dimmer, which utilize reinforcement learning to optimize performance in varying wireless conditions, demonstrating a 95.8% reliability rate against strong interference.\n\nIn addition, I have introduced innovative methods for progressive image compression and scalable Vision Transformers, addressing the challenges of deploying advanced models on resource-constrained devices. My work on Whisper has led to a fast and efficient flooding protocol for multi-hop networks, while EdgeAlpha offers a distributed approach to process mining directly on sensor nodes, enhancing scalability and reducing communication overhead.\n\nThrough my research, I aim to push the boundaries of wireless communication and IoT technologies, ensuring they are robust, efficient, and adaptable to real-world challenges.",
+    "collaborators": [
+      "Valentin Poirot",
+      "Patrick Rathje",
+      "Ali Hojjat",
+      "Janek Haberer",
+      "Martina Brachmann",
+      "Diana G\u00f6hringer",
+      "Silvia Santini",
+      "Julia Andersen",
+      "Beshr Al Nahas",
+      "Antonio Escobar-Molero"
+    ],
+    "domain": [
+      "Bluetooth",
+      "Wireless Networks",
+      "Internet of Things",
+      "Process Mining"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

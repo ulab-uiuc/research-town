@@ -1,0 +1,145 @@
+{
+  "753ff48a-07c0-4a09-a9fc-b63269b4d6e6": {
+    "pk": "753ff48a-07c0-4a09-a9fc-b63269b4d6e6",
+    "project_name": null,
+    "name": "Yuchen Xia",
+    "bio": "I am a researcher dedicated to integrating large language models (LLMs) into industrial automation systems, with a focus on enhancing task automation, flexibility, and intelligent planning. My recent work explores the intersection of LLMs, digital twins, and production processes, where I have developed frameworks that enable LLM agents to interpret production-specific data and generate executable process plans. By retrofitting automation systems and creating digital twins, I empower LLMs to orchestrate complex tasks autonomously, significantly improving the adaptability of production environments.\n\nOne of my notable contributions is the design of a multi-agent system that utilizes LLMs for the parametrization of simulation models in digital twins. This framework not only enhances usability but also reduces cognitive load on users by assisting in complex decision-making. I have also tackled the challenge of semantic interoperability in digital twins, creating a system that automates the generation of Asset Administration Shells (AAS) from raw textual data, demonstrating a high success rate in translating technical information into digital models.\n\nAdditionally, I have explored decentralized multi-agent reinforcement learning to address the complexities of multi-robot tasks, proposing innovative methods that achieve near-centralized performance in real-world applications. My research aims to bridge the gap between advanced AI technologies and practical industrial applications, paving the way for smarter, more efficient production systems. You can find demos and further details of my work on my GitHub repositories.",
+    "collaborators": [
+      "Nasser Jazdi",
+      "Michael Weyrich",
+      "Jize Zhang",
+      "Manthan Shenoy",
+      "Daniel Dittler",
+      "Haonan Chen",
+      "Chaitanya Shah",
+      "Zhewen Xiao",
+      "Yuchen Xiao",
+      "Joshua Hoffman"
+    ],
+    "domain": [
+      "Large Language Models",
+      "Industrial Automation",
+      "Digital Twins",
+      "Multi-Agent Systems"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "629c2804-3f99-4de8-9b3d-245ea7934f8d": {
+    "pk": "629c2804-3f99-4de8-9b3d-245ea7934f8d",
+    "project_name": null,
+    "name": "Nasser Jazdi",
+    "bio": "I am a researcher deeply engaged in the intersection of digital twins, industrial automation, and artificial intelligence. My work primarily focuses on enhancing the capabilities of cyber-physical systems through the integration of intelligent digital twins, which serve as virtual representations of physical assets. I have developed methodologies for creating digital twins of existing production systems, addressing the challenges of manual creation and the need for multidisciplinary relations.\n\nMy recent research explores the application of large language models (LLMs) in automating production processes, enabling flexible and adaptive operations. I have designed frameworks that leverage LLMs to enhance task automation, allowing for real-time data interpretation and decision-making in complex industrial environments. This includes developing systems that facilitate the parametrization of simulation models within digital twins, ultimately improving usability and reducing cognitive load for users.\n\nAdditionally, I have investigated the phenomenon of erosion in software product lines, emphasizing the importance of maintaining variant-rich systems in the automotive domain. My work also extends to the creation of knowledge graphs to automate systematic literature reviews, providing insights into context-aware automation systems.\n\nThrough my research, I aim to bridge the gap between theoretical advancements and practical applications, contributing to the evolution of smart factories and the broader field of Industry 4.0. My ongoing projects and findings can be explored further on my GitHub repository, where I share demos and code to inspire collaboration and innovation in this rapidly evolving domain.",
+    "collaborators": [
+      "Michael Weyrich",
+      "Daniel Dittler",
+      "Yuchen Xia",
+      "Timo M\u00fcller",
+      "Dominik Braun",
+      "Nada Sahlab",
+      "Wolfgang Schloegl",
+      "Benjamin Maschler",
+      "Valentin Stegmaier",
+      "Jize Zhang"
+    ],
+    "domain": [
+      "Digital Twin",
+      "Industrial Automation",
+      "Machine Learning",
+      "Knowledge Graphs"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d51ae734-93fc-4bc6-8da3-94c93ad81453": {
+    "pk": "d51ae734-93fc-4bc6-8da3-94c93ad81453",
+    "project_name": null,
+    "name": "Jize Zhang",
+    "bio": "I am a researcher dedicated to advancing the fields of machine learning and automation, with a particular focus on integrating innovative methodologies into practical applications. My recent work explores the intersection of predictive uncertainty and deep learning, particularly in materials science, where I leverage uncertainty to enhance classification accuracy and decision-making processes. I have developed novel approaches for low-light image enhancement using invertible networks, which address the inherent challenges of traditional GAN frameworks.\n\nIn finance, I have tackled portfolio optimization problems, creating efficient algorithms for cardinality-constrained portfolios that balance risk and return while adhering to real-world constraints. My research also extends to the integration of large language models (LLMs) into industrial automation systems, where I design frameworks that enhance task automation and flexibility, allowing for intuitive human-machine interactions.\n\nI am particularly interested in the calibration of machine learning classifiers, where I introduced Mix-n-Match strategies to improve data efficiency and expressive power while maintaining accuracy. My work on hybrid dynamical systems and deep learning models emphasizes the importance of compactness, accuracy, and robustness, leading to the development of Compact, Accurate, and Robust Deep neural networks (CARDs).\n\nThrough my research, I aim to bridge theoretical advancements with practical implementations, ensuring that machine learning techniques can be effectively applied across various domains. My ongoing projects and findings can be accessed through my GitHub repositories, where I share tools and insights to foster collaboration and innovation in the field.",
+    "collaborators": [
+      "Bhavya Kailkhura",
+      "T. Yong-Jin Han",
+      "Tim Leung",
+      "Aleksandr Aravkin",
+      "Yuchen Xia",
+      "Nasser Jazdi",
+      "Michael Weyrich",
+      "Lizhen Lin",
+      "Haolin Wang",
+      "Xiaohe Wu"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Deep Learning",
+      "Uncertainty Quantification",
+      "Image Processing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b82c180c-297c-467d-9a0f-d22e6221c5e0": {
+    "pk": "b82c180c-297c-467d-9a0f-d22e6221c5e0",
+    "project_name": null,
+    "name": "Chaitanya Shah",
+    "bio": "I am a researcher dedicated to bridging the gap between large language models (LLMs) and industrial automation systems. My recent work focuses on developing a framework that integrates LLMs to enhance the flexibility and usability of traditional automation systems, which often require specialized expertise and complex reprogramming. By leveraging LLMs, I aim to create an end-to-end control system that allows for intuitive human-machine interaction through natural language.\n\nAt the core of my framework is an agent system tailored for industrial tasks, coupled with a structured prompting method and an event-driven information modeling mechanism. This innovative approach enables real-time data processing, allowing LLMs to interpret information, generate production plans, and control operations effectively. I have also developed methods for creating task-specific datasets to fine-tune LLMs for these applications, ensuring that they can adapt to spontaneous events in dynamic industrial environments.\n\nMy contributions include a formal system design, proof-of-concept implementation, and comprehensive resources available on GitHub. I am passionate about making industrial automation more accessible and responsive, and I believe that integrating LLMs is a significant step toward achieving this goal.",
+    "collaborators": [
+      "Yuchen Xia",
+      "Nasser Jazdi",
+      "Jize Zhang",
+      "Michael Weyrich"
+    ],
+    "domain": [
+      "Large Language Models",
+      "Industrial Automation",
+      "Human-Machine Interaction"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "f6aa6e46-11e3-42d8-b54c-aac015a06f11": {
+    "pk": "f6aa6e46-11e3-42d8-b54c-aac015a06f11",
+    "project_name": null,
+    "name": "Michael Weyrich",
+    "bio": "I am a researcher dedicated to advancing the field of industrial automation through innovative applications of deep learning and digital twin technologies. My work primarily focuses on enhancing adaptability and efficiency in dynamic industrial environments, particularly through the lens of transfer learning and continual learning. I have developed methodologies for creating digital twins that facilitate the seamless integration of artificial intelligence into existing production systems, enabling predictive maintenance, virtual commissioning, and robust anomaly detection.\n\nMy recent publications explore a range of topics, including the application of clustering algorithms for transfer case selection, the integration of large language models (LLMs) into automated production systems, and the development of modular deep learning algorithms for anomaly detection in time-variant datasets. I emphasize the importance of context-aware systems and the role of knowledge graphs in automating systematic literature reviews, which help bridge the gap between research and practical applications.\n\nI am particularly passionate about leveraging digital twins as \"digital playgrounds\" to navigate the complexities of modern manufacturing. By employing intelligent digital models, I aim to enhance the reconfiguration of brownfield systems and improve the overall lifecycle management of industrial assets. My goal is to create robust, adaptable systems that can respond to the ever-evolving demands of the industrial landscape, ultimately driving efficiency and innovation in automation.",
+    "collaborators": [
+      "Nasser Jazdi",
+      "Benjamin Maschler",
+      "Dominik Braun",
+      "Nada Sahlab",
+      "Timo M\u00fcller",
+      "Daniel Dittler",
+      "Tim Knodel",
+      "Wolfgang Schloegl",
+      "Benjamin Lindemann",
+      "Andreas L\u00f6cklin"
+    ],
+    "domain": [
+      "Transfer Learning",
+      "Digital Twin",
+      "Anomaly Detection",
+      "Automation Systems"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

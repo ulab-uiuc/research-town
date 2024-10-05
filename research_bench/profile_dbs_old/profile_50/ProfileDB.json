@@ -1,0 +1,88 @@
+{
+  "1d8083ef-b6ef-4f1a-b628-49d22c98eb28": {
+    "pk": "1d8083ef-b6ef-4f1a-b628-49d22c98eb28",
+    "project_name": null,
+    "name": "Gulcin Baykal",
+    "bio": "I am a researcher deeply engaged in the field of generative models, particularly focusing on enhancing the capabilities of Generative Adversarial Networks (GANs) and diffusion models for image generation. My recent work has led to the development of innovative architectures like DeshuffleGAN, which employs a self-supervised deshuffling task to improve the learning of spatial structures in images, resulting in more realistic outputs. I have also tackled the issue of codebook collapse in discrete variational autoencoders (dVAEs) by introducing evidential deep learning (EdVAE), which enhances reconstruction performance and codebook utilization.\n\nMy exploration of disentangled representation learning culminated in the FactorQVAE model, which combines discrete representation learning with optimization-based disentanglement, outperforming previous methods on key metrics. Additionally, I have investigated the generalizability of self-supervised tasks across different GAN architectures, demonstrating the effectiveness of deshuffling in improving image generation quality.\n\nMore recently, I have shifted my focus to diffusion models, where I introduced ProtoDiffusion, a method that leverages learned class prototypes to accelerate training while maintaining high generation quality. My work also extends to text-guided image generation, where I fine-tuned a diffusion model specifically for textile pattern generation, showcasing its potential to revolutionize design processes in the textile industry.\n\nThrough my research, I aim to push the boundaries of generative modeling, contributing to both theoretical advancements and practical applications in computer vision.",
+    "collaborators": [
+      "Gozde Unal",
+      "Melih Kandemir",
+      "Halil Faruk Karagoz",
+      "Furkan Ozcelik",
+      "Taha Binhuraib",
+      "Irem Arikan Eksi"
+    ],
+    "domain": [
+      "Generative Models",
+      "Image Generation",
+      "Deep Learning",
+      "Self-Supervised Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9399c9e5-925a-44de-b926-26e6583b6e6c": {
+    "pk": "9399c9e5-925a-44de-b926-26e6583b6e6c",
+    "project_name": null,
+    "name": "Melih Kandemir",
+    "bio": "I am a researcher specializing in the intersection of machine learning and dynamical systems, with a particular focus on uncertainty quantification and representation learning. My recent work has explored the development of Neural Ordinary Differential Equations (N-ODEs) and their Bayesian counterparts, which allow for robust prediction uncertainty quantification while maintaining the expressive power of deterministic models. I have also contributed to the field of probabilistic deep state-space models, where I leverage neural networks to model complex dynamical systems with unknown parametric forms.\n\nMy research extends to innovative methods for closed-form predictive distribution modeling, where I integrate evidential deep learning to enhance uncertainty quantification capabilities. I have developed techniques for efficient moment matching in Neural Stochastic Differential Equations (NSDEs) and proposed novel algorithms for bandit problems, combining Bayesian and frequentist principles to improve decision-making in non-stationary environments.\n\nAdditionally, I am passionate about disentangled representation learning and have introduced models that facilitate the independent representation of generative factors. My work emphasizes the importance of interpretability in machine learning, as I strive to bridge the gap between black-box models and human-understandable dynamics through symbolic regression.\n\nOverall, my research aims to advance the understanding and application of machine learning in dynamic environments, ensuring that models not only perform well but also provide reliable uncertainty estimates and insights into the underlying processes they represent.",
+    "collaborators": [
+      "Andreas Look",
+      "Jan Peters",
+      "Barbara Rakitsch",
+      "Manuel Haussmann",
+      "Abdullah Akg\u00fcl",
+      "Gozde Unal",
+      "Sebastian Gerwinn",
+      "Fred A. Hamprecht",
+      "Hamish Flynn",
+      "David Reeb"
+    ],
+    "domain": [
+      "Bayesian Neural Networks",
+      "Stochastic Differential Equations",
+      "Uncertainty Quantification",
+      "Graph Neural Networks"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c09e1a75-0f0a-4e51-9aba-d9bf1654ba27": {
+    "pk": "c09e1a75-0f0a-4e51-9aba-d9bf1654ba27",
+    "project_name": null,
+    "name": "Gozde Unal",
+    "bio": "I am a researcher dedicated to advancing the fields of image processing and machine learning, with a particular focus on generative models and deep learning architectures. My recent work has explored innovative solutions to challenges in image inpainting, where I developed frameworks that effectively separate the tasks of image reconstruction and artifact removal, significantly improving both visual quality and quantitative metrics.\n\nI have also contributed to the evolution of Generative Adversarial Networks (GANs) through the introduction of the DeshuffleGAN, which enhances the learning of spatial structures in images via self-supervised tasks. This work has demonstrated substantial improvements in image generation quality across various datasets. My research extends to depth estimation, where I reformulated the problem as a ranking task, leveraging existing literature to enhance performance.\n\nIn addition, I have explored the integration of probabilistic models in federated learning, addressing the critical need for uncertainty quantification in safety-critical applications. My work on multi-label ranking has introduced novel methods that utilize the inherent ranking information of labels, achieving state-of-the-art results in both synthetic and real-world datasets.\n\nOverall, my research aims to bridge the gap between theoretical advancements and practical applications, providing robust solutions that enhance the capabilities of machine learning systems in real-world scenarios. I am passionate about leveraging AI to solve complex problems and contribute to the ongoing evolution of intelligent systems.",
+    "collaborators": [
+      "Gulcin Baykal",
+      "Alican Mertan",
+      "Melih Kandemir",
+      "Abdullah Akg\u00fcl",
+      "Ugur Demir",
+      "Damien Jade Duff",
+      "Furkan Ozcelik",
+      "Yusuf H. Sahin",
+      "Vahit Bugra Yesilkaynak",
+      "Emine Dari"
+    ],
+    "domain": [
+      "Image Inpainting",
+      "Generative Adversarial Networks",
+      "Depth Estimation",
+      "Uncertainty Quantification"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

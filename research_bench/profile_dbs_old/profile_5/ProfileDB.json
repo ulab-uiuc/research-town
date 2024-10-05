@@ -1,0 +1,170 @@
+{
+  "dfa93103-2d7a-4269-b674-1b3ffbc76cec": {
+    "pk": "dfa93103-2d7a-4269-b674-1b3ffbc76cec",
+    "project_name": null,
+    "name": "Yi Ren",
+    "bio": "I am a researcher dedicated to advancing the fields of optimization, machine learning, and robotics. My recent work focuses on developing efficient algorithms for training deep neural networks, particularly through innovative Levenberg-Marquardt variants that leverage subsampled Gauss-Newton and natural gradient methods. I have explored the learning dynamics of large language models, providing insights into how training examples influence model predictions, which has led to improved alignment performance in these systems.\n\nIn robotics, I have investigated cooperative task allocation for networked mobile manipulators, proposing adaptive control strategies that ensure motion synchronization despite uncertainties. My work also extends to the realm of network function virtualization, where I developed a dynamic auto-scaling algorithm that balances performance and operational costs for 5G networks.\n\nAdditionally, I have contributed to the understanding of unbiased learning-to-rank algorithms, addressing challenges in handling biased feedback in recommender systems. My research emphasizes the importance of integrating marketing and manufacturing knowledge in product design, as well as tackling popularity bias in sequential recommendation systems through structural causal models.\n\nOverall, my work aims to bridge theoretical advancements with practical applications, ensuring that the algorithms and models I develop are not only innovative but also applicable to real-world challenges across various domains.",
+    "collaborators": [
+      "Donald Goldfarb",
+      "Danica J. Sutherland",
+      "Hongyan Tang",
+      "Sandra Hirche",
+      "Sheng Cheng",
+      "Yang Jiao",
+      "Jing Liu",
+      "Yi Chen",
+      "Lei Zhang",
+      "Tanner Merry"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Optimization",
+      "Reinforcement Learning",
+      "Causal Inference"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0b364302-2026-4ee5-9d05-adf8007f1344": {
+    "pk": "0b364302-2026-4ee5-9d05-adf8007f1344",
+    "project_name": null,
+    "name": "Tianyi Zhang",
+    "bio": "I am a researcher with a strong focus on graph theory, algorithm design, and machine learning, particularly in the context of optimizing computational efficiency and understanding complex structures. My recent work has significantly advanced the field of Gomory-Hu trees, where I improved the running time for computing these succinct representations of pairwise minimum cuts to a groundbreaking quadratic time complexity. I have also contributed to the development of cut-equivalent trees, enhancing existing algorithms to achieve faster runtimes.\n\nIn addition to my work on graph structures, I have explored dynamic algorithms, particularly in maintaining maximal independent sets in evolving graphs, where I introduced a randomized algorithm with a remarkably efficient update time. My research extends to distance sensitivity oracles, where I developed a new structure that optimizes space and query efficiency.\n\nI am also deeply interested in the intersection of machine learning and graph theory, as evidenced by my studies on biases in large pretrained language models and the development of tools to quantify and mitigate these biases. My work on Selective Prompt Anchoring (SPA) addresses challenges in code generation by large language models, demonstrating significant improvements in performance.\n\nOverall, my research aims to bridge theoretical advancements with practical applications, providing efficient algorithms and tools that can be utilized across various domains, from computational graph theory to machine learning.",
+    "collaborators": [
+      "Matthew Baker",
+      "Shiri Chechik",
+      "Ran Duan",
+      "Matthew Johnson-Roberson",
+      "Justin Chen",
+      "Tatsunori Hashimoto",
+      "Anshumali Shrivastava",
+      "Yongquan Xue",
+      "Hrishikesh Viswanath",
+      "Yuan Tian"
+    ],
+    "domain": [
+      "Graph Theory",
+      "Algorithm Design",
+      "Machine Learning",
+      "Computational Geometry"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "81a91687-13a6-45d9-9d33-934688174fea": {
+    "pk": "81a91687-13a6-45d9-9d33-934688174fea",
+    "project_name": null,
+    "name": "Weibin Li",
+    "bio": "I am a researcher deeply engaged in the exploration of quantum dynamics and many-body physics, particularly within the context of Bose-Einstein condensates and Rydberg atoms. My recent work has focused on the intricate interplay between light and matter, investigating phenomena such as the dynamics of bright solitary waves in attractive Bose-Einstein condensates and the coherent manipulation of ion crystals through Rydberg excitations. \n\nI have developed theoretical frameworks for understanding complex quantum systems, including the implementation of entangling quantum gates using dipolar interactions among Rydberg states, and the dynamics of Rydberg-dressed Bose-Einstein condensates in optical lattices. My research also delves into the quantum melting of one-dimensional crystals and the emergence of chaotic dynamics in Rydberg-dressed systems, revealing rich phase structures and stability properties.\n\nAdditionally, I am passionate about advancing quantum information applications, as demonstrated by my work on photon transistors and the generation of stable high-dimensional optical pulses in cold Rydberg gases. Through these studies, I aim to bridge the gap between theoretical insights and experimental realizations, contributing to the development of quantum technologies and enhancing our understanding of quantum many-body systems. My goal is to continue pushing the boundaries of knowledge in quantum physics, exploring new avenues for manipulation and control in complex quantum systems.",
+    "collaborators": [
+      "Igor Lesanovsky",
+      "Zhihao Lan",
+      "Rejish Nath",
+      "Weibin Liu",
+      "Bing Li",
+      "Weibin Lin",
+      "Lin Li",
+      "Xiaotao Xie",
+      "Zhiming Zhan",
+      "Xiaoxue Yang"
+    ],
+    "domain": [
+      "Quantum Physics",
+      "Bose-Einstein Condensate",
+      "Rydberg Atoms",
+      "Nonlinear Optics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e9b71678-8185-4549-bbb7-ae308a9672e1": {
+    "pk": "e9b71678-8185-4549-bbb7-ae308a9672e1",
+    "project_name": null,
+    "name": "DuoMu Zhou",
+    "bio": "I am a researcher deeply engaged in the intersection of large language models and public opinion analysis. My recent work focuses on harnessing the capabilities of advanced models like GPT-4o to predict the heat levels of public opinion events. In my latest study, I meticulously processed and classified over 62,000 pieces of Chinese hot event data, employing innovative clustering techniques to categorize these events into distinct heat levels. \n\nThrough rigorous evaluation, I explored the predictive accuracy of various large language models, revealing promising results, particularly in predicting low-heat events. While the overall accuracy remains a challenge, my findings highlight the potential of these models in public opinion analysis, especially as we refine our datasets and methodologies. I am excited about the future of this research area, as I believe that with more robust data, we can significantly enhance the predictive capabilities of large language models in understanding public sentiment and its dynamics.",
+    "collaborators": [
+      "Yi Ren",
+      "Tianyi Zhang",
+      "Weibin Li",
+      "Chenhao Qin",
+      "FangCheng Dong"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Public Opinion Analysis",
+      "Large Language Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d3e0063e-0534-4e5b-b901-ef9eeb51df28": {
+    "pk": "d3e0063e-0534-4e5b-b901-ef9eeb51df28",
+    "project_name": null,
+    "name": "Chenhao Qin",
+    "bio": "I am a researcher dedicated to harnessing the power of large language models (LLMs) for innovative applications in public opinion analysis and multimodal data processing. My recent work focuses on predicting the heat levels of public opinion events using advanced LLMs, where I analyzed over 62,000 Chinese hot event data points. By employing clustering techniques, I categorized these events into distinct heat levels and evaluated the predictive accuracy of models like GPT-4o and DeepseekV2. While the overall prediction accuracy was modest, I found promising results for low-heat events, indicating the potential for future research in this area.\n\nAdditionally, I have developed an adaptive fine-tuning algorithm for multimodal large models that optimizes training efficiency and generalization. This algorithm utilizes semantic clustering to select high-potential data for training, significantly reducing training time while maintaining performance. My experiments with the InternLM-XComposer2-VL-7B model demonstrated that my approach not only preserved general-purpose capabilities but also achieved superior results on various remote sensing datasets.\n\nThrough my research, I aim to contribute to the understanding and application of LLMs in real-world scenarios, paving the way for more effective tools in public opinion analysis and beyond.",
+    "collaborators": [
+      "Yi Ren",
+      "Tianyi Zhang",
+      "Weibin Li",
+      "DuoMu Zhou",
+      "FangCheng Dong",
+      "Zhixiong Han",
+      "Zhiyang Wang",
+      "Wenbo Ji",
+      "Chenbin Liang",
+      "Licheng Jiao"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Large Language Models",
+      "Public Opinion Analysis",
+      "Multimodal Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c6e5258d-d4c1-4730-8660-c545ba4b7caf": {
+    "pk": "c6e5258d-d4c1-4730-8660-c545ba4b7caf",
+    "project_name": null,
+    "name": "FangCheng Dong",
+    "bio": "I am a researcher deeply engaged in the intersection of large language models and public opinion analysis. My recent work focuses on harnessing the capabilities of advanced models like GPT-4o to predict the heat levels of public opinion events. In my latest study, I meticulously processed and classified over 62,000 pieces of Chinese hot event data, employing innovative clustering techniques to categorize these events into distinct heat levels. \n\nThrough rigorous evaluation, I explored the predictive accuracy of various large language models, revealing promising results, particularly in predicting low-heat events. While the overall accuracy remains a challenge, my findings highlight the potential of these models in public opinion analysis, especially as we refine our datasets and methodologies. I am excited about the future of this research area, as I believe that with more robust data, we can significantly enhance the predictive capabilities of large language models in understanding public sentiment and its dynamics.",
+    "collaborators": [
+      "Yi Ren",
+      "Tianyi Zhang",
+      "Weibin Li",
+      "DuoMu Zhou",
+      "Chenhao Qin"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Public Opinion Analysis",
+      "Large Language Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

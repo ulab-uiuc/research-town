@@ -1,0 +1,146 @@
+{
+  "3dad77b1-99d8-4567-89f1-5578ffa1e9a5": {
+    "pk": "3dad77b1-99d8-4567-89f1-5578ffa1e9a5",
+    "project_name": null,
+    "name": "Nilanjan Sinhababu",
+    "bio": "I am a researcher dedicated to enhancing medical diagnostics through advanced machine learning techniques, particularly in the realm of brain neoplasm detection using Magnetic Resonance Imaging (MRI). My work has led to the development of an innovative preprocessing technique that significantly improves the area of interest in MRI data, coupled with a hybrid approach that combines Convolutional Neural Networks (CNNs) for feature extraction and Support Vector Machines (SVMs) for classification. By modifying the SVM's cost function, I have addressed the critical issue of false positive predictions, enabling more accurate detection of both malignant and benign neoplasms.\n\nIn addition to my work in medical imaging, I am also exploring the intersection of big data and healthcare information retrieval. I have proposed an intelligent, interactive system that leverages vast medical data repositories to enhance the precision of medical information searches. My recent research delves into the potential of large language models (LLMs) in ranking tasks, where I have developed a pairwise few-shot ranker that improves performance over traditional zero-shot methods. This work demonstrates my commitment to simplifying complex processes while maintaining high accuracy in medical and information retrieval applications. Overall, my research aims to bridge the gap between advanced machine learning techniques and practical medical applications, ultimately improving patient outcomes and access to critical health information.",
+    "collaborators": [
+      "Debasis Samanta",
+      "Monalisa Sarma",
+      "Rahul Saxena",
+      "Andrew Parry",
+      "Debasis Ganguly",
+      "Pabitra Mitra"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Machine Learning",
+      "Natural Language Processing",
+      "Deep Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "5d589753-920b-4908-96d0-9015cdbb3500": {
+    "pk": "5d589753-920b-4908-96d0-9015cdbb3500",
+    "project_name": null,
+    "name": "Andrew Parry",
+    "bio": "I am a researcher deeply engaged in the intersection of information retrieval and natural language processing, with a particular focus on the application of large language models (LLMs) in enhancing retrieval systems. My recent work has explored innovative approaches to generative relevance feedback, where I applied LLMs in both zero-shot and pseudo-relevance feedback settings, demonstrating significant performance improvements in retrieval tasks.\n\nI have also investigated the vulnerabilities of modern sequence-to-sequence relevance models to adversarial attacks, revealing how prompt injection can manipulate relevance scores. This research highlights the need for robust evaluation methods in retrieval systems, especially as neural ranking models (NRMs) become more prevalent. My findings indicate that while NRMs are powerful, they can be susceptible to semantic perturbations, prompting me to propose strategies to mitigate these weaknesses.\n\nAdditionally, I have delved into the paradigm of in-context learning (ICL), drawing parallels between ICL and information retrieval to optimize the selection of few-shot examples for downstream tasks. My work aims to redefine relevance in this context, enhancing the effectiveness of LLMs in practical applications.\n\nThrough my research, I strive to push the boundaries of how we understand and utilize LLMs in retrieval, advocating for more efficient algorithms and robust models that can withstand adversarial challenges while improving user experience in information retrieval systems.",
+    "collaborators": [
+      "Sean MacAvaney",
+      "Debasis Ganguly",
+      "Thomas Jaenich",
+      "Iadh Ounis",
+      "Maik Fr\u00f6be",
+      "Martin Potthast",
+      "Matthias Hagen",
+      "Manish Chandra"
+    ],
+    "domain": [
+      "Information Retrieval",
+      "Natural Language Processing",
+      "Adversarial Machine Learning",
+      "Ranking Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "84f90055-1ece-453a-8506-1b211cc34bdb": {
+    "pk": "84f90055-1ece-453a-8506-1b211cc34bdb",
+    "project_name": null,
+    "name": "Debasis Ganguly",
+    "bio": "I am a researcher deeply engaged in the fields of information retrieval (IR) and natural language processing (NLP), with a particular focus on enhancing the effectiveness and interpretability of retrieval systems. My recent work has explored innovative methodologies for query performance prediction, where I advocate for variable depth pooling to optimize annotation efforts while maintaining evaluation accuracy. I have also developed a bias-aware multi-objective learning framework aimed at mitigating cognitive biases in AI predictions, addressing the ethical implications of machine learning in society.\n\nIn addition, I am investigating the intersection of active learning and model interpretability, striving to create classifiers that not only perform well but are also understandable to users. My research extends to the application of large language models (LLMs) in generating misinformation detection datasets and improving retrieval effectiveness through selective pseudo-relevance feedback.\n\nI am particularly interested in the robustness of neural ranking models against adversarial attacks and the potential of in-context learning to enhance NLP tasks. My work emphasizes the importance of explainability in complex models, and I have proposed frameworks to systematically evaluate the interpretability of various ranking systems. Through my research, I aim to contribute to the development of more ethical, effective, and interpretable AI systems that can positively impact society.",
+    "collaborators": [
+      "Andrew Parry",
+      "Sean MacAvaney",
+      "Suchana Datta",
+      "Derek Greene",
+      "Procheta Sen",
+      "Ishani Mondal",
+      "Mandar Mitra",
+      "Manish Chandra",
+      "Emine Yilmaz",
+      "Nilanjan Sinhababu"
+    ],
+    "domain": [
+      "Information Retrieval",
+      "Natural Language Processing",
+      "Machine Learning",
+      "Bias Mitigation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "804772a1-60bf-42c2-9c31-76fd0a513212": {
+    "pk": "804772a1-60bf-42c2-9c31-76fd0a513212",
+    "project_name": null,
+    "name": "Debasis Samanta",
+    "bio": "I am a researcher dedicated to unraveling the complexities of human cognition and enhancing technology through innovative methodologies. My work spans various domains, including brain decoding, medical imaging, and user intention modeling. Recently, I developed DreamCatcher, a novel framework for fMRI captioning that transforms fMRI data into meaningful captions, providing insights into visual perception. I also explored the potential of large language models in ranking tasks, demonstrating that augmenting examples can significantly improve performance in retrieval benchmarks.\n\nMy research extends to the automatic detection of brain neoplasms in MRI scans, where I introduced a hybrid technique combining Convolutional Neural Networks and Support Vector Machines to enhance diagnostic accuracy. Additionally, I have focused on user intention modeling for recommendation systems, proposing a Hybrid Topic Model that effectively predicts user interests based on temporal context.\n\nUnderstanding mental workload in critical environments is another area of my expertise. I developed an experimental setup utilizing EEG data to assess task complexity, providing insights into user experience and operational efficiency. Furthermore, I have contributed to the conceptualization of Social Cloud frameworks, addressing the challenges of distributed resource sharing.\n\nThrough my diverse research endeavors, I aim to bridge the gap between cognitive neuroscience and practical applications, ultimately enhancing human-computer interaction and decision-making processes.",
+    "collaborators": [
+      "Monalisa Sarma",
+      "Nilanjan Sinhababu",
+      "Subhrasankar Chatterjee",
+      "Andrew Parry",
+      "Debasis Ganguly",
+      "Pabitra Mitra",
+      "Vasisht Duddu",
+      "D Vijay Rao",
+      "Arpita Chaudhuri",
+      "Vishal Anand"
+    ],
+    "domain": [
+      "Cognitive Neuroscience",
+      "Machine Learning",
+      "Medical Imaging",
+      "Recommendation Systems"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "05f211d0-c2be-49d2-a67c-4163220d8546": {
+    "pk": "05f211d0-c2be-49d2-a67c-4163220d8546",
+    "project_name": null,
+    "name": "Pabitra Mitra",
+    "bio": "I am a researcher with a diverse background in computer vision, machine learning, and reinforcement learning, focusing on developing innovative algorithms and frameworks that enhance performance across various applications. My work spans from saliency detection models using Kalman filters to advanced segmentation techniques for ultrasound imaging, where I leverage deep learning to tackle challenges posed by stochastic noise.\n\nRecently, I have been exploring the intersection of visual attention and autonomous driving, employing both supervised and unsupervised learning methods to predict attention maps that improve driving performance. My research also delves into the complexities of transfer learning, particularly in the context of machine learning as a service (MLaaS), where I investigate vulnerabilities and propose countermeasures against model stealing attacks.\n\nIn addition to my work in visual tasks, I have contributed to the understanding of graph properties in recurrent neural networks, ensuring their efficiency in resource-constrained environments. My recent projects include developing a texture-aware framework for iris recognition and a semantically conditioned GAN for image inpainting, both of which demonstrate my commitment to pushing the boundaries of deep learning applications.\n\nThrough my research, I aim to bridge theoretical insights with practical implementations, ultimately contributing to advancements in technology that can improve real-world outcomes, particularly in healthcare and autonomous systems.",
+    "collaborators": [
+      "Anirban Santara",
+      "Debdoot Sheet",
+      "Prabir Kumar Biswas",
+      "Debarghya China",
+      "Shubhi Shukla",
+      "Manaar Alam",
+      "Debdeep Mukhopadhyay",
+      "Manashi Chakraborty",
+      "Sourya Roy",
+      "Souradeep Chakraborty"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Deep Learning",
+      "Reinforcement Learning",
+      "Image Processing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

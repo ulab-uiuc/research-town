@@ -1,0 +1,143 @@
+{
+  "898601d0-b78e-4a72-bc5b-e307a9f7f787": {
+    "pk": "898601d0-b78e-4a72-bc5b-e307a9f7f787",
+    "project_name": null,
+    "name": "Duong Thuy Anh Nguyen",
+    "bio": "I am a researcher specializing in distributed optimization and edge computing, with a focus on developing algorithms that enhance collaboration among networked agents. My recent work has centered on innovative methods for solving complex optimization problems in dynamic environments, particularly through the lens of time-varying directed communication networks. I have contributed to the development of algorithms like SAB-TV and the AB/Push-Pull method, which leverage gradient tracking and consensus mechanisms to achieve linear convergence to optimal solutions.\n\nMy research also explores the intersection of game theory and distributed systems, where I have proposed frameworks for finding Nash equilibria in non-cooperative convex games. By incorporating techniques such as heavy-ball momentum and decentralized information exchange, I aim to improve the efficiency and privacy of resource allocation in mobile edge computing scenarios.\n\nAdditionally, I have addressed challenges in edge network operations, proposing models that account for uncertainties in link delays and workload allocation. My work emphasizes the importance of robust decision-making in edge computing environments, ensuring both service quality and fairness during disruptions.\n\nThrough extensive numerical simulations, I validate the effectiveness of my algorithms, demonstrating their applicability across various real-world scenarios, including energy management and resource crowdsourcing. My goal is to continue advancing the field of distributed optimization, contributing to the development of scalable and efficient solutions that can adapt to the complexities of modern networked systems.",
+    "collaborators": [
+      "Duong Tung Nguyen",
+      "Angelia Nedich",
+      "Jiaming Cheng",
+      "Angelia Nedi\u0107",
+      "Ni Trieu",
+      "Mattia Bianchi",
+      "Florian D\u00f6rfler",
+      "Lele Wang",
+      "Vijay K. Bhargava",
+      "Su Wang"
+    ],
+    "domain": [
+      "Distributed Optimization",
+      "Game Theory",
+      "Edge Computing",
+      "Stochastic Systems"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2167df70-1b23-442b-82f7-8a1ee15da83d": {
+    "pk": "2167df70-1b23-442b-82f7-8a1ee15da83d",
+    "project_name": null,
+    "name": "Su Wang",
+    "bio": "I am an astrophysicist with a keen interest in the formation and dynamics of planetary systems, particularly those involving mean motion resonances (MMRs). My recent research focuses on the intriguing patterns observed in the Kepler mission's transiting planet candidates, where I have analyzed the statistical significance of planetary configurations near 3:2 and 2:1 resonances. Through extensive simulations\u2014over 1000 runs\u2014I have explored how factors such as stellar accretion rates, magnetic fields, and migration speeds influence the formation of these resonant systems.\n\nMy findings reveal that specific conditions can enhance the likelihood of forming MMRs, with notable proportions of candidate systems aligning with the observed peaks near period ratios of 1.5 and 2.0. I have identified critical thresholds for migration speed and accretion rates that favor the emergence of these resonances, contributing to our understanding of planetary system evolution. By considering the effects of additional planets in the vicinity, I have also shed light on the complex interactions that can lead to the formation of intricate resonant chains.\n\nOverall, my work aims to provide a comprehensive framework for interpreting the diverse configurations of exoplanetary systems, offering insights into the processes that govern their formation and stability.",
+    "collaborators": [
+      "Jianghui Ji"
+    ],
+    "domain": [
+      "Exoplanets",
+      "Mean Motion Resonance",
+      "Astrophysics",
+      "Planetary Formation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d39c30b9-5bf1-40b6-bb53-359ce2dfe676": {
+    "pk": "d39c30b9-5bf1-40b6-bb53-359ce2dfe676",
+    "project_name": null,
+    "name": "Duong Tung Nguyen",
+    "bio": "I am a researcher dedicated to advancing the fields of edge computing, distributed optimization, and smart grid technologies. My work focuses on integrating distributed energy resources (DERs) and enhancing demand-side management (DSM) to optimize energy consumption while ensuring user comfort. I have developed innovative algorithms for distributed optimization, such as the SAB-TV method, which employs gradient tracking for efficient decision-making in networked systems.\n\nMy recent research delves into the complexities of edge computing, where I propose frameworks for optimizing edge node placement and resource allocation under uncertainty. I have introduced a two-stage decision-dependent distributionally robust optimization model that captures the interdependence between edge node decisions and demand uncertainties, significantly improving computational efficiency.\n\nAdditionally, I explore Nash equilibrium seeking in non-cooperative games, developing distributed algorithms that leverage local information exchange among agents. My work emphasizes the importance of privacy-preserving mechanisms in decentralized learning environments, ensuring that sensitive data remains secure while optimizing resource allocation.\n\nI am particularly interested in the intersection of edge computing and renewable energy, where I have formulated optimization frameworks that balance operational costs with environmental impacts. My contributions aim to enhance the resilience of edge computing systems against failures and fluctuating demands, ultimately paving the way for more efficient and sustainable smart grid solutions. Through my research, I strive to create practical applications that benefit both service providers and end-users in an increasingly interconnected world.",
+    "collaborators": [
+      "Duong Thuy Anh Nguyen",
+      "Jiaming Cheng",
+      "Angelia Nedich",
+      "Ni Trieu",
+      "Angelia Nedi\u0107",
+      "Vijay K. Bhargava",
+      "Mattia Bianchi",
+      "Florian D\u00f6rfler",
+      "Long Bao Le",
+      "Vijay Bhargava"
+    ],
+    "domain": [
+      "Edge Computing",
+      "Distributed Optimization",
+      "Game Theory",
+      "Smart Grid"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a464e251-9887-4d41-8d3e-63440775eba2": {
+    "pk": "a464e251-9887-4d41-8d3e-63440775eba2",
+    "project_name": null,
+    "name": "Angelia Nedich",
+    "bio": "I am a researcher specializing in distributed optimization and convex analysis, with a focus on developing algorithms that facilitate efficient computation in multi-agent networks. My recent work has centered on asynchronous gossip-based algorithms for constrained convex optimization, where I introduced a random projection method that allows agents to converge to optimal solutions through local communications. I have also explored the dynamics of weighted-averaging in consensus problems, establishing new convergence rates that account for graph structures.\n\nMy research extends to Nash equilibrium computation in convex games, where I developed a distributed approach that ensures both convergence and privacy, addressing the challenges of non-cooperative settings. I have contributed to the understanding of stochastic variational inequalities, proposing methods that relax traditional assumptions of strong monotonicity and Lipschitz continuity, thus broadening the applicability of these techniques in machine learning contexts.\n\nAdditionally, I have investigated the convergence properties of random projection algorithms and penalty-based methods for large-scale optimization problems, demonstrating their effectiveness through rigorous theoretical analysis and simulations. My work aims to bridge the gap between theoretical advancements and practical applications, ensuring that the algorithms I develop are not only efficient but also robust in real-world scenarios. Through my research, I strive to contribute to the evolving landscape of optimization techniques that empower decentralized systems and enhance collaborative decision-making.",
+    "collaborators": [
+      "Tatiana Tatarenko",
+      "Soomin Lee",
+      "Ion Necoara",
+      "Sina Arefizadeh",
+      "Daniil Vankov",
+      "Lalitha Sankar",
+      "Ji Liu",
+      "Behrouz Touri",
+      "Rohan Rele",
+      "Yongqiang Wang"
+    ],
+    "domain": [
+      "Distributed Optimization",
+      "Convex Optimization",
+      "Game Theory",
+      "Variational Inequalities"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "93a9255f-6736-4c06-aaf2-b7c25d14be92": {
+    "pk": "93a9255f-6736-4c06-aaf2-b7c25d14be92",
+    "project_name": null,
+    "name": "H. Vincent Poor",
+    "bio": "I am a researcher deeply engaged in the field of information theory and its applications to communication systems. My work spans a variety of topics, including the convergence properties of smooth fictitious play in potential games, the capacity analysis of interference channels, and the development of innovative schemes for non-orthogonal multiple access (NOMA) using massive MIMO technology. \n\nRecently, I have focused on enhancing the security of communication systems, exploring concepts like secure distributed data compression in the presence of eavesdroppers and investigating the maximal secrecy rate over wiretap channels. My research also delves into the complexities of multi-hop relay channels and the fundamental diversity-multiplexing tradeoff, where I analyze both full-duplex and half-duplex scenarios to optimize performance.\n\nI am particularly interested in the interplay between theoretical limits and practical implementations, as evidenced by my work on joint source-channel coding and the robustness of MIMO systems. My contributions aim to bridge the gap between theoretical insights and real-world applications, providing a solid foundation for future advancements in secure and efficient communication networks. Through my research, I strive to push the boundaries of what is possible in information-theoretic security and communication theory.",
+    "collaborators": [
+      "Shlomo Shamai",
+      "Xiaohu Shang",
+      "Zhiguo Ding",
+      "Youngchul Sung",
+      "Heejung Yu",
+      "Deniz Gunduz",
+      "Elza Erkip",
+      "Lalitha Sankar",
+      "Yingbin Liang",
+      "Brian Swenson"
+    ],
+    "domain": [
+      "Information Theory",
+      "Wireless Communication",
+      "Game Theory",
+      "Network Security"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

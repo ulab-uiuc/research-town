@@ -1,0 +1,44 @@
+{
+  "57538504-a820-4eac-82ea-73fc515648d6": {
+    "pk": "57538504-a820-4eac-82ea-73fc515648d6",
+    "project_name": null,
+    "name": "John Dorsch",
+    "bio": "As a researcher in the field of artificial intelligence, my work primarily focuses on understanding user perceptions and acceptance of AI technologies, particularly in automotive applications and decision support systems. My recent studies have explored how labeling AI as \"trustworthy\" or \"reliable\" can significantly influence user attitudes, revealing that while the label \"trustworthy\" may not alter specific scenario judgments, it enhances perceived ease of use and fosters a sense of human-like trust. This anthropomorphic effect underscores the importance of language in shaping user interactions with AI.\n\nIn addition to user perception, I delve into the ethical dimensions of AI decision support systems (AI-DSS). I advocate for the development of AI systems that provide human decision-makers with comprehensive explanations\u2014reasons, counterfactuals, and confidence\u2014through what I term the RCC approach. My work critiques existing models of explainable AI (XAI) and proposes a novel theory of human-machine interaction, the theory of epistemic quasi-partnerships (EQP). This framework not only aligns with empirical evidence but also offers ethical guidance for the development of AI technologies.\n\nThrough my research, I aim to bridge the gap between technical advancements in AI and the human factors that influence their acceptance and effectiveness, ultimately contributing to the creation of more trustworthy and user-friendly AI systems.",
+    "collaborators": [
+      "Ophelia Deroy",
+      "Maximilian Moll"
+    ],
+    "domain": [
+      "Human-Computer Interaction",
+      "Explainable AI",
+      "Trust in AI",
+      "Decision Support Systems"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "16e4ce12-def1-49d5-936d-571cbee9671c": {
+    "pk": "16e4ce12-def1-49d5-936d-571cbee9671c",
+    "project_name": null,
+    "name": "Maximilian Moll",
+    "bio": "As a researcher in the field of artificial intelligence, my work primarily revolves around the development of ethical and explainable AI decision support systems (AI-DSS). I advocate for a framework I call the RCC approach, which emphasizes the importance of providing human decision-makers with three essential types of explanations: reasons, counterfactuals, and confidence. My recent publications delve into the empirical landscape of explainable AI (XAI), critically analyzing existing methods like LIME, SHAP, and Anchors, and their impact on user trust and decision accuracy.\n\nI have identified gaps in current theories regarding what constitutes effective human-grounded explanations, leading me to propose a novel theory of human-machine interaction known as epistemic quasi-partnerships (EQP). This theory not only clarifies the empirical evidence surrounding model explanations but also provides ethical guidance for the development of AI systems. My goal is to bridge the gap between AI capabilities and human understanding, ensuring that AI technologies are not only powerful but also trustworthy and aligned with human values. Through my research, I aim to foster a more collaborative relationship between humans and AI, ultimately enhancing decision-making processes across various domains.",
+    "collaborators": [
+      "John Dorsch"
+    ],
+    "domain": [
+      "Explainable AI",
+      "Ethical AI",
+      "Decision Support Systems"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

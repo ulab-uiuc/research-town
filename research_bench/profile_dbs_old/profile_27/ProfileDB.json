@@ -1,0 +1,105 @@
+{
+  "1fe17544-438e-461b-8eb1-83d8b1b43eb5": {
+    "pk": "1fe17544-438e-461b-8eb1-83d8b1b43eb5",
+    "project_name": null,
+    "name": "Dominik Drexler",
+    "bio": "I am a researcher dedicated to advancing the field of automated planning and decision-making through innovative approaches to problem decomposition and policy learning. My recent work focuses on enhancing width-based planning methods, particularly in addressing the limitations of existing algorithms like SIW when dealing with complex conjunctive goals. By introducing policy sketches\u2014a powerful language for expressing nuanced problem decompositions\u2014I have demonstrated how these sketches can facilitate efficient planning in domains previously deemed intractable.\n\nI have also explored the automatic learning of sketches, leveraging logical formulations and implementing solutions with ASP solvers like Clingo. This work has led to the development of a domain-independent planner that effectively learns and utilizes domain structure, showcasing the potential of sketches in simplifying complex planning tasks.\n\nAdditionally, I have investigated the role of state symmetries in planning, emphasizing their importance in reducing search space and enhancing learning efficiency. My research highlights the limitations of current learning architectures in distinguishing non-symmetric states, and I have proposed methods to improve symmetry detection, ultimately leading to more effective policy learning.\n\nThrough my work, I aim to create flexible and reusable planning languages that incorporate internal memory states, indexical features, and modular structures, thereby expanding the expressive power of policies and sketches. I am passionate about bridging theoretical advancements with practical applications, contributing to the evolution of intelligent planning systems.",
+    "collaborators": [
+      "Hector Geffner",
+      "Jendrik Seipp",
+      "Blai Bonet",
+      "Simon St\u00e5hlberg"
+    ],
+    "domain": [
+      "Automated Planning",
+      "Policy Learning",
+      "Graph Neural Network",
+      "Knowledge Representation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b3e5c399-e06a-4110-a34c-ee527f47a338": {
+    "pk": "b3e5c399-e06a-4110-a34c-ee527f47a338",
+    "project_name": null,
+    "name": "Simon St\u00e5hlberg",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. Additionally, I proposed the ROLAND framework, which facilitates the adaptation of static GNNs to dynamic graphs, addressing the challenges of evolving data structures.\n\nMy research extends beyond GNNs; I have investigated the interplay between neural network architecture and predictive performance through relational graphs, and I have systematically explored the design space of GNNs to provide guidelines for optimal architecture selection. My work aims to bridge the gap between theoretical insights and practical applications, ultimately contributing to the development of more efficient and effective machine learning models. I am passionate about pushing the boundaries of what GNNs can achieve and fostering a deeper understanding of their underlying mechanisms.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a295c6a6-608e-4a26-b902-21589f5614c9": {
+    "pk": "a295c6a6-608e-4a26-b902-21589f5614c9",
+    "project_name": null,
+    "name": "Blai Bonet",
+    "bio": "I am a researcher deeply engaged in the intersection of artificial intelligence, decision-making, and causal reasoning. My work primarily focuses on developing robust frameworks for understanding and modeling complex decision processes, particularly through the lens of causal relevance and planning. I have contributed to the formalization of causal models, enhancing the understanding of instrumental variables, and exploring the intricacies of Partially Observable Markov Decision Processes (POMDPs).\n\nMy recent research delves into qualitative decision-making models, where I aim to bridge the gap between human-like reasoning and computational efficiency. I have developed algorithms that leverage the structure of state spaces to improve belief tracking and planning in uncertain environments. My work on generalized planning has led to innovative approaches that allow for the creation of policies applicable across multiple instances, enhancing the flexibility of AI systems.\n\nI am particularly interested in the challenges posed by bounded width in planning domains and how this concept can be harnessed to develop more efficient algorithms. My exploration of graph neural networks (GNNs) for learning generalized policies has opened new avenues for understanding how these models can be applied to classical planning problems.\n\nThrough my research, I strive to create systems that not only solve specific tasks but also learn and adapt to new challenges, ultimately contributing to the development of more intelligent and flexible AI solutions.",
+    "collaborators": [
+      "Hector Geffner",
+      "Judea Pearl",
+      "Nerio Borges",
+      "Wilmer Bandres",
+      "Florian Pommerening",
+      "Malte Helmert",
+      "Dominik Drexler",
+      "Raquel Fuentetaja",
+      "Yolanda E-Martin",
+      "Daniel Borrajo"
+    ],
+    "domain": [
+      "Causal Inference",
+      "Planning",
+      "Graph Neural Network",
+      "Decision Making"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9fdaef06-99c9-41dd-bcff-eabb7876496c": {
+    "pk": "9fdaef06-99c9-41dd-bcff-eabb7876496c",
+    "project_name": null,
+    "name": "Hector Geffner",
+    "bio": "I am a researcher deeply engaged in the intersection of artificial intelligence, planning, and decision-making. My work spans several decades, reflecting a commitment to bridging the gap between model-free learners and model-based solvers. I have explored the evolution of AI from hand-crafted programs to data-driven learning approaches, emphasizing the need for transparency and generality in intelligent systems.\n\nMy recent research focuses on developing robust planning algorithms that can handle uncertainty and complexity. I have introduced innovative frameworks for conformant and fully observable non-deterministic planning, leveraging SAT encodings to produce efficient policies. I am particularly interested in qualitative numerical planning and the role of width in planning domains, where I have demonstrated how bounded width can lead to optimal general policies.\n\nI also advocate for the integration of structured causal models and first-order representations in learning from unstructured data, aiming to create flexible AI systems that can adapt to various problem instances. My work on policy sketches has provided a powerful language for expressing domain-specific knowledge, enabling more efficient problem decompositions and planning strategies.\n\nThrough my research, I strive to make AI systems more interpretable and capable of generalization, ultimately contributing to the development of intelligent agents that can reason and act effectively in complex environments.",
+    "collaborators": [
+      "Blai Bonet",
+      "Hector Palacios",
+      "Tomas Geffner",
+      "Miquel Ramirez",
+      "Till Hofmann",
+      "Emil Keyder",
+      "Ivan D. Rodriguez",
+      "Javier Romero",
+      "Wilmer Bandres",
+      "Dominik Drexler"
+    ],
+    "domain": [
+      "Artificial Intelligence",
+      "Planning",
+      "Reinforcement Learning",
+      "Model-Based Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

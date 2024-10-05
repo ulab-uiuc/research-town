@@ -1,0 +1,221 @@
+{
+  "cd9f785e-019b-4c18-bece-030c46279647": {
+    "pk": "cd9f785e-019b-4c18-bece-030c46279647",
+    "project_name": null,
+    "name": "Sawinder Kaur",
+    "bio": "I am a researcher dedicated to enhancing the efficiency and robustness of deep neural networks, particularly in resource-constrained environments. My work addresses the critical challenges of model size and deployment, especially in safety-critical applications. I introduced Deadwooding, a global pruning technique that leverages a Lagrangian Dual method to achieve model sparsity without sacrificing accuracy or adversarial robustness. This innovation has significantly advanced the state-of-the-art in model performance.\n\nIn my pursuit of practical solutions, I developed VeriCompress, an automated tool that optimizes the search and training of compressed models with guaranteed robustness. This tool not only accelerates training but also ensures that the resulting models are suitable for deployment on edge devices, requiring significantly less memory and inference time compared to existing methods. My comprehensive evaluations across various datasets, including MNIST and CIFAR, demonstrate VeriCompress's effectiveness in identifying robust models tailored for safety-critical applications.\n\nAdditionally, I have explored the realm of human sensing applications, where I introduced CRoP, a static personalization approach that optimizes model performance by addressing intra-user heterogeneity. This work is particularly relevant in clinical settings, where data limitations pose significant challenges. By combining pre-trained models with pruning techniques, CRoP enhances personalization and generalization, showcasing its potential impact on real-world health applications. My research is driven by a commitment to making advanced machine learning techniques accessible and effective in practical scenarios.",
+    "collaborators": [
+      "Asif Salekin",
+      "Yi Xiao",
+      "Ferdinando Fioretto",
+      "Avery Gump",
+      "Jingyu Xin",
+      "Harshit Sharma",
+      "Nina R Benway",
+      "Jonathan L Preston"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Model Compression",
+      "Robustness",
+      "Personalization"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "f8366588-afb9-404b-bdd8-69fa95984d3f": {
+    "pk": "f8366588-afb9-404b-bdd8-69fa95984d3f",
+    "project_name": null,
+    "name": "Avery Gump",
+    "bio": "I am a researcher dedicated to addressing the intersection of privacy, deep learning, and human sensing applications. My recent work focuses on the implications of smart speaker voice assistants (VAs) and their potential for unauthorized surveillance through speech emotion recognition (SER). I developed DARE-GP, a novel solution that employs a constrained genetic programming approach to create additive noise, effectively masking users' emotional information while preserving the essential transcription of their speech. This work not only provides real-time protection against unseen SER classifiers but also demonstrates robustness in realistic acoustic environments.\n\nIn addition to privacy concerns, I am deeply invested in the challenges of personalization in human sensing applications. My research introduces CRoP, a static personalization method that optimizes model performance by addressing intra-user heterogeneity across different contexts. This approach is particularly relevant in clinical settings, where data availability is often limited. Through extensive evaluations across multiple datasets, including those from health domains, CRoP has shown significant improvements in personalization effectiveness and generalization.\n\nOverall, my work aims to enhance the practical and social impact of machine learning technologies while ensuring user privacy and adaptability in diverse contexts. I am passionate about developing solutions that not only advance the field but also prioritize ethical considerations in technology deployment.",
+    "collaborators": [
+      "Yi Xiao",
+      "Harshit Sharma",
+      "Asif Salekin",
+      "Brian Testa",
+      "Sawinder Kaur",
+      "Jingyu Xin",
+      "Nina R Benway",
+      "Jonathan L Preston"
+    ],
+    "domain": [
+      "Speech Emotion Recognition",
+      "Personalization",
+      "Deep Learning",
+      "Internet of Things"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "db886341-5dae-411c-ae6a-d6f829b04cc9": {
+    "pk": "db886341-5dae-411c-ae6a-d6f829b04cc9",
+    "project_name": null,
+    "name": "Jingyu Xin",
+    "bio": "I am a researcher dedicated to advancing the field of sports video analysis, particularly in automating the editing and highlight generation processes for soccer broadcasts. My recent work focuses on developing a two-stage paradigm that effectively detects and locates events within long, untrimmed videos. By fine-tuning multiple action recognition models on soccer data, I extract high-level semantic features that enhance our understanding of the game. \n\nAdditionally, I have designed a transformer-based temporal detection module that excels in pinpointing when and what events occur in soccer videos. This innovative approach has led to state-of-the-art performance in both action spotting and replay grounding tasks, as demonstrated in the SoccerNet-v2 Challenge at the CVPR 2021 ActivityNet workshop. \n\nI am passionate about sharing my findings with the research community, which is why I released our soccer embedding features publicly. I believe that collaboration and open access to resources can significantly accelerate advancements in soccer video understanding and contribute to the broader field of sports analytics.",
+    "collaborators": [
+      "Xin Zhou",
+      "Le Kang",
+      "Zhiyu Cheng",
+      "Bo He"
+    ],
+    "domain": [
+      "Video Analysis",
+      "Action Recognition",
+      "Sports Analytics",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "bcb858b2-4751-407c-9eae-c7da794853c2": {
+    "pk": "bcb858b2-4751-407c-9eae-c7da794853c2",
+    "project_name": null,
+    "name": "Yi Xiao",
+    "bio": "I am a researcher with a diverse background in computational biology, machine learning, and data analysis. My recent work has focused on understanding protein folding mechanisms, particularly through molecular dynamics simulations of trpzip2, where I identified multiple folding pathways and their probabilities, shedding light on beta-hairpin folding mechanisms. \n\nIn the realm of machine learning, I have developed innovative algorithms for nominal automata, extending classical automata theory to capture nominal regular languages with binders. This work has implications for resource-aware computations and abstract modeling. Additionally, I have contributed to the field of deep learning by creating a novel colorization method that allows for simultaneous global and local user inputs, enhancing control over output images and achieving state-of-the-art results.\n\nMy research also includes advancements in data assimilation techniques, where I introduced VAE-Var, a variational algorithm that models non-Gaussian background error distributions, significantly improving accuracy in chaotic systems. Furthermore, I have tackled the challenge of log parsing by proposing LogBatcher, a cost-effective, LLM-based parser that efficiently processes logs without the need for extensive training or labeled data.\n\nOverall, my work aims to bridge the gap between theoretical advancements and practical applications, contributing to a deeper understanding of complex systems in both biological and computational contexts.",
+    "collaborators": [
+      "Changjun Chen",
+      "Emilio Tuosto",
+      "Peiyao Zhou",
+      "Yan Zheng",
+      "Qilong Jia",
+      "Wei Xue",
+      "Lei Bai",
+      "Van-Hoang Le",
+      "Hongyu Zhang",
+      "Ruizhen Xu"
+    ],
+    "domain": [
+      "Computational Biology",
+      "Machine Learning",
+      "Deep Learning",
+      "Data Assimilation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "4ff10126-d279-49a9-99cf-6e87d6115fb6": {
+    "pk": "4ff10126-d279-49a9-99cf-6e87d6115fb6",
+    "project_name": null,
+    "name": "Harshit Sharma",
+    "bio": "I am a researcher dedicated to advancing the fields of data analytics, machine learning, and speech science. My work spans a diverse range of topics, from the integration of GPUs in in-memory analytics to the development of innovative frameworks for detecting and understanding speech patterns in children who stutter. \n\nIn my recent studies, I have explored the advantages of GPU databases, highlighting their superior performance in handling data-intensive workloads. I have also tackled the critical issue of credit card fraud detection by employing sparse Gaussian classification methods, demonstrating the effectiveness of Bayesian learning techniques in achieving high accuracy with large financial datasets.\n\nMy research in speech science has led to the development of novel approaches like the PASAD framework, which leverages real-time physiological data to analyze speech acoustics in young children. This work not only enhances our understanding of speech-motor control factors but also paves the way for personalized interventions for children who stutter.\n\nAdditionally, I have made significant contributions to the field of federated learning, proposing a bias mitigation approach that ensures fairness without compromising data privacy. My work aims to bridge the gap between advanced machine learning techniques and real-world applications, ultimately striving for a more equitable and effective use of AI in human-centered contexts.\n\nThrough my research, I aim to push the boundaries of knowledge in these domains, fostering innovation and practical solutions that can have a meaningful impact on society.",
+    "collaborators": [
+      "Asif Salekin",
+      "Yi Xiao",
+      "Victoria Tumanova",
+      "Udaysinh T. Bhosale",
+      "Anmol Sharma",
+      "Harsh K. Gandhi",
+      "Apoorv Jain",
+      "Shaily Roy"
+    ],
+    "domain": [
+      "Data Analytics",
+      "Machine Learning",
+      "Federated Learning",
+      "Speech Processing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c8400af1-1179-4a1b-ab87-754a6bbdb33d": {
+    "pk": "c8400af1-1179-4a1b-ab87-754a6bbdb33d",
+    "project_name": null,
+    "name": "Nina R Benway",
+    "bio": "I am a researcher dedicated to enhancing clinical speech technology systems and their applications in treating speech sound disorders. My work emphasizes the importance of clinical validation to ensure the reproducibility of systems like the PERCEPT-R Classifier, which predicts clinician judgments of American English /r/ during innovative interventions. Through my studies, I have demonstrated that participants can achieve significant improvements in untreated words after engaging in combined human and AI treatments, despite variability in classification performance.\n\nI have also explored the efficacy of mispronunciation detection tools, revealing that age-and-sex normalized formant estimation outperforms traditional methods for detecting rhotic versus derhotic /r/. My research employs gated recurrent neural networks, achieving impressive participant-specific F1-scores, which underscores the potential of these tools to increase treatment access.\n\nAdditionally, I am investigating acoustic-to-articulatory speech inversion to provide detailed feedback for mispronunciation detection, particularly in children with speech sound disorders. My findings indicate that classifiers trained on tract variables can match or exceed the performance of state-of-the-art features, paving the way for more effective clinical applications.\n\nIn the realm of human sensing, I have developed CRoP, a novel static personalization approach that optimizes model performance across diverse contexts. This work addresses the challenges of intra-user heterogeneity and limited data availability, demonstrating significant improvements in personalization effectiveness and robustness. My research aims to bridge the gap between advanced technology and practical clinical applications, ultimately enhancing treatment outcomes for individuals with speech sound disorders.",
+    "collaborators": [
+      "Jonathan L Preston",
+      "Asif Salekin",
+      "Yi Xiao",
+      "Harshit Sharma",
+      "Tara McAllister",
+      "Yashish M Siriwardena",
+      "Elaine Hitchcock",
+      "Carol Espy-Wilson",
+      "Sawinder Kaur",
+      "Avery Gump"
+    ],
+    "domain": [
+      "Speech Technology",
+      "Deep Learning",
+      "Clinical Validation",
+      "Personalization"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "4e27482b-fbd4-4d03-a579-cd855741bcaf": {
+    "pk": "4e27482b-fbd4-4d03-a579-cd855741bcaf",
+    "project_name": null,
+    "name": "Jonathan L Preston",
+    "bio": "As a researcher in the field of clinical speech technology, I am deeply committed to ensuring that our systems not only perform well in controlled lab settings but also demonstrate real-world effectiveness. My recent work focuses on the PERCEPT-R Classifier, which aims to predict clinician judgments of American English /r/ sounds during ChainingAI interventions for motor-based speech sound disorders. \n\nIn my latest study, I validated the classifier's performance through clinical trials, where I observed statistically significant improvements in untreated words among participants after just ten sessions of combined human and ChainingAI treatment. This research has highlighted the complexities of measuring classification performance in clinical speech, particularly when dealing with perceptually ambiguous sounds. \n\nI am passionate about bridging the gap between technology and clinical practice, ensuring that our innovations are not only theoretically sound but also practically applicable. My goal is to contribute to the development of reliable speech technology that can enhance therapeutic outcomes for individuals with speech sound disorders.",
+    "collaborators": [
+      "Nina R Benway"
+    ],
+    "domain": [
+      "Speech Technology",
+      "Clinical Validation",
+      "Machine Learning",
+      "Speech Disorders"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "fa2b6111-e397-48b7-86f7-9135b8f1e670": {
+    "pk": "fa2b6111-e397-48b7-86f7-9135b8f1e670",
+    "project_name": null,
+    "name": "Asif Salekin",
+    "bio": "I am a researcher dedicated to advancing the understanding of speech disorders, particularly stuttering, and the application of machine learning in health-related contexts. My recent work has focused on the physiological arousal patterns of preschool-age children who stutter (CWS) compared to those who do not (CWNS). By employing a novel modality-wise multiple-instance-learning (MI-MIL) approach, I have been able to classify and visualize these differences in real-time, paving the way for personalized interventions that could enhance speech fluency.\n\nIn addition to my work on stuttering, I have explored various facets of machine learning, including federated learning and its implications for fairness in human-centered AI applications. My approach to bias mitigation in federated systems represents a significant advancement in ensuring equitable outcomes without compromising data privacy. I have also developed innovative frameworks like PASAD, which leverages physiological responses to analyze speech acoustics, and ThermaStrain, a co-teaching framework that enhances stress prediction using thermal imaging.\n\nMy research extends to the deployment of deep learning models in resource-constrained environments, where I introduced VeriCompress, a tool that automates the search for robust, compact models suitable for safety-critical applications. I am passionate about bridging the gap between advanced machine learning techniques and practical applications in healthcare, aiming to improve early detection of conditions like Alzheimer's disease and enhance speech sound disorder treatments.\n\nThrough my work, I strive to contribute to the fields of speech science and machine learning, focusing on real-world applications that can significantly impact individuals' lives.",
+    "collaborators": [
+      "Harshit Sharma",
+      "Yi Xiao",
+      "Sawinder Kaur",
+      "Victoria Tumanova",
+      "Brian Testa",
+      "Senem Velipasalar",
+      "Zhongyang Zhang",
+      "Tauhidur Rahman",
+      "Avery Gump",
+      "Nina R Benway"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Speech Processing",
+      "Federated Learning",
+      "Health Informatics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

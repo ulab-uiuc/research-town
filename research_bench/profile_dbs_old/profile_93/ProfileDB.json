@@ -1,0 +1,574 @@
+{
+  "7d495858-1a29-427f-ba73-34b1180198c4": {
+    "pk": "7d495858-1a29-427f-ba73-34b1180198c4",
+    "project_name": null,
+    "name": "Tirtha Chanda",
+    "bio": "As a researcher in the field of artificial intelligence and its applications in dermatology, I am deeply committed to enhancing diagnostic accuracy for melanoma through innovative AI systems. My recent work focuses on the integration of explainable AI (XAI) to bolster clinicians' confidence in AI-driven decisions. In a study involving 76 dermatologists, I employed eye-tracking technology to analyze how they interact with both standard AI systems and XAI tools while diagnosing dermoscopic images of melanomas and nevi.\n\nThe results of this research were illuminating; we found that XAI systems improved diagnostic accuracy by 2.8 percentage points compared to traditional AI. Additionally, I discovered that diagnostic disagreements, particularly with complex lesions, were linked to increased cognitive load, as indicated by heightened ocular fixations. These findings not only contribute to our understanding of clinician engagement with AI but also have significant implications for the design of future AI tools in medical diagnostics. My goal is to continue exploring how XAI can transform clinical practice and improve patient outcomes in dermatology.",
+    "collaborators": [
+      "Sarah Haggenmueller",
+      "Tabea-Clara Bucher",
+      "Tim Holland-Letz",
+      "Harald Kittler",
+      "Philipp Tschandl",
+      "Markus V. Heppt",
+      "Carola Berking",
+      "Jochen S. Utikal",
+      "Bastian Schilling",
+      "Claudia Buerger"
+    ],
+    "domain": [
+      "Explainable AI",
+      "Medical Imaging",
+      "Dermatology",
+      "Cognitive Load"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "70ae4f6b-ce89-4c1f-aeb6-593212d70c17": {
+    "pk": "70ae4f6b-ce89-4c1f-aeb6-593212d70c17",
+    "project_name": null,
+    "name": "Sarah Haggenmueller",
+    "bio": "I am a researcher deeply engaged in the intersection of DNA nanotechnology and artificial intelligence, particularly in the context of medical diagnostics. My work in DNA origami has allowed me to explore the design and simulation of complex nanoscale structures using the oxDNA model, which enhances our understanding of these constructs and their applications in nanofabrication and therapeutics. I am passionate about bridging computational analysis with experimental design, providing tools that empower researchers to visualize and characterize DNA structures effectively.\n\nIn the realm of medical diagnostics, I have focused on leveraging deep learning to improve melanoma detection. My studies have demonstrated the efficacy of using immunohistochemical (IHC) staining alongside traditional hematoxylin and eosin (H&E) staining, revealing that classifiers trained on these modalities can significantly enhance diagnostic accuracy. I am particularly interested in the role of explainable AI (XAI) in dermatology, where I have conducted reader studies to evaluate how dermatologists interact with AI systems. My findings highlight the importance of XAI in improving diagnostic performance and clinician trust, while also shedding light on the cognitive load associated with complex diagnostic tasks.\n\nOverall, my research aims to advance both the fields of bionanotechnology and medical diagnostics through innovative applications of computational tools and AI, ultimately contributing to more effective and reliable healthcare solutions.",
+    "collaborators": [
+      "Tabea-Clara Bucher",
+      "Markus V. Heppt",
+      "Titus J. Brinker",
+      "Michael Matthies",
+      "Matthew Sample",
+      "Petr \u0160ulc",
+      "Christoph Wies",
+      "Lucas Schneider",
+      "Sarah Hobelsberger",
+      "Gerardo Ferrara"
+    ],
+    "domain": [
+      "DNA Nanotechnology",
+      "Deep Learning",
+      "Explainable AI",
+      "Medical Diagnostics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b48aad11-1552-4ec9-a8df-2e66a7202e99": {
+    "pk": "b48aad11-1552-4ec9-a8df-2e66a7202e99",
+    "project_name": null,
+    "name": "Tabea-Clara Bucher",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This innovation has led to substantial accuracy improvements across various prediction tasks. My exploration of dynamic graphs culminated in the ROLAND framework, which allows static GNNs to adapt to dynamic environments, thereby enhancing their scalability and effectiveness.\n\nBeyond architectural advancements, I have delved into the design space of GNNs, systematically studying over 315,000 designs to provide guidelines for optimal model selection across different tasks. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the search for effective neural architectures by leveraging prior knowledge and task similarities.\n\nThrough these efforts, I strive to bridge the gap between theoretical advancements and practical applications, ultimately contributing to the evolution of machine learning methodologies in relational data contexts.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "72ecf78f-0111-4fef-8263-e988273a77c1": {
+    "pk": "72ecf78f-0111-4fef-8263-e988273a77c1",
+    "project_name": null,
+    "name": "Tim Holland-Letz",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identities during message passing. This innovation has led to substantial accuracy improvements across various prediction tasks. My exploration of dynamic graphs culminated in the ROLAND framework, which allows static GNNs to adapt to dynamic environments, thereby enhancing their scalability and effectiveness.\n\nBeyond architectural advancements, I have delved into the design space of GNNs, systematically studying over 315,000 designs to provide guidelines for optimizing performance across different tasks. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the search for optimal model designs, making it more efficient and insightful.\n\nOverall, my research is driven by a passion for pushing the boundaries of GNNs and contributing to a deeper understanding of their structure and functionality, ultimately aiming to make these models more accessible and effective for a wide range of applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "3fe37aca-1a5a-4280-bd0d-fb278b975fc6": {
+    "pk": "3fe37aca-1a5a-4280-bd0d-fb278b975fc6",
+    "project_name": null,
+    "name": "Harald Kittler",
+    "bio": "I am a researcher dedicated to enhancing the diagnosis of skin diseases through advanced machine learning techniques. My work primarily focuses on the development and application of neural networks for automated diagnosis, particularly in the realm of pigmented skin lesions. One of my significant contributions is the creation of the HAM10000 dataset, which comprises over 10,000 diverse dermatoscopic images collected from various populations. This dataset not only serves as a benchmark for machine learning applications but also facilitates comparisons with human expert diagnoses.\n\nIn addition to dataset creation, I have developed Dermtrainer, a medical decision support system designed to assist general practitioners and train dermatologists. This system integrates a comprehensive dermatological knowledge base with a clinical algorithm to enhance diagnostic accuracy.\n\nMy research also delves into the challenges of diagnosing basal cell carcinomas (BCC) from histological images. I have explored the use of attention-based deep learning models to address issues related to ultra-high resolution and weak labels in whole slide images. My findings demonstrate that these models can achieve remarkable classification performance, with an AUC of 0.99, showcasing the potential of machine learning in improving diagnostic safety and efficiency in dermatopathology. Through my work, I aim to bridge the gap between technology and clinical practice, ultimately improving patient outcomes in dermatology.",
+    "collaborators": [
+      "Philipp Tschandl",
+      "Cliff Rosendahl",
+      "Gernot Salzer",
+      "Agata Ciabattoni",
+      "Christian Ferm\u00fcller",
+      "Martin Haiduk",
+      "Arno Lukas",
+      "Rosa Mar\u00eda Rodr\u00edguez Dom\u00ednguez",
+      "Antonia Wesinger",
+      "Elisabeth Riedl"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Machine Learning",
+      "Deep Learning",
+      "Dermatology"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b3d827fc-8647-422a-93f9-d567cfae73e1": {
+    "pk": "b3d827fc-8647-422a-93f9-d567cfae73e1",
+    "project_name": null,
+    "name": "Philipp Tschandl",
+    "bio": "I am a researcher dedicated to advancing the field of medical image analysis, particularly in dermatology. My work focuses on leveraging deep learning and neural networks to enhance the diagnostic accuracy of pigmented skin lesions and other dermatological conditions. A significant part of my research involves the development of automated clustering techniques that facilitate human-interpretable pattern discovery from large datasets, such as the HAM10000 dataset, which I helped create to address the challenges posed by small and non-diverse training sets.\n\nI have explored various methodologies, including content-based image retrieval (CBIR) and attention-based models, to improve diagnostic performance while ensuring interpretability. My studies have demonstrated that CBIR can match or even surpass traditional neural network predictions in certain contexts, highlighting the importance of visual similarity in clinical decision-making. Additionally, I have investigated the impact of segmentation masks on classification tasks, revealing nuanced insights into their utility in enhancing model performance.\n\nMy commitment to improving diagnostic tools extends to the development of comprehensive datasets that reflect real-world clinical practices, such as the SIIM-ISIC Melanoma Classification challenge dataset, which incorporates patient-level information. I also emphasize the importance of explainable AI (XAI) in fostering trust among clinicians, as evidenced by my research on how XAI systems can enhance diagnostic accuracy and reduce cognitive load during image analysis.\n\nThrough my work, I aim to bridge the gap between advanced machine learning techniques and practical clinical applications, ultimately improving patient outcomes in dermatology.",
+    "collaborators": [
+      "Harald Kittler",
+      "Noel Codella",
+      "Veronica Rotemberg",
+      "Stephen Dusza",
+      "David Gutman",
+      "Allan Halpern",
+      "Lidia Talavera-Martinez",
+      "Cliff Rosendahl",
+      "Giuseppe Argenziano",
+      "Majid Razmara"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Deep Learning",
+      "Dermatology",
+      "Explainable AI"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2abf59b9-270c-469c-86d1-f66ee064c2df": {
+    "pk": "2abf59b9-270c-469c-86d1-f66ee064c2df",
+    "project_name": null,
+    "name": "Markus V. Heppt",
+    "bio": "I am a researcher dedicated to enhancing melanoma diagnosis through the integration of artificial intelligence (AI) and explainable AI (XAI) systems. My work focuses on the application of deep learning techniques to both immunohistochemical (IHC) and hematoxylin and eosin (H&E) stained tissue slides, where I have demonstrated that classifiers trained on MelanA can achieve comparable performance to traditional H&E-based methods. I have also explored the impact of XAI on dermatologists' diagnostic accuracy and cognitive load, revealing that XAI systems can significantly improve diagnostic performance and clinician trust.\n\nIn my recent studies, I have investigated the benefits of using multiple real-world dermoscopic views of lesions, which led to notable improvements in classifier performance. My research emphasizes the importance of generalizability in AI systems, as I have conducted prospective studies across diverse datasets, including rare melanoma subtypes. I have developed and evaluated an open-source ensemble algorithm, demonstrating its superior diagnostic accuracy compared to dermatologists in challenging cases.\n\nMy commitment to transparency in AI has driven me to create XAI systems that provide interpretable explanations for dermatologists, enhancing their confidence and trust in AI-driven decisions. Through my work, I aim to bridge the gap between advanced AI technologies and clinical practice, ultimately improving patient outcomes in melanoma diagnosis.",
+    "collaborators": [
+      "Titus J. Brinker",
+      "Christoph Wies",
+      "Sarah Hobelsberger",
+      "Jochen S. Utikal",
+      "Bastian Schilling",
+      "Matthias Goebeler",
+      "Tabea-Clara Bucher",
+      "Carola Berking",
+      "Kamran Ghoreschi",
+      "Gabriela Poch"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Deep Learning",
+      "Explainable AI",
+      "Dermatology"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9ed67d53-2531-4f88-a4d7-1a77086025aa": {
+    "pk": "9ed67d53-2531-4f88-a4d7-1a77086025aa",
+    "project_name": null,
+    "name": "Carola Berking",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, which has proven effective in various prediction tasks, achieving significant performance improvements.\n\nI am particularly interested in the interplay between graph structures and predictive performance, as demonstrated in my work on relational graphs that reveal a \"sweet spot\" for optimizing neural network architectures. This exploration has led to the creation of Identity-aware GNNs (ID-GNNs), which enhance the expressive power of message-passing frameworks by incorporating node identities during the aggregation process.\n\nAdditionally, I have tackled the challenges posed by dynamic graphs through the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments. My research also extends to automated machine learning (AutoML), where I introduced FALCON and AutoTransfer to streamline the design process and improve efficiency in model selection.\n\nOverall, my goal is to push the boundaries of GNN research, providing innovative solutions that not only advance theoretical understanding but also yield practical applications across various domains. I am excited about the future of this field and the potential for my work to contribute to its evolution.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "AutoML",
+      "Multi-task Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "01105feb-d04a-425c-a941-097708743fab": {
+    "pk": "01105feb-d04a-425c-a941-097708743fab",
+    "project_name": null,
+    "name": "Jochen S. Utikal",
+    "bio": "I am a researcher dedicated to enhancing the diagnostic capabilities of artificial intelligence (AI) in dermatology, particularly in the detection of melanoma. My work focuses on the intersection of AI and explainable AI (XAI), aiming to improve both the accuracy of melanoma diagnoses and the trust clinicians place in these systems. Through a series of studies, I have explored how XAI can provide detailed, domain-specific explanations that enhance dermatologists' confidence in AI-driven decisions.\n\nIn my recent research, I conducted a reader study involving 76 dermatologists, utilizing eye-tracking technology to assess their interactions with XAI systems. The results demonstrated that XAI improved diagnostic accuracy and highlighted the cognitive load associated with complex lesions. Additionally, I investigated the impact of using multiple real-world images on convolutional neural network (CNN) classifiers, finding that this approach significantly enhanced diagnostic performance.\n\nI have also evaluated the generalizability of AI algorithms in diverse clinical settings, confirming their potential to support dermatologists, especially in challenging cases. My work emphasizes the importance of transparency in AI systems, and I have developed XAI methods that produce interpretable explanations, aligning closely with clinicians' reasoning. Overall, my research aims to bridge the gap between AI technology and clinical practice, fostering a future where AI tools are seamlessly integrated into dermatological diagnostics.",
+    "collaborators": [
+      "Markus V. Heppt",
+      "Bastian Schilling",
+      "Matthias Goebeler",
+      "Titus J. Brinker",
+      "Carola Berking",
+      "Christoph Wies",
+      "Sarah Hobelsberger",
+      "Kamran Ghoreschi",
+      "Gabriela Poch",
+      "S\u00f6ren Korsing"
+    ],
+    "domain": [
+      "Explainable AI",
+      "Medical Imaging",
+      "Dermatology",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b229c70c-6ec6-45eb-a96b-9b5d75cdc817": {
+    "pk": "b229c70c-6ec6-45eb-a96b-9b5d75cdc817",
+    "project_name": null,
+    "name": "Bastian Schilling",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, which has proven effective in various prediction tasks, achieving significant performance improvements.\n\nI am particularly interested in the interplay between graph structures and predictive performance, as demonstrated in my work on relational graphs that reveal a \"sweet spot\" for optimizing neural network architectures. This exploration has led to the creation of Identity-aware GNNs (ID-GNNs), which enhance the expressive power of message-passing frameworks by incorporating node identities during the aggregation process.\n\nAdditionally, I have tackled the challenges posed by dynamic graphs through the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments. My research also extends to automated machine learning (AutoML), where I introduced methods like FALCON and AutoTransfer to improve the efficiency of model design searches by leveraging prior knowledge across tasks.\n\nOverall, my work aims to bridge theoretical insights with practical applications, providing scalable solutions that advance the state of the art in graph-based learning and contribute to the broader machine learning community.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a2d60d56-194e-44f6-9267-c7a16dedc649": {
+    "pk": "a2d60d56-194e-44f6-9267-c7a16dedc649",
+    "project_name": null,
+    "name": "Claudia Buerger",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, which has proven effective in various prediction tasks, achieving significant performance improvements.\n\nI am particularly interested in the interplay between graph structures and predictive performance, as demonstrated in my work on relational graphs that reveal a \"sweet spot\" for optimizing neural network architectures. This exploration has led to the creation of Identity-aware GNNs (ID-GNNs), which enhance the expressive power of message-passing frameworks by incorporating node identities.\n\nIn addition to static graphs, I have tackled the challenges posed by dynamic graphs through the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments. My research also extends to automated machine learning (AutoML), where I introduced FALCON and AutoTransfer to streamline the design process and improve efficiency in model selection.\n\nOverall, my goal is to push the boundaries of GNN research, providing innovative solutions that not only advance theoretical understanding but also have practical implications across various domains. I am excited about the future of this field and the potential for my work to contribute to its evolution.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b5d7849e-2b94-4888-97b9-221d701a2490": {
+    "pk": "b5d7849e-2b94-4888-97b9-221d701a2490",
+    "project_name": null,
+    "name": "Cristian Navarrete-Dechent",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work primarily revolves around enhancing the capabilities and understanding of GNN architectures. My recent publications reflect a commitment to addressing the limitations of existing models and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to improve node embeddings by capturing their positions within the broader graph structure, which has shown significant performance improvements in various prediction tasks.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of message-passing frameworks by incorporating node identities during the aggregation process. This advancement has led to notable accuracy gains across challenging prediction tasks. Additionally, I proposed the ROLAND framework, which facilitates the adaptation of static GNNs to dynamic graphs, addressing the unique challenges posed by evolving data.\n\nMy research extends beyond GNNs; I have explored the interplay between neural network structures and their predictive performance through relational graphs, and I have systematically studied the architectural design space of GNNs to provide guidelines for effective model design. I am particularly passionate about making machine learning more efficient and accessible, as demonstrated by my work on AutoTransfer, which leverages prior architectural knowledge to enhance AutoML processes.\n\nOverall, my goal is to push the boundaries of what GNNs can achieve, fostering a deeper understanding of their potential and applicability across various domains.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "04e42a29-3339-4ec7-9e82-f42b9f939134": {
+    "pk": "04e42a29-3339-4ec7-9e82-f42b9f939134",
+    "project_name": null,
+    "name": "Matthias Goebeler",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, which has proven effective in various prediction tasks, achieving significant performance improvements.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identities during message passing. This innovation has led to substantial accuracy gains across multiple prediction benchmarks. Recognizing the challenges posed by dynamic graphs, I proposed the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments, enhancing scalability and real-world applicability.\n\nIn addition to architectural advancements, I have explored the intricate relationship between neural network structures and their predictive performance through relational graphs. My work aims to systematically study the design space of GNNs, providing guidelines for optimizing architectures across various tasks. I am also passionate about improving the efficiency of automated machine learning (AutoML) methods, as demonstrated by my development of FALCON and AutoTransfer, which leverage design knowledge to streamline the search for optimal models.\n\nOverall, my research is driven by a desire to push the boundaries of GNNs and contribute to the broader understanding of machine learning frameworks, ultimately enabling more effective solutions for complex relational data challenges.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "75b1b7dd-964a-46a3-9004-4e472f0c62dd": {
+    "pk": "75b1b7dd-964a-46a3-9004-4e472f0c62dd",
+    "project_name": null,
+    "name": "Jakob Nikolas Kather",
+    "bio": "I am a researcher dedicated to harnessing the power of deep learning and artificial intelligence in the field of computational pathology and medical imaging. My recent work focuses on developing innovative methodologies that bridge the gap between complex data analysis and clinical application. I have pioneered a weakly-supervised joint multi-task Transformer architecture that predicts critical biomarkers from cancer histology, achieving significant improvements over existing methods. \n\nMy research also explores the robustness of denoising diffusion models in MRI, revealing vulnerabilities that could impact clinical decision-making. I am particularly interested in the potential of self-supervised learning (SSL) to democratize access to advanced AI tools in medical settings, allowing for effective analysis of non-annotated data. \n\nAdditionally, I have investigated the application of large language models (LLMs) in automating clinical trial matching and enhancing multimodal AI systems for clinical decision-making. My work emphasizes the importance of model interpretability and the need for robust validation mechanisms to ensure the safe deployment of AI in healthcare. \n\nThrough my research, I aim to create scalable, efficient solutions that empower clinicians and improve patient outcomes, while also addressing the challenges posed by data diversity and model complexity in medical AI applications. I am committed to advancing the field through open-source initiatives and collaborative frameworks that facilitate the integration of AI into clinical practice.",
+    "collaborators": [
+      "Daniel Truhn",
+      "Sven Nebelung",
+      "Firas Khader",
+      "Tianyu Han",
+      "Omar S. M. El Nahhas",
+      "Christiane Kuhl",
+      "Soroosh Tayebi Arasteh",
+      "Georg W\u00f6lflein",
+      "Marta Ligero",
+      "Tim Lenz"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Deep Learning",
+      "Self-Supervised Learning",
+      "Multimodal AI"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "f12d5fd4-ca6f-48e2-ab6e-3b445bd57531": {
+    "pk": "f12d5fd4-ca6f-48e2-ab6e-3b445bd57531",
+    "project_name": null,
+    "name": "Carolin V. Schneider",
+    "bio": "I am a researcher dedicated to the intersection of artificial intelligence and healthcare, particularly focusing on vision-language models (VLMs) and their applications in medical diagnostics. My recent work has highlighted critical vulnerabilities in VLMs, demonstrating how prompt injection attacks can compromise their integrity, especially in sensitive medical contexts. Through a quantitative analysis of four leading VLMs, I revealed that these models are susceptible to attacks that can lead to harmful outputs, underscoring the need for robust security measures before their clinical implementation.\n\nIn addition to security concerns, I am passionate about enhancing the diagnostic capabilities of dermatologists through explainable AI (XAI). My studies have involved evaluating how dermatologists interact with AI systems, particularly in diagnosing melanoma. By employing eye-tracking technology, I assessed the impact of XAI on diagnostic accuracy and cognitive load. The results showed that XAI systems not only improved diagnostic performance but also provided valuable insights into the cognitive processes involved in medical decision-making.\n\nOverall, my research aims to bridge the gap between advanced AI technologies and their practical, safe application in healthcare, ensuring that these tools enhance clinical outcomes while maintaining the highest standards of security and trust.",
+    "collaborators": [
+      "Titus J. Brinker",
+      "Jan Clusmann",
+      "Dyke Ferber",
+      "Isabella C. Wiest",
+      "Sebastian Foersch",
+      "Daniel Truhn",
+      "Jakob N. Kather",
+      "Tirtha Chanda",
+      "Sarah Haggenmueller",
+      "Tabea-Clara Bucher"
+    ],
+    "domain": [
+      "Vision-Language Models",
+      "Explainable AI",
+      "Medical Imaging",
+      "Security in AI"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "29f4e0d8-dde7-481f-9dcb-7077950ed8cc": {
+    "pk": "29f4e0d8-dde7-481f-9dcb-7077950ed8cc",
+    "project_name": null,
+    "name": "Benjamin Durani",
+    "bio": "As a researcher in the field of artificial intelligence and its applications in dermatology, I am deeply committed to enhancing diagnostic accuracy for melanoma through innovative AI systems. My recent work focuses on the integration of explainable AI (XAI) to bolster clinicians' confidence in AI-driven decisions. In a study involving 76 dermatologists, I employed eye-tracking technology to analyze how they interact with both standard AI systems and XAI tools while diagnosing dermoscopic images of melanomas and nevi.\n\nThe results of this research were illuminating; I found that XAI systems improved diagnostic accuracy by 2.8 percentage points compared to traditional AI. Additionally, I discovered that diagnostic disagreements, particularly with complex lesions, were linked to increased cognitive load, as indicated by heightened ocular fixations. These findings not only contribute to our understanding of how dermatologists engage with AI but also have significant implications for the design of AI tools in medical diagnostics. My goal is to continue exploring the intersection of AI and clinical practice, ensuring that these technologies are both effective and user-friendly for healthcare professionals.",
+    "collaborators": [
+      "Tirtha Chanda",
+      "Sarah Haggenmueller",
+      "Tabea-Clara Bucher",
+      "Tim Holland-Letz",
+      "Harald Kittler",
+      "Philipp Tschandl",
+      "Markus V. Heppt",
+      "Carola Berking",
+      "Jochen S. Utikal",
+      "Bastian Schilling"
+    ],
+    "domain": [
+      "Explainable AI",
+      "Medical Imaging",
+      "Dermatology",
+      "Cognitive Load"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c264ddf0-aacc-4bd0-a6c3-2693bbf8a1d9": {
+    "pk": "c264ddf0-aacc-4bd0-a6c3-2693bbf8a1d9",
+    "project_name": null,
+    "name": "Hendrike Durani",
+    "bio": "As a researcher in the field of artificial intelligence and its applications in dermatology, I am deeply committed to enhancing diagnostic accuracy for melanoma through innovative AI systems. My recent work focuses on the integration of explainable AI (XAI) to bolster clinicians' confidence in AI-driven decisions. In a study involving 76 dermatologists, I employed eye-tracking technology to analyze how they interact with both standard AI systems and XAI tools while diagnosing dermoscopic images of melanomas and nevi.\n\nThe results of this research were illuminating; I found that XAI systems improved diagnostic accuracy by 2.8 percentage points compared to traditional AI. Additionally, I discovered that diagnostic disagreements, particularly with complex lesions, were linked to increased cognitive load, as indicated by heightened ocular fixations. These findings not only contribute to our understanding of how dermatologists engage with AI but also have significant implications for the design of AI tools in medical diagnostics. My goal is to continue exploring the intersection of AI and clinical practice, ensuring that these technologies are both effective and user-friendly for healthcare professionals.",
+    "collaborators": [
+      "Tirtha Chanda",
+      "Sarah Haggenmueller",
+      "Tabea-Clara Bucher",
+      "Tim Holland-Letz",
+      "Harald Kittler",
+      "Philipp Tschandl",
+      "Markus V. Heppt",
+      "Carola Berking",
+      "Jochen S. Utikal",
+      "Bastian Schilling"
+    ],
+    "domain": [
+      "Explainable AI",
+      "Medical Imaging",
+      "Dermatology",
+      "Cognitive Load"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "f7056307-21ec-4e13-a073-1001ddefb8bd": {
+    "pk": "f7056307-21ec-4e13-a073-1001ddefb8bd",
+    "project_name": null,
+    "name": "Martin Jansen",
+    "bio": "I am a researcher with a strong focus on the interplay between electronic structure, magnetic properties, and gene expression dynamics. My work spans a diverse range of topics, from the self-regulation of gene transcription to the intricate behaviors of complex materials like double perovskites. I have developed models that elucidate the mechanisms of gene expression, particularly how delays in transcription and translation can influence protein production and variance.\n\nIn the realm of materials science, I have employed first-principles density functional theory to investigate the electronic and magnetic properties of various compounds, including the intriguing behaviors of mixed-valent perovskites and their potential as topological insulators. My research has revealed critical insights into magnetic exchange interactions and the effects of geometrical frustration in systems like Ag2MnO2.\n\nI am particularly passionate about bridging theoretical models with experimental findings, as seen in my studies of double perovskites, where I explore the role of electron configurations in determining magnetic properties. My work not only contributes to the fundamental understanding of these systems but also has implications for developing new materials with tailored properties. Through my research, I aim to advance our knowledge in both biological and physical sciences, fostering interdisciplinary connections that can lead to innovative solutions in various fields.",
+    "collaborators": [
+      "Binghai Yan",
+      "Claudia Felser",
+      "Sudipta Kanungo",
+      "Peter Pfaffelhuber",
+      "Tim G\u00fclke",
+      "Bernhard Rumpe",
+      "Joachim Axmann",
+      "Hiroyuki Yoshida",
+      "Sascha Ahlert",
+      "Yoshihiko Okamoto"
+    ],
+    "domain": [
+      "Gene Regulation",
+      "Density Functional Theory",
+      "Magnetic Properties",
+      "Superconductors"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0ecbcfb4-5c53-496d-9a70-f1c34fe2cded": {
+    "pk": "0ecbcfb4-5c53-496d-9a70-f1c34fe2cded",
+    "project_name": null,
+    "name": "Juliane Wacker",
+    "bio": "As a researcher in the field of artificial intelligence and its applications in dermatology, I am deeply committed to enhancing diagnostic accuracy for melanoma through innovative AI systems. My recent work focuses on the integration of explainable AI (XAI) to bolster clinicians' confidence in AI-driven decisions. In a study involving 76 dermatologists, I employed eye-tracking technology to analyze how they interact with both standard AI systems and XAI tools while diagnosing dermoscopic images of melanomas and nevi.\n\nThe results of this research were illuminating; we found that XAI systems improved diagnostic accuracy by 2.8 percentage points compared to traditional AI. Additionally, our findings highlighted the cognitive load experienced by dermatologists when faced with diagnostic disagreements, particularly with complex lesions. This work not only sheds light on the importance of explainability in AI tools for visual tasks but also has significant implications for clinical practice and the future development of XAI in medical diagnostics. I am passionate about bridging the gap between technology and healthcare, ensuring that AI systems are not only effective but also intuitive and supportive for medical professionals.",
+    "collaborators": [
+      "Tirtha Chanda",
+      "Sarah Haggenmueller",
+      "Tabea-Clara Bucher",
+      "Tim Holland-Letz",
+      "Harald Kittler",
+      "Philipp Tschandl",
+      "Markus V. Heppt",
+      "Carola Berking",
+      "Jochen S. Utikal",
+      "Bastian Schilling"
+    ],
+    "domain": [
+      "Explainable AI",
+      "Medical Imaging",
+      "Dermatology",
+      "Cognitive Load"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "547b3c57-8f8c-45f2-b4b6-47acfb4bd91c": {
+    "pk": "547b3c57-8f8c-45f2-b4b6-47acfb4bd91c",
+    "project_name": null,
+    "name": "Joerg Wacker",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work primarily revolves around enhancing the capabilities and understanding of GNN architectures. My recent publications reflect a commitment to addressing the limitations of existing models and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research doesn't stop at static graphs; I proposed the ROLAND framework to effectively adapt static GNNs for dynamic graphs, ensuring scalability and real-world applicability.\n\nAdditionally, I have delved into the architectural design space of GNNs, systematically studying over 315,000 designs to provide guidelines for optimizing performance across different tasks. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the search for optimal model designs, making the process more efficient and insightful.\n\nThrough these contributions, I strive to bridge the gap between theoretical advancements and practical applications, ultimately enhancing the understanding and utility of GNNs in various domains.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "f62dbf90-d050-4185-9a25-da41b8ad169c": {
+    "pk": "f62dbf90-d050-4185-9a25-da41b8ad169c",
+    "project_name": null,
+    "name": "Reader Study Consortium",
+    "bio": "As a researcher in the field of artificial intelligence and its applications in dermatology, I am deeply committed to enhancing diagnostic accuracy for melanoma through innovative AI systems. My recent work focuses on the integration of explainable AI (XAI) to bolster clinicians' confidence in AI-driven decisions. In a study involving 76 dermatologists, I employed eye-tracking technology to analyze how they interact with both standard AI systems and XAI tools while diagnosing dermoscopic images of melanomas and nevi.\n\nThe results of this research were illuminating; we found that XAI systems improved diagnostic accuracy by 2.8 percentage points compared to traditional AI. Additionally, I discovered that diagnostic disagreements, particularly with complex lesions, were linked to increased cognitive load, as indicated by heightened ocular fixations. These findings not only underscore the importance of XAI in clinical practice but also provide valuable insights for the design of future AI tools in medical diagnostics. My goal is to continue exploring the intersection of AI and healthcare, ensuring that technology serves to enhance the capabilities of medical professionals while maintaining transparency and trust in the diagnostic process.",
+    "collaborators": [
+      "Tirtha Chanda",
+      "Sarah Haggenmueller",
+      "Tabea-Clara Bucher",
+      "Tim Holland-Letz",
+      "Harald Kittler",
+      "Philipp Tschandl",
+      "Markus V. Heppt",
+      "Carola Berking",
+      "Jochen S. Utikal",
+      "Bastian Schilling"
+    ],
+    "domain": [
+      "Artificial Intelligence",
+      "Explainable AI",
+      "Medical Imaging",
+      "Dermatology"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "87a770d0-6740-4a9b-8be4-8b34ea8d99e5": {
+    "pk": "87a770d0-6740-4a9b-8be4-8b34ea8d99e5",
+    "project_name": null,
+    "name": "Titus J. Brinker",
+    "bio": "I am a researcher dedicated to advancing the field of clinical dermatology through innovative applications of artificial intelligence and deep learning. My work primarily focuses on enhancing diagnostic accuracy and reliability in skin cancer detection and pathology. I have developed a cutting-edge hyperspectral dermatoscope, the Hyperscope, which shows promise in non-invasive skin evaluation. My research also delves into the calibration of deep neural networks for digital pathology, particularly in predicting biomarkers from Whole Slide Images, where I emphasize the importance of reliable confidence scores in medical contexts.\n\nRecognizing the challenges posed by domain shifts in dermoscopic image classification, I have conducted extensive studies on unsupervised domain adaptation methods to improve model generalization across diverse clinical settings. My contributions include the MultiStain-CycleGAN for stain normalization in histopathology, which addresses the variability in histologic staining across medical centers, thereby enhancing the reliability of computer-aided diagnosis.\n\nAdditionally, I have explored the integration of large language models in medical question-answering systems, developing UroBot, a urology-specialized chatbot that outperforms existing models and demonstrates clinician-verifiable accuracy. My research also investigates the vulnerabilities of vision-language models in healthcare, highlighting the need for robust security measures.\n\nThrough my work, I aim to bridge the gap between advanced AI technologies and practical clinical applications, ultimately improving patient outcomes and fostering trust in AI-assisted diagnostics.",
+    "collaborators": [
+      "Tabea-Clara Bucher",
+      "Martin J. Hetz",
+      "Sarah Haggenm\u00fcller",
+      "Alexander Kurz",
+      "Hendrik A. Mehrtens",
+      "Katharina Fogelberg",
+      "Sireesha Chamarthi",
+      "Roman C. Maron",
+      "Julia Niebling",
+      "Christoph Wies"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Deep Learning",
+      "Dermatology",
+      "Uncertainty Estimation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}
