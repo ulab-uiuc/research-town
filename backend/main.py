@@ -1,6 +1,7 @@
 import asyncio
 import json
 import multiprocessing
+import os
 import uuid
 from typing import AsyncGenerator, Generator, Optional, Tuple
 
@@ -40,7 +41,6 @@ def stop_process(user_id: str) -> None:
         process.terminate()  # Safely terminate the process
         process.join()  # Ensure cleanup
         del active_processes[user_id]
-        print(f'Process for user {user_id} stopped.')
 
 
 def background_task(
@@ -48,12 +48,25 @@ def background_task(
 ) -> None:
     generator = run_engine(url)
     try:
+        # Generate and send results to the parent process
         for progress, agent in generator:
             child_conn.send((progress, agent))
+
+        print(
+            'Generation complete. Background task is now idle and waiting for manual termination.'
+        )
+        while True:
+            if child_conn.poll():
+                msg = child_conn.recv()
+                if msg == 'terminate':
+                    break
+
     except Exception as e:
         child_conn.send({'type': 'error', 'content': str(e)})
+
     finally:
         child_conn.send(None)
+        print('Finish Generation')
         child_conn.close()
 
 
@@ -61,6 +74,17 @@ def generator_wrapper(
     result: Tuple[Optional[Progress], Optional[Agent]],
 ) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
     yield result
+
+
+def clean_prompt_data() -> None:
+    directory = os.path.join('..', 'data', 'prompt_data')
+    print(f'Cleaning prompt data in {directory}')
+    if os.path.exists(directory):
+        for filename in os.listdir(directory):
+            file_path = os.path.join(directory, filename)
+            os.remove(file_path)
+    else:
+        os.makedirs(directory)
 
 
 def format_response(
@@ -139,6 +163,8 @@ def format_response(
 
 @app.post('/process')  # type: ignore
 async def process_url(request: Request) -> StreamingResponse:
+    clean_prompt_data()
+
     # Get URL from the request body
     data = await request.json()
     url = data.get('url')
@@ -164,22 +190,28 @@ async def process_url(request: Request) -> StreamingResponse:
     async def stream_response() -> AsyncGenerator[str, None]:
         try:
             while True:
+                # Check if the client has disconnected
                 if await request.is_disconnected():
                     print(f'Client disconnected for user {user_id}. Cancelling task.')
                     stop_process(user_id)
                     break
 
+                # Check for new data from the background task
                 if parent_conn.poll():
                     result = parent_conn.recv()
                     if result is None:
+                        print(f'No more data for user {user_id}. Stopping task.')
                         break
 
+                    # Stream the formatted output to the client
                     for formatted_output in format_response(generator_wrapper(result)):
                         yield formatted_output
                 else:
                     await asyncio.sleep(0.1)
         finally:
-            stop_process(user_id)  # Ensure process is stopped on function exit
+            if await request.is_disconnected():
+                stop_process(user_id)
+                print(f'Process for user {user_id} stopped due to disconnection.')
 
     # Return the StreamingResponse
     return StreamingResponse(stream_response(), media_type='application/json')

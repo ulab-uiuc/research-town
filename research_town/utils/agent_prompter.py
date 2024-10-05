@@ -4,7 +4,7 @@ from beartype import beartype
 from beartype.typing import Dict, List, Optional, Tuple, Union
 
 from .model_prompting import model_prompting
-from .prompt_constructor import openai_format_prompt_construct
+from .prompt_constructor import openai_format_prompt_construct, save_prompt_to_json
 from .string_mapper import (
     map_idea_list_to_str,
     map_idea_to_str,
@@ -36,6 +36,7 @@ def review_literature_prompting(
         'papers': papers_str,
     }
     messages = openai_format_prompt_construct(prompt_template, template_input)
+    save_prompt_to_json('review_literature', messages[0]['content'])
 
     insight = model_prompting(
         model_name,
@@ -84,6 +85,7 @@ def brainstorm_idea_prompting(
     papers_str = map_paper_list_to_str(papers)
     template_input = {'bio': bio, 'insights': insights_str, 'papers': papers_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
+    save_prompt_to_json('brainstorm_idea', messages[0]['content'])
     return model_prompting(
         model_name,
         messages,
@@ -111,6 +113,7 @@ def discuss_idea_prompting(
     ideas_str = map_idea_list_to_str(ideas)
     template_input = {'bio': bio, 'ideas': ideas_str, 'contexts': contexts}
     messages = openai_format_prompt_construct(prompt_template, template_input)
+    save_prompt_to_json('discuss_idea', messages[0]['content'])
     return model_prompting(
         model_name,
         messages,
@@ -138,6 +141,7 @@ def write_proposal_prompting(
     papers_str = map_paper_list_to_str(papers)
     template_input = {'idea': idea_str, 'papers': papers_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
+    save_prompt_to_json('write_proposal', messages[0]['content'])
     proposal = model_prompting(
         model_name,
         messages,
@@ -194,14 +198,17 @@ def write_review_prompting(
     strength_messages = openai_format_prompt_construct(
         strength_prompt_template, strength_template_input
     )
+    save_prompt_to_json('review_strength', strength_messages[0]['content'])
     weakness_template_input = {'proposal': proposal_str, 'summary': summary}
     weakness_messages = openai_format_prompt_construct(
         weakness_prompt_template, weakness_template_input
     )
+    save_prompt_to_json('review_weakness', weakness_messages[0]['content'])
     ethical_template_input = {'proposal': proposal_str, 'summary': summary}
     ethical_messages = openai_format_prompt_construct(
         ethical_prompt_template, ethical_template_input
     )
+    save_prompt_to_json('review_ethical', ethical_messages[0]['content'])
 
     strength = model_prompting(
         model_name,
@@ -241,6 +248,7 @@ def write_review_prompting(
     score_messages = openai_format_prompt_construct(
         score_prompt_template, score_template_input
     )
+    save_prompt_to_json('review_score', score_messages[0]['content'])
     score_str = (
         model_prompting(
             model_name,
@@ -286,6 +294,7 @@ def write_metareview_prompting(
     summary_messages = openai_format_prompt_construct(
         summary_prompt_template, summary_template_input
     )
+    save_prompt_to_json('metareview_summary', summary_messages[0]['content'])
     summary = model_prompting(
         model_name,
         summary_messages,
@@ -314,12 +323,15 @@ def write_metareview_prompting(
     strength_messages = openai_format_prompt_construct(
         strength_prompt_template, strength_template_input
     )
+    save_prompt_to_json('metareview_strength', strength_messages[0]['content'])
     weakness_messages = openai_format_prompt_construct(
         weakness_prompt_template, weakness_template_input
     )
+    save_prompt_to_json('metareview_weakness', weakness_messages[0]['content'])
     ethical_messages = openai_format_prompt_construct(
         ethical_prompt_template, ethical_template_input
     )
+    save_prompt_to_json('metareview_ethical', ethical_messages[0]['content'])
 
     strength = model_prompting(
         model_name,
@@ -360,6 +372,7 @@ def write_metareview_prompting(
     decision_messages = openai_format_prompt_construct(
         decision_prompt_template, decision_template_input
     )
+    save_prompt_to_json('metareview_decision', decision_messages[0]['content'])
     decision_str = model_prompting(
         model_name,
         decision_messages,
@@ -390,6 +403,7 @@ def write_rebuttal_prompting(
     review_str = map_review_to_str(review)
     template_input = {'proposal': proposal_str, 'review': review_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
+    save_prompt_to_json('write_rebuttal', messages[0]['content'])
     rebuttal = model_prompting(
         model_name,
         messages,
