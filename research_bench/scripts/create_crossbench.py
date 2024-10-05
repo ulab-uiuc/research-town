@@ -40,9 +40,7 @@ def get_paper_info(arxiv_id: str, max_retry: int = 5) -> Optional[Dict[str, Any]
     paper_id = f'ARXIV:{arxiv_id}'
     url = f'https://api.semanticscholar.org/graph/v1/paper/{paper_id}'
     fields = 'title,authors,year,venue,abstract'
-    headers = {
-        "x-api-key": "FfOnoChxCS2vGorFNV4sQB7KdzzRalp9ygKzAGf8"
-    }
+    headers = {'x-api-key': 'FfOnoChxCS2vGorFNV4sQB7KdzzRalp9ygKzAGf8'}
     params: Dict[str, Union[str, int]] = {
         'fields': fields,
     }
@@ -79,7 +77,7 @@ def get_references(arxiv_id: str, max_retry: int = 5) -> Optional[List[Dict[str,
         'limit': 100,  # 每次请求获取100条引用
     }
 
-    references = []
+    references: List[Any] = []
     offset = 0
 
     while True:
@@ -193,8 +191,6 @@ def process_arxiv_links(input_file: str, output_file: str) -> None:
         json.dump(output_data, f, ensure_ascii=False, indent=4)
 
     print(f'处理完成。结果已保存至 {output_file}。')
-
-
 
 
 def main() -> None:
