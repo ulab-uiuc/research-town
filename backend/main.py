@@ -2,7 +2,7 @@ import asyncio
 import json
 import multiprocessing
 import uuid
-from typing import AsyncGenerator, Generator, Optional, Tuple, Union, List
+from typing import AsyncGenerator, Generator, List, Optional, Tuple, Union
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,7 +13,14 @@ from research_town.agents import Agent
 from research_town.data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 
 app = FastAPI()
-ProgressList = Union[List[Insight], List[Idea], List[Proposal], List[Review], List[Rebuttal], List[MetaReview]]
+ProgressList = Union[
+    List[Insight],
+    List[Idea],
+    List[Proposal],
+    List[Review],
+    List[Rebuttal],
+    List[MetaReview],
+]
 
 # Enable CORS for all origins, credentials, methods, and headers
 app.add_middleware(
@@ -131,7 +138,7 @@ def format_response(
 
 
 @app.post('/process')  # type: ignore
-async def process_url(request: Request) -> StreamingResponse:
+async def process_url(request: Request) -> StreamingResponse | JSONResponse:
     # Get URL from the request body
     data = await request.json()
     url = data.get('url')

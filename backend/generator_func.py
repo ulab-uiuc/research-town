@@ -8,7 +8,15 @@ from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_paper_introduction
 
-ProgressList = Union[List[Insight], List[Idea], List[Proposal], List[Review], List[Rebuttal], List[MetaReview]]
+ProgressList = Union[
+    List[Insight],
+    List[Idea],
+    List[Proposal],
+    List[Review],
+    List[Rebuttal],
+    List[MetaReview],
+]
+
 
 def run_engine(
     url: str,
