@@ -28,7 +28,7 @@ def openai_format_prompt_construct(
     return messages
 
 
-def save_prompt_to_json(
+def save_prompt_to_log(
     template_name: str, messages: List[Dict[str, Union[str, List[str]]]]
 ) -> None:
     file_name = f'{template_name}.log'
