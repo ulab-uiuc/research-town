@@ -106,12 +106,8 @@ def process_paper(arxiv_id: str) -> Optional[Dict[str, Any]]:
     return paper_data
 
 
-def process_arxiv_links(input_file: str, output_file: str) -> None:
-    if not os.path.exists(input_file):
-        return
-
-    with open(input_file, 'r') as f:
-        urls = f.read().strip().split('\n')
+def process_arxiv_links(input_text: str, output_file: str) -> None:
+    urls = input_text.strip().split('\n')
 
     output_data = {}
     for url in tqdm(urls, desc='Processing arXiv links'):
@@ -134,9 +130,29 @@ def process_arxiv_links(input_file: str, output_file: str) -> None:
 
 
 def main() -> None:
-    input_file = './arxiv_link.txt'
+    input_text = """https://arxiv.org/abs/2402.13448
+https://arxiv.org/abs/2409.19100
+https://arxiv.org/abs/2409.20252
+https://arxiv.org/abs/2409.20506
+https://arxiv.org/abs/2409.20044
+https://arxiv.org/abs/2409.19864
+https://arxiv.org/abs/2409.18815
+https://arxiv.org/abs/2407.10990
+https://arxiv.org/abs/2404.08001
+https://arxiv.org/abs/2402.09588
+https://arxiv.org/abs/2409.09825
+https://arxiv.org/abs/2403.14801
+https://arxiv.org/abs/2403.07144
+https://arxiv.org/abs/2401.04155
+https://arxiv.org/abs/2409.15675
+https://arxiv.org/abs/2401.14818
+https://arxiv.org/abs/2401.14656
+https://arxiv.org/abs/2401.11052
+https://arxiv.org/abs/2311.12410
+https://arxiv.org/abs/2311.10776
+"""
     output_file = '../benchmark/cross_bench.json'
-    process_arxiv_links(input_file, output_file)
+    process_arxiv_links(input_text, output_file)
 
 
 if __name__ == '__main__':
