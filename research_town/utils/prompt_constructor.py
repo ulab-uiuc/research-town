@@ -29,7 +29,7 @@ def openai_format_prompt_construct(
 
 
 def save_prompt_to_log(
-    template_name: str, messages: List[Dict[str, Union[str, List[str]]]]
+    template_name: str, messages: list[dict[str, str | list[str]]]
 ) -> None:
     file_name = f'{template_name}.log'
     directory_path = os.path.join('..', 'data', 'prompt_data')

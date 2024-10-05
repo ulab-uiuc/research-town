@@ -77,8 +77,7 @@ def clean_prompt_data() -> None:
     if os.path.exists(directory):
         for filename in os.listdir(directory):
             file_path = os.path.join(directory, filename)
-            with open(file_path, 'w'):
-                pass
+            os.remove(file_path)
     else:
         os.makedirs(directory)
 
