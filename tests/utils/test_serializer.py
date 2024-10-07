@@ -1,12 +1,17 @@
+from unittest.mock import MagicMock
+
 from research_town.agents.agent import Agent
 from research_town.utils.serializer import Serializer
 from tests.constants.data_constants import profile_A
 
 
 def test_serializer() -> None:
+    mock_log_db = MagicMock()
+
     agent = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
+        log_db=mock_log_db,
         role='leader',
     )
     agent_serialized = Serializer.serialize(agent)
