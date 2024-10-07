@@ -74,11 +74,11 @@ class ProposalWritingEnv(BaseEnv):
                 else keywords[0],
                 num=7,
             )
-            idea, log_entry = member.brainstorm_idea(
+            idea, brainstorm_log_entry = member.brainstorm_idea(
                 papers=related_papers, insights=insights, config=self.config
             )
             ideas.append(idea)
-            self.log_db.add(log_entry)
+            self.log_db.add(brainstorm_log_entry)
             yield idea, member
 
         # Leader discusses ideas
@@ -96,12 +96,12 @@ class ProposalWritingEnv(BaseEnv):
             else None,
             num=2,
         )
-        proposal, log_entry = self.leader.write_proposal(
+        proposal, proposal_log_entry = self.leader.write_proposal(
             idea=summarized_idea,
             papers=related_papers,
             config=self.config,
         )
-        self.log_db.add(log_entry)
+        self.log_db.add(proposal_log_entry)
         yield proposal, self.leader
 
         self.proposal = proposal  # Store the proposal for use in on_exit
