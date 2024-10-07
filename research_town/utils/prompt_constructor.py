@@ -1,4 +1,3 @@
-import os
 from typing import Any, Dict, List, Union
 
 
@@ -26,16 +25,3 @@ def openai_format_prompt_construct(
     messages.append({'role': 'user', 'content': query})
 
     return messages
-
-
-def save_prompt_to_log(template_name: str, messages: list[dict[str, str]]) -> None:
-    file_name = f'{template_name}.log'
-    directory_path = os.path.join('..', 'data', 'prompt_data')
-
-    if not os.path.exists(directory_path):
-        os.makedirs(directory_path)
-
-    file_path = os.path.join(directory_path, file_name)
-
-    with open(file_path, 'w') as log_file:
-        log_file.write(str(messages))

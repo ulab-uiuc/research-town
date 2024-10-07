@@ -1,7 +1,6 @@
 import asyncio
 import json
 import multiprocessing
-import os
 import uuid
 from typing import AsyncGenerator, Generator, Optional, Tuple
 
@@ -70,16 +69,6 @@ def generator_wrapper(
     result: Tuple[Optional[Progress], Optional[Agent]],
 ) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
     yield result
-
-
-def clean_prompt_data() -> None:
-    directory = os.path.join('..', 'data', 'prompt_data')
-    if os.path.exists(directory):
-        for filename in os.listdir(directory):
-            file_path = os.path.join(directory, filename)
-            os.remove(file_path)
-    else:
-        os.makedirs(directory)
 
 
 def format_response(
@@ -158,8 +147,6 @@ def format_response(
 
 @app.post('/process')  # type: ignore
 async def process_url(request: Request) -> StreamingResponse:
-    clean_prompt_data()
-
     # Get URL from the request body
     data = await request.json()
     url = data.get('url')

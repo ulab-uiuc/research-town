@@ -2,7 +2,7 @@ from typing import List, Literal
 
 from ..configs import Config
 from ..data import Profile, Proposal
-from ..dbs import ProfileDB
+from ..dbs import LogDB, ProfileDB
 from .agent import Agent
 
 Role = Literal['reviewer', 'leader', 'member', 'chair']
@@ -17,6 +17,7 @@ class AgentManager:
         return Agent(
             profile=profile,
             role=role,
+            log_db=LogDB(),
             model_name=self.config.param.base_llm,
         )
 

@@ -1,5 +1,5 @@
 import uuid
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -43,6 +43,9 @@ class Paper(Data):
 class Log(Data):
     timestep: int = Field(default=0)
     profile_pk: str
+    prompt: Optional[Union[List[Dict[str, str]], List[List[Dict[str, str]]]]] = Field(
+        default=None
+    )
 
 
 class LiteratureReviewLog(Log):

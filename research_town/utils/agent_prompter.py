@@ -4,7 +4,7 @@ from beartype import beartype
 from beartype.typing import Dict, List, Optional, Tuple, Union
 
 from .model_prompting import model_prompting
-from .prompt_constructor import openai_format_prompt_construct, save_prompt_to_log
+from .prompt_constructor import openai_format_prompt_construct
 from .string_mapper import (
     map_idea_list_to_str,
     map_idea_to_str,
@@ -28,7 +28,7 @@ def review_literature_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> Tuple[str, List[str], str]:
+) -> Tuple[str, List[str], str, list[dict[str, str]]]:
     papers_str = map_paper_list_to_str(papers)
     template_input = {
         'bio': profile['bio'],
@@ -36,7 +36,8 @@ def review_literature_prompting(
         'papers': papers_str,
     }
     messages = openai_format_prompt_construct(prompt_template, template_input)
-    save_prompt_to_log('review_literature', messages)
+
+    formatted_prompt = messages
 
     insight = model_prompting(
         model_name,
@@ -65,7 +66,7 @@ def review_literature_prompting(
     valuable_points = (
         valuable_points_match.group(1).strip() if valuable_points_match else ''
     )
-    return summary, keywords, valuable_points
+    return summary, keywords, valuable_points, formatted_prompt
 
 
 @beartype
@@ -80,12 +81,12 @@ def brainstorm_idea_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> List[str]:
+) -> Tuple[List[str], List[Dict[str, str]]]:
     insights_str = map_insight_list_to_str(insights)
     papers_str = map_paper_list_to_str(papers)
     template_input = {'bio': bio, 'insights': insights_str, 'papers': papers_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
-    save_prompt_to_log('brainstorm_idea', messages)
+    formatted_prompt = messages
     return model_prompting(
         model_name,
         messages,
@@ -94,7 +95,7 @@ def brainstorm_idea_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
+    ), formatted_prompt
 
 
 @beartype
@@ -109,11 +110,12 @@ def discuss_idea_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> List[str]:
+) -> Tuple[List[str], List[Dict[str, str]]]:
     ideas_str = map_idea_list_to_str(ideas)
     template_input = {'bio': bio, 'ideas': ideas_str, 'contexts': contexts}
     messages = openai_format_prompt_construct(prompt_template, template_input)
-    save_prompt_to_log('discuss_idea', messages)
+    formatted_prompt = messages
+
     return model_prompting(
         model_name,
         messages,
@@ -122,7 +124,7 @@ def discuss_idea_prompting(
         temperature=temperature,
         top_p=top_p,
         stream=stream,
-    )
+    ), formatted_prompt
 
 
 @beartype
@@ -136,12 +138,13 @@ def write_proposal_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> Tuple[str, Dict[str, str]]:
+) -> Tuple[str, Dict[str, str], List[Dict[str, str]]]:
     idea_str = map_idea_to_str(idea)
     papers_str = map_paper_list_to_str(papers)
     template_input = {'idea': idea_str, 'papers': papers_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
-    save_prompt_to_log('write_proposal', messages)
+
+    formatted_prompt = messages
     proposal = model_prompting(
         model_name,
         messages,
@@ -161,7 +164,7 @@ def write_proposal_prompting(
         answer = match[1].strip()
         q5_result[question_number] = answer
 
-    return proposal, q5_result
+    return proposal, q5_result, formatted_prompt
 
 
 @beartype
@@ -178,7 +181,8 @@ def write_review_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> Tuple[str, str, str, str, int]:
+) -> Tuple[str, str, str, str, int, List[List[Dict[str, str]]]]:
+    formatted_prompts: List[List[Dict[str, str]]] = []
     proposal_str = map_proposal_to_str(proposal)
     summary_template_input = {'proposal': proposal_str}
     summary_messages = openai_format_prompt_construct(
@@ -198,17 +202,17 @@ def write_review_prompting(
     strength_messages = openai_format_prompt_construct(
         strength_prompt_template, strength_template_input
     )
-    save_prompt_to_log('review_strength', strength_messages)
+    formatted_prompts.append(strength_messages)
     weakness_template_input = {'proposal': proposal_str, 'summary': summary}
     weakness_messages = openai_format_prompt_construct(
         weakness_prompt_template, weakness_template_input
     )
-    save_prompt_to_log('review_weakness', weakness_messages)
+    formatted_prompts.append(weakness_messages)
     ethical_template_input = {'proposal': proposal_str, 'summary': summary}
     ethical_messages = openai_format_prompt_construct(
         ethical_prompt_template, ethical_template_input
     )
-    save_prompt_to_log('review_ethical', ethical_messages)
+    formatted_prompts.append(ethical_messages)
 
     strength = model_prompting(
         model_name,
@@ -248,7 +252,8 @@ def write_review_prompting(
     score_messages = openai_format_prompt_construct(
         score_prompt_template, score_template_input
     )
-    save_prompt_to_log('review_score', score_messages)
+
+    formatted_prompts.append(score_messages)
     score_str = (
         model_prompting(
             model_name,
@@ -266,7 +271,7 @@ def write_review_prompting(
     )
     score = int(score_str[0]) if score_str[0].isdigit() else 0
 
-    return summary, strength, weakness, ethical_concerns, score
+    return summary, strength, weakness, ethical_concerns, score, formatted_prompts
 
 
 @beartype
@@ -284,7 +289,8 @@ def write_metareview_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> Tuple[str, str, str, str, bool]:
+) -> Tuple[str, str, str, str, bool, List[List[Dict[str, str]]]]:
+    formatted_prompts: List[List[Dict[str, str]]] = []
     proposal_str = map_proposal_to_str(proposal)
     reviews_str = map_review_list_to_str(reviews)
     summary_template_input = {
@@ -294,7 +300,7 @@ def write_metareview_prompting(
     summary_messages = openai_format_prompt_construct(
         summary_prompt_template, summary_template_input
     )
-    save_prompt_to_log('metareview_summary', summary_messages)
+    formatted_prompts.append(summary_messages)
     summary = model_prompting(
         model_name,
         summary_messages,
@@ -323,15 +329,15 @@ def write_metareview_prompting(
     strength_messages = openai_format_prompt_construct(
         strength_prompt_template, strength_template_input
     )
-    save_prompt_to_log('metareview_strength', strength_messages)
+    formatted_prompts.append(strength_messages)
     weakness_messages = openai_format_prompt_construct(
         weakness_prompt_template, weakness_template_input
     )
-    save_prompt_to_log('metareview_weakness', weakness_messages)
+    formatted_prompts.append(weakness_messages)
     ethical_messages = openai_format_prompt_construct(
         ethical_prompt_template, ethical_template_input
     )
-    save_prompt_to_log('metareview_ethical', ethical_messages)
+    formatted_prompts.append(ethical_messages)
 
     strength = model_prompting(
         model_name,
@@ -372,7 +378,7 @@ def write_metareview_prompting(
     decision_messages = openai_format_prompt_construct(
         decision_prompt_template, decision_template_input
     )
-    save_prompt_to_log('metareview_decision', decision_messages)
+    formatted_prompts.append(decision_messages)
     decision_str = model_prompting(
         model_name,
         decision_messages,
@@ -384,7 +390,7 @@ def write_metareview_prompting(
     )
     decision = 'accept' in decision_str[0].lower()
 
-    return summary, strength, weakness, ethical_concerns, decision
+    return summary, strength, weakness, ethical_concerns, decision, formatted_prompts
 
 
 @beartype
@@ -398,12 +404,12 @@ def write_rebuttal_prompting(
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
-) -> Tuple[str, Dict[str, str]]:
+) -> Tuple[str, Dict[str, str], List[Dict[str, str]]]:
     proposal_str = map_proposal_to_str(proposal)
     review_str = map_review_to_str(review)
     template_input = {'proposal': proposal_str, 'review': review_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
-    save_prompt_to_log('write_rebuttal', messages)
+    formatted_prompt = messages
     rebuttal = model_prompting(
         model_name,
         messages,
@@ -423,4 +429,4 @@ def write_rebuttal_prompting(
         answer = match[1].strip()
         q5_result[question_number] = answer
 
-    return rebuttal, q5_result
+    return rebuttal, q5_result, formatted_prompt

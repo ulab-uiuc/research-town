@@ -2,7 +2,23 @@ from beartype import beartype
 from beartype.typing import Dict, List, Literal, Tuple
 
 from ..configs import Config
-from ..data import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
+from ..data import (
+    Idea,
+    IdeaBrainstormLog,
+    Insight,
+    LiteratureReviewLog,
+    MetaReview,
+    MetaReviewWritingLog,
+    Paper,
+    Profile,
+    Proposal,
+    ProposalWritingLog,
+    Rebuttal,
+    RebuttalWritingLog,
+    Review,
+    ReviewWritingLog,
+)
+from ..dbs import LogDB
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
@@ -28,12 +44,14 @@ class Agent(object):
         self,
         profile: Profile,
         model_name: str,
+        log_db: LogDB,
         role: Role = None,
     ) -> None:
         self.profile: Profile = profile
         self.memory: Dict[str, str] = {}
         self.role: Role = role
         self.model_name: str = model_name
+        self.log_db: LogDB = log_db
         self.serializer = Serializer()
 
     @beartype
@@ -50,7 +68,7 @@ class Agent(object):
     ) -> Tuple[str, List[str], Insight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
-        summary, keywords, valuable_points = review_literature_prompting(
+        summary, keywords, valuable_points, prompt = review_literature_prompting(
             profile=serialized_profile,
             papers=serialized_papers,
             contexts=contexts,
@@ -63,6 +81,12 @@ class Agent(object):
             stream=config.param.stream,
         )
         insight = Insight(content=valuable_points)
+        log_entry = LiteratureReviewLog(
+            profile_pk=self.profile.pk,
+            insight_pk=insight.pk,
+            prompt=prompt,  # Store the formatted prompt
+        )
+        self.log_db.add(log_entry)
         return summary, keywords, insight
 
     @beartype
@@ -72,7 +96,7 @@ class Agent(object):
     ) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
         serialized_papers = self.serializer.serialize(papers)
-        idea_content = brainstorm_idea_prompting(
+        idea_content, prompt = brainstorm_idea_prompting(
             bio=self.profile.bio,
             insights=serialized_insights,
             papers=serialized_papers,
@@ -83,8 +107,15 @@ class Agent(object):
             temperature=config.param.temperature,
             top_p=config.param.top_p,
             stream=config.param.stream,
-        )[0]
-        return Idea(content=idea_content)
+        )
+        idea_content = idea_content[0]
+        idea = Idea(content=idea_content)
+
+        log_entry = IdeaBrainstormLog(
+            profile_pk=self.profile.pk, idea_pk=idea.pk, prompt=prompt
+        )
+        self.log_db.add(log_entry)
+        return idea
 
     @beartype
     @member_required
@@ -92,7 +123,7 @@ class Agent(object):
         self, ideas: List[Idea], contexts: List[str], config: Config
     ) -> Idea:
         serialized_ideas = self.serializer.serialize(ideas)
-        idea_summarized = discuss_idea_prompting(
+        idea_summarized, prompt = discuss_idea_prompting(
             bio=self.profile.bio,
             contexts=contexts,
             ideas=serialized_ideas,
@@ -103,7 +134,8 @@ class Agent(object):
             temperature=config.param.temperature,
             top_p=config.param.top_p,
             stream=config.param.stream,
-        )[0]
+        )
+        idea_summarized = idea_summarized[0]
         return Idea(content=idea_summarized)
 
     @beartype
@@ -127,7 +159,7 @@ class Agent(object):
             print('write_proposal_strategy not supported, will use default')
             prompt_template = config.agent_prompt_template.write_proposal
 
-        proposal, q5_result = write_proposal_prompting(
+        proposal, q5_result, prompt = write_proposal_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
@@ -138,7 +170,8 @@ class Agent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )
-        return Proposal(
+
+        proposal_obj = Proposal(
             content=proposal,
             q1=q5_result.get('q1', ''),
             q2=q5_result.get('q2', ''),
@@ -147,26 +180,37 @@ class Agent(object):
             q5=q5_result.get('q5', ''),
         )
 
+        log_entry = ProposalWritingLog(
+            profile_pk=self.profile.pk,
+            proposal_pk=proposal_obj.pk,
+            prompt=prompt,  # Store the formatted prompt
+        )
+        self.log_db.add(log_entry)  # Add the log entry to LogDB
+
+        return proposal_obj
+
     @beartype
     @reviewer_required
     def write_review(self, proposal: Proposal, config: Config) -> Review:
         serialized_proposal = self.serializer.serialize(proposal)
 
-        summary, strength, weakness, ethical_concerns, score = write_review_prompting(
-            proposal=serialized_proposal,
-            model_name=self.model_name,
-            summary_prompt_template=config.agent_prompt_template.write_review_summary,
-            strength_prompt_template=config.agent_prompt_template.write_review_strength,
-            weakness_prompt_template=config.agent_prompt_template.write_review_weakness,
-            ethical_prompt_template=config.agent_prompt_template.write_review_ethical,
-            score_prompt_template=config.agent_prompt_template.write_review_score,
-            return_num=config.param.return_num,
-            max_token_num=config.param.max_token_num,
-            temperature=config.param.temperature,
-            top_p=config.param.top_p,
-            stream=config.param.stream,
+        summary, strength, weakness, ethical_concerns, score, prompt = (
+            write_review_prompting(
+                proposal=serialized_proposal,
+                model_name=self.model_name,
+                summary_prompt_template=config.agent_prompt_template.write_review_summary,
+                strength_prompt_template=config.agent_prompt_template.write_review_strength,
+                weakness_prompt_template=config.agent_prompt_template.write_review_weakness,
+                ethical_prompt_template=config.agent_prompt_template.write_review_ethical,
+                score_prompt_template=config.agent_prompt_template.write_review_score,
+                return_num=config.param.return_num,
+                max_token_num=config.param.max_token_num,
+                temperature=config.param.temperature,
+                top_p=config.param.top_p,
+                stream=config.param.stream,
+            )
         )
-        return Review(
+        review_obj = Review(
             proposal_pk=proposal.pk,
             reviewer_pk=self.profile.pk,
             summary=summary,
@@ -175,6 +219,13 @@ class Agent(object):
             ethical_concerns=ethical_concerns,
             score=score,
         )
+
+        log_entry = ReviewWritingLog(
+            profile_pk=self.profile.pk, review_pk=review_obj.pk, prompt=prompt
+        )
+        self.log_db.add(log_entry)
+
+        return review_obj
 
     @beartype
     @chair_required
@@ -187,7 +238,7 @@ class Agent(object):
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_reviews = self.serializer.serialize(reviews)
 
-        summary, strength, weakness, ethical_concerns, decision = (
+        summary, strength, weakness, ethical_concerns, decision, prompt = (
             write_metareview_prompting(
                 proposal=serialized_proposal,
                 reviews=serialized_reviews,
@@ -205,7 +256,7 @@ class Agent(object):
             )
         )
 
-        return MetaReview(
+        metareview_obj = MetaReview(
             proposal_pk=proposal.pk,
             chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
@@ -216,6 +267,13 @@ class Agent(object):
             ethical_concerns=ethical_concerns,
             decision=decision,
         )
+
+        log_entry = MetaReviewWritingLog(
+            profile_pk=self.profile.pk, metareview_pk=metareview_obj.pk, prompt=prompt
+        )
+        self.log_db.add(log_entry)
+
+        return metareview_obj
 
     @beartype
     @leader_required
@@ -228,7 +286,7 @@ class Agent(object):
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_review = self.serializer.serialize(review)
 
-        rebuttal_content, q5_result = write_rebuttal_prompting(
+        rebuttal_content, q5_result, prompt = write_rebuttal_prompting(
             proposal=serialized_proposal,
             review=serialized_review,
             model_name=self.model_name,
@@ -240,7 +298,7 @@ class Agent(object):
             stream=config.param.stream,
         )
 
-        return Rebuttal(
+        rebuttal_obj = Rebuttal(
             proposal_pk=proposal.pk,
             reviewer_pk=review.reviewer_pk,
             author_pk=self.profile.pk,
@@ -251,3 +309,10 @@ class Agent(object):
             q4=q5_result.get('q4', ''),
             q5=q5_result.get('q5', ''),
         )
+
+        log_entry = RebuttalWritingLog(
+            profile_pk=self.profile.pk, rebuttal_pk=rebuttal_obj.pk, prompt=prompt
+        )
+        self.log_db.add(log_entry)
+
+        return rebuttal_obj
