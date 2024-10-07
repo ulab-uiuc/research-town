@@ -74,11 +74,12 @@ class ReviewWritingEnv(BaseEnv):
             yield rebuttal, self.leader
 
         # Paper Meta Reviewing
-        metareview = self.chair.write_metareview(
+        metareview, log_entry = self.chair.write_metareview(
             proposal=self.proposal,
             reviews=self.reviews,
             config=self.config,
         )
+        self.log_db.add(log_entry)
         yield metareview, self.chair
 
         self.metareview = metareview
