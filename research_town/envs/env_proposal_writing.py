@@ -53,11 +53,12 @@ class ProposalWritingEnv(BaseEnv):
                 query=';'.join(self.contexts),
                 num=2,
             )
-            summary, keywords, insight = member.review_literature(
+            summary, keywords, insight, log_entry = member.review_literature(
                 papers=related_papers,
                 contexts=self.contexts,
                 config=self.config,
             )
+            self.log_db.add(log_entry)
             yield insight, member
             insights.append(insight)
             keywords.extend(keywords)
@@ -73,10 +74,11 @@ class ProposalWritingEnv(BaseEnv):
                 else keywords[0],
                 num=7,
             )
-            idea = member.brainstorm_idea(
+            idea, log_entry = member.brainstorm_idea(
                 papers=related_papers, insights=insights, config=self.config
             )
             ideas.append(idea)
+            self.log_db.add(log_entry)
             yield idea, member
 
         # Leader discusses ideas
@@ -94,11 +96,12 @@ class ProposalWritingEnv(BaseEnv):
             else None,
             num=2,
         )
-        proposal = self.leader.write_proposal(
+        proposal, log_entry = self.leader.write_proposal(
             idea=summarized_idea,
             papers=related_papers,
             config=self.config,
         )
+        self.log_db.add(log_entry)
         yield proposal, self.leader
 
         self.proposal = proposal  # Store the proposal for use in on_exit

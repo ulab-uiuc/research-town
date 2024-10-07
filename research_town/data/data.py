@@ -9,6 +9,15 @@ class Data(BaseModel):
     project_name: Optional[str] = Field(default=None)
 
 
+class Prompt(BaseModel):
+    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    messages: Optional[Any] = Field(default=None)
+
+
+class OpenAIPrompt(Prompt):
+    messages: Union[List[Dict[str, str]], List[List[Dict[str, str]]]]
+
+
 class Profile(Data):
     name: str
     bio: str
@@ -43,9 +52,7 @@ class Paper(Data):
 class Log(Data):
     timestep: int = Field(default=0)
     profile_pk: str
-    prompt: Optional[Union[List[Dict[str, str]], List[List[Dict[str, str]]]]] = Field(
-        default=None
-    )
+    prompt_pk: Optional[str] = Field(default=None)
 
 
 class LiteratureReviewLog(Log):

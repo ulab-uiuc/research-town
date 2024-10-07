@@ -21,11 +21,9 @@ def test_review_literature(
     mock_model_prompting: MagicMock,
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
-    mock_log_db = MagicMock()
     agent = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        log_db=mock_log_db,
         role='leader',
     )
     _, _, research_insight = agent.review_literature(
@@ -45,11 +43,9 @@ def test_brainstorm_idea(
     mock_model_prompting: MagicMock,
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
-    mock_log_db = MagicMock()
     agent = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        log_db=mock_log_db,
         role='leader',
     )
     research_idea = agent.brainstorm_idea(
@@ -65,11 +61,9 @@ def test_brainstorm_idea(
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_proposal(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
-    mock_log_db = MagicMock()
     agent = Agent(
         profile=profile_B,
         model_name='gpt-4o-mini',
-        log_db=mock_log_db,
         role='leader',
     )
     paper = agent.write_proposal(
@@ -85,11 +79,9 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_review(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
-    mock_log_db = MagicMock()
     agent = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        log_db=mock_log_db,
         role='reviewer',
     )
     review = agent.write_review(
@@ -106,17 +98,14 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_metareview(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
-    mock_log_db = MagicMock()
     agent_reviewer = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        log_db=mock_log_db,
         role='reviewer',
     )
     agent_chair = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        log_db=mock_log_db,
         role='chair',
     )
     review = agent_reviewer.write_review(
@@ -139,17 +128,14 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
-    mock_log_db = MagicMock()
     agent_reviewer = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        log_db=mock_log_db,
         role='reviewer',
     )
     agent_leader = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
-        log_db=mock_log_db,
         role='leader',
     )
     review = agent_reviewer.write_review(

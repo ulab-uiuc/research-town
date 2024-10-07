@@ -53,21 +53,23 @@ class ReviewWritingEnv(BaseEnv):
         # Review Writing
         self.reviews: List[Review] = []
         for reviewer in self.reviewers:
-            review = reviewer.write_review(
+            review, log_entry = reviewer.write_review(
                 proposal=self.proposal,
                 config=self.config,
             )
             self.reviews.append(review)
+            self.log_db.add(log_entry)
             yield review, reviewer
 
         # Rebuttal Submitting
         self.rebuttals: List[Rebuttal] = []
         for review in self.reviews:
-            rebuttal = self.leader.write_rebuttal(
+            rebuttal, log_entry = self.leader.write_rebuttal(
                 proposal=self.proposal,
                 review=review,
                 config=self.config,
             )
+            self.log_db.add(log_entry)
             self.rebuttals.append(rebuttal)
             yield rebuttal, self.leader
 

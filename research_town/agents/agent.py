@@ -1,3 +1,5 @@
+import uuid
+
 from beartype import beartype
 from beartype.typing import Dict, List, Literal, Tuple
 
@@ -9,6 +11,7 @@ from ..data import (
     LiteratureReviewLog,
     MetaReview,
     MetaReviewWritingLog,
+    OpenAIPrompt,
     Paper,
     Profile,
     Proposal,
@@ -18,7 +21,6 @@ from ..data import (
     Review,
     ReviewWritingLog,
 )
-from ..dbs import LogDB
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
@@ -44,14 +46,12 @@ class Agent(object):
         self,
         profile: Profile,
         model_name: str,
-        log_db: LogDB,
         role: Role = None,
     ) -> None:
         self.profile: Profile = profile
         self.memory: Dict[str, str] = {}
         self.role: Role = role
         self.model_name: str = model_name
-        self.log_db: LogDB = log_db
         self.serializer = Serializer()
 
     @beartype
@@ -65,7 +65,7 @@ class Agent(object):
         papers: List[Paper],
         contexts: List[str],
         config: Config,
-    ) -> Tuple[str, List[str], Insight]:
+    ) -> Tuple[str, List[str], Insight, LiteratureReviewLog]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
         summary, keywords, valuable_points, prompt = review_literature_prompting(
@@ -81,19 +81,20 @@ class Agent(object):
             stream=config.param.stream,
         )
         insight = Insight(content=valuable_points)
+        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
         log_entry = LiteratureReviewLog(
             profile_pk=self.profile.pk,
             insight_pk=insight.pk,
-            prompt=prompt,  # Store the formatted prompt
+            prompt_pk=formatted_prompt.pk,
         )
-        self.log_db.add(log_entry)
-        return summary, keywords, insight
+
+        return summary, keywords, insight, log_entry
 
     @beartype
     @member_required
     def brainstorm_idea(
         self, insights: List[Insight], papers: List[Paper], config: Config
-    ) -> Idea:
+    ) -> Tuple[Idea, IdeaBrainstormLog]:
         serialized_insights = self.serializer.serialize(insights)
         serialized_papers = self.serializer.serialize(papers)
         idea_content_list, prompt = brainstorm_idea_prompting(
@@ -110,12 +111,12 @@ class Agent(object):
         )
         idea_content = idea_content_list[0]
         idea = Idea(content=idea_content)
-
+        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
         log_entry = IdeaBrainstormLog(
-            profile_pk=self.profile.pk, idea_pk=idea.pk, prompt=prompt
+            profile_pk=self.profile.pk, idea_pk=idea.pk, prompt_pk=formatted_prompt.pk
         )
-        self.log_db.add(log_entry)
-        return idea
+
+        return idea, log_entry
 
     @beartype
     @member_required
@@ -142,7 +143,7 @@ class Agent(object):
     @member_required
     def write_proposal(
         self, idea: Idea, papers: List[Paper], config: Config
-    ) -> Proposal:
+    ) -> Tuple[Proposal, ProposalWritingLog]:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
 
@@ -179,19 +180,20 @@ class Agent(object):
             q4=q5_result.get('q4', ''),
             q5=q5_result.get('q5', ''),
         )
-
+        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
         log_entry = ProposalWritingLog(
             profile_pk=self.profile.pk,
             proposal_pk=proposal_obj.pk,
-            prompt=prompt,  # Store the formatted prompt
+            prompt_pk=formatted_prompt.pk,
         )
-        self.log_db.add(log_entry)  # Add the log entry to LogDB
 
-        return proposal_obj
+        return proposal_obj, log_entry
 
     @beartype
     @reviewer_required
-    def write_review(self, proposal: Proposal, config: Config) -> Review:
+    def write_review(
+        self, proposal: Proposal, config: Config
+    ) -> Tuple[Review, ReviewWritingLog]:
         serialized_proposal = self.serializer.serialize(proposal)
 
         summary, strength, weakness, ethical_concerns, score, prompt = (
@@ -219,13 +221,14 @@ class Agent(object):
             ethical_concerns=ethical_concerns,
             score=score,
         )
-
+        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
         log_entry = ReviewWritingLog(
-            profile_pk=self.profile.pk, review_pk=review_obj.pk, prompt=prompt
+            profile_pk=self.profile.pk,
+            review_pk=review_obj.pk,
+            prompt_pk=formatted_prompt.pk,
         )
-        self.log_db.add(log_entry)
 
-        return review_obj
+        return review_obj, log_entry
 
     @beartype
     @chair_required
@@ -234,7 +237,7 @@ class Agent(object):
         proposal: Proposal,
         reviews: List[Review],
         config: Config,
-    ) -> MetaReview:
+    ) -> Tuple[MetaReview, MetaReviewWritingLog]:
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_reviews = self.serializer.serialize(reviews)
 
@@ -267,13 +270,14 @@ class Agent(object):
             ethical_concerns=ethical_concerns,
             decision=decision,
         )
-
+        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
         log_entry = MetaReviewWritingLog(
-            profile_pk=self.profile.pk, metareview_pk=metareview_obj.pk, prompt=prompt
+            profile_pk=self.profile.pk,
+            metareview_pk=metareview_obj.pk,
+            prompt_pk=formatted_prompt.pk,
         )
-        self.log_db.add(log_entry)
 
-        return metareview_obj
+        return metareview_obj, log_entry
 
     @beartype
     @leader_required
@@ -282,7 +286,7 @@ class Agent(object):
         proposal: Proposal,
         review: Review,
         config: Config,
-    ) -> Rebuttal:
+    ) -> Tuple[Rebuttal, RebuttalWritingLog]:
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_review = self.serializer.serialize(review)
 
@@ -309,10 +313,11 @@ class Agent(object):
             q4=q5_result.get('q4', ''),
             q5=q5_result.get('q5', ''),
         )
-
+        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
         log_entry = RebuttalWritingLog(
-            profile_pk=self.profile.pk, rebuttal_pk=rebuttal_obj.pk, prompt=prompt
+            profile_pk=self.profile.pk,
+            rebuttal_pk=rebuttal_obj.pk,
+            prompt_pk=formatted_prompt.pk,
         )
-        self.log_db.add(log_entry)
 
-        return rebuttal_obj
+        return rebuttal_obj, log_entry
