@@ -96,7 +96,7 @@ class Agent(object):
     ) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
         serialized_papers = self.serializer.serialize(papers)
-        idea_content, prompt = brainstorm_idea_prompting(
+        idea_content_list, prompt = brainstorm_idea_prompting(
             bio=self.profile.bio,
             insights=serialized_insights,
             papers=serialized_papers,
@@ -108,7 +108,7 @@ class Agent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )
-        idea_content = idea_content[0]
+        idea_content = idea_content_list[0]
         idea = Idea(content=idea_content)
 
         log_entry = IdeaBrainstormLog(
@@ -123,7 +123,7 @@ class Agent(object):
         self, ideas: List[Idea], contexts: List[str], config: Config
     ) -> Idea:
         serialized_ideas = self.serializer.serialize(ideas)
-        idea_summarized, prompt = discuss_idea_prompting(
+        idea_summarized_list, prompt = discuss_idea_prompting(
             bio=self.profile.bio,
             contexts=contexts,
             ideas=serialized_ideas,
@@ -135,7 +135,7 @@ class Agent(object):
             top_p=config.param.top_p,
             stream=config.param.stream,
         )
-        idea_summarized = idea_summarized[0]
+        idea_summarized = idea_summarized_list[0]
         return Idea(content=idea_summarized)
 
     @beartype
