@@ -12,6 +12,7 @@ class ParamConfig(BaseModel):
     member_num: int = 3
     reviewer_num: int = 1
     max_env_run_num: int = 1
+    proposal_num: int = 1
     use_rag: bool = True
     write_proposal_strategy: str = 'default'
     return_num: Optional[int] = None
