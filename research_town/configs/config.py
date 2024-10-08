@@ -7,14 +7,14 @@ from pydantic import BaseModel, root_validator
 
 # ParamConfig definition for handling parameters
 class ParamConfig(BaseModel):
-    related_paper_num: int = 3
-    base_llm: str = 'gpt-4o-mini'
-    member_num: int = 3
-    reviewer_num: int = 1
-    max_env_run_num: int = 1
-    proposal_num: int = 1
-    use_rag: bool = True
-    write_proposal_strategy: str = 'default'
+    related_paper_num: int
+    base_llm: str
+    member_num: int
+    reviewer_num: int
+    max_env_run_num: int
+    proposal_num: int
+    use_rag: bool
+    write_proposal_strategy: str
     return_num: Optional[int] = None
     max_token_num: Optional[int] = None
     temperature: Optional[float] = None
