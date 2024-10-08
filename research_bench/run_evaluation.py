@@ -219,10 +219,6 @@ def process_paper(
 
     return evaluation_result
 
-    # except Exception as e:
-    #     logger.error(f'Error processing paper {paper_key}: {e}')
-    #     return None
-
 
 def main(
     args: argparse.ArgumentParser,
@@ -251,9 +247,6 @@ def main(
     gpt_metric_scores = []
     bert_scores = []
     num_lines = 0
-    # Open output JSONL file
-    # with open(output_jsonl, 'w', encoding='utf-8') as outfile:
-    #     # Iterate over each paper with a progress bar
     try:
         with open(output_jsonl, 'r', encoding='utf-8') as outfile:
             num_lines = sum(1 for line in outfile)
@@ -296,8 +289,6 @@ def main(
     logger.info(f'Average GPT-based metric score: {avg_gpt_metric:.4f}')
     logger.info(f'Average BERTScore: {avg_bert_score:.4f}')
 
-    # except Exception as e:
-    #     logger.error(f'An error occurred in the main execution: {e}')
 
 
 if __name__ == '__main__':
