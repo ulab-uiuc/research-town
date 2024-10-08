@@ -86,7 +86,6 @@ def process_paper(paper: arxiv.Result) -> Dict[str, Any]:
         'references': references,
     }
 
-
 def single_agent_proposal_writing(intros: List[str], model:str="gpt-4o-mini") -> Optional[str]:
     combined_intro = '\n\n'.join(intros)
     prompt = [{
