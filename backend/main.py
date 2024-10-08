@@ -48,7 +48,7 @@ def background_task(
     generator = run_engine(url)
     try:
         # Generate and send results to the parent process
-        for progress, agent, prompt in generator:
+        for progress, agent in generator:
             child_conn.send((progress, agent))
 
         while True:
@@ -100,7 +100,7 @@ def format_response(
                 'summary': progress.summary or '',
                 'strength': progress.strength or '',
                 'weakness': progress.weakness or '',
-                'ethical_concerns': progress.ethical_concerns or '',
+                'ethical_concern': progress.ethical_concern or '',
                 'score': str(progress.score) if progress.score else '-1',
             }
         elif isinstance(progress, Rebuttal):
@@ -118,7 +118,7 @@ def format_response(
                 'summary': progress.summary or '',
                 'strength': progress.strength or '',
                 'weakness': progress.weakness or '',
-                'ethical_concerns': progress.ethical_concerns or '',
+                'ethical_concern': progress.ethical_concern or '',
                 'decision': 'accept' if progress.decision else 'reject',
             }
         else:

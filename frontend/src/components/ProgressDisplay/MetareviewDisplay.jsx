@@ -15,7 +15,7 @@ function MetareviewDisplay({ list }) {
         {list.map((item, index) => {
           return (
             <>
-              {["summary", "strength", "weakness", "ethical_concerns"].map(
+              {["summary", "strength", "weakness", "ethical_concern"].map(
                 (field) => (
                   <div key={field} className="sub-item">
                     <div>
