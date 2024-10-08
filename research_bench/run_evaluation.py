@@ -221,10 +221,10 @@ def process_paper(
 
 
 def main(
-    args: argparse.ArgumentParser,
+    args: argparse.Namespace,
     input_json: str,
     output_jsonl: str,
-    intro_log_jsonl: str = None,
+    intro_log_jsonl: str = '',
 ) -> None:
     """
     Main function to perform evaluation on all papers in the input JSON.
@@ -288,7 +288,6 @@ def main(
     logger.info(f'Average ROUGE-L score: {avg_rouge_l:.4f}')
     logger.info(f'Average GPT-based metric score: {avg_gpt_metric:.4f}')
     logger.info(f'Average BERTScore: {avg_bert_score:.4f}')
-
 
 
 if __name__ == '__main__':
