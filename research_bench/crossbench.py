@@ -5,12 +5,10 @@ import re
 from typing import Any, Dict, List, Set
 
 from tqdm import tqdm
-
 from utils import get_paper_by_arxiv_id, process_paper, save_benchmark
 
 
 def get_arxiv_ids(input: str) -> List[str]:
-
     with open(input, 'r', encoding='utf-8') as f:
         urls = [line.strip() for line in f if line.strip()]
 
@@ -40,7 +38,7 @@ def process_arxiv_ids(
             existing_arxiv_ids.add(arxiv_id)
             save_benchmark(benchmark, output)
         else:
-            print(f"Paper with arXiv ID {arxiv_id} not found.")
+            print(f'Paper with arXiv ID {arxiv_id} not found.')
 
     return benchmark
 
@@ -51,13 +49,13 @@ def parse_args():
         '--input',
         type=str,
         required=True,
-        help='Path to the input file containing arXiv URLs.'
+        help='Path to the input file containing arXiv URLs.',
     )
     parser.add_argument(
         '--output',
         type=str,
         default='./benchmark/crossbench.json',
-        help='Output file path.'
+        help='Output file path.',
     )
     return parser.parse_args()
 

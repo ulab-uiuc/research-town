@@ -20,25 +20,27 @@ def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
         response = requests.get(url, params=params, headers=headers)
         if response.status_code == 200:
             data = response.json()
-            return [ref['citedPaper'] for ref in data.get('data', []) if 'citedPaper' in ref]
+            return [
+                ref['citedPaper'] for ref in data.get('data', []) if 'citedPaper' in ref
+            ]
         else:
-            wait_time = 2 ** attempt
-            print(f"Error {response.status_code} fetching references for {arxiv_id}. Retrying in {wait_time}s...")
+            wait_time = 2**attempt
+            print(
+                f'Error {response.status_code} fetching references for {arxiv_id}. Retrying in {wait_time}s...'
+            )
             time.sleep(wait_time)  # Exponential backoff
-    print(f"Failed to fetch references for {arxiv_id} after {max_retries} attempts.")
+    print(f'Failed to fetch references for {arxiv_id} after {max_retries} attempts.')
     return []
 
 
 def get_paper_by_keyword(
-    keyword: str,
-    existing_arxiv_ids: Set[str],
-    max_papers: int = 10
+    keyword: str, existing_arxiv_ids: Set[str], max_papers: int = 10
 ) -> List[arxiv.Result]:
     query = f'all:"{keyword}" AND (cat:cs.AI OR cat:cs.LG)'
     search = arxiv.Search(
         query=query,
         max_results=max_papers * 2,  # Fetch extra to account for duplicates
-        sort_by=arxiv.SortCriterion.SubmittedDate
+        sort_by=arxiv.SortCriterion.SubmittedDate,
     )
 
     papers = []
@@ -56,7 +58,7 @@ def save_benchmark(benchmark: Dict[str, Any], output_path: str) -> None:
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(benchmark, f, indent=4, ensure_ascii=False)
-    print(f"Benchmark saved to {output_path}")
+    print(f'Benchmark saved to {output_path}')
 
 
 def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
@@ -65,7 +67,7 @@ def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
         results = list(search.results())
         return results[0] if results else None
     except Exception as e:
-        print(f"Error fetching paper {arxiv_id}: {e}")
+        print(f'Error fetching paper {arxiv_id}: {e}')
         return None
 
 

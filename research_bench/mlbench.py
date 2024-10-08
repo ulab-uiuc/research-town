@@ -4,7 +4,6 @@ import argparse
 from typing import Any, Dict, List, Set
 
 from tqdm import tqdm
-
 from utils import get_paper_by_keyword, process_paper, save_benchmark
 
 
@@ -18,7 +17,9 @@ def process_keywords(
 
     for keyword in keywords:
         print(f"Fetching papers for keyword: '{keyword}'")
-        papers = get_paper_by_keyword(keyword, existing_arxiv_ids, max_papers_per_keyword)
+        papers = get_paper_by_keyword(
+            keyword, existing_arxiv_ids, max_papers_per_keyword
+        )
 
         for paper in tqdm(papers, desc=f"Processing papers for '{keyword}'"):
             paper_data = process_paper(paper)
@@ -49,19 +50,19 @@ def parse_args():
             'explainable AI',
             'automated machine learning',
         ],
-        help='List of keywords to search for.'
+        help='List of keywords to search for.',
     )
     parser.add_argument(
         '--max_papers_per_keyword',
         type=int,
         default=10,
-        help='Maximum number of papers per keyword.'
+        help='Maximum number of papers per keyword.',
     )
     parser.add_argument(
         '--output',
         type=str,
         default='./benchmark/mlbench.json',
-        help='Output file path.'
+        help='Output file path.',
     )
     return parser.parse_args()
 
