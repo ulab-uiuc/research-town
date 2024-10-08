@@ -1,5 +1,5 @@
 import random
-from typing import List
+from typing import List, Tuple
 
 from ..data import Idea
 
@@ -9,7 +9,7 @@ def sample_ideas(lst: List[Idea], n: int) -> List[List[Idea]]:
     if n > total_subsets:
         raise ValueError(f'n cannot be greater than {total_subsets}')
 
-    sampled_subsets = set()
+    sampled_subsets: set[Tuple[int, ...]] = set()
     lst_len = len(lst)
     lst_indices = list(range(lst_len))
 
