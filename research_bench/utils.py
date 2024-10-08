@@ -91,7 +91,7 @@ def get_single_agent_proposal_5q(intros: List[str]) -> Optional[str]:
     combined_intro = '\n\n'.join(intros)
     prompt = [{
         'role': 'user',
-        'content': """You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
+        'content': f"""You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
 The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
 
 Here are the five core questions:
@@ -137,7 +137,7 @@ For example:
 [Question 4]: ....
 [Question 5]: ....
 
-Now, let's begin:""",
+Now, let's begin:"""
     }]
 
     try:
