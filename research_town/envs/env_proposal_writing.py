@@ -5,8 +5,8 @@ from ..agents import Agent, AgentManager
 from ..configs import Config
 from ..data import Idea, Insight, Progress
 from ..dbs import LogDB, PaperDB, ProgressDB
-from .env_base import BaseEnv
 from ..utils.sampler import sample
+from .env_base import BaseEnv
 
 
 class ProposalWritingEnv(BaseEnv):
