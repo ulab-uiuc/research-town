@@ -4,7 +4,7 @@
 INPUT="./benchmark/bench.json" #"./benchmark/benchmark.json"
 OUTPUT="./results/results.jsonl"
 #INTRO_LOG="./results/intro_logging.jsonl"
-TEST_SINGLE_AGENT="" #"--test-single-agent"
+TEST_SINGLE_AGENT="" #"--test-single-agent"  #IF YOU WANT TO TEST SINGLE AGENT, UNCOMMENT THIS LINE and delete the ""
 
 # Function to get the number of lines in the output file
 get_line_count() {
