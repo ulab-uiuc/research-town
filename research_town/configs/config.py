@@ -21,7 +21,6 @@ class ParamConfig(BaseModel):
     stream: Optional[bool] = None
 
 
-
 # EvalPromptTemplate for validation of eval-related prompts
 class EvalPromptTemplate(BaseModel):
     insight_quality: Dict[str, Union[str, List[str]]]
