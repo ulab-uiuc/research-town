@@ -8,7 +8,7 @@ from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
 
-class ProposalWritingEnv(BaseEnv):
+class ProposalWritingwithRAGEnv(BaseEnv):
     def __init__(
         self,
         name: str,

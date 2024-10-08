@@ -1,7 +1,7 @@
 from ..envs import (
     EndEnv,
-    ProposalWritingEnv,
-    ProposalWritingWithoutRAGEnv,
+    ProposalWritingwithRAGEnv,
+    ProposalWritingwithoutRAGEnv,
     ReviewWritingEnv,
     StartEnv,
 )
@@ -13,7 +13,7 @@ class Engine(BaseEngine):
         if self.config.param.use_rag:
             envs = [
                 StartEnv('start', self.config, self.agent_manager),
-                ProposalWritingEnv(
+                ProposalWritingwithRAGEnv(
                     'proposal_writing',
                     self.log_db,
                     self.progress_db,
@@ -34,7 +34,7 @@ class Engine(BaseEngine):
         else:
             envs = [
                 StartEnv('start', self.config, self.agent_manager),
-                ProposalWritingWithoutRAGEnv(
+                ProposalWritingwithoutRAGEnv(
                     'proposal_writing',
                     self.log_db,
                     self.progress_db,
