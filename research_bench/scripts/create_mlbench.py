@@ -56,17 +56,6 @@ logging.getLogger().addHandler(console)
 def fetch_papers_for_keyword(
     keyword: str, existing_arxiv_ids: Set[str], max_papers: int = 10
 ) -> List[arxiv.Result]:
-    """
-    Fetches papers from arXiv for a given keyword.
-
-    Args:
-        keyword (str): The keyword to search for.
-        existing_arxiv_ids (set): Set of arXiv IDs to exclude to ensure uniqueness.
-        max_papers (int): Maximum number of papers to fetch.
-
-    Returns:
-        List[arxiv.Result]: List of arXiv paper results.
-    """
     search_query = f'all:"{keyword}" AND (cat:cs.AI OR cat:cs.LG)'
     logging.info(f"Searching arXiv for keyword: '{keyword}' with query: {search_query}")
 
@@ -92,16 +81,6 @@ def fetch_papers_for_keyword(
 def fetch_references(
     arxiv_id: str, max_retry: int = 5
 ) -> Optional[List[Dict[str, Any]]]:
-    """
-    Fetches references for a given arXiv paper using the Semantic Scholar API.
-
-    Args:
-        arxiv_id (str): The arXiv ID of the paper.
-        max_retry (int): Maximum number of retry attempts.
-
-    Returns:
-        Optional[List[Dict[str, Any]]]: List of reference dictionaries or None if failed.
-    """
     if 'v' in arxiv_id:
         arxiv_id = arxiv_id.split('v')[0]
     url = f'{SEMANTIC_SCHOLAR_API_URL}ARXIV:{arxiv_id}/references'
@@ -138,15 +117,6 @@ def fetch_references(
 
 
 def process_reference(ref: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Processes a single reference paper's data.
-
-    Args:
-        ref (Dict[str, Any]): Raw reference data from Semantic Scholar.
-
-    Returns:
-        Dict[str, Any]: Processed reference data.
-    """
     return {
         'title': ref.get('title', ''),
         'abstract': ref.get('abstract', ''),
@@ -166,16 +136,6 @@ def process_reference(ref: Dict[str, Any]) -> Dict[str, Any]:
 def create_benchmark(
     keywords: List[str], max_papers_per_keyword: int = 10
 ) -> Dict[str, Any]:
-    """
-    Creates a benchmark dataset based on the provided keywords.
-
-    Args:
-        keywords (List[str]): List of AI-related keywords/topics.
-        max_papers_per_keyword (int): Number of papers to fetch per keyword.
-
-    Returns:
-        Dict[str, Any]: Benchmark dataset.
-    """
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
 
@@ -223,13 +183,6 @@ def create_benchmark(
 
 
 def save_benchmark(benchmark: Dict[str, Any], output_path: str) -> None:
-    """
-    Saves the benchmark dataset to a JSON file.
-
-    Args:
-        benchmark (Dict[str, Any]): Benchmark dataset.
-        output_path (str): Path to save the JSON file.
-    """
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(benchmark, f, ensure_ascii=False, indent=4)
@@ -237,12 +190,6 @@ def save_benchmark(benchmark: Dict[str, Any], output_path: str) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    """
-    Parses command-line arguments.
-
-    Returns:
-        argparse.Namespace: Parsed arguments.
-    """
     parser = argparse.ArgumentParser(
         description='Create a benchmark dataset of AI-related arXiv papers.'
     )
@@ -265,9 +212,6 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
-    """
-    Main function to create the benchmark dataset.
-    """
     args = parse_args()
 
     logging.info('Starting benchmark creation...')
