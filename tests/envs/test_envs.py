@@ -3,7 +3,11 @@ from unittest.mock import MagicMock, patch
 from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
 from tests.constants.agent_constants import example_agent_manager
 from tests.constants.config_constants import example_config
-from tests.constants.data_constants import profile_A, research_proposal_A
+from tests.constants.data_constants import (
+    profile_A,
+    research_proposal_A,
+    research_proposal_B,
+)
 from tests.constants.db_constants import (
     example_log_db,
     example_paper_db,
@@ -28,7 +32,7 @@ def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
     )
     leader = example_agent_manager.create_agent(profile=profile_A, role='leader')
     env.on_enter(
-        proposal=research_proposal_A,
+        proposals=[research_proposal_A, research_proposal_B],
         leader=leader,
     )
     run_result = env.run()
@@ -38,7 +42,7 @@ def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
     exit_status, exit_dict = env.on_exit()
 
     assert exit_status == 'proposal_accept'
-    assert exit_dict['metareview'] is not None
+    assert exit_dict['metareviews'] is not None
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
@@ -68,7 +72,9 @@ def test_proposal_writing_env(
         for progress, agent in run_result:
             pass
     exit_status, exit_dict = env.on_exit()
-    proposal = exit_dict['proposal']
-    assert proposal.content is not None
-    assert proposal.content == 'Paper abstract1'
     assert exit_status == 'start_review'
+
+    proposals = exit_dict['proposals']
+    for proposal in proposals:
+        assert proposal.content is not None
+        assert proposal.content == 'Paper abstract1'

@@ -2,10 +2,10 @@ import itertools
 import random
 from typing import List
 
-from ..data import Insight
+from ..data import Idea
 
 
-def sample(lst: List[Insight], n: int) -> List[List[Insight]]:
+def sample_ideas(lst: List[Idea], n: int) -> List[List[Idea]]:
     valid_subsets = [
         list(subset)
         for i in range(2, len(lst) + 1)

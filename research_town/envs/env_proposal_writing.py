@@ -5,7 +5,7 @@ from ..agents import Agent, AgentManager
 from ..configs import Config
 from ..data import Idea, Insight, Progress
 from ..dbs import LogDB, PaperDB, ProgressDB
-from ..utils.sampler import sample
+from ..utils.sampler import sample_ideas
 from .env_base import BaseEnv
 
 
@@ -81,7 +81,7 @@ class ProposalWritingEnv(BaseEnv):
             yield idea, member
 
         self.proposals = []
-        idea_combos = sample(ideas, self.config.param.proposal_num)
+        idea_combos = sample_ideas(ideas, self.config.param.proposal_num)
         for idea_combo in idea_combos:
             summarized_idea = self.leader.discuss_idea(
                 ideas=idea_combo, contexts=self.contexts, config=self.config
