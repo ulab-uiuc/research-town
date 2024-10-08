@@ -50,9 +50,8 @@ class ProposalWritingNoRagEnv(BaseEnv):
         keywords: List[str] = []
         ideas: List[Idea] = []
         for member in self.members:
-            related_papers = []
             summary, keywords, insight = member.review_literature(
-                papers=related_papers,
+                papers=[],
                 contexts=self.contexts,
                 config=self.config,
             )
@@ -64,9 +63,8 @@ class ProposalWritingNoRagEnv(BaseEnv):
         keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
 
         for member in self.members:
-            related_papers = []
             idea = member.brainstorm_idea(
-                papers=related_papers, insights=insights, config=self.config
+                papers=[], insights=insights, config=self.config
             )
             ideas.append(idea)
 
@@ -79,10 +77,9 @@ class ProposalWritingNoRagEnv(BaseEnv):
         yield summarized_idea, self.leader
 
         # Write Proposal
-        related_papers = []
         proposal = self.leader.write_proposal(
             idea=summarized_idea,
-            papers=related_papers,
+            papers=[],
             config=self.config,
         )
         yield proposal, self.leader
