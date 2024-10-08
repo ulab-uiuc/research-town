@@ -2,17 +2,7 @@ from beartype import beartype
 from beartype.typing import Dict, List, Literal, Tuple
 
 from ..configs import Config
-from ..data import (
-    Idea,
-    Insight,
-    MetaReview,
-    Paper,
-    Profile,
-    Prompt,
-    Proposal,
-    Rebuttal,
-    Review,
-)
+from ..data import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     discuss_idea_prompting,
@@ -57,7 +47,7 @@ class Agent(object):
         papers: List[Paper],
         contexts: List[str],
         config: Config,
-    ) -> Tuple[str, List[str], Insight, Prompt]:
+    ) -> Tuple[str, List[str], Insight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
         summary, keywords, valuable_points, prompt_messages = (
@@ -74,15 +64,14 @@ class Agent(object):
                 stream=config.param.stream,
             )
         )
-        insight = Insight(content=valuable_points)
-        prompt = Prompt(messages=prompt_messages)
-        return summary, keywords, insight, prompt
+        insight = Insight(content=valuable_points, prompt_messages=prompt_messages)
+        return summary, keywords, insight
 
     @beartype
     @member_required
     def brainstorm_idea(
         self, insights: List[Insight], papers: List[Paper], config: Config
-    ) -> Tuple[Idea, Prompt]:
+    ) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
         serialized_papers = self.serializer.serialize(papers)
         idea_content_list, prompt_messages = brainstorm_idea_prompting(
@@ -98,15 +87,14 @@ class Agent(object):
             stream=config.param.stream,
         )
         idea_content = idea_content_list[0]
-        idea = Idea(content=idea_content)
-        prompt = Prompt(messages=prompt_messages)
-        return idea, prompt
+        idea = Idea(content=idea_content, prompt_messages=prompt_messages)
+        return idea
 
     @beartype
     @member_required
     def discuss_idea(
         self, ideas: List[Idea], contexts: List[str], config: Config
-    ) -> Tuple[Idea, Prompt]:
+    ) -> Idea:
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized_list, prompt_messages = discuss_idea_prompting(
             bio=self.profile.bio,
@@ -121,15 +109,14 @@ class Agent(object):
             stream=config.param.stream,
         )
         idea_summarized = idea_summarized_list[0]
-        idea = Idea(content=idea_summarized)
-        prompt = Prompt(messages=prompt_messages)
-        return idea, prompt
+        idea = Idea(content=idea_summarized, prompt_messages=prompt_messages)
+        return idea
 
     @beartype
     @member_required
     def write_proposal(
         self, idea: Idea, papers: List[Paper], config: Config
-    ) -> Tuple[Proposal, Prompt]:
+    ) -> Proposal:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
 
@@ -146,7 +133,7 @@ class Agent(object):
             print('write_proposal_strategy not supported, will use default')
             prompt_template = config.agent_prompt_template.write_proposal
 
-        proposal, q5_result, prompt_messages = write_proposal_prompting(
+        proposal_content, q5_result, prompt_messages = write_proposal_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
@@ -158,20 +145,20 @@ class Agent(object):
             stream=config.param.stream,
         )
 
-        proposal_obj = Proposal(
-            content=proposal,
+        proposal = Proposal(
+            prompt_messages=prompt_messages,
+            content=proposal_content,
             q1=q5_result.get('q1', ''),
             q2=q5_result.get('q2', ''),
             q3=q5_result.get('q3', ''),
             q4=q5_result.get('q4', ''),
             q5=q5_result.get('q5', ''),
         )
-        prompt = Prompt(messages=prompt_messages)
-        return proposal_obj, prompt
+        return proposal
 
     @beartype
     @reviewer_required
-    def write_review(self, proposal: Proposal, config: Config) -> Tuple[Review, Prompt]:
+    def write_review(self, proposal: Proposal, config: Config) -> Review:
         serialized_proposal = self.serializer.serialize(proposal)
 
         summary, strength, weakness, ethical_concerns, score, prompt_messages = (
@@ -190,7 +177,8 @@ class Agent(object):
                 stream=config.param.stream,
             )
         )
-        review_obj = Review(
+        review = Review(
+            prompt_messages=prompt_messages,
             proposal_pk=proposal.pk,
             reviewer_pk=self.profile.pk,
             summary=summary,
@@ -199,8 +187,7 @@ class Agent(object):
             ethical_concerns=ethical_concerns,
             score=score,
         )
-        prompt = Prompt(messages=prompt_messages)
-        return review_obj, prompt
+        return review
 
     @beartype
     @chair_required
@@ -209,7 +196,7 @@ class Agent(object):
         proposal: Proposal,
         reviews: List[Review],
         config: Config,
-    ) -> Tuple[MetaReview, Prompt]:
+    ) -> MetaReview:
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_reviews = self.serializer.serialize(reviews)
 
@@ -231,7 +218,8 @@ class Agent(object):
             )
         )
 
-        metareview_obj = MetaReview(
+        metareview = MetaReview(
+            prompt_messages=prompt_messages,
             proposal_pk=proposal.pk,
             chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
@@ -242,8 +230,7 @@ class Agent(object):
             ethical_concerns=ethical_concerns,
             decision=decision,
         )
-        prompt = Prompt(messages=prompt_messages)
-        return metareview_obj, prompt
+        return metareview
 
     @beartype
     @leader_required
@@ -252,7 +239,7 @@ class Agent(object):
         proposal: Proposal,
         review: Review,
         config: Config,
-    ) -> Tuple[Rebuttal, Prompt]:
+    ) -> Rebuttal:
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_review = self.serializer.serialize(review)
 
@@ -268,7 +255,8 @@ class Agent(object):
             stream=config.param.stream,
         )
 
-        rebuttal_obj = Rebuttal(
+        rebuttal = Rebuttal(
+            prompt_messages=prompt_messages,
             proposal_pk=proposal.pk,
             reviewer_pk=review.reviewer_pk,
             author_pk=self.profile.pk,
@@ -279,5 +267,4 @@ class Agent(object):
             q4=q5_result.get('q4', ''),
             q5=q5_result.get('q5', ''),
         )
-        prompt = Prompt(messages=prompt_messages)
-        return rebuttal_obj, prompt
+        return rebuttal

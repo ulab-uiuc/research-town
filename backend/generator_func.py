@@ -52,8 +52,8 @@ def run_engine(
             run_result = engine.curr_env.run()
 
             if run_result:
-                for progress, agent, prompt in run_result:
-                    yield progress, agent, prompt
+                for progress, agent in run_result:
+                    yield progress, agent
                     engine.time_step += 1
 
             engine.transition()

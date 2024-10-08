@@ -76,6 +76,7 @@ class MetaReviewWritingLog(Log):
 
 class Progress(Data):
     content: str = Field(default='')
+    prompt_messages: Optional[List[Dict[str, str]]] = Field(default=[])
     eval_score: Optional[List[int]] = Field(default=[])  # evaluation scores
 
 

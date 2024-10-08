@@ -3,7 +3,7 @@ from typing import Any, Dict, Generator, Tuple
 
 from ..agents import Agent
 from ..configs import Config
-from ..data import Progress, Prompt
+from ..data import Progress
 
 
 class BaseEnv(ABC):
@@ -17,7 +17,7 @@ class BaseEnv(ABC):
         pass
 
     @abstractmethod
-    def run(self) -> Generator[Tuple[Progress, Agent, Prompt], None, None]:
+    def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         pass
 
     @abstractmethod
