@@ -1,5 +1,3 @@
-# script_1.py
-
 import argparse
 from typing import Any, Dict, List, Set
 
