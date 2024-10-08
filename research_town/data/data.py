@@ -10,7 +10,7 @@ class Data(BaseModel):
 
 
 class Prompt(Data):
-    messages: Union[List[Dict[str, str]], List[List[Dict[str, str]]]]
+    messages: Union[List[Dict[str, str]]]
 
 
 class Profile(Data):
