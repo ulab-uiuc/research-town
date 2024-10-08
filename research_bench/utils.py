@@ -87,7 +87,7 @@ def process_paper(paper: arxiv.Result) -> Dict[str, Any]:
     }
 
 
-def get_single_agent_proposal_5q(intros: List[str]) -> Optional[str]:
+def single_agent_proposal_writing(intros: List[str]) -> Optional[str]:
     combined_intro = '\n\n'.join(intros)
     prompt = [{
         'role': 'user',
