@@ -43,7 +43,7 @@ def process_arxiv_ids(
     return benchmark
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Process arXiv URLs.')
     parser.add_argument(
         '--input',
@@ -60,7 +60,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     args = parse_args()
     arxiv_ids = get_arxiv_ids(args.input)
     process_arxiv_ids(arxiv_ids, args.output)

@@ -29,7 +29,7 @@ def process_keywords(
     return benchmark
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Create an AI paper benchmark.')
     parser.add_argument(
         '--keywords',
@@ -67,7 +67,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     args = parse_args()
     keywords = args.keywords
     process_keywords(keywords, args.max_papers_per_keyword, args.output)
