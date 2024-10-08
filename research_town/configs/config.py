@@ -72,7 +72,7 @@ class AgentPromptTemplate(BaseModel):
     summarize_domain: Dict[str, Union[str, List[str]]]
     review_literature: Dict[str, Union[str, List[str]]]
     brainstorm_idea: Dict[str, Union[str, List[str]]]
-    discuss_idea: Dict[str, Union[str, List[str]]]
+    summarize_idea: Dict[str, Union[str, List[str]]]
     write_proposal: Dict[str, Union[str, List[str]]]
     write_proposal_cot: Dict[str, Union[str, List[str]]]
     write_proposal_react: Dict[str, Union[str, List[str]]]
@@ -95,7 +95,7 @@ class AgentPromptTemplate(BaseModel):
             'write_bio': ['{publication_info}'],
             'review_literature': ['{bio}', '{papers}', '{contexts}'],
             'brainstorm_idea': ['{bio}', '{insights}', '{papers}'],
-            'discuss_idea': ['{bio}', '{ideas}', '{contexts}'],
+            'summarize_idea': ['{bio}', '{ideas}', '{contexts}'],
             'write_proposal': ['{idea}', '{papers}'],
             'write_proposal_cot': ['{idea}', '{papers}'],
             'write_proposal_react': ['{idea}', '{papers}'],

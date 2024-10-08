@@ -96,7 +96,7 @@ def brainstorm_idea_prompting(
 
 
 @beartype
-def discuss_idea_prompting(
+def summarize_idea_prompting(
     bio: str,
     contexts: List[str],
     ideas: List[Dict[str, str]],

@@ -14,7 +14,7 @@
 
 ### research_town.utils.agent_prompter.brainstorm_idea_prompting(bio: str, insights: list[dict[str, str]], model_name: str, prompt_template: dict[str, str | list[str]], return_num: int | None = 1, max_token_num: int | None = 512, temperature: float | None = 0.0, top_p: float | None = None, stream: bool | None = None) → list[str]
 
-### research_town.utils.agent_prompter.discuss_idea_prompting(ideas: list[dict[str, str]], model_name: str, prompt_template: dict[str, str | list[str]], return_num: int | None = 1, max_token_num: int | None = 512, temperature: float | None = 0.0, top_p: float | None = None, stream: bool | None = None) → list[str]
+### research_town.utils.agent_prompter.summarize_idea_prompting(ideas: list[dict[str, str]], model_name: str, prompt_template: dict[str, str | list[str]], return_num: int | None = 1, max_token_num: int | None = 512, temperature: float | None = 0.0, top_p: float | None = None, stream: bool | None = None) → list[str]
 
 ### research_town.utils.agent_prompter.review_literature_prompting(profile: dict[str, str], papers: list[dict[str, str]], domains: list[str], contexts: list[str], model_name: str, prompt_template: dict[str, str | list[str]], return_num: int | None = 1, max_token_num: int | None = 512, temperature: float | None = 0.0, top_p: float | None = None, stream: bool | None = None) → list[str]
 
