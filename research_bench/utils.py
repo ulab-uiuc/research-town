@@ -8,6 +8,8 @@ from typing import Any, Dict, List, Optional, Set
 import arxiv
 import requests
 
+from research_town.utils.model_prompting import model_prompting
+
 SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
 
 
@@ -83,3 +85,83 @@ def process_paper(paper: arxiv.Result) -> Dict[str, Any]:
         'updated': paper.updated.isoformat(),
         'references': references,
     }
+
+
+def get_single_agent_proposal_5q(intros: List[str]) -> Optional[str]:
+    """
+    Generates a five-question proposal for future research ideas based on the provided introductions using an LLM.
+
+    Args:
+        intros (List[str]): A list of introduction texts from various sources.
+
+    Returns:
+        Optional[str]: Generated five core research questions as a string, or None if generation fails.
+    """
+    try:
+        # Combine all introduction texts into a single string separated by two newlines for clarity
+        combined_intro = '\n\n'.join(intros)
+        prompt = [
+            {
+                'role': 'user',
+                'content': """You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
+The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
+
+Here are the five core questions:
+
+[Question 1] - What is the problem?
+
+Formulate the specific research question you aim to address. Only output one question and do not include any more information.
+
+[Question 2] - Why is it interesting and important?
+
+Explain the broader implications of solving this problem for the research community.
+Discuss how such paper will affect the future research.
+Discuss how addressing this question could advance knowledge or lead to practical applications.
+
+[Question 3] - Why is it hard?
+
+Discuss the challenges and complexities involved in solving this problem.
+Explain why naive or straightforward approaches may fail.
+Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.
+
+[Question 4] - Why hasn't it been solved before?
+
+Identify gaps or limitations in previous research or existing solutions.
+Discuss any barriers that have prevented this problem from being solved until now.
+Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.
+
+[Question 5] - What are the key components of my approach and results?
+
+Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.
+Describe the expected outcomes. MAKE IT CLEAR.
+
+Your goal is to ensure the proposal is clear, concise, and logically structured.
+Now you will be given a set of introduction texts from various sources. Please use this information to generate a comprehensive research proposal based on the introductions, you need to look into what future research directions, topics or methods could be use for the proposal writing.
+Here are the introduction texts: {combined_intro}
+The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
+
+For example:
+[Question 1]: ....
+[Question 2]: ....
+[Question 3]: ....
+[Question 4]: ....
+[Question 5]: ....
+
+Now, let's begin:
+                """,
+            }
+        ]
+
+        # Replace 'model_prompting' with your actual function or API call to interact with the language model
+        response = model_prompting('gpt-4o-mini', prompt, mode='TEST')
+
+        if response and len(response) > 0 and len(response[0]) > 0:
+            return response[0]
+        else:
+            print(
+                'Received empty response from model_prompting for get_single_agent_proposal_5q.'
+            )
+            return None
+    except Exception as e:
+        print(f'Error generating get_single_agent_proposal_5q: {e}')
+        return None
