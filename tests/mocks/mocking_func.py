@@ -32,7 +32,7 @@ def mock_prompting(
         ]
     elif prompt[0]['content'] == agent_prompt_template.brainstorm_idea['sys_prompt']:
         return ['Idea1', 'Idea2', 'Idea3']
-    elif prompt[0]['content'] == agent_prompt_template.discuss_idea['sys_prompt']:
+    elif prompt[0]['content'] == agent_prompt_template.summarize_idea['sys_prompt']:
         return ['Summarized idea1', 'Summarized idea2', 'Summarized idea3']
     elif prompt[0]['content'] == agent_prompt_template.write_proposal['sys_prompt']:
         return ['Paper abstract1', 'Paper abstract2', 'Paper abstract3']

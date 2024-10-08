@@ -86,7 +86,7 @@ class ProposalWritingwithRAGEnv(BaseEnv):
         self.proposals = []
         idea_combos = sample_ideas(ideas, self.config.param.proposal_num)
         for idea_combo in idea_combos:
-            summarized_idea = self.leader.discuss_idea(
+            summarized_idea = self.leader.summarize_idea(
                 ideas=idea_combo, contexts=self.contexts, config=self.config
             )
             yield summarized_idea, self.leader
