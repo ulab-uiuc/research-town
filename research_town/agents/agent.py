@@ -5,8 +5,8 @@ from ..configs import Config
 from ..data import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
-    summarize_idea_prompting,
     review_literature_prompting,
+    summarize_idea_prompting,
     write_metareview_prompting,
     write_proposal_prompting,
     write_rebuttal_prompting,
@@ -133,7 +133,9 @@ class Agent(object):
         elif write_proposal_strategy == 'reflexion':
             prompt_template = config.agent_prompt_template.write_proposal_reflexion
         else:
-            raise ValueError(f"Unknown write proposal strategy: {write_proposal_strategy}")
+            raise ValueError(
+                f'Unknown write proposal strategy: {write_proposal_strategy}'
+            )
 
         proposal_content, q5_result, prompt_messages = write_proposal_prompting(
             idea=serialized_idea,
