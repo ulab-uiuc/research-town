@@ -221,7 +221,7 @@ def process_paper(
 
 
 def main(
-    args: argparse.Namespace,
+    args: argparse.ArgumentParser,
     input_json: str,
     output_jsonl: str,
     intro_log_jsonl: str = '',
