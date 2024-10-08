@@ -8,7 +8,7 @@ from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
 
-class ProposalWritingEnv(BaseEnv):
+class ProposalWritingwithRAGEnv(BaseEnv):
     def __init__(
         self,
         name: str,
@@ -26,6 +26,7 @@ class ProposalWritingEnv(BaseEnv):
         self.progress_db = progress_db
         self.paper_db = paper_db
         self.agent_manager = agent_manager
+        # self.user_rag = use_rag
 
     @beartype
     def on_enter(self, **context: Any) -> None:
@@ -58,6 +59,7 @@ class ProposalWritingEnv(BaseEnv):
                 contexts=self.contexts,
                 config=self.config,
             )
+
             yield insight, member
             insights.append(insight)
             keywords.extend(keywords)
@@ -77,6 +79,7 @@ class ProposalWritingEnv(BaseEnv):
                 papers=related_papers, insights=insights, config=self.config
             )
             ideas.append(idea)
+
             yield idea, member
 
         # Leader discusses ideas
