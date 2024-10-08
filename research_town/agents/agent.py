@@ -48,11 +48,7 @@ class Agent(object):
         config: Config,
         papers: Optional[List[Paper]] = None,
     ) -> Tuple[str, List[str], Insight]:
-        serialized_papers = (
-            self.serializer.serialize(papers)
-            if papers
-            else 'No related papers available\n'
-        )
+        serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
         summary, keywords, valuable_points, prompt_messages = (
             review_literature_prompting(
@@ -80,11 +76,7 @@ class Agent(object):
         papers: Optional[List[Paper]] = None,
     ) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
-        serialized_papers = (
-            self.serializer.serialize(papers)
-            if papers
-            else 'No related papers available\n'
-        )
+        serialized_papers = self.serializer.serialize(papers)
         idea_content_list, prompt_messages = brainstorm_idea_prompting(
             bio=self.profile.bio,
             insights=serialized_insights,
@@ -129,11 +121,7 @@ class Agent(object):
         self, idea: Idea, config: Config, papers: Optional[List[Paper]] = None
     ) -> Proposal:
         serialized_idea = self.serializer.serialize(idea)
-        serialized_papers = (
-            self.serializer.serialize(papers)
-            if papers
-            else 'No related papers available\n'
-        )
+        serialized_papers = self.serializer.serialize(papers)
 
         write_proposal_strategy = config.param.write_proposal_strategy
         if write_proposal_strategy == 'default':
