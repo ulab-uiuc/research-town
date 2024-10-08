@@ -60,4 +60,3 @@ def run_engine(
 
     finally:
         print('Engine execution completed.')
-        yield None, None

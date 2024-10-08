@@ -130,7 +130,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### timestep *: int*
 
-### *class* research_town.data.MetaReview(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, chair_pk: str | None = None, reviewer_pks: List[str] = [], author_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concerns: str | None = None, decision: bool = False, \*\*extra_data: Any)
+### *class* research_town.data.MetaReview(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, chair_pk: str | None = None, reviewer_pks: List[str] = [], author_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concern: str | None = None, decision: bool = False, \*\*extra_data: Any)
 
 Bases: [`Progress`](#research_town.data.Progress)
 
@@ -140,7 +140,7 @@ Bases: [`Progress`](#research_town.data.Progress)
 
 #### decision *: bool*
 
-#### ethical_concerns *: str | None*
+#### ethical_concern *: str | None*
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -150,7 +150,7 @@ A dictionary of computed field names and their corresponding ComputedFieldInfo o
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'chair_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'decision': FieldInfo(annotation=bool, required=False, default=False), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pks': FieldInfo(annotation=List[str], required=False, default=[]), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'chair_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'decision': FieldInfo(annotation=bool, required=False, default=False), 'ethical_concern': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pks': FieldInfo(annotation=List[str], required=False, default=[]), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -399,11 +399,11 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### rebuttal_pk *: str*
 
-### *class* research_town.data.Review(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, reviewer_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concerns: str | None = None, score: int | None = None, \*\*extra_data: Any)
+### *class* research_town.data.Review(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, reviewer_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concern: str | None = None, score: int | None = None, \*\*extra_data: Any)
 
 Bases: [`Progress`](#research_town.data.Progress)
 
-#### ethical_concerns *: str | None*
+#### ethical_concern *: str | None*
 
 #### model_computed_fields *: ClassVar[dict[str, ComputedFieldInfo]]* *=     *
 
@@ -413,7 +413,7 @@ A dictionary of computed field names and their corresponding ComputedFieldInfo o
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'score': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'ethical_concern': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'score': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -718,7 +718,7 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 Bases: [`ComplexDB`](#research_town.dbs.db_complex.ComplexDB)
 
-### *class* research_town.dbs.MetaReview(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, chair_pk: str | None = None, reviewer_pks: List[str] = [], author_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concerns: str | None = None, decision: bool = False, \*\*extra_data: Any)
+### *class* research_town.dbs.MetaReview(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, chair_pk: str | None = None, reviewer_pks: List[str] = [], author_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concern: str | None = None, decision: bool = False, \*\*extra_data: Any)
 
 Bases: [`Progress`](#research_town.data.Progress)
 
@@ -730,7 +730,7 @@ Bases: [`Progress`](#research_town.data.Progress)
 
 #### decision *: bool*
 
-#### ethical_concerns *: str | None*
+#### ethical_concern *: str | None*
 
 #### eval_score *: List[int] | None*
 
@@ -742,7 +742,7 @@ A dictionary of computed field names and their corresponding ComputedFieldInfo o
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'chair_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'decision': FieldInfo(annotation=bool, required=False, default=False), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pks': FieldInfo(annotation=List[str], required=False, default=[]), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'author_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'chair_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'content': FieldInfo(annotation=str, required=False, default=''), 'decision': FieldInfo(annotation=bool, required=False, default=False), 'ethical_concern': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pks': FieldInfo(annotation=List[str], required=False, default=[]), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].
@@ -1083,13 +1083,13 @@ This replaces Model._\_fields_\_ from Pydantic V1.
 
 #### timestep *: int*
 
-### *class* research_town.dbs.Review(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, reviewer_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concerns: str | None = None, score: int | None = None, \*\*extra_data: Any)
+### *class* research_town.dbs.Review(\*, pk: str = None, project_name: str | None = None, content: str = '', eval_score: List[int] | None = [], proposal_pk: str | None = None, reviewer_pk: str | None = None, summary: str | None = None, strength: str | None = None, weakness: str | None = None, ethical_concern: str | None = None, score: int | None = None, \*\*extra_data: Any)
 
 Bases: [`Progress`](#research_town.data.Progress)
 
 #### content *: str*
 
-#### ethical_concerns *: str | None*
+#### ethical_concern *: str | None*
 
 #### eval_score *: List[int] | None*
 
@@ -1101,7 +1101,7 @@ A dictionary of computed field names and their corresponding ComputedFieldInfo o
 
 Configuration for the model, should be a dictionary conforming to [ConfigDict][pydantic.config.ConfigDict].
 
-#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'ethical_concerns': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'score': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
+#### model_fields *: ClassVar[dict[str, FieldInfo]]* *=   'content': FieldInfo(annotation=str, required=False, default=''), 'ethical_concern': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'eval_score': FieldInfo(annotation=Union[List[int], NoneType], required=False, default=[]), 'pk': FieldInfo(annotation=str, required=False, default_factory= lambda ), 'project_name': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'proposal_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'reviewer_pk': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'score': FieldInfo(annotation=Union[int, NoneType], required=False, default=None), 'strength': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'summary': FieldInfo(annotation=Union[str, NoneType], required=False, default=None), 'weakness': FieldInfo(annotation=Union[str, NoneType], required=False, default=None)  *
 
 Metadata about the fields defined on the model,
 mapping of field names to [FieldInfo][pydantic.fields.FieldInfo].

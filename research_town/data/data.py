@@ -1,5 +1,5 @@
 import uuid
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -7,6 +7,10 @@ from pydantic import BaseModel, ConfigDict, Field
 class Data(BaseModel):
     pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
     project_name: Optional[str] = Field(default=None)
+
+
+class Prompt(Data):
+    messages: Union[List[Dict[str, str]]]
 
 
 class Profile(Data):
@@ -43,6 +47,7 @@ class Paper(Data):
 class Log(Data):
     timestep: int = Field(default=0)
     profile_pk: str
+    prompt_pk: Optional[str] = Field(default=None)
 
 
 class LiteratureReviewLog(Log):
@@ -71,6 +76,7 @@ class MetaReviewWritingLog(Log):
 
 class Progress(Data):
     content: str = Field(default='')
+    prompt_messages: Optional[List[Dict[str, str]]] = Field(default=[])
     eval_score: Optional[List[int]] = Field(default=[])  # evaluation scores
 
 
@@ -98,9 +104,13 @@ class Review(Progress):
     proposal_pk: Optional[str] = Field(default=None)
     reviewer_pk: Optional[str] = Field(default=None)
     summary: Optional[str] = Field(default=None)
+    summary_prompt_messages: Optional[List[Dict[str, str]]] = Field(default=[])
     strength: Optional[str] = Field(default=None)
+    strength_prompt_messages: Optional[List[Dict[str, str]]] = Field(default=[])
     weakness: Optional[str] = Field(default=None)
-    ethical_concerns: Optional[str] = Field(default=None)
+    weakness_prompt_messages: Optional[List[Dict[str, str]]] = Field(default=[])
+    ethical_concern: Optional[str] = Field(default=None)
+    ethical_concern_prompt_messages: Optional[List[Dict[str, str]]] = Field(default=[])
     score: Optional[int] = Field(default=None)
     model_config = ConfigDict(extra='allow')
 
@@ -123,8 +133,12 @@ class MetaReview(Progress):
     reviewer_pks: List[str] = Field(default=[])
     author_pk: Optional[str] = Field(default=None)
     summary: Optional[str] = Field(default=None)
+    summary_prompt_messages: Optional[List[Dict[str, str]]] = Field(default=[])
     strength: Optional[str] = Field(default=None)
+    strength_prompt_messages: Optional[List[Dict[str, str]]] = Field(default=[])
     weakness: Optional[str] = Field(default=None)
-    ethical_concerns: Optional[str] = Field(default=None)
+    weakness_prompt_messages: Optional[List[Dict[str, str]]] = Field(default=[])
+    ethical_concern: Optional[str] = Field(default=None)
+    ethical_concern_prompt_messages: Optional[List[Dict[str, str]]] = Field(default=[])
     decision: bool = Field(default=False)
     model_config = ConfigDict(extra='allow')

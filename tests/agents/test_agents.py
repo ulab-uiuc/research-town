@@ -43,7 +43,6 @@ def test_brainstorm_idea(
     mock_model_prompting: MagicMock,
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
-
     agent = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
@@ -62,7 +61,6 @@ def test_brainstorm_idea(
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_proposal(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
-
     agent = Agent(
         profile=profile_B,
         model_name='gpt-4o-mini',
@@ -81,7 +79,6 @@ def test_write_proposal(mock_model_prompting: MagicMock) -> None:
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_review(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
-
     agent = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
@@ -101,7 +98,6 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_metareview(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
-
     agent_reviewer = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
@@ -132,7 +128,6 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
-
     agent_reviewer = Agent(
         profile=profile_A,
         model_name='gpt-4o-mini',
