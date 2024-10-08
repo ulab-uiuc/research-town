@@ -88,22 +88,10 @@ def process_paper(paper: arxiv.Result) -> Dict[str, Any]:
 
 
 def get_single_agent_proposal_5q(intros: List[str]) -> Optional[str]:
-    """
-    Generates a five-question proposal for future research ideas based on the provided introductions using an LLM.
-
-    Args:
-        intros (List[str]): A list of introduction texts from various sources.
-
-    Returns:
-        Optional[str]: Generated five core research questions as a string, or None if generation fails.
-    """
-    try:
-        # Combine all introduction texts into a single string separated by two newlines for clarity
-        combined_intro = '\n\n'.join(intros)
-        prompt = [
-            {
-                'role': 'user',
-                'content': """You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
+    combined_intro = '\n\n'.join(intros)
+    prompt = [{
+        'role': 'user',
+        'content': """You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
 The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
 
 Here are the five core questions:
@@ -137,7 +125,9 @@ Describe the expected outcomes. MAKE IT CLEAR.
 
 Your goal is to ensure the proposal is clear, concise, and logically structured.
 Now you will be given a set of introduction texts from various sources. Please use this information to generate a comprehensive research proposal based on the introductions, you need to look into what future research directions, topics or methods could be use for the proposal writing.
+
 Here are the introduction texts: {combined_intro}
+
 The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
 
 For example:
@@ -147,21 +137,12 @@ For example:
 [Question 4]: ....
 [Question 5]: ....
 
-Now, let's begin:
-                """,
-            }
-        ]
+Now, let's begin:""",
+    }]
 
-        # Replace 'model_prompting' with your actual function or API call to interact with the language model
-        response = model_prompting('gpt-4o-mini', prompt, mode='TEST')
-
-        if response and len(response) > 0 and len(response[0]) > 0:
-            return response[0]
-        else:
-            print(
-                'Received empty response from model_prompting for get_single_agent_proposal_5q.'
-            )
-            return None
+    try:
+        response = model_prompting('gpt-4o-mini', prompt)
+        return response[0] if response and response[0] else None
     except Exception as e:
-        print(f'Error generating get_single_agent_proposal_5q: {e}')
+        print(f'Error generating proposal: {e}')
         return None
