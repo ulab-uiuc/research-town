@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, List, Literal, Tuple
+from beartype.typing import Dict, List, Literal, Optional, Tuple
 
 from ..configs import Config
 from ..data import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
@@ -44,11 +44,15 @@ class Agent(object):
     @member_required
     def review_literature(
         self,
-        papers: List[Paper],
         contexts: List[str],
         config: Config,
+        papers: Optional[List[Paper]] = None,
     ) -> Tuple[str, List[str], Insight]:
-        serialized_papers = self.serializer.serialize(papers)
+        serialized_papers = (
+            self.serializer.serialize(papers)
+            if papers
+            else 'No related papers available\n'
+        )
         serialized_profile = self.serializer.serialize(self.profile)
         summary, keywords, valuable_points, prompt_messages = (
             review_literature_prompting(
@@ -70,10 +74,17 @@ class Agent(object):
     @beartype
     @member_required
     def brainstorm_idea(
-        self, insights: List[Insight], papers: List[Paper], config: Config
+        self,
+        insights: List[Insight],
+        config: Config,
+        papers: Optional[List[Paper]] = None,
     ) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
-        serialized_papers = self.serializer.serialize(papers)
+        serialized_papers = (
+            self.serializer.serialize(papers)
+            if papers
+            else 'No related papers available\n'
+        )
         idea_content_list, prompt_messages = brainstorm_idea_prompting(
             bio=self.profile.bio,
             insights=serialized_insights,
@@ -115,10 +126,14 @@ class Agent(object):
     @beartype
     @member_required
     def write_proposal(
-        self, idea: Idea, papers: List[Paper], config: Config
+        self, idea: Idea, config: Config, papers: Optional[List[Paper]] = None
     ) -> Proposal:
         serialized_idea = self.serializer.serialize(idea)
-        serialized_papers = self.serializer.serialize(papers)
+        serialized_papers = (
+            self.serializer.serialize(papers)
+            if papers
+            else 'No related papers available\n'
+        )
 
         write_proposal_strategy = config.param.write_proposal_strategy
         if write_proposal_strategy == 'default':

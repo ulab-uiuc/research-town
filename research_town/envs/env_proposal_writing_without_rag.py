@@ -52,7 +52,6 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
         ideas: List[Idea] = []
         for member in self.members:
             summary, keywords, insight = member.review_literature(
-                papers=[],
                 contexts=self.contexts,
                 config=self.config,
             )
@@ -64,9 +63,7 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
         keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
 
         for member in self.members:
-            idea = member.brainstorm_idea(
-                papers=[], insights=insights, config=self.config
-            )
+            idea = member.brainstorm_idea(insights=insights, config=self.config)
             ideas.append(idea)
 
             yield idea, member
@@ -81,7 +78,6 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
 
             proposal = self.leader.write_proposal(
                 idea=summarized_idea,
-                papers=[],
                 config=self.config,
             )
             yield proposal, self.leader
