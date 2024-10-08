@@ -28,7 +28,7 @@ Bases: [`BaseEnv`](#research_town.envs.env_base.BaseEnv)
 
 ## research_town.envs.env_proposal_writing module
 
-### *class* research_town.envs.env_proposal_writing.ProposalWritingEnv(name: str, log_db: [LogDB](research_town.dbs.md#research_town.dbs.db_log.LogDB), progress_db: [ProgressDB](research_town.dbs.md#research_town.dbs.db_progress.ProgressDB), paper_db: [PaperDB](research_town.dbs.md#research_town.dbs.db_paper.PaperDB), config: [Config](research_town.configs.md#research_town.configs.config.Config), agent_manager: [AgentManager](research_town.agents.md#research_town.agents.agent_manager.AgentManager))
+### *class* research_town.envs.env_proposal_writing.ProposalWritingwithRAGEnv(name: str, log_db: [LogDB](research_town.dbs.md#research_town.dbs.db_log.LogDB), progress_db: [ProgressDB](research_town.dbs.md#research_town.dbs.db_progress.ProgressDB), paper_db: [PaperDB](research_town.dbs.md#research_town.dbs.db_paper.PaperDB), config: [Config](research_town.configs.md#research_town.configs.config.Config), agent_manager: [AgentManager](research_town.agents.md#research_town.agents.agent_manager.AgentManager))
 
 Bases: [`BaseEnv`](#research_town.envs.env_base.BaseEnv)
 
@@ -84,7 +84,7 @@ Bases: [`BaseEnv`](#research_town.envs.env_base.BaseEnv)
 
 #### run() → Generator[tuple[[Progress](research_town.dbs.md#research_town.data.Progress), [Agent](research_town.agents.md#research_town.agents.agent.Agent)], None, None]
 
-### *class* research_town.envs.ProposalWritingEnv(name: str, log_db: [LogDB](research_town.dbs.md#research_town.dbs.db_log.LogDB), progress_db: [ProgressDB](research_town.dbs.md#research_town.dbs.db_progress.ProgressDB), paper_db: [PaperDB](research_town.dbs.md#research_town.dbs.db_paper.PaperDB), config: [Config](research_town.configs.md#research_town.configs.config.Config), agent_manager: [AgentManager](research_town.agents.md#research_town.agents.agent_manager.AgentManager))
+### *class* research_town.envs.ProposalWritingwithRAGEnv(name: str, log_db: [LogDB](research_town.dbs.md#research_town.dbs.db_log.LogDB), progress_db: [ProgressDB](research_town.dbs.md#research_town.dbs.db_progress.ProgressDB), paper_db: [PaperDB](research_town.dbs.md#research_town.dbs.db_paper.PaperDB), config: [Config](research_town.configs.md#research_town.configs.config.Config), agent_manager: [AgentManager](research_town.agents.md#research_town.agents.agent_manager.AgentManager))
 
 Bases: [`BaseEnv`](#research_town.envs.env_base.BaseEnv)
 

@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
+from research_town.envs import ProposalWritingwithRAGEnv, ReviewWritingEnv
 from tests.constants.agent_constants import example_agent_manager
 from tests.constants.config_constants import example_config
 from tests.constants.data_constants import (
@@ -52,7 +52,7 @@ def test_proposal_writing_env(
     mock_model_prompting.side_effect = mock_prompting
 
     example_profile_db.reset_role_availability()
-    env = ProposalWritingEnv(
+    env = ProposalWritingwithRAGEnv(
         name='proposal_writing',
         log_db=example_log_db,
         progress_db=example_progress_db,

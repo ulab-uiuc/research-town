@@ -6,7 +6,7 @@ from beartype.typing import List
 from research_town.agents import AgentManager
 from research_town.data import Profile, Proposal
 from research_town.dbs import ProfileDB
-from research_town.envs import ProposalWritingEnv, ReviewWritingEnv
+from research_town.envs import ProposalWritingwithRAGEnv, ReviewWritingEnv
 from tests.constants.config_constants import example_config
 from tests.constants.db_constants import (
     example_log_db,
@@ -55,7 +55,7 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
 
     agent_manager = AgentManager(config=example_config, profile_db=temp_profile_db)
 
-    proposal_writing_env = ProposalWritingEnv(
+    proposal_writing_env = ProposalWritingwithRAGEnv(
         name='proposal_writing',
         paper_db=example_paper_db,
         log_db=example_log_db,
