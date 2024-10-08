@@ -3,7 +3,7 @@ from beartype.typing import Any, Dict, Generator, List, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..data import Idea, Insight, Progress
+from ..data import Idea, Insight, Progress, Prompt
 from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
@@ -43,7 +43,7 @@ class ProposalWritingEnv(BaseEnv):
             return 'start_review', {'proposal': self.proposal, 'leader': self.leader}
 
     @beartype
-    def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
+    def run(self) -> Generator[Tuple[Progress, Agent, Prompt], None, None]:
         # Each member reviews literature
         insights: List[Insight] = []
         keywords: List[str] = []
@@ -53,13 +53,12 @@ class ProposalWritingEnv(BaseEnv):
                 query=';'.join(self.contexts),
                 num=2,
             )
-            summary, keywords, insight, log_entry = member.review_literature(
+            summary, keywords, insight, prompt = member.review_literature(
                 papers=related_papers,
                 contexts=self.contexts,
                 config=self.config,
             )
-            self.log_db.add(log_entry)
-            yield insight, member
+            yield insight, member, prompt
             insights.append(insight)
             keywords.extend(keywords)
 
@@ -74,18 +73,17 @@ class ProposalWritingEnv(BaseEnv):
                 else keywords[0],
                 num=7,
             )
-            idea, brainstorm_log_entry = member.brainstorm_idea(
+            idea, prompt = member.brainstorm_idea(
                 papers=related_papers, insights=insights, config=self.config
             )
             ideas.append(idea)
-            self.log_db.add(brainstorm_log_entry)
-            yield idea, member
+            yield idea, member, prompt
 
         # Leader discusses ideas
-        summarized_idea = self.leader.discuss_idea(
+        summarized_idea, prompt = self.leader.discuss_idea(
             ideas=ideas, contexts=self.contexts, config=self.config
         )
-        yield summarized_idea, self.leader
+        yield summarized_idea, self.leader, prompt
 
         # Write Proposal
         query = summarized_idea.content or self.leader.profile.bio
@@ -96,12 +94,11 @@ class ProposalWritingEnv(BaseEnv):
             else None,
             num=2,
         )
-        proposal, proposal_log_entry = self.leader.write_proposal(
+        proposal, prompt = self.leader.write_proposal(
             idea=summarized_idea,
             papers=related_papers,
             config=self.config,
         )
-        self.log_db.add(proposal_log_entry)
-        yield proposal, self.leader
+        yield proposal, self.leader, prompt
 
         self.proposal = proposal  # Store the proposal for use in on_exit

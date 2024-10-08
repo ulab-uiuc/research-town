@@ -48,7 +48,7 @@ def background_task(
     generator = run_engine(url)
     try:
         # Generate and send results to the parent process
-        for progress, agent in generator:
+        for progress, agent, prompt in generator:
             child_conn.send((progress, agent))
 
         while True:

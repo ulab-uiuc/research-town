@@ -3,7 +3,7 @@ from beartype.typing import Any, Dict, Generator, List, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..data import Progress, Rebuttal, Review
+from ..data import Progress, Prompt, Rebuttal, Review
 from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
@@ -49,38 +49,35 @@ class ReviewWritingEnv(BaseEnv):
             }
 
     @beartype
-    def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
+    def run(self) -> Generator[Tuple[Progress, Agent, Prompt], None, None]:
         # Review Writing
         self.reviews: List[Review] = []
         for reviewer in self.reviewers:
-            review, review_log_entry = reviewer.write_review(
+            review, prompt = reviewer.write_review(
                 proposal=self.proposal,
                 config=self.config,
             )
             self.reviews.append(review)
-            self.log_db.add(review_log_entry)
-            yield review, reviewer
+            yield review, reviewer, prompt
 
         # Rebuttal Submitting
         self.rebuttals: List[Rebuttal] = []
         for review in self.reviews:
-            rebuttal, rebuttal_log_entry = self.leader.write_rebuttal(
+            rebuttal, prompt = self.leader.write_rebuttal(
                 proposal=self.proposal,
                 review=review,
                 config=self.config,
             )
-            self.log_db.add(rebuttal_log_entry)
             self.rebuttals.append(rebuttal)
-            yield rebuttal, self.leader
+            yield rebuttal, self.leader, prompt
 
         # Paper Meta Reviewing
-        metareview, metareview_log_entry = self.chair.write_metareview(
+        metareview, prompt = self.chair.write_metareview(
             proposal=self.proposal,
             reviews=self.reviews,
             config=self.config,
         )
-        self.log_db.add(metareview_log_entry)
-        yield metareview, self.chair
+        yield metareview, self.chair, prompt
 
         self.metareview = metareview
 

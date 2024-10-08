@@ -75,7 +75,7 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
     )
     run_result = proposal_writing_env.run()
     if run_result is not None:
-        for progress, agent in run_result:
+        for progress, agent, prompt in run_result:
             pass
     exit_status, exit_dict = proposal_writing_env.on_exit()
     proposal = exit_dict['proposal']
@@ -115,7 +115,7 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
     )
     run_result = review_writing_env.run()
     if run_result is not None:
-        for progress, agent in run_result:
+        for progress, agent, prompt in run_result:
             pass
     exit_status, _ = review_writing_env.on_exit()
 

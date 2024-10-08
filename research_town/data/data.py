@@ -9,12 +9,7 @@ class Data(BaseModel):
     project_name: Optional[str] = Field(default=None)
 
 
-class Prompt(BaseModel):
-    pk: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    messages: Optional[Any] = Field(default=None)
-
-
-class OpenAIPrompt(Prompt):
+class Prompt(Data):
     messages: Union[List[Dict[str, str]], List[List[Dict[str, str]]]]
 
 

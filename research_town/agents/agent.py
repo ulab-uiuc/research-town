@@ -1,25 +1,17 @@
-import uuid
-
 from beartype import beartype
 from beartype.typing import Dict, List, Literal, Tuple
 
 from ..configs import Config
 from ..data import (
     Idea,
-    IdeaBrainstormLog,
     Insight,
-    LiteratureReviewLog,
     MetaReview,
-    MetaReviewWritingLog,
-    OpenAIPrompt,
     Paper,
     Profile,
+    Prompt,
     Proposal,
-    ProposalWritingLog,
     Rebuttal,
-    RebuttalWritingLog,
     Review,
-    ReviewWritingLog,
 )
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
@@ -65,39 +57,35 @@ class Agent(object):
         papers: List[Paper],
         contexts: List[str],
         config: Config,
-    ) -> Tuple[str, List[str], Insight, LiteratureReviewLog]:
+    ) -> Tuple[str, List[str], Insight, Prompt]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
-        summary, keywords, valuable_points, prompt = review_literature_prompting(
-            profile=serialized_profile,
-            papers=serialized_papers,
-            contexts=contexts,
-            model_name=self.model_name,
-            prompt_template=config.agent_prompt_template.review_literature,
-            return_num=config.param.return_num,
-            max_token_num=config.param.max_token_num,
-            temperature=config.param.temperature,
-            top_p=config.param.top_p,
-            stream=config.param.stream,
+        summary, keywords, valuable_points, prompt_messages = (
+            review_literature_prompting(
+                profile=serialized_profile,
+                papers=serialized_papers,
+                contexts=contexts,
+                model_name=self.model_name,
+                prompt_template=config.agent_prompt_template.review_literature,
+                return_num=config.param.return_num,
+                max_token_num=config.param.max_token_num,
+                temperature=config.param.temperature,
+                top_p=config.param.top_p,
+                stream=config.param.stream,
+            )
         )
         insight = Insight(content=valuable_points)
-        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
-        log_entry = LiteratureReviewLog(
-            profile_pk=self.profile.pk,
-            insight_pk=insight.pk,
-            prompt_pk=formatted_prompt.pk,
-        )
-
-        return summary, keywords, insight, log_entry
+        prompt = Prompt(messages=prompt_messages)
+        return summary, keywords, insight, prompt
 
     @beartype
     @member_required
     def brainstorm_idea(
         self, insights: List[Insight], papers: List[Paper], config: Config
-    ) -> Tuple[Idea, IdeaBrainstormLog]:
+    ) -> Tuple[Idea, Prompt]:
         serialized_insights = self.serializer.serialize(insights)
         serialized_papers = self.serializer.serialize(papers)
-        idea_content_list, prompt = brainstorm_idea_prompting(
+        idea_content_list, prompt_messages = brainstorm_idea_prompting(
             bio=self.profile.bio,
             insights=serialized_insights,
             papers=serialized_papers,
@@ -111,20 +99,16 @@ class Agent(object):
         )
         idea_content = idea_content_list[0]
         idea = Idea(content=idea_content)
-        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
-        log_entry = IdeaBrainstormLog(
-            profile_pk=self.profile.pk, idea_pk=idea.pk, prompt_pk=formatted_prompt.pk
-        )
-
-        return idea, log_entry
+        prompt = Prompt(messages=prompt_messages)
+        return idea, prompt
 
     @beartype
     @member_required
     def discuss_idea(
         self, ideas: List[Idea], contexts: List[str], config: Config
-    ) -> Idea:
+    ) -> Tuple[Idea, Prompt]:
         serialized_ideas = self.serializer.serialize(ideas)
-        idea_summarized_list, prompt = discuss_idea_prompting(
+        idea_summarized_list, prompt_messages = discuss_idea_prompting(
             bio=self.profile.bio,
             contexts=contexts,
             ideas=serialized_ideas,
@@ -137,13 +121,15 @@ class Agent(object):
             stream=config.param.stream,
         )
         idea_summarized = idea_summarized_list[0]
-        return Idea(content=idea_summarized)
+        idea = Idea(content=idea_summarized)
+        prompt = Prompt(messages=prompt_messages)
+        return idea, prompt
 
     @beartype
     @member_required
     def write_proposal(
         self, idea: Idea, papers: List[Paper], config: Config
-    ) -> Tuple[Proposal, ProposalWritingLog]:
+    ) -> Tuple[Proposal, Prompt]:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
 
@@ -160,7 +146,7 @@ class Agent(object):
             print('write_proposal_strategy not supported, will use default')
             prompt_template = config.agent_prompt_template.write_proposal
 
-        proposal, q5_result, prompt = write_proposal_prompting(
+        proposal, q5_result, prompt_messages = write_proposal_prompting(
             idea=serialized_idea,
             papers=serialized_papers,
             model_name=self.model_name,
@@ -180,23 +166,15 @@ class Agent(object):
             q4=q5_result.get('q4', ''),
             q5=q5_result.get('q5', ''),
         )
-        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
-        log_entry = ProposalWritingLog(
-            profile_pk=self.profile.pk,
-            proposal_pk=proposal_obj.pk,
-            prompt_pk=formatted_prompt.pk,
-        )
-
-        return proposal_obj, log_entry
+        prompt = Prompt(messages=prompt_messages)
+        return proposal_obj, prompt
 
     @beartype
     @reviewer_required
-    def write_review(
-        self, proposal: Proposal, config: Config
-    ) -> Tuple[Review, ReviewWritingLog]:
+    def write_review(self, proposal: Proposal, config: Config) -> Tuple[Review, Prompt]:
         serialized_proposal = self.serializer.serialize(proposal)
 
-        summary, strength, weakness, ethical_concerns, score, prompt = (
+        summary, strength, weakness, ethical_concerns, score, prompt_messages = (
             write_review_prompting(
                 proposal=serialized_proposal,
                 model_name=self.model_name,
@@ -221,14 +199,8 @@ class Agent(object):
             ethical_concerns=ethical_concerns,
             score=score,
         )
-        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
-        log_entry = ReviewWritingLog(
-            profile_pk=self.profile.pk,
-            review_pk=review_obj.pk,
-            prompt_pk=formatted_prompt.pk,
-        )
-
-        return review_obj, log_entry
+        prompt = Prompt(messages=prompt_messages)
+        return review_obj, prompt
 
     @beartype
     @chair_required
@@ -237,11 +209,11 @@ class Agent(object):
         proposal: Proposal,
         reviews: List[Review],
         config: Config,
-    ) -> Tuple[MetaReview, MetaReviewWritingLog]:
+    ) -> Tuple[MetaReview, Prompt]:
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_reviews = self.serializer.serialize(reviews)
 
-        summary, strength, weakness, ethical_concerns, decision, prompt = (
+        summary, strength, weakness, ethical_concerns, decision, prompt_messages = (
             write_metareview_prompting(
                 proposal=serialized_proposal,
                 reviews=serialized_reviews,
@@ -270,14 +242,8 @@ class Agent(object):
             ethical_concerns=ethical_concerns,
             decision=decision,
         )
-        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
-        log_entry = MetaReviewWritingLog(
-            profile_pk=self.profile.pk,
-            metareview_pk=metareview_obj.pk,
-            prompt_pk=formatted_prompt.pk,
-        )
-
-        return metareview_obj, log_entry
+        prompt = Prompt(messages=prompt_messages)
+        return metareview_obj, prompt
 
     @beartype
     @leader_required
@@ -286,11 +252,11 @@ class Agent(object):
         proposal: Proposal,
         review: Review,
         config: Config,
-    ) -> Tuple[Rebuttal, RebuttalWritingLog]:
+    ) -> Tuple[Rebuttal, Prompt]:
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_review = self.serializer.serialize(review)
 
-        rebuttal_content, q5_result, prompt = write_rebuttal_prompting(
+        rebuttal_content, q5_result, prompt_messages = write_rebuttal_prompting(
             proposal=serialized_proposal,
             review=serialized_review,
             model_name=self.model_name,
@@ -313,11 +279,5 @@ class Agent(object):
             q4=q5_result.get('q4', ''),
             q5=q5_result.get('q5', ''),
         )
-        formatted_prompt = OpenAIPrompt(pk=str(uuid.uuid4()), messages=prompt)
-        log_entry = RebuttalWritingLog(
-            profile_pk=self.profile.pk,
-            rebuttal_pk=rebuttal_obj.pk,
-            prompt_pk=formatted_prompt.pk,
-        )
-
-        return rebuttal_obj, log_entry
+        prompt = Prompt(messages=prompt_messages)
+        return rebuttal_obj, prompt

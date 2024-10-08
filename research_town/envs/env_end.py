@@ -2,7 +2,7 @@ from beartype.typing import Any, Dict, Generator, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..data import Progress
+from ..data import Progress, Prompt
 from .env_base import BaseEnv
 
 
@@ -22,7 +22,7 @@ class EndEnv(BaseEnv):
     def on_enter(self, **context: Any) -> None:
         return
 
-    def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
+    def run(self) -> Generator[Tuple[Progress, Agent, Prompt], None, None]:
         if False:
             yield
 

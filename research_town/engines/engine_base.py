@@ -12,6 +12,7 @@ from ..data.data import (
     MetaReview,
     MetaReviewWritingLog,
     Progress,
+    Prompt,
     Proposal,
     ProposalWritingLog,
     Rebuttal,
@@ -81,8 +82,8 @@ class BaseEngine:
         while self.curr_env.name != 'end':
             run_result = self.curr_env.run()
             if run_result is not None:
-                for progress, agent in run_result:
-                    self.record(progress, agent)
+                for progress, agent, prompt in run_result:
+                    self.record(progress, agent, prompt)
                     self.time_step += 1
             self.transition()
 
@@ -93,7 +94,7 @@ class BaseEngine:
         self.progress_db.save_to_json(save_file_path, with_embed=with_embed)
         self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
 
-    def record(self, progress: Progress, agent: Agent) -> None:
+    def record(self, progress: Progress, agent: Agent, prompt: Prompt) -> None:
         log_map: Dict[Type[Progress], Type[Log]] = {
             Insight: LiteratureReviewLog,
             Idea: IdeaBrainstormLog,
@@ -109,6 +110,7 @@ class BaseEngine:
         log = log_class(
             time_step=self.time_step,
             profile_pk=agent.profile.pk,
+            prompt_pk=prompt.pk,
             **{f'{progress.__class__.__name__.lower()}_pk': progress.pk},
         )
         self.progress_db.add(progress)

@@ -3,7 +3,7 @@ from typing import Generator, Optional, Tuple
 
 from research_town.agents import Agent
 from research_town.configs import Config
-from research_town.data import Progress
+from research_town.data import Progress, Prompt
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_paper_introduction
@@ -11,11 +11,13 @@ from research_town.utils.paper_collector import get_paper_introduction
 
 def run_engine(
     url: str,
-) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
+) -> Generator[
+    Tuple[Optional[Progress], Optional[Agent], Optional[Prompt]], None, None
+]:
     try:
         intro = get_paper_introduction(url)
         if not intro:
-            yield None, None
+            yield None, None, None
             return
 
         config_file_path = '../configs'
@@ -50,8 +52,8 @@ def run_engine(
             run_result = engine.curr_env.run()
 
             if run_result:
-                for progress, agent in run_result:
-                    yield progress, agent
+                for progress, agent, prompt in run_result:
+                    yield progress, agent, prompt
                     engine.time_step += 1
 
             engine.transition()
