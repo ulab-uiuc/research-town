@@ -3,7 +3,7 @@ from beartype.typing import Any, Dict, Generator, List, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..data import Progress, Rebuttal, Review
+from ..data import MetaReview, Progress, Rebuttal, Review
 from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
@@ -32,7 +32,7 @@ class ReviewWritingEnv(BaseEnv):
         self,
         **context: Any,
     ) -> None:
-        self.proposal = context['proposal']
+        self.proposals = context['proposals']
         self.leader = context['leader']
         self.chair = self.agent_manager.sample_chair()
         self.reviewers = self.agent_manager.sample_reviewers()
@@ -44,41 +44,42 @@ class ReviewWritingEnv(BaseEnv):
             return 'error', {}
         else:
             return 'proposal_accept', {
-                'metareview': self.metareview,
+                'metareviews': self.metareviews,
                 'leader': self.leader,
             }
 
     @beartype
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
-        # Review Writing
-        self.reviews: List[Review] = []
-        for reviewer in self.reviewers:
-            review = reviewer.write_review(
-                proposal=self.proposal,
+        self.metareviews: List[MetaReview] = []
+        for proposal in self.proposals:
+            # Review Writing
+            self.reviews: List[Review] = []
+            for reviewer in self.reviewers:
+                review = reviewer.write_review(
+                    proposal=proposal,
+                    config=self.config,
+                )
+                self.reviews.append(review)
+                yield review, reviewer
+
+            # Rebuttal Submitting
+            self.rebuttals: List[Rebuttal] = []
+            for review in self.reviews:
+                rebuttal = self.leader.write_rebuttal(
+                    proposal=proposal,
+                    review=review,
+                    config=self.config,
+                )
+                self.rebuttals.append(rebuttal)
+                yield rebuttal, self.leader
+
+            # Paper Meta Reviewing
+            metareview = self.chair.write_metareview(
+                proposal=proposal,
+                reviews=self.reviews,
                 config=self.config,
             )
-            self.reviews.append(review)
-            yield review, reviewer
-
-        # Rebuttal Submitting
-        self.rebuttals: List[Rebuttal] = []
-        for review in self.reviews:
-            rebuttal = self.leader.write_rebuttal(
-                proposal=self.proposal,
-                review=review,
-                config=self.config,
-            )
-            self.rebuttals.append(rebuttal)
-            yield rebuttal, self.leader
-
-        # Paper Meta Reviewing
-        metareview = self.chair.write_metareview(
-            proposal=self.proposal,
-            reviews=self.reviews,
-            config=self.config,
-        )
-        yield metareview, self.chair
-
-        self.metareview = metareview
+            self.metareviews.append(metareview)
+            yield metareview, self.chair
 
         return None

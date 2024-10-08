@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, List, Literal, Tuple
+from beartype.typing import Dict, List, Literal, Optional, Tuple
 
 from ..configs import Config
 from ..data import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
@@ -44,9 +44,9 @@ class Agent(object):
     @member_required
     def review_literature(
         self,
-        papers: List[Paper],
         contexts: List[str],
         config: Config,
+        papers: Optional[List[Paper]] = None,
     ) -> Tuple[str, List[str], Insight]:
         serialized_papers = self.serializer.serialize(papers)
         serialized_profile = self.serializer.serialize(self.profile)
@@ -70,7 +70,10 @@ class Agent(object):
     @beartype
     @member_required
     def brainstorm_idea(
-        self, insights: List[Insight], papers: List[Paper], config: Config
+        self,
+        insights: List[Insight],
+        config: Config,
+        papers: Optional[List[Paper]] = None,
     ) -> Idea:
         serialized_insights = self.serializer.serialize(insights)
         serialized_papers = self.serializer.serialize(papers)
@@ -115,7 +118,7 @@ class Agent(object):
     @beartype
     @member_required
     def write_proposal(
-        self, idea: Idea, papers: List[Paper], config: Config
+        self, idea: Idea, config: Config, papers: Optional[List[Paper]] = None
     ) -> Proposal:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)

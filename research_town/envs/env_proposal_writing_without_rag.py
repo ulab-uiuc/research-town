@@ -5,6 +5,7 @@ from ..agents import Agent, AgentManager
 from ..configs import Config
 from ..data import Idea, Insight, Progress
 from ..dbs import LogDB, PaperDB, ProgressDB
+from ..utils.sampler import sample_ideas
 from .env_base import BaseEnv
 
 
@@ -41,7 +42,7 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
         if self.env_run_num > self.config.param.max_env_run_num:
             return 'error', {}
         else:
-            return 'start_review', {'proposal': self.proposal, 'leader': self.leader}
+            return 'start_review', {'proposals': self.proposals, 'leader': self.leader}
 
     @beartype
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
@@ -51,7 +52,6 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
         ideas: List[Idea] = []
         for member in self.members:
             summary, keywords, insight = member.review_literature(
-                papers=[],
                 contexts=self.contexts,
                 config=self.config,
             )
@@ -63,25 +63,22 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
         keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
 
         for member in self.members:
-            idea = member.brainstorm_idea(
-                papers=[], insights=insights, config=self.config
-            )
+            idea = member.brainstorm_idea(insights=insights, config=self.config)
             ideas.append(idea)
 
             yield idea, member
 
-        # Leader discusses ideas
-        summarized_idea = self.leader.discuss_idea(
-            ideas=ideas, contexts=self.contexts, config=self.config
-        )
-        yield summarized_idea, self.leader
+        self.proposals = []
+        idea_combos = sample_ideas(ideas, self.config.param.proposal_num)
+        for idea_combo in idea_combos:
+            summarized_idea = self.leader.discuss_idea(
+                ideas=idea_combo, contexts=self.contexts, config=self.config
+            )
+            yield summarized_idea, self.leader
 
-        # Write Proposal
-        proposal = self.leader.write_proposal(
-            idea=summarized_idea,
-            papers=[],
-            config=self.config,
-        )
-        yield proposal, self.leader
-
-        self.proposal = proposal  # Store the proposal for use in on_exit
+            proposal = self.leader.write_proposal(
+                idea=summarized_idea,
+                config=self.config,
+            )
+            yield proposal, self.leader
+            self.proposals.append(proposal)

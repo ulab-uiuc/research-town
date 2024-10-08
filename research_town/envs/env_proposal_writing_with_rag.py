@@ -5,6 +5,7 @@ from ..agents import Agent, AgentManager
 from ..configs import Config
 from ..data import Idea, Insight, Progress
 from ..dbs import LogDB, PaperDB, ProgressDB
+from ..utils.sampler import sample_ideas
 from .env_base import BaseEnv
 
 
@@ -41,7 +42,7 @@ class ProposalWritingwithRAGEnv(BaseEnv):
         if self.env_run_num > self.config.param.max_env_run_num:
             return 'error', {}
         else:
-            return 'start_review', {'proposal': self.proposal, 'leader': self.leader}
+            return 'start_review', {'proposals': self.proposals, 'leader': self.leader}
 
     @beartype
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
@@ -82,26 +83,26 @@ class ProposalWritingwithRAGEnv(BaseEnv):
 
             yield idea, member
 
-        # Leader discusses ideas
-        summarized_idea = self.leader.discuss_idea(
-            ideas=ideas, contexts=self.contexts, config=self.config
-        )
-        yield summarized_idea, self.leader
+        self.proposals = []
+        idea_combos = sample_ideas(ideas, self.config.param.proposal_num)
+        for idea_combo in idea_combos:
+            summarized_idea = self.leader.discuss_idea(
+                ideas=idea_combo, contexts=self.contexts, config=self.config
+            )
+            yield summarized_idea, self.leader
 
-        # Write Proposal
-        query = summarized_idea.content or self.leader.profile.bio
-        related_papers = self.paper_db.search_papers(
-            query=query,
-            domain=self.leader.profile.domain[0]
-            if self.leader.profile.domain
-            else None,
-            num=2,
-        )
-        proposal = self.leader.write_proposal(
-            idea=summarized_idea,
-            papers=related_papers,
-            config=self.config,
-        )
-        yield proposal, self.leader
-
-        self.proposal = proposal  # Store the proposal for use in on_exit
+            query = summarized_idea.content or self.leader.profile.bio
+            related_papers = self.paper_db.search_papers(
+                query=query,
+                domain=self.leader.profile.domain[0]
+                if self.leader.profile.domain
+                else None,
+                num=2,
+            )
+            proposal = self.leader.write_proposal(
+                idea=summarized_idea,
+                papers=related_papers,
+                config=self.config,
+            )
+            yield proposal, self.leader
+            self.proposals.append(proposal)

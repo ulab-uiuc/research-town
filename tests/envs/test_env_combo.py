@@ -78,10 +78,11 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
         for progress, agent in run_result:
             pass
     exit_status, exit_dict = proposal_writing_env.on_exit()
-    proposal = exit_dict['proposal']
+    proposals = exit_dict['proposals']
 
-    assert isinstance(proposal, Proposal)
-    assert proposal.content == 'Paper abstract1'
+    for proposal in proposals:
+        assert isinstance(proposal, Proposal)
+        assert proposal.content == 'Paper abstract1'
 
     review_writing_agent_list: List[str] = [
         'Jiaxuan You',
@@ -110,7 +111,7 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
     )
     review_writing_env.on_enter(
         time_step=0,
-        proposal=proposal,
+        proposals=proposals,
         leader=leader,
     )
     run_result = review_writing_env.run()
@@ -121,7 +122,7 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
 
     assert exit_status == 'proposal_accept'
 
-    metareview = review_writing_env.metareview
-    assert metareview is not None
+    metareviews = review_writing_env.metareviews
+    assert metareviews is not None
 
     assert len(mock_client_instance.results.return_value) == 2

@@ -19,17 +19,17 @@ from .string_mapper import (
 @beartype
 def review_literature_prompting(
     profile: Dict[str, str],
-    papers: List[Dict[str, str]],
     contexts: List[str],
     model_name: str,
     prompt_template: Dict[str, Union[str, List[str]]],
+    papers: Optional[List[Dict[str, str]]] = None,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
     top_p: Optional[float] = None,
     stream: Optional[bool] = None,
 ) -> Tuple[str, List[str], str, list[dict[str, str]]]:
-    papers_str = map_paper_list_to_str(papers)
+    papers_str = map_paper_list_to_str(papers) if papers else 'No papers provided.\n'
     template_input = {
         'bio': profile['bio'],
         'contexts': contexts,
@@ -71,9 +71,9 @@ def review_literature_prompting(
 def brainstorm_idea_prompting(
     bio: str,
     insights: List[Dict[str, str]],
-    papers: List[Dict[str, str]],
     model_name: str,
     prompt_template: Dict[str, Union[str, List[str]]],
+    papers: Optional[List[Dict[str, str]]] = None,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
@@ -81,7 +81,7 @@ def brainstorm_idea_prompting(
     stream: Optional[bool] = None,
 ) -> Tuple[List[str], List[Dict[str, str]]]:
     insights_str = map_insight_list_to_str(insights)
-    papers_str = map_paper_list_to_str(papers)
+    papers_str = map_paper_list_to_str(papers) if papers else 'No papers provided.\n'
     template_input = {'bio': bio, 'insights': insights_str, 'papers': papers_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
     return model_prompting(
@@ -126,9 +126,9 @@ def discuss_idea_prompting(
 @beartype
 def write_proposal_prompting(
     idea: Dict[str, str],
-    papers: List[Dict[str, str]],
     model_name: str,
     prompt_template: Dict[str, Union[str, List[str]]],
+    papers: Optional[List[Dict[str, str]]] = None,
     return_num: Optional[int] = 1,
     max_token_num: Optional[int] = 512,
     temperature: Optional[float] = 0.0,
@@ -136,7 +136,7 @@ def write_proposal_prompting(
     stream: Optional[bool] = None,
 ) -> Tuple[str, Dict[str, str], List[Dict[str, str]]]:
     idea_str = map_idea_to_str(idea)
-    papers_str = map_paper_list_to_str(papers)
+    papers_str = map_paper_list_to_str(papers) if papers else 'No papers provided.\n'
     template_input = {'idea': idea_str, 'papers': papers_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
 
