@@ -5,7 +5,6 @@ def openai_format_prompt_construct(
     template: Dict[str, Union[str, List[str]]], input_data: Dict[str, Any]
 ) -> List[Dict[str, str]]:
     messages = []
-
     if 'sys_prompt' in template:
         sys_prompt = template['sys_prompt']
         assert isinstance(sys_prompt, str)

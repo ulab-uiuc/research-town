@@ -59,5 +59,4 @@ def run_engine(
         print(f'Error occurred during engine execution: {e}')
 
     finally:
-        print('Engine execution completed.')
-        yield None, None
+        ('Engine execution completed.')
