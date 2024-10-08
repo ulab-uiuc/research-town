@@ -87,7 +87,7 @@ def process_paper(paper: arxiv.Result) -> Dict[str, Any]:
     }
 
 
-def single_agent_proposal_writing(intros: List[str]) -> Optional[str]:
+def single_agent_proposal_writing(intros: List[str], model:str="gpt-4o-mini") -> Optional[str]:
     combined_intro = '\n\n'.join(intros)
     prompt = [{
         'role': 'user',
@@ -141,7 +141,7 @@ Now, let's begin:"""
     }]
 
     try:
-        response = model_prompting('gpt-4o-mini', prompt)
+        response = model_prompting(model, prompt)
         return response[0] if response and response[0] else None
     except Exception as e:
         print(f'Error generating proposal: {e}')
