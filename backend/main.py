@@ -2,7 +2,7 @@ import asyncio
 import json
 import multiprocessing
 import uuid
-from typing import AsyncGenerator, Generator, Optional, Tuple
+from typing import AsyncGenerator, Generator, List, Optional, Tuple, Union
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,17 +10,17 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from generator_func import run_engine
 
 from research_town.agents import Agent
-from research_town.data import (
-    Idea,
-    Insight,
-    MetaReview,
-    Progress,
-    Proposal,
-    Rebuttal,
-    Review,
-)
+from research_town.data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 
 app = FastAPI()
+ProgressList = Union[
+    List[Insight],
+    List[Idea],
+    List[Proposal],
+    List[Review],
+    List[Rebuttal],
+    List[MetaReview],
+]
 
 # Enable CORS for all origins, credentials, methods, and headers
 app.add_middleware(
@@ -58,13 +58,13 @@ def background_task(
 
 
 def generator_wrapper(
-    result: Tuple[Optional[Progress], Optional[Agent]],
-) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
+    result: Tuple[Optional[ProgressList], Optional[Agent]],
+) -> Generator[Tuple[Optional[ProgressList], Optional[Agent]], None, None]:
     yield result
 
 
 def format_response(
-    generator: Generator[Tuple[Optional[Progress], Optional[Agent]], None, None],
+    generator: Generator[Tuple[Optional[ProgressList], Optional[Agent]], None, None],
 ) -> Generator[str, None, None]:
     for progress, agent in generator:
         item = {}
@@ -138,7 +138,7 @@ def format_response(
 
 
 @app.post('/process')  # type: ignore
-async def process_url(request: Request) -> StreamingResponse:
+async def process_url(request: Request) -> StreamingResponse | JSONResponse:
     # Get URL from the request body
     data = await request.json()
     url = data.get('url')

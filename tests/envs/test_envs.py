@@ -28,7 +28,7 @@ def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
     )
     leader = example_agent_manager.create_agent(profile=profile_A, role='leader')
     env.on_enter(
-        proposal=research_proposal_A,
+        proposal=[research_proposal_A],
         leader=leader,
     )
     run_result = env.run()

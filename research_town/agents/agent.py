@@ -109,7 +109,10 @@ class Agent(object):
     @beartype
     @member_required
     def write_proposal(
-        self, idea: Idea, papers: List[Paper], config: Config
+        self,
+        idea: Idea,
+        papers: List[Paper],
+        config: Config,
     ) -> Proposal:
         serialized_idea = self.serializer.serialize(idea)
         serialized_papers = self.serializer.serialize(papers)
@@ -149,105 +152,122 @@ class Agent(object):
 
     @beartype
     @reviewer_required
-    def write_review(self, proposal: Proposal, config: Config) -> Review:
-        serialized_proposal = self.serializer.serialize(proposal)
+    def write_review(self, proposal: List[Proposal], config: Config) -> List[Review]:
+        reviews = []
+        for prop in proposal:
+            serialized_proposal = self.serializer.serialize(prop)
 
-        summary, strength, weakness, ethical_concerns, score = write_review_prompting(
-            proposal=serialized_proposal,
-            model_name=self.model_name,
-            summary_prompt_template=config.agent_prompt_template.write_review_summary,
-            strength_prompt_template=config.agent_prompt_template.write_review_strength,
-            weakness_prompt_template=config.agent_prompt_template.write_review_weakness,
-            ethical_prompt_template=config.agent_prompt_template.write_review_ethical,
-            score_prompt_template=config.agent_prompt_template.write_review_score,
-            return_num=config.param.return_num,
-            max_token_num=config.param.max_token_num,
-            temperature=config.param.temperature,
-            top_p=config.param.top_p,
-            stream=config.param.stream,
-        )
-        return Review(
-            proposal_pk=proposal.pk,
-            reviewer_pk=self.profile.pk,
-            summary=summary,
-            strength=strength,
-            weakness=weakness,
-            ethical_concerns=ethical_concerns,
-            score=score,
-        )
+            summary, strength, weakness, ethical_concerns, score = (
+                write_review_prompting(
+                    proposal=serialized_proposal,
+                    model_name=self.model_name,
+                    summary_prompt_template=config.agent_prompt_template.write_review_summary,
+                    strength_prompt_template=config.agent_prompt_template.write_review_strength,
+                    weakness_prompt_template=config.agent_prompt_template.write_review_weakness,
+                    ethical_prompt_template=config.agent_prompt_template.write_review_ethical,
+                    score_prompt_template=config.agent_prompt_template.write_review_score,
+                    return_num=config.param.return_num,
+                    max_token_num=config.param.max_token_num,
+                    temperature=config.param.temperature,
+                    top_p=config.param.top_p,
+                    stream=config.param.stream,
+                )
+            )
+            reviews.append(
+                Review(
+                    proposal_pk=prop.pk,
+                    reviewer_pk=self.profile.pk,
+                    summary=summary,
+                    strength=strength,
+                    weakness=weakness,
+                    ethical_concerns=ethical_concerns,
+                    score=score,
+                )
+            )
+        return reviews
 
     @beartype
     @chair_required
     def write_metareview(
         self,
-        proposal: Proposal,
-        reviews: List[Review],
+        proposal: List[Proposal],
+        reviews: List[List[Review]],
         config: Config,
-    ) -> MetaReview:
-        serialized_proposal = self.serializer.serialize(proposal)
-        serialized_reviews = self.serializer.serialize(reviews)
+    ) -> List[MetaReview]:
+        metareviews = []
+        for prop, review in zip(proposal, reviews):
+            serialized_proposal = self.serializer.serialize(prop)
+            serialized_reviews = self.serializer.serialize(review)
 
-        summary, strength, weakness, ethical_concerns, decision = (
-            write_metareview_prompting(
+            summary, strength, weakness, ethical_concerns, decision = (
+                write_metareview_prompting(
+                    proposal=serialized_proposal,
+                    reviews=serialized_reviews,
+                    model_name=self.model_name,
+                    summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
+                    strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
+                    weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
+                    ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
+                    decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
+                    return_num=config.param.return_num,
+                    max_token_num=config.param.max_token_num,
+                    temperature=config.param.temperature,
+                    top_p=config.param.top_p,
+                    stream=config.param.stream,
+                )
+            )
+
+            metareviews.append(
+                MetaReview(
+                    proposal_pk=prop.pk,
+                    chair_pk=self.profile.pk,
+                    reviewer_pks=[rev.reviewer_pk for rev in review],
+                    author_pk=self.profile.pk,
+                    summary=summary,
+                    strength=strength,
+                    weakness=weakness,
+                    ethical_concerns=ethical_concerns,
+                    decision=decision,
+                )
+            )
+        return metareviews
+
+    @beartype
+    @leader_required
+    def write_rebuttal(
+        self,
+        proposal: List[Proposal],
+        review: List[Review],
+        config: Config,
+    ) -> List[Rebuttal]:
+        rebuttals = []
+        for prop, rev in zip(proposal, review):
+            serialized_proposal = self.serializer.serialize(proposal)
+            serialized_review = self.serializer.serialize(review)
+
+            rebuttal_content, q5_result = write_rebuttal_prompting(
                 proposal=serialized_proposal,
-                reviews=serialized_reviews,
+                review=serialized_review,
                 model_name=self.model_name,
-                summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
-                strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
-                weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
-                ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
-                decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
+                prompt_template=config.agent_prompt_template.write_rebuttal,
                 return_num=config.param.return_num,
                 max_token_num=config.param.max_token_num,
                 temperature=config.param.temperature,
                 top_p=config.param.top_p,
                 stream=config.param.stream,
             )
-        )
 
-        return MetaReview(
-            proposal_pk=proposal.pk,
-            chair_pk=self.profile.pk,
-            reviewer_pks=[review.reviewer_pk for review in reviews],
-            author_pk=self.profile.pk,
-            summary=summary,
-            strength=strength,
-            weakness=weakness,
-            ethical_concerns=ethical_concerns,
-            decision=decision,
-        )
-
-    @beartype
-    @leader_required
-    def write_rebuttal(
-        self,
-        proposal: Proposal,
-        review: Review,
-        config: Config,
-    ) -> Rebuttal:
-        serialized_proposal = self.serializer.serialize(proposal)
-        serialized_review = self.serializer.serialize(review)
-
-        rebuttal_content, q5_result = write_rebuttal_prompting(
-            proposal=serialized_proposal,
-            review=serialized_review,
-            model_name=self.model_name,
-            prompt_template=config.agent_prompt_template.write_rebuttal,
-            return_num=config.param.return_num,
-            max_token_num=config.param.max_token_num,
-            temperature=config.param.temperature,
-            top_p=config.param.top_p,
-            stream=config.param.stream,
-        )
-
-        return Rebuttal(
-            proposal_pk=proposal.pk,
-            reviewer_pk=review.reviewer_pk,
-            author_pk=self.profile.pk,
-            content=rebuttal_content,
-            q1=q5_result.get('q1', ''),
-            q2=q5_result.get('q2', ''),
-            q3=q5_result.get('q3', ''),
-            q4=q5_result.get('q4', ''),
-            q5=q5_result.get('q5', ''),
-        )
+            rebuttals.append(
+                Rebuttal(
+                    proposal_pk=prop.pk,
+                    reviewer_pk=rev.reviewer_pk,
+                    author_pk=self.profile.pk,
+                    content=rebuttal_content,
+                    q1=q5_result.get('q1', ''),
+                    q2=q5_result.get('q2', ''),
+                    q3=q5_result.get('q3', ''),
+                    q4=q5_result.get('q4', ''),
+                    q5=q5_result.get('q5', ''),
+                )
+            )
+        return rebuttals

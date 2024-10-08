@@ -78,7 +78,7 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
         for progress, agent in run_result:
             pass
     exit_status, exit_dict = proposal_writing_env.on_exit()
-    proposal = exit_dict['proposal']
+    proposal = exit_dict['proposal'][0]
 
     assert isinstance(proposal, Proposal)
     assert proposal.content == 'Paper abstract1'

@@ -88,9 +88,9 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
         role='reviewer',
     )
     review = agent.write_review(
-        proposal=research_proposal_A,
+        proposal=[research_proposal_A],
         config=example_config,
-    )
+    )[0]
     assert isinstance(review, Review)
     assert review.summary == 'Summary of the paper1'
     assert review.strength == 'Strength of the paper1'
@@ -113,14 +113,14 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
         role='chair',
     )
     review = agent_reviewer.write_review(
-        proposal=research_proposal_A,
+        proposal=[research_proposal_A],
         config=example_config,
-    )
+    )[0]
     metareview = agent_chair.write_metareview(
-        proposal=research_proposal_A,
-        reviews=[review],
+        proposal=[research_proposal_A],
+        reviews=[[review]],
         config=example_config,
-    )
+    )[0]
     assert isinstance(metareview, MetaReview)
     assert metareview.summary == 'Meta review summary1'
     assert metareview.strength == 'Meta review strength1'
@@ -144,14 +144,14 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         role='leader',
     )
     review = agent_reviewer.write_review(
-        proposal=research_proposal_A,
+        proposal=[research_proposal_A],
         config=example_config,
-    )
+    )[0]
     rebuttal = agent_leader.write_rebuttal(
-        proposal=research_proposal_A,
-        review=review,
+        proposal=[research_proposal_A],
+        review=[review],
         config=example_config,
-    )
+    )[0]
     assert isinstance(rebuttal, Rebuttal)
     if rebuttal.content is not None:
         assert len(rebuttal.content) > 0
