@@ -1,29 +1,57 @@
-from ..envs import EndEnv, ProposalWritingEnv, ReviewWritingEnv, StartEnv
+from ..envs import (
+    EndEnv,
+    ProposalWritingEnv,
+    ProposalWritingNoRagEnv,
+    ReviewWritingEnv,
+    StartEnv,
+)
 from .engine_base import BaseEngine
 
 
 class Engine(BaseEngine):
     def set_envs(self) -> None:
-        envs = [
-            StartEnv('start', self.config, self.agent_manager),
-            ProposalWritingEnv(
-                'proposal_writing',
-                self.log_db,
-                self.progress_db,
-                self.paper_db,
-                self.config,
-                self.agent_manager,
-            ),
-            ReviewWritingEnv(
-                'review_writing',
-                self.log_db,
-                self.progress_db,
-                self.paper_db,
-                self.config,
-                self.agent_manager,
-            ),
-            EndEnv('end', self.config, self.agent_manager),
-        ]
+        if self.config.param.use_rag:
+            envs = [
+                StartEnv('start', self.config, self.agent_manager),
+                ProposalWritingEnv(
+                    'proposal_writing',
+                    self.log_db,
+                    self.progress_db,
+                    self.paper_db,
+                    self.config,
+                    self.agent_manager,
+                ),
+                ReviewWritingEnv(
+                    'review_writing',
+                    self.log_db,
+                    self.progress_db,
+                    self.paper_db,
+                    self.config,
+                    self.agent_manager,
+                ),
+                EndEnv('end', self.config, self.agent_manager),
+            ]
+        else:
+            envs = [
+                StartEnv('start', self.config, self.agent_manager),
+                ProposalWritingNoRagEnv(
+                    'proposal_writing',
+                    self.log_db,
+                    self.progress_db,
+                    self.paper_db,
+                    self.config,
+                    self.agent_manager,
+                ),
+                ReviewWritingEnv(
+                    'review_writing',
+                    self.log_db,
+                    self.progress_db,
+                    self.paper_db,
+                    self.config,
+                    self.agent_manager,
+                ),
+                EndEnv('end', self.config, self.agent_manager),
+            ]
         self.add_envs(envs)
 
     def set_transitions(self) -> None:

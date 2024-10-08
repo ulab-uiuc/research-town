@@ -8,7 +8,7 @@ from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
 
-class ProposalWritingEnv(BaseEnv):
+class ProposalWritingNoRagEnv(BaseEnv):
     def __init__(
         self,
         name: str,
@@ -50,10 +50,7 @@ class ProposalWritingEnv(BaseEnv):
         keywords: List[str] = []
         ideas: List[Idea] = []
         for member in self.members:
-            related_papers = self.paper_db.search_papers(
-                query=';'.join(self.contexts),
-                num=2,
-            )
+            related_papers = []
             summary, keywords, insight = member.review_literature(
                 papers=related_papers,
                 contexts=self.contexts,
@@ -67,14 +64,7 @@ class ProposalWritingEnv(BaseEnv):
         keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
 
         for member in self.members:
-            related_papers = self.paper_db.search_papers(
-                query=insight.content,
-                author=member.profile.name,
-                domain=keywords[0] + member.profile.domain[0]
-                if member.profile.domain
-                else keywords[0],
-                num=7,
-            )
+            related_papers = []
             idea = member.brainstorm_idea(
                 papers=related_papers, insights=insights, config=self.config
             )
@@ -89,14 +79,7 @@ class ProposalWritingEnv(BaseEnv):
         yield summarized_idea, self.leader
 
         # Write Proposal
-        query = summarized_idea.content or self.leader.profile.bio
-        related_papers = self.paper_db.search_papers(
-            query=query,
-            domain=self.leader.profile.domain[0]
-            if self.leader.profile.domain
-            else None,
-            num=2,
-        )
+        related_papers = []
         proposal = self.leader.write_proposal(
             idea=summarized_idea,
             papers=related_papers,
