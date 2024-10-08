@@ -4,16 +4,15 @@ import logging
 import os
 from typing import Any, Dict, List, Optional
 
+from metrics import compute_bertscore, compute_bleu, compute_gpt_metric, compute_rouge_l
 from tqdm import tqdm
+from utils import get_current_5q, single_agent_proposal_writing
 
 from research_town.agents import AgentManager
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.envs import ProposalWritingEnv
 from research_town.utils.paper_collector import get_paper_introduction
-from utils import single_agent_proposal_writing, get_current_5q
-from metrics import compute_bleu, compute_rouge_l, compute_gpt_metric, compute_bertscore
-
 
 # Configure logging
 logging.basicConfig(
@@ -24,8 +23,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-
-def get_proposal_5q(authors: List[str], intros: List[str], keyword:str, id:int) -> Optional[str]:
+def get_proposal_5q(
+    authors: List[str], intros: List[str], keyword: str, id: int
+) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on the provided authors and existing proposals
     using the ProposalWritingEnv environment.
@@ -45,7 +45,7 @@ def get_proposal_5q(authors: List[str], intros: List[str], keyword:str, id:int) 
         profile_db = ProfileDB()
         profile_db.pull_profiles(names=authors, config=config)
         profile_db.save_to_json(f'./profile_dbs/profile_{id}')
-    
+
     # Initialize other databases using default instances
     log_db = LogDB()
     progress_db = ProgressDB()
@@ -99,9 +99,12 @@ def get_proposal_5q(authors: List[str], intros: List[str], keyword:str, id:int) 
         return None
 
 
-
 def process_paper(
-    args:argparse.ArgumentParser, paper_key: str, paper_data: Dict[str, Any], id:int, intro_log_jsonl: Optional[str] = None
+    args: argparse.ArgumentParser,
+    paper_key: str,
+    paper_data: Dict[str, Any],
+    id: int,
+    intro_log_jsonl: Optional[str] = None,
 ) -> Optional[Dict[str, Any]]:
     """
     Processes a single paper to generate evaluations.
@@ -113,7 +116,7 @@ def process_paper(
     Returns:
         Optional[Dict[str, Any]]: A dictionary containing evaluation results, or None if processing fails.
     """
-    #try:
+    # try:
     arxiv_id = paper_data.get('arxiv_id')
     authors = paper_data.get('authors', [])
     references = paper_data.get('references', [])
@@ -188,7 +191,9 @@ def process_paper(
 
     # Step 4: Generate proposal 5Q
     if args.test_single_agent:
-        proposal_5q = single_agent_proposal_writing(intros=intros, model=args.single_agent_model)
+        proposal_5q = single_agent_proposal_writing(
+            intros=intros, model=args.single_agent_model
+        )
     else:
         proposal_5q = get_proposal_5q(authors, intros, keyword, id)
     if not proposal_5q:
@@ -219,7 +224,12 @@ def process_paper(
     #     return None
 
 
-def main(args:argparse.ArgumentParser, input_json: str, output_jsonl: str, intro_log_jsonl:str=None) -> None:
+def main(
+    args: argparse.ArgumentParser,
+    input_json: str,
+    output_jsonl: str,
+    intro_log_jsonl: str = None,
+) -> None:
     """
     Main function to perform evaluation on all papers in the input JSON.
 
@@ -227,8 +237,8 @@ def main(args:argparse.ArgumentParser, input_json: str, output_jsonl: str, intro
         input_json (str): Path to the input JSON file.
         output_jsonl (str): Path to the output JSONL file.
     """
-    #try:
-        # Load input JSON
+    # try:
+    # Load input JSON
     with open(input_json, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
@@ -246,7 +256,6 @@ def main(args:argparse.ArgumentParser, input_json: str, output_jsonl: str, intro
     #     # Iterate over each paper with a progress bar
     try:
         with open(output_jsonl, 'r', encoding='utf-8') as outfile:
-            
             num_lines = sum(1 for line in outfile)
             papers = papers[num_lines:]
             logger.info(f'Skipping {num_lines} papers already processed.')
@@ -254,7 +263,9 @@ def main(args:argparse.ArgumentParser, input_json: str, output_jsonl: str, intro
         logger.error(f'Error reading output JSONL file: {e}')
         pass
 
-    for id, paper_key in enumerate(tqdm(papers, desc='Processing papers'), start=1 + num_lines):
+    for id, paper_key in enumerate(
+        tqdm(papers, desc='Processing papers'), start=1 + num_lines
+    ):
         paper_data = data[paper_key]
         evaluation = process_paper(args, paper_key, paper_data, id, intro_log_jsonl)
         if evaluation:
@@ -270,19 +281,13 @@ def main(args:argparse.ArgumentParser, input_json: str, output_jsonl: str, intro
             if gpt_score is not None:
                 gpt_metric_scores.append(gpt_score)
         else:
-            logger.warning(
-                f'Skipping paper due to failed processing: {paper_key}'
-            )
+            logger.warning(f'Skipping paper due to failed processing: {paper_key}')
 
     # Compute and log average metrics
     avg_bleu = sum(bleu_scores) / len(bleu_scores) if bleu_scores else 0.0
-    avg_rouge_l = (
-        sum(rouge_l_scores) / len(rouge_l_scores) if rouge_l_scores else 0.0
-    )
+    avg_rouge_l = sum(rouge_l_scores) / len(rouge_l_scores) if rouge_l_scores else 0.0
     avg_gpt_metric = (
-        sum(gpt_metric_scores) / len(gpt_metric_scores)
-        if gpt_metric_scores
-        else 0.0
+        sum(gpt_metric_scores) / len(gpt_metric_scores) if gpt_metric_scores else 0.0
     )
     avg_bert_score = sum(bert_scores) / len(bert_scores) if bert_scores else 0.0
 
@@ -306,15 +311,22 @@ if __name__ == '__main__':
         '--output', type=str, required=True, help='Path to the output JSONL file.'
     )
     parser.add_argument(
-        '--intro_log', type=str, required=False, help='Path to the introduction log JSONL file.'
+        '--intro_log',
+        type=str,
+        required=False,
+        help='Path to the introduction log JSONL file.',
     )
     parser.add_argument(
-    '--test-single-agent', action='store_true',
-    help='If set, run a test for a single agent using sample introductions.'
+        '--test-single-agent',
+        action='store_true',
+        help='If set, run a test for a single agent using sample introductions.',
     )
     parser.add_argument(
-        '--single-agent-model', type=str, required=False, default='gpt-40-mini',
-        help='Model name for the single agent test.'
+        '--single-agent-model',
+        type=str,
+        required=False,
+        default='gpt-40-mini',
+        help='Model name for the single agent test.',
     )
     args = parser.parse_args()
 

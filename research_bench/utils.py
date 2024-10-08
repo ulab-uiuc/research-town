@@ -151,7 +151,8 @@ Now, let's begin:""",
         print(f'Error generating proposal: {e}')
         return None
 
-def get_current_5q(intro: str, model:str = 'gpt-4o-mini') -> Optional[str]:
+
+def get_current_5q(intro: str, model: str = 'gpt-4o-mini') -> Optional[str]:
     """
     Generates the five core research questions based on the introduction text using an LLM.
 
@@ -194,9 +195,7 @@ def get_current_5q(intro: str, model:str = 'gpt-4o-mini') -> Optional[str]:
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
-            print(
-                'Received empty response from model_prompting for current_5q.'
-            )
+            print('Received empty response from model_prompting for current_5q.')
             return None
     except Exception as e:
         print(f'Error generating current_5q: {e}')

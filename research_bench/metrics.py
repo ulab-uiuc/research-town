@@ -1,12 +1,15 @@
+from typing import Optional
 
 import nltk
 from bert_score import score
 from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
 from rouge_score import rouge_scorer
-from typing import Optional
+
 from research_town.utils.model_prompting import model_prompting
+
 # Initialize NLTK resources
 nltk.download('punkt')
+
 
 def compute_bleu(reference: str, hypothesis: str) -> float:
     """
@@ -115,9 +118,7 @@ def compute_gpt_metric(current_5q: str, proposal_5q: str) -> Optional[float]:
                 print('GPT metric response is not a valid float.')
                 return None
         else:
-            print(
-                'Received empty response from model_prompting for GPT metric.'
-            )
+            print('Received empty response from model_prompting for GPT metric.')
             return None
     except Exception as e:
         print(f'Error computing GPT-based metric: {e}')
