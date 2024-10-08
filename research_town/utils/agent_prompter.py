@@ -97,7 +97,6 @@ def brainstorm_idea_prompting(
 
 @beartype
 def summarize_idea_prompting(
-    bio: str,
     contexts: List[str],
     ideas: List[Dict[str, str]],
     model_name: str,
@@ -109,7 +108,7 @@ def summarize_idea_prompting(
     stream: Optional[bool] = None,
 ) -> Tuple[List[str], List[Dict[str, str]]]:
     ideas_str = map_idea_list_to_str(ideas)
-    template_input = {'bio': bio, 'ideas': ideas_str, 'contexts': contexts}
+    template_input = {'ideas': ideas_str, 'contexts': contexts}
     messages = openai_format_prompt_construct(prompt_template, template_input)
 
     return model_prompting(

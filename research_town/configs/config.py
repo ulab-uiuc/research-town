@@ -95,7 +95,7 @@ class AgentPromptTemplate(BaseModel):
             'write_bio': ['{publication_info}'],
             'review_literature': ['{bio}', '{papers}', '{contexts}'],
             'brainstorm_idea': ['{bio}', '{insights}', '{papers}'],
-            'summarize_idea': ['{bio}', '{ideas}', '{contexts}'],
+            'summarize_idea': ['{ideas}', '{contexts}'],
             'write_proposal': ['{idea}', '{papers}'],
             'write_proposal_cot': ['{idea}', '{papers}'],
             'write_proposal_react': ['{idea}', '{papers}'],

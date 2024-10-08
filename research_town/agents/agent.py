@@ -100,7 +100,6 @@ class Agent(object):
     ) -> Idea:
         serialized_ideas = self.serializer.serialize(ideas)
         idea_summarized_list, prompt_messages = summarize_idea_prompting(
-            bio=self.profile.bio,
             contexts=contexts,
             ideas=serialized_ideas,
             model_name=self.model_name,
