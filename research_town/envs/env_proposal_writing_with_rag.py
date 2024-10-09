@@ -53,7 +53,7 @@ class ProposalWritingwithRAGEnv(BaseEnv):
         for member in self.members:
             related_papers = self.paper_db.search_papers(
                 query=';'.join(self.contexts),
-                num=2,
+                num=self.config.param.related_paper_num,
             )
             summary, keywords, insight = member.review_literature(
                 papers=related_papers,
@@ -65,23 +65,22 @@ class ProposalWritingwithRAGEnv(BaseEnv):
             insights.append(insight)
             keywords.extend(keywords)
 
-        keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
+        keyword = sorted(keywords, key=lambda x: x[1], reverse=True)[0]
 
         for member in self.members:
             related_papers = self.paper_db.search_papers(
                 query=insight.content,
                 author=member.profile.name,
-                domain=keywords[0] + member.profile.domain[0]
+                domain=keyword + member.profile.domain[0]
                 if member.profile.domain
-                else keywords[0],
-                num=7,
+                else keyword,
+                num=self.config.param.related_paper_num,
             )
             idea = member.brainstorm_idea(
                 papers=related_papers, insights=insights, config=self.config
             )
-            ideas.append(idea)
-
             yield idea, member
+            ideas.append(idea)
 
         self.proposals = []
         idea_combos = sample_ideas(ideas, self.config.param.proposal_num)
@@ -91,13 +90,9 @@ class ProposalWritingwithRAGEnv(BaseEnv):
             )
             yield summarized_idea, self.leader
 
-            query = summarized_idea.content or self.leader.profile.bio
             related_papers = self.paper_db.search_papers(
-                query=query,
-                domain=self.leader.profile.domain[0]
-                if self.leader.profile.domain
-                else None,
-                num=2,
+                query=summarized_idea.content,
+                num=self.config.param.related_paper_num,
             )
             proposal = self.leader.write_proposal(
                 idea=summarized_idea,
