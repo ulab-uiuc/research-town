@@ -31,10 +31,9 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
 
     @beartype
     def on_enter(self, **context: Any) -> None:
-        leader = context['leader']
-        self.contexts = context['contexts']
-        self.leader = leader
-        self.members = self.agent_manager.sample_members()
+        self.leader = context.get('leader', self.agent_manager.sample_leader())
+        self.members = context.get('members', self.agent_manager.sample_members())
+        self.contexts = context.get('contexts')
 
     @beartype
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
