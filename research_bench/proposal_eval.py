@@ -12,16 +12,6 @@ nltk.download('punkt')
 
 
 def compute_bleu(reference: str, hypothesis: str) -> float:
-    """
-    Computes the BLEU score between reference and hypothesis texts.
-
-    Args:
-        reference (str): Reference text.
-        hypothesis (str): Hypothesis text.
-
-    Returns:
-        float: BLEU score.
-    """
     try:
         reference_tokens = nltk.word_tokenize(reference.lower())
         hypothesis_tokens = nltk.word_tokenize(hypothesis.lower())
@@ -36,16 +26,6 @@ def compute_bleu(reference: str, hypothesis: str) -> float:
 
 
 def compute_rouge_l(reference: str, hypothesis: str) -> float:
-    """
-    Computes the ROUGE-L score between reference and hypothesis texts.
-
-    Args:
-        reference (str): Reference text.
-        hypothesis (str): Hypothesis text.
-
-    Returns:
-        float: ROUGE-L F1 score.
-    """
     try:
         scorer = rouge_scorer.RougeScorer(['rougeL'], use_stemmer=True)
         scores = scorer.score(reference, hypothesis)
@@ -57,16 +37,6 @@ def compute_rouge_l(reference: str, hypothesis: str) -> float:
 
 
 def compute_bertscore(reference: str, hypothesis: str) -> float:
-    """
-    Computes the BERTScore between reference and hypothesis texts.
-
-    Args:
-        reference (str): Reference text.
-        hypothesis (str): Hypothesis text.
-
-    Returns:
-        float: BERTScore F1 score.
-    """
     try:
         # Compute BERTScore
         P, R, F1 = score(
@@ -79,16 +49,6 @@ def compute_bertscore(reference: str, hypothesis: str) -> float:
 
 
 def compute_gpt_metric(current_5q: str, proposal_5q: str) -> Optional[float]:
-    """
-    Computes a custom GPT-based metric to evaluate if the proposal_5q reflects the current_5q.
-
-    Args:
-        current_5q (str): The current five core questions.
-        proposal_5q (str): The proposed five core questions.
-
-    Returns:
-        Optional[float]: A similarity score between 0 and 1.
-    """
     try:
         prompt = [
             {

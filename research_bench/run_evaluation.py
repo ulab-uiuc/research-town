@@ -4,7 +4,7 @@ import logging
 import os
 from typing import Any, Dict, List, Optional
 
-from metrics import compute_bertscore, compute_bleu, compute_gpt_metric, compute_rouge_l
+from research_bench.proposal_eval import compute_bertscore, compute_bleu, compute_gpt_metric, compute_rouge_l
 from tqdm import tqdm
 from utils import get_current_5q, single_agent_proposal_writing
 
@@ -23,80 +23,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def get_proposal_5q(
-    authors: List[str], intros: List[str], keyword: str, id: int
-) -> Optional[str]:
-    """
-    Generates a comprehensive research proposal based on the provided authors and existing proposals
-    using the ProposalWritingEnv environment.
-
-    Args:
-        authors (List[str]): List of author names.
-        intros (List[str]): List of existing introduction texts.
-
-    Returns:
-        Optional[str]: Generated proposal as a string if successful, else None.
-    """
-
-    config = Config('../configs')
-    if os.path.exists(f'./profile_dbs/profile_{id}'):
-        profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
-    else:
-        profile_db = ProfileDB()
-        profile_db.pull_profiles(names=authors, config=config)
-        profile_db.save_to_json(f'./profile_dbs/profile_{id}')
-
-    # Initialize other databases using default instances
-    log_db = LogDB()
-    progress_db = ProgressDB()
-    paper_db = PaperDB()  # Assuming existing papers are handled elsewhere
-    paper_db.pull_papers(num=3, domain=keyword)
-    # Initialize ProposalWritingEnv with the required databases and configuration
-    agent_manager = AgentManager(config=config, profile_db=profile_db)
-    env = ProposalWritingEnv(
-        name='proposal_writing',
-        log_db=log_db,
-        progress_db=progress_db,
-        paper_db=paper_db,
-        config=config,
-        agent_manager=agent_manager,
-    )
-    logger.info('Initialized ProposalWritingEnv.')
-
-    # Create a leader agent (assuming `create_leader` requires a profile)
-    leader_profile = profile_db.get(name=authors[0])[0]
-    print('leader_profile', leader_profile)
-    leader = agent_manager.create_agent(leader_profile, role='leader')
-    if not leader_profile:
-        logger.error('No valid leader profile found.')
-        return None
-    logger.info('Created leader agent for profile')
-
-    # Prepare the context from existing proposals
-    # Assuming that the context should be a list of proposal strings
-    env.on_enter(
-        leader=leader,
-        contexts=intros,
-    )
-    logger.info('Entered ProposalWritingEnv with provided proposals as context.')
-
-    # Run the environment to generate the proposal
-    run_result = env.run()
-    if run_result is not None:
-        for progress, agent in run_result:
-            # Process progress and agent if needed
-            pass
-    logger.info('Ran ProposalWritingEnv.')
-
-    # Exit the environment and retrieve the generated proposal
-    exit_status, exit_dict = env.on_exit()
-    proposal = exit_dict.get('proposal')
-    if proposal and proposal.content:
-        logger.info('Successfully generated proposal.')
-        return str(proposal.content)
-    else:
-        logger.warning('Proposal generation returned no content.')
-        return None
 
 
 def process_paper(
