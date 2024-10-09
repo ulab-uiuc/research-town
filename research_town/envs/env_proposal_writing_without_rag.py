@@ -49,23 +49,24 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
         insights: List[Insight] = []
         keywords: List[str] = []
         ideas: List[Idea] = []
-        for member in self.members:
-            summary, keywords, insight = member.review_literature(
+        researchers = self.members + [self.leader]
+        for researcher in researchers:
+            summary, keywords, insight = researcher.review_literature(
                 contexts=self.contexts,
                 config=self.config,
             )
 
-            yield insight, member
+            yield insight, researcher
             insights.append(insight)
             keywords.extend(keywords)
 
         keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
 
-        for member in self.members:
-            idea = member.brainstorm_idea(insights=insights, config=self.config)
+        for researcher in researchers:
+            idea = researcher.brainstorm_idea(insights=insights, config=self.config)
             ideas.append(idea)
 
-            yield idea, member
+            yield idea, researcher
 
         self.proposals = []
         idea_combos = sample_ideas(ideas, self.config.param.proposal_num)

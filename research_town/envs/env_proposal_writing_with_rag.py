@@ -36,7 +36,6 @@ class ProposalWritingwithRAGEnv(BaseEnv):
         # must have contexts otherwise throw error
         self.contexts = context['contexts']
 
-
     @beartype
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
         self.env_run_num += 1
@@ -51,36 +50,35 @@ class ProposalWritingwithRAGEnv(BaseEnv):
         insights: List[Insight] = []
         keywords: List[str] = []
         ideas: List[Idea] = []
-        for member in self.members:
+        researchers = self.members + [self.leader]
+        for researcher in researchers:
             related_papers = self.paper_db.search_papers(
                 query=';'.join(self.contexts),
                 num=self.config.param.related_paper_num,
             )
-            summary, keywords, insight = member.review_literature(
+            summary, keywords, insight = researcher.review_literature(
                 papers=related_papers,
                 contexts=self.contexts,
                 config=self.config,
             )
 
-            yield insight, member
+            yield insight, researcher
             insights.append(insight)
             keywords.extend(keywords)
 
         keyword = sorted(keywords, key=lambda x: x[1], reverse=True)[0]
 
-        for member in self.members:
+        for researcher in researchers:
             related_papers = self.paper_db.search_papers(
                 query=insight.content,
-                author=member.profile.name,
-                domain=keyword + member.profile.domain[0]
-                if member.profile.domain
-                else keyword,
+                author=researcher.profile.name,
+                domain=keyword + researcher.profile.domain[0],
                 num=self.config.param.related_paper_num,
             )
-            idea = member.brainstorm_idea(
+            idea = researcher.brainstorm_idea(
                 papers=related_papers, insights=insights, config=self.config
             )
-            yield idea, member
+            yield idea, researcher
             ideas.append(idea)
 
         self.proposals = []
