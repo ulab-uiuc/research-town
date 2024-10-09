@@ -65,15 +65,15 @@ class ProposalWritingwithRAGEnv(BaseEnv):
             insights.append(insight)
             keywords.extend(keywords)
 
-        keywords = sorted(keywords, key=lambda x: x[1], reverse=True)
+        keyword = sorted(keywords, key=lambda x: x[1], reverse=True)[0]
 
         for member in self.members:
             related_papers = self.paper_db.search_papers(
                 query=insight.content,
                 author=member.profile.name,
-                domain=keywords[0] + member.profile.domain[0]
+                domain=keyword + member.profile.domain[0]
                 if member.profile.domain
-                else keywords[0],
+                else keyword,
                 num=self.config.param.related_paper_num,
             )
             idea = member.brainstorm_idea(
