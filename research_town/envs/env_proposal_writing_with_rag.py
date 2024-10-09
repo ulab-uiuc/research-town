@@ -33,7 +33,9 @@ class ProposalWritingwithRAGEnv(BaseEnv):
     def on_enter(self, **context: Any) -> None:
         self.leader = context.get('leader', self.agent_manager.sample_leader())
         self.members = context.get('members', self.agent_manager.sample_members())
-        self.contexts = context.get('contexts')
+        # must have contexts otherwise throw error
+        self.contexts = context['contexts']
+
 
     @beartype
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
