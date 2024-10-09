@@ -32,10 +32,10 @@ class ReviewWritingEnv(BaseEnv):
         self,
         **context: Any,
     ) -> None:
+        self.leader = context.get('leader', self.agent_manager.sample_leader())
+        self.chair = context.get('chair', self.agent_manager.sample_chair())
+        self.reviewers = context.get('reviewers', self.agent_manager.sample_reviewers())
         self.proposals = context['proposals']
-        self.leader = context['leader']
-        self.chair = self.agent_manager.sample_chair()
-        self.reviewers = self.agent_manager.sample_reviewers()
 
     @beartype
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
