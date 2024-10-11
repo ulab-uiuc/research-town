@@ -1,12 +1,10 @@
+import os
+from typing import List, Optional
+
 from research_town.agents import AgentManager
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.envs import ProposalWritingEnv
-from research_town.utils.paper_collector import get_paper_introduction
-from typing import List, Optional
-import logging
-import os
-from typing import Optional
 from research_town.utils.model_prompting import model_prompting
 
 

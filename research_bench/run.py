@@ -1,9 +1,7 @@
 import argparse
-from proposal_writing import write_proposal_researchtown
 
 
 def main(args: argparse.Namespace) -> None:
-    
     return
 
 

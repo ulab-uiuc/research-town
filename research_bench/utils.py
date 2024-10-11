@@ -8,8 +8,6 @@ from typing import Any, Dict, List, Optional, Set
 import arxiv
 import requests
 
-from research_town.utils.model_prompting import model_prompting
-
 SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
 
 
