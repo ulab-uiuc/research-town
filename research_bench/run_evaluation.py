@@ -13,6 +13,7 @@ from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.envs import ProposalWritingEnv
 from research_town.utils.paper_collector import get_paper_introduction
+from proposal_writing import write_proposal_researchtown
 
 # Configure logging
 logging.basicConfig(
@@ -121,7 +122,7 @@ def process_paper(
             intros=intros, model=args.single_agent_model
         )
     else:
-        proposal_5q = get_proposal_5q(authors, intros, keyword, id)
+        proposal_5q = write_proposal_researchtown(authors, intros, keyword, id)
     if not proposal_5q:
         logger.warning(f'proposal_5q generation failed for paper: {paper_key}')
         return None

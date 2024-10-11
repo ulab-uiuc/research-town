@@ -48,16 +48,13 @@ def write_proposal_researchtown(
         config=config,
         agent_manager=agent_manager,
     )
-    logger.info('Initialized ProposalWritingEnv.')
 
     # Create a leader agent (assuming `create_leader` requires a profile)
     leader_profile = profile_db.get(name=authors[0])[0]
     print('leader_profile', leader_profile)
     leader = agent_manager.create_agent(leader_profile, role='leader')
     if not leader_profile:
-        logger.error('No valid leader profile found.')
         return None
-    logger.info('Created leader agent for profile')
 
     # Prepare the context from existing proposals
     # Assuming that the context should be a list of proposal strings
@@ -65,7 +62,6 @@ def write_proposal_researchtown(
         leader=leader,
         contexts=intros,
     )
-    logger.info('Entered ProposalWritingEnv with provided proposals as context.')
 
     # Run the environment to generate the proposal
     run_result = env.run()
@@ -73,16 +69,13 @@ def write_proposal_researchtown(
         for progress, agent in run_result:
             # Process progress and agent if needed
             pass
-    logger.info('Ran ProposalWritingEnv.')
 
     # Exit the environment and retrieve the generated proposal
     exit_status, exit_dict = env.on_exit()
     proposal = exit_dict.get('proposal')
     if proposal and proposal.content:
-        logger.info('Successfully generated proposal.')
         return str(proposal.content)
     else:
-        logger.warning('Proposal generation returned no content.')
         return None
 
 
