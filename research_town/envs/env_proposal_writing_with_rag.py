@@ -76,7 +76,7 @@ class ProposalWritingwithRAGEnv(BaseEnv):
             related_papers = self.paper_db.search_papers(
                 query=insight.content,
                 author=researcher.profile.name,
-                domain=top_keyword + researcher.profile.domain[0],
+                domain=top_keyword,
                 num=self.config.param.related_paper_num,
             )
             idea = researcher.brainstorm_idea(
