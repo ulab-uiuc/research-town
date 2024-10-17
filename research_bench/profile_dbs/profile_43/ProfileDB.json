@@ -1,0 +1,52 @@
+{
+  "a2b0e4ba-eab5-4daf-8837-946d5eabcb81": {
+    "pk": "a2b0e4ba-eab5-4daf-8837-946d5eabcb81",
+    "project_name": null,
+    "name": "Lorenzo Fiaschi",
+    "bio": "I am a researcher with a keen interest in the intersection of deep learning, optimization, and game theory. My recent work has focused on developing innovative architectures for hierarchical classification tasks, exemplified by my introduction of the lexicographic hybrid deep neural network (LH-DNN). This architecture leverages concepts from lexicographic multi-objective optimization and non-standard analysis, allowing for efficient classification while significantly reducing learning parameters and computational time.\n\nIn addition to my work in deep learning, I have made strides in optimization techniques, particularly through the development of the non-Archimedean Interior Point Method (NA-IPM). This novel algorithm addresses challenges in managing infeasibility and unboundedness in optimization problems, proving to be a robust tool for a variety of linear and quadratic programming tasks.\n\nFurthermore, I have explored the dynamics of the Prisoner's Dilemma within game theory, extending traditional analyses to incorporate infinite and infinitesimal payoffs using Sergeyev's Infinity Computing. This work not only broadens the understanding of PD Tournaments but also provides concrete numerical insights into their outcomes.\n\nOverall, my research aims to bridge theoretical advancements with practical applications, paving the way for innovative solutions in machine learning and optimization.",
+    "collaborators": [
+      "Marco Cococcioni"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Optimization",
+      "Game Theory",
+      "Hierarchical Classification"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "40f901df-102d-482a-98ea-d335c2b0639e": {
+    "pk": "40f901df-102d-482a-98ea-d335c2b0639e",
+    "project_name": null,
+    "name": "Marco Cococcioni",
+    "bio": "I am a researcher with a strong focus on the intersection of game theory, deep learning, and numerical optimization. My recent work has explored the complexities of the Prisoner's Dilemma using Sergeyev's Infinity Computing, extending traditional analyses to infinite and infinitesimal payoffs. I have also developed a novel architecture for hierarchical classification tasks, the lexicographic hybrid deep neural network (LH-DNN), which integrates concepts from multi-objective optimization and deep learning, demonstrating superior performance with reduced computational demands.\n\nIn addition, I have contributed to the field of optimization with the non-Archimedean Interior Point Method (NA-IPM), which effectively handles infeasibility and unboundedness in linear and quadratic programming. This work not only advances theoretical understanding but also provides practical algorithms for real-world applications.\n\nMy research also delves into hardware implementations, specifically customizing the RISC-V instruction set with posit arithmetic to enhance numerical accuracy and range. I have prototyped a Full Posit Processing Unit, demonstrating its integration into low-power cores and its potential for deep learning applications.\n\nLastly, I have investigated the use of compressed numerical formats, such as bfloat and posit, in deep neural networks, proposing methods to optimize bandwidth and cache efficiency during inference. My work aims to bridge theoretical advancements with practical applications, driving innovation in machine learning and computational efficiency.",
+    "collaborators": [
+      "Lorenzo Fiaschi",
+      "Federico Rossi",
+      "Emanuele Ruffaldi",
+      "Sergio Saponara",
+      "Francesco Urbani",
+      "Roger Ferrer Ib\u00e0\u00f1ez",
+      "Jes\u00f9s Labarta",
+      "Filippo Mantovani",
+      "Marc Casas"
+    ],
+    "domain": [
+      "Game Theory",
+      "Deep Learning",
+      "Optimization",
+      "Hardware Design"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

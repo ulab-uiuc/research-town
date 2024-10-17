@@ -1,0 +1,78 @@
+{
+  "fdaf9360-c971-4a47-9608-0176f102682c": {
+    "pk": "fdaf9360-c971-4a47-9608-0176f102682c",
+    "project_name": null,
+    "name": "Fedor Velikonivtsev",
+    "bio": "I am a researcher dedicated to exploring the intricacies of graph theory and its applications, particularly in the realm of generating structurally diverse graphs. My recent work addresses a significant gap in the literature regarding the generation of diverse graph structures, which is crucial for testing graph algorithms and their neural approximations. I delve into defining what diversity means in the context of graphs, recognizing the complexities involved in selecting appropriate diversity measures.\n\nIn my research, I have developed and compared various algorithms aimed at optimizing graph diversity, including traditional random graph models, local graph optimization techniques, genetic algorithms, and neural generative models. My findings demonstrate that it is indeed possible to enhance diversity beyond what basic random graph generators can achieve. Through this work, I have gained valuable insights into the properties of graph distances and how different diversity measures can lead to graphs with distinct structural characteristics. This research not only contributes to the theoretical understanding of graph properties but also has practical implications for the development of more robust graph algorithms.",
+    "collaborators": [
+      "Mikhail Mironov",
+      "Liudmila Prokhorenkova"
+    ],
+    "domain": [
+      "Graph Generation",
+      "Structural Diversity",
+      "Graph Algorithms",
+      "Neural Networks"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "146bf70e-47d7-4f9f-81f4-de37aa2e95f2": {
+    "pk": "146bf70e-47d7-4f9f-81f4-de37aa2e95f2",
+    "project_name": null,
+    "name": "Mikhail Mironov",
+    "bio": "I am a researcher with a keen interest in algebraic geometry, functional analysis, and graph theory. My work primarily revolves around the construction of exceptional collections in the bounded derived category of $S_k$-equivariant coherent sheaves on projective spaces. I have successfully developed rectangular and minimal Lefschetz exceptional collections, particularly in cases involving three-dimensional settings and specific conditions on the dimensions of the projective spaces.\n\nIn functional analysis, I explore the properties of topological vector spaces of holomorphic functions, focusing on the conditions under which polynomial sets generate these spaces. My research has led to significant insights into the continuity of evaluation functionals and the structure of maximal domains, particularly in metrizable spaces.\n\nRecently, I have ventured into graph theory, addressing the challenge of generating structurally diverse graphs. I have defined measures of diversity and proposed various algorithms, including genetic and neural generative models, to optimize these measures. This work not only enhances our understanding of graph properties but also provides valuable tools for testing graph algorithms and their neural approximations.\n\nThrough my research, I aim to bridge theoretical concepts with practical applications, contributing to the advancement of knowledge in these interconnected fields.",
+    "collaborators": [
+      "Yurii Belov",
+      "Jeet Sampat",
+      "Fedor Velikonivtsev",
+      "Liudmila Prokhorenkova"
+    ],
+    "domain": [
+      "Algebraic Geometry",
+      "Functional Analysis",
+      "Graph Theory",
+      "Exceptional Collections"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "425d6845-1cb6-4c3f-9d76-215fb70be13f": {
+    "pk": "425d6845-1cb6-4c3f-9d76-215fb70be13f",
+    "project_name": null,
+    "name": "Liudmila Prokhorenkova",
+    "bio": "I am a researcher deeply engaged in the fields of network analysis, machine learning, and graph-based methodologies. My work primarily focuses on community detection, where I have developed innovative techniques for hyperparameter tuning without the need for labeled data, significantly enhancing the performance of various community detection algorithms. I have also introduced Stochastic Gradient Langevin Boosting (SGLB), a robust framework that guarantees global convergence for multimodal loss functions, outperforming traditional gradient boosting methods.\n\nMy research extends to the intersection of graph neural networks (GNNs) and gradient boosting decision trees (GBDT), where I proposed a novel architecture that leverages the strengths of both models to optimize performance on heterogeneous tabular data. Additionally, I have explored neural algorithmic reasoning, emphasizing the importance of learning algorithms without intermediate supervision, which has led to state-of-the-art results in several algorithmic tasks.\n\nI am particularly interested in uncertainty quantification in model predictions, especially for gradient boosting models, and have developed a probabilistic ensemble framework to derive uncertainty estimates. My work also includes a systematic analysis of classification performance measures, leading to the introduction of new metrics that satisfy desirable properties for evaluating classification results.\n\nThrough my research, I aim to bridge theoretical insights with practical applications, contributing to the understanding and advancement of machine learning and network analysis methodologies.",
+    "collaborators": [
+      "Aleksei Ustimenko",
+      "Alexey Tikhonov",
+      "Gleb Rodionov",
+      "Aleksandr Shekhovtsov",
+      "Sergei Ivanov",
+      "Artem Beliakov",
+      "Kirill Shevkunov",
+      "Andrey Malinin",
+      "Martijn G\u00f6sgens",
+      "Anton Zhiyanov"
+    ],
+    "domain": [
+      "Community Detection",
+      "Graph Neural Network",
+      "Machine Learning",
+      "Uncertainty Quantification"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

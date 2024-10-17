@@ -1,0 +1,152 @@
+{
+  "eba3c377-8ccc-4a3e-a497-9ad880a80d11": {
+    "pk": "eba3c377-8ccc-4a3e-a497-9ad880a80d11",
+    "project_name": null,
+    "name": "Pengju Wang",
+    "bio": "I am a researcher dedicated to enhancing the reliability and privacy of deep learning models, particularly in sensitive domains such as face manipulation detection and federated learning. My recent work focuses on developing interpretable models that balance accuracy and transparency, such as my approach to face manipulation detection, which incorporates feature whitening to clarify the internal workings of deep networks.\n\nI have also explored the intersection of generative models and differential privacy, introducing innovative methods like DP-SAD, which leverages diffusion models for high-quality, private data generation. My research on dataset condensation has led to the development of M3D, a method that minimizes discrepancies between synthetic and real data distributions, achieving state-of-the-art results on challenging datasets.\n\nIn the realm of deepfake detection, I proposed a patch-level approach utilizing spatiotemporal dropout transformers to enhance model robustness against sophisticated manipulations. Additionally, I have contributed to privacy-preserving model conversion through differentially private data-free distillation, ensuring that sensitive training data remains protected.\n\nMy work in personalized federated learning emphasizes the importance of tailoring models to individual clients while maintaining a global knowledge base. I strive to create frameworks that not only advance the state of the art in machine learning but also prioritize user trust and data privacy. Through extensive experimentation and theoretical validation, I aim to bridge the gap between high utility and strong privacy in deep learning applications.",
+    "collaborators": [
+      "Shiming Ge",
+      "Dan Zeng",
+      "Bochao Liu",
+      "Yingying Hua",
+      "Daichi Zhang",
+      "Shikun Li",
+      "Jiapeng Dong",
+      "Weiqiang Sun",
+      "Hansong Zhang",
+      "Fanzhao Lin"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Privacy Preservation",
+      "Generative Models",
+      "Face Manipulation Detection"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "22beb8f0-8203-4cc5-9e5c-8819ae3d242f": {
+    "pk": "22beb8f0-8203-4cc5-9e5c-8819ae3d242f",
+    "project_name": null,
+    "name": "Bochao Liu",
+    "bio": "I am a researcher dedicated to addressing the challenges of privacy and data scarcity in machine learning, particularly in sensitive domains. My recent work focuses on generative models with differential privacy, where I introduced DP-SAD, a private diffusion model that leverages stochastic adversarial distillation to enhance image generation quality while ensuring privacy. This innovative approach combines the strengths of diffusion models with adversarial training, demonstrating significant improvements in generated image quality.\n\nIn addition to generative modeling, I have explored the theoretical aspects of particle physics, specifically in the context of Chiral Perturbation Theory, where I provided a comprehensive analysis of two-pion production reactions. My research also extends to federated learning, where I developed a backbone self-distillation method to facilitate personalized model training across heterogeneous data sources. This method allows clients to maintain privacy while benefiting from global knowledge transfer, showcasing my commitment to advancing machine learning techniques that prioritize both performance and privacy.\n\nOverall, my work aims to bridge the gap between cutting-edge machine learning methodologies and the pressing need for privacy-preserving solutions, contributing to a more secure and effective AI landscape.",
+    "collaborators": [
+      "Pengju Wang",
+      "Shiming Ge",
+      "Christoph Hanhart",
+      "Dan Zeng",
+      "Vadim Baru",
+      "Johann Haidenbauer",
+      "Shikun Li",
+      "Markus Buescher",
+      "Feng-Kun Guo",
+      "Ulf-G. Mei\u00dfner"
+    ],
+    "domain": [
+      "Differential Privacy",
+      "Generative Models",
+      "Federated Learning",
+      "Chiral Perturbation Theory"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0c460b2e-a3bd-4877-af89-e3b39ae7c6cc": {
+    "pk": "0c460b2e-a3bd-4877-af89-e3b39ae7c6cc",
+    "project_name": null,
+    "name": "Dan Zeng",
+    "bio": "I am a researcher dedicated to advancing the fields of computer vision and machine learning, with a particular focus on face recognition, visual tracking, and data-efficient learning methods. My recent work has tackled the challenging problem of occluded face recognition, where I explored various approaches to enhance recognition accuracy despite partial visibility. I have also contributed to the development of innovative tracking algorithms for unmanned aerial vehicles (UAVs), such as the P-SiamFC++ tracker, which balances efficiency and precision through model compression techniques.\n\nIn addition to my work on UAV tracking, I have pioneered methods that leverage contrastive learning for improved feature representation, and I have designed a super-pixel level cloud detection system that utilizes deep learning for remote sensing applications. My research also delves into the integration of 2D landmarks and 3D face reconstruction, proposing a joint method that enhances both tasks simultaneously.\n\nI am particularly interested in the intersection of deep learning and practical applications, as evidenced by my work on evolutionary knowledge distillation and trustable co-label learning, which aim to improve model performance in scenarios with limited labeled data. My goal is to create robust, efficient, and scalable solutions that can be applied to real-world challenges, ultimately pushing the boundaries of what is possible in computer vision and machine learning.",
+    "collaborators": [
+      "Qijun Zhao",
+      "Xucheng Wang",
+      "Shuiwang Li",
+      "Feng Liu",
+      "Shikun Li",
+      "Shiming Ge",
+      "Raymond Veldhuis",
+      "Luuk Spreeuwers",
+      "Yuanling Niu",
+      "Jiaxin Wei"
+    ],
+    "domain": [
+      "Face Recognition",
+      "UAV Tracking",
+      "Deep Learning",
+      "Data Augmentation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0f7c2fc1-a4c1-498b-b092-1ee4f93c3154": {
+    "pk": "0f7c2fc1-a4c1-498b-b092-1ee4f93c3154",
+    "project_name": null,
+    "name": "Chenggang Yan",
+    "bio": "I am a researcher dedicated to advancing the fields of computer vision and machine learning, with a particular focus on innovative approaches to image processing and retrieval. My recent work has explored the integration of multi-view deep learning techniques into hash learning, resulting in a supervised multi-view hash model that significantly enhances retrieval performance across various datasets. \n\nI have also developed the Hybrid Spectral Denoising Transformer (HSDT) for hyperspectral image denoising, which combines the strengths of convolutional and transformer models to effectively capture spatial-spectral correlations while maintaining efficiency. My research extends to high dynamic range (HDR) imaging, where I proposed a model that leverages raw sensor data to improve HDR reconstruction, particularly in challenging lighting conditions.\n\nIn the realm of electricity consumption prediction, I introduced a multi-task optimization framework that facilitates knowledge transfer between tasks, enhancing prediction accuracy. Additionally, I have tackled the challenges of person re-identification in unsupervised settings, proposing methods that eliminate the need for clustering while improving robustness to hyper-parameter changes.\n\nMy work also includes advancements in change captioning, where I developed networks that effectively distinguish real changes from distractors, and in image captioning, where I created a Cascaded Revision Network to enhance descriptions of images with novel objects. I am passionate about addressing the challenges posed by crowd-sourced annotations and have proposed a Coupled Confusion Correction method to better model annotator expertise.\n\nOverall, my research aims to push the boundaries of what is possible in image analysis and retrieval, leveraging deep learning and innovative methodologies to solve complex real-world problems.",
+    "collaborators": [
+      "Liang Li",
+      "Ying Fu",
+      "Yu Wu",
+      "Yunbin Tu",
+      "Biao Gong",
+      "Yuxuan Wei",
+      "Yue Gao",
+      "Zeqiang Lai",
+      "Yunhao Zou",
+      "Hui Song"
+    ],
+    "domain": [
+      "Image Processing",
+      "Deep Learning",
+      "Hashing",
+      "Multi-task Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b00278d0-de46-4d23-a5f5-38462e9cd575": {
+    "pk": "b00278d0-de46-4d23-a5f5-38462e9cd575",
+    "project_name": null,
+    "name": "Shiming Ge",
+    "bio": "I am a researcher dedicated to advancing the fields of computer vision and machine learning, with a particular focus on low-resolution face recognition, knowledge distillation, and model interpretability. My recent work has explored innovative approaches to enhance the adaptability and performance of models in challenging scenarios, such as low-resolution images and face manipulation detection. For instance, I developed an adaptable instance-relation distillation method that effectively transfers knowledge from high-resolution to low-resolution face recognition, significantly improving model performance.\n\nI am also passionate about making deep learning models more interpretable and trustworthy. My research includes a re-label distillation approach that provides insights into the decision-making processes of black-box models, as well as an interpretable face manipulation detection framework that balances accuracy and transparency.\n\nIn addition to these contributions, I have tackled the challenges posed by noisy labels in crowd-sourced data, proposing methods like Trustable Co-label Learning and Coupled Confusion Correction to enhance model robustness. My work on federated learning emphasizes personalized model training, ensuring that clients can benefit from global knowledge while maintaining local adaptability.\n\nThrough extensive experimentation and innovative methodologies, I strive to push the boundaries of what is possible in machine learning, making significant strides in both theoretical understanding and practical applications. My goal is to create models that are not only effective but also reliable and interpretable, paving the way for their deployment in real-world scenarios.",
+    "collaborators": [
+      "Shikun Li",
+      "Dan Zeng",
+      "Daichi Zhang",
+      "Pengju Wang",
+      "Tongliang Liu",
+      "Jia Li",
+      "Xiaobo Xia",
+      "Hansong Zhang",
+      "Ruixin Shi",
+      "Yingying Hua"
+    ],
+    "domain": [
+      "Knowledge Distillation",
+      "Face Recognition",
+      "Deep Learning",
+      "Privacy Preservation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

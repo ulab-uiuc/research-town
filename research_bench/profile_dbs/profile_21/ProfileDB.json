@@ -1,0 +1,268 @@
+{
+  "b135c4c5-9ce0-46f7-b1f1-1fd47133fbc0": {
+    "pk": "b135c4c5-9ce0-46f7-b1f1-1fd47133fbc0",
+    "project_name": null,
+    "name": "Haotian Ye",
+    "bio": "I am a researcher deeply engaged in the intersection of natural language processing (NLP) and linguistic typology, with a particular focus on enhancing the understanding and processing of low-resource languages. My work explores innovative approaches to language similarity, emphasizing conceptual representations that complement traditional lexical and typological measures. I have developed methods to address challenges in machine learning, such as spurious correlations and out-of-distribution generalization, proposing algorithms like Freeze then Train (FTT) that improve model robustness.\n\nIn my recent research, I have introduced frameworks like TransliCo and Transliterate-Merge-Initialize (TransMI) to optimize multilingual pretrained language models (mPLMs) for crosslingual transfer, particularly in the context of different scripts. I am also investigating the emergent capabilities of large language models (LLMs) and have proposed in-context vectors (ICV) to enhance their performance on various tasks while reducing computational costs.\n\nMy work extends to the theoretical aspects of reinforcement learning generalization and the efficient solving of partial differential equations using deep learning techniques. Additionally, I have pioneered methods to identify colexification patterns across languages, leveraging unannotated parallel corpora to build multilingual graphs that facilitate transfer learning.\n\nThrough my research, I aim to bridge linguistic diversity and improve NLP applications, making significant strides in understanding how language models can better serve underrepresented languages and complex linguistic phenomena.",
+    "collaborators": [
+      "Yihong Liu",
+      "Hinrich Sch\u00fctze",
+      "Chunlan Ma",
+      "James Zou",
+      "Liwei Wang",
+      "Linjun Zhang",
+      "Collin Burns",
+      "Dan Klein",
+      "Jacob Steinhardt",
+      "Chuanlong Xie"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Crosslingual Transfer",
+      "Machine Learning",
+      "Linguistic Typology"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d01b1b53-355a-43b5-9da5-b6bb44657d04": {
+    "pk": "d01b1b53-355a-43b5-9da5-b6bb44657d04",
+    "project_name": null,
+    "name": "Haowei Lin",
+    "bio": "I am a researcher deeply engaged in the intersection of natural language processing (NLP) and machine learning, with a particular focus on out-of-distribution (OOD) detection, continual learning, and the development of intelligent agents in complex environments like Minecraft. My recent work has led to the creation of FLatS, a principled framework for OOD detection that leverages likelihood ratios to enhance existing methods, achieving state-of-the-art results on popular benchmarks.\n\nI am also passionate about advancing continual learning paradigms, exemplified by my development of the TPL method for task-id prediction in class incremental learning settings. This approach significantly reduces catastrophic forgetting while improving task identification accuracy. My exploration of continual post-training systems, such as CPT, aims to incrementally adapt language models to new domains without losing previously acquired knowledge.\n\nIn addition to theoretical advancements, I have contributed to practical applications, such as the MCU framework for evaluating Minecraft agents, which emphasizes task-centric assessments and skill benchmarks. My work on OmniJARVIS, a Vision-Language-Action model, showcases my commitment to creating open-world agents capable of reasoning and decision-making through unified multimodal interactions.\n\nThrough my research, I strive to bridge theoretical insights with practical implementations, pushing the boundaries of what is possible in NLP and intelligent systems. I am dedicated to developing frameworks that not only enhance model performance but also provide a deeper understanding of the underlying principles governing these technologies.",
+    "collaborators": [
+      "Yitao Liang",
+      "Zihao Wang",
+      "Yijia Shao",
+      "Bing Liu",
+      "Jianzhu Ma",
+      "Zixuan Ke",
+      "Hu Xu",
+      "Lei Shu",
+      "Haotian Ye",
+      "James Zou"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Continual Learning",
+      "Out-of-Distribution Detection",
+      "Vision-Language Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "643295fc-3de3-4111-87cd-c50148fd08fc": {
+    "pk": "643295fc-3de3-4111-87cd-c50148fd08fc",
+    "project_name": null,
+    "name": "Jiaqi Han",
+    "bio": "I am a researcher deeply engaged in the intersection of mathematical physics and machine learning, with a particular focus on soliton dynamics and equivariant graph neural networks (GNNs). My recent work has explored the dynamics of algebraic solitons in the massive Thirring model, where I derived exact solutions that reveal the intricate interactions between solitons. This foundational research has paved the way for my investigations into geometric graphs, where I have classified and analyzed equivariant GNNs to enhance their application in modeling multi-body physical systems.\n\nI have developed Equivariant Hierarchy-based Graph Networks (EGHNs), which improve the expressivity of message passing in GNNs, allowing for better substructure discovery and global information fusion. My work in reinforcement learning has led to the creation of Subequivariant Graph RL in 3D environments, where I introduced new benchmarks that enable agents to explore with full degrees of freedom, significantly enhancing exploration efficiency through geometric symmetry.\n\nAdditionally, I have applied deep learning techniques to solve high-order nonlinear soliton equations, demonstrating the effectiveness of neural networks in approximating complex solutions under various conditions. My research not only contributes to theoretical advancements but also aims to bridge the gap between mathematical models and practical applications in physics and machine learning. I am committed to pushing the boundaries of these fields and fostering innovative methodologies that can tackle complex dynamical systems.",
+    "collaborators": [
+      "Wenbing Huang",
+      "Yu Rong",
+      "Tingyang Xu",
+      "Cheng He",
+      "Dmitry E. Pelinovsky",
+      "Runfa Chen",
+      "Fuchun Sun",
+      "Shikun Cui",
+      "Zhen Wang",
+      "Xinyu Cui"
+    ],
+    "domain": [
+      "Graph Neural Network",
+      "Soliton Dynamics",
+      "Reinforcement Learning",
+      "Equivariant Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "266362d0-3018-4f4e-a416-98166eb94488": {
+    "pk": "266362d0-3018-4f4e-a416-98166eb94488",
+    "project_name": null,
+    "name": "Minkai Xu",
+    "bio": "I am a researcher specializing in computational chemistry and machine learning, with a focus on molecular conformation generation and drug discovery. My work aims to bridge the gap between 2D molecular graphs and their stable 3D structures, addressing fundamental challenges in predicting molecular conformations. I have developed innovative approaches such as ConfGF, which estimates gradient fields for direct conformation generation, and GeoDiff, a generative model that learns to reverse the diffusion process for stable molecular structures.\n\nMy research also explores the application of generative models, including diffusion models and energy-based models, to enhance the efficiency and accuracy of molecular generation tasks. For instance, I introduced the Energy-Based Imitation Learning (EBIL) framework, which simplifies the imitation learning process by leveraging energy-based models to recover meaningful reward signals. Additionally, I have contributed to retrosynthesis prediction with G2Gs, a template-free approach that transforms target molecular graphs into reactant graphs, significantly improving accuracy.\n\nI am passionate about advancing the field of molecular modeling through the integration of deep learning techniques and traditional computational methods. My recent work on Equivariant Graph Neural Operators (EGNO) exemplifies this, as it models the dynamics of relational systems while preserving 3D equivariance. I strive to create robust, scalable solutions that can be applied to real-world challenges in drug discovery and material design, ultimately contributing to the development of effective therapeutic agents.",
+    "collaborators": [
+      "Jian Tang",
+      "Stefano Ermon",
+      "Chence Shi",
+      "Weinan Zhang",
+      "Shitong Luo",
+      "Jure Leskovec",
+      "Yuxuan Song",
+      "Hao Zhou",
+      "Aaron Lou",
+      "Yoshua Bengio"
+    ],
+    "domain": [
+      "Molecular Modeling",
+      "Generative Models",
+      "Machine Learning",
+      "Computational Chemistry"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "36f3cbf0-e769-4e99-ae04-b62acabbb781": {
+    "pk": "36f3cbf0-e769-4e99-ae04-b62acabbb781",
+    "project_name": null,
+    "name": "Sheng Liu",
+    "bio": "I am a researcher with a diverse background in theoretical physics, control systems, image processing, and optimization. My recent work has focused on the phase transition dynamics of trapped Bose-Einstein condensates, where I explored the Kibble-Zurek mechanism to understand domain wall defects during phase transitions. I have also delved into the soft-wall AdS/QCD model, investigating meson and nucleon spectra, and successfully aligning theoretical predictions with experimental data.\n\nIn the realm of control systems, I have applied fuzzy control techniques to stabilize platforms, comparing their effectiveness against classical methods like PID control. My work in hyperspectral image denoising has led to the development of the multi-modal and frequency-weighted tensor nuclear norm (MFWTNN), which enhances low-rank representation and improves denoising performance through innovative algorithms.\n\nAdditionally, I have tackled real-world challenges in logistics by modeling a stochastic dynamic driver dispatching and routing problem for last-mile delivery systems. My structured approximation framework significantly improved delivery times, demonstrating the practical impact of my research.\n\nLastly, I have explored joint encryption and compression techniques for image data security, developing methods to recover visual information from encrypted images. My interdisciplinary approach allows me to bridge theoretical concepts with practical applications, driving advancements in both fundamental research and real-world solutions.",
+    "collaborators": [
+      "Yongsheng Zhang",
+      "Peng Zhang",
+      "Said Leghmizi",
+      "Xiaozhen Xie",
+      "Zhixing Luo",
+      "Chengqing Li"
+    ],
+    "domain": [
+      "Quantum Physics",
+      "Fuzzy Control",
+      "Image Processing",
+      "Stochastic Optimization"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "45068942-707f-4630-94f0-721bcc322ce3": {
+    "pk": "45068942-707f-4630-94f0-721bcc322ce3",
+    "project_name": null,
+    "name": "Yitao Liang",
+    "bio": "I am a researcher dedicated to advancing the fields of machine learning and artificial intelligence, with a particular focus on developing innovative models and frameworks that bridge the gap between symbolic reasoning and deep learning. My recent work includes the introduction of logistic circuits, which outperform traditional neural networks on benchmark datasets while maintaining a strong connection to symbolic AI. I have also explored incentive mechanisms for crowdsourcing, proposing a reinforcement learning approach that dynamically incentivizes high-quality data collection without prior assumptions about worker behavior.\n\nIn the realm of causality, I developed DIGIC, a framework that identifies causal features for domain generalization using single-domain data, enhancing imitation learning. My work in open-ended environments, particularly in Minecraft, led to the creation of the MCU framework for agent evaluation, which assesses agent capabilities through a multi-dimensional task difficulty scoring system.\n\nI have also contributed to knowledge graph reasoning with RulE, a framework that integrates logical rules into knowledge graph embeddings, and to meta reinforcement learning with ANOLE, which enables fast policy adaptation through human preference feedback. My research extends to understanding and improving deep reinforcement learning algorithms, such as DQN and ADAC, and developing tractable probabilistic models for offline reinforcement learning.\n\nOverall, my work aims to create robust, adaptable AI systems capable of learning and reasoning in complex, dynamic environments, while also addressing practical challenges in data collection and model interpretability.",
+    "collaborators": [
+      "Guy Van den Broeck",
+      "Anji Liu",
+      "Zihao Wang",
+      "Shaofei Cai",
+      "Xiaojian Ma",
+      "Pasha Khosravi",
+      "YooJung Choi",
+      "Jianzhu Ma",
+      "Antonio Vergari",
+      "Xuejie Liu"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Reinforcement Learning",
+      "Causality",
+      "Knowledge Graphs"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "970b4caa-7f25-42e3-8f25-2eb57778bdca": {
+    "pk": "970b4caa-7f25-42e3-8f25-2eb57778bdca",
+    "project_name": null,
+    "name": "Jianzhu Ma",
+    "bio": "I am a researcher dedicated to advancing the fields of protein structure prediction, drug design, and machine learning. My work primarily focuses on leveraging innovative computational methods to address complex biological challenges. Recently, I developed a machine learning-based approach for predicting protein structures, which significantly enhances accuracy through advanced alignment techniques and contact prediction methods. My contributions include the introduction of MRFalign, a framework that utilizes Markov Random Fields for better protein alignment, and a Group Graphical Lasso method that integrates evolutionary coupling analysis with supervised learning for improved contact predictions.\n\nIn addition to protein research, I have explored the realm of temporal networks and higher-order interactions, proposing the HIT model for predicting complex interaction patterns. My work on stochastic optimization led to the development of XOR-PGD, an efficient algorithm that addresses constrained optimization problems, demonstrating superior performance in various applications.\n\nI am also passionate about applying deep learning to drug design, having created models like MolDiff and 3DLinker that generate realistic 3D molecules and linkers for drug candidates. My recent work on Pocket2Mol showcases my commitment to integrating structural information into drug design, achieving significant improvements in binding affinity and drug properties.\n\nThrough my research, I aim to bridge the gap between computational methods and biological applications, ultimately contributing to advancements in healthcare and our understanding of life at the molecular level.",
+    "collaborators": [
+      "Jian Peng",
+      "Xingang Peng",
+      "Jiaqi Guan",
+      "Sheng Wang",
+      "Jinbo Xu",
+      "Shitong Luo",
+      "Pan Li",
+      "Yijie Wang",
+      "Qiang Liu",
+      "Yinan Huang"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Protein Structure Prediction",
+      "Graph Neural Network",
+      "Drug Design"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "392ed97f-bcf5-4513-8e15-0e37323a2bb0": {
+    "pk": "392ed97f-bcf5-4513-8e15-0e37323a2bb0",
+    "project_name": null,
+    "name": "James Zou",
+    "bio": "I am a researcher deeply engaged in the intersection of machine learning, data analysis, and interpretability. My work primarily focuses on developing frameworks and algorithms that enhance our understanding of complex models and the data they operate on. Recently, I have explored the concept-based explanations in machine learning, proposing the ACE algorithm to extract human-understandable visual concepts that improve model interpretability.\n\nI have also addressed the challenges of exploratory data analysis, introducing a general information usage framework to quantify and bound biases in data exploration, which is crucial for maintaining scientific rigor. My research extends to non-negative matrix factorization, where I introduced the Face-Intersect algorithm to solve subset-separable NMF problems, enhancing the robustness of factorization methods.\n\nIn the realm of matching markets, I analyzed the trade-offs between application costs and the quality of matches, providing insights into how application processes can be optimized. My work on experience replay in deep reinforcement learning has led to a better understanding of memory dynamics and their impact on learning efficiency.\n\nI am particularly interested in the implications of large language models (LLMs) and their potential risks, including the challenges of watermarking and the vulnerabilities to Bait-and-Switch attacks. My research aims to uncover the underlying mechanisms of LLMs and improve their safety and reliability.\n\nOverall, my contributions span a wide range of topics, from data valuation and interpretability to generative models and bias mitigation, all aimed at making machine learning more transparent, equitable, and effective in real-world applications.",
+    "collaborators": [
+      "Abubakar Abid",
+      "Amirata Ghorbani",
+      "Rong Ge",
+      "Yongchan Kwon",
+      "James Wexler",
+      "Been Kim",
+      "Daniel Russo",
+      "S. Matthew Weinberg",
+      "Ruishan Liu",
+      "Bryan He"
+    ],
+    "domain": [
+      "Interpretability",
+      "Machine Learning",
+      "Data Valuation",
+      "Generative Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0922107b-bb53-4c6c-90df-94f5dea28fd8": {
+    "pk": "0922107b-bb53-4c6c-90df-94f5dea28fd8",
+    "project_name": null,
+    "name": "Stefano Ermon",
+    "bio": "I am a researcher deeply engaged in the intersection of machine learning, probabilistic modeling, and decision-making. My work primarily focuses on developing innovative algorithms that enhance the efficiency and effectiveness of learning from data, particularly in high-dimensional and complex environments. \n\nOne of my recent contributions is a novel framework for direct policy extraction from expert behavior, which significantly improves performance in imitation learning tasks. I have also explored the critical issue of model calibration under domain shifts, proposing methods that ensure reliable uncertainty quantification in safety-critical applications. My research extends to unsupervised learning, where I introduced a method for supervising neural networks through constraints derived from domain knowledge, reducing the reliance on labeled data.\n\nI am particularly interested in generative models and have developed techniques that leverage score-based methods for high-resolution image generation, achieving state-of-the-art results. My work on variational mutual information estimators has provided new insights into bias-variance trade-offs, enhancing unsupervised representation learning.\n\nAdditionally, I have investigated the challenges of inference in discrete graphical models, proposing efficient methods that utilize probabilistic circuits for exact gradient computation. My goal is to create robust machine learning systems that can adapt to real-world complexities while maintaining high performance and reliability. Through my research, I aim to bridge theoretical advancements with practical applications, ultimately contributing to safer and more effective AI systems.",
+    "collaborators": [
+      "Jiaming Song",
+      "Aditya Grover",
+      "Yang Song",
+      "Volodymyr Kuleshov",
+      "Jonathan Ho",
+      "Anusri Pampari",
+      "Russell Stewart",
+      "Carla P. Gomes",
+      "Bart Selman",
+      "Colin Wei"
+    ],
+    "domain": [
+      "Imitation Learning",
+      "Uncertainty Quantification",
+      "Generative Models",
+      "Graphical Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

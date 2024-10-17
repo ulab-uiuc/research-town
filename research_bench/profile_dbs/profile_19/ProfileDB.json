@@ -1,0 +1,194 @@
+{
+  "0542762a-7100-43d7-9aa3-02d6dee183d9": {
+    "pk": "0542762a-7100-43d7-9aa3-02d6dee183d9",
+    "project_name": null,
+    "name": "Mark Weber",
+    "bio": "I am a researcher deeply engaged in the realms of higher category theory, operads, and their applications in algebraic structures. My work has focused on developing a comprehensive framework for understanding operads, multitensors, and their relationships with monoidal structures. I have explored the intricate connections between higher operads and various tensor products, including the Gray tensor product of 2-categories and the Crans tensor product of Gray categories. \n\nIn my recent publications, I have unified previous developments in higher operads and multitensors, providing a conceptual foundation that facilitates the exploration of these structures. I have also extended the theory of lax monoidal structures, introducing new results that enhance our understanding of weak n-categories and their algebraic properties. \n\nBeyond category theory, I have ventured into practical applications, such as developing a novel panoptic segmentation method that operates at near video frame rates, addressing the challenges of object instance segmentation in real-time scenarios. Additionally, I have tackled the pressing issue of algorithmic fairness in lending, proposing solutions to mitigate subgroup discrimination while adhering to existing fairness requirements.\n\nMy research is driven by a desire to bridge theoretical advancements with practical implications, and I am committed to exploring the rich interplay between abstract algebraic structures and their applications in various domains.",
+    "collaborators": [
+      "Michael Batanin",
+      "Denis-Charles Cisinski",
+      "Joachim Kock",
+      "Jonathon Luiten",
+      "Bastian Leibe",
+      "Mikhail Yurochkin",
+      "Sherif Botros",
+      "Vanio Markov",
+      "Matthew Feller",
+      "Richard Garner"
+    ],
+    "domain": [
+      "Higher Category Theory",
+      "Operads",
+      "Monoidal Structures",
+      "Algorithmic Fairness"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "83f7219a-ecc8-4569-b42e-119f07e76173": {
+    "pk": "83f7219a-ecc8-4569-b42e-119f07e76173",
+    "project_name": null,
+    "name": "Lijun Yu",
+    "bio": "I am a researcher dedicated to advancing the field of generative learning, particularly in non-textual modalities like video. My recent work focuses on developing multi-task models that generate and understand visual content, leveraging high-fidelity latent representations and innovative tokenization techniques. I have successfully demonstrated that language models can surpass traditional diffusion models in visual synthesis, and I have created a scalable generative multi-modal transformer capable of producing videos with synchronized audio.\n\nIn addition to my work in generative models, I have explored the nuances of travel time valuation, applying advanced modeling techniques to understand how different socio-economic factors influence travel preferences. My research has led to the development of a comprehensive framework for estimating the value of travel time and savings, enhancing our understanding of urban travel behavior.\n\nI have also ventured into traffic safety, creating a model that predicts car crashes using 3D road reconstructions and trajectory predictions, achieving impressive accuracy without labeled training data. Furthermore, I have contributed to the gaming domain with MOBA-Slice, a framework that quantitatively evaluates team advantages in multiplayer online battle arena games, enhancing both AI development and game analysis.\n\nThrough these diverse projects, I aim to bridge the gap between complex data modalities and practical applications, paving the way for real-time, interactive experiences across various fields. My work reflects a commitment to innovation and a passion for exploring the potential of generative models in understanding and creating non-textual data.",
+    "collaborators": [
+      "Dawei Zhang",
+      "Xiangqun Chen",
+      "Baojun He",
+      "Alexander Hauptmann",
+      "Xing Xie"
+    ],
+    "domain": [
+      "Generative Models",
+      "Video Synthesis",
+      "Machine Learning",
+      "Traffic Prediction"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "26e34d6e-6eaf-4eef-bd12-5a4e071895b1": {
+    "pk": "26e34d6e-6eaf-4eef-bd12-5a4e071895b1",
+    "project_name": null,
+    "name": "Qihang Yu",
+    "bio": "I am a researcher dedicated to advancing the field of machine perception, particularly in the areas of object localization and recognition within complex environments. My recent work has focused on developing innovative models that address the limitations of existing methods, such as the OmniScient Model (OSM), which leverages large language models to predict class labels generatively, eliminating the need for predefined class names during both training and testing. This approach enhances generalization across datasets without human intervention.\n\nI have also explored efficient 3D segmentation techniques, proposing a novel method that utilizes \"thickened\" 2D inputs to capture 3D contextual information, achieving superior performance while maintaining low inference latency. My research extends to the development of the Glance-and-Gaze Transformer (GG-Transformer), which efficiently models long-range dependencies and local context in vision tasks, demonstrating significant improvements over previous state-of-the-art models.\n\nAdditionally, I have contributed to the field of open-vocabulary segmentation with the FC-CLIP framework, which simplifies the segmentation process and sets new benchmarks across various datasets. My work on image tokenization has led to the creation of the Transformer-based 1-Dimensional Tokenizer (TiTok), which significantly enhances the efficiency of high-resolution image synthesis.\n\nThrough my research, I aim to bridge the gap between theoretical advancements and practical applications, continually striving to push the boundaries of what is possible in machine perception.",
+    "collaborators": [
+      "Xiaohui Shen",
+      "Liang-Chieh Chen",
+      "Yingda Xia",
+      "Alan L. Yuille",
+      "Alan Yuille",
+      "Ju He",
+      "Xueqing Deng",
+      "Lingxi Xie",
+      "Elliot K. Fishman",
+      "Yingwei Li"
+    ],
+    "domain": [
+      "Computer Vision",
+      "Machine Learning",
+      "Image Segmentation",
+      "Generative Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "bb8efe01-b465-4fde-9147-bb6bbf86a3cc": {
+    "pk": "bb8efe01-b465-4fde-9147-bb6bbf86a3cc",
+    "project_name": null,
+    "name": "Xueqing Deng",
+    "bio": "I am a researcher deeply engaged in the intersection of geospatial analysis and deep learning, with a focus on enhancing geographic knowledge discovery through innovative methodologies. My recent work has explored the potential of conditional generative adversarial networks (cGANs) to synthesize ground-level imagery from overhead views, addressing the challenges posed by sparse geotagged media. This research has led to the development of frameworks that not only generate realistic images but also improve land-cover classification through learned representations.\n\nI have also pioneered approaches for fine-grained land use mapping using ground-level images, leveraging convolutional neural networks to classify diverse land-use classes effectively. My work emphasizes the importance of robust data augmentation strategies to mitigate the noise inherent in user-generated content. Additionally, I have contributed to advancements in domain adaptation techniques, particularly in remote sensing, by proposing scale-aware adversarial learning frameworks that enhance model generalization across varying scales and locations.\n\nMy research extends to the realm of open-vocabulary segmentation, where I have developed a streamlined framework that integrates multi-modal models for efficient object recognition. I am passionate about pushing the boundaries of generative models, as evidenced by my work on novel tokenization methods that significantly enhance image synthesis efficiency.\n\nThrough my contributions, I aim to bridge the gap between geospatial data and machine learning, fostering interdisciplinary collaboration to tackle complex societal challenges. I am committed to advancing the field of GeoAI and enhancing the capabilities of AI systems in understanding and interpreting our world.",
+    "collaborators": [
+      "Shawn Newsam",
+      "Yi Zhu",
+      "Peng Wang",
+      "Qihang Yu",
+      "Xiaohui Shen",
+      "Liang-Chieh Chen",
+      "Yuxin Tian",
+      "Mark Weber",
+      "Daniel Cremers",
+      "Xiaochen Lian"
+    ],
+    "domain": [
+      "Geospatial Analysis",
+      "Deep Learning",
+      "Generative Models",
+      "Semantic Segmentation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "84ecfa53-8f93-4200-9463-c82e2eccf80c": {
+    "pk": "84ecfa53-8f93-4200-9463-c82e2eccf80c",
+    "project_name": null,
+    "name": "Xiaohui Shen",
+    "bio": "I am a researcher dedicated to advancing the fields of depth estimation, image synthesis, and machine perception. My recent work has focused on addressing the limitations of existing depth datasets by introducing DynOcc, the first dataset of dynamic in-the-wild scenes. This dataset, which contains 22 million depth pairs, leverages occlusion cues to enhance depth estimation, achieving state-of-the-art results in weighted human disagreement rates.\n\nIn the realm of image synthesis, I developed SemanticStyleGAN, a model that allows for fine-grained control over synthesized images by disentangling local semantic parts. This innovation not only improves image editing capabilities but also extends the potential applications of GANs across various domains through transfer learning.\n\nAdditionally, I have tackled the challenges of object localization and recognition in open-ended environments with the OmniScient Model (OSM). By utilizing a Large Language Model (LLM) for class prediction, OSM eliminates the need for predefined class names during both training and testing, enabling robust generalization and cross-dataset training without human intervention.\n\nThrough these contributions, I aim to push the boundaries of machine perception and image synthesis, making significant strides in how machines understand and interact with the visual world.",
+    "collaborators": [
+      "Yifan Wang",
+      "Linjie Luo",
+      "Xing Mei",
+      "Yichun Shi",
+      "Xiao Yang",
+      "Yangyue Wan",
+      "Qihang Yu",
+      "Liang-Chieh Chen"
+    ],
+    "domain": [
+      "Depth Estimation",
+      "Generative Adversarial Networks",
+      "Object Recognition",
+      "Machine Perception"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "ae1879ce-a618-41e9-b049-f8d4bbe809ed": {
+    "pk": "ae1879ce-a618-41e9-b049-f8d4bbe809ed",
+    "project_name": null,
+    "name": "Daniel Cremers",
+    "bio": "I am a researcher deeply engaged in the intersection of optimization, machine learning, and computer vision. My work primarily focuses on developing novel algorithms and frameworks that enhance the performance and understanding of complex systems. Recently, I have explored variational problems, particularly in the context of nonconvex optimization, where I have contributed to the analysis and convergence of primal-dual hybrid gradient methods. \n\nI have also delved into the realm of deep learning, proposing innovative interpretations of neural networks as chain graphs, which provide a robust theoretical foundation for understanding their behavior and improving their performance. My research extends to the application of deep reinforcement learning in autonomous driving, where I have successfully extracted reward functions from large state spaces.\n\nIn the field of image processing, I have developed methods for texture and color-based segmentation, as well as advanced techniques for depth map super-resolution using uncalibrated photometric stereo. My work on continuous-time feature tracking in event cameras showcases my commitment to pushing the boundaries of real-time computer vision applications.\n\nOverall, my research aims to bridge theoretical insights with practical applications, fostering advancements in both machine learning and computer vision. I am passionate about exploring new methodologies that can lead to more efficient and interpretable models, ultimately contributing to the broader field of artificial intelligence.",
+    "collaborators": [
+      "Thomas M\u00f6llenhoff",
+      "Evgeny Strekalovskiy",
+      "Yuesong Shen",
+      "Ioannis Chiotellis",
+      "Michael Moeller",
+      "Andreas Mielke",
+      "Marvin Eisenberger",
+      "Emanuel Laude",
+      "Christian Tomani",
+      "Christian Koke"
+    ],
+    "domain": [
+      "Optimization",
+      "Variational Methods",
+      "Deep Learning",
+      "Computer Vision"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "f56c4dd7-5499-4efd-8f52-79be094b5973": {
+    "pk": "f56c4dd7-5499-4efd-8f52-79be094b5973",
+    "project_name": null,
+    "name": "Liang-Chieh Chen",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research on dynamic graphs culminated in the ROLAND framework, which allows static GNNs to adapt to dynamic environments, thereby enhancing their scalability and effectiveness.\n\nIn addition to architectural innovations, I have explored the design space of GNNs, systematically analyzing over 315,000 configurations to provide guidelines for optimal model selection across different tasks. My work in automated machine learning (AutoML) has also focused on improving search efficiency through knowledge transfer, enabling faster and more effective model design.\n\nOverall, my research aims to bridge theoretical insights with practical applications, driving forward the understanding and utility of GNNs in real-world scenarios. I am passionate about continuing to explore the intersections of graph theory, machine learning, and data science to unlock new possibilities in predictive modeling.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "8a1cb131-d48e-4ed0-bf38-8f3433304988": {
+    "pk": "8a1cb131-d48e-4ed0-bf38-8f3433304988",
+    "project_name": null,
+    "name": "Kunpeng Xu",
+    "bio": "I am a researcher dedicated to addressing critical challenges in healthcare and autonomous systems through innovative modeling and machine learning techniques. My recent work focuses on the alarming rise in diabetes cases, particularly exacerbated by the COVID-19 pandemic. I developed a predictive model that quantifies factors influencing hospital stay durations for diabetes patients, providing valuable insights for hospital administrators to enhance patient management strategies. This research underscores the importance of understanding urban-rural disparities in healthcare access and the financial implications of diabetes-related hospitalizations.\n\nIn the realm of autonomous driving, I have contributed to advancing lane-changing decision-making through my novel framework, DRNet, which leverages deep reinforcement learning. This approach not only improves lane-changing efficiency but also incorporates safety verification to ensure that the agent makes safe driving decisions in complex environments.\n\nAdditionally, I have explored the groundbreaking Kolmogorov-Arnold Networks (KAN) for time series forecasting, proposing variants that enhance predictive accuracy and interpretability. My work on Wormhole, a deep representation learning framework, further emphasizes my commitment to understanding dynamic concepts in co-evolving sequences, providing tools for better decision-making in complex systems.\n\nThrough my research, I aim to bridge the gap between theoretical advancements and practical applications, ensuring that my findings contribute to more effective healthcare management and safer autonomous systems.",
+    "collaborators": [
+      "Lifei Chen",
+      "Shengrui Wang",
+      "Jorden Lam"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Time Series Analysis",
+      "Deep Learning",
+      "Predictive Modeling"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e6a8ceee-26a6-468f-b055-2a03b6fb59fa": {
+    "pk": "e6a8ceee-26a6-468f-b055-2a03b6fb59fa",
+    "project_name": null,
+    "name": "Lifei Chen",
+    "bio": "I am a researcher dedicated to advancing machine learning and deep learning techniques, particularly in the realms of autonomous driving, time series forecasting, computer vision, and molecular dynamics. My recent work has focused on leveraging deep reinforcement learning (DRL) to enhance lane-changing maneuvers in autonomous vehicles through my framework, DRNet, which prioritizes safety and adaptability in complex driving scenarios.\n\nI have also explored the innovative Kolmogorov-Arnold Networks (KAN) for time series forecasting, developing T-KAN and MT-KAN to improve interpretability and predictive performance in dynamic environments. My research on co-evolving sequences led to the creation of Wormhole, a framework that identifies dynamic concepts and transitions, enhancing our understanding of complex systems.\n\nIn the field of computer vision, I have tackled challenges related to color bias and adversarial attacks. My strategies, such as Random Color Dropout and Local Feature Masking, aim to improve model robustness and generalization by effectively managing color variations and enhancing feature learning. Additionally, I have contributed to the application of machine learning force fields in molecular dynamics, introducing BAMBOO, a framework that demonstrates state-of-the-art accuracy in predicting properties of liquid electrolytes.\n\nThrough my work, I strive to bridge the gap between theoretical advancements and practical applications, ensuring that my contributions not only push the boundaries of research but also have a meaningful impact on real-world challenges.",
+    "collaborators": [
+      "Yunpeng Gong",
+      "Kunpeng Xu",
+      "Shengrui Wang",
+      "Liqing Huang",
+      "Min Jiang",
+      "Jiaquan Li",
+      "Chuangliang Zhang",
+      "Yongjie Hou",
+      "Sheng Gong",
+      "Yumin Zhang"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Deep Learning",
+      "Computer Vision",
+      "Reinforcement Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "decef250-7480-4430-84e1-634a96c9b074": {
+    "pk": "decef250-7480-4430-84e1-634a96c9b074",
+    "project_name": null,
+    "name": "Shengrui Wang",
+    "bio": "I am a researcher dedicated to the intersection of artificial intelligence, machine learning, and social dynamics, with a particular focus on automated fact-checking, time series forecasting, and the interpretability of AI models. My recent work has explored the critical role of automated fact-checking in combating misinformation, where I proposed a comprehensive taxonomy of methodologies and future directions for enhancing explainability in this domain.\n\nI have also investigated the mental health implications of social media during the COVID-19 pandemic, developing statistical models that leverage topic modeling and psycholinguistic features to detect signals of depression. My research extends to autonomous vehicles, where I introduced DRNet, a deep reinforcement learning framework that enhances lane-changing decisions by considering the driving styles of surrounding vehicles.\n\nIn the realm of time series analysis, I have contributed to the development of innovative models like T-KAN and MT-KAN, which improve predictive accuracy and interpretability in forecasting tasks. My work on Wormhole introduced a novel framework for identifying dynamic concepts in co-evolving sequences, while my research on ensemble-based deep neural networks has led to significant advancements in scaling forecasting models.\n\nI am also passionate about the ethical implications of AI, particularly in finance, where I have surveyed explainable AI approaches to enhance trust in high-stakes decision-making. My diverse research portfolio reflects my commitment to advancing the understanding and application of AI in real-world scenarios, with a focus on interpretability, efficiency, and societal impact.",
+    "collaborators": [
+      "Jean Marie Tshimula",
+      "Belkacem Chikhaoui",
+      "Kunpeng Xu",
+      "Lifei Chen",
+      "Jean-Marc Patenaude",
+      "Soumaya Cherkaoui",
+      "Jean-Fr\u00e9d\u00e9ric Laprade",
+      "Philippe Chatigny",
+      "Etienne Gael Tajeuna",
+      "Mohamed Bouguessa"
+    ],
+    "domain": [
+      "Automated Fact-Checking",
+      "Time Series Forecasting",
+      "Deep Learning",
+      "Natural Language Processing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "d91e5482-fbd9-47e0-96d4-95b6e285fd70": {
+    "pk": "d91e5482-fbd9-47e0-96d4-95b6e285fd70",
+    "project_name": null,
+    "name": "Sergei Nirenburg",
+    "bio": "I am a researcher dedicated to the development of intelligent agents that leverage knowledge engineering and cognitive architectures to enhance their functionality across various domains. My work emphasizes the integration of dialog act modeling within holistic systems, allowing agents to expand their ontological and lexical knowledge through lifelong learning. I have explored the discovery and representation of lexical rules, demonstrating their critical role in large-scale semi-automatic lexicon acquisition, particularly in business and finance contexts.\n\nA significant focus of my research is on the application of large language models (LLMs) to facilitate the automatic learning of new semantic entries in intelligent agents. By combining knowledge-based methods with LLMs, I have developed hybrid learning architectures that enhance the agent's ability to understand and generate natural language.\n\nI am also passionate about metacognition in artificial intelligence, proposing a framework called TRAP that addresses transparency, reasoning, adaptation, and perception in AI systems. My work on the HARMONIC framework aims to transform general-purpose robots into trusted teammates capable of complex decision-making and natural communication, emphasizing the importance of explainability in high-stakes AI applications.\n\nThrough my research, I strive to create cognitive agents that not only perform tasks but also communicate effectively and provide explanations for their actions, fostering trust and collaboration in human-robot teams. My recent projects demonstrate the potential of integrating cognitive strategies with natural language communication to enhance multi-robot planning and collaboration in real-world scenarios.",
+    "collaborators": [
+      "Marjorie McShane",
+      "Jesse English",
+      "Sanjay Oruganti",
+      "Michael K. Roberts",
+      "Christian Arndt",
+      "Evelyne Viegas",
+      "Boyan Onyshkevych",
+      "Victor Raskin",
+      "Hua Wei",
+      "Paulo Shakarian"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Knowledge Engineering",
+      "Explainable AI",
+      "Robotics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "fb8b1c75-2b4f-41de-b73d-a3ab8c976320": {
+    "pk": "fb8b1c75-2b4f-41de-b73d-a3ab8c976320",
+    "project_name": null,
+    "name": "Marjorie McShane",
+    "bio": "I am a researcher dedicated to advancing the field of natural language generation (NLG) and cognitive robotics, particularly within the OntoAgent cognitive architecture. My work focuses on developing language-endowed intelligent agents (LEIAs) that can effectively communicate and collaborate across various domains. I emphasize the integration of knowledge engineering principles to create holistic agents capable of lifelong learning and dialog act modeling, which enhances their ability to understand and generate natural language.\n\nOne of my recent projects involved leveraging large language model (LLM) technology to automatically expand an agent's semantic lexicon, demonstrating the power of hybrid learning architectures that combine knowledge-based methods with data analytics. I am also deeply invested in the explainable AI (XAI) movement, advocating for a human-centered approach that prioritizes user needs in high-stakes environments. My work in this area has led to the development of cognitive agents that provide transparent explanations, fostering trust in AI systems.\n\nAdditionally, I have contributed to the HARMONIC framework, which transforms general-purpose robots into trusted teammates capable of complex decision-making and natural communication. My research explores multi-robot collaboration, emphasizing metacognition and explainability to enhance human-robot teamwork. Through simulation experiments, I have demonstrated the importance of reasoning and communication in achieving effective collaboration between heterogeneous robots and humans. Overall, my goal is to create intelligent systems that not only perform tasks but also engage meaningfully with their human counterparts.",
+    "collaborators": [
+      "Sergei Nirenburg",
+      "Jesse English",
+      "Sanjay Oruganti",
+      "Michael K. Roberts",
+      "Christian Arndt",
+      "Ivan Leon",
+      "Kenneth W. Goodman"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Explainable AI",
+      "Cognitive Robotics",
+      "Knowledge Engineering"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d8dea9a8-3ed6-4ff4-8558-645f9bad848d": {
+    "pk": "d8dea9a8-3ed6-4ff4-8558-645f9bad848d",
+    "project_name": null,
+    "name": "Kenneth W. Goodman",
+    "bio": "As a researcher deeply invested in the intersection of artificial intelligence and human interaction, I focus on the critical need for explainability in high-stakes AI systems. My work addresses the limitations of traditional machine learning models, which often operate as black boxes, leaving users without the necessary insights to trust their decisions. I advocate for a hybrid approach that combines knowledge-based infrastructures with machine learning, enabling the development of cognitive agents that can provide meaningful explanations tailored to the needs of users in critical domains.\n\nThrough my research, I aim to redefine what it means to explain AI systems, moving beyond the constraints of the human-centered explainable AI (HCXAI) movement. I believe that by creating agents that assist humans\u2014who ultimately bear responsibility for decisions\u2014we can foster a more transparent and accountable AI landscape. My recent work illustrates this potential through a demonstration system where simulated robots collaborate on tasks, showcasing how these agents can effectively communicate their reasoning and actions. My goal is to empower users with the understanding they need to confidently engage with AI technologies in their everyday lives.",
+    "collaborators": [
+      "Sergei Nirenburg",
+      "Marjorie McShane",
+      "Sanjay Oruganti"
+    ],
+    "domain": [
+      "Explainable AI",
+      "Human-Centered AI",
+      "Cognitive Agents"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e2c40492-c063-44f2-97b2-e1d8267e5130": {
+    "pk": "e2c40492-c063-44f2-97b2-e1d8267e5130",
+    "project_name": null,
+    "name": "Sanjay Oruganti",
+    "bio": "I am a researcher dedicated to advancing the field of cognitive robotics and artificial intelligence, with a particular focus on enhancing human-robot collaboration through explainability and intelligent decision-making. My recent work has centered around the development of hybrid learning architectures that integrate large language models (LLMs) with knowledge-based systems, enabling intelligent agents to automatically expand their semantic lexicons and improve their communication capabilities.\n\nOne of my key contributions is the HARMONIC framework, which transforms general-purpose robots into trusted teammates capable of complex decision-making and natural communication. This framework emphasizes the importance of interoperability between cognitive and tactical layers, allowing robots to effectively collaborate in multi-robot tasks. I have also explored innovative approaches to multi-robot planning that incorporate metacognition and natural language communication, ensuring that robots can reason about their actions and provide meaningful explanations to human operators.\n\nIn addition, I have investigated decentralized knowledge dissemination strategies inspired by eavesdropping mechanisms in nature, which enhance the performance of multi-agent systems while reducing reliance on direct communication. My research aims to bridge the gap between machine learning and human-centered AI, ensuring that cognitive agents can provide the transparency and explanations necessary for effective human-robot teaming in high-stakes environments. Through my work, I strive to create intelligent systems that not only perform tasks but also foster trust and understanding between humans and robots.",
+    "collaborators": [
+      "Sergei Nirenburg",
+      "Marjorie McShane",
+      "Jesse English",
+      "Michael K. Roberts",
+      "Christian Arndt",
+      "Kenneth W. Goodman",
+      "Ramviyas Parasuraman",
+      "Ramana Pidaparti"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Explainable AI",
+      "Multi-Robot Systems",
+      "Cognitive Robotics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

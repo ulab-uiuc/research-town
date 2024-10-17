@@ -1,0 +1,165 @@
+{
+  "f4887f0d-b205-4865-bb95-97f84ded26f5": {
+    "pk": "f4887f0d-b205-4865-bb95-97f84ded26f5",
+    "project_name": null,
+    "name": "Giandomenico Cornacchia",
+    "bio": "I am a researcher dedicated to addressing the ethical implications and security challenges posed by Artificial Intelligence and Machine Learning. My recent work focuses on fairness in machine learning, particularly through the lens of counterfactual reasoning. I have developed methodologies that unveil unfair model behaviors, even in scenarios where sensitive features are omitted, revealing hidden biases that persist in decision-making processes.\n\nIn addition to fairness, I am deeply invested in the security of Large Language Models (LLMs). I introduced MoJE, a novel guardrail architecture that enhances the detection of jailbreak attacks while maintaining computational efficiency. My research also explores the intersection of multimodality and recommendation systems, analyzing how different modalities can exacerbate popularity bias and affect recommendation accuracy.\n\nI strive to bridge the gap between academic research and practical applications, particularly in the realm of generative AI. My work on red- and blue-teaming strategies aims to provide actionable insights for practitioners to secure AI systems against adversarial threats. Through my contributions, I hope to foster a more equitable and secure AI landscape, ensuring that technological advancements benefit all users without compromising fairness or safety.",
+    "collaborators": [
+      "Eugenio Di Sciascio",
+      "Vito Walter Anelli",
+      "Fedelucio Narducci",
+      "Azzurra Ragone",
+      "Giulio Zizzo",
+      "Kieran Fraser",
+      "Ambrish Rawat",
+      "Mark Purcell",
+      "Daniele Malitesta",
+      "Claudio Pomo"
+    ],
+    "domain": [
+      "Fairness in AI",
+      "Adversarial Machine Learning",
+      "Recommender Systems",
+      "Generative AI"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "74335913-0df2-4512-b226-13a6c16408c5": {
+    "pk": "74335913-0df2-4512-b226-13a6c16408c5",
+    "project_name": null,
+    "name": "Giulio Zizzo",
+    "bio": "I am a researcher dedicated to enhancing the security and robustness of machine learning systems, particularly in the context of adversarial attacks. My work spans various domains, including deep learning, federated learning, and malware detection, where I explore innovative defenses against adversarial examples that can compromise model integrity. \n\nIn my recent publications, I have developed frameworks like Deep Latent Defence, which combines adversarial training with detection mechanisms to safeguard against misclassification. I have also pioneered federated adversarial training protocols that address privacy concerns while maintaining model robustness. My research on adversarial attacks in industrial control systems highlights the vulnerabilities of neural networks and proposes effective countermeasures.\n\nI am particularly interested in the intersection of adversarial training and watermarking techniques, aiming to protect intellectual property while ensuring model resilience. My work on generative AI emphasizes the importance of red- and blue-teaming strategies to identify and mitigate adversarial threats in real-world applications.\n\nThrough extensive experimentation and innovative methodologies, I strive to bridge the gap between theoretical advancements and practical implementations, ensuring that machine learning models can operate securely in critical applications. My goal is to contribute to a safer AI landscape, where the benefits of machine learning can be harnessed without compromising security or privacy.",
+    "collaborators": [
+      "Ambrish Rawat",
+      "Sergio Maffeis",
+      "Daniel Gibert",
+      "Quan Le",
+      "Chris Hankin",
+      "Jordi Planes",
+      "Kevin Jones",
+      "Mathieu Sinn",
+      "Beat Buesser",
+      "Janvi Thakkar"
+    ],
+    "domain": [
+      "Adversarial Machine Learning",
+      "Deep Learning",
+      "Federated Learning",
+      "Security"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c3f98647-544b-4c09-be47-aca3df82672b": {
+    "pk": "c3f98647-544b-4c09-be47-aca3df82672b",
+    "project_name": null,
+    "name": "Kieran Fraser",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, which has proven effective in various prediction tasks, achieving significant performance improvements.\n\nI am particularly interested in the interplay between graph structures and predictive performance, as demonstrated in my work on relational graphs that reveal a \"sweet spot\" for optimizing neural network architectures. This exploration has led to the creation of Identity-aware GNNs (ID-GNNs), which enhance the expressive power of message-passing frameworks by incorporating node identities during the aggregation process.\n\nAdditionally, I have tackled the challenges posed by dynamic graphs through the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments. My research also extends to automated machine learning (AutoML), where I introduced methods like FALCON and AutoTransfer to improve the efficiency of model design searches by leveraging prior knowledge across tasks.\n\nOverall, my work aims to bridge theoretical insights with practical applications, providing scalable solutions that enhance the performance of GNNs across a variety of domains. I am passionate about pushing the boundaries of what GNNs can achieve and contributing to the broader understanding of their design and functionality.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "75e48379-ba50-4dd3-9afd-3617bb8c0b32": {
+    "pk": "75e48379-ba50-4dd3-9afd-3617bb8c0b32",
+    "project_name": null,
+    "name": "Muhammad Zaid Hamed",
+    "bio": "As a researcher dedicated to the security of Large Language Models (LLMs), I focus on addressing the vulnerabilities that can be exploited through jailbreak attacks. The rapid adoption of LLMs across various applications has highlighted the urgent need for effective protective measures to ensure data integrity and user privacy. My recent work emphasizes the importance of input guardrails in safeguarding these models, culminating in the development of MoJE (Mixture of Jailbreak Expert). \n\nMoJE represents a significant advancement in guardrail architecture, designed to overcome the limitations of existing solutions. By leveraging simple linguistic statistical techniques, I have created a system that not only excels in detecting jailbreak attacks but also maintains computational efficiency during model inference. My rigorous experimentation has shown that MoJE can detect 90% of attacks while preserving the integrity of benign prompts, thereby enhancing the overall security of LLMs. \n\nThrough my research, I aim to contribute to the development of robust security frameworks that protect users and their data in an increasingly AI-driven world.",
+    "collaborators": [
+      "Giandomenico Cornacchia",
+      "Giulio Zizzo",
+      "Kieran Fraser",
+      "Ambrish Rawat",
+      "Mark Purcell"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Security",
+      "Large Language Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "69c1e8ec-912c-4e25-aebe-fbccad8cb643": {
+    "pk": "69c1e8ec-912c-4e25-aebe-fbccad8cb643",
+    "project_name": null,
+    "name": "Ambrish Rawat",
+    "bio": "I am a researcher deeply engaged in the intersection of machine learning, deep learning, and data privacy. My work primarily focuses on addressing the challenges posed by adversarial attacks, model robustness, and the complexities of generative models. I have developed innovative frameworks such as Kernel GANs to enhance the training of Generative Adversarial Networks, and I have explored Bayesian methods to improve model uncertainty and robustness against adversarial examples.\n\nMy recent research has delved into federated learning, where I have proposed methods for federated adversarial training and unlearning, ensuring data privacy while maintaining model performance. I have also investigated the security of large language models (LLMs), developing guardrail architectures like MoJE to prevent jailbreak attacks and enhance model integrity.\n\nI am passionate about democratizing data science through automated methods, and I have contributed to the AutoDS challenge by proposing frameworks that streamline the data science process. My work aims to make advanced machine learning techniques more accessible and efficient, ultimately paving the way for safer and more reliable AI applications. Through rigorous experimentation and innovative methodologies, I strive to push the boundaries of what is possible in machine learning while addressing critical issues of security and privacy.",
+    "collaborators": [
+      "Giulio Zizzo",
+      "Mathieu Sinn",
+      "Martin Wistuba",
+      "Beat Buesser",
+      "Maria-Irina Nicolae",
+      "Tejaswini Pedapati",
+      "Anisa Halimi",
+      "Swanand Kadhe",
+      "Nathalie Baracaldo",
+      "James Requeima"
+    ],
+    "domain": [
+      "Generative Models",
+      "Adversarial Learning",
+      "Federated Learning",
+      "Automated Data Science"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "6a0e7f9c-028f-4506-8988-932316235a72": {
+    "pk": "6a0e7f9c-028f-4506-8988-932316235a72",
+    "project_name": null,
+    "name": "Mark Purcell",
+    "bio": "I am a researcher dedicated to advancing the integration of renewable energy sources into distribution grids through innovative technologies and data-driven approaches. My recent work focuses on developing AI-driven tools that enhance grid management, such as a probabilistic graph-based modeling tool that predicts congestion and identifies energy flexibility needs. I have also contributed to the design of scalable time-series forecasting systems that support real-time decision-making for distributed energy resources.\n\nIn my exploration of federated learning (FL), I have developed AdaFed, a scalable architecture that optimizes resource utilization and adapts to the dynamic nature of FL jobs. My work emphasizes the importance of security in large language models (LLMs), where I introduced MoJE, a guardrail architecture that effectively detects jailbreak attacks while maintaining computational efficiency.\n\nAdditionally, I have been involved in creating Castor, a cloud-native system that streamlines the management of IoT time-series data and predictive models, ensuring that data scientists can efficiently deploy and monitor their models in production environments. My research aims to bridge the gap between advanced machine learning techniques and practical applications in energy systems, IoT, and federated learning, all while addressing ethical considerations and promoting transparency in AI. Through collaboration with industry partners and research institutions, I strive to contribute to a sustainable and secure energy future.",
+    "collaborators": [
+      "Bradley Eck",
+      "Francesco Fusco",
+      "Robert Gormally",
+      "Seshu Tirupathi",
+      "Ambrish Rawat",
+      "Mathieu Sinn",
+      "Giandomenico Cornacchia",
+      "Giulio Zizzo",
+      "Kieran Fraser",
+      "Muhammad Zaid Hamed"
+    ],
+    "domain": [
+      "Federated Learning",
+      "Graph Neural Network",
+      "Time Series Forecasting",
+      "Renewable Energy"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

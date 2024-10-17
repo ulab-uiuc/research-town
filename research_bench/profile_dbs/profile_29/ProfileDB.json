@@ -1,0 +1,141 @@
+{
+  "6aecaaf5-37d5-4a75-b462-4cdedaa32764": {
+    "pk": "6aecaaf5-37d5-4a75-b462-4cdedaa32764",
+    "project_name": null,
+    "name": "Josephine Lamp",
+    "bio": "I am a researcher dedicated to advancing the intersection of machine learning and healthcare, with a particular focus on privacy-preserving technologies and decision support systems. My recent work has centered on developing frameworks that ensure patient data privacy while enabling effective clinical decision-making. For instance, I pioneered a local differential privacy approach for learning population rulesets in clinical decision support systems, utilizing Monte-Carlo Tree Search to balance privacy and utility.\n\nI have also explored safety assurance in machine learning for medical cyber-physical systems, specifically in artificial pancreas systems, where I implemented deep learning models and formal verification techniques to enhance prediction accuracy. My research on hemodynamic risk stratification led to the creation of CARNA, a framework that integrates invasive hemodynamics and interpretable machine learning to improve heart failure risk assessments.\n\nAdditionally, I have investigated Type I Diabetes management through a Signal Temporal Logic-based learning approach, identifying behavioral patterns that influence glycemic control. My work on causal discovery in time series data culminated in the development of MotifDisco, a framework that uncovers causal relationships among motifs in glucose traces, enhancing our understanding of patient behaviors.\n\nMost recently, I introduced GlucoSynth, a privacy-preserving GAN framework for generating synthetic glucose traces, which maintains the integrity of the data while ensuring strong privacy guarantees. My research aims to empower healthcare providers with robust, interpretable tools that enhance patient care while safeguarding sensitive information.",
+    "collaborators": [
+      "Lu Feng",
+      "David Evans",
+      "Mark Derdzinski",
+      "Christopher Hannemann",
+      "Joost van der Linden",
+      "Maryam Bagheri",
+      "Xugui Zhou",
+      "Homa Alemzadeh",
+      "Yuxin Wu",
+      "Steven Lamp"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Privacy-Preserving Systems",
+      "Health Informatics",
+      "Causal Discovery"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "130cabfa-f5d0-47d6-8fc3-35ee77ea8e37": {
+    "pk": "130cabfa-f5d0-47d6-8fc3-35ee77ea8e37",
+    "project_name": null,
+    "name": "Mark Derdzinski",
+    "bio": "I am a researcher dedicated to advancing the understanding and application of time series analysis, particularly in the context of health data streams. My recent work has focused on identifying and quantifying motifs\u2014short trace segments within time series data that capture underlying human behaviors, such as those observed in glucose monitoring. I developed MotifDisco, a novel causal discovery framework that leverages Graph Neural Networks to uncover causal relationships among these motifs, enhancing our ability to forecast, detect anomalies, and cluster data effectively.\n\nIn addition to causal discovery, I have also tackled the challenge of generating high-quality, privacy-preserving synthetic glucose traces through my framework, GlucoSynth. This innovative approach not only captures the intricate relationships among motifs but also incorporates differential privacy mechanisms, ensuring strong privacy guarantees without compromising data utility. My work aims to bridge the gap between advanced data synthesis techniques and real-world applications, ultimately contributing to personalized health technologies and improved patient care. Through these efforts, I strive to push the boundaries of what is possible in time series analysis and its applications in health informatics.",
+    "collaborators": [
+      "Josephine Lamp",
+      "Christopher Hannemann",
+      "Joost van der Linden",
+      "Sam Hatfield",
+      "Lu Feng",
+      "Tianhao Wang",
+      "David Evans"
+    ],
+    "domain": [
+      "Time Series Analysis",
+      "Causal Discovery",
+      "Generative Models",
+      "Privacy-Preserving Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "fdfa2d32-c824-4385-90c3-9ce1ea108716": {
+    "pk": "fdfa2d32-c824-4385-90c3-9ce1ea108716",
+    "project_name": null,
+    "name": "Christopher Hannemann",
+    "bio": "I am a researcher dedicated to the intersection of time series analysis and privacy-preserving data synthesis, with a particular focus on glucose monitoring data. My recent work has led to the development of GlucoSynth, a novel Generative Adversarial Network (GAN) framework that generates high-quality synthetic glucose traces while ensuring strong privacy guarantees through differential privacy mechanisms. This work addresses the limitations of existing methods that fail to capture the unique characteristics of glucose data.\n\nIn addition to data synthesis, I have explored the concept of motifs\u2014short trace segments that encapsulate underlying phenomena within time series data. My framework, MotifDisco, introduces a novel approach to causal discovery among these motifs, leveraging Graph Neural Networks to uncover causal relationships. By formalizing Motif Causality, I have demonstrated its applicability across various tasks, including forecasting, anomaly detection, and clustering, significantly enhancing performance in each case.\n\nThrough my research, I aim to contribute to the development of advanced technologies, such as personalized coaching and artificial insulin delivery systems, by providing robust tools for understanding and representing complex health data. My work not only advances the field of time series analysis but also prioritizes the ethical considerations of data privacy in health-related applications.",
+    "collaborators": [
+      "Josephine Lamp",
+      "Mark Derdzinski",
+      "Joost van der Linden",
+      "Lu Feng",
+      "Tianhao Wang",
+      "David Evans",
+      "Sam Hatfield"
+    ],
+    "domain": [
+      "Time Series Analysis",
+      "Generative Models",
+      "Causal Discovery",
+      "Differential Privacy"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c7067711-2675-4b82-9f1e-97194c852c0a": {
+    "pk": "c7067711-2675-4b82-9f1e-97194c852c0a",
+    "project_name": null,
+    "name": "Sam Hatfield",
+    "bio": "I am a researcher dedicated to harnessing the power of machine learning to enhance operational weather forecasting and health data analysis. My recent work focuses on developing advanced parameterization schemes for weather models, particularly in the context of non-orographic gravity wave drag. By creating emulators that leverage complex neural networks, I have demonstrated that these models can outperform traditional forecasting methods, achieving greater accuracy while maintaining computational efficiency, especially on GPU hardware.\n\nIn addition to my work in meteorology, I am passionate about analyzing time series data, particularly in health contexts. I have pioneered a novel framework called MotifDisco, which uncovers causal relationships among motifs in time series data, such as glucose traces from continuous glucose monitors. This framework not only formalizes the concept of Motif Causality but also integrates seamlessly with various applications, including forecasting, anomaly detection, and clustering. My research aims to improve our understanding of human behaviors and their implications for personalized health technologies, such as artificial insulin delivery systems. Through these interdisciplinary efforts, I strive to contribute to both scientific knowledge and practical advancements in technology.",
+    "collaborators": [
+      "Matthew Chantry",
+      "Peter Duben",
+      "Inna Polichtchouk",
+      "Tim Palmer",
+      "Josephine Lamp",
+      "Mark Derdzinski",
+      "Christopher Hannemann",
+      "Joost van der Linden"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Time Series Analysis",
+      "Causal Discovery",
+      "Graph Neural Network"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d9a684dd-5587-4cc6-ba75-2cf02e5776c5": {
+    "pk": "d9a684dd-5587-4cc6-ba75-2cf02e5776c5",
+    "project_name": null,
+    "name": "Joost van der Linden",
+    "bio": "I am a researcher dedicated to advancing the understanding and application of time series analysis, particularly in the context of health data streams. My recent work has focused on identifying and quantifying motifs\u2014short trace segments within time series data that capture underlying human behaviors, such as those observed in glucose monitoring. I developed MotifDisco, a novel causal discovery framework that leverages Graph Neural Networks to uncover causal relationships among these motifs, enhancing our ability to forecast, detect anomalies, and cluster data effectively.\n\nIn addition to causal discovery, I have also tackled the challenge of generating high-quality, privacy-preserving synthetic glucose traces through my framework, GlucoSynth. This innovative approach not only captures the intricate relationships among motifs but also incorporates differential privacy mechanisms, ensuring strong privacy guarantees without compromising data utility. My work aims to bridge the gap between advanced data synthesis techniques and real-world applications, ultimately contributing to the development of personalized health technologies, such as artificial insulin delivery systems and tailored coaching solutions. Through my research, I strive to improve the intersection of machine learning and healthcare, making significant strides in how we understand and utilize time series data.",
+    "collaborators": [
+      "Josephine Lamp",
+      "Mark Derdzinski",
+      "Christopher Hannemann",
+      "Sam Hatfield",
+      "Lu Feng",
+      "Tianhao Wang",
+      "David Evans"
+    ],
+    "domain": [
+      "Time Series Analysis",
+      "Causal Discovery",
+      "Generative Models",
+      "Privacy-Preserving Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

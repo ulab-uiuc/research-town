@@ -1,0 +1,164 @@
+{
+  "2a765cfa-6d5c-4b8e-b050-7080b3db6ef8": {
+    "pk": "2a765cfa-6d5c-4b8e-b050-7080b3db6ef8",
+    "project_name": null,
+    "name": "Linxiao Wu",
+    "bio": "I am a researcher deeply engaged in the intersection of natural language processing and medical imaging, with a particular focus on opinion mining and its applications in e-commerce and healthcare. My recent work has centered on developing a composite framework that leverages positional cues of topical descriptors to enhance evaluative categorization in textual contexts. By transforming syntactic structures into a matrix format and employing convolutional and attention mechanisms within a graph, I have been able to significantly improve the accuracy of sentiment analysis.\n\nIn addition to my work in opinion mining, I have also integrated Struts and Hibernate architectures to create a dual-mode medical image library that supports deep learning applications. This innovative approach has led to the development of a medical image-assisted diagnosis method, achieving remarkable performance metrics, including an AUROC of 0.9985 and a recall rate of 0.9814. My goal is to make clinical diagnosis more accessible and efficient, enabling outpatient doctors to quickly register and upload images for precise analysis. Through my research, I aim to bridge the gap between technology and practical healthcare solutions, ultimately improving patient outcomes.",
+    "collaborators": [
+      "Yuanshuai Luo",
+      "Binrong Zhu",
+      "Guiran Liu",
+      "Rui Wang",
+      "Qian Yu",
+      "Jiajie Yuan",
+      "Yulu Gong",
+      "Zhou Yu",
+      "Ziang Liu",
+      "Shuyao He"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Opinion Mining",
+      "Medical Imaging",
+      "Deep Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "8e6156df-a9d8-47a3-8ea8-2e2d23259bb7": {
+    "pk": "8e6156df-a9d8-47a3-8ea8-2e2d23259bb7",
+    "project_name": null,
+    "name": "Yuanshuai Luo",
+    "bio": "I am a researcher deeply engaged in the field of opinion mining and natural language processing, particularly in the context of social media and e-commerce. My recent work focuses on developing innovative frameworks that enhance the extraction of nuanced evaluations from textual data. By integrating positional cues of topical descriptors and employing advanced techniques such as convolutions and attention mechanisms within a graph structure, I have created systems that significantly improve the accuracy of evaluative categorization.\n\nIn addition to opinion mining, I have tackled the challenges posed by the overwhelming volume of news information in the digital age. I proposed an automatic classification scheme for news texts that leverages deep learning, specifically combining Bi-directional Long Short-Term Memory Networks (Bi-LSTM) with attention mechanisms. This approach not only streamlines the classification process but also enhances the efficiency and timeliness of information management, reducing the reliance on manual intervention.\n\nThrough rigorous experimentation and comparative analysis, my research demonstrates the effectiveness of these methodologies, paving the way for future advancements in text classification and information processing. I am passionate about harnessing the power of machine learning to address real-world challenges and improve the way we interact with information.",
+    "collaborators": [
+      "Rui Wang",
+      "Linxiao Wu",
+      "Binrong Zhu",
+      "Guiran Liu",
+      "Qian Yu",
+      "Bingyao Liu",
+      "Jiajing Chen",
+      "Junming Huang",
+      "Jianjun Wei"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Opinion Mining",
+      "Deep Learning",
+      "Text Classification"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "6f50b380-d83e-4425-aa68-8d4d237933a8": {
+    "pk": "6f50b380-d83e-4425-aa68-8d4d237933a8",
+    "project_name": null,
+    "name": "Binrong Zhu",
+    "bio": "As a researcher in the dynamic field of natural language processing, I am deeply engaged in the exploration of opinion mining, particularly within the rapidly evolving landscapes of social media and e-commerce. My recent work focuses on developing a comprehensive framework that effectively extracts nuanced evaluations from textual contexts. By integrating positional cues of topical descriptors, I have created a system that transforms syntactic structures into a matrix format, utilizing advanced techniques such as convolutions and attention mechanisms within a graph-based architecture.\n\nThis innovative approach not only enhances the sequential integrity of the input but also significantly improves the efficacy of evaluative categorization. My trials have demonstrated that this graph-centric scheme outperforms traditional methods, showcasing its potential to elevate the understanding of sentiment and opinion in complex textual data. I am passionate about pushing the boundaries of what is possible in opinion mining, and I am excited to continue exploring new methodologies that can further enhance our ability to analyze and interpret human sentiment in the digital age.",
+    "collaborators": [
+      "Linxiao Wu",
+      "Yuanshuai Luo",
+      "Guiran Liu",
+      "Rui Wang",
+      "Qian Yu"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Opinion Mining",
+      "Graph Neural Network"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "26c205b7-ad0c-442b-a7f2-2dfb18e3ec72": {
+    "pk": "26c205b7-ad0c-442b-a7f2-2dfb18e3ec72",
+    "project_name": null,
+    "name": "Guiran Liu",
+    "bio": "I am a researcher dedicated to exploring the intersection of neuroscience and artificial intelligence, particularly through the lens of EEG signal analysis and natural language processing. My recent work focuses on developing innovative methods for emotion recognition from EEG signals while participants listen to music. By combining Bidirectional Long Short-Term Memory (Bi-LSTM) networks with attention mechanisms, I have achieved remarkable accuracy rates\u201498.28% on the SEED dataset and 92.46% on the DEAP dataset\u2014significantly surpassing traditional models. This research not only enhances our understanding of brain activity but also paves the way for advancements in brain-computer interfaces and affective computing.\n\nIn addition to my work in EEG analysis, I am also passionate about opinion mining within natural language processing. I have developed a composite framework that integrates positional cues of topical descriptors, utilizing convolutional and attention mechanisms in a graph-based approach. This innovative method has proven effective in improving evaluative categorization, demonstrating the potential of combining syntactic structures with advanced machine learning techniques.\n\nMy future endeavors will focus on refining device designs for EEG applications, incorporating multimodal data, and further enhancing emotion recognition accuracy, all aimed at translating these findings into practical, real-world applications.",
+    "collaborators": [
+      "Jingyi Wang",
+      "Zhiqun Wang",
+      "Linxiao Wu",
+      "Yuanshuai Luo",
+      "Binrong Zhu",
+      "Rui Wang",
+      "Qian Yu"
+    ],
+    "domain": [
+      "Emotion Recognition",
+      "EEG Signal Processing",
+      "Natural Language Processing",
+      "Opinion Mining"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "496ed8ac-9d1a-465e-9cfc-0568739fd7c3": {
+    "pk": "496ed8ac-9d1a-465e-9cfc-0568739fd7c3",
+    "project_name": null,
+    "name": "Rui Wang",
+    "bio": "I am a researcher deeply engaged in the intersection of machine learning, statistics, and economic modeling. My work primarily focuses on addressing the challenges posed by adversarial attacks on deep learning models, particularly black-box attacks, where limited model knowledge is available. I have conducted comprehensive analyses of various black-box attack algorithms, aiming to enhance their query efficiency.\n\nIn addition to my work on adversarial attacks, I have explored advanced statistical methods for economic scenario generation, proposing the Point in Time Economic Scenario Generation (PiT ESG) framework. This approach allows for more responsive economic modeling by leveraging forward-looking market data, demonstrating the superiority of generative networks over traditional methods.\n\nMy research also extends to the realms of 3D reconstruction technologies, where I have reviewed and implemented practical systems for creating accurate point cloud models. Furthermore, I have contributed to econometric modeling by developing methods for identifying local average treatment effects using multiple instruments, and I have investigated substitution and complementarity patterns in consumer goods through semiparametric models.\n\nI am passionate about optimizing data processing frameworks for big data analytics, as evidenced by my development of Oseba, a method that enhances selective bulk analysis. My work is characterized by a commitment to advancing theoretical understanding while also providing practical solutions across various domains, including economics, machine learning, and data science.",
+    "collaborators": [
+      "Weijia Wang",
+      "J. -Q. Liang",
+      "Orville Mondal",
+      "Jun Wang",
+      "Fei Wang",
+      "Ke Tang"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Adversarial Attacks",
+      "Economic Modeling",
+      "Quantum Transport"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "67b10819-7daa-496a-ae44-481ae6c31e2a": {
+    "pk": "67b10819-7daa-496a-ae44-481ae6c31e2a",
+    "project_name": null,
+    "name": "Qian Yu",
+    "bio": "I am a researcher with a strong focus on stochastic processes, particularly in the context of fractional Brownian motion and its applications in communication theory and distributed computing. My work explores the intricate properties of self-intersection local time and its derivatives, where I have established existence conditions and continuity properties that deepen our understanding of these processes.\n\nIn the realm of communication systems, I have developed practical solutions for optimizing Gaussian channels, addressing quantization thresholds and mismatched decoding metrics. My research has led to significant advancements in maximizing mutual information and improving system performance through efficient algorithms.\n\nI am also passionate about the intersection of information theory and statistical mechanics, particularly in the study of Ising models on locally tree-like graphs. My recent findings on the uniqueness of fixed points in belief propagation have resolved several longstanding conjectures in the field, showcasing the power of information-theoretic approaches.\n\nAdditionally, I have contributed to the development of entangled polynomial codes, which break the cubic barrier in distributed matrix multiplication, providing a unified framework that enhances computational efficiency. My work continues to bridge theoretical insights with practical applications, aiming to push the boundaries of our understanding in both stochastic processes and communication systems.",
+    "collaborators": [
+      "Minhao Hong",
+      "Xianye Yu",
+      "Salwa Bajja",
+      "A. Salman Avestimehr",
+      "Yury Polyanskiy",
+      "Guangjun Shen"
+    ],
+    "domain": [
+      "Stochastic Processes",
+      "Information Theory",
+      "Communication Systems",
+      "Mathematical Statistics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

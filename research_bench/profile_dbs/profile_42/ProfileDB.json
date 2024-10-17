@@ -1,0 +1,92 @@
+{
+  "431472ed-189b-43a2-800c-1452a7d0102f": {
+    "pk": "431472ed-189b-43a2-800c-1452a7d0102f",
+    "project_name": null,
+    "name": "M Sabbir Salek",
+    "bio": "I am a researcher dedicated to advancing the field of autonomous vehicles (AVs) and connected vehicle (CV) technologies, with a strong focus on safety, efficiency, and social responsibility. My work encompasses a wide range of topics, from developing robust platooning strategies that enhance operational efficiency to addressing the vulnerabilities of AV perception systems against adversarial attacks. \n\nIn my recent studies, I have explored the integration of quantum computing with deep learning to improve traffic sign classification systems, demonstrating the potential of hybrid quantum-classical neural networks for enhanced performance and reduced memory requirements. Additionally, I have developed innovative defense mechanisms, such as the attack-resilient GAN (AR-GAN), which effectively mitigates adversarial threats while maintaining high classification accuracy.\n\nI am also passionate about the practical applications of cloud computing in CV environments. My research on serverless architectures has shown how commercial cloud services can support real-time traffic management applications, significantly improving traffic flow and reducing collision risks. Furthermore, I advocate for the ethical development of AV technologies, emphasizing the importance of fairness and transparency to prevent biases that could exacerbate social inequalities.\n\nThrough my work, I aim to contribute to the responsible evolution of transportation systems, ensuring that emerging technologies serve all members of society while addressing pressing environmental challenges, such as methane emissions detection using advanced machine learning models. My goal is to bridge the gap between theoretical advancements and real-world applications, fostering a safer and more efficient future for transportation.",
+    "collaborators": [
+      "Mashrur Chowdhury",
+      "Sakib Mahmud Khan",
+      "Mizanur Rahman",
+      "Shaozhi Li",
+      "Hsien-Wen Deng",
+      "Mitch Shue",
+      "Gurcan Comert",
+      "Mugdha Basu Thakur",
+      "Pardha Sai Krishna Ala",
+      "Matthias Schmid"
+    ],
+    "domain": [
+      "Autonomous Vehicles",
+      "Machine Learning",
+      "Quantum Computing",
+      "Cloud Computing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "8b17e8ab-4d71-4913-af24-23456c3e36ff": {
+    "pk": "8b17e8ab-4d71-4913-af24-23456c3e36ff",
+    "project_name": null,
+    "name": "Shaozhi Li",
+    "bio": "I am a researcher deeply engaged in the study of quantum materials, particularly focusing on the interplay between electron interactions, magnetism, and phonon dynamics. My recent work has explored a variety of models, including the triangular lattice and the Hubbard model, to understand complex phenomena such as phase transitions, charge density waves, and superconductivity. I employ advanced computational techniques, including determinant quantum Monte Carlo simulations, to investigate the effects of electron-phonon interactions and their implications for materials like cuprates and Kitaev candidates.\n\nOne of my significant contributions is the exploration of the thermal Hall effect in Kitaev-Heisenberg systems, where I demonstrated how spin-phonon interactions can influence magnetic states and thermal conductivity. Additionally, I have developed methods to enhance Monte Carlo simulations using neural networks, achieving substantial speedups in computational efficiency.\n\nMy research also delves into the emerging field of quantum machine learning, where I investigate the expressibility of quantum circuits within convolutional neural networks. This work not only advances our understanding of quantum-enhanced models but also provides insights into classical machine learning techniques.\n\nOverall, my goal is to bridge theoretical insights with experimental observations, providing a deeper understanding of the rich physics underlying quantum materials and their potential applications in future technologies.",
+    "collaborators": [
+      "Steven Johnston",
+      "Yao Wang",
+      "Emanuel Gull",
+      "Satoshi Okamoto",
+      "S. Johnston",
+      "Ehsan Khatami",
+      "Randy S. Fishman",
+      "M Sabbir Salek",
+      "Mashrur Chowdhury",
+      "E. A. Nowadnick"
+    ],
+    "domain": [
+      "Quantum Many-Body Physics",
+      "Quantum Simulation",
+      "Electron-Phonon Interactions",
+      "Superconductivity"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "6a786f02-27c0-4e53-9ba7-9743093075c3": {
+    "pk": "6a786f02-27c0-4e53-9ba7-9743093075c3",
+    "project_name": null,
+    "name": "Mashrur Chowdhury",
+    "bio": "I am a researcher dedicated to enhancing the safety and efficiency of connected and autonomous vehicles (CAVs) through innovative methodologies that address the complex challenges posed by cyber threats and traffic management. My work primarily focuses on the intersection of cybersecurity and intelligent transportation systems, where I employ probabilistic graphical models to quantify vulnerabilities and impacts of cyberattacks on traffic systems. \n\nIn my recent studies, I have developed frameworks like CVGuard to detect and mitigate cyberattacks on vehicle-to-infrastructure (V2I) networks, demonstrating significant reductions in vehicle conflicts during simulated attacks. I also explore the use of machine learning and sensor fusion techniques to improve traffic state estimation and queue length predictions, achieving notable accuracy improvements even with low penetration rates of connected vehicles.\n\nMy research extends to the realm of adversarial attacks on deep learning models used in autonomous vehicle perception systems. I have created resilient traffic sign classifiers that leverage hybrid defense strategies to maintain high accuracy under attack scenarios. Additionally, I am investigating the potential of quantum-classical neural networks to enhance attack detection capabilities in cyber-physical systems.\n\nThrough my work, I aim to contribute to the development of robust, secure, and efficient transportation systems that can adapt to the evolving landscape of connected vehicle technologies. My passion lies in bridging the gap between advanced computational techniques and real-world applications, ensuring that the future of transportation is both safe and intelligent.",
+    "collaborators": [
+      "Mhafuzul Islam",
+      "Mizanur Rahman",
+      "Sakib Mahmud Khan",
+      "Gurcan Comert",
+      "Zadid Khan",
+      "Sagar Dasgupta",
+      "M Sabbir Salek",
+      "Shaozhi Li",
+      "David M. Nicol",
+      "Tewodros Amdeberhan"
+    ],
+    "domain": [
+      "Cybersecurity",
+      "Connected Vehicles",
+      "Traffic Management",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

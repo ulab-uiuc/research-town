@@ -1,0 +1,159 @@
+{
+  "f6ec152c-93fa-4b87-9ecb-6934ab6c60fb": {
+    "pk": "f6ec152c-93fa-4b87-9ecb-6934ab6c60fb",
+    "project_name": null,
+    "name": "Sanjay Oruganti",
+    "bio": "I am a researcher dedicated to advancing the field of cognitive robotics and artificial intelligence, with a particular focus on enhancing human-robot collaboration through explainability and intelligent decision-making. My recent work has centered around the development of hybrid learning architectures that integrate large language models (LLMs) with knowledge-based systems, enabling intelligent agents to automatically expand their semantic lexicons and improve communication capabilities.\n\nOne of my key contributions is the HARMONIC framework, which transforms general-purpose robots into trusted teammates capable of complex decision-making and natural communication. This framework facilitates interoperability between cognitive and tactical layers, allowing robots to effectively collaborate in multi-robot tasks. I have also explored innovative approaches to multi-robot planning that incorporate metacognition and natural language communication, ensuring that robots can explain their actions and decisions to human operators.\n\nIn addition, I have investigated decentralized knowledge dissemination in multi-agent systems, drawing inspiration from eavesdropping mechanisms in nature. My work has demonstrated significant improvements in mission performance and knowledge sharing among agents, reducing reliance on direct communication.\n\nOverall, my research aims to create cognitive agents that not only perform tasks efficiently but also provide transparent explanations, fostering trust and collaboration in high-stakes environments. I am passionate about bridging the gap between advanced AI technologies and their practical applications in real-world scenarios.",
+    "collaborators": [
+      "Sergei Nirenburg",
+      "Marjorie McShane",
+      "Jesse English",
+      "Michael K. Roberts",
+      "Christian Arndt",
+      "Kenneth W. Goodman",
+      "Ramviyas Parasuraman",
+      "Ramana Pidaparti"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Explainable AI",
+      "Multi-Robot Systems",
+      "Cognitive Robotics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "111e47d2-46d8-4efe-8e00-2179fa234e70": {
+    "pk": "111e47d2-46d8-4efe-8e00-2179fa234e70",
+    "project_name": null,
+    "name": "Sergei Nirenburg",
+    "bio": "I am a researcher dedicated to the development of intelligent agents that leverage knowledge engineering and cognitive architectures to enhance their functionality across various domains. My work emphasizes the integration of dialog act modeling within a holistic framework, allowing agents to expand their ontological and lexical knowledge through lifelong learning. I have explored the discovery and representation of lexical rules, demonstrating their critical role in large-scale semi-automatic lexicon acquisition, particularly in business and finance contexts.\n\nMy recent projects include the application of large language model (LLM) technology to facilitate the automatic learning of new semantic entries, showcasing a hybrid learning architecture that combines knowledge-based methods with data analytics. I am also passionate about metacognition in artificial intelligence, proposing a framework\u2014TRAP\u2014that addresses transparency, reasoning, adaptation, and perception in AI systems.\n\nOne of my significant contributions is the HARMONIC framework, which transforms general-purpose robots into trusted teammates capable of complex decision-making and natural communication. I believe that explanation is crucial for user confidence in AI systems, and I advocate for a hybrid approach that combines knowledge-based infrastructures with machine learning to create cognitive agents that can provide meaningful explanations.\n\nThrough my work, I aim to advance the field of human-robot collaboration, focusing on multi-robot planning and communication strategies that incorporate metacognition and explainability, ultimately enhancing the effectiveness of human-robot teams in real-world scenarios.",
+    "collaborators": [
+      "Marjorie McShane",
+      "Jesse English",
+      "Sanjay Oruganti",
+      "Michael K. Roberts",
+      "Christian Arndt",
+      "Evelyne Viegas",
+      "Boyan Onyshkevych",
+      "Victor Raskin",
+      "Hua Wei",
+      "Paulo Shakarian"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Knowledge Engineering",
+      "Explainable AI",
+      "Robotics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "16360e91-96df-4850-9e64-74fd7499c7fb": {
+    "pk": "16360e91-96df-4850-9e64-74fd7499c7fb",
+    "project_name": null,
+    "name": "Marjorie McShane",
+    "bio": "I am a researcher dedicated to advancing the field of natural language generation (NLG) and cognitive robotics, particularly within the OntoAgent cognitive architecture. My work focuses on developing language-endowed intelligent agents (LEIAs) that can effectively communicate and collaborate across various domains. I emphasize the integration of knowledge engineering principles to create holistic agents capable of lifelong learning and dialog act modeling, which enhances their ability to understand and generate natural language.\n\nOne of my recent projects involved leveraging large language model (LLM) technology to automate the expansion of an intelligent agent's semantic lexicon. This hybrid learning architecture combines knowledge-based methods with LLMs, demonstrating significant improvements in the agent's ability to learn and generate multiword expressions.\n\nI am also deeply invested in the explainable AI (XAI) movement, advocating for a human-centered approach that prioritizes user needs in high-stakes environments. My work explores the development of cognitive agents that provide clear explanations for their actions, fostering trust and collaboration in human-robot teams. Through the HARMONIC framework, I aim to transform general-purpose robots into trusted teammates capable of complex decision-making and natural communication.\n\nUltimately, my research seeks to bridge the gap between cognitive capabilities and practical applications, ensuring that intelligent agents can effectively support human decision-making in real-world scenarios.",
+    "collaborators": [
+      "Sergei Nirenburg",
+      "Jesse English",
+      "Sanjay Oruganti",
+      "Michael K. Roberts",
+      "Christian Arndt",
+      "Ivan Leon",
+      "Kenneth W. Goodman"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Explainable AI",
+      "Cognitive Robotics",
+      "Knowledge Engineering"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e5db85e8-1b12-47b5-85db-542237bceb90": {
+    "pk": "e5db85e8-1b12-47b5-85db-542237bceb90",
+    "project_name": null,
+    "name": "Jesse English",
+    "bio": "I am a researcher dedicated to the development of intelligent agents that leverage holistic language capabilities across various domains. My work emphasizes the principles of knowledge engineering, particularly in the context of dialog act modeling, where I advocate for an integrative approach grounded in the OntoAgent cognitive architecture. I believe that isolating dialog from other agent functionalities limits the potential of intelligent systems, and I strive to create agents that can expand their ontological and lexical knowledge through lifelong learning.\n\nRecently, I have focused on harnessing large language model (LLM) technology to enhance the semantic lexicon of intelligent agents. My innovative learning method, which combines existing lexicons with natural language generation, allows agents to automatically learn new multiword expressions and enrich their understanding of language. This hybrid architecture not only integrates knowledge-based methods with traditional data analytics but also ensures quality control throughout the learning process. My research aims to push the boundaries of what intelligent agents can achieve, making them more adaptable and capable of understanding complex language constructs in real-world applications.",
+    "collaborators": [
+      "Marjorie McShane",
+      "Sergei Nirenburg",
+      "Sanjay Oruganti"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Knowledge Engineering",
+      "Intelligent Agents",
+      "Lifelong Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a5ee4d01-05eb-414d-9b66-279b54bd4c05": {
+    "pk": "a5ee4d01-05eb-414d-9b66-279b54bd4c05",
+    "project_name": null,
+    "name": "Michael K. Roberts",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, which has proven effective in various prediction tasks, achieving significant performance improvements.\n\nI am particularly interested in the interplay between graph structures and predictive performance, as demonstrated in my work on relational graphs that reveal a \"sweet spot\" for optimizing neural network architectures. This exploration has led to the creation of Identity-aware GNNs (ID-GNNs), which enhance the expressive power of message-passing frameworks by incorporating node identities.\n\nAdditionally, I have tackled the challenges posed by dynamic graphs through the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments. My research also extends to automated machine learning (AutoML), where I introduced FALCON and AutoTransfer to streamline the design process and improve efficiency in model selection.\n\nOverall, my goal is to push the boundaries of GNN research, providing innovative solutions that not only advance theoretical understanding but also yield practical applications across various domains. I am passionate about creating frameworks that facilitate the exploration of GNN design spaces, ultimately contributing to the broader field of machine learning.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "76f46cf9-8537-4447-a205-3b67b90e4937": {
+    "pk": "76f46cf9-8537-4447-a205-3b67b90e4937",
+    "project_name": null,
+    "name": "Christian Arndt",
+    "bio": "I am a researcher dedicated to the intersection of robotics, cognitive systems, and materials science. My recent work centers around the HARMONIC framework, which transforms general-purpose robots into trusted teammates capable of complex decision-making and natural communication. This framework integrates cognitive and tactical layers, enabling robots to collaborate effectively in human-robot teams. Through simulation experiments, I have demonstrated how metacognition and explainability enhance the robots' ability to coordinate actions and communicate naturally with humans, making them more effective in real-world scenarios.\n\nIn addition to my work in robotics, I have explored innovative materials for non-volatile memory applications. My research on carbon allotropes, including carbon nanotubes and graphene, has revealed their potential as resistive memory materials, showcasing their capabilities for high-speed switching and multi-level programming. This dual focus on cognitive robotics and advanced materials reflects my commitment to pushing the boundaries of technology and enhancing the capabilities of intelligent systems.",
+    "collaborators": [
+      "Sanjay Oruganti",
+      "Sergei Nirenburg",
+      "Marjorie McShane",
+      "Jesse English",
+      "Michael K. Roberts",
+      "Franz Kreupl",
+      "Rainer Bruchhaus",
+      "Petra Majewski",
+      "Jan B. Philipp",
+      "Ralf Symanczyk"
+    ],
+    "domain": [
+      "Cognitive Robotics",
+      "Human-Robot Interaction",
+      "Non-Volatile Memory",
+      "Multi-Robot Systems"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

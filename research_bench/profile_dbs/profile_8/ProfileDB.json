@@ -1,0 +1,160 @@
+{
+  "6d4f67aa-4779-426f-8c5e-7df898b7aab2": {
+    "pk": "6d4f67aa-4779-426f-8c5e-7df898b7aab2",
+    "project_name": null,
+    "name": "Jakub \u0141ucki",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research doesn't stop at static graphs; I proposed the ROLAND framework to effectively handle dynamic graphs, allowing for scalable and efficient training methods that adapt to real-world scenarios.\n\nIn addition to architectural innovations, I have explored the design space of GNNs, systematically studying over 315,000 different configurations to provide guidelines for optimal model design. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the process of finding effective neural architectures by leveraging prior knowledge and enhancing search efficiency.\n\nThrough these contributions, I strive to push the boundaries of what GNNs can achieve, fostering a deeper understanding of their structure and performance across diverse applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "35e01fd6-35fc-4afb-a0e0-fb6e0b392da6": {
+    "pk": "35e01fd6-35fc-4afb-a0e0-fb6e0b392da6",
+    "project_name": null,
+    "name": "Boyi Wei",
+    "bio": "I am a researcher dedicated to advancing the fields of graph neural networks (GNNs), event-based vision, and large language models (LLMs). My recent work has focused on optimizing GNN sampling processes through hardware acceleration, specifically with the CONCAT Sampler, which significantly enhances sampling speed while maintaining accuracy. I have also developed a novel evaluation metric for event cameras, the area of the continuous contrast curve (AOCC), which addresses the challenges of denoising performance assessment in low-light conditions.\n\nIn the realm of LLMs, I have explored the vulnerabilities of safety mechanisms, demonstrating how existing unlearning methods can be circumvented and proposing adaptive techniques to recover hazardous capabilities. My research also delves into the implications of copyright concerns in language models, introducing CoTaEval, a framework to evaluate the effectiveness of copyright takedown strategies.\n\nThrough my work, I aim to bridge the gap between theoretical advancements and practical applications, ensuring that the technologies we develop are both efficient and robust. I am passionate about pushing the boundaries of what is possible in machine learning and contributing to the ongoing dialogue about the ethical implications of these technologies.",
+    "collaborators": [
+      "Yangsibo Huang",
+      "Peter Henderson",
+      "Chenyang Shi",
+      "Hanxiao Liu",
+      "Yibo Zhang",
+      "Jing Jin",
+      "Yuchen Gui",
+      "Wei Yuan",
+      "Xi Jin",
+      "Shasha Guo"
+    ],
+    "domain": [
+      "Graph Neural Network",
+      "Event Cameras",
+      "Language Models",
+      "Video Frame Interpolation"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d80444e2-35c0-4bf5-a342-ef31865920f2": {
+    "pk": "d80444e2-35c0-4bf5-a342-ef31865920f2",
+    "project_name": null,
+    "name": "Yangsibo Huang",
+    "bio": "I am a researcher dedicated to advancing the fields of machine learning, privacy, and data security. My recent work has focused on innovative solutions for challenges such as missing value imputation, privacy preservation in federated learning, and the robustness of large language models (LLMs). For instance, I developed IFGAN, a feature-specific generative adversarial network for effective missing value imputation, which outperforms existing methods by preserving inter-feature correlations.\n\nI have also explored privacy in distributed learning environments, introducing InstaHide, an encryption method that enhances privacy without significantly impacting model accuracy. My research on gradient inversion attacks has led to a deeper understanding of the vulnerabilities in federated learning, and I have proposed effective defense mechanisms to mitigate these risks.\n\nIn the realm of LLMs, I have investigated their susceptibility to adversarial attacks and the implications of unlearning hazardous knowledge. My work emphasizes the need for robust safety mechanisms and privacy strategies, particularly in the context of user-level differential privacy, ensuring equitable privacy protection across diverse user contributions.\n\nThrough my research, I aim to bridge the gap between advanced machine learning techniques and practical applications, ensuring that innovations in AI are both effective and secure. I am committed to developing methodologies that not only enhance model performance but also prioritize user privacy and data integrity.",
+    "collaborators": [
+      "Kai Li",
+      "Zhao Song",
+      "Sanjeev Arora",
+      "Samyak Gupta",
+      "Danqi Chen",
+      "Xiaoxiao Li",
+      "Zexuan Zhong",
+      "Daogao Liu",
+      "Mengzhou Xia",
+      "Badih Ghazi"
+    ],
+    "domain": [
+      "Privacy Preservation",
+      "Federated Learning",
+      "Generative Models",
+      "Deep Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "8c05c3b1-6168-4f3a-9c58-709ff3bef4ee": {
+    "pk": "8c05c3b1-6168-4f3a-9c58-709ff3bef4ee",
+    "project_name": null,
+    "name": "Peter Henderson",
+    "bio": "I am a researcher deeply engaged in the intersection of embedded systems, machine learning, and artificial intelligence, with a focus on security, optimization, and ethical implications. My work spans a variety of domains, from developing innovative malware detection techniques for embedded systems to exploring the complexities of reinforcement learning and its applications in continuous control tasks.\n\nIn my recent publications, I have proposed novel methods for improving the robustness of reinforcement learning agents against corrupted reward signals and have introduced frameworks for better energy and carbon usage reporting in machine learning research. I am particularly interested in the implications of generative AI and its intersection with legal frameworks, advocating for a nuanced understanding of liability in AI-generated outputs.\n\nI also emphasize the importance of reproducibility in deep reinforcement learning, providing guidelines to enhance experimental reporting and minimize misinterpretation of results. My research aims to bridge theoretical insights with practical applications, whether through developing adaptive control mechanisms for multi-agent systems or creating benchmarks for multitask learning in continuous domains.\n\nOverall, my goal is to contribute to the responsible and effective deployment of AI technologies while addressing the ethical and societal challenges they present. I am committed to fostering collaboration and innovation in these rapidly evolving fields, ensuring that our advancements are both impactful and sustainable.",
+    "collaborators": [
+      "Joelle Pineau",
+      "David Meger",
+      "Riashat Islam",
+      "Joshua Romoff",
+      "Emma Brunskill",
+      "Mark Lemley",
+      "Matthew Vertescher",
+      "Doina Precup",
+      "Muthucumaru Maheswaran",
+      "Thang Doan"
+    ],
+    "domain": [
+      "Embedded Systems",
+      "Reinforcement Learning",
+      "Machine Learning",
+      "Legal AI"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "acb2ff91-dc0d-42b0-90c9-1139b907855e": {
+    "pk": "acb2ff91-dc0d-42b0-90c9-1139b907855e",
+    "project_name": null,
+    "name": "Florian Tram\u00e8r",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research doesn't stop at static graphs; I proposed the ROLAND framework to effectively handle dynamic graphs, allowing for scalable and efficient learning in real-world applications.\n\nIn addition to architectural innovations, I have explored the design space of GNNs, systematically studying over 315,000 designs to provide guidelines for optimizing performance across different tasks. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the process of finding optimal model designs by leveraging prior knowledge and enhancing search efficiency.\n\nThrough these contributions, I strive to push the boundaries of what GNNs can achieve, fostering a deeper understanding of their structure and performance while making them more accessible for diverse applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "5dca0a15-b802-43a1-9eff-7a000b176280": {
+    "pk": "5dca0a15-b802-43a1-9eff-7a000b176280",
+    "project_name": null,
+    "name": "Javier Rando",
+    "bio": "I am a researcher deeply engaged in the intersection of artificial intelligence, security, and human interaction, particularly focusing on large language models (LLMs) and their vulnerabilities. My recent work has explored the alarming potential of \"jailbreak backdoors\" in models trained with Reinforcement Learning from Human Feedback (RLHF), revealing how adversarial prompts can exploit these systems. I have also developed PassGPT, a model that significantly enhances password generation, outperforming existing methods and introducing guided password generation.\n\nMy research extends to adversarial attacks in natural language processing, where I created a model-agnostic detector that improves the identification of adversarial text inputs. I have conducted extensive analyses on the robustness of self-supervised Vision Transformers against such attacks, and I have critically evaluated the effectiveness of current protections against style mimicry in generative models, highlighting their limitations.\n\nAdditionally, I investigate the ethical implications of AI, including how people perceive moral evaluations made by AI systems compared to humans. My findings suggest that AI-generated moral reasoning can be viewed as superior, raising concerns about the potential for harmful guidance from these models. Through competitions and collaborative research, I aim to advance our understanding of security risks in LLMs and develop more robust defenses against malicious attacks. My work is driven by a commitment to ensuring that AI technologies are safe, ethical, and beneficial for society.",
+    "collaborators": [
+      "Florian Tram\u00e8r",
+      "Daniel Paleka",
+      "Fernando Perez-Cruz",
+      "Briland Hitaj",
+      "Edoardo Mosca",
+      "Shreyash Agarwal",
+      "Georg Groh",
+      "Nasib Naimi",
+      "Thomas Baumann",
+      "Max Mathys"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Adversarial Machine Learning",
+      "Large Language Models",
+      "Security and Safety in AI"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

@@ -1,0 +1,298 @@
+{
+  "6829a3e9-a199-492d-9876-6e12d5e51a16": {
+    "pk": "6829a3e9-a199-492d-9876-6e12d5e51a16",
+    "project_name": null,
+    "name": "Zheng Zhan",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research doesn't stop at static graphs; I proposed the ROLAND framework to effectively handle dynamic graphs, allowing for scalable and efficient training methods that adapt to real-world applications.\n\nIn addition to architectural innovations, I have explored the design space of GNNs, systematically studying over 315,000 configurations to provide guidelines for optimal model design. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the process of finding effective neural architectures by leveraging prior knowledge and enhancing search efficiency.\n\nThrough these contributions, I strive to push the boundaries of what GNNs can achieve, fostering a deeper understanding of their structure and performance across diverse applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "44c4e844-facb-4b6f-b5f0-36f1dca3554b": {
+    "pk": "44c4e844-facb-4b6f-b5f0-36f1dca3554b",
+    "project_name": null,
+    "name": "Zhenglun Kong",
+    "bio": "I am a researcher dedicated to enhancing the efficiency and deployment of large-scale language models (LLMs) and vision transformers (ViTs) on resource-constrained devices. My recent work focuses on innovative techniques for model compression, including structured pruning, quantization, and architecture optimization, to ensure that these powerful models can be effectively utilized in edge computing environments.\n\nOne of my notable contributions is the development of a hardware-friendly block structure pruning method that significantly reduces weight storage and computational requirements while maintaining high accuracy across various NLP tasks. I have also pioneered a compiler-aware neural architecture optimization framework that guarantees real-time execution of transformer models on mobile devices, achieving impressive speedups without substantial accuracy loss.\n\nIn the realm of vision transformers, I have introduced a computation-aware soft pruning framework that leverages input token sparsity to enhance efficiency while preserving model performance. My research emphasizes the importance of balancing accuracy and computational constraints, particularly for deployment on mobile and edge devices.\n\nI am passionate about exploring the intersection of deep learning and hardware optimization, and my work aims to bridge the gap between advanced model architectures and practical applications in real-world scenarios. Through my research, I strive to make cutting-edge AI technologies accessible and efficient for a broader range of applications.",
+    "collaborators": [
+      "Yanzhi Wang",
+      "Geng Yuan",
+      "Xuan Shen",
+      "Wei Niu",
+      "Zhengang Li",
+      "Pu Zhao",
+      "Xiaolong Ma",
+      "Peiyan Dong",
+      "Caiwen Ding",
+      "Sijia Liu"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Model Compression",
+      "Edge Computing",
+      "Vision Transformers"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "d1f60560-7a70-4d0a-b92a-91c3d29ede8e": {
+    "pk": "d1f60560-7a70-4d0a-b92a-91c3d29ede8e",
+    "project_name": null,
+    "name": "Yifan Gong",
+    "bio": "I am a dedicated researcher in the field of speech recognition, with a focus on developing innovative models and techniques that enhance the accuracy and efficiency of automatic speech recognition (ASR) systems. My recent work has centered around integrating attention mechanisms within the Connectionist Temporal Classification (CTC) framework, leading to significant improvements in word error rates for large-scale tasks, such as those involving Microsoft Cortana.\n\nI have also explored privacy-preserving methods for cloud-based speech recognition, proposing a deep polynomial network that allows for encrypted audio processing without compromising data confidentiality. My research extends to self-teaching networks, which enhance the generalization capabilities of deep neural networks, and I have developed novel approaches for speaker diarization that account for speaker movement.\n\nIn addition, I have contributed to adversarial speaker verification techniques, enabling robust performance across varying conditions, and introduced the PyKaldi2 toolkit to facilitate research in speech recognition. My work on end-to-end multi-talker speech recognition has led to the development of the Streaming Unmixing and Recognition Transducer (SURT), which addresses real-time challenges in speech processing.\n\nI am passionate about pushing the boundaries of speech technology, focusing on methods that improve model adaptability and robustness while ensuring privacy and security. My goal is to create systems that not only perform well in controlled environments but also excel in real-world applications.",
+    "collaborators": [
+      "Jinyu Li",
+      "Zhong Meng",
+      "Liang Lu",
+      "Yashesh Gaur",
+      "Rui Zhao",
+      "Eric Sun",
+      "Biing-Hwang",
+      "Juang",
+      "Amit Das",
+      "Shi-Xiong Zhang"
+    ],
+    "domain": [
+      "Speech Recognition",
+      "Deep Learning",
+      "Adversarial Learning",
+      "Multi-task Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0515be40-adbb-469c-9f1f-7479dd3d77c1": {
+    "pk": "0515be40-adbb-469c-9f1f-7479dd3d77c1",
+    "project_name": null,
+    "name": "Yushu Wu",
+    "bio": "I am a researcher specializing in the intersection of deep learning, edge computing, and multi-agent systems. My recent work focuses on developing innovative solutions for real-world applications, such as coordinating aerial drones for target detection using multi-agent deep reinforcement learning (MADRL). I designed a realistic drone simulator that enables the training of decentralized policies, achieving near-optimal performance in complex environments.\n\nIn addition to aerial systems, I have explored audio processing, where I identified neural network accelerators that allow for flexible quantization of model weights. This work led to significant reductions in memory usage, inference latency, and energy consumption while maintaining performance in sound event detection tasks.\n\nMy research also addresses the challenges of object detection on edge devices. I developed AyE-Edge, a pioneering tool that automates the deployment of algorithms to achieve high accuracy and power efficiency in real-time applications. This tool demonstrated remarkable power savings while maintaining performance in extensive real-world tests.\n\nFurthermore, I have contributed to the field of large language models (LLMs) by proposing a training-free architecture search framework that identifies optimal subnets for inference acceleration. My work emphasizes the importance of dynamic power management in deploying deep neural networks on edge devices, leading to the development of the All-in-One pruning framework, which stabilizes inference speed across varying execution conditions.\n\nThrough these diverse projects, I aim to bridge the gap between advanced machine learning techniques and practical applications, ensuring that our solutions are efficient, scalable, and impactful.",
+    "collaborators": [
+      "Chao Wu",
+      "Yifan Gong",
+      "Yanzhi Wang",
+      "Xuan Shen",
+      "Pu Zhao",
+      "Zheng Zhan",
+      "Roi Yehoshua",
+      "Juan Heredia-Juesas",
+      "Christopher Amato",
+      "Jose Martinez-Lorenzo"
+    ],
+    "domain": [
+      "Deep Reinforcement Learning",
+      "Edge Computing",
+      "Neural Architecture Search",
+      "Model Compression"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "61e1143d-ff55-4341-b891-10b7a0f4a6ed": {
+    "pk": "61e1143d-ff55-4341-b891-10b7a0f4a6ed",
+    "project_name": null,
+    "name": "Zichong Meng",
+    "bio": "I am a researcher dedicated to tackling the challenges of Class Incremental Learning (CIL) and advancing image editing technologies through innovative methodologies. My recent work focuses on exemplar-free CIL, where I developed a novel approach that employs multi-distribution matching diffusion models to bridge domain gaps and enhance model stability during incremental training. This method not only mitigates catastrophic forgetting but also achieves state-of-the-art performance on benchmark datasets.\n\nIn the realm of image editing, I have introduced a robust framework that enhances generalization capabilities by integrating in-context learning and language unification techniques. This framework includes a specialized module for image editing tasks and a selective area-matching technique to rectify details in generated images, particularly human facial features. Additionally, I compiled the first dataset for image editing with visual prompts, which significantly boosts the quality of synthesis across various tasks.\n\nMy exploration of State Space Models (SSMs) has led to the development of a novel token pruning method that enhances the efficiency of SSM-based vision models. By aligning hidden states and evaluating token importance, I have achieved substantial computation reductions while maintaining high performance, exemplified by an 81.7% accuracy on ImageNet with a significant reduction in FLOPs.\n\nThrough my research, I aim to push the boundaries of machine learning and computer vision, contributing to more efficient and effective models that can adapt and generalize across diverse tasks.",
+    "collaborators": [
+      "Pu Zhao",
+      "Yanzhi Wang",
+      "Changdi Yang",
+      "Zheng Zhan",
+      "Jie Zhang",
+      "Jun Liu",
+      "Hao Tang",
+      "Zhenglun Kong",
+      "Yifan Gong",
+      "Yushu Wu"
+    ],
+    "domain": [
+      "Class Incremental Learning",
+      "Image Editing",
+      "State Space Models",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e42b44b9-3c2c-4965-9e93-3fd248c335f3": {
+    "pk": "e42b44b9-3c2c-4965-9e93-3fd248c335f3",
+    "project_name": null,
+    "name": "Hangyu Zheng",
+    "bio": "I am a researcher dedicated to enhancing the efficiency and performance of state space models (SSMs) in vision tasks. My recent work focuses on leveraging the linear computational complexity of SSMs compared to traditional transformer models, particularly in the context of vision transformers (ViTs). Recognizing that final predictions in ViTs rely heavily on a subset of informative tokens, I have pioneered a novel token-based pruning method tailored specifically for SSM-based vision models.\n\nThrough my research, I have identified the unique computational characteristics of SSMs that necessitate a different approach to token pruning. By introducing a pruning-aware hidden state alignment method, I stabilize the neighborhood of remaining tokens, which significantly enhances performance. Additionally, I developed a token importance evaluation method specifically designed for SSMs, guiding the pruning process effectively.\n\nMy extensive experiments demonstrate that my approach not only achieves substantial reductions in computational load\u2014such as a 41.6% decrease in FLOPs while maintaining 81.7% accuracy on ImageNet\u2014but also provides valuable insights into the behavior of SSM-based vision models. I am passionate about pushing the boundaries of vision foundation models and contributing to the understanding of their underlying mechanisms for future advancements in the field.",
+    "collaborators": [
+      "Zheng Zhan",
+      "Zhenglun Kong",
+      "Yifan Gong",
+      "Yushu Wu",
+      "Zichong Meng",
+      "Xuan Shen",
+      "Stratis Ioannidis",
+      "Wei Niu",
+      "Pu Zhao",
+      "Yanzhi Wang"
+    ],
+    "domain": [
+      "State Space Models",
+      "Vision Foundation Models",
+      "Token Pruning",
+      "Computational Efficiency"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "117c738f-d129-4afa-9ff5-58269874e51e": {
+    "pk": "117c738f-d129-4afa-9ff5-58269874e51e",
+    "project_name": null,
+    "name": "Xuan Shen",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This innovation has led to substantial accuracy improvements across various prediction tasks. My exploration of dynamic graphs culminated in the ROLAND framework, which allows static GNNs to adapt to dynamic environments, thereby enhancing their scalability and effectiveness.\n\nIn addition to architectural advancements, I have delved into the design space of GNNs, systematically studying over 315,000 configurations to provide guidelines for optimal model design. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the search for effective neural architectures by leveraging prior knowledge and improving efficiency.\n\nOverall, my research is driven by a passion for understanding and optimizing GNNs, with the goal of making them more accessible and effective for a wide range of applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "59268d2c-6b8e-44a2-83a9-637ebf987dae": {
+    "pk": "59268d2c-6b8e-44a2-83a9-637ebf987dae",
+    "project_name": null,
+    "name": "Stratis Ioannidis",
+    "bio": "I am a researcher with a strong focus on optimization, machine learning, and privacy in data-driven systems. My work spans a variety of topics, including regression models with hidden variables, optimal content placement in caching networks, and the development of efficient algorithms for submodular maximization problems. I have explored the intersection of graph theory and data mining, particularly in the context of clustering and classification over graphs, and have contributed to the understanding of generative models for graph distributions.\n\nIn my recent research, I have tackled the challenges of privacy in recommender systems, designing mechanisms that balance user privacy with the accuracy of predictions. I have also investigated the complexities of multi-armed bandit problems, developing algorithms that adapt to evolving user interests influenced by social circles. My work on secure function evaluation using FPGA technology aims to enhance the efficiency of privacy-preserving computations, making them more practical for real-world applications.\n\nI am passionate about creating algorithms that not only perform well theoretically but also have practical implications in real-world scenarios, such as content search and recommendation systems. My goal is to bridge the gap between theoretical advancements and their applications, ensuring that my research contributes to the development of robust, efficient, and privacy-conscious systems.",
+    "collaborators": [
+      "Andrea Montanari",
+      "Nadia Fawaz",
+      "Edmund Yeh",
+      "G\u00f6zde \u00d6zcan",
+      "Amin Karbasi",
+      "S. Muthukrishnan",
+      "Jinyun Yan",
+      "Jos\u00e9 Bento",
+      "Jose Bento",
+      "laurent Massoulie"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Graph Theory",
+      "Recommender Systems",
+      "Differential Privacy"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "0e81cf01-6e0a-485d-8063-275ead37e375": {
+    "pk": "0e81cf01-6e0a-485d-8063-275ead37e375",
+    "project_name": null,
+    "name": "Wei Niu",
+    "bio": "I am a researcher dedicated to the intersection of algebraic geometry and deep learning, with a focus on developing innovative algorithms and frameworks that enhance computational efficiency. My recent work includes a significant contribution to the field of polynomial algebra, where I generalized the squarefree decomposition of univariate polynomials to create a pseudo squarefree decomposition for multivariate polynomials. This advancement allows for the effective counting of zeros and their multiplicities in zero-dimensional regular sets, providing a robust theoretical foundation and practical algorithm for real solution isolation.\n\nIn addition to my work in algebra, I have also delved into optimizing dynamic deep neural networks (DNNs) through my framework, SoD\u00b2. This framework addresses the growing need for efficient processing of dynamic DNNs, which adapt their structure based on input variations. By classifying common operators and employing a Rank and Dimension Propagation (RDP) method, I have achieved significant reductions in execution latency and memory consumption, demonstrating performance improvements of up to 3.9 times faster than existing systems.\n\nMy research is driven by a passion for solving complex problems and pushing the boundaries of what is possible in both theoretical and applied mathematics, as well as in machine learning. I am committed to advancing these fields through rigorous analysis and innovative solutions.",
+    "collaborators": [
+      "Xiaoliang Li",
+      "Gagan Agrawal",
+      "Bin Ren"
+    ],
+    "domain": [
+      "Algebraic Geometry",
+      "Deep Learning",
+      "Dynamic Neural Networks"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "4a5295ff-4f07-4da9-a696-ab664a41c694": {
+    "pk": "4a5295ff-4f07-4da9-a696-ab664a41c694",
+    "project_name": null,
+    "name": "Pu Zhao",
+    "bio": "I am a researcher dedicated to enhancing the security and robustness of deep neural networks (DNNs) against adversarial attacks and fault injection attacks (FIAs). My work has focused on developing versatile frameworks for generating adversarial examples, utilizing the Alternating Direction Method of Multipliers (ADMM) to unify various attack methods, including L0, L1, L2, and L\u221e attacks. This approach has allowed me to achieve a 100% attack success rate with minimal distortion, setting a new benchmark in the field.\n\nIn addition to adversarial attacks, I have explored the vulnerabilities of DNNs in real-world applications, particularly in the context of FIAs. I introduced a Contrastive Learning-based framework, CFDR, which enhances DNN resilience by enabling real-time detection and recovery from faults using self-supervised learning techniques. This framework has shown promising results, even with limited unlabeled data.\n\nMy recent research also delves into black-box adversarial attacks, where I proposed a novel zeroth-order natural gradient descent (ZO-NGD) method. This method improves query efficiency and reduces model query complexities compared to existing techniques, making it a practical solution for stealthy attacks.\n\nThrough my work, I aim to bridge the gap between theoretical advancements and practical applications, ensuring that DNNs can operate reliably in security-sensitive environments.",
+    "collaborators": [
+      "Xue Lin",
+      "Siyue Wang",
+      "Sijia Liu",
+      "Yanzhi Wang",
+      "Chenan Wang",
+      "Pin-Yu Chen"
+    ],
+    "domain": [
+      "Adversarial Machine Learning",
+      "Deep Learning",
+      "Security",
+      "Fault Injection"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2874416e-7b75-448e-afc6-63e6ff3088d9": {
+    "pk": "2874416e-7b75-448e-afc6-63e6ff3088d9",
+    "project_name": null,
+    "name": "Yanzhi Wang",
+    "bio": "I am a researcher dedicated to advancing the field of deep learning, particularly in optimizing deep neural networks (DNNs) for real-time applications on mobile devices. My work has focused on developing frameworks like CADNN and CoCoPIE, which leverage model compression and architecture-aware optimizations to enhance DNN performance without the need for specialized hardware. I have also explored the vulnerabilities of DNNs to adversarial attacks, creating a unified framework using ADMM for generating adversarial examples across various norms, and developing the ADML algorithm to improve meta-learning in adversarial contexts.\n\nMy research extends to dynamic optimization frameworks that adaptively prune and optimize CNNs based on input features, as well as innovative approaches to solving parametric partial differential equations using deep learning. I have also contributed to the understanding of DNN inference time variations, which is crucial for safety-critical applications like autonomous driving.\n\nIn addition, I have investigated the lottery ticket hypothesis, demonstrating that structurally sparse winning tickets can be effectively identified, thus facilitating hardware acceleration. My work aims to bridge the gap between DNN computing demands and the capabilities of edge devices, ensuring that advanced AI applications can run efficiently in real-time environments. Through my research, I strive to make deep learning more robust, efficient, and applicable across a wide range of real-world scenarios.",
+    "collaborators": [
+      "Bin Ren",
+      "Xiaolong Ma",
+      "Jian Tang",
+      "Zhiyuan Xu",
+      "Xipeng Shen",
+      "Fuxun Yu",
+      "Chenchen Liu",
+      "Xiang Chen",
+      "Chu Wang",
+      "Jinhong Wu"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Adversarial Machine Learning",
+      "Mobile Computing",
+      "Reinforcement Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

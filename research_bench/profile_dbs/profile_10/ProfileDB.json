@@ -1,0 +1,92 @@
+{
+  "1ea3bbfb-e985-4830-8168-c08b2524b0d5": {
+    "pk": "1ea3bbfb-e985-4830-8168-c08b2524b0d5",
+    "project_name": null,
+    "name": "Konstantinos Skianis",
+    "bio": "I am a researcher passionate about the intersection of natural language processing (NLP) and machine learning, with a particular focus on leveraging advanced models like Transformers and large language models (LLMs) for innovative applications. My recent work includes developing novel fine-dining recipes using auto-regressive language models, showcasing the potential of AI in culinary creativity. I have also explored the challenges of multilingual mental health support, creating a comprehensive dataset that evaluates LLM performance across multiple languages, highlighting the nuances that can affect model accuracy.\n\nIn addition to my work in NLP, I have contributed to the field of graph learning, addressing the limitations of deep graph neural networks (GNNs) through my research on over-smoothing and over-squashing. My proposed Stochastic Jost and Liu Curvature Rewiring (SJLR) algorithm offers a computationally efficient solution to enhance representation learning in GNNs. I am also dedicated to improving text classification through innovative regularization techniques, such as Orthogonal Matching Pursuit, which balances sparsity and accuracy.\n\nMy research is driven by a commitment to advancing machine learning methodologies and their applications across diverse domains, from culinary arts to mental health and graph analysis. I strive to create tools and frameworks that not only push the boundaries of current technologies but also provide practical solutions to real-world challenges.",
+    "collaborators": [
+      "Michalis Vazirgiannis",
+      "Giannis Nikolentzos",
+      "Stratis Limnios",
+      "Stamatis Outsios",
+      "Polykarpos Meladianos",
+      "Konstantinos Katserelis",
+      "Nikolaos Tziortziotis",
+      "John Pavlopoulos",
+      "A. Seza Do\u011fru\u00f6z",
+      "Christos Xypolopoulos"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Graph Neural Network",
+      "Recipe Generation",
+      "Multilingual Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "fcddf49c-247c-460f-88b6-7a8fd721583a": {
+    "pk": "fcddf49c-247c-460f-88b6-7a8fd721583a",
+    "project_name": null,
+    "name": "Giannis Nikolentzos",
+    "bio": "I am a researcher deeply engaged in the intersection of graph theory and machine learning, with a particular focus on graph neural networks (GNNs) and graph kernels. Over the years, I have contributed to the development of novel algorithms and frameworks that enhance the understanding and application of structured data. My work spans a wide range of topics, from proposing new graph kernels that leverage message passing to creating libraries like GraKeL, which unifies various graph kernels for practical use in machine learning pipelines.\n\nRecently, I have explored the limitations of standard GNNs and developed more expressive architectures, such as k-hop GNNs and Path Neural Networks, which can capture fundamental graph properties and distinguish between non-isomorphic graphs. My research also extends to dynamic graphs, where I have proposed models that predict graph evolution over time, demonstrating the effectiveness of GNNs in real-world applications, including epidemiological predictions during the COVID-19 pandemic.\n\nIn addition to my theoretical contributions, I have focused on practical implementations, such as the Message Passing Attention network for document understanding and the time-parameterized convolutional neural network for irregularly sampled time series. My goal is to bridge the gap between theory and application, providing robust solutions that can be readily utilized in various domains, from social networks to bioinformatics. I am passionate about advancing the field of graph learning and continuously seek to uncover new insights that can drive innovation in machine learning.",
+    "collaborators": [
+      "Michalis Vazirgiannis",
+      "Konstantinos Skianis",
+      "Michail Chatzianastasis",
+      "Giannis Siglidis",
+      "Stratis Limnios",
+      "George Dasoulas",
+      "Johannes Lutzeyer",
+      "Chrysoula Kosma",
+      "George Panagopoulos",
+      "Christos Giatsidis"
+    ],
+    "domain": [
+      "Graph Neural Networks",
+      "Graph Kernels",
+      "Machine Learning",
+      "Time Series Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "7756ccad-4012-4e9e-be73-37ec860dfb3a": {
+    "pk": "7756ccad-4012-4e9e-be73-37ec860dfb3a",
+    "project_name": null,
+    "name": "Michalis Vazirgiannis",
+    "bio": "I am a researcher with a strong focus on graph-based methodologies and their applications in various domains, including natural language processing, social networks, and machine learning. My work spans a diverse range of topics, from developing innovative algorithms for graph isomorphism and influence maximization to creating advanced frameworks for graph kernels and neural networks.\n\nOne of my notable contributions is the Continuous Bag-of-Skip-grams (CBOS) method, which enhances word representation quality, particularly for the modern Greek language. I have also explored the intricacies of Bitcoin's blockchain, developing heuristics to identify CoinJoin transactions, which are crucial for maintaining user privacy.\n\nIn the realm of graph neural networks (GNNs), I have proposed several architectures, including k-hop GNNs, which improve expressive power by aggregating information from a broader neighborhood. My research on graph autoencoders and variational autoencoders has led to the realization that simpler linear models can achieve competitive performance, challenging the necessity of complex architectures.\n\nAdditionally, I have delved into the dynamics of social networks, proposing models to predict the evolution of dynamic graphs and exploring the effectiveness of various neural architecture search techniques. My work emphasizes the importance of interpretability and efficiency in machine learning models, striving to bridge the gap between theoretical advancements and practical applications. Through my research, I aim to contribute to a deeper understanding of structured data and its implications across multiple fields.",
+    "collaborators": [
+      "Giannis Nikolentzos",
+      "Nikolaos Tziortziotis",
+      "Guillaume Salha",
+      "Konstantinos Skianis",
+      "Stamatis Outsios",
+      "Romain Hennequin",
+      "George Dasoulas",
+      "Michalis Lioudakis",
+      "Hugo Schnoering",
+      "Sammy Khalife"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Graph Neural Network",
+      "Machine Learning",
+      "Blockchain Analysis"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "a1f0125b-9509-4cb1-a5bc-98b8fd5c38ee": {
+    "pk": "a1f0125b-9509-4cb1-a5bc-98b8fd5c38ee",
+    "project_name": null,
+    "name": "L. Lao Beyer",
+    "bio": "I am a researcher dedicated to advancing the field of robotics, particularly in the areas of navigation and motion planning. My recent work focuses on the application of diffusion models to end-to-end navigation, where I explore the integration of perception and planning. I have developed a novel diffusion model that generates collision-free paths in complex 2D environments, leveraging egocentric LIDAR scans and arbitrary maps to facilitate real-time localization and planning.\n\nIn addition to my work on diffusion models, I have also created a motion planning framework tailored for multi-modal vehicle dynamics. By employing sparse factor graphs, I optimize trajectories for vehicles with varying dynamics, such as airplanes and VTOL aircraft. This approach not only enhances the efficiency of mode transitions but also streamlines the optimization process, allowing for effective trajectory planning in both simulated and real-world scenarios.\n\nThrough my research, I aim to bridge the gap between theoretical advancements and practical applications in robotics, contributing to the development of intelligent systems capable of navigating complex environments with precision and adaptability.",
+    "collaborators": [
+      "S. Karaman",
+      "N. Balabanska",
+      "E. Tal"
+    ],
+    "domain": [
+      "Robotics",
+      "Motion Planning",
+      "Diffusion Models",
+      "Localization"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "deaca1c0-8214-49e4-9e7d-0cba4781577c": {
+    "pk": "deaca1c0-8214-49e4-9e7d-0cba4781577c",
+    "project_name": null,
+    "name": "S. Karaman",
+    "bio": "I am a researcher specializing in the application of diffusion models to robotics, particularly in the realms of navigation, perception, and planning. My recent work focuses on developing innovative solutions for end-to-end navigation, where I have successfully integrated global localization and path planning in complex 2D environments. By leveraging diffusion models, I have created a framework that generates collision-free paths based on egocentric LIDAR scans and arbitrary maps, showcasing the model's ability to generalize across diverse environments.\n\nAdditionally, I have explored multi-modal vehicle dynamics through a motion planning framework that utilizes sparse factor graphs. This approach allows for efficient optimization of trajectories while accommodating various vehicle dynamics, such as those of airplanes and VTOL aircraft. My research emphasizes the importance of optimizing mode transitions and trajectory planning, enabling real-world applications in both simulation and practical scenarios.\n\nThrough my work, I aim to bridge the gap between theoretical advancements and practical implementations in robotics, contributing to the development of robust and efficient navigation systems.",
+    "collaborators": [
+      "L. Lao Beyer",
+      "N. Balabanska",
+      "E. Tal"
+    ],
+    "domain": [
+      "Robotics",
+      "Motion Planning",
+      "Diffusion Models",
+      "Localization"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

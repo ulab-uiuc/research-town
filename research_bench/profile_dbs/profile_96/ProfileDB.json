@@ -1,0 +1,83 @@
+{
+  "d14a90da-a913-4388-a78c-8bc2785f3811": {
+    "pk": "d14a90da-a913-4388-a78c-8bc2785f3811",
+    "project_name": null,
+    "name": "Eleonora Beatrice Rossi",
+    "bio": "I am a researcher dedicated to enhancing the application of deep learning in medical imaging, with a particular focus on improving the transparency and reliability of AI models in clinical settings. My recent work centers around Explainable AI (XAI), where I aim to bridge the gap between advanced diagnostic capabilities and the need for trustworthy AI systems. \n\nIn my latest study, I developed the Tumor Aware Counterfactual Explanations (TACE) framework, which generates reliable counterfactual explanations for medical images. Unlike traditional methods, TACE specifically modifies tumor-related features while preserving the overall structure of the organ, ensuring that the explanations remain faithful and clinically relevant. This innovative approach has shown remarkable results, significantly improving classification success rates for breast cancer and brain tumors.\n\nI am passionate about making AI more interpretable and trustworthy, as I believe that understanding the decision-making process of AI models is crucial for their adoption in healthcare. My work not only advances the field of medical imaging but also contributes to the broader goal of creating transparent AI systems that can be reliably used in critical applications. You can find the code for my work at https://github.com/ispamm/TACE.",
+    "collaborators": [
+      "Eleonora Lopez",
+      "Danilo Comminiello"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Explainable AI",
+      "Deep Learning",
+      "Counterfactual Explanations"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "66341176-a2af-497e-8c11-0674eefc8fa6": {
+    "pk": "66341176-a2af-497e-8c11-0674eefc8fa6",
+    "project_name": null,
+    "name": "Eleonora Lopez",
+    "bio": "I am a researcher dedicated to advancing the field of multimodal emotion recognition and medical imaging through innovative deep learning techniques. My recent work focuses on harnessing the power of hypercomplex neural networks to improve the accuracy and interpretability of models in these domains. I have developed a hypercomplex multimodal network that effectively captures latent relationships among physiological signals, significantly enhancing emotion recognition capabilities. \n\nIn the realm of breast cancer classification, I introduced parameterized hypercomplex networks that leverage inter-view correlations in mammography images, outperforming traditional single-view approaches. My research also emphasizes the importance of explainability in AI, leading to the creation of Tumor Aware Counterfactual Explanations (TACE), which provide reliable insights into model decisions while maintaining the integrity of the underlying medical images.\n\nI am passionate about making deep learning models more interpretable and trustworthy, particularly in critical applications like healthcare. My work not only pushes the boundaries of what is possible with hypercomplex architectures but also aims to ensure that these advancements translate into real-world benefits, such as improved diagnostic performance and enhanced understanding of model behavior. I believe that by combining theoretical rigor with practical applications, we can create systems that are both powerful and reliable.",
+    "collaborators": [
+      "Danilo Comminiello",
+      "Eleonora Grassucci",
+      "Eleonora Chiarantano",
+      "Martina Valleriani",
+      "Debora Capriotti",
+      "Eleonora Beatrice Rossi",
+      "Filippo Betello",
+      "Federico Carmignani",
+      "Aurelio Uncini"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Hypercomplex Neural Networks",
+      "Emotion Recognition",
+      "Medical Imaging"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "5e95ecb9-38ff-4b03-8606-e26180bfe5bf": {
+    "pk": "5e95ecb9-38ff-4b03-8606-e26180bfe5bf",
+    "project_name": null,
+    "name": "Danilo Comminiello",
+    "bio": "I am a researcher deeply engaged in the intersection of deep learning and advanced signal processing, with a particular focus on hypercomplex neural networks and their applications across various domains. My recent work has centered on developing innovative frameworks that leverage the unique properties of hypercomplex algebras, such as quaternions, to enhance performance in tasks ranging from violence detection in surveillance videos to speech emotion recognition.\n\nOne of my notable contributions is JOSENet, a self-supervised framework that excels in detecting violence in video footage while optimizing for computational efficiency. I have also explored the potential of quaternion-valued variational autoencoders (VAEs) to improve generative modeling, demonstrating significant parameter reduction without sacrificing performance.\n\nIn addition to my work on generative models, I have developed NAF-DPM, a generative framework for restoring degraded documents, and proposed novel methods for semantic communication that utilize deep generative models to enhance data transmission. My research also extends to spatial audio processing, where I introduced a dual quaternion representation to improve sound localization.\n\nI am passionate about addressing real-world challenges through my research, and I strive to create models that are not only effective but also efficient and adaptable to various applications. My work aims to bridge the gap between theoretical advancements and practical implementations, ultimately contributing to the evolution of AI-driven technologies.",
+    "collaborators": [
+      "Eleonora Grassucci",
+      "Aurelio Uncini",
+      "Simone Scardapane",
+      "Michele Scarpiniti",
+      "Luigi Sigillo",
+      "Pietro Nardelli",
+      "Danilo P. Mandic",
+      "Giordano Cicchetti",
+      "Jinho Choi",
+      "Jihong Park"
+    ],
+    "domain": [
+      "Deep Learning",
+      "Hypercomplex Algebra",
+      "Video Surveillance",
+      "Semantic Communication"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

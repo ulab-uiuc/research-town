@@ -1,18 +1,18 @@
 import argparse
 import json
 import logging
-from typing import Any, Dict, Optional
+import os
+from typing import Any, Dict, List, Optional
 
-from proposal_writing import write_proposal_researchtown
+from research_bench.proposal_eval import compute_bertscore, compute_bleu, compute_gpt_metric, compute_rouge_l
 from tqdm import tqdm
-from utils import get_current_5q, single_agent_proposal_writing
+#from utils import get_current_5q, single_agent_proposal_writing
+from research_bench.proposal_writing import write_proposal_baseline, write_proposal_researchtown
 
-from research_bench.proposal_eval import (
-    compute_bertscore,
-    compute_bleu,
-    compute_gpt_metric,
-    compute_rouge_l,
-)
+from research_town.agents import AgentManager
+from research_town.configs import Config
+from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
+from research_town.envs import ProposalWritingwithoutRAGEnv as ProposalWritingEnv
 from research_town.utils.paper_collector import get_paper_introduction
 
 # Configure logging
@@ -22,6 +22,82 @@ logging.basicConfig(
     handlers=[logging.StreamHandler()],
 )
 logger = logging.getLogger(__name__)
+
+
+def get_proposal_5q(
+    authors: List[str], intros: List[str], keyword: str, id: int
+) -> Optional[str]:
+    """
+    Generates a comprehensive research proposal based on the provided authors and existing proposals
+    using the ProposalWritingEnv environment.
+
+    Args:
+        authors (List[str]): List of author names.
+        intros (List[str]): List of existing introduction texts.
+
+    Returns:
+        Optional[str]: Generated proposal as a string if successful, else None.
+    """
+
+    config = Config('../configs')
+    if os.path.exists(f'./profile_dbs/profile_{id}'):
+        profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
+    else:
+        profile_db = ProfileDB()
+        profile_db.pull_profiles(names=authors, config=config)
+        profile_db.save_to_json(f'./profile_dbs/profile_{id}')
+
+    # Initialize other databases using default instances
+    log_db = LogDB()
+    progress_db = ProgressDB()
+    paper_db = PaperDB()  # Assuming existing papers are handled elsewhere
+    paper_db.pull_papers(num=3, domain=keyword)
+    # Initialize ProposalWritingEnv with the required databases and configuration
+    agent_manager = AgentManager(config=config, profile_db=profile_db)
+    env = ProposalWritingEnv(
+        name='proposal_writing',
+        log_db=log_db,
+        progress_db=progress_db,
+        paper_db=paper_db,
+        config=config,
+        agent_manager=agent_manager,
+    )
+    logger.info('Initialized ProposalWritingEnv.')
+
+    # Create a leader agent (assuming `create_leader` requires a profile)
+    leader_profile = profile_db.get(name=authors[0])[0]
+    print('leader_profile', leader_profile)
+    leader = agent_manager.create_agent(leader_profile, role='leader')
+    if not leader_profile:
+        logger.error('No valid leader profile found.')
+        return None
+    logger.info('Created leader agent for profile')
+
+    # Prepare the context from existing proposals
+    # Assuming that the context should be a list of proposal strings
+    env.on_enter(
+        leader=leader,
+        contexts=intros,
+    )
+    logger.info('Entered ProposalWritingEnv with provided proposals as context.')
+
+    # Run the environment to generate the proposal
+    run_result = env.run()
+    if run_result is not None:
+        for progress, agent in run_result:
+            # Process progress and agent if needed
+            pass
+    logger.info('Ran ProposalWritingEnv.')
+
+    # Exit the environment and retrieve the generated proposal
+    exit_status, exit_dict = env.on_exit()
+    proposal = exit_dict.get('proposal')
+    if proposal and proposal.content:
+        logger.info('Successfully generated proposal.')
+        return str(proposal.content)
+    else:
+        logger.warning('Proposal generation returned no content.')
+        return None
 
 
 def process_paper(
@@ -72,7 +148,7 @@ def process_paper(
             return None
 
         # Step 2: Generate current 5Q
-        current_5q = get_current_5q(intro)
+        current_5q = write_proposal_researchtown(intro)
         if not current_5q:
             logger.warning(f'current_5q generation failed for paper: {paper_key}')
             return None
@@ -116,11 +192,11 @@ def process_paper(
 
     # Step 4: Generate proposal 5Q
     if args.test_single_agent:
-        proposal_5q = single_agent_proposal_writing(
+        proposal_5q = write_proposal_baseline(
             intros=intros, model=args.single_agent_model
         )
     else:
-        proposal_5q = write_proposal_researchtown(authors, intros, keyword, id)
+        proposal_5q = get_proposal_5q(authors, intros, keyword, id)
     if not proposal_5q:
         logger.warning(f'proposal_5q generation failed for paper: {paper_key}')
         return None

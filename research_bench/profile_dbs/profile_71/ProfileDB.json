@@ -1,0 +1,27 @@
+{
+  "0f015849-5995-415f-bd5b-6a4c197012ff": {
+    "pk": "0f015849-5995-415f-bd5b-6a4c197012ff",
+    "project_name": null,
+    "name": "Hanwen Huang",
+    "bio": "I am a researcher deeply engaged in the development of advanced generative models and statistical methodologies within the realm of machine learning. My recent work focuses on conditional generative models, particularly through the lens of Schr\u00f6dinger bridge-based methods, which allow for efficient and high-quality data synthesis. I have pioneered techniques that leverage stochastic differential equations to transform fixed points into desired target distributions, demonstrating significant improvements in sample quality over existing methods.\n\nMy research also delves into the challenges of signal recovery and classification in high-dimensional spaces. I have analyzed the performance of LASSO and other large-margin classifiers, establishing phase transition boundaries that inform optimal model selection and tuning. My work employs innovative statistical techniques, including the replica method from statistical physics, to derive asymptotic expressions that enhance our understanding of classifier behavior in complex data environments.\n\nAdditionally, I have contributed to the field of clustering, particularly in high-dimensional settings, by improving the statistical significance of clustering methods through novel eigenvalue estimation techniques. This work has practical implications in bioinformatics, where accurate clustering can lead to significant discoveries.\n\nOverall, my research aims to bridge theoretical advancements with practical applications, providing robust tools and insights for tackling complex data challenges in machine learning and statistics.",
+    "collaborators": [
+      "Qinglong Yang",
+      "Peng Zeng",
+      "Yufeng Liu",
+      "Ming Yuan",
+      "J. S. Marron"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Generative Models",
+      "Statistical Inference",
+      "High-Dimensional Data"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

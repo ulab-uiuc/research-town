@@ -1,0 +1,53 @@
+{
+  "bd36b184-dc6a-4d7f-bc9b-a09a15ff8376": {
+    "pk": "bd36b184-dc6a-4d7f-bc9b-a09a15ff8376",
+    "project_name": null,
+    "name": "Sajjad Aghasi Javid",
+    "bio": "I am a researcher dedicated to tackling the challenges posed by Alzheimer's disease (AD), particularly in the realm of early diagnosis. My work focuses on leveraging advanced machine learning techniques, specifically convolutional neural networks (CNNs), to analyze MRI scans and identify critical features associated with dementia. Recognizing the importance of addressing class imbalance in medical datasets, I employ the Synthetic Minority Oversampling Technique (SMOTE) to ensure a more equitable distribution of samples across different classes. \n\nIn my recent project, I developed a framework that utilizes a pre-trained CNN within the DEMNET dementia network, which has yielded remarkable results, achieving an accuracy of 98.67%. This work not only enhances our understanding of AD but also contributes to improving patient care and clinical trial outcomes. I am passionate about using technology to make a meaningful impact in the field of neurodegenerative diseases, and I continuously seek innovative approaches to advance early diagnosis and treatment strategies.",
+    "collaborators": [
+      "Mahmood Mohassel Feghhi"
+    ],
+    "domain": [
+      "Medical Imaging",
+      "Deep Learning",
+      "Alzheimer's Disease",
+      "Class Imbalance"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "27412a02-4f33-4871-97e0-179792cd0684": {
+    "pk": "27412a02-4f33-4871-97e0-179792cd0684",
+    "project_name": null,
+    "name": "Mahmood Mohassel Feghhi",
+    "bio": "I am a researcher dedicated to advancing the fields of medical imaging, wireless communications, and machine learning. My recent work has focused on developing innovative solutions for critical health challenges, such as Alzheimer's disease and COVID-19, utilizing convolutional neural networks (CNNs) and advanced feature extraction techniques. For instance, I achieved an impressive accuracy of 98.67% in classifying dementia through MRI scans by addressing class imbalance using the Synthetic Minority Oversampling Technique (SMOTE).\n\nIn the realm of wireless communications, I have explored energy harvesting (EH) techniques to enhance the performance and sustainability of networks. My research includes optimizing power and rate allocation in full-duplex relay channels and designing UAV-enabled IoT networks that efficiently manage energy transfer and data collection. I have also investigated the Age of Information (AoI) in energy-harvesting networks, providing insights into the reliability of information transmission.\n\nMy work is characterized by a strong emphasis on practical applications and theoretical foundations, as I strive to bridge the gap between complex mathematical models and real-world implementations. I am passionate about leveraging technology to improve healthcare outcomes and enhance communication systems, and I continuously seek to push the boundaries of what is possible in these dynamic fields.",
+    "collaborators": [
+      "Aliazam Abbasfar",
+      "Mahtab Mirmohseni",
+      "Vida Esmaeili",
+      "Seyed Omid Shahdi",
+      "Sajjad Aghasi Javid",
+      "Leyla Fathollahi",
+      "Mahmoud Atashbar",
+      "Solmaz Sorkhi Asbaghi",
+      "Javad Musevi niya",
+      "Navid Nouri"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Energy Harvesting",
+      "Wireless Communication",
+      "Medical Imaging"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

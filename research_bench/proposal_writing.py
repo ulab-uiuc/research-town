@@ -4,7 +4,7 @@ from typing import List, Optional
 from research_town.agents import AgentManager
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from research_town.envs import ProposalWritingEnv
+from research_town.envs import ProposalWritingwithoutRAGEnv as ProposalWritingEnv
 from research_town.utils.model_prompting import model_prompting
 
 
@@ -75,6 +75,70 @@ def write_proposal_researchtown(
         return str(proposal.content)
     else:
         return None
+
+def write_proposal_single_agent(author: str, intros: List[str], id: int) -> Optional[str]:
+    """
+    Generates a comprehensive research proposal based on the provided author and existing proposals
+    
+    Args:
+        author (str): Author name.
+        intros (List[str]): List of existing introduction texts.
+        id (int): ID of the author.
+    
+    Returns:
+        Optional[str]: Generated proposal as a string if successful, else None.
+    """
+    config = Config('../configs')
+    if os.path.exists(f'./profile_dbs/profile_{id}'):
+        profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
+    else:
+        profile_db = ProfileDB()
+        profile_db.pull_profiles(names=[author], config=config)
+        profile_db.save_to_json(f'./profile_dbs/profile_{id}')
+
+    bio = profile_db.get(name=author)[0].bio
+
+    try:
+        prompt = [
+            {
+                'role': 'user',
+                'content': (
+                    'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                    'Here are the five core questions:\n\n'
+                    '[Question 1] - What is the problem?\n\n'
+                    'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                    '[Question 2] - Why is it interesting and important?\n\n'
+                    'Explain the broader implications of solving this problem for the research community.\n'
+                    'Discuss how such paper will affect the future research.\n'
+                    'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                    '[Question 3] - Why is it hard?\n\n'
+                    'Discuss the challenges and complexities involved in solving this problem.\n'
+                    'Explain why naive or straightforward approaches may fail.\n'
+                    'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                    "[Question 4] - Why hasn't it been solved before?\n\n"
+                    'Identify gaps or limitations in previous research or existing solutions.\n'
+                    'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                    'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                    '[Question 5] - What are the key components of my approach and results?\n\n'
+                    'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                    'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                    f'Introductions collect from some previous papers:\n{intros}\n\n'
+                    'You are the only author of this paper. Please provide the five core questions contents for a brand new future research based on the above introductions.'
+                    f'Your biography and persona is:\n{bio}'
+                    'Please provide the five core questions contents based on the above introduction.'
+                ),
+            }
+        ]
+        response = model_prompting(config.param.base_llm, prompt, mode='TEST')
+        if response and len(response) > 0 and len(response[0]) > 0:
+            return response[0]
+        else:
+            print('Received empty response from model_prompting for current_5q.')
+            return None
+    except Exception as e:
+        print(f'Error generating current_5q: {e}')
+        return None
+
 
 
 def write_proposal_baseline(intro: str, model: str = 'gpt-4o-mini') -> Optional[str]:

@@ -1,0 +1,84 @@
+{
+  "247bbbd8-2bd6-419a-96ff-d2bb987d15db": {
+    "pk": "247bbbd8-2bd6-419a-96ff-d2bb987d15db",
+    "project_name": null,
+    "name": "Sukai Huang",
+    "bio": "I am a researcher dedicated to enhancing the capabilities of agents in understanding and executing complex written instructions through advanced reinforcement learning (RL) techniques. My recent work has focused on language reward shaping (LRS), where I critically examined its effectiveness and identified inherent brittleness in existing methods. I demonstrated that agents trained with LRS rewards often converge more slowly than those using pure RL, highlighting the need for more robust designs.\n\nIn my exploration of large language models (LLMs), I developed a novel approach that constructs an action schema library to generate diverse interpretations of natural language descriptions. This method, combined with a semantic validation and ranking module, allows for fully automated planning without expert intervention, significantly improving scalability and accessibility in AI planning.\n\nAdditionally, I have investigated the vulnerabilities of vision-language models (VLMs) as reward signals in sparse environments. My research revealed that noise in reward signals can severely hinder agent performance, leading to the introduction of BiMI (Binary Mutual Information), a noise-resilient reward function. This innovation has shown remarkable improvements in agent performance, making VLM-based reward models more practical for real-world applications.\n\nThrough my work, I aim to bridge the gap between natural language understanding and effective agent behavior, paving the way for more intuitive and capable AI systems.",
+    "collaborators": [
+      "Nir Lipovetzky",
+      "Trevor Cohn"
+    ],
+    "domain": [
+      "Reinforcement Learning",
+      "Natural Language Processing",
+      "Vision-Language Models",
+      "AI Planning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "02a7434c-62bf-4f2c-a38c-a88bffd8d28a": {
+    "pk": "02a7434c-62bf-4f2c-a38c-a88bffd8d28a",
+    "project_name": null,
+    "name": "Nir Lipovetzky",
+    "bio": "I am a researcher dedicated to advancing the fields of planning and decision-making in artificial intelligence. My work primarily focuses on width-based algorithms, which have demonstrated state-of-the-art performance in classical planning and have been successfully adapted to both model-based and model-free settings. I have explored various innovative techniques, such as classical count-based novelty and regression-based supervised learning, to enhance exploration and learning efficiency in planning tasks.\n\nMy recent contributions include developing novel algorithms that leverage action novelty rank for generalized planning and creating a robust framework for goal recognition that aligns more closely with human inference. I have also investigated the integration of language reward shaping in reinforcement learning, revealing critical vulnerabilities and proposing noise-resilient reward functions to improve agent performance.\n\nIn multi-agent planning, I have addressed privacy concerns by employing best-first width search techniques, demonstrating their effectiveness in decentralized settings. My research extends to epistemic planning, where I have introduced functional STRIPS to enhance scalability and expressiveness.\n\nAdditionally, I have developed Planimation, an open-source framework for visualizing planning solutions, and explored the use of Monte Carlo Tree Search for generating diverse and high-quality plans in complex environments. My work on transhumeral prostheses highlights the application of goal recognition systems using time series data, showcasing the potential for improving assistive technologies.\n\nThrough my research, I aim to bridge theoretical advancements with practical applications, contributing to the development of intelligent systems that can effectively navigate complex decision-making scenarios.",
+    "collaborators": [
+      "Miquel Ramirez",
+      "Sukai Huang",
+      "Trevor Cohn",
+      "Stefan O'Toole",
+      "Anubhav Singh",
+      "Chao Lei",
+      "Krista A. Ehinger",
+      "Alfonso E. Gerevini",
+      "Francesco Percassi",
+      "Alessandro Saetti"
+    ],
+    "domain": [
+      "Planning",
+      "Reinforcement Learning",
+      "Multi-Agent Systems",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a6df24d0-2b01-4331-b340-91dc1f5a259f": {
+    "pk": "a6df24d0-2b01-4331-b340-91dc1f5a259f",
+    "project_name": null,
+    "name": "Trevor Cohn",
+    "bio": "I am a researcher dedicated to advancing the field of natural language processing (NLP) through innovative methodologies that address the challenges of low-resource languages, model bias, and the complexities of language understanding. My recent work focuses on enhancing cross-lingual projection and model transfer, where I developed a debiasing layer that corrects errors in projected annotations, achieving state-of-the-art results in low-resource settings.\n\nI have also explored the integration of syntactic structures in coreference resolution, demonstrating the importance of constituent trees alongside dependency trees. My research extends to probabilistic methods for machine translation quality estimation, where I emphasize the significance of uncertainty in predictions. Additionally, I have contributed to user geolocation modeling and dialect detection, leveraging neural networks to achieve superior performance on benchmark datasets.\n\nMy work on adversarial learning aims to create fairer models by employing diverse discriminators to mitigate bias effectively. I am passionate about developing robust models that generalize well across domains, ensuring that they are not only effective but also equitable. Through my research, I strive to push the boundaries of NLP, making significant strides in understanding and processing human language in all its complexity.",
+    "collaborators": [
+      "Timothy Baldwin",
+      "Afshin Rahimi",
+      "Yitong Li",
+      "Meng Fang",
+      "Daniel Beck",
+      "Lucia Specia",
+      "Shivashankar Subramanian",
+      "Fei Liu",
+      "Xudong Han",
+      "Fan Jiang"
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Machine Learning",
+      "Cross-lingual Transfer",
+      "Adversarial Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

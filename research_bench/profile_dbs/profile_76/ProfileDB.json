@@ -1,0 +1,98 @@
+{
+  "6798e5bd-02b6-4083-a6cc-92868730fb7b": {
+    "pk": "6798e5bd-02b6-4083-a6cc-92868730fb7b",
+    "project_name": null,
+    "name": "Juan Ossa",
+    "bio": "I am a researcher dedicated to the field of artificial intelligence, particularly in the realm of image generation. My recent work focuses on enhancing the capabilities of diffusion models, specifically through the development of NovelAI Diffusion V3, a cutting-edge anime image generation model. In my technical report, I meticulously document the modifications and improvements made to the SDXL framework during the training process. This work reflects my commitment to pushing the boundaries of generative models and my passion for creating high-quality, visually compelling content. I strive to contribute to the ongoing evolution of AI technologies, ensuring they are not only innovative but also accessible and impactful in various applications.",
+    "collaborators": [
+      "Eren Do\u011fan",
+      "Alex Birch",
+      "F. Johnson"
+    ],
+    "domain": [
+      "Image Generation",
+      "Deep Learning",
+      "Diffusion Models"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2dcbc239-d7da-4204-9d59-d61095e2e2f2": {
+    "pk": "2dcbc239-d7da-4204-9d59-d61095e2e2f2",
+    "project_name": null,
+    "name": "Eren Do\u011fan",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This innovation has led to substantial accuracy improvements across various prediction tasks. My exploration of dynamic graphs culminated in the ROLAND framework, which allows static GNNs to adapt to dynamic environments, thereby enhancing their scalability and effectiveness.\n\nIn addition to architectural advancements, I have delved into the design space of GNNs, systematically studying over 315,000 configurations to provide guidelines for optimal model design. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the search for effective neural architectures by leveraging prior knowledge and improving efficiency.\n\nOverall, my research is driven by a passion for understanding and optimizing GNNs, with the goal of making them more accessible and effective for a wide range of applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "cd75469b-8cec-478d-b612-bad31d8566d8": {
+    "pk": "cd75469b-8cec-478d-b612-bad31d8566d8",
+    "project_name": null,
+    "name": "Alex Birch",
+    "bio": "I am a researcher dedicated to the field of image generation, particularly in the realm of anime and high-resolution models. My recent work includes the development of the Hourglass Diffusion Transformer (HDiT), a novel image generative model that leverages the strengths of the Transformer architecture to achieve linear scaling with pixel count. This innovation allows for efficient training at high resolutions, such as 1024x1024 pixels, without relying on traditional high-resolution techniques like multiscale architectures or latent autoencoders.\n\nIn my technical report, I detail the modifications made to the SDXL framework during the training of NovelAI Diffusion V3, which has emerged as a state-of-the-art model in anime image generation. My research not only demonstrates that HDiT competes effectively with existing models on benchmarks like ImageNet but also sets a new standard for diffusion models on FFHQ at 1024x1024 resolution. I am passionate about pushing the boundaries of generative models and exploring their potential in creating high-quality, visually stunning images.",
+    "collaborators": [
+      "Juan Ossa",
+      "Eren Do\u011fan",
+      "F. Johnson",
+      "Katherine Crowson",
+      "Stefan Andreas Baumann",
+      "Tanishq Mathew Abraham",
+      "Daniel Z. Kaplan",
+      "Enrico Shippole"
+    ],
+    "domain": [
+      "Image Generation",
+      "Diffusion Models",
+      "Transformer Architecture",
+      "High-Resolution Training"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "76615b58-e492-43eb-96d7-fe73f8d00d0f": {
+    "pk": "76615b58-e492-43eb-96d7-fe73f8d00d0f",
+    "project_name": null,
+    "name": "F. Johnson",
+    "bio": "I am a researcher with a diverse background in mathematics, quantum mechanics, and the analysis of complex systems. My work spans a range of topics, from developing efficient algorithms for calculating Lucas and Fibonacci numbers to exploring the foundations of quantum measurement and the implications of quantum mechanics in real-world scenarios. \n\nIn my recent publications, I have focused on the mathematical underpinnings of quantum mechanics, particularly in relation to measurement theory and the thermodynamic limits of quantum systems. I have proposed rigorous models that bridge classical and quantum descriptions, emphasizing the importance of macroscopic observables and the role of amplification in measurement processes. My research also delves into the intersection of physics and information theory, clarifying Shannon's Noiseless Coding Theorem and its connections to physical entropy.\n\nAdditionally, I have ventured into the analysis of collective violence and global terrorism, applying mechanistic models inspired by non-equilibrium statistical physics to understand the dynamics of these complex social phenomena. My work aims to provide insights that can inform policymakers, particularly in the context of ultrafast networks and their vulnerabilities.\n\nOverall, my research is driven by a desire to unify theoretical frameworks across disciplines, providing clarity and rigor to concepts that are often taken for granted. I am committed to advancing our understanding of both fundamental physics and its applications in the social sciences.",
+    "collaborators": [
+      "Joseph F. Johnson",
+      "L. F. Johnson",
+      "Neil F. Johnson",
+      "L. Quiroga",
+      "N. F. Johnson",
+      "J. Reslen",
+      "F. J. Rodriguez"
+    ],
+    "domain": [
+      "Quantum Mechanics",
+      "Algorithms",
+      "Information Theory",
+      "Statistical Physics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "74ae19d8-a5d4-4ba3-99c3-ad71aa0d825e": {
+    "pk": "74ae19d8-a5d4-4ba3-99c3-ad71aa0d825e",
+    "project_name": null,
+    "name": "Xuanming Hu",
+    "bio": "I am a researcher dedicated to advancing the fields of machine learning and artificial intelligence, particularly in the context of polymer property prediction, urban planning, feature transformation, and biomarker discovery. My recent work focuses on developing innovative frameworks that address the limitations of existing methodologies. For instance, I introduced the Traceable Group-wise Reinforcement Generation Perspective to enhance polymer property predictions by automating descriptor generation and selection, ensuring both optimality and explainability.\n\nIn urban planning, I proposed the Dual-stage Urban Flows (DSUF) framework, which leverages normalizing flows to generate functional zones and land-use configurations while capturing the intricate relationships among different urban zones. This approach not only improves the stability and interpretability of the planning process but also streamlines the design of urban environments.\n\nMy research also tackles the challenge of unsupervised feature transformation learning (UFTL) by integrating graph, contrastive, and generative learning techniques. This paradigm allows for the effective capture of complex feature interactions without relying on expensive supervised feedback.\n\nAdditionally, I am passionate about biomarker discovery, where I developed a framework that automates the identification of effective biomarker subsets through a multi-agent system and an encoder-evaluator-decoder learning paradigm. This work aims to reduce the reliance on extensive human effort while enhancing the efficiency and robustness of biomarker identification.\n\nThrough my research, I strive to create impactful solutions that bridge the gap between complex scientific challenges and practical applications, ultimately contributing to advancements in personalized medicine and sustainable urban development.",
+    "collaborators": [
+      "Dongjie Wang",
+      "Yanjie Fu",
+      "Wangyang Ying",
+      "Wei Fan",
+      "Pengyang Wang",
+      "Yong Li",
+      "Yuanchun Zhou",
+      "Charu C. Aggarwal",
+      "Ji Qiu",
+      "Jin Park"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Urban Planning",
+      "Feature Transformation",
+      "Biomarker Discovery"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "85aaddde-7ce5-40a3-a06f-c9af86c8bb98": {
+    "pk": "85aaddde-7ce5-40a3-a06f-c9af86c8bb98",
+    "project_name": null,
+    "name": "Dongjie Wang",
+    "bio": "I am a researcher at the intersection of urban planning and artificial intelligence (AI), dedicated to leveraging AI to address complex challenges in urban environments. My work explores how AI can enhance urban planning from various perspectives, including sustainability, economic development, and disaster management. I have developed innovative frameworks for urban resource scheduling, traffic demand forecasting, and online point-of-interest recommendations, utilizing deep learning and reinforcement learning techniques to improve predictive accuracy and operational efficiency.\n\nMy recent research has focused on feature selection and representation learning, where I have introduced novel generative frameworks that automate the identification of optimal feature subsets and enhance model performance. I have also tackled the challenges of anomaly detection in cyber-physical systems and root cause analysis, proposing frameworks that utilize causal discovery and graph-based methods to improve system reliability.\n\nI am particularly passionate about creating explainable and efficient models that can adapt to dynamic environments, as demonstrated in my work on mobile user profiling and spatial data characterization. By integrating deep learning with traditional urban planning principles, I aim to contribute to the development of smart cities that are responsive to the needs of their inhabitants. My goal is to bridge the gap between urban planning and AI, fostering a collaborative approach that drives sustainable urban development.",
+    "collaborators": [
+      "Yanjie Fu",
+      "Kunpeng Liu",
+      "Wangyang Ying",
+      "Haifeng Chen",
+      "Pengyang Wang",
+      "Chang-Tien Lu",
+      "Ehtesamul Azim",
+      "Zhengzhang Chen",
+      "Pengfei Wang",
+      "Yan Yang"
+    ],
+    "domain": [
+      "Urban Planning",
+      "Machine Learning",
+      "Reinforcement Learning",
+      "Feature Selection"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c9745195-c4b2-40f9-82d9-06112a8fa9d9": {
+    "pk": "c9745195-c4b2-40f9-82d9-06112a8fa9d9",
+    "project_name": null,
+    "name": "Wangyang Ying",
+    "bio": "I am a researcher dedicated to advancing the fields of feature selection, feature transformation, and biomarker discovery through innovative machine learning methodologies. My recent work has focused on transforming traditional feature selection processes into deep generative learning tasks, allowing for the identification of optimal feature subsets without the computational burden of conventional methods. By leveraging deep variational transformers and reinforcement learning, I have developed frameworks that not only enhance model performance but also provide explainable and efficient solutions to feature selection challenges.\n\nIn my exploration of polymer property prediction, I introduced a Traceable Group-wise Reinforcement Generation Perspective, which automates the descriptor generation process while ensuring meaningful interactions among features. This approach addresses the limitations of existing methods by combining generation and selection in a cohesive manner.\n\nAdditionally, I have pioneered an evolutionary framework for automated feature transformation, integrating large language models with evolutionary algorithms to efficiently navigate vast feature spaces. This work aims to enhance the AI readiness of data across various scientific domains, including material performance screening.\n\nMy commitment to biomarker discovery is reflected in my development of a generative framework that automates the identification of effective biomarker subsets, significantly reducing the reliance on extensive human effort and domain expertise. Through these contributions, I strive to bridge the gap between complex data challenges and practical, scalable solutions, ultimately advancing the capabilities of machine learning in real-world applications.",
+    "collaborators": [
+      "Yanjie Fu",
+      "Dongjie Wang",
+      "Xuanming Hu",
+      "Haifeng Chen",
+      "Nanxu Gong",
+      "Kunpeng Liu",
+      "Leilei Sun",
+      "Chandan K. Reddy",
+      "Yuanchun Zhou",
+      "Charu C. Aggarwal"
+    ],
+    "domain": [
+      "Feature Selection",
+      "Machine Learning",
+      "Reinforcement Learning",
+      "Event Extraction"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "5dba065e-8a0a-49a5-b326-e4ad6d8cab29": {
+    "pk": "5dba065e-8a0a-49a5-b326-e4ad6d8cab29",
+    "project_name": null,
+    "name": "Yanjie Fu",
+    "bio": "I am a researcher at the intersection of urban planning and artificial intelligence (AI), dedicated to exploring how these two fields can synergistically enhance each other. My work emphasizes the importance of sustainable urban development, leveraging AI to address critical challenges such as automated land-use configuration and dynamic geo-human interactions. I have developed innovative frameworks, such as the deep interactive reinforcement learning model for online point-of-interest recommendations and the Community Sensing Without Aggregation (CSWA) paradigm, which enables efficient environmental monitoring without compromising data privacy.\n\nMy research also delves into advanced feature selection and representation learning techniques, where I have introduced generative models and reinforcement learning approaches to optimize feature spaces and enhance model performance. I am particularly interested in the application of large language models (LLMs) in graph data analysis, aiming to bridge the gap between LLMs and graph neural networks for improved relationship mining.\n\nThrough my work, I strive to create robust, explainable, and efficient AI systems that can adapt to complex real-world scenarios, from anomaly detection in cyber-physical systems to sound source localization. I am passionate about pushing the boundaries of what AI can achieve in urban planning and beyond, and I am committed to developing solutions that are not only effective but also sustainable and socially responsible.",
+    "collaborators": [
+      "Dongjie Wang",
+      "Wangyang Ying",
+      "Kunpeng Liu",
+      "Leilei Sun",
+      "Haifeng Chen",
+      "Hui Xiong",
+      "Ehtesamul Azim",
+      "Nanxu Gong",
+      "Bowen Du",
+      "Chang-Tien Lu"
+    ],
+    "domain": [
+      "Urban Planning",
+      "Machine Learning",
+      "Feature Selection",
+      "Graph Neural Network"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

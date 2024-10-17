@@ -1,0 +1,112 @@
+{
+  "7fb011cc-c8d7-457c-84cc-b36643ff8e53": {
+    "pk": "7fb011cc-c8d7-457c-84cc-b36643ff8e53",
+    "project_name": null,
+    "name": "Deniz G\u00fcnd\u00fcz",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work primarily revolves around enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, which has proven effective in various prediction tasks, achieving significant performance improvements.\n\nI am particularly interested in the interplay between graph structures and predictive performance, as demonstrated in my work on relational graphs that reveal a \"sweet spot\" for optimizing neural network architectures. This exploration has led to the creation of Identity-aware GNNs (ID-GNNs), which enhance the expressive power of message-passing frameworks by incorporating node identities.\n\nAdditionally, I have tackled the challenges posed by dynamic graphs through the ROLAND framework, which allows for the seamless adaptation of static GNNs to dynamic environments. My research also extends to automated machine learning (AutoML), where I introduced FALCON and AutoTransfer to streamline the search for optimal model designs across various tasks, significantly reducing computational costs.\n\nOverall, my goal is to push the boundaries of GNN research, providing scalable solutions and insights that can be applied across a wide range of domains, from social networks to biological systems. I am passionate about fostering a deeper understanding of how graph-based approaches can transform machine learning and contribute to solving complex real-world problems.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "610dbe7e-da98-401e-84a7-18fab5f9a7d9": {
+    "pk": "610dbe7e-da98-401e-84a7-18fab5f9a7d9",
+    "project_name": null,
+    "name": "Mich\u00e8le A. Wigger",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and machine learning, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research doesn't stop at static graphs; I proposed the ROLAND framework to effectively adapt static GNNs for dynamic graphs, enabling real-time updates and scalable training methods.\n\nIn addition to architectural innovations, I have explored the design space of GNNs, systematically analyzing over 315,000 configurations to provide guidelines for optimal model selection across different tasks. My work on AutoML, particularly with FALCON and AutoTransfer, aims to streamline the process of finding effective neural architectures by leveraging prior knowledge and enhancing search efficiency.\n\nThrough these contributions, I strive to push the boundaries of what GNNs can achieve, fostering a deeper understanding of their structure and performance while making them more accessible for real-world applications.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "4f3de4f3-bf42-41e3-8050-57a5bd91b1de": {
+    "pk": "4f3de4f3-bf42-41e3-8050-57a5bd91b1de",
+    "project_name": null,
+    "name": "Tze-Yang Tung",
+    "bio": "As a researcher deeply immersed in the field of graph neural networks (GNNs) and their applications, my work focuses on enhancing the capabilities and understanding of these powerful models. My recent publications reflect a commitment to addressing the limitations of existing GNN architectures and exploring innovative solutions. For instance, I developed Position-aware GNNs (P-GNNs) to better capture the positional context of nodes within graphs, significantly improving performance in tasks like link prediction and community detection.\n\nI also introduced Identity-aware GNNs (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identity during message passing. This advancement has led to substantial accuracy improvements across various prediction tasks. My research on dynamic graphs culminated in the ROLAND framework, which allows static GNNs to adapt to dynamic environments, thereby enhancing their scalability and effectiveness.\n\nIn addition to architectural innovations, I have explored the design space of GNNs, identifying optimal configurations for different tasks through systematic evaluation. My work on AutoML, particularly with the AutoTransfer framework, aims to streamline the process of finding effective neural architectures by leveraging prior knowledge from similar tasks.\n\nOverall, my research is driven by a passion for understanding and improving the interplay between graph structures and machine learning, with the goal of making GNNs more robust, efficient, and applicable to real-world challenges.",
+    "collaborators": [],
+    "domain": [
+      "Graph Neural Network",
+      "Machine Learning",
+      "Multi-task Learning",
+      "AutoML"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "7cad3e0f-df7f-47be-b105-eec76908f11e": {
+    "pk": "7cad3e0f-df7f-47be-b105-eec76908f11e",
+    "project_name": null,
+    "name": "Ping Zhang",
+    "bio": "I am a researcher specializing in fluid dynamics, particularly in the analysis of the Navier-Stokes equations and their applications in various physical systems. My recent work has focused on proving the global existence of weak solutions to the inhomogeneous incompressible Navier-Stokes system, exploring both well-prepared and ill-prepared initial data. I have developed methods to establish the long-time existence and uniqueness of solutions to the Prandtl system, as well as the global regularity of solutions to the 3D inhomogeneous Navier-Stokes equations with axisymmetric initial conditions.\n\nIn addition to theoretical advancements, I have conducted first-principles calculations to investigate quantum size effects in materials like Mg thin films and have explored the behavior of shock-compressed substances, such as oxygen and benzene, using quantum molecular dynamics simulations. My research also delves into the intricate relationships between spin effects and charge transport in condensed matter systems, contributing to our understanding of phenomena like the charge-Hall effect and orbital magnetization in complex lattice structures.\n\nThrough my work, I aim to bridge the gap between theoretical fluid dynamics and practical applications, providing insights that can inform experimental approaches and enhance our understanding of fluid behavior in various contexts. I am committed to advancing the field through rigorous analysis and innovative computational techniques.",
+    "collaborators": [
+      "Cong Wang",
+      "Zhifei Zhang",
+      "Yanlin Liu",
+      "Fawei Zheng",
+      "Marius Paicu",
+      "Yibin Zhang",
+      "Qian Niu",
+      "Zhigang Wang",
+      "Raphael Danchin",
+      "Hammadi Abidi"
+    ],
+    "domain": [
+      "Fluid Dynamics",
+      "Navier-Stokes Equations",
+      "Quantum Mechanics",
+      "Molecular Dynamics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c22dbb3d-326b-405c-a616-63df0867e32c": {
+    "pk": "c22dbb3d-326b-405c-a616-63df0867e32c",
+    "project_name": null,
+    "name": "Yong Xiao",
+    "bio": "I am a researcher deeply engaged in the intersection of quantum gravity, black hole thermodynamics, and fog computing technologies. My work explores fundamental concepts such as the holographic principle and quantum entanglement, where I propose new theories that bridge gaps in our understanding of quantum properties of gravity and the early universe. I have derived the Bekenstein-Hawking entropy for black holes and established connections between holographic thermodynamics and dimensional reduction, suggesting that the early universe may have a two-dimensional description.\n\nIn addition to my theoretical pursuits, I am also focused on practical applications in fog computing, particularly in enhancing the Tactile Internet. My research addresses the challenges of latency and energy efficiency in fog computing networks, proposing innovative frameworks like AdaptiveFog for optimizing service confidence levels in connected vehicles. I have developed distributed optimization algorithms that facilitate cooperation among fog nodes, significantly improving workload processing capabilities.\n\nThrough my work, I aim to contribute to both the theoretical foundations of quantum gravity and the practical advancements in computational technologies, striving to create a cohesive understanding that spans both realms. My research not only seeks to unravel the mysteries of the universe but also to enhance the efficiency and responsiveness of modern computing systems.",
+    "collaborators": [
+      "Marwan Krunz",
+      "Mingxing Luo",
+      "Yu Tian"
+    ],
+    "domain": [
+      "Quantum Gravity",
+      "Holographic Principle",
+      "Fog Computing",
+      "Network Optimization"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

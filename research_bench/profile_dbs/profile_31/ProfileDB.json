@@ -1,0 +1,86 @@
+{
+  "4202b552-7ae2-4d21-8b53-dd8e49244229": {
+    "pk": "4202b552-7ae2-4d21-8b53-dd8e49244229",
+    "project_name": null,
+    "name": "Gleb Bazhenov",
+    "bio": "I am a researcher dedicated to exploring the intersection of tabular and graph machine learning, with a focus on enhancing predictive performance through the integration of graph-based methods. My work addresses the unique challenges posed by heterogeneous tabular data, where I have developed a benchmark that evaluates various models, including graph neural networks (GNNs) and traditional tabular models. Through empirical studies, I have demonstrated that GNNs can significantly improve predictive outcomes, while also revealing that with appropriate feature preprocessing, standard tabular models can compete effectively.\n\nIn addition to this, I am deeply invested in the problem of out-of-distribution (OOD) detection in graph classification. My research emphasizes the importance of uncertainty estimation and highlights the lack of a universal solution for OOD detection, advocating for a nuanced approach that considers both graph representations and predictive distributions.\n\nFurthermore, I have proposed a novel methodology for inducing diverse distributional shifts based on graph structure, which allows for a more comprehensive evaluation of graph models under challenging conditions. My findings indicate that simple models can often outperform more complex ones in these scenarios, revealing a critical trade-off between representation quality and the ability to distinguish between different distributions.\n\nOverall, my research aims to bridge the gap between tabular and graph machine learning, providing insights and methodologies that enhance the robustness and reliability of machine learning systems in real-world applications.",
+    "collaborators": [
+      "Liudmila Prokhorenkova",
+      "Oleg Platonov",
+      "Sergei Ivanov",
+      "Maxim Panov",
+      "Alexey Zaytsev",
+      "Evgeny Burnaev",
+      "Denis Kuznedelev",
+      "Andrey Malinin",
+      "Artem Babenko"
+    ],
+    "domain": [
+      "Graph Machine Learning",
+      "Tabular Data",
+      "Uncertainty Estimation",
+      "Distributional Shifts"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "5c838f0c-dfa6-4956-b7e2-b08307eb52c3": {
+    "pk": "5c838f0c-dfa6-4956-b7e2-b08307eb52c3",
+    "project_name": null,
+    "name": "Oleg Platonov",
+    "bio": "I am a researcher dedicated to exploring the intricacies of graph neural networks (GNNs) and their application to both homophilous and heterophilous graphs. My recent work has focused on addressing the challenges posed by heterophily in graph structures, where I have critically examined existing homophily measures and proposed the adjusted homophily metric, which offers a more reliable comparison across datasets. Additionally, I introduced the concept of label informativeness (LI), which provides deeper insights into how neighbor labels influence node predictions, demonstrating its correlation with GNN performance.\n\nRecognizing the gap between tabular and graph machine learning, I have developed a benchmark that integrates heterogeneous tabular node features into graph models. This work highlights the potential of GNNs to enhance predictive performance in tabular contexts while also revealing that traditional tabular models can be adapted to leverage graph data effectively.\n\nChallenging the prevailing notion that GNNs are limited to homophilous graphs, I have shown that standard GNN architectures can perform robustly on heterophilous datasets, even outperforming specialized models. My research aims to bridge the divide between theoretical advancements and practical applications, providing valuable insights for both researchers and practitioners in the fields of graph and tabular machine learning.",
+    "collaborators": [
+      "Liudmila Prokhorenkova",
+      "Denis Kuznedelev",
+      "Artem Babenko",
+      "Gleb Bazhenov",
+      "Michael Diskin"
+    ],
+    "domain": [
+      "Graph Neural Network",
+      "Heterophily",
+      "Tabular Machine Learning",
+      "Node Classification"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "925e010a-2ab6-4388-b719-7cd7ac4107ed": {
+    "pk": "925e010a-2ab6-4388-b719-7cd7ac4107ed",
+    "project_name": null,
+    "name": "Liudmila Prokhorenkova",
+    "bio": "I am a researcher deeply engaged in the fields of network analysis, machine learning, and graph-based methodologies. My work primarily focuses on community detection, where I have developed innovative techniques for hyperparameter tuning without labeled data, significantly enhancing the performance of various community detection algorithms. I have also introduced Stochastic Gradient Langevin Boosting (SGLB), a robust framework that guarantees global convergence for multimodal loss functions, outperforming traditional gradient boosting methods.\n\nMy research extends to the intersection of graph neural networks (GNNs) and gradient-boosted decision trees (GBDT), where I proposed a novel architecture that leverages the strengths of both models to handle heterogeneous tabular data effectively. Additionally, I have explored neural algorithmic reasoning, emphasizing the importance of learning algorithms without intermediate supervision, which has led to state-of-the-art results in several algorithmic tasks.\n\nI am particularly interested in uncertainty quantification in model predictions, especially for gradient boosting models, and have developed a probabilistic ensemble-based framework to derive uncertainty estimates. My work also includes a systematic analysis of classification performance measures, leading to the introduction of new metrics that better evaluate classification results.\n\nThrough my research, I aim to bridge theoretical insights with practical applications, contributing to the understanding and advancement of machine learning and network analysis methodologies.",
+    "collaborators": [
+      "Aleksei Ustimenko",
+      "Alexey Tikhonov",
+      "Gleb Rodionov",
+      "Aleksandr Shekhovtsov",
+      "Sergei Ivanov",
+      "Artem Beliakov",
+      "Kirill Shevkunov",
+      "Andrey Malinin",
+      "Martijn G\u00f6sgens",
+      "Anton Zhiyanov"
+    ],
+    "domain": [
+      "Community Detection",
+      "Graph Neural Network",
+      "Machine Learning",
+      "Uncertainty Quantification"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

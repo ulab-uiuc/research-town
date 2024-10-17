@@ -1,0 +1,166 @@
+{
+  "6cc5fe19-02c3-467c-a76c-c2618a1d3f06": {
+    "pk": "6cc5fe19-02c3-467c-a76c-c2618a1d3f06",
+    "project_name": null,
+    "name": "Jixuan Cui",
+    "bio": "I am a researcher dedicated to addressing the challenges of data scarcity and privacy in the realm of industrial surface defect classification (SDC) and fault diagnosis (FD) through innovative applications of federated learning (FL). My recent work has focused on developing personalized federated learning approaches, such as Adversarial Federated Consensus Learning (AFedCL), which effectively tackle data heterogeneity among clients. By employing dynamic consensus construction and a consensus-aware aggregation mechanism, I enhance the global model's generalization capabilities while ensuring that local models retain their unique insights.\n\nAdditionally, I have introduced the representation encoding-based federated meta-learning (REFML) framework, which leverages the inherent heterogeneity of training clients to improve out-of-distribution generalization. This framework not only addresses the domain discrepancies that often plague FL but also optimizes the use of limited training data across different equipment types. My research has consistently demonstrated significant improvements in diagnostic accuracy, achieving up to 18.33% better performance on unseen equipment types compared to state-of-the-art methods.\n\nThrough my work, I aim to bridge the gap between advanced machine learning techniques and real-world industrial applications, ensuring that privacy concerns do not hinder the development of robust and effective models. I am passionate about pushing the boundaries of federated learning to create solutions that are both innovative and practical for the industrial Internet of Things (IIoT).",
+    "collaborators": [
+      "Jun Li",
+      "Zhen Mei",
+      "Wen Chen",
+      "Yiyang Ni",
+      "Zengxiang Li",
+      "Kang Wei",
+      "Sha Wei",
+      "Ming Ding",
+      "Song Guo"
+    ],
+    "domain": [
+      "Federated Learning",
+      "Deep Learning",
+      "Fault Diagnosis",
+      "Industrial Internet of Things"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e02f3c84-07e4-4684-b266-a91445b6998d": {
+    "pk": "e02f3c84-07e4-4684-b266-a91445b6998d",
+    "project_name": null,
+    "name": "Jun Li",
+    "bio": "I am a researcher with a diverse background in mathematics, physics, and engineering, focusing on both theoretical and applied aspects of my fields. My work spans a range of topics, including geometric problems related to triangles and conic sections, the study of Gromov-Witten invariants, and the development of innovative statistical methods for high-dimensional data analysis.\n\nRecently, I have delved into the realm of quantum control methods, proposing a scalable subsystem-based approach that significantly reduces computational complexity. This work is particularly relevant for optimizing quantum operations in emerging quantum technologies. Additionally, I have contributed to understanding the transmission dynamics of infectious diseases, specifically the novel coronavirus, by employing robust statistical estimation techniques to analyze outbreak data.\n\nMy research also extends to the study of gravitational waves in modified gravity theories, where I explore the implications of nonstandard propagation on observable phenomena. Furthermore, I have developed a multi-step steady-state method for accurately measuring low permeability in rock samples, showcasing my commitment to bridging theoretical insights with practical applications.\n\nOverall, my interdisciplinary approach allows me to tackle complex problems across various domains, and I am passionate about advancing knowledge through rigorous research and innovative methodologies.",
+    "collaborators": [],
+    "domain": [
+      "Mathematics",
+      "Statistical Process Control",
+      "Quantum Control",
+      "Fluid Dynamics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "3638d188-bb9d-4773-a6ce-7b030c509b56": {
+    "pk": "3638d188-bb9d-4773-a6ce-7b030c509b56",
+    "project_name": null,
+    "name": "Zhen Mei",
+    "bio": "I am a researcher with a strong focus on the intersection of information theory, memory systems, and advanced coding techniques. My recent work explores the impact of boundary conditions on bifurcation scenarios in semilinear elliptic partial differential equations, revealing how eigenfunction orthogonality can compensate for symmetry loss. I have also delved into the design of quantizers for emerging memory technologies like STT-MRAM, where I developed a quantized channel model and optimized a 1-bit quantizer that significantly outperforms conventional methods.\n\nIn addressing the challenges posed by unknown channel offsets in non-volatile memories, I proposed novel neural network detectors, including a dynamic threshold detector that intelligently adjusts based on neural network outputs, thereby optimizing read latency and power consumption. My research extends to the design of protograph low-density parity-check (LDPC) codes for communication systems affected by impulsive noise, where I introduced simulation-based analysis techniques to enhance error performance.\n\nAdditionally, I have developed a dynamic programming method for optimal sequential deterministic quantizers, which generalizes existing results and improves computational efficiency. My work culminates in the design of a mutual information-maximizing quantized belief propagation decoder, which demonstrates superior performance in decoding regular LDPC codes. Through these contributions, I aim to advance the understanding and application of coding and detection techniques in modern communication and memory systems.",
+    "collaborators": [
+      "Kui Cai",
+      "Xuan He",
+      "Xingwei Zhong",
+      "Chih-Wen Shih",
+      "Long Shi",
+      "Bin Dai",
+      "Martin Johnston",
+      "Rolando Carrasco",
+      "Pingping Chen",
+      "Wentu Song"
+    ],
+    "domain": [
+      "Signal Processing",
+      "Neural Networks",
+      "Error Correction",
+      "Quantization"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "604273a6-7609-4e98-8f4c-b82931d5265f": {
+    "pk": "604273a6-7609-4e98-8f4c-b82931d5265f",
+    "project_name": null,
+    "name": "Yiyang Ni",
+    "bio": "I am a researcher specializing in the intersection of digital twin technology and federated learning within the context of the Industrial Internet of Things (IIoT). My recent work addresses the challenges posed by data silos and privacy concerns in IoT networks, particularly in implementing digital twins that require substantial distributed data support. I have developed a dynamic resource scheduling algorithm designed for asynchronous federated learning-based lightweight digital twin IoT networks. This algorithm optimizes IoT device selection and transmit power control while minimizing energy consumption and latency, utilizing advanced techniques such as the Lyapunov method and multi-armed bandit frameworks.\n\nAdditionally, I have tackled the issue of data scarcity in industrial surface defect classification by proposing a novel personalized federated learning approach called Adversarial Federated Consensus Learning (AFedCL). This method addresses data heterogeneity among clients through dynamic consensus construction and adversarial training, enhancing the global model's performance while maintaining privacy. My research emphasizes the importance of balancing global and local knowledge, leading to significant improvements in accuracy on various datasets. I am passionate about leveraging cutting-edge technologies to create efficient, privacy-preserving solutions that can transform industrial applications.",
+    "collaborators": [
+      "Jun Li",
+      "Wen Chen",
+      "Shunfeng Chu",
+      "Jianxin Wang",
+      "Kang Wei",
+      "Shi Jin",
+      "Jixuan Cui",
+      "Zhen Mei",
+      "Zengxiang Li"
+    ],
+    "domain": [
+      "Federated Learning",
+      "Internet of Things",
+      "Digital Twin",
+      "Machine Learning"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "cc9b9b10-6482-4b5d-ba64-29a4df804bc2": {
+    "pk": "cc9b9b10-6482-4b5d-ba64-29a4df804bc2",
+    "project_name": null,
+    "name": "Wen Chen",
+    "bio": "I am a researcher specializing in theoretical physics and communication systems, with a strong focus on Feynman integrals and their applications in particle physics. My recent work has revolved around transforming parametric representations of Feynman integrals, developing systematic methods for reducing integrals with phase space cuts, and creating the AmpRed Mathematica package for efficient multi-loop calculations. I have also explored the intricacies of asymptotic expansions and the implications of unregulated divergences in Feynman integrals, contributing to a deeper understanding of phenomena like the collinear anomaly.\n\nIn addition to my work in particle physics, I have delved into communication theory, proposing innovative algorithms for resource allocation in multi-user systems and enhancing decoding techniques for non-orthogonal multiple access methods. My research aims to bridge theoretical concepts with practical applications, ensuring that my findings can be utilized effectively in real-world scenarios. I am passionate about advancing our understanding of complex systems, whether in the realm of quantum field theory or modern communication networks, and I strive to develop tools and methodologies that facilitate further exploration in these fields.",
+    "collaborators": [
+      "Jun Li",
+      "Lili Wei",
+      "Hufei Zhu",
+      "Yang Yu",
+      "Yong Liu",
+      "Zijian Wang",
+      "Fan Wei"
+    ],
+    "domain": [
+      "Feynman Integrals",
+      "Graph Theory",
+      "Communication Systems",
+      "Nonlinear Dynamics"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "f876f584-1336-4574-9461-f5f1a9e898bf": {
+    "pk": "f876f584-1336-4574-9461-f5f1a9e898bf",
+    "project_name": null,
+    "name": "Zengxiang Li",
+    "bio": "I am a researcher specializing in federated learning (FL) and its applications across various domains, particularly in addressing data privacy and heterogeneity challenges. My recent work explores the integration of Transformer-based models in FL, demonstrating their advantages over traditional deep learning architectures in large-scale, heterogeneous environments. I have developed innovative frameworks such as Adversarial Federated Consensus Learning (AFedCL) to enhance model performance amidst data discrepancies, and I have also contributed to the field of privacy-preserving FL through the introduction of weighted federated learning concepts and oracle-aided multi-party computation.\n\nMy research extends to intelligent fault diagnosis in industrial settings, where I leverage personalized federated learning to improve diagnostic accuracy across multiple factories. I have also pioneered the use of hierarchical FL mechanisms for gas usage estimation, ensuring efficient collaboration among gas companies while maintaining data privacy. My work on the Federated Opportunistic Block Dropout (FEDOBD) approach has successfully reduced communication overhead in industrial applications, showcasing the practical impact of my research.\n\nAdditionally, I am actively involved in the emerging field of Federated Foundation Models (FedFM), where I explore the synergies between FL and foundation models to enhance model training and aggregation processes. My goal is to contribute to the development of trustworthy, efficient, and scalable FL solutions that can be applied across various industries, ultimately advancing the capabilities of artificial intelligence in real-world applications.",
+    "collaborators": [
+      "Chengyi Yang",
+      "Zhaoxiang Hou",
+      "Han Yu",
+      "Shubao Zhao",
+      "Yulan Gao",
+      "Jun Li",
+      "Wen Chen",
+      "Mervyn Cheah",
+      "Rick Siow Mong Goh",
+      "Sheng Guo"
+    ],
+    "domain": [
+      "Federated Learning",
+      "Privacy-Preserving Machine Learning",
+      "Multi-Party Computation",
+      "Time Series Forecasting"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}
