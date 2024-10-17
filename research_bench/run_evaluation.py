@@ -4,11 +4,21 @@ import logging
 import os
 from typing import Any, Dict, List, Optional
 
-from research_bench.proposal_eval import compute_bertscore, compute_bleu, compute_gpt_metric, compute_rouge_l
 from tqdm import tqdm
-#from utils import get_current_5q, single_agent_proposal_writing
-from research_bench.proposal_writing import write_proposal_baseline, write_proposal_researchtown, write_proposal_single_agent
 
+from research_bench.proposal_eval import (
+    compute_bertscore,
+    compute_bleu,
+    compute_gpt_metric,
+    compute_rouge_l,
+)
+
+# from utils import get_current_5q, single_agent_proposal_writing
+from research_bench.proposal_writing import (
+    write_proposal_baseline,
+    write_proposal_researchtown,
+    write_proposal_single_agent,
+)
 from research_town.agents import AgentManager
 from research_town.configs import Config
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
@@ -193,7 +203,7 @@ def process_paper(
     # Step 4: Generate proposal 5Q
     if args.test_single_agent:
         proposal_5q = write_proposal_single_agent(
-            author = authors[0], intros = intros,  id = id
+            author=authors[0], intros=intros, id=id
         )
     else:
         proposal_5q = write_proposal_researchtown(authors, intros, keyword, id)

@@ -76,15 +76,18 @@ def write_proposal_researchtown(
     else:
         return None
 
-def write_proposal_single_agent(author: str, intros: List[str], id: int) -> Optional[str]:
+
+def write_proposal_single_agent(
+    author: str, intros: List[str], id: int
+) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on the provided author and existing proposals
-    
+
     Args:
         author (str): Author name.
         intros (List[str]): List of existing introduction texts.
         id (int): ID of the author.
-    
+
     Returns:
         Optional[str]: Generated proposal as a string if successful, else None.
     """
@@ -138,7 +141,6 @@ def write_proposal_single_agent(author: str, intros: List[str], id: int) -> Opti
     except Exception as e:
         print(f'Error generating current_5q: {e}')
         return None
-
 
 
 def write_proposal_baseline(intro: str, model: str = 'gpt-4o-mini') -> Optional[str]:
