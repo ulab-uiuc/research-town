@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define input and output file paths
-INPUT="./benchmark/benchmark_0930.json"
+INPUT="./benchmark/mlbench.json"
 OUTPUT="./results/research_bench_result_4o_mini_single_agent.jsonl"
 INTRO_LOG="./benchmark/intro_logging.jsonl"
 TEST_SINGLE_AGENT="--test-single-agent"
