@@ -1,11 +1,10 @@
-from typing import Optional
-
+from ..configs import DatabaseConfig
 from ..data.data import Idea, Insight, MetaReview, Proposal, Rebuttal, Review
 from .db_complex import ComplexDB
 
 
 class ProgressDB(ComplexDB):
-    def __init__(self, load_file_path: Optional[str] = None) -> None:
+    def __init__(self, config: DatabaseConfig) -> None:
         super().__init__(
             classes_to_register=[
                 Insight,
@@ -15,5 +14,5 @@ class ProgressDB(ComplexDB):
                 Rebuttal,
                 MetaReview,
             ],
-            load_file_path=load_file_path,
+            config=config,
         )
