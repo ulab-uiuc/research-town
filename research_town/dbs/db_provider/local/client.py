@@ -23,7 +23,6 @@ class LocalDatabaseClient(DatabaseClient):
             raise ValueError(
                 'LocalDatabaseClient: env variable DATABASE_FOLDER_PATH is required'
             )
-        print('folder_path', folder_path)
 
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
@@ -37,7 +36,6 @@ class LocalDatabaseClient(DatabaseClient):
                 self.data_embed[namespace] = {}
 
     def count(self, namespace: str, **conditions: Union[str, int, float]) -> int:
-        print('count', namespace, conditions, json.dumps(self.data, indent=2))
         if conditions is None or not conditions:
             return len(self.data[namespace])
         result = 0
@@ -128,22 +126,17 @@ class LocalDatabaseClient(DatabaseClient):
         candidate_embeddings = np.asarray(
             [self.data_embed[namespace][pk] for pk in pks], dtype=np.float32
         )
-        print('candidate_embeddings', candidate_embeddings.shape)
         candidate_embeddings = candidate_embeddings / np.linalg.norm(
             candidate_embeddings, axis=1, keepdims=True
         )
-        print('candidate_embeddings', candidate_embeddings.shape)
 
         q_embeddings = np.asarray(query_embeddings, dtype=np.float32)
-        print('q_embeddings', q_embeddings.shape)
         q_embeddings = q_embeddings / np.linalg.norm(
             q_embeddings, axis=1, keepdims=True
         )
-        print('q_embeddings', q_embeddings.shape)
 
         # Calculate cosine similarity
         similarities = q_embeddings @ candidate_embeddings.T
-        print('similarities', similarities)
 
         # Get top matches
         matches = []
