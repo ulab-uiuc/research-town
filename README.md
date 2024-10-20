@@ -44,21 +44,27 @@ conda activate research-town
 curl -sSL https://install.python-poetry.org | python3
 ```
 
+### Configure environment variables
+Environment variables such as `OPENAI_API_KEY` and database related configs are required to run the code. The recommended way to set all the required variable is
+1. Copy the `.env.template` file into the project root with the name `.env`.
+```bash
+cp .env.template .env
+```
+2. Fill the required environment variables in the `.env` file.
+3. Source the `.env` file.
+```bash
+set -a
+source .env
+set +a
+```
+
+### Running the examples
 To run examples provided in the `examples`:
 
 ```bash
 poetry install
 cd examples
 python research_town_demo.py
-```
-
-### Configure API keys
-
-OpenAI key is required to run the code. Please set the environment variable `OPENAI_API_KEY` to your key. The recommend way is to add the key to the conda environment:
-```
-export OPENAI_API_KEY=<your_key>
-# or if you want to make sure your key is auto-set each time you enter the environment
-conda env config vars set OPENAI_API_KEY=<your_key>
 ```
 
 ## Developing
