@@ -12,9 +12,6 @@ def set_env_variable(monkeypatch: MonkeyPatch) -> Generator[None, None, None]:
     """
     This fixture sets the DATABASE_FOLDER_PATH environment variable to a temporary directory path
     """
-    import logging
-
-    logging.error('set_env_variable')
     # Create a temporary directory
     temp_dir = TemporaryDirectory()
 
@@ -25,6 +22,5 @@ def set_env_variable(monkeypatch: MonkeyPatch) -> Generator[None, None, None]:
     yield
 
     # Cleanup the temporary directory after the session is over
-    logging.error('cleanup')
     DatabaseClientHandler.reset_client_instance()
     temp_dir.cleanup()

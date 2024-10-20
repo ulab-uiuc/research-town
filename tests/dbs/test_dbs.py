@@ -1,8 +1,6 @@
-from tempfile import TemporaryDirectory
 from unittest.mock import MagicMock, patch
 
 from beartype.typing import Any, Dict, List
-from pytest import MonkeyPatch
 
 from research_town.data import (
     Idea,
@@ -13,16 +11,11 @@ from research_town.data import (
     ReviewWritingLog,
 )
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from research_town.dbs.db_provider import DatabaseClientHandler
 from tests.constants.config_constants import example_config
 from tests.mocks.mocking_func import mock_prompting
 
 
-def test_LogDB_basic(monkeypatch: MonkeyPatch) -> None:
-    assert DatabaseClientHandler.__client__ is None
-    temp_dir = TemporaryDirectory()
-    monkeypatch.setenv('DATABASE_FOLDER_PATH', temp_dir.name)
-
+def test_LogDB_basic() -> None:
     db = LogDB(config=example_config.database)
     review_log = ReviewWritingLog(
         profile_pk='agent1',
@@ -77,12 +70,7 @@ def test_LogDB_basic(monkeypatch: MonkeyPatch) -> None:
     assert new_db.dbs['MetaReviewWritingLog'].count() == 1
 
 
-def test_progressdb_basic(monkeypatch: MonkeyPatch) -> None:
-    assert DatabaseClientHandler.__client__ is None
-
-    temp_dir = TemporaryDirectory()
-    monkeypatch.setenv('DATABASE_FOLDER_PATH', temp_dir.name)
-
+def test_progressdb_basic() -> None:
     db = ProgressDB(config=example_config.database)
     idea1 = Idea(content='Idea for a new AI algorithm')
     idea2 = Idea(content='Quantum computing research plan')
@@ -119,12 +107,7 @@ def test_progressdb_basic(monkeypatch: MonkeyPatch) -> None:
     assert new_db.dbs['Idea'].count() == 2
 
 
-def test_ProfileDB_basic(monkeypatch: MonkeyPatch) -> None:
-    assert DatabaseClientHandler.__client__ is None
-
-    temp_dir = TemporaryDirectory()
-    monkeypatch.setenv('DATABASE_FOLDER_PATH', temp_dir.name)
-
+def test_ProfileDB_basic() -> None:
     db = ProfileDB(config=example_config.database)
     agent1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
     agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
@@ -160,12 +143,7 @@ def test_ProfileDB_basic(monkeypatch: MonkeyPatch) -> None:
     assert results[0].name == 'Jane Smith'
 
 
-def test_Paperdb_basic(monkeypatch: MonkeyPatch) -> None:
-    assert DatabaseClientHandler.__client__ is None
-
-    temp_dir = TemporaryDirectory()
-    monkeypatch.setenv('DATABASE_FOLDER_PATH', temp_dir.name)
-
+def test_Paperdb_basic() -> None:
     db = PaperDB(config=example_config.database)
     paper1 = Paper(
         title='Sample Paper 1',
@@ -234,10 +212,7 @@ def test_Paperdb_basic(monkeypatch: MonkeyPatch) -> None:
     assert new_db.get(pk=paper1.pk)[0].title == 'Updated Sample Paper 1'
 
 
-def test_agent_match(monkeypatch: MonkeyPatch) -> None:
-    temp_dir = TemporaryDirectory()
-    monkeypatch.setenv('DATABASE_FOLDER_PATH', temp_dir.name)
-
+def test_agent_match() -> None:
     db = ProfileDB(config=example_config.database)
     profile1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
     profile2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
@@ -251,10 +226,7 @@ def test_agent_match(monkeypatch: MonkeyPatch) -> None:
     assert len(match_profiles) == 2
 
 
-def test_paper_match(monkeypatch: MonkeyPatch) -> None:
-    temp_dir = TemporaryDirectory()
-    monkeypatch.setenv('DATABASE_FOLDER_PATH', temp_dir.name)
-
+def test_paper_match() -> None:
     db = PaperDB(config=example_config.database)
     paper1 = Paper(
         title='Sample Paper 1',
@@ -299,12 +271,7 @@ def test_paper_match(monkeypatch: MonkeyPatch) -> None:
 
 
 @patch('research_town.utils.profile_collector.model_prompting')
-def test_pull_profiles(
-    mock_model_prompting: MagicMock, monkeypatch: MonkeyPatch
-) -> None:
-    temp_dir = TemporaryDirectory()
-    monkeypatch.setenv('DATABASE_FOLDER_PATH', temp_dir.name)
-
+def test_pull_profiles(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     db = ProfileDB(config=example_config.database)
@@ -313,10 +280,7 @@ def test_pull_profiles(
     assert db.count() == 2
 
 
-def test_pull_papers(monkeypatch: MonkeyPatch) -> None:
-    temp_dir = TemporaryDirectory()
-    monkeypatch.setenv('DATABASE_FOLDER_PATH', temp_dir.name)
-
+def test_pull_papers() -> None:
     db = PaperDB(config=example_config.database)
     db.pull_papers(num=2, domain='Data Mining')
     assert db.count() == 2
