@@ -11,9 +11,6 @@ from .extensions import config, log_db, paper_db, profile_db, progress_db
 def run_engine(
     url: str,
 ) -> Generator[Tuple[Optional[Progress], Optional[Agent]], None, None]:
-    import time
-
-    start = time.time()
     try:
         intro = get_paper_introduction(url)
         if not intro:
@@ -45,4 +42,3 @@ def run_engine(
 
     finally:
         print('Engine execution completed.')
-        print(f'Time elapsed: {time.time() - start:.2f} seconds')
