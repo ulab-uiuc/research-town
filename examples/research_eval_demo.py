@@ -72,10 +72,6 @@ def main(
         pk=metareview.pk,
     )
 
-    # step 5: save the database logs with evaluation results to file
-    # progress_db.save_to_json(save_file_path)
-    # Not needed anymore, as the database is already saved internally
-
 
 if __name__ == '__main__':
     main()
