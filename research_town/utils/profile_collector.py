@@ -26,7 +26,7 @@ def coauthor_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
 
 
 def collect_publications_and_coauthors(
-    author: str, paper_max_num: int = 10, exclude_papers: List[str] = []
+    author: str, paper_max_num: int = 10, exclude_paper_titles: List[str] = []
 ) -> Tuple[List[Dict[str, Any]], List[str]]:
     client = Client()
     abstracts = []
@@ -35,13 +35,13 @@ def collect_publications_and_coauthors(
     for result in tqdm(
         client.results(search), desc=f"Collecting {author}'s papers", unit='Paper'
     ):
+        if result.title in exclude_paper_titles:
+            continue
         if author not in ', '.join(author.name for author in result.authors):
             continue
         author_list = [author.name for author in result.authors]
         co_authors = coauthor_frequency(author, author_list, co_authors)
         abstract = result.summary.replace('\n', ' ')
-        if result.title in exclude_papers:
-            continue
         abstracts.append(abstract)
     co_author_names = coauthor_filter(co_authors, limit=10)
     return abstracts, co_author_names
