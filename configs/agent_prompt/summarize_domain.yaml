@@ -41,5 +41,5 @@ fewshot_examples:
   Machine Learning; Graph Neural Network; Foundation Model
 
 template: |
-  Here is the publication history of one researcher:  {publication_info}
+  Here is the publication history of one researcher:  {pub_info}
   Please begin writing research domain keywords split by ';' Should only have 1-4 keywords.

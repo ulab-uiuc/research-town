@@ -102,7 +102,9 @@ def write_proposal_single_agent(
         profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
     else:
         profile_db = ProfileDB()
-        profile_db.pull_profiles(names=[author], config=config, exclude_papers=exclude_papers)
+        profile_db.pull_profiles(
+            names=[author], config=config, exclude_papers=exclude_papers
+        )
         profile_db.save_to_json(f'./profile_dbs/profile_{id}')
 
     bio = profile_db.get(name=author)[0].bio
@@ -215,20 +217,22 @@ def write_proposal_author_only(
     """
     config = Config('../configs')
     profile_db_path = f'./profile_dbs/profile_{id}'
-    
+
     if os.path.exists(profile_db_path):
         profile_db = ProfileDB(load_file_path=profile_db_path)
     else:
         profile_db = ProfileDB()
-        profile_db.pull_profiles(names=authors, config=config, exclude_papers=exclude_papers)
+        profile_db.pull_profiles(
+            names=authors, config=config, exclude_papers=exclude_papers
+        )
         profile_db.save_to_json(profile_db_path)
     profiles = []
     for author in authors:
         print('author', author)
-        
+
         profile = profile_db.get(name=author)[0]
         profiles.append(profile)
-    bios = "\n".join([profile.bio for profile in profiles])
+    bios = '\n'.join([profile.bio for profile in profiles])
     try:
         prompt = [
             {
@@ -262,7 +266,9 @@ def write_proposal_author_only(
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
-            print('Received empty response from model_prompting for write_proposal_author_only.')
+            print(
+                'Received empty response from model_prompting for write_proposal_author_only.'
+            )
             return None
     except Exception as e:
         print(f'Error generating proposal in write_proposal_author_only: {e}')
@@ -301,5 +307,5 @@ def write_proposal_author_citation(
     Returns:
         Optional[str]: Generated proposal as a string if successful, else None.
     """
-    
+
     raise NotImplementedError

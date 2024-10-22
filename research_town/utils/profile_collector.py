@@ -52,7 +52,7 @@ def collect_publications_and_coauthors(
 
 @beartype
 def write_bio_prompting(
-    publication_info: str,
+    pub_info: str,
     prompt_template: Dict[str, Union[str, List[str]]],
     model_name: str,
     return_num: Optional[int] = 1,
@@ -64,7 +64,7 @@ def write_bio_prompting(
     """
     Write bio based on personal research history
     """
-    template_input = {'publication_info': publication_info}
+    template_input = {'pub_info': pub_info}
     messages = openai_format_prompt_construct(prompt_template, template_input)
     return model_prompting(
         model_name,
@@ -79,7 +79,7 @@ def write_bio_prompting(
 
 @beartype
 def summarize_domain_prompting(
-    publication_info: str,
+    pub_info: str,
     prompt_template: Dict[str, Union[str, List[str]]],
     model_name: str,
     return_num: Optional[int] = 1,
@@ -91,7 +91,7 @@ def summarize_domain_prompting(
     """
     Check domain based on personal research history
     """
-    template_input = {'publication_info': publication_info}
+    template_input = {'pub_info': pub_info}
     messages = openai_format_prompt_construct(prompt_template, template_input)
     domain_str = model_prompting(
         model_name,

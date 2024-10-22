@@ -19,7 +19,9 @@ def test_coauthor_filter() -> None:
 
 
 def test_collect_publications_and_coauthors() -> None:
-    publications, titles, co_author_names = collect_publications_and_coauthors('Rex Ying')
+    publications, titles, co_author_names = collect_publications_and_coauthors(
+        'Rex Ying'
+    )
 
     assert len(publications) > 0
     assert len(publications) <= 10

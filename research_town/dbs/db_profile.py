@@ -36,24 +36,31 @@ class ProfileDB(BaseDB[Profile]):
         self, names: List[str], config: Config, exclude_paper_titles: List[str] = ['']
     ) -> None:
         for name in names:
-            pub_abstracts, pub_titles, collaborators = collect_publications_and_coauthors(
-                name, paper_max_num=20, exclude_paper_titles=exclude_paper_titles
+            pub_abstracts, pub_titles, collaborators = (
+                collect_publications_and_coauthors(
+                    name, paper_max_num=20, exclude_paper_titles=exclude_paper_titles
+                )
             )
-            publication_info = '; '.join([f'{abstract}' for abstract in publications])
+            pub_info = '; '.join([f'{abstract}' for abstract in pub_abstracts])
 
             bio = write_bio_prompting(
-                publication_info=publication_info,
+                pub_info=pub_info,
                 prompt_template=config.agent_prompt_template.write_bio,
                 model_name=config.param.base_llm,
             )
             domain = summarize_domain_prompting(
-                publication_info=publication_info,
+                pub_info=pub_info,
                 prompt_template=config.agent_prompt_template.summarize_domain,
                 model_name=config.param.base_llm,
             )
 
             profile = Profile(
-                name=name, bio=bio, domain=domain, collaborators=collaborators, pub_titles=pub_titles, pub_abstracts=pub_abstracts
+                name=name,
+                bio=bio,
+                domain=domain,
+                collaborators=collaborators,
+                pub_titles=pub_titles,
+                pub_abstracts=pub_abstracts,
             )
             self.add(profile)
         self.transform_to_embed()
