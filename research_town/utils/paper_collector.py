@@ -371,7 +371,10 @@ def get_paper_content_from_pdf(url: str) -> Optional[Dict[str, str]]:
         return None
 
 
-def get_paper_introduction(url: str) -> Optional[str]:
+def get_paper_introduction(url: str | None) -> Optional[str]:
+    if url is None:
+        return None
+
     intro_length = 512
     sections = get_paper_content_from_html(url)
     if not sections:
@@ -400,7 +403,10 @@ def get_paper_introduction(url: str) -> Optional[str]:
         return introduction_text
 
 
-def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
+def get_paper_by_arxiv_id(arxiv_id: str | None) -> Optional[arxiv.Result]:
+    if arxiv_id is None:
+        return None
+
     try:
         search = arxiv.Search(id_list=[arxiv_id])
         results = list(search.results())

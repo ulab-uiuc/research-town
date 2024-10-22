@@ -13,19 +13,7 @@ def write_proposal_researchtown(
     intros: List[str],
     id: int,
     exclude_paper_titles: List[str] = [''],
-) -> Optional[str]:
-    """
-    Generates a comprehensive research proposal based on the provided authors and existing proposals
-    using the ProposalWritingEnv environment.
-
-    Args:
-        authors (List[str]): List of author names.
-        intros (List[str]): List of existing introduction texts.
-
-    Returns:
-        Optional[str]: Generated proposal as a string if successful, else None.
-    """
-
+) -> str:
     config = Config('../configs')
     if os.path.exists(f'./profile_dbs/profile_{id}'):
         profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
@@ -56,7 +44,7 @@ def write_proposal_researchtown(
     print('leader_profile', leader_profile)
     leader = agent_manager.create_agent(leader_profile, role='leader')
     if not leader_profile:
-        return None
+        raise ValueError('Failed to create leader agent')
 
     # Prepare the context from existing proposals
     # Assuming that the context should be a list of proposal strings
@@ -78,23 +66,12 @@ def write_proposal_researchtown(
     if proposal and proposal.content:
         return str(proposal.content)
     else:
-        return None
+        raise ValueError('Failed to generate proposal')
 
 
 def write_proposal_single_agent(
     author: str, intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
-) -> Optional[str]:
-    """
-    Generates a comprehensive research proposal based on the provided author and existing proposals
-
-    Args:
-        author (str): Author name.
-        intros (List[str]): List of existing introduction texts.
-        id (int): ID of the author.
-
-    Returns:
-        Optional[str]: Generated proposal as a string if successful, else None.
-    """
+) -> str:
     config = Config('../configs')
     if os.path.exists(f'./profile_dbs/profile_{id}'):
         profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
@@ -142,23 +119,12 @@ def write_proposal_single_agent(
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
-            print('Received empty response from model_prompting for current_5q.')
-            return None
+            raise ValueError('Received empty response from model_prompting for write_proposal_single_agent.')
     except Exception as e:
-        print(f'Error generating current_5q: {e}')
-        return None
+        raise ValueError(f'Error generating current_5q: {e}')
 
 
-def extract_reference_proposal(intro: str, model: str = 'gpt-4o-mini') -> Optional[str]:
-    """
-    Generates the five core research questions based on the introduction text using an LLM.
-
-    Args:
-        intro (str): Introduction text of the paper.
-
-    Returns:
-        Optional[str]: Generated five core questions as a string.
-    """
+def extract_reference_proposal(intro: str, model: str = 'gpt-4o-mini') -> str:
     try:
         prompt = [
             {
@@ -192,27 +158,14 @@ def extract_reference_proposal(intro: str, model: str = 'gpt-4o-mini') -> Option
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
-            print('Received empty response from model_prompting for current_5q.')
-            return None
+            raise ValueError('Received empty response from model_prompting for extract_reference_proposal.')
     except Exception as e:
-        print(f'Error generating current_5q: {e}')
-        return None
+        raise ValueError(f'Error generating current_5q: {e}')
 
 
 def write_proposal_author_only(
     authors: List[str], id: int, exclude_paper_titles: List[str] = ['']
-) -> Optional[str]:
-    """
-    Generates a comprehensive research proposal based on multiple author profiles.
-
-    Args:
-        authors (List[str]): List of author names.
-        id (int): ID for the profile database.
-        exclude_paper_titles (List[str], optional): List of papers to exclude. Defaults to [''].
-
-    Returns:
-        Optional[str]: Generated proposal as a string if successful, else None.
-    """
+) -> str:
     config = Config('../configs')
     profile_db_path = f'./profile_dbs/profile_{id}'
 
@@ -264,29 +217,14 @@ def write_proposal_author_only(
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
-            print(
-                'Received empty response from model_prompting for write_proposal_author_only.'
-            )
-            return None
+            raise ValueError('Received empty response from model_prompting for write_proposal_author_only.')
     except Exception as e:
-        print(f'Error generating proposal in write_proposal_author_only: {e}')
-        return None
+        raise ValueError(f'Error generating current_5q: {e}')
 
 
 def write_proposal_citation_only(
     intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
-) -> Optional[str]:
-    """
-    Generates a comprehensive research proposal based on multiple citation paper introductions.
-
-    Args:
-        intros (List[str]): List of citation paper introduction texts.
-        id (int): ID for the profile database.
-        exclude_paper_titles (List[str], optional): List of papers to exclude. Defaults to [''].
-
-    Returns:
-        Optional[str]: Generated proposal as a string if successful, else None.
-    """
+) -> str:
     raise NotImplementedError
 
 
@@ -295,20 +233,7 @@ def write_proposal_author_citation(
     intros: List[str],
     id: int,
     exclude_paper_titles: List[str] = [''],
-) -> Optional[str]:
-    """
-    Generates a comprehensive research proposal based on multiple author profiles and citation paper introductions.
-
-    Args:
-        authors (List[str]): List of author names.
-        intros (List[str]): List of citation paper introduction texts.
-        id (int): ID for the profile database.
-        exclude_paper_titles (List[str], optional): List of papers to exclude. Defaults to [''].
-
-    Returns:
-        Optional[str]: Generated proposal as a string if successful, else None.
-    """
-
+) -> str:
     raise NotImplementedError
 
 
@@ -318,8 +243,7 @@ def write_proposal(
     intros: List[str],
     id: int,
     exclude_paper_titles: List[str],
-) -> Optional[str]:
-    """Generates the 5Q proposal based on the test mode."""
+) -> str:
     if mode == 'author-only':
         return write_proposal_author_only(
             authors=authors, id=id, exclude_paper_titles=exclude_paper_titles

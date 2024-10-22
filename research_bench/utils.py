@@ -2,7 +2,7 @@
 
 import json
 import os
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List, Union
 
 SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
 
@@ -14,14 +14,14 @@ def save_benchmark(benchmark: Dict[str, Any], output_path: str) -> None:
     print(f'Benchmark saved to {output_path}')
 
 
-def load_benchmark(input_path: str) -> Dict[str, Any]:
+def load_benchmark(input_path: str) -> Any:
     with open(input_path, 'r', encoding='utf-8') as file:
         return json.load(file)
 
 
 def load_cache_item(
-    cache_path: Optional[str], paper_key: str, item_key: str
-) -> Optional[Any]:
+    cache_path: Optional[str], paper_key: str, item_key: Union[str, List[Optional[str]], None]
+) -> Optional[Union[str, List[str]]]:
     if not cache_path:
         return None
 
@@ -29,8 +29,11 @@ def load_cache_item(
         with open(cache_path, 'r', encoding='utf-8') as infile:
             for line in infile:
                 cache = json.loads(line)
-                if cache.get('paper_key') == paper_key:
-                    return cache.get(item_key)
+                if cache.get('paper_key', '') == paper_key:
+                    value = cache.get(item_key)
+                    if isinstance(value, (str, list, type(None))):
+                        return value
+                    return None
     except Exception as e:
         raise ValueError(f'Error loading cache for {paper_key}: {e}')
     return None

@@ -48,7 +48,7 @@ def compute_bertscore(reference: str, hypothesis: str) -> float:
         return 0.0
 
 
-def compute_gpt_metric(reference_5q: str, generated_5q: str) -> Optional[float]:
+def compute_gpt_metric(reference_5q: str, generated_5q: str) -> float:
     try:
         prompt = [
             {
@@ -75,21 +75,18 @@ def compute_gpt_metric(reference_5q: str, generated_5q: str) -> Optional[float]:
                 score = max(0.0, min(1.0, score))
                 return score
             except ValueError:
-                print('GPT metric response is not a valid float.')
-                return None
+                raise ValueError(f'Invalid response from model_prompting for GPT metric: {response}')
         else:
-            print('Received empty response from model_prompting for GPT metric.')
-            return None
+            raise ValueError(f'Empty response from model_prompting for GPT metric')
     except Exception as e:
-        print(f'Error computing GPT-based metric: {e}')
-        return None
+        raise ValueError(f'Error computing GPT metric: {e}')
 
 
-def compute_metrics(reference_5q: str, generated_5q: str) -> Dict[str, float | None]:
+def compute_metrics(reference_5q: str, generated_5q: str) -> Dict[str, float]:
     bleu = compute_bleu(reference_5q, generated_5q)
     rouge_l = compute_rouge_l(reference_5q, generated_5q)
-    gpt_metric = compute_gpt_metric(reference_5q, generated_5q)
     bert_score = compute_bertscore(reference_5q, generated_5q)
+    gpt_metric = compute_gpt_metric(reference_5q, generated_5q)
 
     return {
         'bleu': bleu,
