@@ -1,9 +1,9 @@
 {
-  "de502815-8e59-457c-abbd-550bc38d33ce": {
-    "pk": "de502815-8e59-457c-abbd-550bc38d33ce",
+  "bb73f42b-25b3-4ddf-9c66-9857991116c3": {
+    "pk": "bb73f42b-25b3-4ddf-9c66-9857991116c3",
     "project_name": null,
     "name": "Yu Zhou",
-    "bio": "I am a researcher with a diverse background in terahertz imaging technologies, cloud computing for medical image analysis, and algebraic geometry. My recent work focuses on developing innovative terahertz imaging methods for nondestructive testing, particularly in aerospace applications. By employing frequency-modulated continuous wave techniques and continuous wavelet transforms, I have demonstrated high-precision imaging capabilities that can effectively detect defects in multilayer materials.\n\nIn addition to my work in imaging, I have explored the potential of cloud computing to enhance medical image analysis. I am particularly interested in creating secure, user-friendly frameworks that allow clinicians and researchers to leverage advanced algorithms without needing to access the underlying code. This dual approach not only addresses usability and security concerns but also aims to streamline the analysis process for medical professionals.\n\nMy research also delves into the realm of algebraic structures, specifically studying cluster categories arising from marked surfaces. I have constructed skewed-gentle algebras to establish connections between tagged curves and string objects, contributing to our understanding of morphism dimensions and stability conditions in 3-Calabi-Yau categories. Through these interdisciplinary efforts, I strive to bridge the gap between theoretical mathematics and practical applications, ultimately advancing both fields.",
+    "bio": "I am a researcher with a diverse background in terahertz imaging technologies, cloud computing for medical image analysis, and algebraic geometry. My recent work focuses on developing high-precision terahertz imaging methods for nondestructive testing of materials, which has significant implications for aerospace applications and cultural heritage preservation. I have also explored the potential of cloud computing to enhance medical image analysis, creating frameworks that prioritize security and usability for clinicians and researchers.\n\nIn the realm of mathematics, I have investigated cluster categories arising from marked surfaces, establishing connections between tagged curves and string objects through the construction of skewed-gentle algebras. My research has led to significant insights into the dimensions of morphisms in 3-Calabi-Yau categories and the finite presentations of braid twist groups associated with decorated surfaces. I am particularly interested in the interplay between geometry and algebra, as evidenced by my work on the Koszul functor and its geometric realizations.\n\nOverall, my interdisciplinary approach combines practical applications with theoretical advancements, aiming to bridge the gap between technology and mathematics while contributing to the fields of imaging, cloud computing, and algebraic structures.",
     "collaborators": [
       "Yu Qiu",
       "Zixu Li"
@@ -13,6 +13,120 @@
       "Cloud Computing",
       "Medical Image Analysis",
       "Algebraic Geometry"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "46c05930-7fd8-427b-acac-411582fbb973": {
+    "pk": "46c05930-7fd8-427b-acac-411582fbb973",
+    "project_name": null,
+    "name": "Xingyu Wu",
+    "bio": "I am a researcher dedicated to the intersection of artificial intelligence and healthcare, particularly focusing on the development of autonomous systems for monitoring elderly patients with dementia in smart home environments. My recent work has led to the creation of an AIoT system that utilizes sensor data to perform real-time abnormal activity monitoring and trend prediction of disease-related activities. By employing Random Forest models, I achieved over 99% accuracy in activity inference and 94% in abnormal activity detection, demonstrating the effectiveness of my approach.\n\nIn addition to my work in healthcare, I have delved into the complexities of causal variable discovery in multi-label data. This research addresses the challenges posed by intricate causal relationships, distinguishing between common causal variables shared across multiple labels and label-specific variables. I developed a theoretical framework and an algorithm that enhances multi-label feature selection, achieving minimal redundancy and maximum relevance.\n\nMy passion lies in leveraging advanced machine learning techniques to create impactful solutions that improve the quality of life for vulnerable populations while also contributing to the broader understanding of causal relationships in data. I am committed to pushing the boundaries of AI applications in healthcare and beyond.",
+    "collaborators": [
+      "Jinyang Li",
+      "Bingbing Jiang",
+      "Yan Zhong",
+      "Huanhuan Chen"
+    ],
+    "domain": [
+      "Machine Learning",
+      "Causal Inference",
+      "Time Series Analysis",
+      "Internet of Things"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a84ae26e-f196-4c04-8989-38fd4e5b4417": {
+    "pk": "a84ae26e-f196-4c04-8989-38fd4e5b4417",
+    "project_name": null,
+    "name": "Jibin Wu",
+    "bio": "I am a researcher dedicated to advancing the field of spiking neural networks (SNNs) and their applications in real-world scenarios, particularly in auditory processing and machine learning. My work is inspired by biological systems, and I strive to create models that mimic the efficiency and functionality of the human brain. Recently, I developed a spiking neural network model for precise sound localization, leveraging the MTPC scheme to encode interaural time differences. This model has been successfully implemented in a real-time robotic system, achieving remarkable accuracy in noisy environments.\n\nIn addition to sound localization, I have explored speaker verification in multi-talker scenarios, proposing a unified framework that optimizes speaker attention and representation through multi-task learning. My research also addresses the limitations of traditional backpropagation in deep learning by introducing innovative local learning methods, such as AugLocal and the distance-forward algorithm, which enhance performance while reducing memory consumption.\n\nI am particularly interested in the intersection of large language models (LLMs) and evolutionary algorithms (EAs), exploring how these technologies can complement each other to solve complex optimization problems. My work in this area has led to the development of frameworks that autonomously design EA operators and knowledge transfer models, demonstrating superior performance compared to traditional methods.\n\nOverall, my research aims to push the boundaries of neuromorphic computing and machine learning, focusing on energy-efficient, biologically inspired solutions that can be deployed in real-world applications. I am excited about the potential of SNNs and LLMs to revolutionize various domains, from speech recognition to optimization tasks.",
+    "collaborators": [
+      "Kay Chen Tan",
+      "Haizhou Li",
+      "Malu Zhang",
+      "Liang Feng",
+      "Xingyu Wu",
+      "Chenxiang Ma",
+      "Guoqi Li",
+      "Yansong Chua",
+      "Qu Yang",
+      "Chenglin Xu"
+    ],
+    "domain": [
+      "Spiking Neural Networks",
+      "Machine Learning",
+      "Speech Processing",
+      "Neural Architecture"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e85499b1-b8b5-4a20-a6a3-35927d0ca553": {
+    "pk": "e85499b1-b8b5-4a20-a6a3-35927d0ca553",
+    "project_name": null,
+    "name": "Liang Feng",
+    "bio": "I am a researcher with a diverse background in mathematical modeling, optimization, and photonics, focusing on the intersection of theoretical frameworks and practical applications. My work spans various domains, including the study of eigenvalues in projective spaces, the development of multi-factorial evolutionary algorithms for large-scale virtual machine placement, and the exploration of lasing and coherent perfect absorption in non-Hermitian systems.\n\nIn my recent research, I have delved into the topological properties of photonic superlattices, revealing how these structures can support multiple topologically protected edge states. I have also investigated the implications of non-Hermitian effects on multi-mode interference, uncovering unique features that could enhance optical sensing technologies. My contributions to coding theory, particularly through the combinatorial construction of locally decodable codes, highlight my commitment to bridging theoretical insights with practical coding applications.\n\nAdditionally, I have explored the spectral phase transitions in non-Hermitian Hamiltonians, providing insights into the behavior of systems under varying conditions. My work on FPGA-based accelerators aims to improve the efficiency of multicore systems, demonstrating my dedication to advancing computational architectures.\n\nOverall, my research is characterized by a strong emphasis on theoretical rigor combined with a focus on real-world applications, aiming to push the boundaries of knowledge in both fundamental and applied sciences.",
+    "collaborators": [
+      "Stefano Longhi",
+      "Liang Feng Zhang",
+      "Li Ge",
+      "Zhengping Liang",
+      "Jian Zhang",
+      "Zexuan Zhu",
+      "Bikashkali Midya",
+      "Zhe Lin",
+      "Sharad Sinha",
+      "Hao Liang"
+    ],
+    "domain": [
+      "Graph Theory",
+      "Optical Systems",
+      "Non-Hermitian Physics",
+      "Cloud Computing"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9a8f1171-5791-4f96-b78b-fa28e7a73c18": {
+    "pk": "9a8f1171-5791-4f96-b78b-fa28e7a73c18",
+    "project_name": null,
+    "name": "Kay Chen Tan",
+    "bio": "I am a researcher dedicated to advancing the fields of optimization and machine learning, particularly through the lens of evolutionary algorithms and spiking neural networks. My recent work has focused on developing innovative frameworks and methodologies that enhance the performance and efficiency of optimization processes. For instance, I introduced a novel 3D molecule generation framework called GOAT, which leverages optimal transport principles to generate high-quality molecular structures efficiently.\n\nI have also explored the integration of large language models into evolutionary search, significantly accelerating convergence in constrained multi-objective optimization problems. My research on evolutionary transfer multi-objective optimization (ETMO) has led to the creation of comprehensive benchmark problems that facilitate the analysis of ETMO algorithms, promoting knowledge transfer across related optimization tasks.\n\nIn the realm of spiking neural networks, I have developed models that mimic biological processes more closely, such as the Contextual Embedding Leaky Integrate-and-Fire (CE-LIF) neuron model, which enhances memory storage and sequential modeling capabilities. My work on the Parallel Multi-compartment Spiking Neuron (PMSN) has demonstrated significant improvements in temporal processing and training speed, showcasing the potential of spiking networks for pattern recognition tasks.\n\nOverall, my research aims to bridge the gap between theoretical advancements and practical applications, contributing to the development of more efficient algorithms and models that can tackle complex, real-world problems. I am passionate about pushing the boundaries of what is possible in optimization and machine learning, and I continuously seek new challenges and opportunities for innovation in these fields.",
+    "collaborators": [
+      "Min Jiang",
+      "Haokai Hong",
+      "Jibin Wu",
+      "Songbai Liu",
+      "Qiuzhen Lin",
+      "Chenxiang Ma",
+      "Cheng He",
+      "Yaochu Jin",
+      "Weizhen Hu",
+      "Ke Li"
+    ],
+    "domain": [
+      "Evolutionary Algorithms",
+      "Machine Learning",
+      "Optimization",
+      "Spiking Neural Networks"
     ],
     "institute": null,
     "embed": null,

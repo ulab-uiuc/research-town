@@ -122,11 +122,10 @@ def process_paper(
                         f'Introduction not found for referenced paper: {ref_url}'
                     )
 
-
     # Step 4: Generate proposal 5Q
     if args.test_mode == 'author-only':
         proposal_5q = write_proposal_author_only(
-            author=authors, id=id, exclude_papers=exclude_papers
+            authors=authors, id=id, exclude_papers=exclude_papers
         )
     elif args.test_mode == 'citation-only':
         proposal_5q = write_proposal_citation_only(
@@ -257,7 +256,7 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '--test_mode',
-        typr=str,
+        type=str,
         required=True,
         default='author-only',
         help='4 mode: author-only, citation-only,author-citation, textgnn',

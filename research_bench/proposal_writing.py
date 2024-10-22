@@ -222,9 +222,13 @@ def write_proposal_author_only(
         profile_db = ProfileDB()
         profile_db.pull_profiles(names=authors, config=config, exclude_papers=exclude_papers)
         profile_db.save_to_json(profile_db_path)
-
-    bios = "\n".join([profile.bio for profile in profile_db.get(names=authors)])
-
+    profiles = []
+    for author in authors:
+        print('author', author)
+        
+        profile = profile_db.get(name=author)[0]
+        profiles.append(profile)
+    bios = "\n".join([profile.bio for profile in profiles])
     try:
         prompt = [
             {
