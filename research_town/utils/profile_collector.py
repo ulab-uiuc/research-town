@@ -29,7 +29,8 @@ def collect_publications_and_coauthors(
     author: str, paper_max_num: int = 10, exclude_paper_titles: List[str] = []
 ) -> Tuple[List[Dict[str, Any]], List[str]]:
     client = Client()
-    abstracts = []
+    paper_abstracts = []
+    paper_titles = []
     co_authors: Dict[str, int] = {}
     search = Search(query=f'au:{author}', max_results=paper_max_num)
     for result in tqdm(
@@ -39,12 +40,14 @@ def collect_publications_and_coauthors(
             continue
         if author not in ', '.join(author.name for author in result.authors):
             continue
-        author_list = [author.name for author in result.authors]
-        co_authors = coauthor_frequency(author, author_list, co_authors)
-        abstract = result.summary.replace('\n', ' ')
-        abstracts.append(abstract)
+        paper_authors = [author.name for author in result.authors]
+        co_authors = coauthor_frequency(author, paper_authors, co_authors)
+        paper_abstract = result.summary.replace('\n', ' ')
+        paper_title = result.title
+        paper_abstracts.append(paper_abstract)
+        paper_titles.append(paper_title)
     co_author_names = coauthor_filter(co_authors, limit=10)
-    return abstracts, co_author_names
+    return paper_abstracts, paper_titles, co_author_names
 
 
 @beartype

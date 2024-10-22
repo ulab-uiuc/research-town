@@ -36,7 +36,7 @@ class ProfileDB(BaseDB[Profile]):
         self, names: List[str], config: Config, exclude_paper_titles: List[str] = ['']
     ) -> None:
         for name in names:
-            publications, collaborators = collect_publications_and_coauthors(
+            pub_abstracts, pub_titles, collaborators = collect_publications_and_coauthors(
                 name, paper_max_num=20, exclude_paper_titles=exclude_paper_titles
             )
             publication_info = '; '.join([f'{abstract}' for abstract in publications])
@@ -53,7 +53,7 @@ class ProfileDB(BaseDB[Profile]):
             )
 
             profile = Profile(
-                name=name, bio=bio, domain=domain, collaborators=collaborators
+                name=name, bio=bio, domain=domain, collaborators=collaborators, pub_titles=pub_titles, pub_abstracts=pub_abstracts
             )
             self.add(profile)
         self.transform_to_embed()
