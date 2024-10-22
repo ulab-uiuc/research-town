@@ -221,17 +221,13 @@ def write_proposal_author_only(
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
-            print(
-                'Received empty response from model_prompting for write_proposal_author_only.'
-            )
-            return None
+            raise ValueError('Received empty response from model_prompting for write_proposal_author_only.')
     except Exception as e:
-        print(f'Error generating proposal in write_proposal_author_only: {e}')
-        return None
+        raise ValueError(f'Error generating current_5q: {e}')
 
 
 def write_proposal_citation_only(
-    intros: List[str], id: int, exclude_papers: List[str] = ['']
+    intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
 ) -> str:
     """
     Generates a comprehensive research proposal based on multiple citation paper introductions.
@@ -239,7 +235,7 @@ def write_proposal_citation_only(
     Args:
         intros (List[str]): List of citation paper introduction texts.
         id (int): ID for the profile database.
-        exclude_papers (List[str], optional): List of papers to exclude. Defaults to [''].
+        exclude_paper_titles (List[str], optional): List of papers to exclude. Defaults to [''].
 
     Returns:
         Optional[str]: Generated proposal as a string if successful, else None.
@@ -286,7 +282,7 @@ def write_proposal_citation_only(
 
 
 def write_proposal_author_citation(
-    authors: List[str], intros: List[str], id: int, exclude_papers: List[str] = ['']
+    authors: List[str], intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
 ) -> str:
     """
     Generates a comprehensive research proposal based on multiple author profiles and citation paper introductions.
@@ -308,7 +304,7 @@ def write_proposal_author_citation(
     else:
         profile_db = ProfileDB()
         profile_db.pull_profiles(
-            names=authors, config=config, exclude_papers=exclude_papers
+            names=authors, config=config, exclude_paper_titles=exclude_paper_titles
         )
         profile_db.save_to_json(profile_db_path)
     profiles = []
