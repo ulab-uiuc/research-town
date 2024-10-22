@@ -9,7 +9,11 @@ from research_town.utils.model_prompting import model_prompting
 
 
 def write_proposal_researchtown(
-    authors: List[str], intros: List[str], keyword: str, id: int, exclude_papers: List[str] = ['']
+    authors: List[str],
+    intros: List[str],
+    keyword: str,
+    id: int,
+    exclude_papers: List[str] = [''],
 ) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on the provided authors and existing proposals
@@ -28,7 +32,9 @@ def write_proposal_researchtown(
         profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
     else:
         profile_db = ProfileDB()
-        profile_db.pull_profiles(names=authors, config=config, exclude_papers=exclude_papers)
+        profile_db.pull_profiles(
+            names=authors, config=config, exclude_papers=exclude_papers
+        )
         profile_db.save_to_json(f'./profile_dbs/profile_{id}')
 
     # Initialize other databases using default instances
@@ -78,7 +84,7 @@ def write_proposal_researchtown(
 
 
 def write_proposal_single_agent(
-    author: str, intros: List[str], id: int
+    author: str, intros: List[str], id: int, exclude_papers: List[str] = ['']
 ) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on the provided author and existing proposals
@@ -96,7 +102,7 @@ def write_proposal_single_agent(
         profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
     else:
         profile_db = ProfileDB()
-        profile_db.pull_profiles(names=[author], config=config)
+        profile_db.pull_profiles(names=[author], config=config, exclude_papers=exclude_papers)
         profile_db.save_to_json(f'./profile_dbs/profile_{id}')
 
     bio = profile_db.get(name=author)[0].bio
@@ -191,3 +197,105 @@ def write_proposal_baseline(intro: str, model: str = 'gpt-4o-mini') -> Optional[
     except Exception as e:
         print(f'Error generating current_5q: {e}')
         return None
+
+
+def write_proposal_author_only(
+    authors: List[str], id: int, exclude_papers: List[str] = ['']
+) -> Optional[str]:
+    """
+    Generates a comprehensive research proposal based on multiple author profiles.
+
+    Args:
+        authors (List[str]): List of author names.
+        id (int): ID for the profile database.
+        exclude_papers (List[str], optional): List of papers to exclude. Defaults to [''].
+
+    Returns:
+        Optional[str]: Generated proposal as a string if successful, else None.
+    """
+    config = Config('../configs')
+    profile_db_path = f'./profile_dbs/profile_{id}'
+    
+    if os.path.exists(profile_db_path):
+        profile_db = ProfileDB(load_file_path=profile_db_path)
+    else:
+        profile_db = ProfileDB()
+        profile_db.pull_profiles(names=authors, config=config, exclude_papers=exclude_papers)
+        profile_db.save_to_json(profile_db_path)
+
+    bios = "\n".join([profile.bio for profile in profile_db.get(names=authors)])
+
+    try:
+        prompt = [
+            {
+                'role': 'user',
+                'content': (
+                    'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                    'Here are the five core questions:\n\n'
+                    '[Question 1] - What is the problem?\n\n'
+                    'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                    '[Question 2] - Why is it interesting and important?\n\n'
+                    'Explain the broader implications of solving this problem for the research community.\n'
+                    'Discuss how such paper will affect the future research.\n'
+                    'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                    '[Question 3] - Why is it hard?\n\n'
+                    'Discuss the challenges and complexities involved in solving this problem.\n'
+                    'Explain why naive or straightforward approaches may fail.\n'
+                    'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                    "[Question 4] - Why hasn't it been solved before?\n\n"
+                    'Identify gaps or limitations in previous research or existing solutions.\n'
+                    'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                    'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                    '[Question 5] - What are the key components of my approach and results?\n\n'
+                    'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                    'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                    f'Author biographies and personas:\n{bios}\n\n'
+                    'You are the authors of this paper. Please provide the five core questions contents for a brand new future research based on the above biographies.'
+                ),
+            }
+        ]
+        response = model_prompting(config.param.base_llm, prompt, mode='TEST')
+        if response and len(response) > 0 and len(response[0]) > 0:
+            return response[0]
+        else:
+            print('Received empty response from model_prompting for write_proposal_author_only.')
+            return None
+    except Exception as e:
+        print(f'Error generating proposal in write_proposal_author_only: {e}')
+        return None
+
+
+def write_proposal_citation_only(
+    intros: List[str], id: int, exclude_papers: List[str] = ['']
+) -> Optional[str]:
+    """
+    Generates a comprehensive research proposal based on multiple citation paper introductions.
+
+    Args:
+        intros (List[str]): List of citation paper introduction texts.
+        id (int): ID for the profile database.
+        exclude_papers (List[str], optional): List of papers to exclude. Defaults to [''].
+
+    Returns:
+        Optional[str]: Generated proposal as a string if successful, else None.
+    """
+    raise NotImplementedError
+
+
+def write_proposal_author_citation(
+    authors: List[str], intros: List[str], id: int, exclude_papers: List[str] = ['']
+) -> Optional[str]:
+    """
+    Generates a comprehensive research proposal based on multiple author profiles and citation paper introductions.
+
+    Args:
+        authors (List[str]): List of author names.
+        intros (List[str]): List of citation paper introduction texts.
+        id (int): ID for the profile database.
+        exclude_papers (List[str], optional): List of papers to exclude. Defaults to [''].
+
+    Returns:
+        Optional[str]: Generated proposal as a string if successful, else None.
+    """
+    
+    raise NotImplementedError

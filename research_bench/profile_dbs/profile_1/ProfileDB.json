@@ -1,0 +1,24 @@
+{
+  "de502815-8e59-457c-abbd-550bc38d33ce": {
+    "pk": "de502815-8e59-457c-abbd-550bc38d33ce",
+    "project_name": null,
+    "name": "Yu Zhou",
+    "bio": "I am a researcher with a diverse background in terahertz imaging technologies, cloud computing for medical image analysis, and algebraic geometry. My recent work focuses on developing innovative terahertz imaging methods for nondestructive testing, particularly in aerospace applications. By employing frequency-modulated continuous wave techniques and continuous wavelet transforms, I have demonstrated high-precision imaging capabilities that can effectively detect defects in multilayer materials.\n\nIn addition to my work in imaging, I have explored the potential of cloud computing to enhance medical image analysis. I am particularly interested in creating secure, user-friendly frameworks that allow clinicians and researchers to leverage advanced algorithms without needing to access the underlying code. This dual approach not only addresses usability and security concerns but also aims to streamline the analysis process for medical professionals.\n\nMy research also delves into the realm of algebraic structures, specifically studying cluster categories arising from marked surfaces. I have constructed skewed-gentle algebras to establish connections between tagged curves and string objects, contributing to our understanding of morphism dimensions and stability conditions in 3-Calabi-Yau categories. Through these interdisciplinary efforts, I strive to bridge the gap between theoretical mathematics and practical applications, ultimately advancing both fields.",
+    "collaborators": [
+      "Yu Qiu",
+      "Zixu Li"
+    ],
+    "domain": [
+      "Terahertz Imaging",
+      "Cloud Computing",
+      "Medical Image Analysis",
+      "Algebraic Geometry"
+    ],
+    "institute": null,
+    "embed": null,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

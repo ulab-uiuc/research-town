@@ -4,7 +4,7 @@
 INPUT="./benchmark/mlbench.json"
 OUTPUT="./results/research_bench_result_4o_mini_single_agent.jsonl"
 INTRO_LOG="./benchmark/intro_logging.jsonl"
-TEST_SINGLE_AGENT="--test-single-agent"
+TEST_MODE="author-only" #author-only, citation-only,author-citation, textgnn
 TOTAL_LINES=100
 
 # Function to get the number of lines in the output file
@@ -36,7 +36,8 @@ while [ "$current_lines" -lt 100 ]; do
   echo "Line count is less than 100. Running the evaluation script..."
 
   # Run the evaluation script
-  poetry run python run_evaluation.py --input "$INPUT" --output "$OUTPUT" --intro_log "$INTRO_LOG" $TEST_SINGLE_AGENT &> output.log
+  poetry run python run_evaluation.py --input "$INPUT" --output "$OUTPUT" --intro_log "$INTRO_LOG" --test_mode $TEST_MODE
+  #&> output.log
 
   # Update the current line count
   current_lines=$(get_line_count)

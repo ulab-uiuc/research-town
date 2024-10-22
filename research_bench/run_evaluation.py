@@ -17,7 +17,9 @@ from research_bench.proposal_eval import (
 from research_bench.proposal_writing import (
     write_proposal_baseline,
     write_proposal_researchtown,
-    write_proposal_single_agent,
+    write_proposal_author_only,
+    write_proposal_citation_only,
+    write_proposal_author_citation
 )
 from research_town.agents import AgentManager
 from research_town.configs import Config
@@ -34,89 +36,13 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def get_proposal_5q(
-    authors: List[str], intros: List[str], keyword: str, id: int, exclude_papers:List[str] = ['']
-) -> Optional[str]:
-    """
-    Generates a comprehensive research proposal based on the provided authors and existing proposals
-    using the ProposalWritingEnv environment.
-
-    Args:
-        authors (List[str]): List of author names.
-        intros (List[str]): List of existing introduction texts.
-
-    Returns:
-        Optional[str]: Generated proposal as a string if successful, else None.
-    """
-
-    config = Config('../configs')
-    if os.path.exists(f'./profile_dbs/profile_{id}'):
-        profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
-    else:
-        profile_db = ProfileDB()
-        profile_db.pull_profiles(names=authors, config=config, exclude_papers=exclude_papers)
-        profile_db.save_to_json(f'./profile_dbs/profile_{id}')
-
-    # Initialize other databases using default instances
-    log_db = LogDB()
-    progress_db = ProgressDB()
-    paper_db = PaperDB()  # Assuming existing papers are handled elsewhere
-    paper_db.pull_papers(num=3, domain=keyword)
-    # Initialize ProposalWritingEnv with the required databases and configuration
-    agent_manager = AgentManager(config=config, profile_db=profile_db)
-    env = ProposalWritingEnv(
-        name='proposal_writing',
-        log_db=log_db,
-        progress_db=progress_db,
-        paper_db=paper_db,
-        config=config,
-        agent_manager=agent_manager,
-    )
-    logger.info('Initialized ProposalWritingEnv.')
-
-    # Create a leader agent (assuming `create_leader` requires a profile)
-    leader_profile = profile_db.get(name=authors[0])[0]
-    print('leader_profile', leader_profile)
-    leader = agent_manager.create_agent(leader_profile, role='leader')
-    if not leader_profile:
-        logger.error('No valid leader profile found.')
-        return None
-    logger.info('Created leader agent for profile')
-
-    # Prepare the context from existing proposals
-    # Assuming that the context should be a list of proposal strings
-    env.on_enter(
-        leader=leader,
-        contexts=intros,
-    )
-    logger.info('Entered ProposalWritingEnv with provided proposals as context.')
-
-    # Run the environment to generate the proposal
-    run_result = env.run()
-    if run_result is not None:
-        for progress, agent in run_result:
-            # Process progress and agent if needed
-            pass
-    logger.info('Ran ProposalWritingEnv.')
-
-    # Exit the environment and retrieve the generated proposal
-    exit_status, exit_dict = env.on_exit()
-    proposal = exit_dict.get('proposal')
-    if proposal and proposal.content:
-        logger.info('Successfully generated proposal.')
-        return str(proposal.content)
-    else:
-        logger.warning('Proposal generation returned no content.')
-        return None
-
-
 def process_paper(
     args: argparse.ArgumentParser,
     paper_key: str,
     paper_data: Dict[str, Any],
     id: int,
     intro_log_jsonl: Optional[str] = None,
-    exclude_papers: List[str] = ['']
+    exclude_papers: List[str] = [''],
 ) -> Optional[Dict[str, Any]]:
     """
     Processes a single paper to generate evaluations.
@@ -196,19 +122,27 @@ def process_paper(
                         f'Introduction not found for referenced paper: {ref_url}'
                     )
 
-    # Optionally, you can use the collected intros for further processing
-    # For example, passing them to get_proposal_5q or other functions
-    # Currently, get_proposal_5q only uses authors and proposals
-    # If intros are needed in get_proposal_5q, modify the function accordingly
 
     # Step 4: Generate proposal 5Q
-    if args.test_single_agent:
-        # proposal_5q = write_proposal_single_agent(
-        #     author=authors[0], intros=intros, id=id
-        # )
-        proposal_5q = write_proposal_researchtown([authors[0]], intros, keyword, id)
+    if args.test_mode == 'author-only':
+        proposal_5q = write_proposal_author_only(
+            author=authors, id=id, exclude_papers=exclude_papers
+        )
+    elif args.test_mode == 'citation-only':
+        proposal_5q = write_proposal_citation_only(
+            intros, id, exclude_papers=exclude_papers
+        )
+    elif args.test_mode == 'author-citation':
+        proposal_5q = write_proposal_author_citation(
+            authors, intros, id, exclude_papers=exclude_papers
+        )
+    elif args.test_mode == 'textgnn':
+        proposal_5q = write_proposal_researchtown(
+            authors, intros, keyword, id, exclude_papers=exclude_papers
+        )
     else:
-        proposal_5q = write_proposal_researchtown(authors, intros, keyword, id, exclude_papers=exclude_papers)
+        logger.error(f'Invalid test mode: {args.test_mode}')
+        return None
     if not proposal_5q:
         logger.warning(f'proposal_5q generation failed for paper: {paper_key}')
         return None
@@ -273,7 +207,9 @@ def main(
         tqdm(papers, desc='Processing papers'), start=1 + num_lines
     ):
         paper_data = data[paper_key]
-        evaluation = process_paper(args, paper_key, paper_data, id, intro_log_jsonl, exclude_papers=papers)
+        evaluation = process_paper(
+            args, paper_key, paper_data, id, intro_log_jsonl, exclude_papers=papers
+        )
         if evaluation:
             # Write the evaluation result as a JSON line
             with open(output_jsonl, 'a', encoding='utf-8') as outfile:
@@ -320,9 +256,11 @@ if __name__ == '__main__':
         help='Path to the introduction log JSONL file.',
     )
     parser.add_argument(
-        '--test-single-agent',
-        action='store_true',
-        help='If set, run a test for a single agent using sample introductions.',
+        '--test_mode',
+        typr=str,
+        required=True,
+        default='author-only',
+        help='4 mode: author-only, citation-only,author-citation, textgnn',
     )
     parser.add_argument(
         '--single-agent-model',
