@@ -2,58 +2,9 @@
 
 import json
 import os
-import time
-from typing import Any, Dict, List, Optional, Set
-
-import arxiv
-import requests
-
-from research_town.utils.model_prompting import model_prompting
+from typing import Any, Dict, List, Optional, Union
 
 SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
-
-
-def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
-    url = f'{SEMANTIC_SCHOLAR_API_URL}ARXIV:{arxiv_id}/references'
-    params = {'limit': 100}
-    headers = {'User-Agent': 'PaperProcessor/1.0'}
-
-    for attempt in range(max_retries):
-        response = requests.get(url, params=params, headers=headers)
-        if response.status_code == 200:
-            data = response.json()
-            return [
-                ref['citedPaper'] for ref in data.get('data', []) if 'citedPaper' in ref
-            ]
-        else:
-            wait_time = 2**attempt
-            print(
-                f'Error {response.status_code} fetching references for {arxiv_id}. Retrying in {wait_time}s...'
-            )
-            time.sleep(wait_time)  # Exponential backoff
-    print(f'Failed to fetch references for {arxiv_id} after {max_retries} attempts.')
-    return []
-
-
-def get_paper_by_keyword(
-    keyword: str, existing_arxiv_ids: Set[str], max_papers: int = 10
-) -> List[arxiv.Result]:
-    query = f'all:"{keyword}" AND (cat:cs.AI OR cat:cs.LG)'
-    search = arxiv.Search(
-        query=query,
-        max_results=max_papers * 2,  # Fetch extra to account for duplicates
-        sort_by=arxiv.SortCriterion.SubmittedDate,
-    )
-
-    papers = []
-    for paper in search.results():
-        short_id = paper.get_short_id()
-        if short_id not in existing_arxiv_ids:
-            papers.append(paper)
-            existing_arxiv_ids.add(short_id)
-        if len(papers) >= max_papers:
-            break
-    return papers
 
 
 def save_benchmark(benchmark: Dict[str, Any], output_path: str) -> None:
@@ -63,90 +14,42 @@ def save_benchmark(benchmark: Dict[str, Any], output_path: str) -> None:
     print(f'Benchmark saved to {output_path}')
 
 
-def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
-    try:
-        search = arxiv.Search(id_list=[arxiv_id])
-        results = list(search.results())
-        return results[0] if results else None
-    except Exception as e:
-        print(f'Error fetching paper {arxiv_id}: {e}')
+def load_benchmark(input_path: str) -> Any:
+    with open(input_path, 'r', encoding='utf-8') as file:
+        return json.load(file)
+
+
+def load_cache_item(
+    cache_path: Optional[str],
+    paper_key: str,
+    item_key: Union[str, List[Optional[str]], None],
+) -> Optional[Union[str, List[str]]]:
+    if not cache_path:
         return None
 
+    try:
+        with open(cache_path, 'r', encoding='utf-8') as infile:
+            for line in infile:
+                cache = json.loads(line)
+                if cache.get('paper_key', '') == paper_key:
+                    value = cache.get(item_key)
+                    if isinstance(value, (str, list, type(None))):
+                        return value
+                    return None
+    except Exception as e:
+        raise ValueError(f'Error loading cache for {paper_key}: {e}')
+    return None
 
-def process_paper(paper: arxiv.Result) -> Dict[str, Any]:
-    arxiv_id = paper.get_short_id()
-    references = get_references(arxiv_id)
-    return {
-        'title': paper.title,
-        'arxiv_id': arxiv_id,
-        'authors': [author.name for author in paper.authors],
-        'abstract': paper.summary,
-        'published': paper.published.isoformat(),
-        'updated': paper.updated.isoformat(),
-        'references': references,
-    }
 
-
-def single_agent_proposal_writing(
-    intros: List[str], model: str = 'gpt-4o-mini'
-) -> Optional[str]:
-    combined_intro = '\n\n'.join(intros)
-    prompt = [
-        {
-            'role': 'user',
-            'content': f"""You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
-The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
-
-Here are the five core questions:
-
-[Question 1] - What is the problem?
-
-Formulate the specific research question you aim to address. Only output one question and do not include any more information.
-
-[Question 2] - Why is it interesting and important?
-
-Explain the broader implications of solving this problem for the research community.
-Discuss how such paper will affect the future research.
-Discuss how addressing this question could advance knowledge or lead to practical applications.
-
-[Question 3] - Why is it hard?
-
-Discuss the challenges and complexities involved in solving this problem.
-Explain why naive or straightforward approaches may fail.
-Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.
-
-[Question 4] - Why hasn't it been solved before?
-
-Identify gaps or limitations in previous research or existing solutions.
-Discuss any barriers that have prevented this problem from being solved until now.
-Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.
-
-[Question 5] - What are the key components of my approach and results?
-
-Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.
-Describe the expected outcomes. MAKE IT CLEAR.
-
-Your goal is to ensure the proposal is clear, concise, and logically structured.
-Now you will be given a set of introduction texts from various sources. Please use this information to generate a comprehensive research proposal based on the introductions, you need to look into what future research directions, topics or methods could be use for the proposal writing.
-
-Here are the introduction texts: {combined_intro}
-
-The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
-
-For example:
-[Question 1]: ....
-[Question 2]: ....
-[Question 3]: ....
-[Question 4]: ....
-[Question 5]: ....
-
-Now, let's begin:""",
-        }
-    ]
+def write_cache_item(
+    cache_path: Optional[str], paper_key: str, item_key: str, value: Any
+) -> None:
+    if not cache_path:
+        return
 
     try:
-        response = model_prompting(model, prompt)
-        return response[0] if response and response[0] else None
+        with open(cache_path, 'a', encoding='utf-8') as outfile:
+            cache_entry = {'paper_key': paper_key, item_key: value}
+            outfile.write(json.dumps(cache_entry) + '\n')
     except Exception as e:
-        print(f'Error generating proposal: {e}')
-        return None
+        raise ValueError(f'Error writing cache for {paper_key}: {e}')

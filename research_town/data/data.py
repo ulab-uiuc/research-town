@@ -17,6 +17,8 @@ class Profile(Data):
     name: str
     bio: str
     collaborators: Optional[List[str]] = Field(default=[])
+    pub_titles: Optional[List[str]] = Field(default=[])
+    pub_abstracts: Optional[List[str]] = Field(default=[])
     domain: Optional[List[str]] = Field(default=[])
     institute: Optional[str] = Field(default=None)
     embed: Optional[Any] = Field(default=None)
