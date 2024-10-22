@@ -151,7 +151,7 @@ def write_proposal_single_agent(
         return None
 
 
-def write_proposal_baseline(intro: str, model: str = 'gpt-4o-mini') -> Optional[str]:
+def extract_reference_proposal(intro: str, model: str = 'gpt-4o-mini') -> Optional[str]:
     """
     Generates the five core research questions based on the introduction text using an LLM.
 
@@ -293,7 +293,10 @@ def write_proposal_citation_only(
 
 
 def write_proposal_author_citation(
-    authors: List[str], intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
+    authors: List[str],
+    intros: List[str],
+    id: int,
+    exclude_paper_titles: List[str] = [''],
 ) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on multiple author profiles and citation paper introductions.
@@ -309,3 +312,32 @@ def write_proposal_author_citation(
     """
 
     raise NotImplementedError
+
+
+def write_proposal(
+    mode: str,
+    authors: List[str],
+    intros: List[str],
+    keyword: str,
+    id: int,
+    exclude_paper_titles: List[str],
+) -> Optional[str]:
+    """Generates the 5Q proposal based on the test mode."""
+    if mode == 'author-only':
+        return write_proposal_author_only(
+            authors=authors, id=id, exclude_paper_titles=exclude_paper_titles
+        )
+    elif mode == 'citation-only':
+        return write_proposal_citation_only(
+            intros, id, exclude_paper_titles=exclude_paper_titles
+        )
+    elif mode == 'author-citation':
+        return write_proposal_author_citation(
+            authors, intros, id, exclude_paper_titles=exclude_paper_titles
+        )
+    elif mode == 'textgnn':
+        return write_proposal_researchtown(
+            authors, intros, keyword, id, exclude_paper_titles=exclude_paper_titles
+        )
+    else:
+        raise ValueError(f'Invalid proposal writing mode: {mode}')
