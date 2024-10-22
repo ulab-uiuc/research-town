@@ -7,14 +7,14 @@ from pydantic import BaseModel, root_validator
 
 # ParamConfig definition for handling parameters
 class ParamConfig(BaseModel):
-    related_paper_num: int = 3
-    base_llm: str = 'gpt-4o-mini'
-    member_num: int = 3
-    reviewer_num: int = 1
-    max_env_run_num: int = 1
-    proposal_num: int = 1
-    use_rag: bool = True
-    write_proposal_strategy: str = 'default'
+    related_paper_num: int
+    base_llm: str
+    member_num: int
+    reviewer_num: int
+    max_env_run_num: int
+    proposal_num: int
+    use_rag: bool
+    write_proposal_strategy: str
     return_num: Optional[int] = None
     max_token_num: Optional[int] = None
     temperature: Optional[float] = None
@@ -72,7 +72,7 @@ class AgentPromptTemplate(BaseModel):
     summarize_domain: Dict[str, Union[str, List[str]]]
     review_literature: Dict[str, Union[str, List[str]]]
     brainstorm_idea: Dict[str, Union[str, List[str]]]
-    discuss_idea: Dict[str, Union[str, List[str]]]
+    summarize_idea: Dict[str, Union[str, List[str]]]
     write_proposal: Dict[str, Union[str, List[str]]]
     write_proposal_cot: Dict[str, Union[str, List[str]]]
     write_proposal_react: Dict[str, Union[str, List[str]]]
@@ -92,10 +92,10 @@ class AgentPromptTemplate(BaseModel):
     @root_validator(pre=True)
     def validate_placeholders(cls: Any, values: Dict[str, Any]) -> Dict[str, Any]:
         required_placeholders = {
-            'write_bio': ['{publication_info}'],
+            'write_bio': ['{pub_info}'],
             'review_literature': ['{bio}', '{papers}', '{contexts}'],
             'brainstorm_idea': ['{bio}', '{insights}', '{papers}'],
-            'discuss_idea': ['{bio}', '{ideas}', '{contexts}'],
+            'summarize_idea': ['{ideas}', '{contexts}'],
             'write_proposal': ['{idea}', '{papers}'],
             'write_proposal_cot': ['{idea}', '{papers}'],
             'write_proposal_react': ['{idea}', '{papers}'],

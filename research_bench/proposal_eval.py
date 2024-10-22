@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Dict
 
 import nltk
 from bert_score import score
@@ -48,7 +48,7 @@ def compute_bertscore(reference: str, hypothesis: str) -> float:
         return 0.0
 
 
-def compute_gpt_metric(current_5q: str, proposal_5q: str) -> Optional[float]:
+def compute_gpt_metric(reference_5q: str, generated_5q: str) -> float:
     try:
         prompt = [
             {
@@ -60,9 +60,9 @@ def compute_gpt_metric(current_5q: str, proposal_5q: str) -> Optional[float]:
                     '2. **Methodologies**: Are the proposed methods similar, compatible, or capable of being effectively integrated?\n'
                     '3. **Expected Outcomes**: Are the anticipated research results and impacts consistent or mutually supportive?\n\n'
                     'Current Five Research Questions (Current 5Q):\n'
-                    f'{current_5q}\n\n'
+                    f'{reference_5q}\n\n'
                     'Proposed Five Research Questions (Proposal 5Q):\n'
-                    f'{proposal_5q}\n\n'
+                    f'{generated_5q}\n\n'
                     'Based on the above alignment criteria, especially focusing on the methodologies, please provide a similarity score: **1** indicates alignment, and **0** indicates no alignment. **Only output the score without any additional information.**'
                 ),
             }
@@ -75,11 +75,24 @@ def compute_gpt_metric(current_5q: str, proposal_5q: str) -> Optional[float]:
                 score = max(0.0, min(1.0, score))
                 return score
             except ValueError:
-                print('GPT metric response is not a valid float.')
-                return None
+                raise ValueError(
+                    f'Invalid response from model_prompting for GPT metric: {response}'
+                )
         else:
-            print('Received empty response from model_prompting for GPT metric.')
-            return None
+            raise ValueError('Empty response from model_prompting for GPT metric')
     except Exception as e:
-        print(f'Error computing GPT-based metric: {e}')
-        return None
+        raise ValueError(f'Error computing GPT metric: {e}')
+
+
+def compute_metrics(reference_5q: str, generated_5q: str) -> Dict[str, float]:
+    bleu = compute_bleu(reference_5q, generated_5q)
+    rouge_l = compute_rouge_l(reference_5q, generated_5q)
+    bert_score = compute_bertscore(reference_5q, generated_5q)
+    gpt_metric = compute_gpt_metric(reference_5q, generated_5q)
+
+    return {
+        'bleu': bleu,
+        'rouge_l': rouge_l,
+        'gpt_metric_score': gpt_metric,
+        'bert_score': bert_score,
+    }

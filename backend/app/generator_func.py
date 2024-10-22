@@ -1,12 +1,11 @@
-import os
 from typing import Generator, Optional, Tuple
 
 from research_town.agents import Agent
-from research_town.configs import Config
 from research_town.data import Progress
-from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_paper_introduction
+
+from .extensions import config, log_db, paper_db, profile_db, progress_db
 
 
 def run_engine(
@@ -17,23 +16,6 @@ def run_engine(
         if not intro:
             yield None, None
             return
-
-        config_file_path = '../configs'
-        profile_file_path = '../examples/profiles'
-        paper_file_path = '../examples/papers'
-
-        config = Config(config_file_path)
-        profile_db = ProfileDB()
-        paper_db = PaperDB()
-
-        if os.path.exists(paper_file_path) and os.path.exists(profile_file_path):
-            profile_db.load_from_json(profile_file_path, with_embed=True)
-            paper_db.load_from_json(paper_file_path, with_embed=True)
-        else:
-            raise FileNotFoundError('Profile and paper databases not found.')
-
-        log_db = LogDB()
-        progress_db = ProgressDB()
 
         engine = Engine(
             project_name='research_town_demo',

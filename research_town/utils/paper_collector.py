@@ -4,7 +4,7 @@ from io import BytesIO
 
 import arxiv
 import requests
-from beartype.typing import Dict, List, Optional
+from beartype.typing import Any, Dict, List, Optional, Set
 from bs4 import BeautifulSoup
 from keybert import KeyBERT
 from PyPDF2 import PdfReader
@@ -398,3 +398,89 @@ def get_paper_introduction(url: str) -> Optional[str]:
                 introduction_text += sections[section_name]
         introduction_text = ' '.join(introduction_text.split(' ')[:intro_length])
         return introduction_text
+
+
+def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
+    try:
+        search = arxiv.Search(id_list=[arxiv_id])
+        results = list(search.results())
+        return results[0] if results else None
+    except Exception as e:
+        print(f'Error fetching paper {arxiv_id}: {e}')
+        return None
+
+
+def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
+    SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
+
+    url = f'{SEMANTIC_SCHOLAR_API_URL}ARXIV:{arxiv_id}/references'
+    params = {'limit': 100}
+    headers = {'User-Agent': 'PaperProcessor/1.0'}
+
+    for attempt in range(max_retries):
+        response = requests.get(url, params=params, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            return [
+                ref['citedPaper'] for ref in data.get('data', []) if 'citedPaper' in ref
+            ]
+        else:
+            wait_time = 2**attempt
+            print(
+                f'Error {response.status_code} fetching references for {arxiv_id}. Retrying in {wait_time}s...'
+            )
+            time.sleep(wait_time)  # Exponential backoff
+    print(f'Failed to fetch references for {arxiv_id} after {max_retries} attempts.')
+    return []
+
+
+def get_reference_introductions(arxiv_id: str) -> List[str]:
+    references = get_references(arxiv_id)
+    if not references:
+        raise ValueError(f'No references found for paper {arxiv_id}')
+
+    intros = []
+    for ref in references:
+        arxiv_id = ref.get('arxivId', None)
+        if arxiv_id:
+            ref_paper = get_paper_by_arxiv_id(arxiv_id)
+            if ref_paper:
+                intro = get_paper_introduction(arxiv_id)
+                if intro:
+                    intros.append(intro)
+    return intros
+
+
+def get_paper_by_keyword(
+    keyword: str, existing_arxiv_ids: Set[str], max_papers: int = 10
+) -> List[arxiv.Result]:
+    query = f'all:"{keyword}" AND (cat:cs.AI OR cat:cs.LG)'
+    search = arxiv.Search(
+        query=query,
+        max_results=max_papers * 2,  # Fetch extra to account for duplicates
+        sort_by=arxiv.SortCriterion.SubmittedDate,
+    )
+
+    papers = []
+    for paper in search.results():
+        short_id = paper.get_short_id()
+        if short_id not in existing_arxiv_ids:
+            papers.append(paper)
+            existing_arxiv_ids.add(short_id)
+        if len(papers) >= max_papers:
+            break
+    return papers
+
+
+def process_paper(paper: arxiv.Result) -> Dict[str, Any]:
+    arxiv_id = paper.get_short_id()
+    references = get_references(arxiv_id)
+    return {
+        'title': paper.title,
+        'arxiv_id': arxiv_id,
+        'authors': [author.name for author in paper.authors],
+        'abstract': paper.summary,
+        'published': paper.published.isoformat(),
+        'updated': paper.updated.isoformat(),
+        'references': references,
+    }

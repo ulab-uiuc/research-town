@@ -12,7 +12,7 @@ Bases: `object`
 
 #### brainstorm_idea(insights: list[[Insight](research_town.dbs.md#research_town.data.Insight)], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → [Idea](research_town.dbs.md#research_town.data.Idea)
 
-#### discuss_idea(ideas: list[[Idea](research_town.dbs.md#research_town.data.Idea)], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → [Idea](research_town.dbs.md#research_town.data.Idea)
+#### summarize_idea(ideas: list[[Idea](research_town.dbs.md#research_town.data.Idea)], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → [Idea](research_town.dbs.md#research_town.data.Idea)
 
 #### review_literature(papers: list[[Paper](research_town.dbs.md#research_town.data.Paper)], domains: list[str], contexts: list[str], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → list[[Insight](research_town.dbs.md#research_town.data.Insight)]
 
@@ -56,7 +56,7 @@ Bases: `object`
 
 #### brainstorm_idea(insights: list[[Insight](research_town.dbs.md#research_town.data.Insight)], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → [Idea](research_town.dbs.md#research_town.data.Idea)
 
-#### discuss_idea(ideas: list[[Idea](research_town.dbs.md#research_town.data.Idea)], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → [Idea](research_town.dbs.md#research_town.data.Idea)
+#### summarize_idea(ideas: list[[Idea](research_town.dbs.md#research_town.data.Idea)], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → [Idea](research_town.dbs.md#research_town.data.Idea)
 
 #### review_literature(papers: list[[Paper](research_town.dbs.md#research_town.data.Paper)], domains: list[str], contexts: list[str], config: [Config](research_town.configs.md#research_town.configs.config.Config)) → list[[Insight](research_town.dbs.md#research_town.data.Insight)]
 
