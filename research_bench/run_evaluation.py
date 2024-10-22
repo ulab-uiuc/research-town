@@ -29,7 +29,7 @@ def get_reference_proposal(
         if not isinstance(introduction, str):
             introduction = get_paper_introduction(paper) if paper else ''
             write_cache_item(args.cache_path, paper_key, 'introduction', introduction)
-            
+
         ref_proposal = extract_reference_proposal(introduction) if introduction else ''
         write_cache_item(args.cache_path, paper_key, 'ref_proposal', ref_proposal)
         return ref_proposal

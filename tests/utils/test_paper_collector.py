@@ -1,6 +1,7 @@
 import datetime
 from unittest.mock import MagicMock, patch
 
+from research_town.data import Profile
 from research_town.utils.paper_collector import (
     get_paper_by_arxiv_id,
     get_paper_by_keyword,
@@ -191,7 +192,7 @@ def test_process_paper(mock_get_references: MagicMock) -> None:
     mock_paper = MagicMock()
     mock_paper.title = 'Test Paper'
     mock_paper.get_short_id.return_value = '1234.5678'
-    mock_paper.authors = [MagicMock(name='Author 1')]
+    mock_paper.authors = [Profile(name='Author 1')]
     mock_paper.summary = 'This is a test summary.'
     mock_paper.published = MagicMock()
     mock_paper.updated = MagicMock()
@@ -204,7 +205,7 @@ def test_process_paper(mock_get_references: MagicMock) -> None:
     # Assertions
     assert result['title'] == 'Test Paper'
     assert result['arxiv_id'] == '1234.5678'
-    assert result['authors'] == ['Author 1']
+    assert result['authors'][0].name == 'Author 1'
     assert result['abstract'] == 'This is a test summary.'
     assert result['references'] == [{'arxivId': '2345.6789', 'title': 'Cited Paper 1'}]
     mock_get_references.assert_called_once_with('1234.5678')
