@@ -11,7 +11,7 @@ from research_town.utils.logger import logger
 from research_town.utils.paper_collector import (
     get_paper_by_arxiv_id,
     get_paper_introduction,
-    get_references,
+    get_reference_introductions,
 )
 
 
@@ -23,9 +23,13 @@ def get_reference_proposal(
         return ref_proposal
 
     try:
-        arxiv_id = paper_data.get('arxiv_id')
-        paper = get_paper_by_arxiv_id(arxiv_id) if arxiv_id else None
-        introduction = get_paper_introduction(paper) if paper else ''
+        arxiv_id = paper_data.get('arxiv_id', '')
+        paper = get_paper_by_arxiv_id(arxiv_id)
+        introduction = load_cache_item(args.cache_path, paper_key, 'introduction')
+        if not isinstance(introduction, str):
+            introduction = get_paper_introduction(paper) if paper else ''
+            write_cache_item(args.cache_path, paper_key, 'introduction', introduction)
+            
         ref_proposal = extract_reference_proposal(introduction) if introduction else ''
         write_cache_item(args.cache_path, paper_key, 'ref_proposal', ref_proposal)
         return ref_proposal
@@ -46,8 +50,10 @@ def get_generated_proposal(
         authors = [author['name'] for author in paper_data.get('authors', [])]
         title = paper_data.get('title', '')
         arxiv_id = paper_data.get('arxiv_id', '')
-        references = get_references(arxiv_id)
-        ref_intros = fetch_reference_intros(args, paper_key, references)
+        ref_intros = load_cache_item(args.cache_path, paper_key, 'reference_intros')
+        if not isinstance(ref_intros, list):
+            ref_intros = get_reference_introductions(arxiv_id)
+            write_cache_item(args.cache_path, paper_key, 'reference_intros', ref_intros)
 
         gen_proposal = write_proposal(
             args.mode, authors, ref_intros, arxiv_id, exclude_paper_titles=[title]
@@ -58,33 +64,7 @@ def get_generated_proposal(
         raise ValueError(f'Error generating proposal for {paper_key}: {e}')
 
 
-def fetch_reference_intros(
-    args: argparse.Namespace, paper_key: str, references: List[Dict[str, Any]]
-) -> List[str]:
-    cached_intros = load_cache_item(args.cache_path, paper_key, 'reference_intros')
-    if isinstance(cached_intros, list):
-        return cached_intros
-
-    intros = []
-    try:
-        for ref in references:
-            arxiv_id = ref.get('arxivId')
-            if arxiv_id:
-                ref_paper = get_paper_by_arxiv_id(arxiv_id)
-                if ref_paper:
-                    logger.info(
-                        f'Fetching introduction for referenced paper: {arxiv_id}'
-                    )
-                    intro = get_paper_introduction(ref_paper)
-                    if intro:
-                        intros.append(intro)
-        write_cache_item(args.cache_path, paper_key, 'reference_intros', intros)
-        return intros
-    except Exception as e:
-        raise ValueError(f'Error fetching reference intros for {paper_key}: {e}')
-
-
-def process_paper(
+def predict_paper(
     args: argparse.Namespace,
     paper_key: str,
     paper_data: Dict[str, Any],
@@ -126,7 +106,7 @@ def main(args: argparse.Namespace) -> None:
     }
 
     for paper_key, paper_data in tqdm(dataset, desc='Processing papers'):
-        results, metrics = process_paper(args, paper_key, paper_data)
+        results, metrics = predict_paper(args, paper_key, paper_data)
         if results:
             with open(args.output_path, 'a', encoding='utf-8') as outfile:
                 outfile.write(json.dumps({**results, **metrics}) + '\n')
