@@ -217,7 +217,7 @@ def write_proposal_author_only(
                 ),
             }
         ]
-        response = model_prompting(config.param.base_llm, prompt, mode='TEST')
+        response = model_prompting(config.param.base_llm, prompt)
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
@@ -231,7 +231,45 @@ def write_proposal_author_only(
 def write_proposal_citation_only(
     intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
 ) -> str:
-    raise NotImplementedError
+    config = Config('../configs')
+    try:
+        prompt = [
+            {
+                'role': 'user',
+                'content': (
+                    'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                    'Here are the five core questions:\n\n'
+                    '[Question 1] - What is the problem?\n\n'
+                    'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                    '[Question 2] - Why is it interesting and important?\n\n'
+                    'Explain the broader implications of solving this problem for the research community.\n'
+                    'Discuss how such paper will affect the future research.\n'
+                    'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                    '[Question 3] - Why is it hard?\n\n'
+                    'Discuss the challenges and complexities involved in solving this problem.\n'
+                    'Explain why naive or straightforward approaches may fail.\n'
+                    'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                    "[Question 4] - Why hasn't it been solved before?\n\n"
+                    'Identify gaps or limitations in previous research or existing solutions.\n'
+                    'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                    'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                    '[Question 5] - What are the key components of my approach and results?\n\n'
+                    'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                    'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                    f'Introductions collect from cited papers:\n{intros}\n\n'
+                    'Please provide the five core questions contents based on the above cited introductions.'
+                ),
+            }
+        ]
+        response = model_prompting(config.param.base_llm, prompt)
+        if response and len(response) > 0 and len(response[0]) > 0:
+            return response[0]
+        else:
+            raise ValueError(
+                'Received empty response from model_prompting for write_proposal_author_only.'
+            )
+    except Exception as e:
+        raise ValueError(f'Error generating current_5q: {e}')
 
 
 def write_proposal_author_citation(
@@ -240,7 +278,64 @@ def write_proposal_author_citation(
     id: int,
     exclude_paper_titles: List[str] = [''],
 ) -> str:
-    raise NotImplementedError
+    config = Config('../configs')
+    profile_db_path = f'./profile_dbs/profile_{id}'
+
+    if os.path.exists(profile_db_path):
+        profile_db = ProfileDB(load_file_path=profile_db_path)
+    else:
+        profile_db = ProfileDB()
+        profile_db.pull_profiles(
+            names=authors, config=config, exclude_paper_titles=exclude_paper_titles
+        )
+        profile_db.save_to_json(profile_db_path)
+    profiles = []
+    for author in authors:
+        print('author', author)
+
+        profile = profile_db.get(name=author)[0]
+        profiles.append(profile)
+    bios = '\n'.join([profile.bio for profile in profiles])
+
+    try:
+        prompt = [
+            {
+                'role': 'user',
+                'content': (
+                    'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                    'Here are the five core questions:\n\n'
+                    '[Question 1] - What is the problem?\n\n'
+                    'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                    '[Question 2] - Why is it interesting and important?\n\n'
+                    'Explain the broader implications of solving this problem for the research community.\n'
+                    'Discuss how such paper will affect the future research.\n'
+                    'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                    '[Question 3] - Why is it hard?\n\n'
+                    'Discuss the challenges and complexities involved in solving this problem.\n'
+                    'Explain why naive or straightforward approaches may fail.\n'
+                    'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                    "[Question 4] - Why hasn't it been solved before?\n\n"
+                    'Identify gaps or limitations in previous research or existing solutions.\n'
+                    'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                    'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                    '[Question 5] - What are the key components of my approach and results?\n\n'
+                    'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                    'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                    f'Introductions collect from cited papers:\n{intros}\n\n'
+                    f'Author biographies and personas:\n{bios}\n\n'
+                    'Based on the above biographies and cited paper introductions, please provide the five core questions contents for a brand new future research.'
+                ),
+            }
+        ]
+        response = model_prompting(config.param.base_llm, prompt, mode='TEST')
+        if response and len(response) > 0 and len(response[0]) > 0:
+            return response[0]
+        else:
+            raise ValueError(
+                'Received empty response from model_prompting for write_proposal_author_only.'
+            )
+    except Exception as e:
+        raise ValueError(f'Error generating current_5q: {e}')
 
 
 def write_proposal(
