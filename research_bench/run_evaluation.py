@@ -24,8 +24,8 @@ def get_reference_proposal(
 
     try:
         arxiv_id = paper_data.get('arxiv_id')
-        paper = get_paper_by_arxiv_id(arxiv_id)
-        introduction = get_paper_introduction(paper)
+        paper = get_paper_by_arxiv_id(arxiv_id) if arxiv_id else None
+        introduction = get_paper_introduction(paper) if paper else ''
         ref_proposal = extract_reference_proposal(introduction) if introduction else ''
         write_cache_item(args.cache_path, paper_key, 'ref_proposal', ref_proposal)
         return ref_proposal
