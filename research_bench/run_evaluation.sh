@@ -2,9 +2,9 @@
 
 # Define input and output file paths
 INPUT="./benchmark/mlbench.json"
-OUTPUT="./results/research_bench_result_4o_mini_single_agent.jsonl"
+OUTPUT="./results/research_bench_result_4o_mini_author-citation.jsonl"
 INTRO_LOG="./benchmark/intro_logging.jsonl"
-TEST_MODE="author-only" #author-only, citation-only,author-citation, textgnn
+TEST_MODE="author-citation" #author-only, citation-only,author-citation, textgnn
 TOTAL_LINES=100
 
 # Function to get the number of lines in the output file
