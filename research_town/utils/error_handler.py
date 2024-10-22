@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 INF = float(math.inf)
 
-T = TypeVar('T', bound=Callable[..., Optional[List[str]]])
+T = TypeVar('T', bound=Callable[..., Any])
 
 
 def api_calling_error_exponential_backoff(
@@ -22,7 +22,7 @@ def api_calling_error_exponential_backoff(
 
     def decorator(func: T) -> T:
         @wraps(func)
-        def wrapper(*args: Any, **kwargs: Any) -> Optional[List[str]]:
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             error_handler_mode = kwargs.get('mode', None)
             if error_handler_mode == 'TEST':
                 modified_retries = 1
