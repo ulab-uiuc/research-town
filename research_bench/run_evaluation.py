@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 from research_bench.proposal_eval import compute_metrics
 from research_bench.proposal_writing import extract_reference_proposal, write_proposal
-from research_bench.utils import load_cache_item, write_cache_item, load_benchmark
+from research_bench.utils import load_benchmark, load_cache_item, write_cache_item
 from research_town.utils.logger import logger
 from research_town.utils.paper_collector import (
     get_paper_by_arxiv_id,

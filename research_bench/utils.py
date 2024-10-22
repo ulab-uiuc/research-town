@@ -13,9 +13,11 @@ def save_benchmark(benchmark: Dict[str, Any], output_path: str) -> None:
         json.dump(benchmark, f, indent=4, ensure_ascii=False)
     print(f'Benchmark saved to {output_path}')
 
+
 def load_benchmark(input_path: str) -> Dict[str, Any]:
     with open(input_path, 'r', encoding='utf-8') as file:
         return json.load(file)
+
 
 def load_cache_item(
     cache_path: Optional[str], paper_key: str, item_key: str
