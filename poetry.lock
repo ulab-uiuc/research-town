@@ -1351,13 +1351,13 @@ use = ["tensorflow", "tensorflow-hub", "tensorflow-text"]
 
 [[package]]
 name = "litellm"
-version = "1.49.5"
+version = "1.50.1"
 description = "Library to easily interface with LLM API providers"
 optional = false
 python-versions = "!=2.7.*,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,!=3.7.*,>=3.8"
 files = [
-    {file = "litellm-1.49.5-py3-none-any.whl", hash = "sha256:9cd246221c1d922edb7614f29b5b5618b9da588f0ac04612965dbd8afeaa130f"},
-    {file = "litellm-1.49.5.tar.gz", hash = "sha256:f45667d723d77d235dc3cc3b056338012eb2ffbfd46d7beb7abea927f49358e0"},
+    {file = "litellm-1.50.1-py3-none-any.whl", hash = "sha256:7606ee74f8ad0f31814587861cc94e724fa7951381135e17ca69deddd1acde08"},
+    {file = "litellm-1.50.1.tar.gz", hash = "sha256:ddda7ac94d769734e7c38866d0dc1a94c3e3fe5af2a111fcf04c97cc6d6e847a"},
 ]
 
 [package.dependencies]
@@ -1366,7 +1366,7 @@ click = "*"
 importlib-metadata = ">=6.8.0"
 jinja2 = ">=3.1.2,<4.0.0"
 jsonschema = ">=4.22.0,<5.0.0"
-openai = ">=1.51.0"
+openai = ">=1.52.0"
 pydantic = ">=2.0.0,<3.0.0"
 python-dotenv = ">=0.2.0"
 requests = ">=2.31.0,<3.0.0"
@@ -1998,13 +1998,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.51.2"
+version = "1.52.0"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.7.1"
 files = [
-    {file = "openai-1.51.2-py3-none-any.whl", hash = "sha256:5c5954711cba931423e471c37ff22ae0fd3892be9b083eee36459865fbbb83fa"},
-    {file = "openai-1.51.2.tar.gz", hash = "sha256:c6a51fac62a1ca9df85a522e462918f6bb6bc51a8897032217e453a0730123a6"},
+    {file = "openai-1.52.0-py3-none-any.whl", hash = "sha256:0c249f20920183b0a2ca4f7dba7b0452df3ecd0fa7985eb1d91ad884bc3ced9c"},
+    {file = "openai-1.52.0.tar.gz", hash = "sha256:95c65a5f77559641ab8f3e4c3a050804f7b51d278870e2ec1f7444080bfe565a"},
 ]
 
 [package.dependencies]
