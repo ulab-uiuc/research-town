@@ -1,12 +1,19 @@
 import argparse
 import json
+import os
 from typing import Any, Dict, List, Tuple
 
 from tqdm import tqdm
 
 from research_bench.proposal_eval import compute_metrics
-from research_bench.proposal_writing import write_proposal, write_proposal_from_paper
-from research_bench.utils import load_benchmark, load_cache_item, write_cache_item
+from research_bench.proposal_writing import (
+    write_predicted_proposal,
+    write_reference_proposal,
+)
+from research_bench.utils import load_benchmark, with_cache
+from research_town.configs import Config
+from research_town.data import Profile
+from research_town.dbs import ProfileDB
 from research_town.utils.logger import logger
 from research_town.utils.paper_collector import (
     get_paper_by_arxiv_id,
@@ -15,129 +22,134 @@ from research_town.utils.paper_collector import (
 )
 
 
-def get_reference_proposal(
-    args: argparse.Namespace, paper_key: str, paper_data: Dict[str, Any]
-) -> str:
-    ref_proposal = load_cache_item(args.cache_path, paper_key, 'ref_proposal')
-    if isinstance(ref_proposal, str):
-        return ref_proposal
+@with_cache('profile_cache')
+def get_author_profiles(
+    authors: List[str], title: str, config: Config
+) -> List[Profile]:
+    """Retrieve author biographies from the ProfileDB."""
+    profile_db = ProfileDB()
+    profile_db.pull_profiles(names=authors, config=config, exclude_paper_titles=[title])
+    return [profile_db.get(name=author)[0] for author in authors]
 
+
+@with_cache('paper_cache')
+def get_reference_proposal(arxiv_id: str, config: Config) -> str:
+    """Generate a reference proposal based on paper introduction."""
     try:
-        arxiv_id = paper_data.get('arxiv_id', '')
         paper = get_paper_by_arxiv_id(arxiv_id)
-        introduction = load_cache_item(args.cache_path, paper_key, 'introduction')
-        if not isinstance(introduction, str):
-            introduction = get_paper_introduction(paper) if paper else ''
-            write_cache_item(args.cache_path, paper_key, 'introduction', introduction)
-
-        ref_proposal = write_proposal_from_paper(introduction) if introduction else ''
-        write_cache_item(args.cache_path, paper_key, 'ref_proposal', ref_proposal)
-        return ref_proposal
+        if not paper:
+            return ''
+        introduction = get_paper_introduction(paper)
+        return write_reference_proposal(introduction, config) if introduction else ''
     except Exception as e:
-        raise ValueError(f'Failed to get reference proposal for {paper_key}: {e}')
+        logger.error(f'Failed to get reference proposal for {arxiv_id}: {e}')
+        return ''
 
 
-def get_generated_proposal(
-    args: argparse.Namespace,
-    paper_key: str,
-    paper_data: Dict[str, Any],
+@with_cache('proposal_cache')
+def get_predicted_proposal(
+    arxiv_id: str, profiles: List[Profile], config: Config, mode: str
 ) -> str:
-    gen_proposal = load_cache_item(args.cache_path, paper_key, 'gen_proposal')
-    if isinstance(gen_proposal, str):
-        return gen_proposal
-
+    """Generate a predicted proposal based on author profiles and references."""
     try:
-        authors = [author['name'] for author in paper_data.get('authors', [])]
-        title = paper_data.get('title', '')
-        arxiv_id = paper_data.get('arxiv_id', '')
-        ref_intros = load_cache_item(args.cache_path, paper_key, 'reference_intros')
-        if not isinstance(ref_intros, list):
-            ref_intros = get_reference_introductions(arxiv_id)
-            write_cache_item(args.cache_path, paper_key, 'reference_intros', ref_intros)
-
-        gen_proposal = write_proposal(
-            args.mode, authors, ref_intros, arxiv_id, exclude_paper_titles=[title]
-        )
-        write_cache_item(args.cache_path, paper_key, 'gen_proposal', gen_proposal)
-        return gen_proposal
+        ref_intros = get_reference_introductions(arxiv_id)
+        return write_predicted_proposal(mode, profiles, ref_intros, config)
     except Exception as e:
-        raise ValueError(f'Error generating proposal for {paper_key}: {e}')
+        logger.error(f'Error generating proposal for {arxiv_id}: {e}')
+        return ''
 
 
-def predict_paper(
-    args: argparse.Namespace,
-    paper_key: str,
-    paper_data: Dict[str, Any],
+def inference(
+    paper_id: str, paper_data: Dict[str, Any], mode: str, config: Config
 ) -> Tuple[Dict[str, str], Dict[str, float]]:
-    try:
-        ref_proposal = get_reference_proposal(args, paper_key, paper_data)
-        gen_proposal = get_generated_proposal(args, paper_key, paper_data)
-        metrics = compute_metrics(ref_proposal, gen_proposal)
-        results = {
-            'paper_key': paper_key,
-            'ref_proposal': ref_proposal,
-            'gen_proposal': gen_proposal,
-        }
-        return results, metrics
-    except Exception as e:
-        raise ValueError(f'Error processing paper {paper_key}: {e}')
+    """Generate and evaluate proposals for a paper."""
+    arxiv_id = paper_data.get('arxiv_id', '')
+    authors = [author['name'] for author in paper_data.get('authors', [])]
+    title = paper_data.get('title', '')
 
+    # Get author profiles and generate proposals
+    author_profiles = get_author_profiles(authors, title, config)
+    ref_proposal = get_reference_proposal(arxiv_id, config)
+    gen_proposal = get_predicted_proposal(arxiv_id, author_profiles, config, mode)
 
-def skip_processed_papers(output_path: str, papers: Dict[str, Any]) -> Dict[str, Any]:
-    with open(output_path, 'r', encoding='utf-8') as outfile:
-        processed_paper_keys = [json.loads(line).get('paper_key') for line in outfile]
-        for paper_key in papers.keys():
-            if paper_key in processed_paper_keys:
-                papers.pop(paper_key)
-                logger.info(f'Skipping processed paper: {paper_key}')
-    return papers
+    if not ref_proposal or not gen_proposal:
+        raise ValueError('Failed to generate proposals')
 
-
-def main(args: argparse.Namespace) -> None:
-    dataset = load_benchmark(args.input_path)
-    dataset = skip_processed_papers(args.output_path, dataset)
-    logger.info(f'Processing {len(dataset)} papers.')
-
-    metrics_summary: Dict[str, List[float]] = {
-        'bleu': [],
-        'rouge_l': [],
-        'gpt_metric_score': [],
-        'bert_score': [],
+    # Compute metrics
+    metrics = compute_metrics(ref_proposal, gen_proposal)
+    results = {
+        'paper_id': paper_id,
+        'ref_proposal': ref_proposal,
+        'gen_proposal': gen_proposal,
     }
-
-    for paper_key, paper_data in tqdm(dataset, desc='Processing papers'):
-        results, metrics = predict_paper(args, paper_key, paper_data)
-        if results:
-            with open(args.output_path, 'a', encoding='utf-8') as outfile:
-                outfile.write(json.dumps({**results, **metrics}) + '\n')
-
-            for key in metrics_summary.keys():
-                metrics_summary[key].append(metrics.get(key, 0))
-        else:
-            logger.warning(f'Skipping paper {paper_key} due to processing failure.')
-
-    for metric, scores in metrics_summary.items():
-        average_score = sum(scores) / len(scores) if scores else 0.0
-        logger.info(
-            f"Average {metric.replace('_', ' ').upper()} score: {average_score:.4f}"
-        )
+    return results, metrics
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
+def load_papers(input_path: str, output_path: str) -> Any:
+    """Load papers from the dataset, excluding already processed papers."""
+    dataset = load_benchmark(input_path)
+
+    if os.path.exists(output_path):
+        with open(output_path, 'r') as f:
+            processed_ids = {json.loads(line)['paper_id'] for line in f}
+        return {k: v for k, v in dataset.items() if k not in processed_ids}
+
+    return dataset
+
+
+def save_results(
+    results: Dict[str, Any], metrics: Dict[str, float], output_path: str
+) -> None:
+    """Save results and metrics to the output file."""
+    with open(output_path, 'a') as f:
+        json.dump({**results, **metrics}, f)
+        f.write('\n')
+
+
+def main() -> None:
+    """Main entry point for the research proposal generator."""
+    parser = argparse.ArgumentParser(description='Research Proposal Generator')
     parser.add_argument(
-        '--input_path', type=str, required=True, help='Path to the input JSON file.'
+        '--input_path', type=str, required=True, help='Input JSON file path'
     )
     parser.add_argument(
-        '--output_path', type=str, required=True, help='Path to the output JSONL file.'
+        '--output_path', type=str, required=True, help='Output JSONL file path'
     )
-    parser.add_argument('--cache_path', type=str, help='Path to the cache JSONL file.')
     parser.add_argument(
         '--mode',
         type=str,
         required=True,
         choices=['author-only', 'citation-only', 'author-citation', 'textgnn'],
-        help='Processing mode.',
+        help='Processing mode',
     )
     args = parser.parse_args()
-    main(args)
+
+    # Initialize configuration and load papers
+    config = Config('../configs')
+    dataset = load_papers(args.input_path, args.output_path)
+    logger.info(f'Processing {len(dataset)} papers')
+
+    # Process papers
+    metrics_summary: Dict[str, List[float]] = {
+        metric: [] for metric in ['bleu', 'rouge_l', 'gpt_metric_score', 'bert_score']
+    }
+
+    for paper_id, paper_data in tqdm(dataset.items(), desc='Processing papers'):
+        try:
+            results, metrics = inference(paper_id, paper_data, args.mode, config)
+            save_results(results, metrics, args.output_path)
+
+            for metric, scores in metrics_summary.items():
+                scores.append(metrics.get(metric, 0))
+        except Exception as e:
+            logger.warning(f'Failed to process paper {paper_id}: {e}')
+
+    # Report average metrics
+    for metric, scores in metrics_summary.items():
+        if scores:
+            average = sum(scores) / len(scores)
+            logger.info(f"Average {metric.replace('_', ' ').upper()}: {average:.4f}")
+
+
+if __name__ == '__main__':
+    main()

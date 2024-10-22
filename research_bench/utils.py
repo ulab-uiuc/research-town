@@ -2,7 +2,9 @@
 
 import json
 import os
-from typing import Any, Dict, List, Optional, Union
+from functools import wraps
+from pathlib import Path
+from typing import Any, Callable, Dict, Optional
 
 SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
 
@@ -19,37 +21,37 @@ def load_benchmark(input_path: str) -> Any:
         return json.load(file)
 
 
-def load_cache_item(
-    cache_path: Optional[str],
-    paper_key: str,
-    item_key: Union[str, List[Optional[str]], None],
-) -> Optional[Union[str, List[str]]]:
-    if not cache_path:
-        return None
+def with_cache(
+    cache_dir: Optional[str] = None,
+) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    """
+    Decorator to cache function results. It stores results in a given cache directory.
 
-    try:
-        with open(cache_path, 'r', encoding='utf-8') as infile:
-            for line in infile:
-                cache = json.loads(line)
-                if cache.get('paper_key', '') == paper_key:
-                    value = cache.get(item_key)
-                    if isinstance(value, (str, list, type(None))):
-                        return value
-                    return None
-    except Exception as e:
-        raise ValueError(f'Error loading cache for {paper_key}: {e}')
-    return None
+    Usage:
+        @with_cache('cache_dir')
+        def my_function(paper_id, ...):
+            # Function implementation
+    """
 
+    def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
+        @wraps(func)
+        def wrapper(paper_id: str, *args: Any, **kwargs: Any) -> Any:
+            if not cache_dir:
+                return func(paper_id, *args, **kwargs)
 
-def write_cache_item(
-    cache_path: Optional[str], paper_key: str, item_key: str, value: Any
-) -> None:
-    if not cache_path:
-        return
+            cache_path = Path(cache_dir) / f'{paper_id}_{func.__name__}.json'
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
 
-    try:
-        with open(cache_path, 'a', encoding='utf-8') as outfile:
-            cache_entry = {'paper_key': paper_key, item_key: value}
-            outfile.write(json.dumps(cache_entry) + '\n')
-    except Exception as e:
-        raise ValueError(f'Error writing cache for {paper_key}: {e}')
+            if cache_path.exists():
+                with cache_path.open('r') as f:
+                    return json.load(f)
+
+            result = func(paper_id, *args, **kwargs)
+            with cache_path.open('w') as f:
+                json.dump(result, f)
+
+            return result
+
+        return wrapper
+
+    return decorator
