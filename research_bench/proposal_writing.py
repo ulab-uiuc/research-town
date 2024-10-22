@@ -221,7 +221,9 @@ def write_proposal_author_only(
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
-            raise ValueError('Received empty response from model_prompting for write_proposal_author_only.')
+            raise ValueError(
+                'Received empty response from model_prompting for write_proposal_author_only.'
+            )
     except Exception as e:
         raise ValueError(f'Error generating current_5q: {e}')
 
@@ -282,7 +284,10 @@ def write_proposal_citation_only(
 
 
 def write_proposal_author_citation(
-    authors: List[str], intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
+    authors: List[str],
+    intros: List[str],
+    id: int,
+    exclude_paper_titles: List[str] = [''],
 ) -> str:
     """
     Generates a comprehensive research proposal based on multiple author profiles and citation paper introductions.
