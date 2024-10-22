@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Tuple
 from tqdm import tqdm
 
 from research_bench.proposal_eval import compute_metrics
-from research_bench.proposal_writing import extract_reference_proposal, write_proposal
+from research_bench.proposal_writing import write_proposal, write_proposal_from_paper
 from research_bench.utils import load_benchmark, load_cache_item, write_cache_item
 from research_town.utils.logger import logger
 from research_town.utils.paper_collector import (
@@ -30,7 +30,7 @@ def get_reference_proposal(
             introduction = get_paper_introduction(paper) if paper else ''
             write_cache_item(args.cache_path, paper_key, 'introduction', introduction)
 
-        ref_proposal = extract_reference_proposal(introduction) if introduction else ''
+        ref_proposal = write_proposal_from_paper(introduction) if introduction else ''
         write_cache_item(args.cache_path, paper_key, 'ref_proposal', ref_proposal)
         return ref_proposal
     except Exception as e:

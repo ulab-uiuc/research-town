@@ -1,6 +1,6 @@
 from arxiv import Client, Search
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Optional, Tuple, Union
+from beartype.typing import Dict, List, Optional, Tuple, Union
 from tqdm import tqdm
 
 from .model_prompting import model_prompting
