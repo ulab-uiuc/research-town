@@ -414,11 +414,6 @@ def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
             for ref in data.get('data', []):
                 cited_paper = ref.get('citedPaper', {})
                 if cited_paper:
-                    external_ids = (
-                        cited_paper.get('externalIds', {})
-                        if cited_paper.get('externalIds')
-                        else {}
-                    )
                     ref_info = {
                         'title': cited_paper.get('title'),
                         'abstract': cited_paper.get('abstract'),

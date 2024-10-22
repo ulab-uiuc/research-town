@@ -10,8 +10,6 @@ from utils import (
     save_benchmark,
 )
 
-from research_town.configs import Config
-
 
 def get_arxiv_ids(input: str) -> List[str]:
     with open(input, 'r', encoding='utf-8') as f:
@@ -28,10 +26,10 @@ def get_arxiv_ids(input: str) -> List[str]:
 def process_arxiv_ids(
     arxiv_ids: List[str],
     output: str,
+    model: str,
 ) -> Dict[str, Any]:
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
-    config = Config('../configs')
 
     for arxiv_id in tqdm(arxiv_ids, desc='Processing arXiv IDs'):
         if arxiv_id in existing_arxiv_ids:
@@ -40,7 +38,7 @@ def process_arxiv_ids(
         paper_data = get_paper_data(arxiv_id)
         author_data = get_author_data(arxiv_id)
         reference_proposal = get_proposal_from_paper(
-            arxiv_id, paper_data['introduction'], config
+            arxiv_id, paper_data['introduction'], model
         )
 
         benchmark[paper_data['arxiv_id']] = {
@@ -68,13 +66,19 @@ def parse_args() -> argparse.Namespace:
         default='./benchmark/crossbench.json',
         help='Output file path.',
     )
+    parser.add_argument(
+        '--model',
+        type=str,
+        default='gpt-40-mini',
+        help='Model name for the single agent test.',
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     arxiv_ids = get_arxiv_ids(args.input)
-    process_arxiv_ids(arxiv_ids, args.output)
+    process_arxiv_ids(arxiv_ids, args.output, args.model)
 
 
 if __name__ == '__main__':

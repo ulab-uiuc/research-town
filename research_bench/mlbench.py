@@ -16,6 +16,7 @@ def process_keywords(
     keywords: List[str],
     max_papers_per_keyword: int,
     output: str,
+    model: str,
 ) -> Dict[str, Any]:
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
@@ -31,7 +32,9 @@ def process_keywords(
 
             paper_data = get_paper_data(arxiv_id)
             author_data = get_author_data(arxiv_id)
-            reference_proposal = get_proposal_from_paper(arxiv_id)
+            reference_proposal = get_proposal_from_paper(
+                arxiv_id, paper_data['introduction'], model
+            )
 
             benchmark[paper_data['arxiv_id']] = {
                 'paper_data': paper_data,
@@ -79,13 +82,19 @@ def parse_args() -> argparse.Namespace:
         default='./benchmark/mlbench.json',
         help='Output file path.',
     )
+    parser.add_argument(
+        '--model',
+        type=str,
+        default='gpt-40-mini',
+        help='Model name for the single agent test.',
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     keywords = args.keywords
-    process_keywords(keywords, args.max_papers_per_keyword, args.output)
+    process_keywords(keywords, args.max_papers_per_keyword, args.output, args.model)
 
 
 if __name__ == '__main__':
