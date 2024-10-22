@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 from research_bench.proposal_eval import compute_metrics
 from research_bench.proposal_writing import extract_reference_proposal, write_proposal
-from research_bench.utils import load_cache_item, write_cache_item
+from research_bench.utils import load_cache_item, write_cache_item, load_benchmark
 from research_town.utils.logger import logger
 from research_town.utils.paper_collector import (
     get_paper_by_arxiv_id,
@@ -38,8 +38,6 @@ def get_generated_proposal(
     args: argparse.Namespace,
     paper_key: str,
     paper_data: Dict[str, Any],
-    intros: List[str],
-    paper_id: int,
 ) -> Optional[str]:
     gen_proposal = load_cache_item(args.cache_path, paper_key, 'gen_proposal')
     if gen_proposal:
@@ -47,14 +45,13 @@ def get_generated_proposal(
 
     try:
         authors = [author['name'] for author in paper_data.get('authors', [])]
-        keyword = paper_data.get('keyword', '')
         title = paper_data.get('title', '')
         arxiv_id = paper_data.get('arxiv_id')
         references = get_references(arxiv_id)
-        intros = fetch_reference_intros(args, paper_key, references)
+        ref_intros = fetch_reference_intros(args, paper_key, references)
 
         gen_proposal = write_proposal(
-            args.mode, authors, intros, keyword, paper_id, exclude_titles=[title]
+            args.mode, authors, ref_intros, arxiv_id, exclude_titles=[title]
         )
         write_cache_item(args.cache_path, paper_key, 'gen_proposal', gen_proposal)
         return gen_proposal
@@ -92,17 +89,10 @@ def process_paper(
     args: argparse.Namespace,
     paper_key: str,
     paper_data: Dict[str, Any],
-    paper_id: int,
 ) -> Optional[Dict[str, Any]]:
     try:
         ref_proposal = get_reference_proposal(args, paper_key, paper_data)
-        if not ref_proposal:
-            return None
-
-        gen_proposal = get_generated_proposal(args, paper_key, paper_data, paper_id)
-        if not gen_proposal:
-            return None
-
+        gen_proposal = get_generated_proposal(args, paper_key, paper_data)
         metrics = compute_metrics(ref_proposal, gen_proposal)
 
         return {
@@ -116,44 +106,36 @@ def process_paper(
         return None
 
 
-def load_input_data(input_path: str) -> Dict[str, Any]:
-    with open(input_path, 'r', encoding='utf-8') as file:
-        return json.load(file)
-
-
-def skip_processed_papers(output_path: str, papers: List[str]) -> List[str]:
-    try:
-        with open(output_path, 'r', encoding='utf-8') as outfile:
-            processed_count = sum(1 for _ in outfile)
-            logger.info(f'Skipping {processed_count} already processed papers.')
-            return papers[processed_count:]
-    except Exception:
-        return papers
+def skip_processed_papers(output_path: str, papers: Dict[str, Any]) -> List[str]:
+    with open(output_path, 'r', encoding='utf-8') as outfile:
+        processed_paper_keys = [json.loads(line).get('paper_key') for line in outfile]
+        for paper_key in papers.keys():
+            if paper_key in processed_paper_keys:
+                papers.remove(paper_key)
+                logger.info(f'Skipping processed paper: {paper_key}')
+    return papers
 
 
 def main(args: argparse.Namespace) -> None:
-    data = load_input_data(args.input_path)
-    papers = skip_processed_papers(args.output_path, list(data.keys()))
-    logger.info(f'Processing {len(papers)} papers.')
+    dataset = load_benchmark(args.input_path)
+    dataset = skip_processed_papers(args.output_path, dataset)
+    logger.info(f'Processing {len(dataset)} papers.')
 
-    metrics_summary = {
+    metrics_summary: Dict[str, List[float | None]] = {
         'bleu': [],
         'rouge_l': [],
         'gpt_metric_score': [],
         'bert_score': [],
     }
 
-    for paper_id, paper_key in enumerate(
-        tqdm(papers, desc='Processing papers'), start=1
-    ):
-        paper_data = data[paper_key]
-        evaluation = process_paper(args, paper_key, paper_data, paper_id)
-        if evaluation:
+    for paper_key, paper_data in tqdm(dataset, desc='Processing papers'):
+        process_results = process_paper(args, paper_key, paper_data)
+        if process_results:
             with open(args.output_path, 'a', encoding='utf-8') as outfile:
-                outfile.write(json.dumps(evaluation) + '\n')
+                outfile.write(json.dumps(process_results) + '\n')
 
             for key in metrics_summary.keys():
-                metrics_summary[key].append(evaluation.get(key, 0.0))
+                metrics_summary[key].append(process_results.get(key))
         else:
             logger.warning(f'Skipping paper {paper_key} due to processing failure.')
 
@@ -165,9 +147,7 @@ def main(args: argparse.Namespace) -> None:
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Process research papers and compute evaluation metrics.'
-    )
+    parser = argparse.ArgumentParser()
     parser.add_argument(
         '--input_path', type=str, required=True, help='Path to the input JSON file.'
     )

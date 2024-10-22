@@ -11,7 +11,6 @@ from research_town.utils.model_prompting import model_prompting
 def write_proposal_researchtown(
     authors: List[str],
     intros: List[str],
-    keyword: str,
     id: int,
     exclude_paper_titles: List[str] = [''],
 ) -> Optional[str]:
@@ -41,7 +40,6 @@ def write_proposal_researchtown(
     log_db = LogDB()
     progress_db = ProgressDB()
     paper_db = PaperDB()  # Assuming existing papers are handled elsewhere
-    paper_db.pull_papers(num=3, domain=keyword)
     # Initialize ProposalWritingEnv with the required databases and configuration
     agent_manager = AgentManager(config=config, profile_db=profile_db)
     env = ProposalWritingEnv(
@@ -318,7 +316,6 @@ def write_proposal(
     mode: str,
     authors: List[str],
     intros: List[str],
-    keyword: str,
     id: int,
     exclude_paper_titles: List[str],
 ) -> Optional[str]:
@@ -337,7 +334,7 @@ def write_proposal(
         )
     elif mode == 'textgnn':
         return write_proposal_researchtown(
-            authors, intros, keyword, id, exclude_paper_titles=exclude_paper_titles
+            authors, intros, id, exclude_paper_titles=exclude_paper_titles
         )
     else:
         raise ValueError(f'Invalid proposal writing mode: {mode}')

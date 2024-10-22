@@ -85,7 +85,7 @@ def compute_gpt_metric(reference_5q: str, generated_5q: str) -> Optional[float]:
         return None
 
 
-def compute_metrics(reference_5q: str, generated_5q: str) -> Dict[str, float]:
+def compute_metrics(reference_5q: str, generated_5q: str) -> Dict[str, float | None]:
     bleu = compute_bleu(reference_5q, generated_5q)
     rouge_l = compute_rouge_l(reference_5q, generated_5q)
     gpt_metric = compute_gpt_metric(reference_5q, generated_5q)
