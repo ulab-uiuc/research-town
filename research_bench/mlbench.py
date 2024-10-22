@@ -17,11 +17,10 @@ def process_keywords(
     keywords: List[str],
     max_papers_per_keyword: int,
     output: str,
-    model: str,
+    config: Config,
 ) -> Dict[str, Any]:
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
-    config = Config('../../configs')
 
     for keyword in keywords:
         print(f"Fetching papers for keyword: '{keyword}'")
@@ -86,19 +85,14 @@ def parse_args() -> argparse.Namespace:
         default='./benchmark/mlbench.json',
         help='Output file path.',
     )
-    parser.add_argument(
-        '--model',
-        type=str,
-        default='gpt-40-mini',
-        help='Model name for the single agent test.',
-    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     keywords = args.keywords
-    process_keywords(keywords, args.max_papers_per_keyword, args.output, args.model)
+    config = Config('../../configs')
+    process_keywords(keywords, args.max_papers_per_keyword, args.output, config)
 
 
 if __name__ == '__main__':

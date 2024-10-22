@@ -28,11 +28,10 @@ def get_arxiv_ids(input: str) -> List[str]:
 def process_arxiv_ids(
     arxiv_ids: List[str],
     output: str,
-    model: str,
+    config: Config,
 ) -> Dict[str, Any]:
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
-    config = Config('../../configs')
 
     for arxiv_id in tqdm(arxiv_ids, desc='Processing arXiv IDs'):
         if arxiv_id in existing_arxiv_ids:
@@ -71,19 +70,14 @@ def parse_args() -> argparse.Namespace:
         default='./benchmark/crossbench.json',
         help='Output file path.',
     )
-    parser.add_argument(
-        '--model',
-        type=str,
-        default='gpt-40-mini',
-        help='Model name for the single agent test.',
-    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     arxiv_ids = get_arxiv_ids(args.input)
-    process_arxiv_ids(arxiv_ids, args.output, args.model)
+    config = Config('../../configs')
+    process_arxiv_ids(arxiv_ids, args.output, config)
 
 
 if __name__ == '__main__':

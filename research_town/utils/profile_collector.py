@@ -5,6 +5,7 @@ from tqdm import tqdm
 
 from .model_prompting import model_prompting
 from .prompt_constructor import openai_format_prompt_construct
+from .error_handler import api_calling_error_exponential_backoff
 
 
 def coauthor_frequency(
@@ -25,6 +26,7 @@ def coauthor_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
     return [name for name, _ in co_author_list[:limit]]
 
 
+@api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
 def collect_publications_and_coauthors(
     author: str, paper_max_num: int = 10, exclude_paper_titles: List[str] = []
 ) -> Tuple[List[str], List[str], List[str]]:
