@@ -208,7 +208,7 @@ def write_proposal_author_citation(
             names=authors, config=config, exclude_paper_titles=exclude_paper_titles
         )
         profile_db.save_to_json(profile_db_path)
-    
+
     profiles = []
     for author in authors:
         profile = profile_db.get(name=author)[0]
