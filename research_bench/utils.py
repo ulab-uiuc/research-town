@@ -24,29 +24,20 @@ def load_benchmark(input_path: str) -> Any:
 def with_cache(
     cache_dir: Optional[str] = None,
 ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-    """
-    Decorator to cache function results. It stores results in a given cache directory.
-
-    Usage:
-        @with_cache('cache_dir')
-        def my_function(paper_id, ...):
-            # Function implementation
-    """
-
     def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         @wraps(func)
-        def wrapper(paper_id: str, *args: Any, **kwargs: Any) -> Any:
+        def wrapper(arxiv_id: str, *args: Any, **kwargs: Any) -> Any:
             if not cache_dir:
-                return func(paper_id, *args, **kwargs)
+                return func(arxiv_id, *args, **kwargs)
 
-            cache_path = Path(cache_dir) / f'{paper_id}_{func.__name__}.json'
+            cache_path = Path(cache_dir) / f'{arxiv_id}_{func.__name__}.json'
             cache_path.parent.mkdir(parents=True, exist_ok=True)
 
             if cache_path.exists():
                 with cache_path.open('r') as f:
                     return json.load(f)
 
-            result = func(paper_id, *args, **kwargs)
+            result = func(arxiv_id, *args, **kwargs)
             with cache_path.open('w') as f:
                 json.dump(result, f)
 

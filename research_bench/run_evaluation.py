@@ -18,13 +18,31 @@ from research_town.utils.logger import logger
 from research_town.utils.paper_collector import (
     get_paper_by_arxiv_id,
     get_paper_introduction,
-    get_reference_introductions,
+    get_references,
 )
+
+
+@with_cache('references_cache')
+def get_reference_introductions(arxiv_id: str) -> List[str]:
+    references = get_references(arxiv_id)
+    if not references:
+        raise ValueError(f'No references found for paper {arxiv_id}')
+
+    intros = []
+    for ref in references:
+        arxiv_id = ref.get('arxivId', None)
+        if arxiv_id:
+            ref_paper = get_paper_by_arxiv_id(arxiv_id)
+            if ref_paper:
+                intro = get_paper_introduction(arxiv_id)
+                if intro:
+                    intros.append(intro)
+    return intros
 
 
 @with_cache('profile_cache')
 def get_author_profiles(
-    authors: List[str], title: str, config: Config
+    arxiv_id: str, authors: List[str], title: str, config: Config
 ) -> List[Profile]:
     """Retrieve author biographies from the ProfileDB."""
     profile_db = ProfileDB()
@@ -32,7 +50,7 @@ def get_author_profiles(
     return [profile_db.get(name=author)[0] for author in authors]
 
 
-@with_cache('paper_cache')
+@with_cache('reference_proposal_cache')
 def get_reference_proposal(arxiv_id: str, config: Config) -> str:
     """Generate a reference proposal based on paper introduction."""
     try:
@@ -46,7 +64,7 @@ def get_reference_proposal(arxiv_id: str, config: Config) -> str:
         return ''
 
 
-@with_cache('proposal_cache')
+@with_cache('predicted_proposal_cache')
 def get_predicted_proposal(
     arxiv_id: str, profiles: List[Profile], config: Config, mode: str
 ) -> str:
@@ -62,12 +80,10 @@ def get_predicted_proposal(
 def inference(
     paper_id: str, paper_data: Dict[str, Any], mode: str, config: Config
 ) -> Tuple[Dict[str, str], Dict[str, float]]:
-    """Generate and evaluate proposals for a paper."""
     arxiv_id = paper_data.get('arxiv_id', '')
     authors = [author['name'] for author in paper_data.get('authors', [])]
     title = paper_data.get('title', '')
 
-    # Get author profiles and generate proposals
     author_profiles = get_author_profiles(authors, title, config)
     ref_proposal = get_reference_proposal(arxiv_id, config)
     gen_proposal = get_predicted_proposal(arxiv_id, author_profiles, config, mode)
@@ -75,7 +91,6 @@ def inference(
     if not ref_proposal or not gen_proposal:
         raise ValueError('Failed to generate proposals')
 
-    # Compute metrics
     metrics = compute_metrics(ref_proposal, gen_proposal)
     results = {
         'paper_id': paper_id,
@@ -86,7 +101,6 @@ def inference(
 
 
 def load_papers(input_path: str, output_path: str) -> Any:
-    """Load papers from the dataset, excluding already processed papers."""
     dataset = load_benchmark(input_path)
 
     if os.path.exists(output_path):
@@ -100,14 +114,12 @@ def load_papers(input_path: str, output_path: str) -> Any:
 def save_results(
     results: Dict[str, Any], metrics: Dict[str, float], output_path: str
 ) -> None:
-    """Save results and metrics to the output file."""
     with open(output_path, 'a') as f:
         json.dump({**results, **metrics}, f)
         f.write('\n')
 
 
 def main() -> None:
-    """Main entry point for the research proposal generator."""
     parser = argparse.ArgumentParser(description='Research Proposal Generator')
     parser.add_argument(
         '--input_path', type=str, required=True, help='Input JSON file path'
@@ -124,25 +136,20 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    # Initialize configuration and load papers
     config = Config('../configs')
     dataset = load_papers(args.input_path, args.output_path)
     logger.info(f'Processing {len(dataset)} papers')
 
-    # Process papers
     metrics_summary: Dict[str, List[float]] = {
         metric: [] for metric in ['bleu', 'rouge_l', 'gpt_metric_score', 'bert_score']
     }
 
     for paper_id, paper_data in tqdm(dataset.items(), desc='Processing papers'):
-        try:
-            results, metrics = inference(paper_id, paper_data, args.mode, config)
-            save_results(results, metrics, args.output_path)
+        results, metrics = inference(paper_id, paper_data, args.mode, config)
+        save_results(results, metrics, args.output_path)
 
-            for metric, scores in metrics_summary.items():
-                scores.append(metrics.get(metric, 0))
-        except Exception as e:
-            logger.warning(f'Failed to process paper {paper_id}: {e}')
+        for metric, scores in metrics_summary.items():
+            scores.append(metrics.get(metric, 0))
 
     # Report average metrics
     for metric, scores in metrics_summary.items():
