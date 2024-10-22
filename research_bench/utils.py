@@ -1,12 +1,18 @@
-# common.py
-
 import json
 import os
 from functools import wraps
 from pathlib import Path
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict, List, Optional
 
-SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
+from research_town.configs import Config
+from research_town.data import Profile
+from research_town.dbs import ProfileDB
+from research_town.utils.model_prompting import model_prompting
+from research_town.utils.paper_collector import (
+    get_paper_by_arxiv_id,
+    get_paper_introduction,
+    get_references,
+)
 
 
 def save_benchmark(benchmark: Dict[str, Any], output_path: str) -> None:
@@ -46,3 +52,65 @@ def with_cache(
         return wrapper
 
     return decorator
+
+
+@with_cache(cache_dir='paper_data')
+def get_paper_data(arxiv_id: str) -> Dict[str, Any]:
+    paper = get_paper_by_arxiv_id(arxiv_id)
+    references = get_references(arxiv_id)
+    abstract = paper.summary.replace('\n', ' ')
+    url = paper.entry_id
+    introduction = get_paper_introduction(url).replace('\n', ' ')
+    return {
+        'title': paper.title,
+        'url': url,
+        'arxiv_id': arxiv_id,
+        'authors': [author.name for author in paper.authors],
+        'abstract': abstract,
+        'introduction': introduction,
+        'references': references,
+    }
+
+
+@with_cache(cache_dir='reference_proposal_data')
+def get_proposal_from_paper(arxiv_id: str, intro: str, config: Config) -> str:
+    prompt = [
+        {
+            'role': 'user',
+            'content': (
+                'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                'Here are the five core questions:\n\n'
+                '[Question 1] - What is the problem?\n\n'
+                'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                '[Question 2] - Why is it interesting and important?\n\n'
+                'Explain the broader implications of solving this problem for the research community.\n'
+                'Discuss how such paper will affect the future research.\n'
+                'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                '[Question 3] - Why is it hard?\n\n'
+                'Discuss the challenges and complexities involved in solving this problem.\n'
+                'Explain why naive or straightforward approaches may fail.\n'
+                'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                "[Question 4] - Why hasn't it been solved before?\n\n"
+                'Identify gaps or limitations in previous research or existing solutions.\n'
+                'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                '[Question 5] - What are the key components of my approach and results?\n\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                f'Introduction:\n{intro}\n\n'
+                'Please provide the five core questions contents based on the above introduction.'
+            ),
+        }
+    ]
+    response = model_prompting(config.param.base_llm, prompt)[0]
+    return response
+
+
+@with_cache(cache_dir='author_data')
+def get_author_data(
+    arxiv_id: str, authors: List[str], title: str, config: Config
+) -> List[Profile]:
+    profile_db = ProfileDB()
+    profile_db.pull_profiles(names=authors, config=config, exclude_paper_titles=[title])
+    profile_db.save_to_json(save_path=f'./benchmark/{arxiv_id}')
+    return [profile_db.get(name=author)[0] for author in authors]

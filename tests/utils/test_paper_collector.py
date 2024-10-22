@@ -1,7 +1,6 @@
 import datetime
 from unittest.mock import MagicMock, patch
 
-from research_town.data import Profile
 from research_town.utils.paper_collector import (
     get_paper_by_arxiv_id,
     get_paper_by_keyword,
@@ -10,7 +9,6 @@ from research_town.utils.paper_collector import (
     get_recent_papers,
     get_references,
     get_related_papers,
-    process_paper,
 )
 
 
@@ -179,33 +177,3 @@ def test_get_paper_by_keyword(mock_search: MagicMock) -> None:
     assert papers[0].title == 'Keyword Paper 1'
     assert papers[1].title == 'Keyword Paper 2'
     mock_search.assert_called_once()
-
-
-@patch('research_town.utils.paper_collector.get_references')
-def test_process_paper(mock_get_references: MagicMock) -> None:
-    # Mock references
-    mock_get_references.return_value = [
-        {'arxivId': '2345.6789', 'title': 'Cited Paper 1'}
-    ]
-
-    # Mock arxiv paper
-    mock_paper = MagicMock()
-    mock_paper.title = 'Test Paper'
-    mock_paper.get_short_id.return_value = '1234.5678'
-    mock_paper.authors = [Profile(name='Author 1', bio='bio')]
-    mock_paper.summary = 'This is a test summary.'
-    mock_paper.published = MagicMock()
-    mock_paper.updated = MagicMock()
-    mock_paper.published.isoformat.return_value = '2023-07-01T00:00:00'
-    mock_paper.updated.isoformat.return_value = '2023-07-02T00:00:00'
-
-    # Call the function
-    result = process_paper(mock_paper)
-
-    # Assertions
-    assert result['title'] == 'Test Paper'
-    assert result['arxiv_id'] == '1234.5678'
-    assert result['authors'] == ['Author 1']
-    assert result['abstract'] == 'This is a test summary.'
-    assert result['references'] == [{'arxivId': '2345.6789', 'title': 'Cited Paper 1'}]
-    mock_get_references.assert_called_once_with('1234.5678')

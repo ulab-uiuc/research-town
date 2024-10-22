@@ -10,86 +10,25 @@ from research_bench.proposal_writing import (
     write_predicted_proposal,
     write_reference_proposal,
 )
-from research_bench.utils import load_benchmark, with_cache
+from research_bench.utils import load_benchmark
 from research_town.configs import Config
-from research_town.data import Profile
-from research_town.dbs import ProfileDB
 from research_town.utils.logger import logger
-from research_town.utils.paper_collector import (
-    get_paper_by_arxiv_id,
-    get_paper_introduction,
-    get_references,
-)
-
-
-@with_cache('references_cache')
-def get_reference_introductions(arxiv_id: str) -> List[str]:
-    references = get_references(arxiv_id)
-    if not references:
-        raise ValueError(f'No references found for paper {arxiv_id}')
-
-    intros = []
-    for ref in references:
-        arxiv_id = ref.get('arxivId', None)
-        if arxiv_id:
-            ref_paper = get_paper_by_arxiv_id(arxiv_id)
-            if ref_paper:
-                intro = get_paper_introduction(arxiv_id)
-                if intro:
-                    intros.append(intro)
-    return intros
-
-
-@with_cache('profile_cache')
-def get_author_profiles(
-    arxiv_id: str, authors: List[str], title: str, config: Config
-) -> List[Profile]:
-    """Retrieve author biographies from the ProfileDB."""
-    profile_db = ProfileDB()
-    profile_db.pull_profiles(names=authors, config=config, exclude_paper_titles=[title])
-    return [profile_db.get(name=author)[0] for author in authors]
-
-
-@with_cache('reference_proposal_cache')
-def get_reference_proposal(arxiv_id: str, config: Config) -> str:
-    """Generate a reference proposal based on paper introduction."""
-    try:
-        paper = get_paper_by_arxiv_id(arxiv_id)
-        if not paper:
-            return ''
-        introduction = get_paper_introduction(paper)
-        return write_reference_proposal(introduction, config) if introduction else ''
-    except Exception as e:
-        logger.error(f'Failed to get reference proposal for {arxiv_id}: {e}')
-        return ''
-
-
-@with_cache('predicted_proposal_cache')
-def get_predicted_proposal(
-    arxiv_id: str, profiles: List[Profile], config: Config, mode: str
-) -> str:
-    """Generate a predicted proposal based on author profiles and references."""
-    try:
-        ref_intros = get_reference_introductions(arxiv_id)
-        return write_predicted_proposal(mode, profiles, ref_intros, config)
-    except Exception as e:
-        logger.error(f'Error generating proposal for {arxiv_id}: {e}')
-        return ''
 
 
 def inference(
     paper_id: str, paper_data: Dict[str, Any], mode: str, config: Config
 ) -> Tuple[Dict[str, str], Dict[str, float]]:
     arxiv_id = paper_data.get('arxiv_id', '')
-    authors = [author['name'] for author in paper_data.get('authors', [])]
+    authors = [author for author in paper_data.get('authors', [])]
     title = paper_data.get('title', '')
+    paper_intro = paper_data.get('introduction', '')
+    ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
     author_profiles = get_author_profiles(arxiv_id, authors, title, config)
-    ref_proposal = get_reference_proposal(arxiv_id, config)
-    gen_proposal = get_predicted_proposal(arxiv_id, author_profiles, config, mode)
-
-    if not ref_proposal or not gen_proposal:
-        raise ValueError('Failed to generate proposals')
+    ref_proposal = write_reference_proposal(paper_intro, config)
+    gen_proposal = write_predicted_proposal(
+        mode, author_profiles, ref_abstracts, config
+    )
 
     metrics = compute_metrics(ref_proposal, gen_proposal)
     results = {
@@ -131,7 +70,7 @@ def main() -> None:
         '--mode',
         type=str,
         required=True,
-        choices=['author-only', 'citation-only', 'author-citation', 'textgnn'],
+        choices=['author_only', 'citation_only', 'author_citation', 'textgnn'],
         help='Processing mode',
     )
     args = parser.parse_args()

@@ -412,18 +412,29 @@ def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
 
 def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
     SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
-
     url = f'{SEMANTIC_SCHOLAR_API_URL}ARXIV:{arxiv_id}/references'
-    params = {'limit': 100}
+    params = {'limit': 100, 'offset': 0, 'fields': 'title,abstract'}
     headers = {'User-Agent': 'PaperProcessor/1.0'}
 
     for attempt in range(max_retries):
         response = requests.get(url, params=params, headers=headers)
         if response.status_code == 200:
             data = response.json()
-            return [
-                ref['citedPaper'] for ref in data.get('data', []) if 'citedPaper' in ref
-            ]
+            references = []
+            for ref in data.get('data', []):
+                cited_paper = ref.get('citedPaper', {})
+                if cited_paper:
+                    external_ids = (
+                        cited_paper.get('externalIds', {})
+                        if cited_paper.get('externalIds')
+                        else {}
+                    )
+                    ref_info = {
+                        'title': cited_paper.get('title'),
+                        'abstract': cited_paper.get('abstract'),
+                    }
+                    references.append(ref_info)
+            return references
         else:
             wait_time = 2**attempt
             print(
@@ -446,24 +457,10 @@ def get_paper_by_keyword(
 
     papers = []
     for paper in search.results():
-        short_id = paper.get_short_id()
+        short_id = paper.get_short_id().split('v')[0]
         if short_id not in existing_arxiv_ids:
             papers.append(paper)
             existing_arxiv_ids.add(short_id)
         if len(papers) >= max_papers:
             break
     return papers
-
-
-def process_paper(paper: arxiv.Result) -> Dict[str, Any]:
-    arxiv_id = paper.get_short_id()
-    references = get_references(arxiv_id)
-    return {
-        'title': paper.title,
-        'arxiv_id': arxiv_id,
-        'authors': [author.name for author in paper.authors],
-        'abstract': paper.summary,
-        'published': paper.published.isoformat(),
-        'updated': paper.updated.isoformat(),
-        'references': references,
-    }

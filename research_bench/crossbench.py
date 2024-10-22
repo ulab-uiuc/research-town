@@ -3,9 +3,14 @@ import re
 from typing import Any, Dict, List, Set
 
 from tqdm import tqdm
-from utils import save_benchmark
+from utils import (
+    get_author_data,
+    get_paper_data,
+    get_proposal_from_paper,
+    save_benchmark,
+)
 
-from research_town.utils.paper_collector import get_paper_by_arxiv_id, process_paper
+from research_town.configs import Config
 
 
 def get_arxiv_ids(input: str) -> List[str]:
@@ -26,19 +31,25 @@ def process_arxiv_ids(
 ) -> Dict[str, Any]:
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
+    config = Config('../configs')
 
     for arxiv_id in tqdm(arxiv_ids, desc='Processing arXiv IDs'):
         if arxiv_id in existing_arxiv_ids:
             continue
 
-        paper = get_paper_by_arxiv_id(arxiv_id)
-        if paper:
-            paper_data = process_paper(paper)
-            benchmark[paper_data['arxiv_id']] = paper_data
-            existing_arxiv_ids.add(arxiv_id)
-            save_benchmark(benchmark, output)
-        else:
-            print(f'Paper with arXiv ID {arxiv_id} not found.')
+        paper_data = get_paper_data(arxiv_id)
+        author_data = get_author_data(arxiv_id)
+        reference_proposal = get_proposal_from_paper(
+            arxiv_id, paper_data['introduction'], config
+        )
+
+        benchmark[paper_data['arxiv_id']] = {
+            'paper_data': paper_data,
+            'author_data': author_data,
+            'reference_proposal': reference_proposal,
+        }
+        existing_arxiv_ids.add(arxiv_id)
+        save_benchmark(benchmark, output)
 
     return benchmark
 

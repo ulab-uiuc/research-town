@@ -91,7 +91,7 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
 
 
 def write_proposal_with_only_citations(intros: List[str], config: Config) -> str:
-    intro_strs = '\n'.join(intros)
+    intro_strs = '\n'.join([intro for intro in intros if intro is not None])
 
     prompt = [
         {
@@ -129,7 +129,7 @@ def write_proposal_with_profiles_and_citations(
     profiles: List[Profile], intros: List[str], config: Config
 ) -> str:
     bio_strs = '\n'.join([profile.bio for profile in profiles])
-    intro_strs = '\n'.join(intros)
+    intro_strs = '\n'.join([intro for intro in intros if intro is not None])
 
     prompt = [
         {
@@ -170,11 +170,11 @@ def write_predicted_proposal(
     intros: List[str],
     config: Config,
 ) -> str:
-    if mode == 'author-only':
+    if mode == 'author_only':
         return write_proposal_with_only_profiles(profiles=profiles, config=config)
-    elif mode == 'citation-only':
+    elif mode == 'citation_only':
         return write_proposal_with_only_citations(intros=intros, config=config)
-    elif mode == 'author-citation':
+    elif mode == 'author_citation':
         return write_proposal_with_profiles_and_citations(
             profiles=profiles, intros=intros, config=config
         )
@@ -184,36 +184,3 @@ def write_predicted_proposal(
         )
     else:
         raise ValueError(f'Invalid proposal writing mode: {mode}')
-
-
-def write_reference_proposal(intro: str, config: Config) -> str:
-    prompt = [
-        {
-            'role': 'user',
-            'content': (
-                'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
-                'Here are the five core questions:\n\n'
-                '[Question 1] - What is the problem?\n\n'
-                'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
-                '[Question 2] - Why is it interesting and important?\n\n'
-                'Explain the broader implications of solving this problem for the research community.\n'
-                'Discuss how such paper will affect the future research.\n'
-                'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
-                '[Question 3] - Why is it hard?\n\n'
-                'Discuss the challenges and complexities involved in solving this problem.\n'
-                'Explain why naive or straightforward approaches may fail.\n'
-                'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
-                "[Question 4] - Why hasn't it been solved before?\n\n"
-                'Identify gaps or limitations in previous research or existing solutions.\n'
-                'Discuss any barriers that have prevented this problem from being solved until now.\n'
-                'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
-                '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
-                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                f'Introduction:\n{intro}\n\n'
-                'Please provide the five core questions contents based on the above introduction.'
-            ),
-        }
-    ]
-    response = model_prompting(config.param.base_llm, prompt)[0]
-    return response
