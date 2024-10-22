@@ -9,6 +9,7 @@ from utils import (
     save_benchmark,
 )
 
+from research_town.configs import Config
 from research_town.utils.paper_collector import get_paper_by_keyword
 
 
@@ -20,6 +21,7 @@ def process_keywords(
 ) -> Dict[str, Any]:
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
+    config = Config('../../configs')
 
     for keyword in keywords:
         print(f"Fetching papers for keyword: '{keyword}'")
@@ -31,9 +33,11 @@ def process_keywords(
                 continue
 
             paper_data = get_paper_data(arxiv_id)
-            author_data = get_author_data(arxiv_id)
+            authors = paper_data['authors']
+            title = paper_data['title']
+            author_data = get_author_data(arxiv_id, authors, title, config)
             reference_proposal = get_proposal_from_paper(
-                arxiv_id, paper_data['introduction'], model
+                arxiv_id, paper_data['introduction'], config
             )
 
             benchmark[paper_data['arxiv_id']] = {

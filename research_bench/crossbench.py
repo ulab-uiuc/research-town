@@ -10,6 +10,8 @@ from utils import (
     save_benchmark,
 )
 
+from research_town.configs import Config
+
 
 def get_arxiv_ids(input: str) -> List[str]:
     with open(input, 'r', encoding='utf-8') as f:
@@ -30,15 +32,18 @@ def process_arxiv_ids(
 ) -> Dict[str, Any]:
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
+    config = Config('../../configs')
 
     for arxiv_id in tqdm(arxiv_ids, desc='Processing arXiv IDs'):
         if arxiv_id in existing_arxiv_ids:
             continue
 
         paper_data = get_paper_data(arxiv_id)
-        author_data = get_author_data(arxiv_id)
+        authors = paper_data['authors']
+        title = paper_data['title']
+        author_data = get_author_data(arxiv_id, authors, title, config)
         reference_proposal = get_proposal_from_paper(
-            arxiv_id, paper_data['introduction'], model
+            arxiv_id, paper_data['introduction'], config
         )
 
         benchmark[paper_data['arxiv_id']] = {

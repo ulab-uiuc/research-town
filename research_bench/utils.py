@@ -36,7 +36,7 @@ def with_cache(
             if not cache_dir:
                 return func(arxiv_id, *args, **kwargs)
 
-            cache_path = Path(cache_dir) / f'{arxiv_id}_{func.__name__}.json'
+            cache_path = Path(cache_dir) / f'{arxiv_id}.json'
             cache_path.parent.mkdir(parents=True, exist_ok=True)
 
             if cache_path.exists():
@@ -87,9 +87,7 @@ def get_arxiv_ids_from_keyword(
 
 
 @with_cache(cache_dir='reference_proposal_data')
-def get_proposal_from_paper(
-    arxiv_id: str, intro: str, model: str = 'gpt-4o-mini'
-) -> str:
+def get_proposal_from_paper(arxiv_id: str, intro: str, config: Config) -> str:
     prompt = [
         {
             'role': 'user',
@@ -118,7 +116,7 @@ def get_proposal_from_paper(
             ),
         }
     ]
-    proposal = model_prompting(model, prompt)[0]
+    proposal = model_prompting(config.param.base_llm, prompt)[0]
     return proposal
 
 
