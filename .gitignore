@@ -179,3 +179,4 @@ examples/research_town_demo_log/*
 research_bench/data/arxiv_ai_papers/output_with_downloaded_references.json
 research_bench/data/arxiv_ai_papers/output_with_references.json
 research_bench/data/arxiv_ai_papers/paper_info.json
+research_bench/profile_dbs/*
