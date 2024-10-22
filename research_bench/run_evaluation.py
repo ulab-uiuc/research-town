@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_proposal_5q(
-    authors: List[str], intros: List[str], keyword: str, id: int
+    authors: List[str], intros: List[str], keyword: str, id: int, exclude_papers:List[str] = ['']
 ) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on the provided authors and existing proposals
@@ -54,7 +54,7 @@ def get_proposal_5q(
         profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
     else:
         profile_db = ProfileDB()
-        profile_db.pull_profiles(names=authors, config=config)
+        profile_db.pull_profiles(names=authors, config=config, exclude_papers=exclude_papers)
         profile_db.save_to_json(f'./profile_dbs/profile_{id}')
 
     # Initialize other databases using default instances
@@ -116,6 +116,7 @@ def process_paper(
     paper_data: Dict[str, Any],
     id: int,
     intro_log_jsonl: Optional[str] = None,
+    exclude_papers: List[str] = ['']
 ) -> Optional[Dict[str, Any]]:
     """
     Processes a single paper to generate evaluations.
@@ -202,11 +203,12 @@ def process_paper(
 
     # Step 4: Generate proposal 5Q
     if args.test_single_agent:
-        proposal_5q = write_proposal_single_agent(
-            author=authors[0], intros=intros, id=id
-        )
+        # proposal_5q = write_proposal_single_agent(
+        #     author=authors[0], intros=intros, id=id
+        # )
+        proposal_5q = write_proposal_researchtown([authors[0]], intros, keyword, id)
     else:
-        proposal_5q = write_proposal_researchtown(authors, intros, keyword, id)
+        proposal_5q = write_proposal_researchtown(authors, intros, keyword, id, exclude_papers=exclude_papers)
     if not proposal_5q:
         logger.warning(f'proposal_5q generation failed for paper: {paper_key}')
         return None
@@ -271,7 +273,7 @@ def main(
         tqdm(papers, desc='Processing papers'), start=1 + num_lines
     ):
         paper_data = data[paper_key]
-        evaluation = process_paper(args, paper_key, paper_data, id, intro_log_jsonl)
+        evaluation = process_paper(args, paper_key, paper_data, id, intro_log_jsonl, exclude_papers=papers)
         if evaluation:
             # Write the evaluation result as a JSON line
             with open(output_jsonl, 'a', encoding='utf-8') as outfile:

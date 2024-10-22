@@ -32,10 +32,10 @@ class ProfileDB(BaseDB[Profile]):
             )
             self.retriever_model = BertModel.from_pretrained('facebook/contriever')
 
-    def pull_profiles(self, names: List[str], config: Config) -> None:
+    def pull_profiles(self, names: List[str], config: Config, exclude_papers: List[str] = ['']) -> None:
         for name in names:
             publications, collaborators = collect_publications_and_coauthors(
-                name, paper_max_num=20
+                name, paper_max_num=20, exclude_papers=exclude_papers
             )
             publication_info = '; '.join([f'{abstract}' for abstract in publications])
 

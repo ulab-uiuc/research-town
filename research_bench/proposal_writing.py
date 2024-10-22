@@ -9,7 +9,7 @@ from research_town.utils.model_prompting import model_prompting
 
 
 def write_proposal_researchtown(
-    authors: List[str], intros: List[str], keyword: str, id: int
+    authors: List[str], intros: List[str], keyword: str, id: int, exclude_papers: List[str] = ['']
 ) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on the provided authors and existing proposals
@@ -28,7 +28,7 @@ def write_proposal_researchtown(
         profile_db = ProfileDB(load_file_path=f'./profile_dbs/profile_{id}')
     else:
         profile_db = ProfileDB()
-        profile_db.pull_profiles(names=authors, config=config)
+        profile_db.pull_profiles(names=authors, config=config, exclude_papers=exclude_papers)
         profile_db.save_to_json(f'./profile_dbs/profile_{id}')
 
     # Initialize other databases using default instances

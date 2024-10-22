@@ -36,7 +36,7 @@ while [ "$current_lines" -lt 100 ]; do
   echo "Line count is less than 100. Running the evaluation script..."
 
   # Run the evaluation script
-  poetry run python run_evaluation.py --input "$INPUT" --output "$OUTPUT" --intro_log "$INTRO_LOG" $TEST_SINGLE_AGENT
+  poetry run python run_evaluation.py --input "$INPUT" --output "$OUTPUT" --intro_log "$INTRO_LOG" $TEST_SINGLE_AGENT &> output.log
 
   # Update the current line count
   current_lines=$(get_line_count)
