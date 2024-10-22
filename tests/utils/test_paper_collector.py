@@ -192,7 +192,7 @@ def test_process_paper(mock_get_references: MagicMock) -> None:
     mock_paper = MagicMock()
     mock_paper.title = 'Test Paper'
     mock_paper.get_short_id.return_value = '1234.5678'
-    mock_paper.authors = [Profile(name='Author 1')]
+    mock_paper.authors = [Profile(name='Author 1', bio='bio')]
     mock_paper.summary = 'This is a test summary.'
     mock_paper.published = MagicMock()
     mock_paper.updated = MagicMock()
