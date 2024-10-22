@@ -33,7 +33,7 @@ def write_proposal_researchtown(
     else:
         profile_db = ProfileDB()
         profile_db.pull_profiles(
-            names=authors, config=config, exclude_papers=exclude_papers
+            names=authors, config=config, exclude_paper_titles=exclude_papers
         )
         profile_db.save_to_json(f'./profile_dbs/profile_{id}')
 
@@ -103,7 +103,7 @@ def write_proposal_single_agent(
     else:
         profile_db = ProfileDB()
         profile_db.pull_profiles(
-            names=[author], config=config, exclude_papers=exclude_papers
+            names=[author], config=config, exclude_paper_titles=exclude_papers
         )
         profile_db.save_to_json(f'./profile_dbs/profile_{id}')
 
@@ -223,7 +223,7 @@ def write_proposal_author_only(
     else:
         profile_db = ProfileDB()
         profile_db.pull_profiles(
-            names=authors, config=config, exclude_papers=exclude_papers
+            names=authors, config=config, exclude_paper_titles=exclude_papers
         )
         profile_db.save_to_json(profile_db_path)
     profiles = []
