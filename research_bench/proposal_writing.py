@@ -8,7 +8,7 @@ from research_town.envs import ProposalWritingwithoutRAGEnv as ProposalWritingEn
 from research_town.utils.model_prompting import model_prompting
 
 
-def extract_reference_proposal(intro: str, model: str = 'gpt-4o-mini') -> str:
+def write_proposal_from_paper(intro: str, model: str = 'gpt-4o-mini') -> str:
     prompt = [
         {
             'role': 'user',
@@ -102,7 +102,7 @@ def write_proposal_researchtown(
         raise ValueError('Failed to generate proposal')
 
 
-def write_proposal_author_only(
+def write_proposal_with_only_authors(
     authors: List[str], id: int, exclude_paper_titles: List[str] = ['']
 ) -> str:
     config = Config('../configs')
@@ -155,7 +155,7 @@ def write_proposal_author_only(
     return response
 
 
-def write_proposal_citation_only(
+def write_proposal_with_only_citations(
     intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
 ) -> str:
     config = Config('../configs')
@@ -191,7 +191,7 @@ def write_proposal_citation_only(
     return response
 
 
-def write_proposal_author_citation(
+def write_proposal_with_authors_and_citations(
     authors: List[str],
     intros: List[str],
     id: int,
@@ -257,15 +257,15 @@ def write_proposal(
     exclude_paper_titles: List[str],
 ) -> str:
     if mode == 'author-only':
-        return write_proposal_author_only(
+        return write_proposal_with_only_authors(
             authors=authors, id=id, exclude_paper_titles=exclude_paper_titles
         )
     elif mode == 'citation-only':
-        return write_proposal_citation_only(
+        return write_proposal_with_only_citations(
             intros, id, exclude_paper_titles=exclude_paper_titles
         )
     elif mode == 'author-citation':
-        return write_proposal_author_citation(
+        return write_proposal_with_authors_and_citations(
             authors, intros, id, exclude_paper_titles=exclude_paper_titles
         )
     elif mode == 'textgnn':
