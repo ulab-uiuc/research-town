@@ -1,11 +1,11 @@
 from typing import Generator, Optional, Tuple
 
 from research_town.agents import Agent
-from research_town.configs import Config
 from research_town.data import Progress
-from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.engines import Engine
 from research_town.utils.paper_collector import get_paper_introduction
+
+from .extensions import config, log_db, paper_db, profile_db, progress_db
 
 
 def run_engine(
@@ -16,14 +16,6 @@ def run_engine(
         if not intro:
             yield None, None
             return
-
-        config_file_path = '../configs'
-
-        config = Config(config_file_path)
-        profile_db = ProfileDB(config=config.database)
-        paper_db = PaperDB(config=config.database)
-        log_db = LogDB(config=config.database)
-        progress_db = ProgressDB(config=config.database)
 
         engine = Engine(
             project_name='research_town_demo',

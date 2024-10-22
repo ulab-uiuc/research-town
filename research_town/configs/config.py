@@ -93,7 +93,7 @@ class AgentPromptTemplate(BaseModel):
     @root_validator(pre=True)
     def validate_placeholders(cls: Any, values: Dict[str, Any]) -> Dict[str, Any]:
         required_placeholders = {
-            'write_bio': ['{publication_info}'],
+            'write_bio': ['{pub_info}'],
             'review_literature': ['{bio}', '{papers}', '{contexts}'],
             'brainstorm_idea': ['{bio}', '{insights}', '{papers}'],
             'summarize_idea': ['{ideas}', '{contexts}'],

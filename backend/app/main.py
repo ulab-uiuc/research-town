@@ -7,7 +7,6 @@ from typing import AsyncGenerator, Generator, Optional, Tuple
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
-from generator_func import run_engine
 
 from research_town.agents import Agent
 from research_town.data import (
@@ -19,6 +18,8 @@ from research_town.data import (
     Rebuttal,
     Review,
 )
+
+from .generator_func import run_engine
 
 app = FastAPI()
 
