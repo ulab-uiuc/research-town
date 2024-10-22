@@ -2,13 +2,13 @@ import datetime
 from unittest.mock import MagicMock, patch
 
 from research_town.utils.paper_collector import (
+    get_paper_by_arxiv_id,
+    get_paper_by_keyword,
     get_paper_content_from_html,
     get_paper_introduction,
     get_recent_papers,
-    get_related_papers,
-    get_paper_by_arxiv_id,
     get_references,
-    get_paper_by_keyword,
+    get_related_papers,
     process_paper,
 )
 
@@ -111,6 +111,7 @@ def test_get_paper_introduction() -> None:
     assert 'Introduction' in intro2
     assert 'Introduction' in intro3
 
+
 @patch('arxiv.Search')
 def test_get_paper_by_arxiv_id(mock_search: MagicMock) -> None:
     # Mock search results
@@ -131,6 +132,7 @@ def test_get_paper_by_arxiv_id(mock_search: MagicMock) -> None:
     assert result.title == 'Test Paper'
     mock_search.assert_called_once_with(id_list=['1234.5678'])
 
+
 @patch('requests.get')
 def test_get_references(mock_get: MagicMock) -> None:
     mock_response = MagicMock()
@@ -138,7 +140,7 @@ def test_get_references(mock_get: MagicMock) -> None:
     mock_response.json.return_value = {
         'data': [
             {'citedPaper': {'arxivId': '1234.5678', 'title': 'Cited Paper 1'}},
-            {'citedPaper': {'arxivId': '2345.6789', 'title': 'Cited Paper 2'}}
+            {'citedPaper': {'arxivId': '2345.6789', 'title': 'Cited Paper 2'}},
         ]
     }
     mock_get.return_value = mock_response
@@ -151,6 +153,7 @@ def test_get_references(mock_get: MagicMock) -> None:
     assert references[0]['arxivId'] == '1234.5678'
     assert references[1]['arxivId'] == '2345.6789'
     mock_get.assert_called_once()
+
 
 @patch('arxiv.Search')
 def test_get_paper_by_keyword(mock_search: MagicMock) -> None:
@@ -176,10 +179,13 @@ def test_get_paper_by_keyword(mock_search: MagicMock) -> None:
     assert papers[1].title == 'Keyword Paper 2'
     mock_search.assert_called_once()
 
+
 @patch('research_town.utils.paper_collector.get_references')
 def test_process_paper(mock_get_references: MagicMock) -> None:
     # Mock references
-    mock_get_references.return_value = [{'arxivId': '2345.6789', 'title': 'Cited Paper 1'}]
+    mock_get_references.return_value = [
+        {'arxivId': '2345.6789', 'title': 'Cited Paper 1'}
+    ]
 
     # Mock arxiv paper
     mock_paper = MagicMock()
