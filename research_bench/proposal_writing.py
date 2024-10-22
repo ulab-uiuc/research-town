@@ -231,17 +231,6 @@ def write_proposal_author_only(
 def write_proposal_citation_only(
     intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
 ) -> str:
-    """
-    Generates a comprehensive research proposal based on multiple citation paper introductions.
-
-    Args:
-        intros (List[str]): List of citation paper introduction texts.
-        id (int): ID for the profile database.
-        exclude_paper_titles (List[str], optional): List of papers to exclude. Defaults to [''].
-
-    Returns:
-        Optional[str]: Generated proposal as a string if successful, else None.
-    """
     config = Config('../configs')
     try:
         prompt = [
@@ -289,18 +278,6 @@ def write_proposal_author_citation(
     id: int,
     exclude_paper_titles: List[str] = [''],
 ) -> str:
-    """
-    Generates a comprehensive research proposal based on multiple author profiles and citation paper introductions.
-
-    Args:
-        authors (List[str]): List of author names.
-        intros (List[str]): List of citation paper introduction texts.
-        id (int): ID for the profile database.
-        exclude_papers (List[str], optional): List of papers to exclude. Defaults to [''].
-
-    Returns:
-        Optional[str]: Generated proposal as a string if successful, else None.
-    """
     config = Config('../configs')
     profile_db_path = f'./profile_dbs/profile_{id}'
 
