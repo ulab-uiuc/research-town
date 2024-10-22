@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 def process_paper(
-    args: argparse.ArgumentParser,
+    args: argparse.Namespace,
     paper_key: str,
     paper_data: Dict[str, Any],
     id: int,
@@ -162,7 +162,7 @@ def process_paper(
 
 
 def main(
-    args: argparse.ArgumentParser,
+    args: argparse.Namespace,
     input_json: str,
     output_jsonl: str,
     intro_log_jsonl: str = '',
@@ -234,9 +234,7 @@ def main(
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Automated Evaluation of Tool-Augmented LLMs as Conversational AI Agents'
-    )
+    parser = argparse.ArgumentParser()
     parser.add_argument(
         '--input', type=str, required=True, help='Path to the input JSON file.'
     )
