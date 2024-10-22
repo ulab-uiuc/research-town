@@ -2,7 +2,7 @@
 
 # Define input and output file paths
 INPUT="./benchmark/mlbench.json"
-OUTPUT="./results/research_bench_result_4o_mini_single_agent.jsonl"
+OUTPUT="./results/research_bench_result_4o_mini_author_only.jsonl"
 INTRO_LOG="./benchmark/intro_logging.jsonl"
 TEST_MODE="author-only" #author-only, citation-only,author-citation, textgnn
 TOTAL_LINES=100
