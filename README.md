@@ -76,7 +76,7 @@ npm start
 ```bash
 poetry install -E backend
 cd backend
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 #### Install dev options

@@ -17,6 +17,8 @@ class Profile(Data):
     name: str
     bio: str
     collaborators: Optional[List[str]] = Field(default=[])
+    pub_titles: Optional[List[str]] = Field(default=[])
+    pub_abstracts: Optional[List[str]] = Field(default=[])
     domain: Optional[List[str]] = Field(default=[])
     institute: Optional[str] = Field(default=None)
     embed: Optional[Any] = Field(default=None)
@@ -47,7 +49,6 @@ class Paper(Data):
 class Log(Data):
     timestep: int = Field(default=0)
     profile_pk: str
-    prompt_pk: Optional[str] = Field(default=None)
 
 
 class LiteratureReviewLog(Log):

@@ -8,7 +8,7 @@ from tests.constants.config_constants import example_config
 
 def test_default_initialization() -> None:
     config = example_config
-    assert config.param.related_paper_num == 10
+    assert config.param.related_paper_num == 5
     assert config.param.base_llm == 'gpt-4o-mini'
     assert config.param.member_num == 3
     assert config.param.reviewer_num == 1

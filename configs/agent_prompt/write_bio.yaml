@@ -41,5 +41,5 @@ fewshot_examples:
   I am a researcher focused on advancing graph neural networks (GNNs) and machine learning. My key contributions include Position-aware GNNs (P-GNNs) for capturing node positions, Identity-aware GNNs (ID-GNNs) with greater expressive power, and the ROLAND framework for dynamic graph learning. I also study the relationship between neural network structures and their performance using relational graphs, and have explored a vast GNN design space to enhance predictive capabilities across diverse tasks.
 
 template: |
-  Here is the publication history of one researcher:  {publication_info}
+  Here is the publication history of one researcher:  {pub_info}
   Please begin writing the first-person persona.'

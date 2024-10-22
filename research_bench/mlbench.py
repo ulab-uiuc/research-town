@@ -2,7 +2,9 @@ import argparse
 from typing import Any, Dict, List, Set
 
 from tqdm import tqdm
-from utils import get_paper_by_keyword, process_paper, save_benchmark
+from utils import save_benchmark
+
+from research_town.utils.paper_collector import get_paper_by_keyword, process_paper
 
 
 def process_keywords(

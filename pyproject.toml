@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "research-town"
-version = "0.0.1b3"
+version = "0.0.1"
 description = "multi-agent environment for research community simulation"
 authors = ["Haofei Yu <haofeiy2@illinois.edu>"]
 license = "Apache 2.0 License"
@@ -12,7 +12,7 @@ pydantic = ">=2.5.0"
 pypdf2 = ">=3.0.1"
 litellm = ">1.40.0"
 beartype = "^0.19.0"
-numpy = "<2.0.0"
+numpy = "<3.0.0"
 transformers = "^4.45.1"
 termcolor = "^2.4.0"
 arxiv = "^2.1.0"
