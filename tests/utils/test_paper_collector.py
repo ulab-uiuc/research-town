@@ -205,7 +205,7 @@ def test_process_paper(mock_get_references: MagicMock) -> None:
     # Assertions
     assert result['title'] == 'Test Paper'
     assert result['arxiv_id'] == '1234.5678'
-    assert result['authors'][0].name == 'Author 1'
+    assert result['authors'] == ['Author 1']
     assert result['abstract'] == 'This is a test summary.'
     assert result['references'] == [{'arxivId': '2345.6789', 'title': 'Cited Paper 1'}]
     mock_get_references.assert_called_once_with('1234.5678')
