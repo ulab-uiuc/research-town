@@ -15,12 +15,13 @@
       "Shirley Wu",
       "Jiaju Liu"
     ],
+    "domain": [],
     "institute": null,
     "embed": null,
-    "is_leader_candidate": false,
+    "is_leader_candidate": true,
     "is_member_candidate": true,
-    "is_reviewer_candidate": false,
-    "is_chair_candidate": false
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
   },
   "4cb51964-11d9-47a5-97e2-75b86b3d09c4": {
     "pk": "4cb51964-11d9-47a5-97e2-75b86b3d09c4",
@@ -34,12 +35,13 @@
       "Tim Althoff",
       "Hongwei Wang"
     ],
+    "domain": [],
     "institute": null,
     "embed": null,
-    "is_leader_candidate": false,
+    "is_leader_candidate": true,
     "is_member_candidate": true,
-    "is_reviewer_candidate": false,
-    "is_chair_candidate": false
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
   },
   "00786bb0-b977-4b9c-81d3-aaf26d4cea13": {
     "pk": "00786bb0-b977-4b9c-81d3-aaf26d4cea13",
@@ -55,12 +57,13 @@
       "Hongzhou Lin",
       "Zi Wang"
     ],
+    "domain": [],
     "institute": null,
     "embed": null,
-    "is_leader_candidate": false,
+    "is_leader_candidate": true,
     "is_member_candidate": true,
-    "is_reviewer_candidate": false,
-    "is_chair_candidate": false
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
   },
   "67854caa-4e48-425b-9431-b01d3f810639": {
     "pk": "67854caa-4e48-425b-9431-b01d3f810639",
@@ -79,6 +82,7 @@
       "Gabor Lugosi",
       "Nikita Zhivotovskiy"
     ],
+    "domain": [],
     "institute": null,
     "embed": null,
     "is_leader_candidate": true,
@@ -103,12 +107,13 @@
       "Aosong Feng",
       "Dragomir Radev"
     ],
+    "domain": [],
     "institute": null,
     "embed": null,
     "is_leader_candidate": true,
-    "is_member_candidate": false,
-    "is_reviewer_candidate": false,
-    "is_chair_candidate": false
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
   },
   "e92c71d6-dd53-41a5-b64e-bd56984b9195": {
     "pk": "e92c71d6-dd53-41a5-b64e-bd56984b9195",
@@ -127,6 +132,7 @@
       "Amin Saberi",
       "Xin Luna Dong"
     ],
+    "domain": [],
     "institute": null,
     "embed": null,
     "is_leader_candidate": true,
@@ -151,11 +157,12 @@
       "Michele Berlingerio",
       "Tina Eliassi-Rad"
     ],
+    "domain": [],
     "institute": null,
     "embed": null,
-    "is_leader_candidate": false,
-    "is_member_candidate": false,
-    "is_reviewer_candidate": false,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
     "is_chair_candidate": true
   },
   "ce861789-5287-4931-a554-e8ca419faaed": {
@@ -170,11 +177,12 @@
       "Alex Yang",
       "Noveen Sachdeva"
     ],
+    "domain": [],
     "institute": null,
     "embed": null,
-    "is_leader_candidate": false,
-    "is_member_candidate": false,
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
     "is_reviewer_candidate": true,
-    "is_chair_candidate": false
+    "is_chair_candidate": true
   }
 }

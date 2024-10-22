@@ -5,8 +5,8 @@ from ..configs import Config
 from ..data import Idea, Insight, MetaReview, Paper, Profile, Proposal, Rebuttal, Review
 from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
-    discuss_idea_prompting,
     review_literature_prompting,
+    summarize_idea_prompting,
     write_metareview_prompting,
     write_proposal_prompting,
     write_rebuttal_prompting,
@@ -95,16 +95,15 @@ class Agent(object):
 
     @beartype
     @member_required
-    def discuss_idea(
+    def summarize_idea(
         self, ideas: List[Idea], contexts: List[str], config: Config
     ) -> Idea:
         serialized_ideas = self.serializer.serialize(ideas)
-        idea_summarized_list, prompt_messages = discuss_idea_prompting(
-            bio=self.profile.bio,
+        idea_summarized_list, prompt_messages = summarize_idea_prompting(
             contexts=contexts,
             ideas=serialized_ideas,
             model_name=self.model_name,
-            prompt_template=config.agent_prompt_template.discuss_idea,
+            prompt_template=config.agent_prompt_template.summarize_idea,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
             temperature=config.param.temperature,
@@ -133,8 +132,9 @@ class Agent(object):
         elif write_proposal_strategy == 'reflexion':
             prompt_template = config.agent_prompt_template.write_proposal_reflexion
         else:
-            print('write_proposal_strategy not supported, will use default')
-            prompt_template = config.agent_prompt_template.write_proposal
+            raise ValueError(
+                f'Unknown write proposal strategy: {write_proposal_strategy}'
+            )
 
         proposal_content, q5_result, prompt_messages = write_proposal_prompting(
             idea=serialized_idea,

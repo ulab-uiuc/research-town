@@ -49,7 +49,6 @@ class Paper(Data):
 class Log(Data):
     timestep: int = Field(default=0)
     profile_pk: str
-    prompt_pk: Optional[str] = Field(default=None)
 
 
 class LiteratureReviewLog(Log):
