@@ -32,6 +32,7 @@ class Paper(Data):
     authors: List[str] = Field(default=[])
     title: str
     abstract: str
+    arxiv_id: Optional[str] = Field(default=None)
     url: Optional[str] = Field(default=None)
     timestamp: Optional[int] = Field(default=None)
     sections: Optional[Dict[str, str]] = Field(default=None)

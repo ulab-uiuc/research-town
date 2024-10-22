@@ -434,23 +434,6 @@ def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
     return []
 
 
-def get_reference_introductions(arxiv_id: str) -> List[str]:
-    references = get_references(arxiv_id)
-    if not references:
-        raise ValueError(f'No references found for paper {arxiv_id}')
-
-    intros = []
-    for ref in references:
-        arxiv_id = ref.get('arxivId', None)
-        if arxiv_id:
-            ref_paper = get_paper_by_arxiv_id(arxiv_id)
-            if ref_paper:
-                intro = get_paper_introduction(arxiv_id)
-                if intro:
-                    intros.append(intro)
-    return intros
-
-
 def get_paper_by_keyword(
     keyword: str, existing_arxiv_ids: Set[str], max_papers: int = 10
 ) -> List[arxiv.Result]:
