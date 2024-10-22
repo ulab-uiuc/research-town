@@ -2,7 +2,7 @@
 
 import json
 import os
-from typing import Any, Dict, Optional, List, Union
+from typing import Any, Dict, List, Optional, Union
 
 SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
 
@@ -20,7 +20,9 @@ def load_benchmark(input_path: str) -> Any:
 
 
 def load_cache_item(
-    cache_path: Optional[str], paper_key: str, item_key: Union[str, List[Optional[str]], None]
+    cache_path: Optional[str],
+    paper_key: str,
+    item_key: Union[str, List[Optional[str]], None],
 ) -> Optional[Union[str, List[str]]]:
     if not cache_path:
         return None

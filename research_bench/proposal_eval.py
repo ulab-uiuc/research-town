@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Dict
 
 import nltk
 from bert_score import score
@@ -75,9 +75,11 @@ def compute_gpt_metric(reference_5q: str, generated_5q: str) -> float:
                 score = max(0.0, min(1.0, score))
                 return score
             except ValueError:
-                raise ValueError(f'Invalid response from model_prompting for GPT metric: {response}')
+                raise ValueError(
+                    f'Invalid response from model_prompting for GPT metric: {response}'
+                )
         else:
-            raise ValueError(f'Empty response from model_prompting for GPT metric')
+            raise ValueError('Empty response from model_prompting for GPT metric')
     except Exception as e:
         raise ValueError(f'Error computing GPT metric: {e}')
 

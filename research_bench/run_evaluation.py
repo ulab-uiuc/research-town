@@ -1,6 +1,6 @@
 import argparse
 import json
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
 from tqdm import tqdm
 
@@ -82,7 +82,6 @@ def fetch_reference_intros(
         return intros
     except Exception as e:
         raise ValueError(f'Error fetching reference intros for {paper_key}: {e}')
-    
 
 
 def process_paper(

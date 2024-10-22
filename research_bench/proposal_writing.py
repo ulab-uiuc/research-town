@@ -1,5 +1,5 @@
 import os
-from typing import List, Optional
+from typing import List
 
 from research_town.agents import AgentManager
 from research_town.configs import Config
@@ -119,7 +119,9 @@ def write_proposal_single_agent(
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
-            raise ValueError('Received empty response from model_prompting for write_proposal_single_agent.')
+            raise ValueError(
+                'Received empty response from model_prompting for write_proposal_single_agent.'
+            )
     except Exception as e:
         raise ValueError(f'Error generating current_5q: {e}')
 
@@ -158,7 +160,9 @@ def extract_reference_proposal(intro: str, model: str = 'gpt-4o-mini') -> str:
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
-            raise ValueError('Received empty response from model_prompting for extract_reference_proposal.')
+            raise ValueError(
+                'Received empty response from model_prompting for extract_reference_proposal.'
+            )
     except Exception as e:
         raise ValueError(f'Error generating current_5q: {e}')
 
@@ -217,7 +221,9 @@ def write_proposal_author_only(
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
-            raise ValueError('Received empty response from model_prompting for write_proposal_author_only.')
+            raise ValueError(
+                'Received empty response from model_prompting for write_proposal_author_only.'
+            )
     except Exception as e:
         raise ValueError(f'Error generating current_5q: {e}')
 
