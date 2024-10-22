@@ -84,7 +84,7 @@ def inference(
     authors = [author['name'] for author in paper_data.get('authors', [])]
     title = paper_data.get('title', '')
 
-    author_profiles = get_author_profiles(authors, title, config)
+    author_profiles = get_author_profiles(arxiv_id, authors, title, config)
     ref_proposal = get_reference_proposal(arxiv_id, config)
     gen_proposal = get_predicted_proposal(arxiv_id, author_profiles, config, mode)
 
