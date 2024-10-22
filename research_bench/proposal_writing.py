@@ -217,7 +217,7 @@ def write_proposal_author_only(
                 ),
             }
         ]
-        response = model_prompting(config.param.base_llm, prompt, mode='TEST')
+        response = model_prompting(config.param.base_llm, prompt)
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
@@ -261,7 +261,7 @@ def write_proposal_citation_only(
                 ),
             }
         ]
-        response = model_prompting(config.param.base_llm, prompt, mode='TEST')
+        response = model_prompting(config.param.base_llm, prompt)
         if response and len(response) > 0 and len(response[0]) > 0:
             return response[0]
         else:
