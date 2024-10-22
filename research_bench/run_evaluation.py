@@ -6,29 +6,25 @@ from typing import Any, Dict, List, Tuple
 from tqdm import tqdm
 
 from research_bench.proposal_eval import compute_metrics
-from research_bench.proposal_writing import (
-    write_predicted_proposal,
-    write_reference_proposal,
-)
+from research_bench.proposal_writing import write_proposal
 from research_bench.utils import load_benchmark
 from research_town.configs import Config
+from research_town.data import Profile
 from research_town.utils.logger import logger
 
 
 def inference(
-    paper_id: str, paper_data: Dict[str, Any], mode: str, config: Config
+    paper_id: str,
+    paper_data: Dict[str, Any],
+    author_data: Dict[str, Any],
+    ref_proposal: str,
+    mode: str,
+    config: Config,
 ) -> Tuple[Dict[str, str], Dict[str, float]]:
-    arxiv_id = paper_data.get('arxiv_id', '')
-    authors = [author for author in paper_data.get('authors', [])]
-    title = paper_data.get('title', '')
-    paper_intro = paper_data.get('introduction', '')
+    profiles = [Profile(**data) for data in author_data.values()]
     ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
-    author_profiles = get_author_profiles(arxiv_id, authors, title, config)
-    ref_proposal = write_reference_proposal(paper_intro, config)
-    gen_proposal = write_predicted_proposal(
-        mode, author_profiles, ref_abstracts, config
-    )
+    gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
 
     metrics = compute_metrics(ref_proposal, gen_proposal)
     results = {
@@ -83,8 +79,14 @@ def main() -> None:
         metric: [] for metric in ['bleu', 'rouge_l', 'gpt_metric_score', 'bert_score']
     }
 
-    for paper_id, paper_data in tqdm(dataset.items(), desc='Processing papers'):
-        results, metrics = inference(paper_id, paper_data, args.mode, config)
+    for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
+        paper_data = data['paper_data']
+        author_data = data['author_data']
+        reference_proposal = data['reference_proposal']
+
+        results, metrics = inference(
+            paper_id, paper_data, author_data, reference_proposal, args.mode, config
+        )
         save_results(results, metrics, args.output_path)
 
         for metric, scores in metrics_summary.items():

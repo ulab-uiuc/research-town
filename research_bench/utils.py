@@ -2,14 +2,14 @@ import json
 import os
 from functools import wraps
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, Set
 
 from research_town.configs import Config
-from research_town.data import Profile
 from research_town.dbs import ProfileDB
 from research_town.utils.model_prompting import model_prompting
 from research_town.utils.paper_collector import (
     get_paper_by_arxiv_id,
+    get_paper_by_keyword,
     get_paper_introduction,
     get_references,
 )
@@ -57,19 +57,33 @@ def with_cache(
 @with_cache(cache_dir='paper_data')
 def get_paper_data(arxiv_id: str) -> Dict[str, Any]:
     paper = get_paper_by_arxiv_id(arxiv_id)
-    references = get_references(arxiv_id)
-    abstract = paper.summary.replace('\n', ' ')
-    url = paper.entry_id
-    introduction = get_paper_introduction(url).replace('\n', ' ')
-    return {
-        'title': paper.title,
-        'url': url,
-        'arxiv_id': arxiv_id,
-        'authors': [author.name for author in paper.authors],
-        'abstract': abstract,
-        'introduction': introduction,
-        'references': references,
-    }
+    if paper:
+        references = get_references(arxiv_id)
+        abstract = paper.summary.replace('\n', ' ')
+        url = paper.entry_id
+        if url:
+            introduction = get_paper_introduction(url)
+            introduction = introduction.replace('\n', ' ') if introduction else None
+        else:
+            raise ValueError(f'Paper with arXiv ID {arxiv_id} has no URL.')
+        return {
+            'title': paper.title,
+            'url': url,
+            'arxiv_id': arxiv_id,
+            'authors': [author.name for author in paper.authors],
+            'abstract': abstract,
+            'introduction': introduction,
+            'references': references,
+        }
+    else:
+        raise ValueError(f'Paper with arXiv ID {arxiv_id} not found.')
+
+
+def get_arxiv_ids_from_keyword(
+    keyword: str, existing_arxiv_ids: Set[str], max_papers_per_keyword: int
+) -> List[str]:
+    papers = get_paper_by_keyword(keyword, existing_arxiv_ids, max_papers_per_keyword)
+    return [paper.get_short_id().split('v')[0] for paper in papers]
 
 
 @with_cache(cache_dir='reference_proposal_data')
@@ -102,15 +116,17 @@ def get_proposal_from_paper(arxiv_id: str, intro: str, config: Config) -> str:
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt)[0]
-    return response
+    proposal = model_prompting(config.param.base_llm, prompt)[0]
+    return proposal
 
 
 @with_cache(cache_dir='author_data')
 def get_author_data(
     arxiv_id: str, authors: List[str], title: str, config: Config
-) -> List[Profile]:
+) -> Dict[str, Any]:
     profile_db = ProfileDB()
     profile_db.pull_profiles(names=authors, config=config, exclude_paper_titles=[title])
-    profile_db.save_to_json(save_path=f'./benchmark/{arxiv_id}')
-    return [profile_db.get(name=author)[0] for author in authors]
+    author_data = {}
+    for pk, data in profile_db.data.items():
+        author_data[pk] = data.model_dump()
+    return author_data

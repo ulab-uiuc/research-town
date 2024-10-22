@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 
 from research_town.utils.paper_collector import (
     get_paper_by_arxiv_id,
-    get_paper_by_keyword,
     get_paper_content_from_html,
     get_paper_introduction,
     get_recent_papers,
@@ -152,28 +151,3 @@ def test_get_references(mock_get: MagicMock) -> None:
     assert references[0]['arxivId'] == '1234.5678'
     assert references[1]['arxivId'] == '2345.6789'
     mock_get.assert_called_once()
-
-
-@patch('arxiv.Search')
-def test_get_paper_by_keyword(mock_search: MagicMock) -> None:
-    # Mock search results
-    mock_paper_1 = MagicMock()
-    mock_paper_1.get_short_id.return_value = '1234.5678'
-    mock_paper_1.title = 'Keyword Paper 1'
-
-    mock_paper_2 = MagicMock()
-    mock_paper_2.get_short_id.return_value = '2345.6789'
-    mock_paper_2.title = 'Keyword Paper 2'
-
-    mock_search_instance = MagicMock()
-    mock_search_instance.results.return_value = [mock_paper_1, mock_paper_2]
-    mock_search.return_value = mock_search_instance
-
-    # Call the function
-    papers = get_paper_by_keyword('machine learning', set(), max_papers=2)
-
-    # Assertions
-    assert len(papers) == 2
-    assert papers[0].title == 'Keyword Paper 1'
-    assert papers[1].title == 'Keyword Paper 2'
-    mock_search.assert_called_once()

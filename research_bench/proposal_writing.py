@@ -164,7 +164,7 @@ def write_proposal_with_profiles_and_citations(
     return response
 
 
-def write_predicted_proposal(
+def write_proposal(
     mode: str,
     profiles: List[Profile],
     intros: List[str],

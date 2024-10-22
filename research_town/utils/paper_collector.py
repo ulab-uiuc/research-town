@@ -400,16 +400,6 @@ def get_paper_introduction(url: str) -> Optional[str]:
         return introduction_text
 
 
-def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
-    try:
-        search = arxiv.Search(id_list=[arxiv_id])
-        results = list(search.results())
-        return results[0] if results else None
-    except Exception as e:
-        print(f'Error fetching paper {arxiv_id}: {e}')
-        return None
-
-
 def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
     SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
     url = f'{SEMANTIC_SCHOLAR_API_URL}ARXIV:{arxiv_id}/references'
@@ -417,7 +407,7 @@ def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
     headers = {'User-Agent': 'PaperProcessor/1.0'}
 
     for attempt in range(max_retries):
-        response = requests.get(url, params=params, headers=headers)
+        response = requests.get(url, params=params, headers=headers)  # type: ignore
         if response.status_code == 200:
             data = response.json()
             references = []
@@ -464,3 +454,13 @@ def get_paper_by_keyword(
         if len(papers) >= max_papers:
             break
     return papers
+
+
+def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
+    try:
+        search = arxiv.Search(id_list=[arxiv_id])
+        results = list(search.results())
+        return results[0] if results else None
+    except Exception as e:
+        print(f'Error fetching paper {arxiv_id}: {e}')
+        return None
