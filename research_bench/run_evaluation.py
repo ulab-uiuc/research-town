@@ -1,7 +1,6 @@
 import argparse
 import json
 import logging
-import os
 from typing import Any, Dict, List, Optional
 
 from tqdm import tqdm
@@ -15,16 +14,12 @@ from research_bench.proposal_eval import (
 
 # from utils import get_current_5q, single_agent_proposal_writing
 from research_bench.proposal_writing import (
-    write_proposal_baseline,
-    write_proposal_researchtown,
+    write_proposal_author_citation,
     write_proposal_author_only,
+    write_proposal_baseline,
     write_proposal_citation_only,
-    write_proposal_author_citation
+    write_proposal_researchtown,
 )
-from research_town.agents import AgentManager
-from research_town.configs import Config
-from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from research_town.envs import ProposalWritingwithoutRAGEnv as ProposalWritingEnv
 from research_town.utils.paper_collector import get_paper_introduction
 
 # Configure logging
@@ -101,6 +96,7 @@ def process_paper(
                     intros = intro_data.get('referenced_intros', None)
                     logger.info(f'Found referenced intros for paper: {paper_key}')
                     break
+
     if not intros:
         intros = []
         logger.info(f'No referenced intros found for paper: {paper_key}')
