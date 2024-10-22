@@ -37,7 +37,7 @@ def process_paper(
     paper_data: Dict[str, Any],
     id: int,
     intro_log_jsonl: Optional[str] = None,
-    exclude_papers: List[str] = [''],
+    exclude_paper_titles: List[str] = [''],
 ) -> Optional[Dict[str, Any]]:
     """
     Processes a single paper to generate evaluations.
@@ -120,19 +120,19 @@ def process_paper(
     # Step 4: Generate proposal 5Q
     if args.test_mode == 'author-only':
         proposal_5q = write_proposal_author_only(
-            authors=authors, id=id, exclude_papers=exclude_papers
+            authors=authors, id=id, exclude_paper_titles=exclude_paper_titles
         )
     elif args.test_mode == 'citation-only':
         proposal_5q = write_proposal_citation_only(
-            intros, id, exclude_papers=exclude_papers
+            intros, id, exclude_paper_titles=exclude_paper_titles
         )
     elif args.test_mode == 'author-citation':
         proposal_5q = write_proposal_author_citation(
-            authors, intros, id, exclude_papers=exclude_papers
+            authors, intros, id, exclude_paper_titles=exclude_paper_titles
         )
     elif args.test_mode == 'textgnn':
         proposal_5q = write_proposal_researchtown(
-            authors, intros, keyword, id, exclude_papers=exclude_papers
+            authors, intros, keyword, id, exclude_paper_titles=exclude_paper_titles
         )
     else:
         logger.error(f'Invalid test mode: {args.test_mode}')
@@ -202,7 +202,7 @@ def main(
     ):
         paper_data = data[paper_key]
         evaluation = process_paper(
-            args, paper_key, paper_data, id, intro_log_jsonl, exclude_papers=papers
+            args, paper_key, paper_data, id, intro_log_jsonl, exclude_paper_titles=papers
         )
         if evaluation:
             # Write the evaluation result as a JSON line

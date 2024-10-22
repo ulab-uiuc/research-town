@@ -13,7 +13,7 @@ def write_proposal_researchtown(
     intros: List[str],
     keyword: str,
     id: int,
-    exclude_papers: List[str] = [''],
+    exclude_paper_titles: List[str] = [''],
 ) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on the provided authors and existing proposals
@@ -33,7 +33,7 @@ def write_proposal_researchtown(
     else:
         profile_db = ProfileDB()
         profile_db.pull_profiles(
-            names=authors, config=config, exclude_papers=exclude_papers
+            names=authors, config=config, exclude_paper_titles=exclude_paper_titles
         )
         profile_db.save_to_json(f'./profile_dbs/profile_{id}')
 
@@ -84,7 +84,7 @@ def write_proposal_researchtown(
 
 
 def write_proposal_single_agent(
-    author: str, intros: List[str], id: int, exclude_papers: List[str] = ['']
+    author: str, intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
 ) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on the provided author and existing proposals
@@ -103,7 +103,7 @@ def write_proposal_single_agent(
     else:
         profile_db = ProfileDB()
         profile_db.pull_profiles(
-            names=[author], config=config, exclude_papers=exclude_papers
+            names=[author], config=config, exclude_paper_titles=exclude_paper_titles
         )
         profile_db.save_to_json(f'./profile_dbs/profile_{id}')
 
@@ -202,7 +202,7 @@ def write_proposal_baseline(intro: str, model: str = 'gpt-4o-mini') -> Optional[
 
 
 def write_proposal_author_only(
-    authors: List[str], id: int, exclude_papers: List[str] = ['']
+    authors: List[str], id: int, exclude_paper_titles: List[str] = ['']
 ) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on multiple author profiles.
@@ -210,7 +210,7 @@ def write_proposal_author_only(
     Args:
         authors (List[str]): List of author names.
         id (int): ID for the profile database.
-        exclude_papers (List[str], optional): List of papers to exclude. Defaults to [''].
+        exclude_paper_titles (List[str], optional): List of papers to exclude. Defaults to [''].
 
     Returns:
         Optional[str]: Generated proposal as a string if successful, else None.
@@ -223,7 +223,7 @@ def write_proposal_author_only(
     else:
         profile_db = ProfileDB()
         profile_db.pull_profiles(
-            names=authors, config=config, exclude_papers=exclude_papers
+            names=authors, config=config, exclude_paper_titles=exclude_paper_titles
         )
         profile_db.save_to_json(profile_db_path)
     profiles = []
@@ -276,7 +276,7 @@ def write_proposal_author_only(
 
 
 def write_proposal_citation_only(
-    intros: List[str], id: int, exclude_papers: List[str] = ['']
+    intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
 ) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on multiple citation paper introductions.
@@ -284,7 +284,7 @@ def write_proposal_citation_only(
     Args:
         intros (List[str]): List of citation paper introduction texts.
         id (int): ID for the profile database.
-        exclude_papers (List[str], optional): List of papers to exclude. Defaults to [''].
+        exclude_paper_titles (List[str], optional): List of papers to exclude. Defaults to [''].
 
     Returns:
         Optional[str]: Generated proposal as a string if successful, else None.
@@ -293,7 +293,7 @@ def write_proposal_citation_only(
 
 
 def write_proposal_author_citation(
-    authors: List[str], intros: List[str], id: int, exclude_papers: List[str] = ['']
+    authors: List[str], intros: List[str], id: int, exclude_paper_titles: List[str] = ['']
 ) -> Optional[str]:
     """
     Generates a comprehensive research proposal based on multiple author profiles and citation paper introductions.
@@ -302,7 +302,7 @@ def write_proposal_author_citation(
         authors (List[str]): List of author names.
         intros (List[str]): List of citation paper introduction texts.
         id (int): ID for the profile database.
-        exclude_papers (List[str], optional): List of papers to exclude. Defaults to [''].
+        exclude_paper_titles (List[str], optional): List of papers to exclude. Defaults to [''].
 
     Returns:
         Optional[str]: Generated proposal as a string if successful, else None.
