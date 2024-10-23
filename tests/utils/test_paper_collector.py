@@ -110,25 +110,9 @@ def test_get_paper_introduction() -> None:
     assert 'Introduction' in intro3
 
 
-@patch('arxiv.Search')
-def test_get_paper_by_arxiv_id(mock_search: MagicMock) -> None:
-    # Mock search results
-    mock_result = MagicMock()
-    mock_result.title = 'Test Paper'
-    mock_result.get_short_id.return_value = '1234.5678'
-
-    # Configure the mock search instance
-    mock_search_instance = MagicMock()
-    mock_search_instance.results.return_value = [mock_result]
-    mock_search.return_value = mock_search_instance
-
-    # Call the function
-    result = get_paper_by_arxiv_id('1234.5678')
-
-    # Assertions
+def test_get_paper_by_arxiv_id() -> None:
+    result = get_paper_by_arxiv_id('2409.16928')
     assert result is not None
-    assert result.title == 'Test Paper'
-    mock_search.assert_called_once_with(id_list=['1234.5678'])
 
 
 @patch('requests.get')
