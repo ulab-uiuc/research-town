@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Set
 
 from tqdm import tqdm
 from utils import (
+    get_arxiv_ids_from_keyword,
     get_author_data,
     get_paper_data,
     get_proposal_from_paper,
@@ -10,7 +11,6 @@ from utils import (
 )
 
 from research_town.configs import Config
-from research_town.utils.paper_collector import get_paper_by_keyword
 
 
 def process_keywords(
@@ -24,7 +24,7 @@ def process_keywords(
 
     for keyword in keywords:
         print(f"Fetching papers for keyword: '{keyword}'")
-        arxiv_ids = get_paper_by_keyword(
+        arxiv_ids = get_arxiv_ids_from_keyword(
             keyword, existing_arxiv_ids, max_papers_per_keyword
         )
         for arxiv_id in tqdm(arxiv_ids, desc=f"Processing papers for '{keyword}'"):
