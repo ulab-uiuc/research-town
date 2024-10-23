@@ -1,21 +1,31 @@
-import os
-
-from research_town.configs import Config
+from research_town.configs import Config, DatabaseConfig
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 
+
+def get_profile_db(database_config: DatabaseConfig) -> ProfileDB:
+    db = ProfileDB(config=database_config)
+    return db
+
+
+def get_paper_db(database_config: DatabaseConfig) -> PaperDB:
+    db = PaperDB(config=database_config)
+    return db
+
+
+def get_log_db(database_config: DatabaseConfig) -> LogDB:
+    db = LogDB(config=database_config)
+    return db
+
+
+def get_progress_db(database_config: DatabaseConfig) -> ProgressDB:
+    db = ProgressDB(config=database_config)
+    return db
+
+
 config_file_path = '../configs'
-profile_file_path = '../examples/profiles'
-paper_file_path = '../examples/papers'
-
 config = Config(config_file_path)
-profile_db = ProfileDB()
-paper_db = PaperDB()
 
-if os.path.exists(paper_file_path) and os.path.exists(profile_file_path):
-    profile_db.load_from_json(profile_file_path, with_embed=True)
-    paper_db.load_from_json(paper_file_path, with_embed=True)
-else:
-    raise FileNotFoundError('Profile and paper databases not found.')
-
-log_db = LogDB()
-progress_db = ProgressDB()
+profile_db = get_profile_db(config.database)
+paper_db = get_paper_db(config.database)
+log_db = get_log_db(config.database)
+progress_db = get_progress_db(config.database)

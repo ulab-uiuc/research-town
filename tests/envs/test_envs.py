@@ -1,24 +1,26 @@
 from unittest.mock import MagicMock, patch
 
+from research_town.agents import AgentManager
+from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.envs import ProposalWritingwithRAGEnv, ReviewWritingEnv
-from tests.constants.agent_constants import example_agent_manager
 from tests.constants.config_constants import example_config
 from tests.constants.data_constants import (
     profile_A,
     research_proposal_A,
     research_proposal_B,
 )
-from tests.constants.db_constants import (
-    example_log_db,
-    example_paper_db,
-    example_profile_db,
-    example_progress_db,
-)
 from tests.mocks.mocking_func import mock_prompting
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
+def test_review_writing_env(
+    mock_model_prompting: MagicMock,
+    example_profile_db: ProfileDB,
+    example_log_db: LogDB,
+    example_progress_db: ProgressDB,
+    example_paper_db: PaperDB,
+    example_agent_manager: AgentManager,
+) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     example_profile_db.reset_role_availability()
@@ -48,6 +50,11 @@ def test_review_writing_env(mock_model_prompting: MagicMock) -> None:
 @patch('research_town.utils.agent_prompter.model_prompting')
 def test_proposal_writing_env(
     mock_model_prompting: MagicMock,
+    example_profile_db: ProfileDB,
+    example_log_db: LogDB,
+    example_progress_db: ProgressDB,
+    example_paper_db: PaperDB,
+    example_agent_manager: AgentManager,
 ) -> None:
     mock_model_prompting.side_effect = mock_prompting
 

@@ -5,20 +5,21 @@ from beartype.typing import List
 
 from research_town.agents import AgentManager
 from research_town.data import Profile, Proposal
-from research_town.dbs import ProfileDB
+from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.envs import ProposalWritingwithRAGEnv, ReviewWritingEnv
 from tests.constants.config_constants import example_config
-from tests.constants.db_constants import (
-    example_log_db,
-    example_paper_db,
-    example_progress_db,
-)
 from tests.mocks.mocking_func import mock_prompting
 
 
 @patch('research_town.utils.agent_prompter.model_prompting')
 @patch('arxiv.Client')
-def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> None:
+def test_env_combo(
+    mock_client: MagicMock,
+    mock_model_prompting: MagicMock,
+    example_log_db: LogDB,
+    example_paper_db: PaperDB,
+    example_progress_db: ProgressDB,
+) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     mock_client_instance = MagicMock()
@@ -49,7 +50,7 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
         Profile(name='Rex Yu', bio='A researcher in computer vision.'),
     ]
 
-    temp_profile_db = ProfileDB()
+    temp_profile_db = ProfileDB(config=example_config.database)
     for profile in proposal_writing_profiles:
         temp_profile_db.add(profile)
 
@@ -94,7 +95,7 @@ def test_env_combo(mock_client: MagicMock, mock_model_prompting: MagicMock) -> N
         for agent in review_writing_agent_list
     ]
 
-    temp_profile_db = ProfileDB()
+    temp_profile_db = ProfileDB(config=example_config.database)
     for profile in review_writing_profiles:
         temp_profile_db.add(profile)
 

@@ -1,21 +1,21 @@
 import random
 from typing import Any, List, Optional, TypeVar
 
-import torch
 from transformers import BertModel, BertTokenizer
 
+from ..configs import DatabaseConfig
 from ..data.data import Data, Paper
 from ..utils.logger import logger
 from ..utils.paper_collector import get_recent_papers, get_related_papers
-from ..utils.retriever import get_embed, rank_topk
+from ..utils.retriever import get_embed
 from .db_base import BaseDB
 
 T = TypeVar('T', bound=Data)
 
 
 class PaperDB(BaseDB[Paper]):
-    def __init__(self, load_file_path: Optional[str] = None) -> None:
-        super().__init__(Paper, load_file_path)
+    def __init__(self, config: DatabaseConfig) -> None:
+        super().__init__(Paper, config=config, with_embeddings=True)
         self.retriever_tokenizer: Optional[BertTokenizer] = None
         self.retriever_model: Optional[BertModel] = None
 
@@ -50,30 +50,19 @@ class PaperDB(BaseDB[Paper]):
 
     def match(self, query: str, num: int = 1, **conditions: Any) -> List[Paper]:
         self._initialize_retriever()
-        papers = self.get(**conditions)
 
         query_embed = get_embed(
             instructions=[query],
             retriever_tokenizer=self.retriever_tokenizer,
             retriever_model=self.retriever_model,
         )
-        corpus_embed: List[torch.Tensor] = []
+        query_embeddings = [t.numpy(force=True).squeeze() for t in query_embed]
 
-        for paper in papers:
-            if paper.pk in self.data_embed:
-                corpus_embed.append(self.data_embed[paper.pk])
-            else:
-                paper_embed = get_embed(
-                    instructions=[paper.abstract],
-                    retriever_tokenizer=self.retriever_tokenizer,
-                    retriever_model=self.retriever_model,
-                )[0]
-                corpus_embed.append(paper_embed)
-        topk_indexes = rank_topk(
-            query_embed=query_embed, corpus_embed=corpus_embed, num=num
-        )
-        indexes = [index for topk_index in topk_indexes for index in topk_index]
-        match_papers = [papers[index] for index in indexes]
+        match_papers_data = self.database_client.search(
+            self.data_class.__name__, query_embeddings, num=num, **conditions
+        )[0]
+        match_papers = [self.data_class(**d) for d in match_papers_data]
+
         logger.info(f'Matched papers: {match_papers}')
         return match_papers
 
@@ -82,12 +71,10 @@ class PaperDB(BaseDB[Paper]):
         random.shuffle(papers)
         return papers[:num]
 
-    def transform_to_embed(self) -> None:
+    def add(self, data: Paper) -> None:
         self._initialize_retriever()
-
-        for paper_pk in self.data:
-            self.data_embed[paper_pk] = get_embed(
-                [self.data[paper_pk].abstract],
-                self.retriever_tokenizer,
-                self.retriever_model,
+        if data.embed is None:
+            data.embed = get_embed(
+                [data.abstract], self.retriever_tokenizer, self.retriever_model
             )[0]
+        super().add(data)

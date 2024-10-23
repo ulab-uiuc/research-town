@@ -1,5 +1,4 @@
-from typing import Optional
-
+from ..configs import DatabaseConfig
 from ..data.data import (
     IdeaBrainstormLog,
     LiteratureReviewLog,
@@ -12,7 +11,7 @@ from .db_complex import ComplexDB
 
 
 class LogDB(ComplexDB):
-    def __init__(self, load_file_path: Optional[str] = None) -> None:
+    def __init__(self, config: DatabaseConfig) -> None:
         super().__init__(
             classes_to_register=[
                 LiteratureReviewLog,
@@ -22,5 +21,5 @@ class LogDB(ComplexDB):
                 RebuttalWritingLog,
                 MetaReviewWritingLog,
             ],
-            load_file_path=load_file_path,
+            config=config,
         )

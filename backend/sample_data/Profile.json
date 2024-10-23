@@ -1,0 +1,1687 @@
+{
+  "84acea30-0d69-4425-a833-20093a0f39f9": {
+    "pk": "84acea30-0d69-4425-a833-20093a0f39f9",
+    "name": "Graham Neubig",
+    "bio": "I am a researcher deeply immersed in the field of Natural Language Processing (NLP), with a particular focus on enhancing neural machine translation (NMT), semantic parsing, and cross-lingual word embeddings. My recent work has revolved around improving low-resource NMT through intelligent data selection strategies, such as Target Conditioned Sampling (TCS), which has shown significant gains in translation quality. I have also developed novel neural architectures that incorporate grammar models to better capture the syntax of target programming languages, achieving state-of-the-art results in code generation from natural language descriptions.\n\nIn the realm of cross-lingual embeddings, I have challenged the Anglocentric bias by expanding evaluation dictionaries to include all language pairs and creating new dictionaries for under-represented languages. This work has provided new insights and guidelines for developing robust cross-lingual embeddings.\n\nMy research also addresses domain adaptation in NMT through active learning, where I have proposed methods to select both full sentences and individual phrases for human translation, leading to improved translation accuracy. Additionally, I have explored multi-space variational encoder-decoders for labeled sequence transduction, which effectively leverage both labeled and unlabeled data to outperform existing models.\n\nI have developed TRANX, a transition-based neural semantic parser that generalizes well across different tasks by using abstract syntax descriptions. My work on morphological inflection generation has introduced innovative architectures and cross-lingual transfer techniques, significantly improving performance in low-resource settings.\n\nFurthermore, I have investigated model interpretability in language generation, proposing contrastive explanations to better understand model decisions. My research on iterative sequence generation models has shown that modeling editing processes can enhance performance on various tasks.\n\nOverall, my work aims to push the boundaries of NLP by developing methods that are not only effective but also generalizable and scalable across different languages and tasks.",
+    "collaborators": [
+      "Antonios Anastasopoulos",
+      "Pengcheng Yin",
+      "Zhengbao Jiang",
+      "Xinyi Wang",
+      "Junjie Hu",
+      "Chunting Zhou",
+      "Kayo Yin",
+      "Machel Reid",
+      "Emmy Liu",
+      "Yoav Goldberg"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Natural Language Processing",
+      "Neural Machine Translation",
+      "Multilingual Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "3ceba7f4-712a-45f3-9eb0-e147fb35bf44": {
+    "pk": "3ceba7f4-712a-45f3-9eb0-e147fb35bf44",
+    "name": "J. Zico Kolter",
+    "bio": "As a researcher, my work primarily revolves around advancing the theoretical and practical aspects of deep learning, with a particular focus on neural networks and their applications. My recent research has delved into the intricacies of deep equilibrium models (DEQs), exploring their neural tangent kernels and developing tools like TorchDEQ to streamline their implementation and enhance their performance across various domains. I have also contributed to understanding the stability and convergence of DEQs, proposing regularization schemes to stabilize their learning processes.\n\nIn addition to DEQs, I have investigated the initialization of pre-trained Transformers, introducing the concept of \"mimetic initialization\" to improve training efficiency and accuracy on vision tasks. My work on concept explanations aims to provide model-agnostic measures that satisfy key axioms, enhancing the interpretability and utility of machine learning models in diverse scenarios.\n\nFairness in automated decision-making systems is another area of my research. I have proposed continuous representations of population states and examined the impact of fairness constraints on lending decisions, highlighting the potential for bifurcations and the importance of accurate probability estimates.\n\nMy contributions extend to causal discovery, where I have parallelized existing methods to scale them to large datasets, and to reinforcement learning, where I have developed exploration strategies that improve generalization to new environments. I have also explored the role of features in deep learning, introducing the interaction tensor as a tool for empirical analysis and proposing a conceptual framework for feature learning.\n\nOverall, my research aims to push the boundaries of what is possible with neural networks, making them more efficient, interpretable, and fair, while also providing practical tools and frameworks for the broader research community.",
+    "collaborators": [
+      "Shaojie Bai",
+      "Vladlen Koltun",
+      "Zhili Feng",
+      "Asher Trockman",
+      "Alnur Ali",
+      "Yiding Jiang",
+      "Michal Moshkovitz",
+      "Dotan Di Castro",
+      "Joshua Williams",
+      "Zhengyang Geng"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Deep Learning",
+      "Neural Networks",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "dd391863-39ce-4762-a236-95a5f8183805": {
+    "pk": "dd391863-39ce-4762-a236-95a5f8183805",
+    "name": "Abhinav Gupta 0001",
+    "bio": "As a researcher, my primary focus lies in the development and enhancement of Graph Neural Networks (GNNs) and their applications across various domains. My recent work has been dedicated to pushing the boundaries of what GNNs can achieve, particularly in terms of capturing node positions, improving expressiveness, and adapting to dynamic environments.\n\nOne of my notable contributions is the development of Position-aware Graph Neural Networks (P-GNNs), which address the limitations of existing GNN architectures in capturing the positional information of nodes within a graph. By introducing anchor nodes and a non-linear distance-weighted aggregation scheme, P-GNNs have shown significant improvements in tasks like link prediction and community detection.\n\nI have also worked on Identity-aware Graph Neural Networks (ID-GNNs), which extend the expressive power of traditional GNNs by considering nodes' identities during message passing. This approach has led to substantial accuracy improvements in various prediction tasks, demonstrating the potential of ID-GNNs to overcome the limitations of the 1-Weisfeiler-Lehman graph isomorphism test.\n\nRecognizing the challenges posed by dynamic graphs, I developed the ROLAND framework, which allows static GNNs to be repurposed for dynamic graph scenarios. This framework introduces a live-update evaluation setting and scalable training methods, achieving impressive performance gains on large-scale dynamic graph datasets.\n\nIn addition to these innovations, I have explored the architectural design space of GNNs, systematically studying over 315,000 different designs across 32 predictive tasks. This work has led to the creation of GraphGym, a platform that facilitates the exploration and evaluation of various GNN designs and tasks.\n\nMy research also extends to automated machine learning (AutoML) with projects like FALCON and AutoTransfer, which aim to optimize model design and improve search efficiency by leveraging prior knowledge and task similarities.\n\nOverall, my work is driven by a passion for advancing the capabilities of GNNs and machine learning, with a focus on creating scalable, efficient, and highly performant models that can tackle a wide range of real-world problems.",
+    "collaborators": [],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Graph Neural Networks",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a77d196a-0392-45bf-aaee-59ba7b72bee4": {
+    "pk": "a77d196a-0392-45bf-aaee-59ba7b72bee4",
+    "name": "Deva Ramanan",
+    "bio": "As a researcher deeply immersed in the field of computer vision, my work primarily focuses on advancing video understanding, geometric motion segmentation, and the integration of neural networks with probabilistic models. My recent projects have tackled the limitations of current video datasets and spatiotemporal models, leading to the creation of CATER, a synthetic video dataset designed to test long-term reasoning in object movements. This dataset has provided valuable insights into the performance of state-of-the-art deep video architectures.\n\nIn the realm of motion segmentation, I have developed a modular network that combines the strengths of appearance-based detectors and geometric motion segmentation algorithms. This approach has achieved state-of-the-art performance on benchmarks like KITTI and Sintel, significantly improving depth and scene flow estimation.\n\nMy exploration of bidirectional architectures has led to the development of hierarchical Rectified Gaussian models (RGs), which incorporate top-down feedback for detailed spatial understanding tasks. This work has demonstrated state-of-the-art results in keypoint localization under occlusions, highlighting the importance of top-down reasoning.\n\nI have also ventured into predictive video modeling, inspired by concepts from neuroscience and applications in robotics. By leveraging large-scale pretraining of image diffusion models and introducing invariances, my work has improved the accuracy of video prediction, particularly in diverse and dynamic scenes.\n\nIn addition to these core areas, I have explored joint vision and language tasks, generative models for electron microscope images, and the unsupervised retargeting of human actions in videos. My research has consistently aimed to push the boundaries of what is possible in computer vision, combining theoretical insights with practical applications to achieve state-of-the-art results across various benchmarks and tasks.",
+    "collaborators": [
+      "Rohit Girdhar",
+      "Peiyun Hu",
+      "Aayush Bansal",
+      "Gengshan Yang",
+      "Mengtian Li",
+      "Tarasha Khurana",
+      "Bhavan Jasani",
+      "Ligong Han",
+      "Robert F. Murphy",
+      "Yaser Sheikh"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Computer Vision",
+      "Deep Learning",
+      "Video Understanding"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "4fde80ac-4e95-47d6-8049-20c91233e1da": {
+    "pk": "4fde80ac-4e95-47d6-8049-20c91233e1da",
+    "name": "Tuomas Sandholm",
+    "bio": "I am a researcher deeply immersed in the field of computational game theory, with a particular focus on extensive-form games and optimization algorithms. My work primarily revolves around developing scalable and efficient methods for solving large-scale games, which are often characterized by enormous payoff matrices and complex strategic interactions.\n\nOne of my significant contributions is the development of sparsification techniques for payoff matrices, which has dramatically improved the scalability of optimization algorithms in extensive-form games. By leveraging the Kronecker-product structure inherent in games like poker, I have devised methods that are orders of magnitude faster, more numerically stable, and produce fewer nonzeros than previous techniques. This has enabled high-precision Nash equilibrium computation and significantly accelerated parallel game-solving algorithms.\n\nI have also advanced the field of subgame solving in imperfect-information games, introducing techniques that outperform prior methods and adapt to opponent actions outside the original action abstraction. These innovations were crucial in the success of Libratus, the first AI to defeat top human players in heads-up no-limit Texas hold'em poker.\n\nMy research extends to the study of limited lookahead in imperfect-information games, where I have characterized the complexity of finding Nash equilibria and designed algorithms for computing optimal commitment strategies. Additionally, I have explored game-solving settings with oracle access, proposing strategies that efficiently learn low-exploitability strategies in costly evaluation environments.\n\nIn the realm of equilibrium computation, I have shown that Nash equilibria are approachable under no-regret learning algorithms in large games, leveraging the connection between smoothness arguments and the Minty property. My work also includes developing frameworks for computing approximate mixed-strategy Nash equilibria in continuous-action games, which are essential for applications in reinforcement learning and auctions.\n\nOverall, my research aims to push the boundaries of what is computationally feasible in game theory, providing practical solutions and theoretical insights that bridge the gap between complex game structures and efficient algorithmic implementations.",
+    "collaborators": [
+      "Carlos Martin",
+      "Gabriele Farina",
+      "Noam Brown",
+      "Christian Kroer",
+      "Brian Hu Zhang",
+      "Ioannis Anagnostides",
+      "Adam Lerer",
+      "Sam Gross",
+      "Maria-Florina Balcan",
+      "Ellen Vitercik"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Game Theory",
+      "Optimization",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2a845f07-724c-4635-b496-c2fef9d686ab": {
+    "pk": "2a845f07-724c-4635-b496-c2fef9d686ab",
+    "name": "Pradeep Ravikumar",
+    "bio": "I am a researcher deeply invested in the theoretical and practical aspects of machine learning, with a particular focus on compositional generalization, robust statistics, and causal inference. My work spans a variety of domains, from developing optimization schemes for learning acyclic directed graphical models to exploring the connections between different robust statistical models. I have a keen interest in understanding and improving the generalization capabilities of machine learning models, especially in the context of adversarial robustness and distributional shifts.\n\nOne of my significant contributions is in the area of compositional generalization, where I have explored how structural hints can aid neural models in generalizing systematically. I have also delved into the optimization challenges of learning directed acyclic graphs, proposing novel algorithms that guarantee convergence to global minima under certain conditions.\n\nIn robust statistics, I have developed efficient algorithms that are simultaneously robust to heavy-tailed noise and Huber contamination, providing near-statistically-optimal estimators. My research also addresses imbalanced classification by introducing new robust risk measures like label conditional value at risk (LCVaR) and its generalization, label heterogeneous conditional value at risk (LHCVaR).\n\nFurthermore, I have investigated the theoretical underpinnings of adversarial robustness, providing minimax guarantees for excess risk in adversarial settings. My work on invariant causal prediction and invariant risk minimization has highlighted the limitations of these methods, especially in non-linear regimes.\n\nIn the realm of reinforcement learning, I have studied the query complexity required for agents to generalize across multiple environments, introducing conditions like Weak and Strong Proximity to capture the structural similarities between environments.\n\nMy research also extends to self-supervised learning, where I have explored the parameter identifiability of models trained with contrastive learning tasks. Additionally, I have contributed to the understanding of noise-contrastive estimation (NCE) by addressing the challenges posed by inappropriate noise distributions.\n\nOverall, my work aims to bridge the gap between theoretical insights and practical applications, striving to make machine learning models more robust, generalizable, and interpretable.",
+    "collaborators": [
+      "Bryon Aragam",
+      "Andrej Risteski",
+      "Kevin Bello",
+      "Chen Dan",
+      "Elan Rosenfeld",
+      "Bingbin Liu",
+      "Goutham Rajendran",
+      "Chang Deng",
+      "Runtian Zhai",
+      "Juyong Kim"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Machine Learning",
+      "Robust Statistics",
+      "Causal Inference"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "61f10e1e-9385-4f7c-ad18-ffd3f7e25ae6": {
+    "pk": "61f10e1e-9385-4f7c-ad18-ffd3f7e25ae6",
+    "name": "Lei Li 0005",
+    "bio": "As a researcher, my primary focus lies in the development and enhancement of Graph Neural Networks (GNNs) and their applications across various domains. My recent work has been centered around creating more expressive and scalable GNN architectures that can handle both static and dynamic graphs effectively.\n\nOne of my notable contributions is the development of Position-aware Graph Neural Networks (P-GNNs), which address the limitations of existing GNNs in capturing the positional information of nodes within a graph. By introducing anchor nodes and a non-linear distance-weighted aggregation scheme, P-GNNs significantly improve performance in tasks like link prediction and community detection.\n\nI have also worked on Identity-aware Graph Neural Networks (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identities during message passing. This approach has shown substantial improvements in accuracy for various prediction tasks, including node and graph classification.\n\nUnderstanding the impact of neural network structures on their performance has been another area of my research. I developed a novel graph-based representation of neural networks, revealing that certain relational graph structures can lead to significantly improved predictive performance.\n\nIn the realm of dynamic graphs, I introduced the ROLAND framework, which adapts static GNNs for dynamic settings by treating node embeddings as hierarchical states updated over time. This framework has demonstrated remarkable scalability and performance improvements in real-world dynamic graph datasets.\n\nAdditionally, I have explored the design space of GNNs, systematically studying over 315,000 different designs across multiple tasks. This work has led to the creation of GraphGym, a platform for exploring and evaluating GNN designs, and has provided valuable guidelines for designing high-performing GNNs.\n\nMy research also extends to automated machine learning (AutoML) with a focus on efficient model design search. I developed FALCON, a sample-based method that uses a design graph to predict model performance, and AutoTransfer, which leverages prior architectural knowledge to improve search efficiency for new tasks.\n\nOverall, my work aims to push the boundaries of GNN capabilities, making them more powerful, scalable, and applicable to a wide range of real-world problems.",
+    "collaborators": [],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Graph Neural Networks",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "8c1df81c-f8e7-4a8a-93c7-459bf5d96c83": {
+    "pk": "8c1df81c-f8e7-4a8a-93c7-459bf5d96c83",
+    "name": "David P. Woodruff",
+    "bio": "I am a researcher deeply immersed in the field of algorithms and data structures, with a particular focus on problems related to data streams, matrix approximations, and communication complexity. My work spans a variety of fundamental challenges, from finding heavy hitters in data streams to developing efficient algorithms for low-rank approximations and subspace approximations.\n\nOne of my key contributions is in the area of heavy hitters, where I have developed new algorithms that significantly reduce memory requirements while maintaining optimal performance. This work builds on classical solutions like CountMin and CountSketch, pushing the boundaries of what is possible in terms of efficiency and accuracy.\n\nIn the realm of matrix approximations, I have made strides in improving the running time and stability of algorithms for the Schatten-$p$ Low Rank Approximation (LRA) problem. My research has led to the development of faster algorithms that are not only theoretically sound but also practical for implementation on machines with limited precision.\n\nI have also tackled the problem of approximating matrices by low-rank matrices to minimize entrywise $\\ell_p$-approximation error, providing the first provably good algorithms for every value of $p \\geq 1$. These algorithms are simple, easy to implement, and demonstrate interesting trade-offs between approximation quality, running time, and the rank of the approximating matrix.\n\nAnother significant area of my research is in the communication complexity of distributed systems. I have developed optimal algorithms for $\\ell_p$-regression problems in the coordinator model, achieving significant improvements over previous bounds. My work in this area extends to robust low-rank approximation models and the development of sublinear time and query algorithms for noisy PSD matrices.\n\nAdditionally, I have explored the use of TensorSketch for applications beyond polynomial kernels, solving problems involving Kronecker product regression and regularized spline regression. My research also includes the development of efficient sampling-based sketches for tensors, which have applications in $\\ell_0$ sampling and $\\ell_1$ embeddings.\n\nOverall, my research is driven by a passion for solving complex problems in data streams, matrix approximations, and communication complexity, with a focus on developing efficient, practical algorithms that push the boundaries of what is possible in these fields.",
+    "collaborators": [
+      "Praneeth Kacham",
+      "Samson Zhou",
+      "William Swartworth",
+      "Yi Li",
+      "Taisuke Yasuda",
+      "Hossein Esfandiari",
+      "Vahab Mirrokni",
+      "Peilin Zhong",
+      "Flavio Chierichetti",
+      "Sreenivas Gollapudi"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Data Streams",
+      "Low-Rank Approximation",
+      "Communication Complexity"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9029147c-c696-48e7-9dbf-dc2008152a52": {
+    "pk": "9029147c-c696-48e7-9dbf-dc2008152a52",
+    "name": "Louis-Philippe Morency",
+    "bio": "I am a researcher deeply immersed in the fields of machine learning, multimodal learning, and affective computing. My work spans a variety of innovative projects, from developing deep generative models like StarNet, which leverages linear equations for efficient training, to tackling the complex challenge of monoaural audio source separation with the Spectro-Temporal Transformer (STT). I have a keen interest in multimodal learning, as evidenced by my work on Multimodal Routing, which enhances interpretability in tasks like sentiment analysis and emotion recognition.\n\nMy research also addresses critical societal issues, such as mitigating biases in large-scale pretrained language models and detecting human trafficking through multimodal data analysis. I have developed models like Affect-LM to integrate emotional content into language generation and GazeDirector for precise eye gaze redirection in videos.\n\nIn the realm of human-computer interaction, I have explored the automatic detection of distracted driving behaviors using multimodal data and the generation of natural-looking animations from text descriptions with the Joint Language to Pose (JL2P) model. My work on the Dyadic Residual-Attention Model (DRAM) aims to improve telepresence by modeling both intrapersonal and interpersonal dynamics in dyadic interactions.\n\nFurthermore, I have contributed to the understanding of expressiveness in social interactions, developing methods to predict and analyze expressiveness from visual data. My research is driven by a passion for creating models that not only perform well but also offer interpretability and real-world applicability, pushing the boundaries of what machine learning can achieve in diverse and impactful ways.",
+    "collaborators": [
+      "Amir Zadeh",
+      "Chaitanya Ahuja",
+      "Ruslan Salakhutdinov",
+      "Yao-Hung Hubert Tsai",
+      "Paul Pu Liang",
+      "Santiago Benoit",
+      "Tianjun Ma",
+      "Soujanya Poria",
+      "Martin Q. Ma",
+      "Muqiao Yang"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Deep Generative Models",
+      "Audio Source Separation",
+      "Multimodal Learning",
+      "Affective Computing"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "caec535a-734d-4e36-b07a-300e969b92bf": {
+    "pk": "caec535a-734d-4e36-b07a-300e969b92bf",
+    "name": "Zhiwei Steven Wu",
+    "bio": "I am a researcher deeply invested in the intersection of machine learning, privacy, and fairness. My work primarily focuses on developing algorithms and frameworks that ensure equitable and private data usage while maintaining high predictive performance. One of my key areas of interest is fair regression, where I have proposed methods to guarantee fairness in predictions with respect to protected attributes like gender or race. This involves ensuring statistical parity and bounded group loss, applicable to various regression tasks.\n\nIn the realm of privacy, I have explored private synthetic data generation, developing methods like private entropy projection (PEP) and generative networks with the exponential mechanism (GEM) to enhance accuracy while maintaining differential privacy. My research also extends to local differential privacy (LDP), where I have derived methods for nonparametric statistical inference, providing confidence intervals and sequences for privatized data.\n\nAnother significant aspect of my work is differentially private stochastic gradient descent (SGD), where I have addressed the challenges of gradient clipping and its impact on convergence. I have also developed algorithms for private multi-task learning (MTL) and federated learning, ensuring both privacy and utility in distributed settings.\n\nMy research on fairness extends to federated learning, where I have proposed frameworks for provably fair federated optimization, ensuring group fairness and convergence guarantees. Additionally, I have worked on online learning under individual fairness constraints, developing algorithms that achieve sub-linear regret and fairness violations without assuming a known similarity measure.\n\nOverall, my research aims to balance the trade-offs between privacy, fairness, and performance in machine learning, providing robust and scalable solutions for real-world applications.",
+    "collaborators": [
+      "Terrance Liu",
+      "Aaditya Ramdas",
+      "Shengyuan Hu",
+      "Virginia Smith",
+      "Justin Whitehouse",
+      "Aaron Roth",
+      "Keegan Harris",
+      "Alekh Agarwal",
+      "Miroslav Dud\u00edk",
+      "Giuseppe Vietri"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Fairness in Machine Learning",
+      "Differential Privacy",
+      "Online Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "53665a92-efc4-4b20-86c3-2682cd27b8df": {
+    "pk": "53665a92-efc4-4b20-86c3-2682cd27b8df",
+    "name": "Yiming Yang",
+    "bio": "I am a dedicated researcher with a strong focus on advancing machine learning and graph neural networks (GNNs). My work spans a variety of complex problems, including cross-graph relational learning (CGRL), cross-lingual text classification (CLTC), and combinatorial optimization using neural networks. \n\nOne of my significant contributions is the development of a novel framework for CGRL, which formulates the problem as a convex optimization task, enabling scalable and transductive learning. This approach has shown remarkable success in handling large datasets and outperforming existing methods. In the realm of CLTC, I have extended model distillation techniques to train classifiers for languages lacking labeled data, achieving competitive performance through adversarial feature adaptation.\n\nMy research also delves into the optimization of autoregressive (AR) and non-autoregressive (NAR) models for sequence generation, where I introduced an Expectation-Maximization (EM) framework to address multi-modality issues, significantly reducing inference latency. Additionally, I have explored the use of large-scale pre-trained language models for generating event-level temporal graphs, demonstrating their potential for temporal reasoning over event graphs.\n\nInspired by the dual-process theory of mind, I developed FLOWGEN, a graph-generation model that incrementally generates large graphs by routing tasks to either fast or slow models based on difficulty. This approach has proven to be both efficient and effective in generating high-quality graphs.\n\nIn the field of combinatorial optimization, I introduced DIFUSCO, a graph-based diffusion framework that leverages denoising diffusion models to solve NP-complete problems like the Traveling Salesman Problem (TSP) and Maximal Independent Set (MIS), achieving state-of-the-art results.\n\nMy recent work also includes the personalization of large language models (LLMs) through a few-shot learning approach, Fermi, which uses personalized prompts to improve model responses based on user profiles and previous interactions. Additionally, I have proposed a graph similarity regularized softmax function for GNNs, enhancing their performance in semi-supervised node classification by incorporating spatial information from graph structures.\n\nOverall, my research aims to push the boundaries of machine learning and GNNs, addressing both theoretical challenges and practical applications across diverse domains.",
+    "collaborators": [
+      "Zhiqing Sun",
+      "Aman Madaan",
+      "Hanxiao Liu",
+      "Ruochen Xu",
+      "Deepak Kapur",
+      "Jaehyung Kim",
+      "Jun Liu",
+      "Wei Wan"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Machine Learning",
+      "Graph Neural Network",
+      "Natural Language Processing"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "adac0db3-f359-4a57-831a-14131e4d0b33": {
+    "pk": "adac0db3-f359-4a57-831a-14131e4d0b33",
+    "name": "Yuanzhi Li",
+    "bio": "I am a researcher deeply immersed in the realms of machine learning, with a particular focus on optimization, adversarial training, and neural network architectures. My journey began with tackling the complexities of online convex optimization, where I developed a novel $\\tilde{O}(\\sqrt{T})$-regret algorithm using the ellipsoid method, setting a new benchmark in bandit convex optimization.\n\nMy work on adversarial training has unveiled the phenomenon of Clean Generalization and Robust Overfitting (CGRO), where I explored the intricate dynamics and representation complexities that lead to robust memorization. This research has provided critical insights into the training dynamics of neural networks under adversarial conditions.\n\nIn the domain of quantile regression, I have leveraged Bayesian computational methods to enhance inference stability and efficiency, particularly under heterogeneous conditions. This approach has bridged the gap between Bayesian and frequentist methodologies, offering robust solutions for data analysis.\n\nMy contributions to natural language processing include the development of TinyStories, a synthetic dataset that enables small language models to generate coherent and fluent text. This work has introduced a new evaluation paradigm using GPT-4, which grades model-generated content, providing a comprehensive assessment of language capabilities.\n\nI have also delved into the theoretical underpinnings of Generative Adversarial Networks (GANs), demonstrating how they can efficiently learn complex distributions through stochastic gradient descent ascent. My research has provided empirical and theoretical evidence supporting the practical learning mechanisms of GANs.\n\nIn the realm of optimization, I have explored the benefits of momentum in gradient descent, showing how it improves generalization by leveraging historical gradients. My work on contrastive learning has revealed the importance of feature decoupling, explaining how augmentations help neural networks learn from sparse features.\n\nOverall, my research aims to push the boundaries of machine learning by developing innovative algorithms, uncovering theoretical insights, and creating practical tools that enhance the performance and understanding of neural networks and optimization techniques.",
+    "collaborators": [
+      "Zeyuan Allen-Zhu",
+      "Zehao Dou",
+      "Elad Hazan",
+      "Binghui Li",
+      "Xuming He",
+      "Ronen Eldan",
+      "Samy Jelassi",
+      "Yunwei Ren",
+      "Zixin Wen",
+      "Yang Yuan"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Online Convex Optimization",
+      "Adversarial Training",
+      "Quantile Regression",
+      "Natural Language Processing"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "af616045-4aa7-43b7-afbe-2edf6345c664": {
+    "pk": "af616045-4aa7-43b7-afbe-2edf6345c664",
+    "name": "Martial Hebert",
+    "bio": "I am a researcher deeply immersed in the fields of computer vision, machine learning, and robotics. My work primarily focuses on developing innovative algorithms and models that enhance the capabilities of neural networks and improve their application in real-world scenarios. \n\nOne of my key contributions is in the area of shape reconstruction, where I have extended neural radiance fields and 3D Gaussian representations to create fast, reliable, and robust reconstructions that can be easily performed on both GPU and CPU. This work has significant implications for applications requiring photorealistic novel view synthesis.\n\nIn the realm of object detection and tracking, I have tackled the challenge of occlusion by developing a novel recurrent computational unit that enables long-term propagation of object features, even under occlusion. This approach has shown superior results in video object detection, particularly in complex scenarios like furniture assembly videos.\n\nMy research also includes fitting Gaussian Mixture Models directly to 3D meshes, which has improved 3D registration for both meshes and RGB-D frames. Additionally, I have developed an approximate differentiable renderer called Fuzzy Metaballs, which offers fast runtimes and high-quality gradient information for vision tasks.\n\nIn robotics, I have extended algorithm configuration to automatically discover multiple modes in tuning datasets, enhancing performance in various application domains such as stereoscopic depth estimation and motion planning. My work on PanoNet has provided a fast and flexible framework for panoptic segmentation, yielding high-quality results in real-time.\n\nI have also explored unsupervised learning for action recognition in videos, achieving significant gains in performance by leveraging spatiotemporal signals. My Iterative Transformer Network (IT-Net) addresses the challenge of learning from partial, unaligned point cloud data, demonstrating superior performance in tasks like partial shape classification.\n\nOverall, my research aims to push the boundaries of what is possible with neural networks and machine learning, making them more efficient, robust, and applicable to a wide range of real-world problems.",
+    "collaborators": [
+      "Leonid Keselman",
+      "Ishan Misra",
+      "Yu-Xiong Wang",
+      "Kashyap Chitta",
+      "David Held",
+      "Zhipeng Bao",
+      "Abhinav Gupta",
+      "Pavel Tokmakov",
+      "Cordelia Schmid",
+      "Satyaki Chakraborty"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Computer Vision",
+      "3D Reconstruction",
+      "Neural Networks"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "10854143-3095-42bc-b69f-a80cb7c38ba8": {
+    "pk": "10854143-3095-42bc-b69f-a80cb7c38ba8",
+    "name": "Jun-Yan Zhu",
+    "bio": "As a researcher, my primary focus lies in the realm of Graph Neural Networks (GNNs) and their applications across various domains. My recent work has been dedicated to pushing the boundaries of GNN capabilities and understanding their underlying mechanisms. One of my notable contributions is the development of Position-aware Graph Neural Networks (P-GNNs), which enhance the ability of GNNs to capture the positional information of nodes within a graph, leading to significant improvements in tasks like link prediction and community detection.\n\nI have also delved into the structural aspects of neural networks, investigating how their graph representations impact predictive performance. This led to the creation of relational graphs, which reveal that certain graph structures can significantly boost neural network performance, mirroring the efficiency found in biological neural networks.\n\nTo address the limitations of existing GNNs, I introduced Identity-aware Graph Neural Networks (ID-GNNs), which incorporate node identities during message passing, thereby surpassing the expressive power of traditional GNNs. This innovation has shown remarkable improvements in various prediction tasks, including node and graph classification.\n\nRecognizing the challenges in applying GNNs to dynamic graphs, I developed the ROLAND framework, which adapts static GNNs for dynamic environments, ensuring scalability and efficiency. This framework has demonstrated substantial performance gains in real-world dynamic graph scenarios.\n\nMy research also extends to the systematic exploration of the GNN design space, where I have identified optimal architectures for diverse tasks using a comprehensive evaluation method. This work culminated in the creation of GraphGym, a platform for exploring and evaluating GNN designs.\n\nIn the realm of automated machine learning (AutoML), I proposed FALCON, a sample-based method for efficient model design search, and AutoTransfer, which leverages prior knowledge to enhance search efficiency for new tasks. These contributions aim to make AutoML more accessible and effective.\n\nOverall, my research is driven by a passion for uncovering the potential of GNNs and machine learning, striving to develop innovative solutions that address real-world challenges and advance the field.",
+    "collaborators": [],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Graph Neural Networks",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2dc4d9a8-83d6-4c73-9525-9ba5f58f59e0": {
+    "pk": "2dc4d9a8-83d6-4c73-9525-9ba5f58f59e0",
+    "name": "Vincent Conitzer",
+    "bio": "As a researcher, my work spans a diverse array of topics within the realms of artificial intelligence, decision theory, game theory, and ethics. My recent focus has been on the philosophical and practical implications of AI, particularly concerning superintelligent AI and its potential risks and benefits. I delve into the ethical dimensions of AI decision-making, exploring how AI can be trained to make morally sound decisions despite the lack of a precise mathematical framework for ethics.\n\nIn decision theory, I have critically examined the Sleeping Beauty problem, presenting arguments that challenge existing theories and proposing new perspectives on evidential and causal decision-making. My work in game theory includes analyzing the strategic equivalence of solution concepts, the robustness of mixed strategies in ordinal games, and the computational complexity of finding equilibria in various game settings.\n\nI have also contributed to the understanding of multi-agent interactions, particularly in the context of AI agents. My research explores how transparency and simulation can foster cooperation among AI agents, and how these dynamics differ from traditional human interactions. Additionally, I have investigated the implications of automated mechanism design in dynamic environments, providing efficient algorithms for optimal decision-making.\n\nMy interdisciplinary approach extends to practical applications, such as improving kidney exchange algorithms through human-elicited value judgments and addressing the manipulation of paper bidding in academic conferences. Through my work, I aim to bridge theoretical insights with real-world applications, ensuring that advancements in AI and decision theory contribute positively to society.",
+    "collaborators": [
+      "Caspar Oesterheld",
+      "Hanrui Zhang",
+      "Emanuel Tewolde",
+      "Vojtech Kovarik",
+      "Yu Cheng",
+      "Yixuan Even Xu",
+      "Ratip Emin Berker",
+      "Scott Emmons",
+      "Andrew Critch",
+      "Stuart Russell"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Artificial Intelligence",
+      "Game Theory",
+      "Decision Theory",
+      "Ethics"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e055ae3a-9d06-4e51-bf5a-9efee7da3d4d": {
+    "pk": "e055ae3a-9d06-4e51-bf5a-9efee7da3d4d",
+    "name": "Fei Fang 0001",
+    "bio": "As a researcher, my primary focus lies in the realm of Graph Neural Networks (GNNs) and their applications across various domains. My recent work has been dedicated to pushing the boundaries of GNN capabilities and understanding their underlying mechanisms. One of my notable contributions is the development of Position-aware Graph Neural Networks (P-GNNs), which enhance the ability of GNNs to capture the positional information of nodes within a graph, leading to significant improvements in tasks like link prediction and community detection.\n\nI have also delved into the structural aspects of neural networks, investigating how the graph structure of neural networks influences their predictive performance. This led to the creation of relational graphs, which provide a novel way to represent and analyze neural networks, revealing that certain graph structures can significantly boost performance.\n\nTo address the limitations of existing GNNs, I introduced Identity-aware Graph Neural Networks (ID-GNNs), which incorporate node identities during message passing, thereby surpassing the expressive power of traditional GNNs. This innovation has shown remarkable improvements in various prediction tasks.\n\nRecognizing the challenges in applying GNNs to dynamic graphs, I developed the ROLAND framework, which adapts static GNNs for dynamic environments, offering scalable and efficient training methods. This framework has demonstrated substantial performance gains in real-world dynamic graph scenarios.\n\nIn addition to these advancements, I have explored the design space of GNNs, systematically studying over 315,000 different designs to establish guidelines for creating well-performing GNNs across diverse tasks. This work culminated in the release of GraphGym, a platform for exploring and evaluating GNN designs.\n\nMy research also extends to automated machine learning (AutoML), where I proposed FALCON and AutoTransfer, methods that enhance the efficiency of model design search by leveraging design graphs and task-model banks, respectively. These innovations aim to reduce computational costs while improving model performance.\n\nOverall, my work is driven by a passion for uncovering the potential of GNNs and machine learning, striving to develop scalable, efficient, and high-performing models that can tackle complex real-world problems.",
+    "collaborators": [],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Graph Neural Networks",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "b1080f05-cca2-4794-8355-46ab58e3c7f7": {
+    "pk": "b1080f05-cca2-4794-8355-46ab58e3c7f7",
+    "name": "Tom M. Mitchell",
+    "bio": "I am a researcher dedicated to advancing the fields of natural language understanding (NLU), artificial intelligence (AI), and machine learning. My work primarily focuses on developing models and methodologies that bridge the gap between human cognitive processes and machine learning systems. One of my key contributions is the Probabilistic Worldbuilding Model (PWM), a Bayesian model designed for semantic parsing and reasoning, which aims to generalize across domains and tasks while maintaining interpretability.\n\nI have a strong interest in the role of symbols in AI, inspired by insights from neuroscience and cognitive science. My research proposes that symbols serve as external communication tools and internal self-communication mechanisms, aiding in the formulation and justification of subsymbolic neural patterns. This led to the development of a neuro-symbolic hypothesis and architecture for intelligent agents, emphasizing the importance of symbols in future AI systems.\n\nIn the realm of education technology, I have explored transfer learning techniques to address the cold-start problem in intelligent tutoring systems (ITSs). My work demonstrates how leveraging log data from existing courses can improve performance predictions for new courses, even with limited training data.\n\nI have also contributed to the field of machine translation, particularly in resource-constrained settings. My research on polyglot word embeddings and constrained nearest-neighbor sampling has shown that substantial bilingual lexicons can be retrieved even from noisy social media datasets.\n\nAdditionally, I have developed SmartPlay, a benchmark for evaluating large language models (LLMs) as intelligent agents across various games, each testing different capabilities such as reasoning, planning, and spatial understanding. This benchmark serves as a roadmap for identifying gaps in current methodologies.\n\nMy work on interactive task learning emphasizes the importance of Human-AI collaboration, drawing from my experience with the SUGILITE system. I have also investigated student performance modeling in online courses, proposing new machine learning approaches that utilize extensive student log data to improve prediction accuracy.\n\nFinally, I have explored the semantics of GUI screens and components through the Screen2Vec technique, and developed methods for estimating classifier accuracy using only unlabeled data. My research on political polarization leverages machine translation methods to provide insights into the linguistic divide in social media discussions.\n\nOverall, my research aims to create more interpretable, generalizable, and human-like AI systems, with applications spanning education, machine translation, and social media analysis.",
+    "collaborators": [
+      "Ashiqur R. KhudaBukhsh",
+      "Robin Schmucker",
+      "Toby Jia-Jun Li",
+      "Brad A. Myers",
+      "Rupak Sarkar",
+      "Mark S. Kamlet",
+      "Otilia Stretcu",
+      "Abulhair Saparov",
+      "Daniel L. Silver",
+      "Shriphani Palakodety"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Natural Language Processing",
+      "Machine Learning",
+      "Cognitive Science"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "8a5feead-c98d-4ecb-8e37-7a7c6e18de5c": {
+    "pk": "8a5feead-c98d-4ecb-8e37-7a7c6e18de5c",
+    "name": "Maria-Florina Balcan",
+    "bio": "I am a researcher deeply immersed in the realms of data-driven algorithm design, machine learning, and optimization. My work primarily focuses on developing robust, efficient, and theoretically grounded methods for various computational and statistical challenges. \n\nOne of my key areas of interest is data-driven combinatorial algorithm design, where I strive to provide strong computational and statistical performance guarantees. I have explored both batch and online scenarios, ensuring that algorithms can adapt and perform well across different problem instances. My research in distributed learning has led to the development of noise-tolerant, communication-efficient, and computationally efficient boosting-based procedures, significantly improving over prior works.\n\nI have also delved into the complexities of learning linear thresholds in noisy environments, proposing methods that exploit natural assumptions on data-generating processes to overcome worst-case difficulties. My contributions to clustering research include designing algorithms that offer worst-case guarantees while achieving near-optimal solutions under stability assumptions, and introducing the concept of local stability for clustering.\n\nIn the realm of adversarial machine learning, I have developed robust methods to counter data poisoning attacks, providing strong guarantees for reliable predictions even under targeted adversarial conditions. My work extends to active learning and agnostic learning settings, ensuring robustness and adaptability.\n\nI have also tackled the challenge of learning from pairwise comparisons, presenting novel algorithms for various combinatorial function classes, and addressing the issue of parameter tuning in algorithms with piecewise constant performance functions. My research in integer programming has led to the first guarantees for learning high-performing cut-selection policies, leveraging the structure of branch-and-cut algorithms.\n\nFurthermore, I have explored meta-learning through online convex optimization, bridging the gap between gradient-based meta-learning and classical regularization-based methods. My work in clustering extends to data-driven algorithm selection and metric learning, optimizing both the algorithm and distance metrics for specific applications.\n\nOverall, my research aims to blend theoretical rigor with practical applicability, ensuring that the methods I develop are not only efficient and scalable but also come with strong performance guarantees.",
+    "collaborators": [
+      "Mikhail Khodak",
+      "Ellen Vitercik",
+      "Ameet Talwalkar",
+      "Dravyansh Sharma",
+      "Tuomas Sandholm",
+      "Colin White",
+      "Siddharth Prasad",
+      "Rattana Pukdee",
+      "Pradeep Ravikumar",
+      "Shang-Tse Chen"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Machine Learning",
+      "Algorithm Design",
+      "Robustness"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "3094f2c8-4328-43b0-8a79-d489231243f2": {
+    "pk": "3094f2c8-4328-43b0-8a79-d489231243f2",
+    "name": "Deepak Pathak",
+    "bio": "I am a researcher deeply passionate about advancing the fields of computer vision, robotics, and machine learning. My work primarily focuses on developing innovative algorithms and frameworks that enable machines to understand and interact with the world in more sophisticated ways.\n\nOne of my key contributions is the development of a framework for learning 3D object shapes and dense cross-object 3D correspondences from unaligned image collections. This work, dubbed TARS, leverages a topologically-aware implicit deformation field to achieve state-of-the-art reconstruction fidelity on several datasets, including ShapeNet and Pascal3D+.\n\nIn the realm of robotics, I have explored various approaches to enhance robot learning and control. For instance, I developed a hierarchical setup for learning from third-person video demonstrations, enabling robots to manipulate novel objects in unseen scenarios. This work demonstrated significant success in real-world tasks using a robotic platform like Baxter.\n\nI have also proposed frameworks for learning 3D geometric structures directly from images, which outperform prior methods in reinforcement learning benchmarks. My research in dexterous manipulation has shown that multi-task learning with object point cloud representations can generalize better than single-object specialist policies, achieving impressive results in real-world object manipulation tasks.\n\nAdditionally, I have worked on algorithms for rapid motor adaptation in quadruped robots, enabling them to adapt in real-time to changing terrains and conditions. My work in this area has been validated on various challenging terrains, showcasing state-of-the-art performance.\n\nMy research also extends to leveraging internet videos for robot learning, developing systems that enable robots to learn from human demonstrations in the wild. This includes WHIRL, a method for one-shot robot learning from third-person perspectives, and VideoDex, which uses visual, action, and physical priors from human video datasets to guide robot behavior.\n\nOverall, my work aims to bridge the gap between theoretical advancements and practical applications, pushing the boundaries of what machines can achieve in understanding and interacting with the world.",
+    "collaborators": [
+      "Abhinav Gupta",
+      "Ashish Kumar",
+      "Jitendra Malik",
+      "Pieter Abbeel",
+      "Shikhar Bahl",
+      "Zipeng Fu",
+      "Kenneth Shaw",
+      "Ananye Agarwal",
+      "Xuxin Cheng",
+      "Shivam Duggal"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "3D Reconstruction",
+      "Robotics",
+      "Reinforcement Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "4dd32c13-8c44-44d6-b5bc-44c77c279579": {
+    "pk": "4dd32c13-8c44-44d6-b5bc-44c77c279579",
+    "name": "Maarten Sap",
+    "bio": "I am a researcher dedicated to advancing the field of natural language processing (NLP) with a focus on social intelligence, bias mitigation, and ethical AI. My work spans various aspects of NLP, from developing algorithms to correct unconscious biases in text to enhancing the social intelligence of language models.\n\nOne of my key contributions is the development of PowerTransformer, an approach designed to debias text by addressing implicit power dynamics, particularly in gender portrayals. This work is part of a broader effort to make AI-generated content more equitable and less biased.\n\nI have also explored the limitations of current large language models (LLMs) in understanding social interactions and Theory of Mind (ToM). My research has shown that even advanced models like GPT-3 and GPT-4 struggle with tasks requiring social intelligence, highlighting the need for more person-centric approaches in NLP.\n\nIn addition to these, I introduced Social IQa, a benchmark for evaluating commonsense reasoning about social situations, which has become a valuable resource for transfer learning in commonsense knowledge. My work on MaRCo, a detoxification algorithm, addresses the challenge of subtle toxicity in online content, demonstrating significant improvements in mitigating harmful language.\n\nI have also investigated the role of context in stylistic text rewriting, proposing new metrics like CtxSimFit to better evaluate the cohesiveness of rewritten text. My research on dialogue models has led to the creation of ToxiChat, a dataset for understanding and mitigating offensive language in conversational AI.\n\nFurthermore, I have delved into the complexities of dogwhistles and their detection, providing resources and insights to better understand and mitigate the risks of coded language. My work on contextual privacy with ConfAIde highlights the critical need for privacy-preserving approaches in AI interactions.\n\nOverall, my research aims to make NLP systems more socially aware, ethical, and effective in real-world applications, bridging the gap between technical advancements and societal needs.",
+    "collaborators": [
+      "Yejin Choi",
+      "Xuhui Zhou",
+      "Noah A. Smith",
+      "Hannah Rashkin",
+      "Ronan LeBras",
+      "Akhila Yerukola",
+      "Daniel Fried",
+      "Emily Allaway",
+      "Liwei Jiang",
+      "Hyunwoo Kim"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Natural Language Processing",
+      "Social Bias",
+      "Commonsense Reasoning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "f710ff0a-bb81-436e-985d-5bacfb8056d1": {
+    "pk": "f710ff0a-bb81-436e-985d-5bacfb8056d1",
+    "name": "Chenyan Xiong",
+    "bio": "I am a researcher deeply immersed in the field of natural language processing (NLP) and information retrieval, with a particular focus on leveraging large language models (LLMs) and graph-based methods to enhance various aspects of these domains. My recent work has been centered around developing innovative techniques to improve the performance and applicability of LLMs in specialized tasks, such as academic survey generation and document ranking.\n\nOne of my notable projects is ResearchArena, a benchmark designed to evaluate LLMs' ability to conduct academic surveys by breaking down the process into stages of information discovery, selection, and organization. This work highlights the current limitations of LLMs in domain-specific tasks and opens avenues for future research.\n\nIn the realm of document ranking, I have developed NeuDEF, a neural document expansion approach that significantly enhances the accuracy of neural rankers by incorporating click-based expansion terms. Additionally, my work on Latent Relation Language Models (LRLMs) integrates knowledge graph relations to improve language modeling and entity annotation.\n\nI have also explored the use of commonsense knowledge graphs in conversation generation with ConceptFlow, which models conversation flows to generate more meaningful and informative responses. My research on BERT's application in ranking tasks has provided insights into its effectiveness and limitations in different contexts.\n\nFurthermore, I have contributed to the development of advanced retrieval methods, such as ANCE-PRF for dense retrieval and ReInfoSelect for weak supervision selection, which have shown significant improvements in retrieval performance. My work on multitask retrieval and the introduction of Toolink for task-solving with smaller, open-sourced models demonstrate my commitment to making advanced NLP techniques more accessible and efficient.\n\nOverall, my research aims to push the boundaries of what is possible with LLMs and graph-based methods, striving to create more robust, efficient, and context-aware systems for information retrieval and natural language understanding.",
+    "collaborators": [
+      "Zhiyuan Liu",
+      "Zhenghao Liu",
+      "Maosong Sun",
+      "Jamie Callan",
+      "Arnold Overwijk",
+      "Hao Kang",
+      "Yue Yin",
+      "Cheng Luo",
+      "Hiroaki Hayashi",
+      "Zecong Hu"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Natural Language Processing",
+      "Information Retrieval",
+      "Graph Neural Network"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2ac13d3f-7615-430c-af29-f114e8784b74": {
+    "pk": "2ac13d3f-7615-430c-af29-f114e8784b74",
+    "name": "Shubham Tulsiani",
+    "bio": "As a researcher, my work primarily revolves around advancing the fields of 3D reconstruction, generative modeling, and reinforcement learning, with a particular focus on leveraging neural networks and machine learning techniques. My recent projects have been centered on developing innovative methods for 3D inference and reconstruction from sparse data, as well as improving the efficiency and accuracy of these models.\n\nOne of my key contributions is the development of SparseFusion, a method that unifies neural rendering and probabilistic image generation to achieve 3D reconstruction from sparse views. This approach addresses the limitations of existing methods by ensuring geometric consistency and generative inference, leading to more accurate and realistic 3D representations.\n\nI have also worked on creating a unified model for single-view 3D reconstruction across hundreds of semantic categories, which simplifies the training process and improves reconstruction quality by leveraging common structures across categories. This model is capable of zero-shot inference, demonstrating its robustness and scalability.\n\nIn the realm of multi-view stereopsis, I have proposed a learning-based approach that leverages photometric consistency as a supervisory signal, allowing for depth prediction without the need for ground-truth 3D data. This method has shown significant improvements in reconstruction completeness and generalization to novel settings.\n\nAdditionally, I have explored the task of canonical surface mapping (CSM) and developed a geometric cycle consistency loss to train CSM models without dense manual supervision. This approach has proven effective in inferring dense correspondences between images and improving single-view 3D predictions.\n\nMy research also extends to reinforcement learning, where I have focused on composing skills to solve sparse-reward tasks and learning visual affordances for guiding robot exploration. By modeling state-independent task schemas and leveraging human video data, I have developed methods that enable efficient learning and robust execution of complex tasks in real-world robotic systems.\n\nOverall, my work aims to push the boundaries of what is possible in 3D reconstruction, generative modeling, and reinforcement learning, with the goal of creating more accurate, efficient, and scalable solutions for real-world applications.",
+    "collaborators": [
+      "Abhinav Gupta",
+      "Yufei Ye",
+      "Zhizhuo Zhou",
+      "Jitendra Malik",
+      "Rohan Chitnis",
+      "Saurabh Gupta",
+      "Homanga Bharadhwaj",
+      "Kalyan Vasudev Alwala",
+      "Tejas Khot",
+      "Shubham Agrawal"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Generative Models",
+      "3D Reconstruction",
+      "Neural Rendering"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "920d07fb-e419-482b-a231-bd67a7d3a8fb": {
+    "pk": "920d07fb-e419-482b-a231-bd67a7d3a8fb",
+    "name": "Yonatan Bisk",
+    "bio": "I am a researcher deeply invested in the intersection of natural language processing (NLP), cognitive science, and robotics. My work primarily focuses on understanding and improving how machines interpret and interact with human language and the physical world. \n\nOne of my key research areas is the robustness of human reading comprehension in the presence of textual errors. Through eye-tracking studies, I have explored how different types of errors, such as letter transpositions and misspellings, affect reading difficulty and comprehension. This work has led to the development of computational models that explain these phenomena through character-based surprisal.\n\nIn the realm of NLP, I have extensively studied the generalization capabilities of language models, particularly in tasks requiring counting and reasoning. My research has shown that while traditional RNNs can easily generalize counting tasks, modern architectures like Transformers require positional embeddings to achieve similar performance. This has significant implications for the design and application of these models.\n\nI have also contributed to the development of new datasets and tasks that push the boundaries of textual entailment and natural language understanding. For instance, I introduced a novel textual entailment task that requires inference over multiple premises, emphasizing everyday knowledge and minimizing trivial lexical inferences.\n\nIn the field of robotics, my work has focused on mapping natural language instructions to complex spatial actions in 3D environments. I have developed datasets and neural architectures that enable robots to understand and execute tasks involving intricate spatial and pragmatic interpretations. This includes creating models that can reason about the sequential nature of tasks and adapt to user preferences.\n\nAdditionally, I have explored the potential of unimodal baselines in multimodal domains, demonstrating their surprising strength and providing recommendations for future research. My work in this area aims to better capture dataset biases and improve the assessment of multimodal techniques.\n\nOverall, my research is driven by the goal of enhancing machine understanding and interaction, whether through improving language models, developing robust NLP tasks, or enabling more intuitive human-robot communication.",
+    "collaborators": [
+      "Yejin Choi",
+      "Jesse Thomason",
+      "Rowan Zellers",
+      "Yingshan Chang",
+      "Jianfeng Gao",
+      "Vidhi Jain",
+      "Ali Farhadi",
+      "Chris Paxton",
+      "Michael Hahn",
+      "Frank Keller"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Natural Language Processing",
+      "Machine Learning",
+      "Multimodal Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "cdd36018-8b65-4244-8ef9-c23a707a3edc": {
+    "pk": "cdd36018-8b65-4244-8ef9-c23a707a3edc",
+    "name": "Andrej Risteski",
+    "bio": "I am a researcher deeply immersed in the theoretical and practical aspects of machine learning, with a particular focus on neural networks, generative models, and optimization techniques. My work spans a variety of domains, from understanding the complexities of Variational Autoencoders and their inferential models to exploring the intricacies of sampling from non-convex distributions using Langevin dynamics. \n\nOne of my key contributions is identifying the impact of the generative map's invertibility on the complexity of the inferential model, providing theoretical support for the challenges faced when data lies on low-dimensional manifolds. I have also delved into the behavior of stochastic gradient descent (SGD) in the presence of symmetries, offering insights into its dynamics in matrix factorization problems.\n\nIn the realm of continual learning, I have proposed frameworks that address the challenge of catastrophic forgetting, ensuring models retain performance across multiple environments. My research also extends to incorporating syntax into neural approaches for natural language processing (NLP), where I have provided a theoretical understanding of the representational power of syntax-aware architectures.\n\nI have explored the optimization dynamics of neural networks, uncovering phenomena such as progressive sharpening and the edge of stability, and have developed methods to improve training practices. My work on score matching has led to the development of preconditioning techniques that enhance the efficiency of learning probability distributions.\n\nAdditionally, I have contributed to the construction of WordNets for low-resource languages, developed algorithms for exact sampling from complex distributions, and provided theoretical analyses for invariant causal prediction and universal machine translation. My research on normalizing flows addresses the challenges of depth and conditioning, offering solutions for better generative modeling.\n\nOverall, my work aims to bridge the gap between theoretical insights and practical applications, advancing our understanding and capabilities in machine learning.",
+    "collaborators": [
+      "Yuchen Li",
+      "Elan Rosenfeld",
+      "Holden Lee",
+      "Pradeep Ravikumar",
+      "Bingbin Liu",
+      "Rong Ge",
+      "Divyansh Pareek",
+      "Ankur Moitra",
+      "Binghui Peng",
+      "Yilong Qin"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Machine Learning",
+      "Generative Models",
+      "Bayesian Inference"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "29d2d482-b772-4817-bd40-458504e0a814": {
+    "pk": "29d2d482-b772-4817-bd40-458504e0a814",
+    "name": "Srinivasa G. Narasimhan",
+    "bio": "I am a researcher dedicated to advancing computer vision and machine learning, particularly in the context of real-world applications. My recent work has focused on leveraging outdoor cameras for automated analysis, addressing challenges in camera calibration, and enhancing scene understanding under adverse conditions like rain, snow, and night. I developed a scalable framework for precise calibration of traffic cameras using street-level imagery, enabling accurate 3D scene reconstruction and traffic analysis.\n\nIn the realm of image generation, I proposed a novel framework for generating realistic rainy images, which improves image deraining and object detection. My work on unsupervised domain adaptation (UDA) enhances scene understanding across varying conditions by focusing on salient object regions, significantly improving performance in tasks like segmentation and detection.\n\nI have also explored neural implicit representations for near-periodic patterns, enabling applications such as image completion and segmentation. My contributions to inverse rendering allow for the transformation of indoor panoramas with new furniture layouts under natural illumination, supported by a new calibrated HDR dataset.\n\nIn robotics, I have investigated the use of programmable light curtains for dynamic obstacle detection, providing probabilistic safety guarantees and efficient safety envelope estimation. My work on TexMesh reconstructs detailed human meshes with high-resolution textures from RGB-D video, facilitating high-quality free-viewpoint rendering.\n\nAdditionally, I have developed methods for efficient 3D object recognition using light curtains and proposed a learnable geometry-guided prior for real-time object detection, significantly improving performance for small and far-away objects. My research also includes generating large-scale datasets for training object reconstruction methods robust to occlusions and decomposing indoor panoramas into appearance components for virtual home staging.\n\nOverall, my research aims to push the boundaries of computer vision and machine learning, making significant strides in automated analysis, scene understanding, and real-time perception for various applications.",
+    "collaborators": [
+      "Robert Tamburo",
+      "Shen Zheng",
+      "Anurag Ghosh",
+      "Tiancheng Zhi",
+      "Khiem Vuong",
+      "Bowei Chen",
+      "Martial Hebert",
+      "Siddharth Ancha",
+      "David Held",
+      "N. Dinesh Reddy"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Computer Vision",
+      "Autonomous Navigation",
+      "Scene Understanding"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9dcbe48a-7b23-4340-a432-63a6c91d3fd8": {
+    "pk": "9dcbe48a-7b23-4340-a432-63a6c91d3fd8",
+    "name": "Aditi Raghunathan",
+    "bio": "As a researcher, my work primarily focuses on enhancing the robustness and adaptability of neural networks and machine learning models. My journey began with addressing the catastrophic failures of neural networks in the presence of adversarial inputs. I developed a semidefinite relaxation method to certify robustness in ReLU networks, providing tighter and more meaningful guarantees than previous approaches.\n\nMy interest in model robustness extended to large language models (LLMs), where I introduced ARCA, a discrete optimization algorithm to audit LLMs for unexpected behaviors. This tool has been instrumental in uncovering models' failure modes before deployment. Additionally, I explored the effects of fine-tuning on LLMs, proposing Conjugate Prompting to recover pretraining capabilities lost during fine-tuning.\n\nIn the realm of adversarial attacks, I critically examined jailbreak attacks on language models and the efficacy of existing defenses. My work highlighted the need for robust enforcement mechanisms and high-quality definitions for unsafe outputs. I also delved into Sharpness-Aware Minimization (SAM), uncovering its robustness to label noise and its ability to balance feature quality, which is beneficial for datasets with redundant or spurious features.\n\nMy research on test-time adaptation (TTA) revealed the agreement-on-the-line phenomenon, which I leveraged to make TTA methods more reliable. I also developed Reinforcement Learning-based Decision Trees (RLDT) to optimize feature examination in decision trees, enhancing their efficiency and accuracy.\n\nIn the context of meta-reinforcement learning, I introduced DREAM, an approach that optimizes exploration and exploitation objectives to avoid local optima. My work on transfer learning demonstrated the trade-offs between fine-tuning and linear probing, leading to the development of the LP-FT strategy, which combines the benefits of both methods.\n\nLastly, I proposed Action-Aware Embodied Learning for Perception (ALP), an embodied learning framework that incorporates action information into representation learning, enabling models to generalize more robustly to downstream tasks.\n\nOverall, my research aims to build more robust, adaptable, and reliable machine learning models, addressing both theoretical and practical challenges in the field.",
+    "collaborators": [
+      "Percy Liang",
+      "Zico Kolter",
+      "Tengyu Ma",
+      "Jacob Steinhardt",
+      "Erik Jones",
+      "Suhas Kotha",
+      "Jacob Mitchell Springer",
+      "Christina Baek",
+      "Vaishnavh Nagarajan",
+      "Mingjie Sun"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Adversarial Robustness",
+      "Natural Language Processing",
+      "Meta-Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2d89cddb-2f47-4e35-be68-a88a56494ce9": {
+    "pk": "2d89cddb-2f47-4e35-be68-a88a56494ce9",
+    "name": "Ameet Talwalkar",
+    "bio": "As a researcher, my work primarily revolves around advancing the fields of neural architecture search (NAS), federated learning, and interpretable machine learning. My journey began with exploring NAS, where I proposed new baselines and algorithms like random search with early-stopping and weight-sharing, which have shown competitive results on benchmarks like PTB and CIFAR-10. This work highlighted the importance of reproducibility and robustness in NAS experiments.\n\nI have also delved into the intersection of interpretable machine learning and learning theory, focusing on local approximation explanations and their generalization. My empirical validations have provided insights into the practical applicability of these theoretical results.\n\nIn federated learning, I introduced one-shot federated learning, achieving significant improvements in AUC over local baselines. My work in this area also includes developing MOCHA, a systems-aware optimization method that addresses high communication costs and fault tolerance in distributed networks.\n\nGroup fairness in machine learning is another area of my research. I proposed a diagnostic framework to systematically characterize trade-offs in group fairness, leading to a better understanding of the landscape between accuracy and fairness.\n\nMy contributions extend to saliency methods for feature attribution, where I designed SMERF, a synthetic benchmarking framework that revealed significant limitations in existing methods. Additionally, I developed techniques to identify and mitigate spurious patterns in image classifiers, enhancing model robustness and accuracy.\n\nIn meta-learning, I bridged the gap between gradient-based methods and classical regularization-based approaches, ensuring computational scalability and improved generalization bounds. My work in hyperparameter tuning introduced pipeline-aware approaches and novel algorithms like Hyperband, which significantly speed up the process.\n\nOverall, my research aims to push the boundaries of machine learning by developing innovative methods and frameworks that address real-world challenges, ensuring robustness, fairness, and efficiency in various applications.",
+    "collaborators": [
+      "Mikhail Khodak",
+      "Gregory Plumb",
+      "Virginia Smith",
+      "Maria-Florina Balcan",
+      "Liam Li",
+      "Jeffrey Li",
+      "Joon Sik Kim",
+      "Kevin Jamieson",
+      "Junhong Shen",
+      "Vaishnavh Nagarajan"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Neural Architecture Search",
+      "Federated Learning",
+      "Hyperparameter Optimization",
+      "Meta-Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9ba2863b-3e55-432a-aa53-31663db13ab0": {
+    "pk": "9ba2863b-3e55-432a-aa53-31663db13ab0",
+    "name": "Bhiksha Raj",
+    "bio": "I am a researcher deeply immersed in the fields of acoustic event detection, speech recognition, and adversarial robustness. My work primarily focuses on developing innovative methods to enhance the performance and robustness of machine learning models in audio and speech processing.\n\nOne of my significant contributions is the development of frameworks for learning acoustic event detectors using weakly labeled data. This approach leverages Multiple Instance Learning to bypass the need for detailed manual annotations, making it more scalable and practical for real-world applications. Additionally, I have explored higher-order operations for capturing spatiotemporal dynamics in video recognition, which has shown promising results on various benchmark datasets.\n\nIn the realm of speech enhancement, I have proposed the W-Net beamformer, a novel approach that combines the strengths of DNN-powered beamformers and filter-estimation methods. This model has demonstrated superior performance across diverse acoustic environments, including those with static and mobile noise sources.\n\nMy research also addresses the vulnerabilities of Automatic Speech Recognition (ASR) systems to adversarial attacks. I have developed robust defenses using techniques like enhancement and ROVER voting, and have evaluated the effectiveness of these defenses against state-of-the-art adversarial attacks. Furthermore, I have introduced the concept of adversarial sparsity to provide deeper insights into the robustness of neural networks.\n\nIn addition to these, I have worked on weakly-supervised audio-visual segmentation, voice profiling, and model compression techniques. My work on self-supervised learning for ASR models has revealed unique vulnerabilities to adversarial attacks, highlighting the need for more secure and robust ASR systems.\n\nOverall, my research aims to push the boundaries of what is possible in audio and speech processing, making these technologies more effective, scalable, and secure.",
+    "collaborators": [
+      "Raphael Olivier",
+      "Rita Singh",
+      "Yuichiro Koyama",
+      "Anurag Kumar",
+      "Shentong Mo",
+      "Yandong Wen",
+      "Kai Hu",
+      "Roshan Sharma",
+      "Sohail Bahmani",
+      "Petros T. Boufounos"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Acoustic Event Detection",
+      "Speech Recognition",
+      "Adversarial Attacks",
+      "Audio-Visual Segmentation"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "7f1dddff-3c29-4957-b82c-c4a41c788f6b": {
+    "pk": "7f1dddff-3c29-4957-b82c-c4a41c788f6b",
+    "name": "Sean Welleck",
+    "bio": "I am a researcher deeply immersed in the fields of natural language processing (NLP), machine learning, and automated theorem proving. My work spans a variety of topics, from dependency parsing and dialogue consistency to the integration of language models with proof assistants and the optimization of neural sequence models.\n\nOne of my early contributions was developing a method for non-projective dependency parsing that blends graph, transition, and easy-first parsing techniques. This method achieved near state-of-the-art results for both projective and non-projective languages.\n\nIn the realm of dialogue systems, I tackled the issue of consistency by framing it as a natural language inference (NLI) problem. I created the Dialogue NLI dataset and demonstrated that training models on this dataset can significantly improve dialogue consistency.\n\nMy work on integrating language models with the Lean proof assistant led to the development of LLMSTEP, a tool that provides real-time proof suggestions. This was a step towards making language model suggestions more accessible and effective for users.\n\nI have also explored the limitations of maximum likelihood estimation in neural autoregressive sequence models. I proposed maximum likelihood guided parameter search (MGS) and unlikelihood training to address issues like repetition and non-termination in sequence generation, achieving substantial improvements in various NLP tasks.\n\nIn the domain of mathematical theorem proving, I introduced benchmarks like miniCTX and miniCodeProps to evaluate the capabilities of neural theorem provers. My work on NaturalProver and Lean-STaR has pushed the boundaries of what language models can achieve in automated theorem proving, setting new state-of-the-art results.\n\nAdditionally, I have investigated the challenges of generalization in neural sequence models, particularly in symbolic mathematical integration. My research highlights the importance of evaluating models beyond standard test sets to ensure robustness and compositionality.\n\nOverall, my research aims to bridge the gap between theoretical advancements and practical applications, making significant strides in improving the performance and reliability of NLP and machine learning models.",
+    "collaborators": [
+      "Kyunghyun Cho",
+      "Yejin Choi",
+      "Ilia Kulikov",
+      "Jason Weston",
+      "Peter West",
+      "Stephen Roller",
+      "Ximing Lu",
+      "Daniel Khashabi",
+      "Zhiqing Sun",
+      "Yiming Yang"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Natural Language Processing",
+      "Neural Networks",
+      "Theorem Proving"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "49a37c33-bd9c-45ad-b676-413759e51137": {
+    "pk": "49a37c33-bd9c-45ad-b676-413759e51137",
+    "name": "Katerina Fragkiadaki",
+    "bio": "As a researcher, my work primarily revolves around the intersection of computer vision, robotics, and machine learning, with a particular focus on developing advanced neural network architectures and reinforcement learning techniques for complex tasks. My recent research has been dedicated to enhancing the capabilities of artificial agents in understanding and interacting with their environments through innovative approaches that integrate geometry, visual representation learning, and dynamic scene understanding.\n\nOne of my key contributions is the development of recurrent geometry-aware neural networks that integrate visual information across multiple views into 3D latent feature tensors. This approach has significantly improved object detection, segmentation, and 3D reconstruction by maintaining a one-to-one mapping between 3D physical locations and latent feature locations. Additionally, I have worked on hand/eye controllers for reinforcement learning in cluttered environments, enabling agents to manipulate objects while keeping them within the field of view.\n\nI have also explored the use of top-down feedback in hierarchical feature extractors, leading to the Iterative Error Feedback (IEF) framework, which has shown excellent performance in tasks like articulated pose estimation. My work on long-range motion estimation revisits and enhances the \"particle video\" approach, providing robust pixel tracking over multiple frames.\n\nIn the realm of reinforcement learning, I have proposed methods like Act3D, which uses adaptive 3D feature fields for high-precision manipulation tasks, and Gen2Sim, which automates the generation of 3D assets and task descriptions for scaling up robot skill learning. My research also includes the development of 3D Diffuser Actor, a neural policy that leverages 3D denoising transformers for improved robot action prediction.\n\nFurthermore, I have contributed to the field of language grounding with models like BUTD-DETR, which combines language and objectness guidance for referential grounding in 2D and 3D scenes. My work on visual imitation and stochastic neural networks has advanced the understanding of multimodal future prediction and imitation learning.\n\nOverall, my research aims to push the boundaries of what artificial agents can achieve by integrating advanced neural network architectures, geometric reasoning, and reinforcement learning, ultimately enabling more intelligent and capable robotic systems.",
+    "collaborators": [
+      "Zhou Xian",
+      "Nikolaos Gkanatsios",
+      "Ricson Cheng",
+      "Arpit Agarwal",
+      "Zhaoyuan Fang",
+      "Sudheendra Vijayanarasimhan",
+      "Susanna Ricco",
+      "Rahul Sukthankar",
+      "Hsiao-Yu Fish Tung",
+      "Mihir Prabhudesai"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Computer Vision",
+      "Robotics",
+      "Reinforcement Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "df3c420b-5d55-4f10-ba41-227607d07a4b": {
+    "pk": "df3c420b-5d55-4f10-ba41-227607d07a4b",
+    "name": "Daniel Fried",
+    "bio": "I am a dedicated researcher specializing in the field of Graph Neural Networks (GNNs) and their applications in machine learning. My recent work has focused on pushing the boundaries of GNN capabilities and understanding their underlying structures. One of my notable contributions is the development of Position-aware Graph Neural Networks (P-GNNs), which enhance the ability of GNNs to capture the positional information of nodes within a graph, leading to significant improvements in tasks like link prediction and community detection.\n\nI have also introduced Identity-aware Graph Neural Networks (ID-GNNs), which address the limitations of existing GNNs by incorporating node identities during message passing. This innovation has resulted in substantial accuracy improvements across various prediction tasks. Additionally, my work on ROLAND has provided a scalable and efficient framework for applying GNNs to dynamic graphs, overcoming the challenges posed by evolving graph structures.\n\nBeyond these specific advancements, I have systematically explored the architectural design space of GNNs, creating a comprehensive set of guidelines for designing high-performing models. This research has culminated in the development of GraphGym, a platform that facilitates the exploration and evaluation of different GNN designs and tasks.\n\nIn the realm of automated machine learning (AutoML), I have proposed FALCON, a sample-based method for efficient model design search, and AutoTransfer, which leverages prior architectural knowledge to improve search efficiency for new tasks. These contributions aim to make AutoML more accessible and effective, reducing computational costs while enhancing model performance.\n\nOverall, my research is driven by a passion for uncovering the potential of GNNs and machine learning, with a focus on creating practical, scalable solutions that can be applied to real-world problems.",
+    "collaborators": [],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Graph Neural Networks",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "33150e63-55bc-4b13-af11-72dcb291a4e5": {
+    "pk": "33150e63-55bc-4b13-af11-72dcb291a4e5",
+    "name": "Heng Ji",
+    "bio": "I am a researcher deeply immersed in the intersection of natural language processing (NLP), machine learning, and neural networks, with a particular focus on innovative applications and methodologies. My recent work has been centered around decoding language directly from brain signals, specifically EEG, to text, and extending this to open vocabulary and zero-shot sentiment classification. This research leverages pre-trained language models to achieve significant improvements over traditional methods.\n\nIn the realm of event extraction, I have developed novel approaches to semi-supervised new event type induction and event argument extraction, utilizing techniques like masked contrastive loss and retrieval-augmented generative QA models. These methods have shown substantial performance gains across various settings, including few-shot learning and domain transfer.\n\nMy work also addresses the challenges of fact-checking across different domains and languages. I have proposed adversarial algorithms to enhance the robustness of fact-checking pipelines against distribution shifts and developed cross-lingual retrieval techniques to aggregate evidence from multiple languages, significantly improving fact-checking accuracy in low-resource languages.\n\nIn the field of chemistry, I have contributed to the automatic extraction of molecule descriptors from 2-D images in scientific literature, introducing models that outperform existing systems by a large margin. Additionally, I have explored the updating of large language models with new information, proposing methods to bridge the gap between language modeling probabilities and logical probabilities.\n\nMy research extends to the evaluation of large vision-language models, revealing their shortcomings in fine-grained visual categorization and proposing new benchmarks for better evaluation. I have also worked on comparative reasoning over knowledge graphs, end-to-end speech translation, and efficient biomedical entity linking.\n\nOverall, my work aims to push the boundaries of NLP and machine learning, developing scalable, efficient, and high-performing models that can be applied to a wide range of tasks and domains.",
+    "collaborators": [
+      "Jiawei Han",
+      "ChengXiang Zhai",
+      "Chenkai Sun",
+      "Qi Zeng",
+      "Jiaming Shen",
+      "Zhenhailong Wang",
+      "Carl Edwards",
+      "Xinya Du",
+      "Payam Karisani",
+      "Daniel Campos"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Brain-Computer Interface",
+      "Natural Language Processing",
+      "Event Extraction"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9af061c2-d4e8-42e2-97d8-64e2129677e3": {
+    "pk": "9af061c2-d4e8-42e2-97d8-64e2129677e3",
+    "name": "Jiawei Han",
+    "bio": "I am a researcher deeply immersed in the fields of graph theory, machine learning, and natural language processing. My work spans a diverse array of topics, from the mathematical intricacies of Teichm\u00fcller space and mapping class groups to the practical applications of machine learning in text classification and event extraction.\n\nIn the realm of graph theory, I have explored the asymptotic behavior of lattice points in Teichm\u00fcller space, particularly focusing on pseudo-Anosov mapping classes and Dehn twists. My research has shown that the number of lattice points intersecting a closed ball of radius \\( R \\) grows exponentially, providing new insights into the geometric properties of these spaces.\n\nTransitioning to machine learning, I have developed innovative methods to enhance few-shot text classification by leveraging supervised contrastive learning and consistency regularization. My model, FTCC, has demonstrated superior performance and robustness across multiple datasets. Additionally, I have introduced ProxiModel, a framework for mining high-quality structured event knowledge from large, noisy news data sources, which has proven effective in applications like news summarization and event tracking.\n\nIn the domain of network embedding, I created DMGI, an unsupervised method for attributed multiplex networks that outperforms state-of-the-art techniques by maximizing mutual information between local and global graph representations. My work on multi-head attention in Transformer models has also provided new perspectives on training stability and performance improvements.\n\nFurthermore, I have tackled challenges in hierarchical text classification, proposing HiLAP, a deep reinforcement learning framework that significantly improves classification accuracy by exploring label hierarchies during both training and inference. My contributions to semi-supervised learning include NEP, a method that leverages heterogeneous networks to model complex interactions and improve classification performance.\n\nMy research also extends to linguistic steganography, where I have developed methods to encode secret messages in natural language texts, and to abstractive summarization, where I have proposed techniques to ensure factual consistency. Additionally, I have worked on taxonomy completion with TaxoEnrich and type discovery in information extraction, pushing the boundaries of what automated systems can achieve in organizing and understanding complex data.\n\nOverall, my work is characterized by a blend of theoretical rigor and practical innovation, aiming to advance our understanding and capabilities in both graph theory and machine learning.",
+    "collaborators": [
+      "Heng Ji",
+      "Xiang Ren",
+      "Ahmed El-Kishky",
+      "Yuning Mao",
+      "Jieyu Zhang",
+      "Jiaming Shen",
+      "Yu Zhang",
+      "Yu Meng",
+      "Yunyi Zhang",
+      "Liwen Sun"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Teichm\u00fcller Theory",
+      "Natural Language Processing",
+      "Graph Neural Network"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "1fe58b12-c3fe-424b-9ac0-fab77c212c92": {
+    "pk": "1fe58b12-c3fe-424b-9ac0-fab77c212c92",
+    "name": "Alexander G. Schwing",
+    "bio": "I am a researcher deeply immersed in the field of computer vision, with a particular focus on image and video segmentation, visual question answering, and reinforcement learning. My recent work has revolved around developing unified and efficient models that push the boundaries of what is possible in these domains.\n\nOne of my key contributions is the development of MaskFormer and Mask2Former, which simplify and unify the tasks of semantic, instance, and panoptic segmentation using a mask classification approach. These models have set new benchmarks, outperforming state-of-the-art methods on various datasets like ADE20K and COCO.\n\nIn the realm of visual question answering, I have worked on enhancing reasoning capabilities by leveraging graph convolutional networks to improve accuracy in fact-based visual question answering tasks. My work on TAB-VCR has shown that simpler models can outperform more complex baselines by better associating visual features with attribute information.\n\nI have also explored the augmentation of fMRI data using generative models like GANs and VAEs, demonstrating that synthetic data can significantly improve the performance of predictive models in neuroimaging.\n\nIn the area of reinforcement learning, I have developed methods like CEIP and TAILO to improve learning from demonstrations and observations, particularly in sparse reward settings. These methods have shown robustness and effectiveness across multiple challenging environments.\n\nAdditionally, my work on 3D-aware image synthesis and dynamic object reconstruction has led to the development of frameworks like REDO and CoRF, which handle complex object dynamics and ensure 3D consistency in generated images and videos.\n\nOverall, my research aims to create versatile, efficient, and high-performing models that can be applied across a wide range of tasks in computer vision and machine learning.",
+    "collaborators": [
+      "Bowen Cheng",
+      "Alexander Kirillov",
+      "Ishan Misra",
+      "Rohit Girdhar",
+      "Zhongzheng Ren",
+      "Raymond A. Yeh",
+      "Peiye Zhuang",
+      "Xiaoming Zhao",
+      "Anwesa Choudhuri",
+      "Iou-Jen Liu"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Computer Vision",
+      "Image Segmentation",
+      "Visual Question Answering",
+      "Reinforcement Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "3d06f74c-b30c-4602-bdb6-885dc88bf7b1": {
+    "pk": "3d06f74c-b30c-4602-bdb6-885dc88bf7b1",
+    "name": "Jimeng Sun",
+    "bio": "As a researcher, my work primarily focuses on leveraging advanced machine learning techniques to address critical challenges in healthcare and clinical research. My recent projects have revolved around developing innovative models and frameworks to enhance clinical trial design, survival analysis, electronic health record (EHR) generation, and predictive healthcare.\n\nOne of my notable contributions is the development of Trial2Vec, a zero-shot clinical trial retrieval method that uses self-supervision to generate medically interpretable embeddings, significantly improving trial retrieval precision and recall. Additionally, I have worked on SurvTRACE, a transformer-based model for survival analysis that handles competing events and accounts for implicit confounders, enhancing the accuracy of survival predictions.\n\nIn the realm of EHRs, I proposed a novel approach to generate synthetic EHRs using language models, ensuring realistic and privacy-preserving data generation. My work on TransTab aims to relax fixed table structures in machine learning, allowing for more flexible and efficient model training and updating.\n\nI have also developed AutoTrial, a method to aid in designing clinical trial eligibility criteria using language models, and PILOT, a framework for predicting legal case outcomes by identifying relevant precedent cases and handling temporal patterns. My research extends to document-level relation extraction with TTM-RE, which integrates a trainable memory module to handle noisy training data effectively.\n\nFurthermore, I have explored tensor factorization for federated computational phenotyping, drug-drug interaction prediction with graph energy neural networks, and molecule optimization using a \"Copy & Refine\" strategy. My work on uncertainty quantification in deep learning, particularly with SDE-Net, provides a new perspective on capturing epistemic uncertainty.\n\nOverall, my research aims to bridge the gap between advanced machine learning methodologies and practical applications in healthcare, clinical trials, and legal case predictions, striving to make these processes more efficient, accurate, and interpretable.",
+    "collaborators": [
+      "Cao Xiao",
+      "Zifeng Wang",
+      "Chaoqi Yang",
+      "Zhen Lin",
+      "Shubhendu Trivedi",
+      "Lucas Glass",
+      "Tianfan Fu",
+      "Lang Cao",
+      "Chufan Gao",
+      "Xuan Wang"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Healthcare",
+      "Machine Learning",
+      "Natural Language Processing"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "76aa51df-e7eb-40cd-80bb-a8eb4f3f9c0b": {
+    "pk": "76aa51df-e7eb-40cd-80bb-a8eb4f3f9c0b",
+    "name": "Josep Torrellas",
+    "bio": "As a researcher, my work primarily focuses on enhancing the efficiency, security, and scalability of deep learning and computer architecture. My recent projects have revolved around optimizing neural network training and inference, particularly by leveraging dynamic sparsity and energy-efficient methods. For instance, I developed techniques to exploit ReLU-induced sparsity during training, significantly speeding up the process on popular deep neural networks like VGG16 and ResNet.\n\nIn the realm of large language models (LLMs), I have explored the trade-offs between energy efficiency and performance, proposing frameworks like DynamoLLM to optimize energy usage in data centers without compromising on service-level objectives. This work is crucial for sustainable and cost-effective deployment of LLMs.\n\nMy research also delves into memory technologies, where I proposed Cloak, a method to hide NVM read latency by exploiting data reuse at the page level. This approach outperforms traditional SRAM and NVM-only LLC designs, offering substantial performance and energy efficiency gains.\n\nSecurity is another critical area of my research. I have developed solutions like Maya and Defensive ML to protect against side-channel attacks. Maya reshapes power dissipation using control theory, while Defensive ML employs adversarial machine learning to obfuscate side-channel signals, enhancing security with minimal performance impact.\n\nAdditionally, I have worked on optimizing sparse matrix operations and graph neural networks (GNNs). My system, SENSEi, dynamically selects the best matrix re-associations for GNN computations, achieving significant speedups on both CPUs and GPUs.\n\nOverall, my research aims to push the boundaries of what is possible in deep learning, computer architecture, and security, making systems more efficient, scalable, and secure.",
+    "collaborators": [
+      "Jovan Stojkovic",
+      "Esha Choukse",
+      "Chaojie Zhang",
+      "Raghavendra Pradyumna Pothukuchi",
+      "Gerasimos Gerogiannis",
+      "Zhangxiaowen Gong",
+      "Houxiang Ji",
+      "Christopher Fletcher",
+      "Christopher Hughes",
+      "Inigo Goiri"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Deep Learning",
+      "Energy Efficiency",
+      "Side-Channel Attacks",
+      "Non-Volatile Memory"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "ade69c6e-c621-4164-a13f-b05734008cc7": {
+    "pk": "ade69c6e-c621-4164-a13f-b05734008cc7",
+    "name": "James M. Rehg",
+    "bio": "I am a researcher deeply immersed in the field of computer vision, with a particular focus on leveraging deep learning to tackle complex visual tasks. My recent work has centered around developing innovative methods for low-shot learning, 3D shape reconstruction, and embodied AI. One of my key contributions is the development of Deep Object Patch Encodings (DOPE), a self-supervised approach for learning dense object representations from multiple views without requiring category labels. This method has shown promising results in low-shot category recognition.\n\nI have also explored the integration of 3D shape reasoning into low-shot learning, proposing a novel embedding space that enhances generalization performance. My work on SDFNet has pushed the boundaries of single-image 3D shape reconstruction, achieving state-of-the-art results on both seen and unseen shapes. Additionally, I have delved into the realm of embodied AI with the Localization via Embodied Dialog (LED) task, where I developed the LED-Bert architecture to improve location prediction in unknown environments.\n\nContinual learning is another area of my research, where I have demonstrated positive knowledge transfer in 3D object shape reconstruction tasks. My work on PulseImpute addresses the challenge of missing data in mobile health applications, introducing a transformer-based architecture for pulsative signal imputation.\n\nIn the domain of action recognition and gaze estimation, I have developed Action2Vec, a cross-modal embedding space for actions, and a novel deep model for joint gaze estimation and action recognition in first-person vision. My contributions also extend to video editing with RAVE, a zero-shot method leveraging pre-trained text-to-image diffusion models.\n\nOverall, my research aims to push the boundaries of computer vision by developing robust, scalable, and efficient methods that can be applied to a wide range of real-world tasks.",
+    "collaborators": [
+      "Stefan Stojanov",
+      "Anh Thai",
+      "Miao Liu",
+      "Meera Hahn",
+      "Nataniel Ruiz",
+      "Zixuan Huang",
+      "Eunji Chong",
+      "Evangelos A. Theodorou",
+      "Vijay Upadhya",
+      "Isaac Rehg"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Computer Vision",
+      "3D Reconstruction",
+      "Deep Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "bfd15e7a-d1fd-4846-abcf-e3ceffaef0e4": {
+    "pk": "bfd15e7a-d1fd-4846-abcf-e3ceffaef0e4",
+    "name": "Yu-Xiong Wang",
+    "bio": "As a researcher, my primary focus lies in the realm of Graph Neural Networks (GNNs) and their applications across various domains. My recent work has been dedicated to pushing the boundaries of GNN capabilities and understanding their underlying mechanisms. One of my notable contributions is the development of Position-aware Graph Neural Networks (P-GNNs), which enhance the ability of GNNs to capture the positional information of nodes within a graph, leading to significant improvements in tasks like link prediction and community detection.\n\nI have also delved into the structural aspects of neural networks, investigating how their graph representations impact predictive performance. This led to the creation of relational graphs, which reveal that certain graph structures can significantly boost neural network performance, mirroring the efficiency found in biological neural networks.\n\nTo address the limitations of existing GNNs, I introduced Identity-aware Graph Neural Networks (ID-GNNs), which incorporate node identities during message passing, thereby surpassing the expressive power of traditional GNNs. This innovation has shown remarkable improvements in various prediction tasks, including node and graph classification.\n\nRecognizing the challenges in dynamic graph learning, I developed the ROLAND framework, which adapts static GNNs for dynamic environments, offering scalable and efficient training methods. This framework has demonstrated substantial performance gains in real-world dynamic graph datasets.\n\nMy research also extends to the systematic exploration of the GNN design space, where I have identified optimal architectures for diverse tasks using a comprehensive evaluation method. This work culminated in the creation of GraphGym, a platform for exploring and evaluating GNN designs.\n\nIn the realm of automated machine learning (AutoML), I proposed FALCON, a sample-based method for efficient model design search, and AutoTransfer, which leverages prior knowledge to enhance search efficiency for new tasks. These contributions aim to make AutoML more accessible and effective.\n\nOverall, my research is driven by a passion for uncovering the potential of GNNs and machine learning, striving to develop innovative solutions that address both theoretical and practical challenges in the field.",
+    "collaborators": [],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Graph Neural Networks",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "39bb25b7-ad6f-4deb-ab8a-1afea3733b2b": {
+    "pk": "39bb25b7-ad6f-4deb-ab8a-1afea3733b2b",
+    "name": "Hanghang Tong",
+    "bio": "I am a dedicated researcher with a strong focus on advancing the fields of machine learning, graph neural networks (GNNs), and optimization. My recent work has been centered around enhancing the adaptability and interpretability of machine learning models, particularly through meta-learning and concept discovery. For instance, my development of Concept-Based Model-Agnostic Meta-Learning (COMAML) aims to bridge the gap between human learning processes and machine learning by extracting structural and transferable knowledge, leading to more effective adaptation in few-shot learning scenarios.\n\nIn the realm of optimization, I have proposed Gradient Compressed Sensing (GraCe), a highly efficient method for zeroth-order optimization in high-dimensional spaces, which significantly reduces query complexity while maintaining strong empirical performance. My work on comparative reasoning over knowledge graphs with the KompaRe system introduces a novel approach to infer commonalities and inconsistencies, complementing traditional point-wise reasoning methods.\n\nFairness and robustness in machine learning are also key areas of my research. I have developed frameworks for measuring causality-based fairness and proposed methods like BeMap to mitigate bias in GNNs. Additionally, my work on Adversarial Graph Contrastive Learning (ARIEL) introduces innovative techniques to improve the robustness and performance of graph contrastive learning models.\n\nI am also passionate about practical applications and scalability. My contributions include the SUGER model for bundle recommendation, which leverages subgraph-based GNNs to handle label scarcity issues, and the CoNSoLe framework for convex neural symbolic learning, which provides theoretical guarantees for learning underlying equations from data.\n\nOverall, my research aims to push the boundaries of machine learning and GNNs, making them more adaptable, interpretable, fair, and robust, while ensuring they can be efficiently applied to real-world problems.",
+    "collaborators": [
+      "Boxin Du",
+      "Shengyu Feng",
+      "Baoyu Jing",
+      "Jian Kang",
+      "Xintao Wu",
+      "Yada Zhu",
+      "Qinghai Zhou",
+      "Weilin Cong",
+      "Ruizhong Qiu",
+      "Lihui Liu"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Meta-Learning",
+      "Graph Neural Network",
+      "Fair Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "20eac732-6089-4f23-afa3-711812ed7541": {
+    "pk": "20eac732-6089-4f23-afa3-711812ed7541",
+    "name": "Kris Hauser",
+    "bio": "I am a researcher deeply immersed in the field of robotics and optimization, with a particular focus on developing innovative algorithms and frameworks that enhance the efficiency, safety, and adaptability of robotic systems. My work spans a variety of applications, from real-time optimization in robotics to advanced teleoperation and autonomous navigation.\n\nOne of my key contributions is the development of a data-driven framework for approximate global optimization, which significantly accelerates the solution of complex problems like collision-free inverse kinematics. This approach has shown promise in real-time applications, particularly in robotics, by producing near-optimal solutions much faster than traditional methods.\n\nI have also worked on a bilevel planning algorithm for large-scale object sorting tasks, combining overhead grasping and planar pushing to achieve near-optimal sorting actions efficiently. My research in this area aims to balance computational efficiency with practical applicability, ensuring that robotic systems can handle real-world tasks effectively.\n\nIn the realm of robotic locomotion, I introduced the non-convex maximal dissipation principle (NMDP), a time integration scheme that improves the stability and generalization of contact models in articulated bodies. This work has been pivotal in predicting locomotion trajectories for quadruped robots, demonstrating superior stability and consistency.\n\nMy interest in haptic feedback led to the development of a novel teleoperation framework that estimates operator attentiveness to obstacles, enhancing both safety and user experience. This biologically-inspired model integrates visual saliency with spatial mapping to adjust haptic forces dynamically.\n\nI have also contributed to the field of trajectory optimization by decoupling state and timing variables, creating a bilevel optimization framework that improves convergence and computational efficiency. This method has been successfully applied to generate real-time trajectories for unmanned aerial vehicles.\n\nIn the medical robotics domain, I developed an autonomous robotic auscultation system that uses Bayesian Optimization to select optimal auscultation locations, achieving sound quality comparable to human experts. This system has the potential to revolutionize health screening by providing consistent and accurate diagnostic capabilities.\n\nMy work on adaptive scooping strategies for extraterrestrial missions leverages deep Gaussian processes and meta-learning to handle domain shifts, ensuring high-quality scooping actions on diverse terrains. This research is crucial for the success of autonomous lander missions on other planets.\n\nOverall, my research is driven by a passion for creating robust, efficient, and adaptable robotic systems that can tackle a wide range of real-world challenges.",
+    "collaborators": [
+      "Zherong Pan",
+      "Gao Tang",
+      "Yifan Zhu",
+      "Baoyu Li",
+      "Andrew Stratton",
+      "Joao Marcos Correia Marques",
+      "Mengchao Zhang",
+      "Devesh K. Jha",
+      "Arvind U. Raghunathan",
+      "Ninghan Zhong"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Robotics",
+      "Optimization",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "abfd1867-c784-4c05-84af-e987a0e71e2c": {
+    "pk": "abfd1867-c784-4c05-84af-e987a0e71e2c",
+    "name": "Nam Sung Kim",
+    "bio": "I am a researcher deeply engaged in the intersection of computer architecture, machine learning, and security. My recent work has focused on leveraging adversarial machine learning (AML) to defend against side-channel attacks, a growing threat in computer security. By developing Defensive ML, I have created a framework that uses AML to obfuscate signals at the architectural level, significantly enhancing security with minimal performance impact.\n\nIn the realm of distributed training, I have analyzed and optimized AllReduce operations, proposing models that improve wall-clock training times by up to 5.4x. My work on FastDrain addresses SSD buffer overflow issues by co-designing OS kernels and flash firmware, reducing user application response times by 84%.\n\nI have also tackled the challenge of training massive deep neural networks (DNNs) on limited resources. My Harmony framework rethinks DNN computation scheduling and data movement, achieving up to 7.6x speedup in training throughput. Additionally, my BNS-GCN method enables scalable distributed training of Graph Convolutional Networks (GCNs), boosting throughput by up to 16.2x while reducing memory usage by 58%.\n\nMy research extends to understanding DRAM microarchitectures and mitigating vulnerabilities like RowHammer. By uncovering the internal structure and characteristics of DRAM, I have provided insights that enhance reliability and security.\n\nLastly, I have explored innovative neural accelerator designs, introducing Bit-Parallel Vector Composability to interleave bit-level and data-level parallelism. This approach has shown significant improvements in performance and energy efficiency, outperforming conventional designs and even high-end GPUs.\n\nOverall, my work aims to push the boundaries of what is possible in computer architecture and machine learning, making systems more secure, efficient, and scalable.",
+    "collaborators": [
+      "Youjie Li",
+      "Hwayong Nam",
+      "Seungmin Baek",
+      "Minbok Wi",
+      "Michael Jaemin Kim",
+      "Jaehyun Park",
+      "Chihun Song",
+      "Jung Ho Ahn",
+      "Hyoungwook Nam",
+      "Raghavendra Pradyumna Pothukuchi"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Computer Security",
+      "Distributed Systems",
+      "Deep Learning",
+      "Hardware Architecture"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "60d0e905-0250-4760-8895-780cdb3d1642": {
+    "pk": "60d0e905-0250-4760-8895-780cdb3d1642",
+    "name": "Jian Peng",
+    "bio": "I am a researcher deeply immersed in the fields of reinforcement learning, graph neural networks, and machine learning. My work spans a variety of innovative approaches and methodologies aimed at solving complex problems in these domains.\n\nOne of my key contributions is the development of a general architecture that combines coefficient learning with a residual operator layer to achieve SE(3)-equivariance in 3D Euclidean space. This model, termed InfGCN, leverages both continuous graphon structures and discrete graph structures to capture geometric information effectively. My extensive experiments on large-scale electron density datasets have shown that this model significantly outperforms current state-of-the-art architectures.\n\nIn the realm of imitation learning, I have proposed a state-only IL algorithm that addresses the common issue of transition dynamics mismatch between expert and imitator MDPs. This algorithm divides the optimization objective into subproblems, solving them iteratively to improve performance where traditional methods falter.\n\nMy work on policy gradient methods led to the introduction of the Stein variational policy gradient method (SVPG), which enhances exploration and robustness in reinforcement learning. SVPG combines policy gradient methods with a repulsive functional to generate diverse yet well-behaved policies, showing significant improvements in continuous control problems.\n\nI have also tackled the thresholding bandit problem with the LSA algorithm, which aims to minimize aggregate regret and has proven to be instance-wise asymptotically optimal. Additionally, my localized inference algorithm for large graphical models with the correlation decay property provides fast and accurate approximations for marginalization queries.\n\nIn vision-based RL, I developed an end-to-end learning framework that disentangles controllable objects from observation signals, improving sample efficiency and game performance in Atari games. My exploration of Quality-Diversity (QD) in RL has led to a kernel-based method for training diverse and high-quality policy ensembles.\n\nFurthermore, I have addressed the challenge of learning from sparse and delayed rewards with a novel reward redistribution algorithm, RRD, which scales up least-squares-based reward redistribution for long-horizon problems. My work on conditional probability estimates for binary classification under the agnostic setting has introduced a new measure for calibration property, providing formal justification for using Bayes Decision Theory in cost-sensitive decision problems.\n\nLastly, I have applied stochastic variance reduced gradient descent (SVRG) to model-free policy gradient methods, significantly improving sample efficiency in robotic continuous control tasks. My online learning algorithm, AVE, for MDPs with large state spaces, achieves low cumulative regret while learning the optimal value function.\n\nOverall, my research is driven by a passion for",
+    "collaborators": [
+      "Yuan Zhou",
+      "Tanmay Gangwani",
+      "Qiang Liu",
+      "Yuanyi Zhong",
+      "Chaoran Cheng",
+      "Yang Liu",
+      "Prajit Ramachandran",
+      "Chao Tao",
+      "Sa\u00f9l Blanco",
+      "Jinglin Chen"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Reinforcement Learning",
+      "Policy Optimization",
+      "Graph Neural Network"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "6739891c-ceab-4e05-8589-ec3a8bfe9fb5": {
+    "pk": "6739891c-ceab-4e05-8589-ec3a8bfe9fb5",
+    "name": "Gang Wang",
+    "bio": "I am a researcher deeply engaged in the fields of particle physics, machine learning, and gravitational wave detection. My work spans a diverse array of topics, from the analytical and numerical solutions of the 1-D Fokker-Planck equation in electron cooling systems to the development of advanced models for scene text recognition. In the realm of particle physics, I have focused on understanding the dynamics of ion and electron beams, particularly in the context of coherent electron cooling and recombination rates.\n\nIn machine learning, I have proposed innovative models like Firbarn, which enhances scene text recognition through a finer rectification module and a bidirectional attentional recognition network. This model has shown significant improvements, especially on irregular datasets, by training in a weakly supervised manner.\n\nMy contributions to the field of gravitational wave detection are substantial. I have worked extensively on time-delay interferometry (TDI), a crucial technique for space-based gravitational wave missions. My research includes developing and analyzing second-generation TDI configurations, such as the hybrid Relay, which has demonstrated superior robustness in noise suppression and data analysis compared to traditional Michelson configurations. I have also introduced the SATDI framework, which integrates simulation and analysis for TDI, enhancing our ability to extract gravitational wave signals and accurately determine source parameters.\n\nAdditionally, I have explored the representation of logical relations in artificial neural networks (ANNs), aiming to bridge the gap between perceptual and cognitive intelligence. My work in this area includes designing novel neural network models that can represent and store logical relations more directly and efficiently, thus expanding the application areas of ANNs.\n\nOverall, my research is characterized by a strong interdisciplinary approach, combining theoretical insights with practical applications to push the boundaries of our understanding and capabilities in these advanced scientific domains.",
+    "collaborators": [],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Gravitational Wave Detection",
+      "Time-Delay Interferometry",
+      "Scene Text Recognition",
+      "Logical Neural Networks"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "86cb7ad1-aa76-4b24-bd27-d89dc589cc42": {
+    "pk": "86cb7ad1-aa76-4b24-bd27-d89dc589cc42",
+    "name": "Christopher W. Fletcher",
+    "bio": "As a researcher, my work primarily focuses on the intersection of computer architecture, security, and machine learning. My recent endeavors have been centered around developing innovative solutions to enhance the performance, security, and efficiency of modern computing systems.\n\nOne of my significant contributions is the introduction of microarchitectural side-channel attacks leveraging CPU ring interconnect contention. This work involved reverse engineering sophisticated protocols and developing a cross-core covert channel with unprecedented capacity. Additionally, I have proposed DECLASSIFLOW, a framework to protect constant-time code from speculative execution attacks, significantly reducing performance overhead compared to existing defenses.\n\nIn the realm of machine learning, I have designed Morph, an adaptive accelerator for 3D Convolutional Neural Networks (3D CNNs), which achieves substantial energy reductions and performance improvements. My work also extends to cloud security, where I demonstrated the feasibility of last-level cache side-channel attacks in production cloud environments, introducing novel techniques to enhance attack efficiency.\n\nFurthermore, I have developed TeAAL, a language and simulator generator for evaluating sparse tensor algebra accelerators, and HarDNN, a software-directed approach to improve the resilience of CNNs against hardware errors. My research also includes Mind Mappings, a gradient-based search method for optimizing algorithm-accelerator mappings, and FuseMax, a novel mapping of attention mechanisms onto spatial array-style architectures, achieving significant speedups and energy savings.\n\nOverall, my research aims to push the boundaries of what is possible in computer architecture and security, ensuring that our systems are not only more powerful and efficient but also secure and resilient against emerging threats.",
+    "collaborators": [
+      "Zirui Neil Zhao",
+      "Adam Morrison",
+      "Kartik Hegde",
+      "Nandeeka Nayak",
+      "Toluwanimi O. Odemuyiwa",
+      "Michael Pellauer",
+      "Joel S. Emer",
+      "Riccardo Paccagnella",
+      "Licheng Luo",
+      "Rutvik Choudhary"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Microarchitectural Side Channels",
+      "Hardware Security",
+      "Neural Network Accelerators"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "1f292195-dbd5-492f-acf5-37869e603c73": {
+    "pk": "1f292195-dbd5-492f-acf5-37869e603c73",
+    "name": "Shenlong Wang",
+    "bio": "I am a researcher deeply immersed in the fields of computer vision, machine learning, and autonomous systems. My work primarily focuses on developing advanced algorithms and models to enhance the capabilities of autonomous vehicles and improve the efficiency of data processing in various sensory systems.\n\nOne of my key contributions is in the area of stereo image compression, where I developed a method that leverages overlapping fields of view to significantly reduce the bitrate of the second image. This approach not only enhances compression efficiency but also maintains high image quality, making it highly applicable in resource-constrained environments.\n\nIn the realm of LiDAR technology, I have introduced several innovative models, including LiDARGen and LidarDM, which generate realistic and controllable LiDAR point clouds. These models are crucial for autonomous driving simulations and have demonstrated superior performance in generating high-quality, physically feasible point clouds.\n\nMy research also extends to object navigation and scene understanding. I developed a method for predicting the locations of unobserved objects from incomplete semantic maps, achieving state-of-the-art results in ObjectGoal navigation tasks. Additionally, I have worked on creating rearticulable models for everyday objects, enabling more accurate and flexible object manipulation in robotic systems.\n\nIn the field of autonomous driving, I have made significant strides with models like MapPrior and DSDNet, which improve the accuracy and realism of semantic map layouts and motion planning. My work on scene flow estimation and real-time stereo algorithms has set new benchmarks in speed and accuracy, essential for real-time applications in self-driving cars.\n\nFurthermore, I have explored open-set instance segmentation for point clouds, addressing the challenge of identifying objects from unknown classes, and developed SceneGen, a neural autoregressive model for generating realistic traffic scenes. These contributions are pivotal in enhancing the fidelity of simulations used for training and testing autonomous vehicles.\n\nOverall, my research is driven by the goal of pushing the boundaries of what is possible in autonomous systems, making them more efficient, reliable, and capable of operating in complex real-world environments.",
+    "collaborators": [
+      "Raquel Urtasun",
+      "Kelvin Wong",
+      "Jerry Liu",
+      "Vlas Zyrianov",
+      "Shaowei Liu",
+      "Xiyue Zhu",
+      "Saurabh Gupta",
+      "Zhijian Liu",
+      "Sheng Cheng",
+      "Naira Hovakimyan"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Computer Vision",
+      "Autonomous Driving",
+      "Generative Models"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "cb50d9a4-b586-402a-8fad-4ea8b869f2db": {
+    "pk": "cb50d9a4-b586-402a-8fad-4ea8b869f2db",
+    "name": "Han Zhao",
+    "bio": "As a researcher, my work primarily revolves around the intersection of machine learning, fairness, and control systems. My recent focus has been on understanding and mitigating biases in machine learning models, particularly in high-stakes domains where fairness is crucial. One of my key contributions is characterizing the tradeoff between fairness and accuracy in regression settings, providing sharp, algorithm-independent lower bounds on the error of any fair regressor. This work has led to the development of practical algorithms for fair regression through representation learning.\n\nIn addition to fairness, I have explored model-free algorithms for optimal control in constrained-input systems. My work in this area includes developing novel algorithms like synchronous integral Q-learning, which solve continuous-time optimal control problems without requiring prior knowledge of system dynamics. These algorithms leverage neural networks to approximate optimal value functions and policies, ensuring stability and convergence through Lyapunov analysis.\n\nAnother significant area of my research is the in-context learning capabilities of large language models (LLMs). I have investigated how transformer-based LLMs can simulate kernel regression with internal representations, providing insights into their behavior and improving their performance on downstream tasks.\n\nI have also contributed to the field of fair classification by proposing post-processing algorithms that mitigate model bias under various group fairness criteria. These algorithms recalibrate output scores to achieve fairness, demonstrating efficiency and effectiveness on benchmark datasets.\n\nMy work extends to non-Hermitian systems, where I have designed passive parity-time-symmetric acoustic gratings to enhance diffraction abilities and control acoustic waves. Additionally, I have established theoretical connections between Sum-Product Networks (SPNs) and Bayesian Networks (BNs), showing how SPNs can be converted into BNs using Algebraic Decision Diagrams.\n\nOverall, my research aims to develop robust, fair, and efficient machine learning and control algorithms, with a strong emphasis on theoretical foundations and practical applications.",
+    "collaborators": [
+      "Lei Guo",
+      "Chi Han",
+      "Ziqi Wang",
+      "Heng Ji",
+      "Ruicheng Xian",
+      "Yuzhen Yang",
+      "Han Jia",
+      "Yafeng Bi",
+      "Jun Yang",
+      "Mazen Melibari"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Fairness in Machine Learning",
+      "Reinforcement Learning",
+      "Large Language Models",
+      "Bayesian Networks"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c00ea0c1-5e2b-45f1-90c7-a2e8a4b93ac7": {
+    "pk": "c00ea0c1-5e2b-45f1-90c7-a2e8a4b93ac7",
+    "name": "Tianyin Xu",
+    "bio": "As a researcher, my work primarily revolves around enhancing the reliability, performance, and security of complex software systems, particularly in cloud and distributed environments. My recent focus has been on configuration testing, where I advocate for systematically testing configuration values like software code to prevent misconfigurations from reaching production. This approach, which I have detailed in my work, captures the dynamic effects of configuration changes and has shown significant promise in improving software reliability.\n\nAnother key area of my research is performance isolation in cloud environments. I have explored the limitations of hardware QoS support and proposed innovative solutions like CoCo, a software layer that schedules applications to time-share interference-free partitions, significantly improving performance over traditional methods.\n\nI have also delved into the potential of large language models (LLMs) for configuration validation, developing a framework named Ciri that leverages LLMs to validate configurations effectively. This work addresses some of the long-standing challenges in ML-based configuration validation and opens new avenues for using LLMs in this domain.\n\nMy experience extends to specifying and verifying the correctness of distributed systems, such as ZooKeeper, using formal methods like TLA+. This work has led to the detection and fixing of severe bugs, contributing to the robustness of these systems.\n\nIn the realm of security, I have developed advanced system call filtering mechanisms using eBPF, enhancing the expressiveness and precision of security policies without incurring significant overhead.\n\nAdditionally, I have worked on live forensics for large-scale distributed storage systems, designing systems like Kaleidoscope to pinpoint root causes of performance issues with high accuracy and minimal overhead.\n\nMy research also includes evaluating and optimizing memory expansion technologies, particularly CXL-based memory, and proposing dynamic page allocation policies to improve application performance.\n\nLastly, I have contributed to automating root cause analysis (RCA) for cloud incidents with RCACopilot, a system that leverages large language models to predict incident root causes and provide explanatory narratives, significantly aiding on-call engineers.\n\nOverall, my work aims to bridge the gap between theoretical advancements and practical applications, ensuring that complex software systems are reliable, performant, and secure.",
+    "collaborators": [
+      "Zbigniew T. Kalbarczyk",
+      "Ravishankar K. Iyer",
+      "Yinfang Chen",
+      "Owolabi Legunsen",
+      "Haoran Qiu",
+      "Yongzhou Chen",
+      "Xinyu Lian",
+      "Runxiang Cheng",
+      "Jie Huang",
+      "Parth Thakkar"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Software Reliability",
+      "Configuration Testing",
+      "Cloud Computing",
+      "Large Language Models"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c74b752a-f3d2-4c2d-b5a7-590380510b11": {
+    "pk": "c74b752a-f3d2-4c2d-b5a7-590380510b11",
+    "name": "Tarek F. Abdelzaher",
+    "bio": "As a researcher, my work primarily revolves around the intersection of social media analysis, IoT systems, and knowledge graph reasoning. My recent focus has been on developing advanced algorithms and frameworks to address complex problems in these domains.\n\nIn the realm of social media, I have extended traditional opinion polarization studies by introducing hierarchical overlapping belief estimation. This approach not only identifies points of disagreement but also points of agreement among communities, capturing a more nuanced understanding of social dynamics. My work on Belief Structured Matrix Factorization (BSMF) has shown significant improvements in accuracy and self-consistency, demonstrating its effectiveness on both synthetic and real-world datasets like Twitter.\n\nIn the field of IoT, I have explored the unique challenges posed by the diversity of application domains and the demanding protocols required for constrained resources. My research highlights how foundational advancements in areas like 5G cellular protocols, machine learning model reduction, and device-edge-cloud offloading can address these challenges. I also delve into the critical issues of reliability, security, and privacy in IoT systems, proposing solutions that leverage advancements from other fields.\n\nAdditionally, I have tackled the speculative reasoning task on real-world knowledge graphs, which often suffer from false negative and false positive issues. My proposed variational framework, nPUGraph, addresses these challenges by jointly estimating the correctness of both collected and uncollected facts. This framework enhances the robustness of graph encoders and identifies missing facts, thereby improving the quality of reasoning.\n\nOverall, my research aims to push the boundaries of current methodologies, providing innovative solutions to complex problems in social media analysis, IoT systems, and knowledge graph reasoning.",
+    "collaborators": [
+      "Ruijie Wang",
+      "Shengzhong Liu",
+      "Chaoqi Yang",
+      "Jinyang Li",
+      "Shuochao Yao",
+      "Huajie Shao",
+      "Dongxin Liu",
+      "Tianshi Wang",
+      "Saurabh Bagchi",
+      "Ramesh Govindan"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Social Media Analysis",
+      "IoT",
+      "Knowledge Graphs"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e034463c-4b5b-4767-9d01-7eac7f8a77d0": {
+    "pk": "e034463c-4b5b-4767-9d01-7eac7f8a77d0",
+    "name": "Oluwasanmi Koyejo",
+    "bio": "As a researcher, my work primarily revolves around advancing machine learning, with a particular focus on domain generalization, mechanism design, and neural network training methodologies. My recent contributions include the development of the Target Conditioned Representation Independence (TCRI) objective, which addresses the limitations of existing domain generalization methods by implementing regularizers motivated by conditional independence constraints. This approach has shown significant improvements in cross-domain stability.\n\nIn the realm of mechanism design, I have proposed innovative solutions for repeated-auction settings, particularly for AI-generated digital goods. My work emphasizes human factors, using pairwise comparisons to elicit information from bidders, which has proven to be more intuitive and effective.\n\nI have also delved into biologically inspired learning rules with Feedback Alignment (FA) methods, introducing a unified framework that enhances the interpretability and performance of FA in multi-class classification tasks. My research in this area has provided a deeper theoretical understanding and practical advancements for bio-plausible learning rules.\n\nAdditionally, I have explored the construction and analysis of multiclass and multioutput classification metrics, revealing novel insights into the geometry of feasible confusion tensors and developing consistent plug-in estimators for optimal classifiers.\n\nMy work on distributed training has led to the development of a novel SGD variant that significantly reduces communication overhead, thereby improving training efficiency. In federated learning, I have proposed the SHARE framework, which simultaneously preserves client update privacy and robustness to Byzantine adversaries.\n\nFurthermore, I have contributed to the field of sparse Canonical Correlation Analysis (CCA) with a novel combinatorial algorithm that offers precise control over sparsity and comes with theoretical guarantees. My research also extends to metric elicitation, where I have developed strategies for eliciting flexible multiclass metrics that better reflect human preferences.\n\nOverall, my research aims to push the boundaries of machine learning by addressing fundamental challenges and developing innovative solutions that are both theoretically sound and practically impactful.",
+    "collaborators": [
+      "Mladen Kolar",
+      "Katherine Tsai",
+      "Zachary Robertson",
+      "Ran Li",
+      "Gaurush Hiranandani",
+      "Harikrishna Narasimhan",
+      "Joydeep Ghosh",
+      "Zengjie Song",
+      "Jiangshe Zhang",
+      "Olawale Salaudeen"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Domain Generalization",
+      "Mechanism Design",
+      "Neural Network Training",
+      "Multi-class Classification",
+      "Federated Learning",
+      "Sparse Canonical Correlation Analysis",
+      "Metric Elicitation",
+      "High-dimensional Data Analysis",
+      "Graphical Models",
+      "Disentangled Representations",
+      "Fairness in Machine Learning",
+      "Statistical Inference",
+      "Probabilistic Generative Models",
+      "Aggregated Data Analysis"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "1c1073e2-ed44-428b-be43-90c403d6421e": {
+    "pk": "1c1073e2-ed44-428b-be43-90c403d6421e",
+    "name": "Deming Chen",
+    "bio": "I am a researcher deeply immersed in the intersection of machine learning, hardware acceleration, and efficient algorithm design. My work primarily focuses on optimizing computationally intensive tasks to run efficiently on low-power and embedded systems, such as FPGAs and edge devices. One of my significant contributions is the development of an SoC-based ORB-SLAM system, which accelerates visual feature extraction and matching, achieving substantial speedups and accuracy improvements over traditional CPU and FPGA systems.\n\nIn the realm of deep learning, I have explored the potential of knowledge distillation to enable small models to leverage the performance of large pre-trained models without the need for extensive pre-training. This work has opened new avenues for deploying efficient models in resource-constrained environments.\n\nI have also contributed to the field of visual tracking by developing SiamVGG, a novel tracker that combines CNN backbones with cross-correlation operators to deliver state-of-the-art accuracy and real-time performance. My research extends to high-level synthesis (HLS) for FPGAs, where I introduced HIDA and Chimera, frameworks that automate the design space exploration and optimization of dataflow architectures, significantly reducing development time and improving performance.\n\nMy work on Winograd processing elements and the HybridDNN framework has pushed the boundaries of DSP efficiency and throughput in FPGA-based accelerators, demonstrating substantial performance gains. Additionally, I have developed methods for quantizing CNNs to maximize computational throughput on existing processing units, achieving remarkable improvements in latency and efficiency.\n\nIn the context of neural architecture search (NAS), I have proposed GenNAS, a task-agnostic framework that evaluates neural architectures based on their intrinsic ability to capture input signal patterns, leading to efficient and effective architecture search. My research also includes AutoDistill, an end-to-end model distillation framework that optimizes NLP models for hardware efficiency, achieving superior performance with reduced parameters.\n\nOverall, my research aims to bridge the gap between advanced machine learning algorithms and practical, efficient implementations on modern hardware platforms, ensuring that cutting-edge technologies are accessible and performant in real-world applications.",
+    "collaborators": [
+      "Yao Chen",
+      "Xiaofan Zhang",
+      "Yuhong Li",
+      "Cong Hao",
+      "Xinheng Liu",
+      "Jinjun Xiong",
+      "Junhao Pan",
+      "Hanchen Ye",
+      "Sitao Huang",
+      "Prakhar Ganesh"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Autonomous Navigation",
+      "FPGA",
+      "Neural Architecture Search",
+      "Model Compression"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "4375c6fd-18f8-40ef-ad1d-5c3b6aa55ff7": {
+    "pk": "4375c6fd-18f8-40ef-ad1d-5c3b6aa55ff7",
+    "name": "Saurabh Gupta",
+    "bio": "I am a researcher deeply engaged in the fields of theoretical physics and machine learning, with a particular focus on the quantization of constrained systems and the development of advanced robotic and AI systems. My work in theoretical physics involves the application of the Faddeev-Jackiw formalism to various constrained systems, such as particles on torus knots and the Christ-Lee model. I have explored the symplectic gauge invariant formalism and established BRST symmetries, contributing to a deeper understanding of gauge theories and their quantization.\n\nIn the realm of machine learning and robotics, I have tackled complex problems such as one-shot visual imitation, autonomous agriculture, and mobile manipulation. My research has led to the development of innovative solutions like SRPNet for plant manipulation and SeqIK+$\\theta_0$ for motion planning in novel environments. I have also worked on task-driven navigation, skill composition for sparse-reward tasks, and learning value functions from undirected state-only experience.\n\nMy interdisciplinary approach allows me to bridge the gap between theoretical constructs and practical applications, driving advancements in both fields. Whether it's through the quantization of intricate physical systems or the creation of robust AI models for real-world tasks, my goal is to push the boundaries of what is possible and contribute meaningful insights to the scientific community.",
+    "collaborators": [
+      "Anjali S",
+      "Arjun Gupta",
+      "Matthew Chang",
+      "Jitendra Malik",
+      "Abhinav Gupta",
+      "Raju Roychowdhury",
+      "Xiaoyu Zhang",
+      "Ansha S Nair",
+      "Max E. Shepherd",
+      "Michelle Zhang"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Gauge Theory",
+      "BRST Symmetry",
+      "Quantum Mechanics",
+      "Robotics"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "a117d938-2e79-4510-b5d2-897829e75673": {
+    "pk": "a117d938-2e79-4510-b5d2-897829e75673",
+    "name": "Arindam Banerjee",
+    "bio": "I am a researcher deeply immersed in the study of algebraic geometry, commutative algebra, and their applications to graph theory and combinatorics. My work primarily focuses on the Castelnuovo-Mumford regularity of edge ideals, symbolic and ordinary powers of monomial ideals, and the homological properties of binomial edge ideals. I have explored the upper bounds of regularity in bipartite graphs, classified cubic path ideals, and linked the Cohen-Macaulay property of rings to graph toughness.\n\nIn addition to my algebraic pursuits, I have ventured into the realm of tidal turbine dynamics, investigating the effects of free stream turbulence on turbine performance. This interdisciplinary approach underscores my commitment to applying mathematical principles to solve real-world engineering problems.\n\nMy research also delves into advanced statistical models and machine learning. I have contributed to the development of efficient sampling methods for the Matrix Generalized Inverse Gaussian distribution and proposed novel algorithms for structured matrix recovery. My work on Dynamic Author Persona (DAP) topic models and high-dimensional superposition models highlights my interest in scalable and efficient computational techniques.\n\nOverall, my research is characterized by a blend of theoretical rigor and practical application, aiming to bridge the gap between abstract mathematical concepts and tangible real-world challenges.",
+    "collaborators": [
+      "Sheng Chen",
+      "Robert Giaquinto",
+      "Kriti Goel",
+      "J. K. Verma",
+      "S. Selvaraja",
+      "Eran Nevo",
+      "Ali Alilooee",
+      "Luis N\u00fa\u00f1ez-Betancourt",
+      "Ashwin Vinod",
+      "Farideh Fazayeli"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Commutative Algebra",
+      "Graph Theory",
+      "Homological Algebra"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "aeb7ecd2-cd64-400c-b461-79a00cdf6fc0": {
+    "pk": "aeb7ecd2-cd64-400c-b461-79a00cdf6fc0",
+    "name": "Lingming Zhang",
+    "bio": "I am a researcher deeply immersed in the field of Automated Program Repair (APR) and the application of Large Language Models (LLMs) to software engineering tasks. My work primarily focuses on leveraging advanced machine learning techniques to enhance the reliability and efficiency of software development and maintenance.\n\nOne of my key contributions is the development of conversational APR, a novel paradigm that iteratively combines patch generation with validation feedback to improve the accuracy and relevance of generated patches. This approach has shown significant improvements over traditional methods by utilizing the long-term context capabilities of LLMs.\n\nIn addition to APR, I have also worked on NeuRI, an automated approach for generating diverse and valid deep learning models to improve the testing of DL systems. This work has led to the discovery of numerous bugs in popular frameworks like TensorFlow and PyTorch, many of which have been confirmed and fixed by developers.\n\nMy research also extends to kernel fuzzing with KernelGPT, which uses LLMs to automatically infer specifications for generating valid syscall sequences, thereby enhancing the detection of kernel bugs. This work has been well-received by the Syzkaller team, who have requested to upstream our inferred specifications.\n\nFurthermore, I have explored the potential of LLMs in APR through projects like Repilot and AlphaRepair, which aim to generate more valid patches by understanding the semantic constraints of programming languages and leveraging zero-shot learning, respectively. These approaches have demonstrated substantial improvements in fixing bugs compared to state-of-the-art techniques.\n\nMy work also includes the development of tools like DeepREL for fuzzing DL libraries and Tzer for testing tensor compilers, both of which have uncovered numerous high-priority bugs, contributing to the robustness of DL systems.\n\nOverall, my research is driven by the goal of making software systems more reliable and efficient through the innovative application of machine learning and automated techniques.",
+    "collaborators": [
+      "Chunqiu Steven Xia",
+      "Yinlin Deng",
+      "Jiawei Liu",
+      "Yuxiang Wei",
+      "Chenyuan Yang",
+      "Anjiang Wei",
+      "Yifeng Ding",
+      "Yiling Lou",
+      "Jinjun Peng",
+      "Yuyao Wang"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Automated Program Repair",
+      "Large Language Models",
+      "Deep Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "2ae7ec6b-4721-4cfb-b8a7-046d22bfab11": {
+    "pk": "2ae7ec6b-4721-4cfb-b8a7-046d22bfab11",
+    "name": "Jingrui He",
+    "bio": "I am a researcher deeply immersed in the fields of machine learning, transfer learning, and recommender systems, with a particular focus on dynamic and evolving data environments. My recent work has been centered around addressing the challenges posed by non-static domains, such as continuous transfer learning and dynamic networks. For instance, I developed the TransLATE framework to tackle negative transfer in evolving target domains by leveraging a novel label-informed C-divergence metric.\n\nIn the realm of recommender systems, I have explored various facets of contextual multi-armed bandits (MAB), proposing algorithms like LOCB for user clustering and MuFasa for multi-facet bandits, which significantly enhance recommendation quality by balancing exploration and exploitation. My work on visual-aware recommendations integrates convolutional neural networks (CNNs) to improve reward estimation, demonstrating superior performance on real-world datasets.\n\nI have also contributed to the development of dynamic network datasets, such as DPPIN, to advance research in dynamic network representation learning. My efforts in meta-learning have led to frameworks like CLOVER, which ensures fairness in meta-learned recommendation models, and L2E, which facilitates effective knowledge transfer across dynamic tasks.\n\nMoreover, I have addressed the cold-start problem in recommender systems through fair meta-learning frameworks and tackled algorithmic bias in positive and unlabeled learning (PUL) with methods like FairPUL. My research extends to federated learning, where I proposed FedCollab to mitigate negative transfer by clustering clients based on data distribution similarities.\n\nOverall, my work aims to push the boundaries of machine learning and recommender systems by developing innovative algorithms and frameworks that adapt to dynamic environments, ensure fairness, and enhance performance across various applications.",
+    "collaborators": [
+      "Yikun Ban",
+      "Jun Wu",
+      "Tianxin Wei",
+      "Yunzhe Qi",
+      "Dongqi Fu",
+      "Ziwei Wu",
+      "Haonan Wang",
+      "Wenxuan Bao",
+      "Xinrui He",
+      "Curtiss B. Cook"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Transfer Learning",
+      "Contextual Bandits",
+      "Recommender Systems"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "6bdce16c-c482-4c96-bf9a-3864d913afcb": {
+    "pk": "6bdce16c-c482-4c96-bf9a-3864d913afcb",
+    "name": "Nan Jiang",
+    "bio": "I am a researcher deeply immersed in the theoretical and practical aspects of reinforcement learning (RL), with a particular focus on model-based RL, value-function approximation, and off-policy evaluation. My work aims to bridge the gap between theoretical properties and empirical performance, addressing fundamental issues such as error compounding in model-based RL and the limitations of popular loss functions like the MuZero loss.\n\nOne of my key contributions is the development of boundary-invariant analyses for RL algorithms, which help in providing optimality guarantees regardless of how the agent-environment boundary is defined. This work extends to various RL paradigms, including state resetting, Monte-Carlo Tree Search, and imitation learning.\n\nI have also made significant strides in understanding the assumptions underlying value-function approximation methods, particularly in batch RL. My research revisits these assumptions to provide a deeper theoretical understanding and practical insights, leading to the development of new algorithms like BVFT, which breaks existing hardness conjectures in batch RL.\n\nIn the realm of policy gradient methods, I have derived new variance reduction techniques by leveraging importance sampling estimators, resulting in more efficient and effective policy gradient estimators. My work in this area has shown substantial empirical improvements and theoretical guarantees.\n\nAdditionally, I have explored the intersection of symbolic regression and genetic programming, proposing novel methods like Control Variable Genetic Programming (CVGP) and Racing-CVGP. These methods accelerate the discovery of symbolic expressions from experimental data, outperforming existing approaches in both synthetic and real-world datasets.\n\nMy research also extends to the study of off-policy evaluation in partially observable environments, where I have developed new estimators and algorithms that avoid exponential dependencies on the horizon, providing more accurate and generalizable results.\n\nOverall, my work is driven by a passion for advancing the theoretical foundations of RL while ensuring practical applicability and scalability. I strive to develop algorithms that not only perform well empirically but also come with strong theoretical guarantees, contributing to the broader understanding and advancement of the field.",
+    "collaborators": [
+      "Jiawei Huang",
+      "Jinglin Chen",
+      "Tengyang Xie",
+      "Yexiang Xue",
+      "Kent Yagi",
+      "Siyuan Zhang",
+      "Yuheng Zhang",
+      "Qi Wang",
+      "Marcelo Gleiser",
+      "Yash Nair"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Reinforcement Learning",
+      "Off-Policy Evaluation",
+      "Symbolic Regression",
+      "Astrophysics"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "c15409e4-bad0-44a5-9720-0c2b432c8df9": {
+    "pk": "c15409e4-bad0-44a5-9720-0c2b432c8df9",
+    "name": "Karrie Karahalios",
+    "bio": "As a researcher, my work spans multiple domains, with a strong focus on leveraging machine learning and AI to address real-world challenges. My recent projects have been particularly centered on improving the assessment and intervention strategies for children at risk of autism. By utilizing advanced models like Wav2Vec 2.0, I have developed systems that can automatically label adult and child audio, significantly aiding clinicians in capturing critical behavioral events and enhancing communication with parents.\n\nIn addition to my work in healthcare, I have explored the impact of social technologies on user behavior and public opinion. My studies on political filter bubbles and the biases in online voting systems have provided insights into how social platforms can be redesigned to promote more balanced and unbiased interactions. This research is crucial in an era where online platforms heavily influence societal norms and political landscapes.\n\nI am also deeply invested in improving the informed consent process in online studies. By integrating AI-powered chatbots, I have demonstrated that participants can make more informed decisions, thereby enhancing the ethical standards of human subject research.\n\nData visualization and exploration are other key areas of my research. I have developed platforms like zenvisage and ShapeSearch, which empower data scientists to effortlessly identify interesting patterns and trends in large datasets. These tools are designed to be user-friendly and scalable, making them accessible to both novice and experienced analysts.\n\nFurthermore, my work on conversational surveys and follow-up question generation aims to create more dynamic and personalized user experiences. By constructing datasets and developing models that generate coherent and informative follow-up questions, I strive to improve the quality of conversational surveys.\n\nOverall, my research is driven by a desire to harness the power of AI and machine learning to solve complex problems across various domains, from healthcare and social media to data science and ethics in research.",
+    "collaborators": [
+      "Motahhare Eslami",
+      "Hari Sundaram",
+      "Tarique Siddiqui",
+      "Aditya Parameswaran",
+      "Ziang Xiao",
+      "John Lee",
+      "Jialu Li",
+      "Mark Hasegawa-Johnson",
+      "Nouran Soliman",
+      "Himel Dev"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Machine Learning",
+      "Social Computing",
+      "Human-Computer Interaction"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "02b57c35-cafd-404c-824f-b285b6dcac07": {
+    "pk": "02b57c35-cafd-404c-824f-b285b6dcac07",
+    "name": "Dakshita Khurana",
+    "bio": "As a researcher deeply immersed in the field of quantum cryptography, my work primarily focuses on leveraging the unique properties of quantum information to develop secure cryptographic protocols. My recent research has been driven by the goal of building quantum cryptographic primitives from well-founded mathematical assumptions, even in scenarios where classical cryptography might fail.\n\nOne of my significant contributions is the development of quantum bit commitments and secure computation based on the hardness of approximating the permanents of complex Gaussian matrices and the output probabilities of random quantum circuits. This work demonstrates that quantum cryptography can be built on extremely mild assumptions, such as the conjecture that $\\mathsf{P^{\\#P}}$ is not contained in $\\mathsf{(io)BQP/qpoly}$.\n\nI have also explored the concept of unclonable non-interactive zero-knowledge arguments (NIZK) for NP, addressing a long-standing question in the field. This work has applications in unclonable signatures of knowledge, which prevent replay attacks non-interactively.\n\nAnother area of my research involves developing cryptographic primitives with certified deletion, enabling parties to generate classical certificates that prove the information-theoretic deletion of encrypted plaintexts. This has led to advancements in public-key encryption, attribute-based encryption, and fully-homomorphic encryption with certified deletion.\n\nI have also introduced the \"fixed basis\" framework for building oblivious transfer from quantum information, resulting in more efficient protocols with security against malicious adversaries. This framework has been instantiated in the quantum random oracle model (QROM) to achieve significant improvements in protocol efficiency.\n\nMy work on secure quantum computation has led to the first constant-round protocols for both two-party and multi-party settings, with security against malicious adversaries. These protocols are based on the hardness of quantum learning with errors (QLWE) and have set new benchmarks in the field.\n\nOverall, my research aims to push the boundaries of quantum cryptography, making it more practical and secure by grounding it in robust mathematical assumptions and innovative quantum techniques.",
+    "collaborators": [
+      "James Bartusek",
+      "Kabir Tomer",
+      "Amit Agarwal",
+      "Andrea Coladangelo",
+      "Fermi Ma",
+      "Alexander Poremba",
+      "Giulio Malavolta",
+      "Ruta Jawale",
+      "Nishant Kumar",
+      "Akshayaram Srinivasan"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Quantum Cryptography",
+      "Secure Computation",
+      "Zero-Knowledge Proofs"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "bd750a9b-6666-496e-8291-3d217a954cbe": {
+    "pk": "bd750a9b-6666-496e-8291-3d217a954cbe",
+    "name": "ChengXiang Zhai",
+    "bio": "As a researcher, my work primarily revolves around enhancing the efficiency and effectiveness of language models and information retrieval systems. My recent focus has been on leveraging sparsity in language models to improve inference efficiency in dense retrieval systems, achieving up to 4.3x faster speeds with minimal accuracy loss. I've also explored structured pruning in sequence-to-sequence models, demonstrating that asymmetric pruning can significantly reduce inference latency with only a slight drop in summarization accuracy.\n\nIn the realm of information access systems, I've delved into user simulation techniques to better evaluate search engines, recommender systems, and conversational assistants. My work in this area aims to address the complexities of assessing system effectiveness by simulating diverse user behaviors and preferences.\n\nI've proposed innovative approaches like soft faceted browsing for e-commerce search, which helps users navigate information spaces more efficiently by including relevant items outside selected filters. Additionally, my research in multilingual neural machine translation (MNMT) has shown that multi-task learning frameworks can significantly improve translation quality, even in zero-shot setups.\n\nIn biomedical entity linking, I've developed efficient convolutional neural networks that outperform BERT-based models while being much more parameter-efficient. My work on goal-oriented script completion and cross-lingual fact-checking frameworks further showcases my commitment to addressing real-world challenges with practical solutions.\n\nOverall, my research is driven by a passion for making advanced language models and retrieval systems more accessible, efficient, and effective across various applications.",
+    "collaborators": [
+      "Daniel Campos",
+      "Heng Ji",
+      "Alessandro Magnani",
+      "Ismini Lourentzou",
+      "Krisztian Balog",
+      "Yinan Zhang",
+      "Parikshit Sondhi",
+      "Anjan Goswami",
+      "Yiren Wang",
+      "Hany Hassan Awadalla"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Natural Language Processing",
+      "Information Retrieval",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "bdcca08e-d26c-4108-94d7-e56d36710ead": {
+    "pk": "bdcca08e-d26c-4108-94d7-e56d36710ead",
+    "name": "David A. Forsyth",
+    "bio": "As a researcher, my primary focus lies in the intersection of computer vision and image processing, particularly in the realm of image compositing and shading correction. My recent work has been dedicated to developing innovative methods for inserting objects from one image into another while ensuring realistic results, even in challenging scenarios where the shading of the inserted object clashes with the scene's lighting.\n\nOne of my key contributions is a novel approach that leverages a deep image prior (DIP) to correct shading inconsistencies without the need for a geometric and physical model or an environment map. This method involves training the DIP to produce reshaded renderings of inserted objects through consistent image decomposition inferential losses. The goal is to achieve an albedo similar to the cut-and-paste albedo, a shading field consistent with the target scene, and shading that aligns with the cut-and-paste surface normals.\n\nThe simplicity and effectiveness of this procedure have been demonstrated both qualitatively and quantitatively across various objects with complex surface properties. Additionally, a dataset of spherical lampshades was used for quantitative evaluation, where my method significantly outperformed traditional Image Harmonization (IH) baselines. User studies involving over 100 participants further validated the superiority of my approach over cut-and-paste and IH baselines.\n\nMy research aims to push the boundaries of what is possible in image compositing, making it easier to achieve realistic and visually convincing results without the need for complex models or extensive manual adjustments.",
+    "collaborators": [
+      "Anand Bhattad"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Image Processing",
+      "Deep Learning",
+      "Computer Vision"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "ea036595-932f-457f-b606-f6975dc0be1a": {
+    "pk": "ea036595-932f-457f-b606-f6975dc0be1a",
+    "name": "Yuan Zhou",
+    "bio": "I am a researcher deeply engaged in the fields of operations research, inventory control, and mathematical optimization. My work primarily focuses on developing robust, data-driven methodologies to address complex decision-making problems under uncertainty. \n\nOne of my key contributions is in the area of Sample Average Approximation (SAA) for newsvendor problems with general convex inventory costs. I have rigorously established the optimality of SAA under both \\(\\alpha\\)-global and (\\(\\alpha,\\beta\\))-local strong convexity conditions, closing significant gaps in the literature. My research demonstrates that the long-term regret performance of SAA is influenced by \\(\\alpha\\) but not by \\(\\beta\\), providing new insights into how local properties affect decision-making strategies.\n\nIn the realm of inventory control, I have addressed the infeasible target inventory level issue in Stochastic Gradient Descent (SGD) by proposing a novel minibatch-SGD-based meta-policy. This meta-policy is versatile enough to be applied to a wide range of inventory systems, achieving competitive regret performance and high computational efficiency.\n\nMy work also extends to the Gomory-Johnson model of cut generating functions, where I have utilized metaprogramming and semialgebraic computations to provide computer-based proofs for cutting-plane theorems. Additionally, I have developed new search strategies for extreme functions in the infinite group problem, leading to the discovery of new extreme functions and settling several open questions.\n\nIn higher-dimensional spaces, I have devised methods to compute the normalized solid angle measure of polyhedral cones using multivariable hypergeometric series, providing powerful tools for such computations.\n\nFurthermore, I have explored the application of dynamic kernel generation (DKG) modules in deep neural networks for real-time speech enhancement, particularly under time-variant scenarios. This work has shown significant improvements in tasks like acoustic echo cancellation and deep noise suppression.\n\nOverall, my research is characterized by a blend of theoretical rigor and practical applicability, aiming to solve real-world problems through innovative mathematical and computational techniques.",
+    "collaborators": [
+      "Matthias K\u00f6ppe",
+      "Jiameng Lyu",
+      "Shilin Yuan",
+      "Bingkun Zhou",
+      "Jinxing Xie",
+      "Allison Fitisone",
+      "Chengyu Zheng",
+      "Xiulian Peng",
+      "Yuan Zhang",
+      "Yan Lu"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Optimization",
+      "Inventory Control",
+      "Convex Analysis",
+      "Deep Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "8d664489-a7c8-4665-86cf-6c1a69e3a353": {
+    "pk": "8d664489-a7c8-4665-86cf-6c1a69e3a353",
+    "name": "Romit Roy Choudhury",
+    "bio": "I am a researcher deeply immersed in the field of acoustic signal processing and machine learning, with a particular focus on applications involving microphone arrays, audio source separation, and voice-controlled devices. My recent work has revolved around developing innovative algorithms and frameworks to tackle complex real-world challenges in these domains.\n\nOne of my key contributions is the development of SubAoA, an algorithm designed to improve the estimation of multiple angles of arrival (AoA) in noisy environments. This work is crucial for applications such as human or vehicle localization and multi-user separation. By modeling signals in a new AoA sub-space and employing a successive cancellation approach, SubAoA significantly outperforms existing algorithms, enabling real-time operation and robust performance in multipath settings.\n\nIn the realm of binaural applications, I have proposed a self-supervised framework for audio voice separation, which is particularly beneficial for earphones and hearing aids. This approach leverages personalized signal processing to enhance performance over generic supervised methods, demonstrating promising results in selective hearing and noise cancellation.\n\nMy research also explores the potential of robotic motion in audio source separation. The Rotational Source Separation (RoSS) module I developed utilizes the rotation of microphone arrays to improve the separation of interfering signals, offering practical gains in real-world scenarios.\n\nAdditionally, I have investigated the formation and mitigation of opinion echo chambers in social media, proposing algorithms to reduce their prevalence and promote healthier communication.\n\nIn the context of voice-controlled devices, I have designed CoDIR, an algorithm that detects which device a user is facing based on the directional radiation pattern of human voice, addressing challenges posed by indoor multipath and unknown user locations.\n\nMy work extends to music generation, where I introduced the Multi-Source Latent Diffusion Model (MSLDM) to enhance the quality and control of generated music by modeling individual instrumental sources.\n\nOverall, my research aims to push the boundaries of acoustic signal processing and machine learning, with a strong emphasis on practical applications and real-world impact.",
+    "collaborators": [
+      "Yu-Lin Wei",
+      "Zhongweiyang Xu",
+      "Hyungjoo Seo",
+      "Sahil Bhandary Karnoor",
+      "Prithwish Jana",
+      "Niloy Ganguly",
+      "Rui Li",
+      "Abhinav Mehrotra",
+      "Nic Lane",
+      "Debottam Dutta"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Acoustic Signal Processing",
+      "Audio Source Separation",
+      "Multi-Task Learning",
+      "Music Generation"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "549d7675-35e1-4915-b901-71441a385490": {
+    "pk": "549d7675-35e1-4915-b901-71441a385490",
+    "name": "Kevin Chen-Chuan Chang",
+    "bio": "As a researcher, my primary focus lies in the development and enhancement of Graph Neural Networks (GNNs) and their applications across various domains. My recent work has been centered around creating more expressive and scalable GNN architectures that can handle both static and dynamic graphs effectively.\n\nOne of my notable contributions is the development of Position-aware Graph Neural Networks (P-GNNs), which address the limitations of existing GNNs in capturing the positional information of nodes within a graph. By introducing anchor nodes and a non-linear distance-weighted aggregation scheme, P-GNNs significantly improve performance in tasks like link prediction and community detection.\n\nI have also worked on Identity-aware Graph Neural Networks (ID-GNNs), which extend the expressive power of traditional GNNs by incorporating node identities during message passing. This approach has shown substantial improvements in accuracy for various prediction tasks, including node and graph classification.\n\nUnderstanding the structure of neural networks and their impact on predictive performance is another area of my research. I have developed a novel graph-based representation of neural networks, revealing that certain graph structures can lead to significantly improved performance, akin to biological neural networks.\n\nIn the realm of dynamic graphs, I introduced the ROLAND framework, which adapts static GNNs for dynamic settings through hierarchical node states and recurrent updates. This framework has demonstrated remarkable scalability and performance improvements in real-world dynamic graph datasets.\n\nAdditionally, I have explored the design space of GNNs, creating a comprehensive framework to identify optimal architectures for various tasks. This work led to the development of GraphGym, a platform for systematic GNN design and evaluation.\n\nMy research also extends to automated machine learning (AutoML), where I proposed FALCON and AutoTransfer. These methods enhance the efficiency of model design search by leveraging design graphs and task-model banks, respectively, to transfer knowledge across tasks and reduce computational costs.\n\nOverall, my work aims to push the boundaries of GNN capabilities, making them more powerful, scalable, and applicable to a wide range of real-world problems.",
+    "collaborators": [],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Graph Neural Networks",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "02ed8a6c-1313-4919-8215-5d5607ca46c3": {
+    "pk": "02ed8a6c-1313-4919-8215-5d5607ca46c3",
+    "name": "Wenzhen Yuan",
+    "bio": "I am a researcher deeply immersed in the field of robotics, with a particular focus on tactile sensing and its applications in robotic manipulation and interaction. My work primarily revolves around developing advanced tactile sensors, such as the GelSight sensor, and creating simulation models to enhance their functionality and integration into robotic systems.\n\nOne of my significant contributions is the development of Taxim, a high-speed and realistic simulation model for the GelSight sensor. This model leverages an example-based approach to simulate the optical response to deformation, enabling accurate and efficient tactile sensing simulations. This work has paved the way for more comprehensive and computationally efficient tactile simulation frameworks, which are crucial for system verification and large-scale data collection in robotics.\n\nI have also explored the integration of tactile and visual data to understand the physical properties of objects, such as fabrics and liquids. By jointly training convolutional neural networks (CNNs) across multiple modalities, I have developed systems that can predict how an object will feel based on its visual appearance and vice versa. This multi-modal approach has shown significant improvements in performance over systems trained solely on visual data.\n\nIn addition to tactile sensing, I have worked on various applications, including cable manipulation, liquid handling, and in-hand object manipulation. My research in these areas has demonstrated the importance of combining tactile feedback with other sensory inputs to achieve robust and precise robotic operations.\n\nFurthermore, I have contributed to the development of tactile skins made from textiles, which enhance robot-human interaction by localizing contact points and measuring contact forces. These innovations have significant implications for industrial environments and human-robot interaction.\n\nOverall, my research aims to bridge the gap between tactile sensing and robotic manipulation, enabling robots to interact with the physical world more effectively and intuitively.",
+    "collaborators": [
+      "Zilin Si",
+      "Hung-Jui Huang",
+      "Siyuan Dong",
+      "Edward Adelson",
+      "Helen Jiang",
+      "Xiaofeng Guo",
+      "Jeannette Bohg",
+      "Arpit Agarwal",
+      "Andrew Owens",
+      "James McCann"
+    ],
+    "pub_titles": [],
+    "pub_abstracts": [],
+    "domain": [
+      "Robotics",
+      "Tactile Sensing",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}

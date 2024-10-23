@@ -1,4 +1,5 @@
 import os
+from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
 import yaml
@@ -147,10 +148,20 @@ class AgentPromptTemplate(BaseModel):
         return values
 
 
+class DatabaseProvider(Enum):
+    LOCAL = 'local'
+    REDIS = 'redis'
+
+
+class DatabaseConfig(BaseModel):
+    provider: str
+
+
 class Config(BaseModel):
     param: ParamConfig
     agent_prompt_template: AgentPromptTemplate
     eval_prompt_template: EvalPromptTemplate
+    database: DatabaseConfig
 
     def __init__(self, yaml_config_path: Optional[str] = None, **kwargs: Any) -> None:
         if yaml_config_path:
@@ -166,6 +177,9 @@ class Config(BaseModel):
             ),
             'eval_prompt_template': self._load_prompt_configs(
                 os.path.join(yaml_config_path, 'eval_prompt')
+            ),
+            'database': self._load_yaml_file(
+                os.path.join(yaml_config_path, 'database.yaml')
             ),
         }
 
@@ -196,6 +210,9 @@ class Config(BaseModel):
     def save_all(self, directory: str) -> None:
         self._save_yaml_file(
             os.path.join(directory, 'param.yaml'), self.param.model_dump()
+        )
+        self._save_yaml_file(
+            os.path.join(directory, 'database.yaml'), self.database.model_dump()
         )
 
         agent_prompt_dir = os.path.join(directory, 'agent_prompts')
