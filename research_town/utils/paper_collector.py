@@ -454,12 +454,14 @@ def get_paper_by_keyword(
 
 def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
     query = f'id:{arxiv_id}'
-    search = arxiv.Search(query=query)
+    search = arxiv.Search(
+        query=query, max_results=1, sort_by=arxiv.SortCriterion.Relevance
+    )
     results = perform_arxiv_search(search)
-    if results:
-        return results[0]
-    else:
-        return None
+    for result in results:
+        if result.get_short_id().split('v')[0] == arxiv_id:
+            return result
+    return None
 
 
 def get_paper_by_title(title: str) -> Optional[arxiv.Result]:
