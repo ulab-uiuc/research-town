@@ -164,7 +164,7 @@ def write_proposal_with_profiles_and_citations(
     return response
 
 
-def write_predicted_proposal(
+def write_proposal(
     mode: str,
     profiles: List[Profile],
     ref_contents: List[str],
@@ -173,7 +173,9 @@ def write_predicted_proposal(
     if mode == 'author_only':
         return write_proposal_with_only_profiles(profiles=profiles, config=config)
     elif mode == 'citation_only':
-        return write_proposal_with_only_citations(ref_contents=ref_contents, config=config)
+        return write_proposal_with_only_citations(
+            ref_contents=ref_contents, config=config
+        )
     elif mode == 'author_citation':
         return write_proposal_with_profiles_and_citations(
             profiles=profiles, ref_contents=ref_contents, config=config
