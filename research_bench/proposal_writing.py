@@ -10,7 +10,7 @@ from research_town.utils.model_prompting import model_prompting
 
 def write_proposal_researchtown(
     profiles: List[Profile],
-    intros: List[str],
+    ref_contents: List[str],
     config: Config,
 ) -> str:
     log_db = LogDB()
@@ -36,7 +36,7 @@ def write_proposal_researchtown(
 
     env.on_enter(
         leader=leader,
-        contexts=intros,
+        contexts=ref_contents,
     )
 
     # Run the environment to generate the proposal
@@ -90,8 +90,8 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
     return response
 
 
-def write_proposal_with_only_citations(intros: List[str], config: Config) -> str:
-    intro_strs = '\n'.join([intro for intro in intros if intro is not None])
+def write_proposal_with_only_citations(ref_contents: List[str], config: Config) -> str:
+    ref_strs = '\n'.join([ref for ref in ref_contents if ref is not None])
 
     prompt = [
         {
@@ -116,8 +116,8 @@ def write_proposal_with_only_citations(intros: List[str], config: Config) -> str
                 '[Question 5] - What are the key components of my approach and results?\n\n'
                 'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                f'Introductions collect from cited papers:\n{intro_strs}\n\n'
-                'Please provide the five core questions contents based on the above cited introductions.'
+                f'Contents collect from cited papers:\n{ref_strs}\n\n'
+                'Please provide the five core questions contents based on the above cited contents.'
             ),
         }
     ]
@@ -126,10 +126,10 @@ def write_proposal_with_only_citations(intros: List[str], config: Config) -> str
 
 
 def write_proposal_with_profiles_and_citations(
-    profiles: List[Profile], intros: List[str], config: Config
+    profiles: List[Profile], ref_contents: List[str], config: Config
 ) -> str:
     bio_strs = '\n'.join([profile.bio for profile in profiles])
-    intro_strs = '\n'.join([intro for intro in intros if intro is not None])
+    ref_strs = '\n'.join([ref for ref in ref_contents if ref is not None])
 
     prompt = [
         {
@@ -154,9 +154,9 @@ def write_proposal_with_profiles_and_citations(
                 '[Question 5] - What are the key components of my approach and results?\n\n'
                 'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                f'Introductions collect from cited papers:\n{intro_strs}\n\n'
+                f'Contents collect from cited papers:\n{ref_strs}\n\n'
                 f'Author biographies and personas:\n{bio_strs}\n\n'
-                'Based on the above biographies and cited paper introductions, please provide the five core questions contents for a brand new future research.'
+                'Based on the above biographies and cited paper contents, please provide the five core questions contents for a brand new future research.'
             ),
         }
     ]
@@ -167,20 +167,22 @@ def write_proposal_with_profiles_and_citations(
 def write_proposal(
     mode: str,
     profiles: List[Profile],
-    intros: List[str],
+    ref_contents: List[str],
     config: Config,
 ) -> str:
     if mode == 'author_only':
         return write_proposal_with_only_profiles(profiles=profiles, config=config)
     elif mode == 'citation_only':
-        return write_proposal_with_only_citations(intros=intros, config=config)
+        return write_proposal_with_only_citations(
+            ref_contents=ref_contents, config=config
+        )
     elif mode == 'author_citation':
         return write_proposal_with_profiles_and_citations(
-            profiles=profiles, intros=intros, config=config
+            profiles=profiles, ref_contents=ref_contents, config=config
         )
     elif mode == 'textgnn':
         return write_proposal_researchtown(
-            profiles=profiles, intros=intros, config=config
+            profiles=profiles, ref_contents=ref_contents, config=config
         )
     else:
         raise ValueError(f'Invalid proposal writing mode: {mode}')
