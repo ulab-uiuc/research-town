@@ -10,6 +10,7 @@ from research_town.utils.model_prompting import model_prompting
 from research_town.utils.paper_collector import (
     get_paper_by_arxiv_id,
     get_paper_by_keyword,
+    get_paper_by_title,
     get_paper_introduction,
     get_references,
 )
@@ -84,6 +85,22 @@ def get_arxiv_ids_from_keyword(
 ) -> List[str]:
     papers = get_paper_by_keyword(keyword, existing_arxiv_ids, max_papers_per_keyword)
     return [paper.get_short_id().split('v')[0] for paper in papers]
+
+
+def get_arxiv_id_from_title(title: str) -> Optional[str]:
+    paper = get_paper_by_title(title)
+    if paper:
+        return str(paper.get_short_id().split('v')[0])
+    else:
+        return None
+
+
+def get_url_from_title(title: str) -> Optional[str]:
+    paper = get_paper_by_title(title)
+    if paper:
+        return str(paper.entry_id)
+    else:
+        return None
 
 
 @with_cache(cache_dir='reference_proposal_data')
