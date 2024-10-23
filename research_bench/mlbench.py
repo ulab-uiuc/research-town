@@ -2,30 +2,51 @@ import argparse
 from typing import Any, Dict, List, Set
 
 from tqdm import tqdm
-from utils import save_benchmark
+from utils import (
+    get_author_data,
+    get_paper_data,
+    get_proposal_from_paper,
+    save_benchmark,
+)
 
-from research_town.utils.paper_collector import get_paper_by_keyword, process_paper
+from research_town.configs import Config
+from research_town.utils.paper_collector import get_paper_by_keyword
 
 
 def process_keywords(
     keywords: List[str],
     max_papers_per_keyword: int,
     output: str,
+    config: Config,
 ) -> Dict[str, Any]:
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
 
     for keyword in keywords:
         print(f"Fetching papers for keyword: '{keyword}'")
-        papers = get_paper_by_keyword(
+        arxiv_ids = get_paper_by_keyword(
             keyword, existing_arxiv_ids, max_papers_per_keyword
         )
+        for arxiv_id in tqdm(arxiv_ids, desc=f"Processing papers for '{keyword}'"):
+            if arxiv_id in existing_arxiv_ids:
+                continue
 
-        for paper in tqdm(papers, desc=f"Processing papers for '{keyword}'"):
-            paper_data = process_paper(paper)
-            benchmark[paper_data['arxiv_id']] = paper_data
+            paper_data = get_paper_data(arxiv_id)
+            authors = paper_data['authors']
+            title = paper_data['title']
+            author_data = get_author_data(arxiv_id, authors, title, config)
+            reference_proposal = get_proposal_from_paper(
+                arxiv_id, paper_data['introduction'], config
+            )
 
+            benchmark[paper_data['arxiv_id']] = {
+                'paper_data': paper_data,
+                'author_data': author_data,
+                'reference_proposal': reference_proposal,
+            }
+            existing_arxiv_ids.add(arxiv_id)
             save_benchmark(benchmark, output)
+
     return benchmark
 
 
@@ -70,7 +91,8 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     keywords = args.keywords
-    process_keywords(keywords, args.max_papers_per_keyword, args.output)
+    config = Config('../../configs')
+    process_keywords(keywords, args.max_papers_per_keyword, args.output, config)
 
 
 if __name__ == '__main__':
