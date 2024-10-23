@@ -21,7 +21,9 @@ def get_arxiv_ids(input: str) -> List[str]:
     for url in urls:
         match = re.search(r'arxiv\.org/abs/([^\s/]+)', url)
         if match:
-            arxiv_ids.append(match.group(1))
+            arxiv_id_str = match.group(1)
+            arxiv_id = arxiv_id_str.split('v')[0]
+            arxiv_ids.append(arxiv_id)
     return arxiv_ids
 
 
