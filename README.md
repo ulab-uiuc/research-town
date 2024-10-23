@@ -82,7 +82,7 @@ npm start
 ```bash
 poetry install -E backend
 cd backend
-uvicorn app.main:app --reload
+DATABASE_FOLDER_PATH=`pwd`/sample_data uvicorn app.main:app --reload
 ```
 
 #### Install dev options
