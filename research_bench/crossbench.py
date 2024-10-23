@@ -76,7 +76,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     arxiv_ids = get_arxiv_ids(args.input)
-    config = Config('../../configs')
+    config = Config('../configs')
     process_arxiv_ids(arxiv_ids, args.output, config)
 
 

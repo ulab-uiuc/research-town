@@ -91,7 +91,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     keywords = args.keywords
-    config = Config('../../configs')
+    config = Config('../configs')
     process_keywords(keywords, args.max_papers_per_keyword, args.output, config)
 
 
