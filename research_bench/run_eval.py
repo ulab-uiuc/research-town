@@ -69,9 +69,15 @@ def main() -> None:
         choices=['author_only', 'citation_only', 'author_citation', 'textgnn'],
         help='Processing mode',
     )
+    parser.add_argument(
+        '--config_path',
+        type=str,
+        default='../configs',
+        help='Path to the configuration directory',
+    )
     args = parser.parse_args()
 
-    config = Config('../configs')
+    config = Config(args.config_path)
     dataset = load_papers(args.input_path, args.output_path)
     logger.info(f'Processing {len(dataset)} papers')
 

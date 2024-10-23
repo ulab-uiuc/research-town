@@ -439,9 +439,10 @@ def get_paper_by_keyword(
         max_results=max_papers * 2,  # Fetch extra to account for duplicates
         sort_by=arxiv.SortCriterion.SubmittedDate,
     )
+    results = perform_arxiv_search(search)
 
     papers = []
-    for paper in search.results():
+    for paper in results():
         short_id = paper.get_short_id().split('v')[0]
         if short_id not in existing_arxiv_ids:
             papers.append(paper)
@@ -452,10 +453,24 @@ def get_paper_by_keyword(
 
 
 def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
-    try:
-        search = arxiv.Search(id_list=[arxiv_id])
-        results = list(search.results())
-        return results[0] if results else None
-    except Exception as e:
-        print(f'Error fetching paper {arxiv_id}: {e}')
+    query = f'id:{arxiv_id}'
+    search = arxiv.Search(query=query)
+    results = perform_arxiv_search(search)
+    if results:
+        return results[0]
+    else:
         return None
+
+
+def get_paper_by_title(title: str) -> Optional[arxiv.Result]:
+    query = f'ti:"{title}"'
+    search = arxiv.Search(
+        query=query,
+        max_results=5,
+        sort_by=arxiv.SortCriterion.Relevance,
+    )
+    results = perform_arxiv_search(search)
+    for result in results:
+        if result.title.lower() == title.lower():
+            return result
+    return None

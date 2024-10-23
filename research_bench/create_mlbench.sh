@@ -1,1 +1,1 @@
-python ./mlbench.py --max_papers_per_keyword 10 --output ./benchmark/mlbench.json
+python crossbench.py --input ./mlbench_paper_links.txt --output ./mlbench/crossbench.json
