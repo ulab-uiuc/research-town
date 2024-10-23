@@ -35,7 +35,7 @@ def main() -> None:
     parser.add_argument(
         '--output',
         type=str,
-        default='mlbench_paper_links.txt',
+        default='./mlbench/mlbench_paper_links.txt',
         help='Output file to save the paper URLs',
     )
 
