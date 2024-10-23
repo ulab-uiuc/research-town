@@ -183,9 +183,13 @@ backend/sample_data/*
 research_bench/data/arxiv_ai_papers/output_with_downloaded_references.json
 research_bench/data/arxiv_ai_papers/output_with_references.json
 research_bench/data/arxiv_ai_papers/paper_info.json
-research_bench/benchmark/*
+research_bench/crossbench/*
+research_bench/mlbench/*
 research_bench/profile_dbs/*
 research_bench/results/*
 research_bench/profile_dbs_old
+**/author_data/*
+**/paper_data/*
+**/reference_proposal_data/*
 
 !**/.gitkeep

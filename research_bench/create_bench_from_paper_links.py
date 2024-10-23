@@ -3,9 +3,14 @@ import re
 from typing import Any, Dict, List, Set
 
 from tqdm import tqdm
-from utils import save_benchmark
+from utils import (
+    get_author_data,
+    get_paper_data,
+    get_proposal_from_paper,
+    save_benchmark,
+)
 
-from research_town.utils.paper_collector import get_paper_by_arxiv_id, process_paper
+from research_town.configs import Config
 
 
 def get_arxiv_ids(input: str) -> List[str]:
@@ -16,13 +21,16 @@ def get_arxiv_ids(input: str) -> List[str]:
     for url in urls:
         match = re.search(r'arxiv\.org/abs/([^\s/]+)', url)
         if match:
-            arxiv_ids.append(match.group(1))
+            arxiv_id_str = match.group(1)
+            arxiv_id = arxiv_id_str.split('v')[0]
+            arxiv_ids.append(arxiv_id)
     return arxiv_ids
 
 
 def process_arxiv_ids(
     arxiv_ids: List[str],
     output: str,
+    config: Config,
 ) -> Dict[str, Any]:
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
@@ -31,14 +39,21 @@ def process_arxiv_ids(
         if arxiv_id in existing_arxiv_ids:
             continue
 
-        paper = get_paper_by_arxiv_id(arxiv_id)
-        if paper:
-            paper_data = process_paper(paper)
-            benchmark[paper_data['arxiv_id']] = paper_data
-            existing_arxiv_ids.add(arxiv_id)
-            save_benchmark(benchmark, output)
-        else:
-            print(f'Paper with arXiv ID {arxiv_id} not found.')
+        paper_data = get_paper_data(arxiv_id)
+        authors = paper_data['authors']
+        title = paper_data['title']
+        author_data = get_author_data(arxiv_id, authors, title, config)
+        reference_proposal = get_proposal_from_paper(
+            arxiv_id, paper_data['introduction'], config
+        )
+
+        benchmark[paper_data['arxiv_id']] = {
+            'paper_data': paper_data,
+            'author_data': author_data,
+            'reference_proposal': reference_proposal,
+        }
+        existing_arxiv_ids.add(arxiv_id)
+        save_benchmark(benchmark, output)
 
     return benchmark
 
@@ -63,7 +78,8 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     arxiv_ids = get_arxiv_ids(args.input)
-    process_arxiv_ids(arxiv_ids, args.output)
+    config = Config('../configs')
+    process_arxiv_ids(arxiv_ids, args.output, config)
 
 
 if __name__ == '__main__':

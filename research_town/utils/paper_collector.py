@@ -400,30 +400,26 @@ def get_paper_introduction(url: str) -> Optional[str]:
         return introduction_text
 
 
-def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
-    try:
-        search = arxiv.Search(id_list=[arxiv_id])
-        results = list(search.results())
-        return results[0] if results else None
-    except Exception as e:
-        print(f'Error fetching paper {arxiv_id}: {e}')
-        return None
-
-
 def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
     SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
-
     url = f'{SEMANTIC_SCHOLAR_API_URL}ARXIV:{arxiv_id}/references'
-    params = {'limit': 100}
+    params = {'limit': 100, 'offset': 0, 'fields': 'title,abstract'}
     headers = {'User-Agent': 'PaperProcessor/1.0'}
 
     for attempt in range(max_retries):
-        response = requests.get(url, params=params, headers=headers)
+        response = requests.get(url, params=params, headers=headers)  # type: ignore
         if response.status_code == 200:
             data = response.json()
-            return [
-                ref['citedPaper'] for ref in data.get('data', []) if 'citedPaper' in ref
-            ]
+            references = []
+            for ref in data.get('data', []):
+                cited_paper = ref.get('citedPaper', {})
+                if cited_paper:
+                    ref_info = {
+                        'title': cited_paper.get('title'),
+                        'abstract': cited_paper.get('abstract'),
+                    }
+                    references.append(ref_info)
+            return references
         else:
             wait_time = 2**attempt
             print(
@@ -432,23 +428,6 @@ def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
             time.sleep(wait_time)  # Exponential backoff
     print(f'Failed to fetch references for {arxiv_id} after {max_retries} attempts.')
     return []
-
-
-def get_reference_introductions(arxiv_id: str) -> List[str]:
-    references = get_references(arxiv_id)
-    if not references:
-        raise ValueError(f'No references found for paper {arxiv_id}')
-
-    intros = []
-    for ref in references:
-        arxiv_id = ref.get('arxivId', None)
-        if arxiv_id:
-            ref_paper = get_paper_by_arxiv_id(arxiv_id)
-            if ref_paper:
-                intro = get_paper_introduction(arxiv_id)
-                if intro:
-                    intros.append(intro)
-    return intros
 
 
 def get_paper_by_keyword(
@@ -460,10 +439,11 @@ def get_paper_by_keyword(
         max_results=max_papers * 2,  # Fetch extra to account for duplicates
         sort_by=arxiv.SortCriterion.SubmittedDate,
     )
+    results = perform_arxiv_search(search)
 
     papers = []
-    for paper in search.results():
-        short_id = paper.get_short_id()
+    for paper in results():
+        short_id = paper.get_short_id().split('v')[0]
         if short_id not in existing_arxiv_ids:
             papers.append(paper)
             existing_arxiv_ids.add(short_id)
@@ -472,15 +452,27 @@ def get_paper_by_keyword(
     return papers
 
 
-def process_paper(paper: arxiv.Result) -> Dict[str, Any]:
-    arxiv_id = paper.get_short_id()
-    references = get_references(arxiv_id)
-    return {
-        'title': paper.title,
-        'arxiv_id': arxiv_id,
-        'authors': [author.name for author in paper.authors],
-        'abstract': paper.summary,
-        'published': paper.published.isoformat(),
-        'updated': paper.updated.isoformat(),
-        'references': references,
-    }
+def get_paper_by_arxiv_id(arxiv_id: str) -> Optional[arxiv.Result]:
+    query = f'id:{arxiv_id}'
+    search = arxiv.Search(
+        query=query, max_results=1, sort_by=arxiv.SortCriterion.Relevance
+    )
+    results = perform_arxiv_search(search)
+    for result in results:
+        if result.get_short_id().split('v')[0] == arxiv_id:
+            return result
+    return None
+
+
+def get_paper_by_title(title: str) -> Optional[arxiv.Result]:
+    query = f'ti:"{title}"'
+    search = arxiv.Search(
+        query=query,
+        max_results=5,
+        sort_by=arxiv.SortCriterion.Relevance,
+    )
+    results = perform_arxiv_search(search)
+    for result in results:
+        if result.title.lower() == title.lower():
+            return result
+    return None
