@@ -90,7 +90,7 @@ def get_arxiv_ids_from_keyword(
 def get_arxiv_id_from_title(title: str) -> Optional[str]:
     paper = get_paper_by_title(title)
     if paper:
-        return paper.get_short_id().split('v')[0]
+        return str(paper.get_short_id().split('v')[0])
     else:
         return None
 
@@ -98,7 +98,7 @@ def get_arxiv_id_from_title(title: str) -> Optional[str]:
 def get_url_from_title(title: str) -> Optional[str]:
     paper = get_paper_by_title(title)
     if paper:
-        return paper.entry_id
+        return str(paper.entry_id)
     else:
         return None
 
