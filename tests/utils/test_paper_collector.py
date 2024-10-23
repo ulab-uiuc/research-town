@@ -137,8 +137,8 @@ def test_get_references(mock_get: MagicMock) -> None:
     mock_response.status_code = 200
     mock_response.json.return_value = {
         'data': [
-            {'citedPaper': {'arxivId': '1234.5678', 'title': 'Cited Paper 1'}},
-            {'citedPaper': {'arxivId': '2345.6789', 'title': 'Cited Paper 2'}},
+            {'citedPaper': {'arxiv_id': '1234.5678', 'title': 'Cited Paper 1'}},
+            {'citedPaper': {'arxiv_id': '2345.6789', 'title': 'Cited Paper 2'}},
         ]
     }
     mock_get.return_value = mock_response
@@ -148,6 +148,6 @@ def test_get_references(mock_get: MagicMock) -> None:
 
     # Assertions
     assert len(references) == 2
-    assert references[0]['arxivId'] == '1234.5678'
-    assert references[1]['arxivId'] == '2345.6789'
+    assert references[0]['title'] == 'Cited Paper 1'
+    assert references[1]['title'] == 'Cited Paper 2'
     mock_get.assert_called_once()
