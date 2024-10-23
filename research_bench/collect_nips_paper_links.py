@@ -1,9 +1,10 @@
+import argparse
+from typing import List
+
 import requests
 from bs4 import BeautifulSoup
-import argparse
 from tqdm import tqdm
 from utils import get_url_from_title
-from typing import List
 
 
 def fetch_paper_titles(url: str) -> List[str]:
@@ -25,20 +26,28 @@ def save_paper_urls(titles: List[str], output_file: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description='Scrape and save NeurIPS paper URLs.')
-    parser.add_argument('--url', type=str, default='https://nips.cc/virtual/2024/papers.html?filter=titles',
-                        help='URL of the NeurIPS paper list')
-    parser.add_argument('--output', type=str, default='mlbench_paper_links.txt',
-                        help='Output file to save the paper URLs')
+    parser.add_argument(
+        '--url',
+        type=str,
+        default='https://nips.cc/virtual/2024/papers.html?filter=titles',
+        help='URL of the NeurIPS paper list',
+    )
+    parser.add_argument(
+        '--output',
+        type=str,
+        default='mlbench_paper_links.txt',
+        help='Output file to save the paper URLs',
+    )
 
     args = parser.parse_args()
-    print(f"Fetching paper titles from {args.url}...")
+    print(f'Fetching paper titles from {args.url}...')
     titles = fetch_paper_titles(args.url)
 
-    print(f"Saving paper URLs to {args.output}...")
+    print(f'Saving paper URLs to {args.output}...')
     save_paper_urls(titles, args.output)
 
-    print("Done!")
+    print('Done!')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
