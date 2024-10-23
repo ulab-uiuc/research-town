@@ -91,7 +91,7 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
 
 
 def write_proposal_with_only_citations(intros: List[str], config: Config) -> str:
-    intro_strs = '\n'.join(intros)
+    intro_strs = '\n'.join([intro for intro in intros if intro is not None])
 
     prompt = [
         {
@@ -129,7 +129,7 @@ def write_proposal_with_profiles_and_citations(
     profiles: List[Profile], intros: List[str], config: Config
 ) -> str:
     bio_strs = '\n'.join([profile.bio for profile in profiles])
-    intro_strs = '\n'.join(intros)
+    intro_strs = '\n'.join([intro for intro in intros if intro is not None])
 
     prompt = [
         {
@@ -170,11 +170,11 @@ def write_predicted_proposal(
     intros: List[str],
     config: Config,
 ) -> str:
-    if mode == 'author-only':
+    if mode == 'author_only':
         return write_proposal_with_only_profiles(profiles=profiles, config=config)
-    elif mode == 'citation-only':
+    elif mode == 'citation_only':
         return write_proposal_with_only_citations(intros=intros, config=config)
-    elif mode == 'author-citation':
+    elif mode == 'author_citation':
         return write_proposal_with_profiles_and_citations(
             profiles=profiles, intros=intros, config=config
         )

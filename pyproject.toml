@@ -27,6 +27,9 @@ uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
 pandas = { version = "*", optional = true }
 
+bert_score = { version = "*", optional = true }
+rouge_score = { version = "*", optional = true }
+
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "*"

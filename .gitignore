@@ -182,5 +182,8 @@ research_bench/benchmark/*
 research_bench/profile_dbs/*
 research_bench/results/*
 research_bench/profile_dbs_old
+**/author_data/*
+**/paper_data/*
+**/reference_proposal_data/*
 
 !**/.gitkeep
