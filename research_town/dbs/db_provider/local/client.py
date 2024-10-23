@@ -27,6 +27,7 @@ class LocalDatabaseClient(DatabaseClient):
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
         self.folder_path = folder_path
+        self.load()
 
     def register_namespace(self, namespace: str, with_embeddings: bool) -> None:
         if namespace not in self.registered_namespaces:
@@ -34,6 +35,7 @@ class LocalDatabaseClient(DatabaseClient):
             self.data[namespace] = {}
             if with_embeddings:
                 self.data_embed[namespace] = {}
+            self.save_manifest()
 
     def count(self, namespace: str, **conditions: Union[str, int, float]) -> int:
         if conditions is None or not conditions:
@@ -119,7 +121,7 @@ class LocalDatabaseClient(DatabaseClient):
         # Filter candidates based on conditions
         candidates = self.get(namespace, **conditions)
         if not candidates:
-            return []
+            return [[] for _ in range(len(query_embeddings))]
 
         # Fetch embeddings for candidates
         pks = [data['pk'] for data in candidates]
@@ -146,9 +148,15 @@ class LocalDatabaseClient(DatabaseClient):
         return matches
 
     def save(self, with_embed: bool = False) -> None:
-        manifest = {'namespaces': list(self.registered_namespaces)}
         for namespace in self.data:
             self.save_namespace(namespace, with_embed=with_embed)
+        self.save_manifest()
+
+    def save_manifest(self) -> None:
+        manifest = {
+            'namespaces': list(self.registered_namespaces),
+            'embedding_namespaces': list(self.data_embed.keys()),
+        }
         with open(
             os.path.join(self.folder_path, 'manifest.json'), 'w', encoding='utf-8'
         ) as f:
@@ -177,13 +185,17 @@ class LocalDatabaseClient(DatabaseClient):
             pickle.dump(self.data_embed[namespace], pkl_file)
 
     def load(self) -> None:
+        if not os.path.exists(os.path.join(self.folder_path, 'manifest.json')):
+            return
+
         with open(
             os.path.join(self.folder_path, 'manifest.json'), encoding='utf-8'
         ) as f:
             manifest: Dict[str, Any] = json.load(f)
         self.registered_namespaces = set(manifest['namespaces'])
-        for namespace in manifest['namespaces']:
-            self.load_namespace(namespace, with_embed=True)
+        embedding_namespaces = set(manifest['embedding_namespaces'])
+        for namespace in self.registered_namespaces:
+            self.load_namespace(namespace, with_embed=namespace in embedding_namespaces)
 
     def load_namespace(self, namespace: str, with_embed: bool = False) -> None:
         file_name = f'{namespace}.json'
@@ -191,13 +203,17 @@ class LocalDatabaseClient(DatabaseClient):
         if with_embed:
             self.load_embeddings(namespace=namespace)
 
-        with open(os.path.join(self.folder_path, file_name), encoding='utf-8') as f:
-            data: Dict[str, Any] = json.load(f)
+        if not os.path.exists(os.path.join(self.folder_path, file_name)):
+            data: Dict[str, Any] = {}
+        else:
+            with open(os.path.join(self.folder_path, file_name), encoding='utf-8') as f:
+                data = json.load(f)
         self.data[namespace] = data
 
     def load_embeddings(self, namespace: str) -> None:
-        if namespace not in self.data_embed:
-            return
         file_name = f'{namespace}.pkl'
-        with open(os.path.join(self.folder_path, file_name), 'rb') as pkl_file:
-            self.data_embed[namespace] = pickle.load(pkl_file)
+        if not os.path.exists(os.path.join(self.folder_path, file_name)):
+            self.data_embed[namespace] = {}
+        else:
+            with open(os.path.join(self.folder_path, file_name), 'rb') as pkl_file:
+                self.data_embed[namespace] = pickle.load(pkl_file)
