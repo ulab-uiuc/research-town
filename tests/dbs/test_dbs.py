@@ -1,10 +1,5 @@
-import json
-import pickle
-import shutil
-from tempfile import TemporaryDirectory
 from unittest.mock import MagicMock, patch
 
-import torch
 from beartype.typing import Any, Dict, List
 
 from research_town.data import (
@@ -21,7 +16,7 @@ from tests.mocks.mocking_func import mock_prompting
 
 
 def test_LogDB_basic() -> None:
-    db = LogDB()
+    db = LogDB(config=example_config.database)
     review_log = ReviewWritingLog(
         profile_pk='agent1',
         review_pk='review1',
@@ -44,8 +39,9 @@ def test_LogDB_basic() -> None:
         review_pk='review2',
     )
     db.add(new_review_log)
-    assert new_review_log.pk in db.dbs['ReviewWritingLog'].data
-    assert len(db.dbs['ReviewWritingLog'].data) == 2
+    assert db.count(ReviewWritingLog, pk=new_review_log.pk) == 1
+    assert db.get(ReviewWritingLog, pk=new_review_log.pk)[0].pk == new_review_log.pk
+    assert db.count(ReviewWritingLog) == 2
 
     conditions: Dict[str, Any] = {'profile_pk': 'agent1'}
     results = db.get(ReviewWritingLog, **conditions)
@@ -67,19 +63,15 @@ def test_LogDB_basic() -> None:
     results = db.get(ReviewWritingLog, **conditions)
     assert len(results) == 0
 
-    with TemporaryDirectory() as temp_dir:
-        db.save_to_json(temp_dir)
+    new_db = LogDB(config=example_config.database)
 
-        new_db = LogDB()
-        new_db.load_from_json(temp_dir)
-
-        assert len(new_db.dbs['ReviewWritingLog'].data) == 0
-        assert len(new_db.dbs['RebuttalWritingLog'].data) == 1
-        assert len(new_db.dbs['MetaReviewWritingLog'].data) == 1
+    assert new_db.dbs['ReviewWritingLog'].count() == 0
+    assert new_db.dbs['RebuttalWritingLog'].count() == 1
+    assert new_db.dbs['MetaReviewWritingLog'].count() == 1
 
 
 def test_progressdb_basic() -> None:
-    db = ProgressDB()
+    db = ProgressDB(config=example_config.database)
     idea1 = Idea(content='Idea for a new AI algorithm')
     idea2 = Idea(content='Quantum computing research plan')
 
@@ -88,7 +80,8 @@ def test_progressdb_basic() -> None:
 
     new_idea = Idea(content='Blockchain research proposal')
     db.add(new_idea)
-    assert new_idea.pk in db.dbs['Idea'].data
+    assert db.dbs['Idea'].count() == 3
+    assert db.get(Idea, pk=new_idea.pk)[0].pk == new_idea.pk
 
     content: Dict[str, Any] = {'content': 'Idea for a new AI algorithm'}
     results = db.get(Idea, **content)
@@ -110,17 +103,12 @@ def test_progressdb_basic() -> None:
     remaining_results = db.get(Idea, **content3)
     assert len(remaining_results) == 0
 
-    with TemporaryDirectory() as temp_dir:
-        db.save_to_json(temp_dir)
-
-        new_db = ProgressDB()
-        new_db.load_from_json(temp_dir)
-
-        assert len(new_db.dbs['Idea'].data) == 2
+    new_db = ProgressDB(config=example_config.database)
+    assert new_db.dbs['Idea'].count() == 2
 
 
 def test_ProfileDB_basic() -> None:
-    db = ProfileDB()
+    db = ProfileDB(config=example_config.database)
     agent1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
     agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     db.add(agent1)
@@ -128,21 +116,21 @@ def test_ProfileDB_basic() -> None:
 
     agent3 = Profile(name='Alice Johnson', bio='Data Scientist', institute='Data Lab')
     db.add(agent3)
-    assert agent3.pk in db.data
-    assert db.data[agent3.pk].name == 'Alice Johnson'
+    assert db.count(pk=agent3.pk) == 1
+    assert db.get(pk=agent3.pk)[0].name == 'Alice Johnson'
 
     updates = {'bio': 'Senior Profile in AI'}
     success = db.update(agent1.pk, updates)
 
     assert success
-    assert db.data[agent1.pk].bio == 'Senior Profile in AI'
+    assert db.get(pk=agent1.pk)[0].bio == 'Senior Profile in AI'
 
     success = db.update('non-existing-pk', {'bio': 'New Bio'})
     assert not success
 
     success = db.delete(agent1.pk)
     assert success
-    assert agent1.pk not in db.data
+    assert db.count(pk=agent1.pk) == 0
 
     success = db.delete('non-existing-pk')
     assert not success
@@ -154,12 +142,9 @@ def test_ProfileDB_basic() -> None:
     assert len(results) == 1
     assert results[0].name == 'Jane Smith'
 
-    with TemporaryDirectory() as temp_dir:
-        db.save_to_json(temp_dir)
-
 
 def test_Paperdb_basic() -> None:
-    db = PaperDB()
+    db = PaperDB(config=example_config.database)
     paper1 = Paper(
         title='Sample Paper 1',
         abstract='This is the abstract for paper 1',
@@ -194,7 +179,7 @@ def test_Paperdb_basic() -> None:
         citation_count=2,
     )
     db.add(new_paper)
-    assert new_paper.pk in db.data
+    assert db.count(pk=new_paper.pk) == 1
 
     conditions = {'pk': paper1.pk}
     paper: Paper = db.get(**conditions)[0]
@@ -221,19 +206,14 @@ def test_Paperdb_basic() -> None:
     assert results[0].title == 'Updated Sample Paper 1'
     assert results[1].title == 'Sample Paper 3'
 
-    with TemporaryDirectory() as temp_dir:
-        db.save_to_json(temp_dir)
-
-        new_db = PaperDB()
-        new_db.load_from_json(temp_dir)
-
-        assert len(new_db.data) == 2
-        assert paper1.pk in new_db.data
-        assert new_db.data[paper1.pk].title == 'Updated Sample Paper 1'
+    new_db = PaperDB(config=example_config.database)
+    assert new_db.count() == 2
+    assert new_db.count(pk=paper1.pk) == 1
+    assert new_db.get(pk=paper1.pk)[0].title == 'Updated Sample Paper 1'
 
 
 def test_agent_match() -> None:
-    db = ProfileDB()
+    db = ProfileDB(config=example_config.database)
     profile1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
     profile2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
     profile3 = Profile(name='Jane kid', bio='Expert in RL', institute='RL Lab')
@@ -247,7 +227,7 @@ def test_agent_match() -> None:
 
 
 def test_paper_match() -> None:
-    db = PaperDB()
+    db = PaperDB(config=example_config.database)
     paper1 = Paper(
         title='Sample Paper 1',
         abstract='This is the abstract for paper 1',
@@ -281,113 +261,26 @@ def test_paper_match() -> None:
     db.add(paper1)
     db.add(paper2)
     db.add(paper3)
+    assert db.count() == 3
+    assert db.get(pk=paper1.pk)[0].title == 'Sample Paper 1'
+
     lead_profile = 'Profile in CV'
     match_papers = db.match(query=lead_profile, num=2)
     assert match_papers
     assert len(match_papers) == 2
 
 
-def test_agent_file() -> None:
-    db = ProfileDB()
-    agent1 = Profile(name='John Doe', bio='Profile in AI', institute='AI Institute')
-    agent2 = Profile(name='Jane Smith', bio='Expert in NLP', institute='NLP Lab')
-    db.add(agent1)
-    db.add(agent2)
-    # save without embeddings
-    db.save_to_json('data/test')
-    with open('data/test/ProfileDB.json', 'r') as f:
-        data_test = json.load(f)
-    assert len(data_test) > 0
-    assert db.data == {pk: Profile(**data) for pk, data in data_test.items()}
-    # load without embeddings
-    db_test = ProfileDB()
-    db_test.load_from_json('data/test')
-    assert db.data == db_test.data
-    # save with embeddings
-    db.transform_to_embed()
-    db.save_to_json('data/test', with_embed=True)
-    with open('data/test/ProfileDB.pkl', 'rb') as f:
-        data_embed_test = pickle.load(f)
-    assert db.data_embed.keys() == data_embed_test.keys()
-    for profile_pk in db.data_embed:
-        assert torch.equal(db.data_embed[profile_pk], data_embed_test[profile_pk])
-    # load with embeddings
-    db_test = ProfileDB()
-    db_test.load_from_json('data/test', with_embed=True)
-    assert db.data_embed.keys() == db_test.data_embed.keys()
-    for profile_pk in db.data_embed:
-        assert torch.equal(db.data_embed[profile_pk], db_test.data_embed[profile_pk])
-    # delete test file
-    shutil.rmtree('data/test')
-
-
-def test_paper_file() -> None:
-    db = PaperDB()
-    paper1 = Paper(
-        title='Sample Paper 1',
-        abstract='This is the abstract for paper 1',
-        authors=['Author A', 'Author B'],
-        url='http://example.com/paper1',
-        timestamp=1617181723,
-        keywords=['AI', 'ML'],
-        domain='Computer Science',
-        citation_count=10,
-    )
-    paper2 = Paper(
-        title='Sample Paper 2',
-        abstract='This is the abstract for paper 2',
-        authors=['Author C'],
-        url='http://example.com/paper2',
-        timestamp=1617181756,
-        keywords=['Quantum Computing'],
-        domain='Physics',
-        citation_count=5,
-    )
-    db.add(paper1)
-    db.add(paper2)
-    # save without embeddings
-    db.save_to_json('data/test')
-    with open('data/test/PaperDB.json', 'r') as f:
-        data_test = json.load(f)
-    assert len(data_test) > 0
-    assert db.data == {pk: Paper(**data) for pk, data in data_test.items()}
-    # load without embeddings
-    db_test = PaperDB()
-    db_test.load_from_json('data/test')
-    assert db.data == db_test.data
-    # save with embeddings
-    db.transform_to_embed()
-    db.save_to_json('data/test', with_embed=True)
-    with open('data/test/PaperDB.pkl', 'rb') as f:
-        data_embed_test = pickle.load(f)
-    assert db.data_embed.keys() == data_embed_test.keys()
-    for paper_pk in db.data_embed:
-        assert torch.equal(db.data_embed[paper_pk], data_embed_test[paper_pk])
-    # load with embeddings
-    db_test = PaperDB()
-    db_test.load_from_json('data/test', with_embed=True)
-    assert db.data_embed.keys() == db_test.data_embed.keys()
-    for paper_pk in db.data_embed:
-        assert torch.equal(db.data_embed[paper_pk], db_test.data_embed[paper_pk])
-    # delete test file
-    shutil.rmtree('data/test')
-
-
 @patch('research_town.utils.profile_collector.model_prompting')
 def test_pull_profiles(mock_model_prompting: MagicMock) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
-    db = ProfileDB()
+    db = ProfileDB(config=example_config.database)
     names = ['Jiaxuan You', 'Jure Leskovec']
     db.pull_profiles(names=names, config=example_config)
-    assert db.data.keys()
-    assert len(db.data.keys()) == 2
-    assert db.data.values()
+    assert db.count() == 2
 
 
 def test_pull_papers() -> None:
-    db = PaperDB()
+    db = PaperDB(config=example_config.database)
     db.pull_papers(num=2, domain='Data Mining')
-    assert db.data.keys()
-    assert len(db.data.keys()) == 2
-    assert db.data.values()
+    assert db.count() == 2
