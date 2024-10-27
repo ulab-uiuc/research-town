@@ -17,11 +17,13 @@ def fetch_paper_titles(url: str) -> List[str]:
 
 
 def save_paper_urls(titles: List[str], output_file: str) -> None:
+    urls = []
     with open(output_file, 'a') as f:
         for title in tqdm(titles):
             url = get_url_from_title(title)
-            if url:
+            if url and url not in urls:
                 f.write(f'{url}\n')
+                urls.append(url)
 
 
 def save_latest_paper_urls(
@@ -29,6 +31,7 @@ def save_latest_paper_urls(
 ) -> None:
     with open(output_file_full, 'r') as f:
         lines = f.readlines()
+    lines = list(set(lines))
     lines.sort()
     lines = lines[-paper_num:]
     with open(output_file_latest, 'w') as f:
