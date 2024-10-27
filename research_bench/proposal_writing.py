@@ -13,10 +13,10 @@ def write_proposal_researchtown(
     ref_contents: List[str],
     config: Config,
 ) -> str:
-    log_db = LogDB()
-    progress_db = ProgressDB()
-    paper_db = PaperDB()
-    profile_db = ProfileDB()
+    log_db = LogDB(config=config.database)
+    progress_db = ProgressDB(config=config.database)
+    paper_db = PaperDB(config=config.database)
+    profile_db = ProfileDB(config=config.database)
     agent_manager = AgentManager(config=config, profile_db=profile_db)
 
     env = ProposalWritingEnv(
