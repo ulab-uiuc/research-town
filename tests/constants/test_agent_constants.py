@@ -8,4 +8,4 @@ from .config_constants import example_config
 
 @pytest.fixture
 def example_agent_manager(example_profile_db: ProfileDB) -> AgentManager:
-    return AgentManager(config=example_config, profile_db=example_profile_db)
+    return AgentManager(config=example_config.param, profile_db=example_profile_db)

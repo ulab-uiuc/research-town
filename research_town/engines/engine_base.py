@@ -39,7 +39,7 @@ class BaseEngine:
         self.progress_db = progress_db
         self.log_db = log_db
         self.config = config
-        self.agent_manager = AgentManager(profile_db=profile_db, config=config)
+        self.agent_manager = AgentManager(config=config.param, profile_db=profile_db)
         self.time_step = time_step
 
         self.envs: Dict[str, BaseEnv] = {}

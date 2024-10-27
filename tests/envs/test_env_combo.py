@@ -54,7 +54,9 @@ def test_env_combo(
     for profile in proposal_writing_profiles:
         temp_profile_db.add(profile)
 
-    agent_manager = AgentManager(config=example_config, profile_db=temp_profile_db)
+    agent_manager = AgentManager(
+        config=example_config.param, profile_db=temp_profile_db
+    )
 
     proposal_writing_env = ProposalWritingwithRAGEnv(
         name='proposal_writing',

@@ -17,7 +17,7 @@ def write_proposal_researchtown(
     progress_db = ProgressDB(config=config.database)
     paper_db = PaperDB(config=config.database)
     profile_db = ProfileDB(config=config.database)
-    agent_manager = AgentManager(config=config, profile_db=profile_db)
+    agent_manager = AgentManager(config=config.param, profile_db=profile_db)
 
     env = ProposalWritingEnv(
         name='proposal_writing',
