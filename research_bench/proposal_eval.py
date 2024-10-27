@@ -1,11 +1,12 @@
 from typing import Dict
 
 import nltk
+import numpy as np
 from bert_score import score
+from litellm import embedding
 from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
 from rouge_score import rouge_scorer
-from litellm import embedding
-import numpy as np
+
 from research_town.utils.model_prompting import model_prompting
 
 # Initialize NLTK resources
@@ -72,10 +73,11 @@ def compute_gpt_metric(reference_5q: str, generated_5q: str) -> float:
     score = max(0.0, min(1.0, score))
     return score
 
+
 def compute_embedding_similarity(reference: str, hypothesis: str) -> float:
     try:
-        response_ref = embedding(model="text-embedding-3-large", input=[reference])
-        response_hyp = embedding(model="text-embedding-3-large", input=[hypothesis])
+        response_ref = embedding(model='text-embedding-3-large', input=[reference])
+        response_hyp = embedding(model='text-embedding-3-large', input=[hypothesis])
 
         embedding_ref = response_ref['data'][0]['embedding']
         embedding_hyp = response_hyp['data'][0]['embedding']
@@ -83,7 +85,9 @@ def compute_embedding_similarity(reference: str, hypothesis: str) -> float:
         vec_ref = np.array(embedding_ref)
         vec_hyp = np.array(embedding_hyp)
 
-        cosine_sim = np.dot(vec_ref, vec_hyp) / (np.linalg.norm(vec_ref) * np.linalg.norm(vec_hyp))
+        cosine_sim = np.dot(vec_ref, vec_hyp) / (
+            np.linalg.norm(vec_ref) * np.linalg.norm(vec_hyp)
+        )
 
         return float(cosine_sim)
     except Exception as e:
@@ -102,6 +106,6 @@ def compute_metrics(reference_5q: str, generated_5q: str) -> Dict[str, float]:
         'bleu': bleu,
         'rouge_l': rouge_l,
         'gpt_metric_score': gpt_metric,
-        'bert_score': bert_score_val,
+        'bert_score': bert_score,
         'embedding_similarity': embedding_similarity,
     }
