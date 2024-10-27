@@ -68,10 +68,10 @@ def main() -> None:
 
     args = parser.parse_args()
     print(f'Fetching paper titles from {args.url}...')
-    #titles = fetch_paper_titles(args.url)
+    titles = fetch_paper_titles(args.url)
 
     print(f'Saving paper URLs to {args.output_full}...')
-    #save_paper_urls(titles, args.output_full)
+    save_paper_urls(titles, args.output_full)
 
     save_latest_paper_urls(args.output_full, args.output_latest, args.latest_paper_num)
     print('Done!')

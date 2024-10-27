@@ -1,7 +1,9 @@
 from typing import Dict
 
 import nltk
+import numpy as np
 from bert_score import score
+from litellm import embedding
 from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
 from rouge_score import rouge_scorer
 
@@ -72,15 +74,38 @@ def compute_gpt_metric(reference_5q: str, generated_5q: str) -> float:
     return score
 
 
+def compute_embedding_similarity(reference: str, hypothesis: str) -> float:
+    try:
+        response_ref = embedding(model='text-embedding-3-large', input=[reference])
+        response_hyp = embedding(model='text-embedding-3-large', input=[hypothesis])
+
+        embedding_ref = response_ref['data'][0]['embedding']
+        embedding_hyp = response_hyp['data'][0]['embedding']
+
+        vec_ref = np.array(embedding_ref)
+        vec_hyp = np.array(embedding_hyp)
+
+        cosine_sim = np.dot(vec_ref, vec_hyp) / (
+            np.linalg.norm(vec_ref) * np.linalg.norm(vec_hyp)
+        )
+
+        return float(cosine_sim)
+    except Exception as e:
+        print(f'Error computing embedding similarity: {e}')
+        return 0.0
+
+
 def compute_metrics(reference_5q: str, generated_5q: str) -> Dict[str, float]:
     bleu = compute_bleu(reference_5q, generated_5q)
     rouge_l = compute_rouge_l(reference_5q, generated_5q)
     bert_score = compute_bertscore(reference_5q, generated_5q)
     gpt_metric = compute_gpt_metric(reference_5q, generated_5q)
+    embedding_similarity = compute_embedding_similarity(reference_5q, generated_5q)
 
     return {
         'bleu': bleu,
         'rouge_l': rouge_l,
         'gpt_metric_score': gpt_metric,
         'bert_score': bert_score,
+        'embedding_similarity': embedding_similarity,
     }
