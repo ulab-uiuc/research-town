@@ -1,19 +1,19 @@
 from unittest.mock import MagicMock, patch
 
+from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.engines import Engine
 from tests.constants.config_constants import example_config
 from tests.mocks.mocking_func import mock_prompting
 
-from ..constants.db_constants import (
-    example_log_db,
-    example_paper_db,
-    example_profile_db,
-    example_progress_db,
-)
-
 
 @patch('research_town.utils.agent_prompter.model_prompting')
-def test_research_engine_two_stage(mock_model_prompting: MagicMock) -> None:
+def test_research_engine_two_stage(
+    mock_model_prompting: MagicMock,
+    example_profile_db: ProfileDB,
+    example_paper_db: PaperDB,
+    example_progress_db: ProgressDB,
+    example_log_db: LogDB,
+) -> None:
     mock_model_prompting.side_effect = mock_prompting
 
     engine = Engine(

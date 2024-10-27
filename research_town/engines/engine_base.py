@@ -1,4 +1,3 @@
-import os
 from typing import Dict, List, Tuple, Type
 
 from ..agents import Agent, AgentManager
@@ -40,7 +39,7 @@ class BaseEngine:
         self.progress_db = progress_db
         self.log_db = log_db
         self.config = config
-        self.agent_manager = AgentManager(profile_db=profile_db, config=config)
+        self.agent_manager = AgentManager(config=config.param, profile_db=profile_db)
         self.time_step = time_step
 
         self.envs: Dict[str, BaseEnv] = {}
@@ -85,13 +84,6 @@ class BaseEngine:
                     self.record(progress, agent)
                     self.time_step += 1
             self.transition()
-
-    def save(self, save_file_path: str, with_embed: bool = False) -> None:
-        os.makedirs(save_file_path, exist_ok=True)
-        self.profile_db.save_to_json(save_file_path, with_embed=with_embed)
-        self.log_db.save_to_json(save_file_path, with_embed=with_embed)
-        self.progress_db.save_to_json(save_file_path, with_embed=with_embed)
-        self.paper_db.save_to_json(save_file_path, with_embed=with_embed)
 
     def record(self, progress: Progress, agent: Agent) -> None:
         log_map: Dict[Type[Progress], Type[Log]] = {
