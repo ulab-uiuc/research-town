@@ -156,35 +156,31 @@ def get_author_data(
 def get_all_reviews(venue_id: str) -> Dict[str, Any]:
     client = openreview.api.OpenReviewClient(baseurl='https://api2.openreview.net')
     all_reviews = {}
-    try:
-        submissions = client.get_all_notes(
-            content={'venueid': f'{venue_id}'}, details='replies'
-        )
-        print('Fetching reviews...')
-        for submission in submissions:
-            url = get_url_from_title(submission.content['title']['value'])
-            if not url:
-                continue
-            match = re.search(r'arxiv\.org/abs/([^\s/]+)', url)
-            if match:
-                arxiv_id_str = match.group(1)
-                arxiv_id = arxiv_id_str.split('v')[0]
+    submissions = client.get_all_notes(
+        content={'venueid': f'{venue_id}'}, details='replies'
+    )
+    print('Fetching reviews...')
+    for submission in submissions:
+        url = get_url_from_title(submission.content['title']['value'])
+        if not url:
+            continue
+        match = re.search(r'arxiv\.org/abs/([^\s/]+)', url)
+        if match:
+            arxiv_id_str = match.group(1)
+            arxiv_id = arxiv_id_str.split('v')[0]
 
-            reviews = []
-            for reply in submission.details['replies']:
-                review_content = {}
-                if 'summary' in reply['content']:
-                    for key, value in reply['content'].items():
-                        review_content[key] = (
-                            value['value']
-                            if isinstance(value, dict) and 'value' in value
-                            else value
-                        )
-                    reviews.append(review_content)
+        reviews = []
+        for reply in submission.details['replies']:
+            review_content = {}
+            if 'summary' in reply['content']:
+                for key, value in reply['content'].items():
+                    review_content[key] = (
+                        value['value']
+                        if isinstance(value, dict) and 'value' in value
+                        else value
+                    )
+                reviews.append(review_content)
 
-            all_reviews[arxiv_id] = {'reviews': reviews}
-        print(len(all_reviews), 'reviews fetched.')
-        return all_reviews
-
-    except Exception as e:
-        print(f'An error occurred: {e}')
+        all_reviews[arxiv_id] = {'reviews': reviews}
+    print(len(all_reviews), 'reviews fetched.')
+    return all_reviews
