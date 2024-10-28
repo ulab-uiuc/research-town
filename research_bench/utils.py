@@ -153,7 +153,7 @@ def get_author_data(
     return author_data
 
 
-def get_all_reviews(venue_id: str) -> List[Dict[str, any]]:
+def get_all_reviews(venue_id: str) -> Dict[str, Any]:
     client = openreview.api.OpenReviewClient(baseurl='https://api2.openreview.net')
     all_reviews = {}
     try:
