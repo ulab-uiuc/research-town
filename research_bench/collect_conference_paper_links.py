@@ -1,4 +1,5 @@
 import argparse
+import os
 from typing import List
 
 import requests
@@ -18,6 +19,9 @@ def fetch_paper_titles(url: str) -> List[str]:
 
 def save_paper_urls(titles: List[str], output_file: str) -> None:
     urls = []
+    if not os.path.exists(output_file):
+        open(output_file, 'w').close()
+
     with open(output_file, 'a') as f:
         for title in tqdm(titles):
             url = get_url_from_title(title)
@@ -29,6 +33,9 @@ def save_paper_urls(titles: List[str], output_file: str) -> None:
 def save_latest_paper_urls(
     output_file_full: str, output_file_latest: str, paper_num: int
 ) -> None:
+    if not os.path.exists(output_file_full):
+        open(output_file_full, 'w').close()
+
     with open(output_file_full, 'r') as f:
         lines = f.readlines()
     lines = list(set(lines))
@@ -40,24 +47,30 @@ def save_latest_paper_urls(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description='Scrape and save NeurIPS paper URLs.')
+    parser = argparse.ArgumentParser(
+        description='Scrape and save conference paper URLs.'
+    )
+    parser.add_argument(
+        '--conference',
+        type=str,
+        default='iclr',
+        choices=['iclr', 'nips'],
+        help='Conference name, e.g., iclr or nips',
+    )
     parser.add_argument(
         '--url',
         type=str,
-        default='https://iclr.cc/virtual/2024/papers.html?filter=titles',
-        help='URL of the ICLR paper list',
+        help='URL of the conference paper list',
     )
     parser.add_argument(
         '--output_full',
         type=str,
-        default='./iclrbench/iclr_paper_links.txt',
         help='Output file to save the paper URLs',
     )
     parser.add_argument(
         '--output_latest',
         type=str,
-        default='./iclrbench/iclr_paper_links_latest.txt',
-        help='Output file to save the paper URLs',
+        help='Output file to save the latest paper URLs',
     )
     parser.add_argument(
         '--latest_paper_num',
@@ -67,6 +80,18 @@ def main() -> None:
     )
 
     args = parser.parse_args()
+
+    if not args.url:
+        args.url = (
+            f'https://{args.conference}.cc/virtual/2024/papers.html?filter=titles'
+        )
+    if not args.output_full:
+        args.output_full = f'./{args.conference}bench/{args.conference}_paper_links.txt'
+    if not args.output_latest:
+        args.output_latest = (
+            f'./{args.conference}bench/{args.conference}_paper_links_latest.txt'
+        )
+
     print(f'Fetching paper titles from {args.url}...')
     titles = fetch_paper_titles(args.url)
 

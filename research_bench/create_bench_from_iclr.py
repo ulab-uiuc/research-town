@@ -52,7 +52,7 @@ def process_arxiv_ids(
         if arxiv_id not in reviews:
             print(f'Review not found for arXiv ID {arxiv_id}, skipping...')
             continue
-        review = reviews[arxiv_id]
+        review = reviews[arxiv_id]['reviews']
         benchmark[paper_data['arxiv_id']] = {
             'paper_data': paper_data,
             'author_data': author_data,
