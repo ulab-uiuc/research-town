@@ -8,7 +8,6 @@ from utils import (
     get_author_data,
     get_paper_data,
     get_proposal_from_paper,
-    save_benchmark,
 )
 
 from research_town.configs import Config
@@ -33,6 +32,7 @@ def process_arxiv_ids(
     reviews: Dict[str, Any],
     output: str,
     config: Config,
+    include_reviews: bool,
 ) -> Dict[str, Any]:
     benchmark = {}
     existing_arxiv_ids: Set[str] = set()
@@ -49,18 +49,23 @@ def process_arxiv_ids(
             arxiv_id, paper_data['introduction'], config
         )
 
-        if arxiv_id not in reviews:
-            print(f'Review not found for arXiv ID {arxiv_id}, skipping...')
-            continue
-        review = reviews[arxiv_id]['reviews']
-        benchmark[paper_data['arxiv_id']] = {
-            'paper_data': paper_data,
-            'author_data': author_data,
-            'reference_proposal': reference_proposal,
-            'reviews': review,
-        }
-        existing_arxiv_ids.add(arxiv_id)
-        save_benchmark(benchmark, output)
+        if include_reviews:
+            if arxiv_id not in reviews:
+                print(f'Review not found for arXiv ID {arxiv_id}, skipping...')
+                continue
+            review = reviews[arxiv_id]['reviews']
+            benchmark[paper_data['arxiv_id']] = {
+                'paper_data': paper_data,
+                'author_data': author_data,
+                'reference_proposal': reference_proposal,
+                'reviews': review,
+            }
+        else:
+            benchmark[paper_data['arxiv_id']] = {
+                'paper_data': paper_data,
+                'author_data': author_data,
+                'reference_proposal': reference_proposal,
+            }
 
     return benchmark
 
@@ -86,8 +91,15 @@ def main() -> None:
     args = parse_args()
     arxiv_ids = get_arxiv_ids(args.input)
     config = Config('../configs')
-    reviews = get_all_reviews('ICLR.cc/2024/Conference')
-    process_arxiv_ids(arxiv_ids, reviews, args.output, config)
+
+    if 'iclrbench' in args.input:
+        include_reviews = True
+        reviews = get_all_reviews('ICLR.cc/2024/Conference')
+    else:
+        include_reviews = False
+        reviews = {}
+
+    process_arxiv_ids(arxiv_ids, reviews, args.output, config, include_reviews)
 
 
 if __name__ == '__main__':
