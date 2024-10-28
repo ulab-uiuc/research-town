@@ -160,6 +160,7 @@ def get_all_reviews(venue_id: str) -> List[Dict[str, any]]:
         submissions = client.get_all_notes(
             content={'venueid': f'{venue_id}'}, details='replies'
         )
+        print('Fetching reviews...')
         for submission in submissions:
             url = get_url_from_title(submission.content['title']['value'])
             if not url:
