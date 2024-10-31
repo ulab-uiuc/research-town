@@ -5,6 +5,7 @@ from semanticscholar import SemanticScholar
 from .error_handler import api_calling_error_exponential_backoff
 from .model_prompting import model_prompting
 from .prompt_constructor import openai_format_prompt_construct
+from tqdm import tqdm
 
 
 def coauthor_frequency(
@@ -69,7 +70,7 @@ def collect_publications_and_coauthors(
         raise ValueError('Not enough papers found for author.')
 
     # for paper in tqdm(papers, desc='Processing papers', unit='paper'):
-    for paper in papers:
+    for paper in tqdm(papers, desc='Processing papers', unit='paper'):
         if not paper['abstract']:
             continue
 
