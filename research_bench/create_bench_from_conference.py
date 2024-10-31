@@ -1,4 +1,6 @@
 import argparse
+import json
+import os
 import re
 from typing import Any, Dict, List, Set
 
@@ -94,7 +96,14 @@ def main() -> None:
 
     if 'iclrbench' in args.input:
         include_reviews = True
-        reviews = get_all_reviews('ICLR.cc/2024/Conference')
+        if os.path.exists('./iclrbench/iclr_reviews.json'):
+            with open('./iclrbench/iclr_reviews.json', 'r') as f:
+                reviews = json.load(f)
+            print(f'Loaded {len(reviews)} reviews from ICRL 2024.')
+        else:
+            reviews = get_all_reviews('ICLR.cc/2024/Conference')
+            with open('./iclrbench/iclr_reviews.json', 'w') as f:
+                json.dump(reviews, f)
     else:
         include_reviews = False
         reviews = {}

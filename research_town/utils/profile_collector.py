@@ -1,6 +1,6 @@
-from arxiv import Client, Search
 from beartype import beartype
 from beartype.typing import Dict, List, Optional, Tuple, Union
+from semanticscholar import SemanticScholar
 from tqdm import tqdm
 
 from .error_handler import api_calling_error_exponential_backoff
@@ -28,24 +28,54 @@ def coauthor_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
 
 @api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
 def collect_publications_and_coauthors(
-    author: str, paper_max_num: int = 10, exclude_paper_titles: List[str] = []
+    author: str,
+    known_paper_titles: List[str] = [],
+    paper_max_num: int = 10,
+    exclude_paper_titles: bool = True,
 ) -> Tuple[List[str], List[str], List[str]]:
-    client = Client()
+    semantic_client = SemanticScholar()
+
+    # Retrieve author ID from Semantic Scholar
+    matched_author_ids = set()
+    search_results = semantic_client.search_author(author, fields=['papers'])
+
+    if known_paper_titles == []:
+        if len(search_results) == 1:
+            matched_author_ids = {search_results[0]['authorId']}
+        else:
+            raise ValueError('Need to provide known paper titles for multiple authors.')
+    else:
+        for result in search_results:
+            for paper in result['papers']:
+                if paper['title'].lower() in [
+                    title.lower() for title in known_paper_titles
+                ]:
+                    matched_author_ids.add(result['authorId'])
+
+    if len(matched_author_ids) > 1:
+        raise ValueError('Multiple authors found with matching paper titles.')
+    elif len(matched_author_ids) == 0:
+        raise ValueError('No authors found with matching paper titles.')
+
     paper_abstracts = []
     paper_titles = []
     co_authors: Dict[str, int] = {}
-    search = Search(query=f'au:{author}', max_results=paper_max_num)
-    for result in tqdm(
-        client.results(search), desc=f"Collecting {author}'s papers", unit='Paper'
-    ):
-        if result.title in exclude_paper_titles:
+    author_id = matched_author_ids.pop()
+    author_data = semantic_client.get_author(
+        author_id, fields=['papers.authors', 'papers.title', 'papers.abstract']
+    )
+    papers = author_data['papers'][:paper_max_num]
+    for paper in tqdm(papers, desc='Processing papers', unit='paper'):
+        if exclude_paper_titles and paper['title'] in known_paper_titles:
             continue
-        if author not in ', '.join(author.name for author in result.authors):
+
+        paper_authors = [author['name'] for author in paper['authors']]
+        if author not in ', '.join(author for author in paper_authors):
             continue
-        paper_authors = [author.name for author in result.authors]
+
         co_authors = coauthor_frequency(author, paper_authors, co_authors)
-        paper_abstract = result.summary.replace('\n', ' ')
-        paper_title = result.title
+        paper_abstract = paper['abstract'].replace('\n', ' ')
+        paper_title = paper['title']
         paper_abstracts.append(paper_abstract)
         paper_titles.append(paper_title)
     co_author_names = coauthor_filter(co_authors, limit=10)
