@@ -33,20 +33,24 @@ def collect_publications_and_coauthors(
     paper_max_num: int = 10,
     exclude_paper_titles: bool = True,
 ) -> Tuple[List[str], List[str], List[str]]:
-    if known_paper_titles == []:
-        raise ValueError('Please provide known paper titles.')
-
     semantic_client = SemanticScholar()
 
     # Retrieve author ID from Semantic Scholar
     matched_author_ids = set()
     search_results = semantic_client.search_author(author, fields=['papers'])
-    for result in search_results:
-        for paper in result['papers']:
-            if paper['title'].lower() in [
-                title.lower() for title in known_paper_titles
-            ]:
-                matched_author_ids.add(result['authorId'])
+
+    if known_paper_titles == []:
+        if len(search_results) == 1:
+            matched_author_ids = {search_results[0]['authorId']}
+        else:
+            raise ValueError('Need to provide known paper titles for multiple authors.')
+    else:
+        for result in search_results:
+            for paper in result['papers']:
+                if paper['title'].lower() in [
+                    title.lower() for title in known_paper_titles
+                ]:
+                    matched_author_ids.add(result['authorId'])
 
     if len(matched_author_ids) > 1:
         raise ValueError('Multiple authors found with matching paper titles.')
