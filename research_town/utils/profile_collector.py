@@ -9,15 +9,15 @@ from .prompt_constructor import openai_format_prompt_construct
 
 
 def coauthor_frequency(
-    author: str, author_list: List[str], co_authors: Dict[str, int]
+    author_id: str, author_list: List[Dict[str, str]], co_authors: Dict[str, int]
 ) -> Dict[str, int]:
-    for i in author_list:
-        if author.lower() == i.lower():
+    for author in author_list:
+        if author_id == author['authorId']:
             continue
-        if i in co_authors:
-            co_authors[i] += 1
+        if author['name'] in co_authors:
+            co_authors[author['name']] += 1
         else:
-            co_authors[i] = 1
+            co_authors[author['name']] = 1
     return co_authors
 
 
@@ -65,15 +65,20 @@ def collect_publications_and_coauthors(
         author_id, fields=['papers.authors', 'papers.title', 'papers.abstract']
     )
     papers = author_data['papers'][:paper_max_num]
+
+    if len(papers) - len(known_paper_titles) < 1:
+        raise ValueError('Not enough papers found for author.')
+
+    # for paper in tqdm(papers, desc='Processing papers', unit='paper'):
     for paper in tqdm(papers, desc='Processing papers', unit='paper'):
+        if not paper['abstract']:
+            continue
+
         if exclude_paper_titles and paper['title'] in known_paper_titles:
             continue
 
-        paper_authors = [author['name'] for author in paper['authors']]
-        if author not in ', '.join(author for author in paper_authors):
-            continue
-
-        co_authors = coauthor_frequency(author, paper_authors, co_authors)
+        paper_authors = paper['authors']
+        co_authors = coauthor_frequency(author_id, paper_authors, co_authors)
         paper_abstract = paper['abstract'].replace('\n', ' ')
         paper_title = paper['title']
         paper_abstracts.append(paper_abstract)
