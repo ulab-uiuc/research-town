@@ -6,11 +6,16 @@ from research_town.utils.profile_collector import (
 
 
 def test_coauthor_frequency() -> None:
-    author = 'Alice'
-    author_list = ['Alice', 'Bob', 'Charlie', 'Alice']
+    author_id = 'Alice1'
+    author_list = [
+        {'authorId': 'Alice1', 'name': 'Alice'},
+        {'authorId': 'Bob2', 'name': 'Bob'},
+        {'authorId': 'Charlie3', 'name': 'Charlie'},
+        {'authorId': 'Alice1', 'name': 'Alice'},
+    ]
     co_authors = {'Bob': 1, 'Charlie': 1}
     expected_co_authors = {'Bob': 2, 'Charlie': 2}
-    assert coauthor_frequency(author, author_list, co_authors) == expected_co_authors
+    assert coauthor_frequency(author_id, author_list, co_authors) == expected_co_authors
 
 
 def test_coauthor_filter() -> None:
