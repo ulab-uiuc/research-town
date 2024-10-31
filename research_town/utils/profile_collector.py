@@ -1,3 +1,4 @@
+import tqdm
 from beartype import beartype
 from beartype.typing import Dict, List, Optional, Tuple, Union
 from semanticscholar import SemanticScholar
@@ -55,7 +56,7 @@ def collect_publications_and_coauthors(
         author_id, fields=['papers.authors', 'papers.title', 'papers.abstract']
     )
     papers = author_data['papers'][:paper_max_num]
-    for paper in papers:
+    for paper in tqdm(papers, desc='Processing papers', unit='paper'):
         if paper['title'] in exclude_paper_titles:
             continue
 
