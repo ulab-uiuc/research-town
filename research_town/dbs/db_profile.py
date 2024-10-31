@@ -36,15 +36,15 @@ class ProfileDB(BaseDB[Profile]):
         self,
         names: List[str],
         config: Config,
-        exclude_paper_titles: Optional[List[str]] = None,
+        known_paper_titles: Optional[List[str]] = None,
     ) -> None:
-        if exclude_paper_titles is None:
-            exclude_paper_titles = ['']
+        if known_paper_titles is None:
+            known_paper_titles = []
         profiles: List[Profile] = []
         for name in names:
             pub_abstracts, pub_titles, collaborators = (
                 collect_publications_and_coauthors(
-                    name, paper_max_num=20, exclude_paper_titles=exclude_paper_titles
+                    name, paper_max_num=20, known_paper_titles=known_paper_titles
                 )
             )
             pub_info = '; '.join([f'{abstract}' for abstract in pub_abstracts])
