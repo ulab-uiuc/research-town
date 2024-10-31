@@ -66,6 +66,9 @@ def collect_publications_and_coauthors(
     )
     papers = author_data['papers'][:paper_max_num]
     for paper in tqdm(papers, desc='Processing papers', unit='paper'):
+        if not paper['abstract']:
+            continue
+
         if exclude_paper_titles and paper['title'] in known_paper_titles:
             continue
 
