@@ -1,7 +1,7 @@
-import tqdm
 from beartype import beartype
 from beartype.typing import Dict, List, Optional, Tuple, Union
 from semanticscholar import SemanticScholar
+from tqdm import tqdm
 
 from .error_handler import api_calling_error_exponential_backoff
 from .model_prompting import model_prompting
