@@ -39,7 +39,7 @@ class ProfileDB(BaseDB[Profile]):
         known_paper_titles: Optional[List[str]] = None,
     ) -> None:
         if known_paper_titles is None:
-            known_paper_titles = ['']
+            known_paper_titles = []
         profiles: List[Profile] = []
         for name in names:
             pub_abstracts, pub_titles, collaborators = (
