@@ -276,7 +276,10 @@ def test_pull_profiles(mock_model_prompting: MagicMock) -> None:
 
     db = ProfileDB(config=example_config.database)
     names = ['Jiaxuan You', 'Jure Leskovec']
-    db.pull_profiles(names=names, config=example_config)
+    known_paper_titles = 'Position-aware Graph Neural Networks'
+    db.pull_profiles(
+        names=names, config=example_config, known_paper_titles=[known_paper_titles]
+    )
     assert db.count() == 2
 
 
