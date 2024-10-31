@@ -65,6 +65,10 @@ def collect_publications_and_coauthors(
         author_id, fields=['papers.authors', 'papers.title', 'papers.abstract']
     )
     papers = author_data['papers'][:paper_max_num]
+
+    if len(papers) - len(known_paper_titles) < 1:
+        raise ValueError('Not enough papers found for author.')
+
     for paper in tqdm(papers, desc='Processing papers', unit='paper'):
         if not paper['abstract']:
             continue
