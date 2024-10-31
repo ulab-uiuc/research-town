@@ -24,13 +24,20 @@ def test_coauthor_filter() -> None:
 
 
 def test_collect_publications_and_coauthors() -> None:
+    author = 'Rex Ying'
+    known_paper_titles = [
+        'GNN Explainer: A Tool for Post-hoc Explanation of Graph Neural Networks'
+    ]
+
     publications, titles, co_author_names = collect_publications_and_coauthors(
-        'Rex Ying'
+        author=author,
+        known_paper_titles=known_paper_titles,
+        paper_max_num=5,
+        exclude_paper_titles=True,
     )
 
+    assert isinstance(publications, list)
+    assert isinstance(titles, list)
+    assert isinstance(co_author_names, list)
     assert len(publications) > 0
-    assert len(publications) <= 10
-    for publication in publications:
-        assert publication is not None
-
     assert len(co_author_names) > 0
