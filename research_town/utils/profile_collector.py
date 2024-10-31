@@ -28,30 +28,35 @@ def coauthor_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
 
 @api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
 def collect_publications_and_coauthors(
-    author: str, paper_max_num: int = 10, exclude_paper_titles: List[str] = []
+    author: str,
+    known_paper_titles: List[str] = [],
+    paper_max_num: int = 10,
+    exclude_paper_titles: bool = True,
 ) -> Tuple[List[str], List[str], List[str]]:
+    if known_paper_titles == []:
+        raise ValueError('Please provide known paper titles.')
+
     semantic_client = SemanticScholar()
 
     # Retrieve author ID from Semantic Scholar
-    author_id = None
+    matched_author_ids = set()
     search_results = semantic_client.search_author(author, fields=['papers'])
     for result in search_results:
         for paper in result['papers']:
             if paper['title'].lower() in [
-                title.lower() for title in exclude_paper_titles
+                title.lower() for title in known_paper_titles
             ]:
-                author_id = result['authorId']
-                break
-        if author_id:
-            break
+                matched_author_ids.add(result['authorId'])
 
-    if not author_id:
-        print('Author not found or paper name does not match any records.')
-        return [], [], []
+    if len(matched_author_ids) > 1:
+        raise ValueError('Multiple authors found with matching paper titles.')
+    elif len(matched_author_ids) == 0:
+        raise ValueError('No authors found with matching paper titles.')
 
     paper_abstracts = []
     paper_titles = []
     co_authors: Dict[str, int] = {}
+    author_id = matched_author_ids.pop()
     author_data = semantic_client.get_author(
         author_id, fields=['papers.authors', 'papers.title', 'papers.abstract']
     )
