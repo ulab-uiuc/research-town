@@ -42,11 +42,15 @@ class ProfileDB(BaseDB[Profile]):
             known_paper_titles = []
         profiles: List[Profile] = []
         for name in names:
-            pub_abstracts, pub_titles, collaborators = (
-                collect_publications_and_coauthors(
-                    name, paper_max_num=20, known_paper_titles=known_paper_titles
+            try:
+                pub_abstracts, pub_titles, collaborators = (
+                    collect_publications_and_coauthors(
+                        name, paper_max_num=20, known_paper_titles=known_paper_titles
+                    )
                 )
-            )
+            except Exception:
+                continue
+
             pub_info = '; '.join([f'{abstract}' for abstract in pub_abstracts])
 
             bio = write_bio_prompting(

@@ -10,6 +10,7 @@ from utils import (
     get_author_data,
     get_paper_data,
     get_proposal_from_paper,
+    save_benchmark,
 )
 
 from research_town.configs import Config
@@ -68,6 +69,8 @@ def process_arxiv_ids(
                 'author_data': author_data,
                 'reference_proposal': reference_proposal,
             }
+        existing_arxiv_ids.add(arxiv_id)
+        save_benchmark(benchmark, output)
 
     return benchmark
 

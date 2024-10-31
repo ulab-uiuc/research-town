@@ -60,12 +60,15 @@ def collect_publications_and_coauthors(
     paper_abstracts = []
     paper_titles = []
     co_authors: Dict[str, int] = {}
-    author_id = matched_author_ids.pop()
+    author_id = list(matched_author_ids)[0]
     author_data = semantic_client.get_author(
         author_id, fields=['papers.authors', 'papers.title', 'papers.abstract']
     )
     papers = author_data['papers'][:paper_max_num]
     for paper in tqdm(papers, desc='Processing papers', unit='paper'):
+        if not paper['abstract']:
+            continue
+
         if exclude_paper_titles and paper['title'] in known_paper_titles:
             continue
 
