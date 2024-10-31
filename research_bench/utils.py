@@ -145,7 +145,7 @@ def get_author_data(
     arxiv_id: str, authors: List[str], title: str, config: Config
 ) -> Dict[str, Any]:
     profile_db = ProfileDB(config.database)
-    profile_db.pull_profiles(names=authors, config=config, exclude_paper_titles=[title])
+    profile_db.pull_profiles(names=authors, config=config, known_paper_titles=[title])
     author_data = {}
     profile_data = profile_db.get()
     for data in profile_data:

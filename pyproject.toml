@@ -22,6 +22,7 @@ lxml = "*"
 tqdm = "*"
 keybert = "*"
 torch = { version = "^2.2.1", source = "torchcpu" }
+semanticscholar = "*"
 
 uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
