@@ -71,7 +71,6 @@ def process_arxiv_ids(
             }
         existing_arxiv_ids.add(arxiv_id)
         save_benchmark(benchmark, output)
-
     return benchmark
 
 

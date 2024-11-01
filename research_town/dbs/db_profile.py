@@ -50,7 +50,6 @@ class ProfileDB(BaseDB[Profile]):
                 )
             except Exception:
                 continue
-
             pub_info = '; '.join([f'{abstract}' for abstract in pub_abstracts])
 
             bio = write_bio_prompting(
