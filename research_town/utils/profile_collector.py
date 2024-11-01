@@ -1,6 +1,7 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Optional, Set, Tuple, Union
+from beartype.typing import Any, Dict, List, Optional, Set, Tuple, Union, cast
 from semanticscholar import SemanticScholar
+
 
 from .error_handler import api_calling_error_exponential_backoff
 from .model_prompting import model_prompting
@@ -11,12 +12,11 @@ def coauthor_frequency(
     author_id: str, author_list: List[Dict[str, str]], co_authors: Dict[str, int]
 ) -> Dict[str, int]:
     for author in author_list:
-        if author_id == author['authorId']:
+        co_author_id = author.get('authorId')
+        co_author_name = author.get('name')
+        if not co_author_id or not co_author_name or co_author_id == author_id:
             continue
-        if author['name'] in co_authors:
-            co_authors[author['name']] += 1
-        else:
-            co_authors[author['name']] = 1
+        co_authors[co_author_name] = co_authors.get(co_author_name, 0) + 1
     return co_authors
 
 
@@ -32,17 +32,16 @@ def match_author_ids(author_name: str, known_paper_titles: List[str]) -> Set[str
         author_name, fields=['authorId', 'papers.title']
     )
 
-    # Preprocess known paper titles for case-insensitive matching
-    known_titles_lower = set(title.lower() for title in known_paper_titles)
+    known_titles_lower = {title.lower() for title in known_paper_titles}
     matched_author_ids = set()
 
     for result in search_results:
         author_id = result.get('authorId')
         papers = result.get('papers', [])
         for paper in papers:
-            paper_title = paper.get('title', '').lower()
-            if paper_title in known_titles_lower:
+            if paper.get('title', '').lower() in known_titles_lower:
                 matched_author_ids.add(author_id)
+                break
 
     return matched_author_ids
 
@@ -52,7 +51,7 @@ def get_papers_from_author_id(
     author_id: str, paper_max_num: int = 10
 ) -> List[Dict[str, Any]]:
     semantic_client = SemanticScholar()
-    author_data = semantic_client.get_author(
+    author_data: Dict[str, Any] = semantic_client.get_author(
         author_id,
         fields=[
             'papers.title',
@@ -61,8 +60,9 @@ def get_papers_from_author_id(
             'papers.authors.authorId',
         ],
     )
-    papers = author_data.get('papers', [])[:paper_max_num]
-    return papers
+    papers = author_data.get('papers', [])
+    papers = cast(List[Dict[str, Any]], papers)
+    return papers[:paper_max_num]
 
 
 def collect_publications_and_coauthors(
@@ -75,32 +75,37 @@ def collect_publications_and_coauthors(
 
     if len(matched_author_ids) > 1:
         raise ValueError('Multiple authors found with matching paper titles.')
-    elif len(matched_author_ids) == 0:
+    elif not matched_author_ids:
         raise ValueError('No authors found with matching paper titles.')
-    else:
-        author_id = matched_author_ids.pop()
 
+    author_id = matched_author_ids.pop()
     papers = get_papers_from_author_id(author_id, paper_max_num)
 
     paper_abstracts = []
     paper_titles = []
+    co_authors: Dict[str, int] = {}
+
+    known_titles_lower = {title.lower() for title in known_paper_titles}
+
     for paper in papers:
-        if not paper['abstract']:
+        title = paper.get('title', '')
+        if exclude_paper_titles and title.lower() in known_titles_lower:
             continue
 
-        if exclude_paper_titles and paper['title'] in known_paper_titles:
+        abstract = paper.get('abstract')
+        if not abstract:
             continue
 
-        paper_authors = paper['authors']
+        paper_abstracts.append(abstract.replace('\n', ' '))
+        paper_titles.append(title)
+
+        paper_authors = paper.get('authors', [])
         co_authors = coauthor_frequency(author_id, paper_authors, co_authors)
-        paper_abstract = paper['abstract'].replace('\n', ' ')
-        paper_title = paper['title']
-        paper_abstracts.append(paper_abstract)
-        paper_titles.append(paper_title)
-    co_author_names = coauthor_filter(co_authors, limit=10)
 
-    if len(paper_abstracts) < 1 or len(paper_titles) < 1:
-        raise ValueError('No enough papers found with abstracts.')
+    if not paper_abstracts or not paper_titles:
+        raise ValueError('Not enough papers found with abstracts.')
+
+    co_author_names = coauthor_filter(co_authors, limit=100)
 
     return paper_abstracts, paper_titles, co_author_names
 
