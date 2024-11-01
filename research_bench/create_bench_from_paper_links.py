@@ -1,7 +1,7 @@
 import argparse
 import re
 from multiprocessing import Pool, cpu_count
-from typing import Any, Dict, List, Tuple, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from tqdm import tqdm
 from utils import (
@@ -60,7 +60,10 @@ def process_arxiv_ids_chunk(
 
 
 def process_arxiv_ids(
-    arxiv_ids: List[str], output: str, config: Config, num_processes: Optional[int] = None
+    arxiv_ids: List[str],
+    output: str,
+    config: Config,
+    num_processes: Optional[int] = None,
 ) -> Dict[str, Any]:
     if num_processes is None:
         num_processes = max(1, cpu_count() - 1)
