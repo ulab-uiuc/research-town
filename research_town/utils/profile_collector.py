@@ -61,8 +61,10 @@ def get_papers_from_author_id(
         ],
     )
     papers = author_data.get('papers', [])
-    papers = cast(List[Dict[str, Any]], papers)
-    return papers[:paper_max_num]
+    if isinstance(papers, list):
+        return cast(List[Dict[str, Any]], papers[:paper_max_num])
+    else:
+        return []
 
 
 def collect_publications_and_coauthors(
