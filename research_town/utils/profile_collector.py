@@ -24,7 +24,7 @@ def coauthor_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
     return [name for name, _ in co_author_list[:limit]]
 
 
-@api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
+@api_calling_error_exponential_backoff(retries=10, base_wait_time=1)
 def match_author_ids(author_name: str, known_paper_titles: List[str]) -> Set[str]:
     semantic_client = SemanticScholar()
     search_results = semantic_client.search_author(
@@ -45,7 +45,7 @@ def match_author_ids(author_name: str, known_paper_titles: List[str]) -> Set[str
     return matched_author_ids
 
 
-@api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
+@api_calling_error_exponential_backoff(retries=10, base_wait_time=1)
 def get_papers_from_author_id(
     author_id: str, paper_max_num: int = 10
 ) -> List[Dict[str, Any]]:
