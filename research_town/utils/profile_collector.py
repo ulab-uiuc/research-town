@@ -35,8 +35,8 @@ def match_author_ids(author_name: str, known_paper_titles: List[str]) -> Set[str
     matched_author_ids = set()
 
     for result in search_results:
-        author_id = result.get('authorId')
-        papers = result.get('papers', [])
+        author_id = result['authorId']
+        papers = result['papers']
         for paper in papers:
             if paper.get('title', '').lower() in known_titles_lower:
                 matched_author_ids.add(author_id)
@@ -55,11 +55,10 @@ def get_papers_from_author_id(
         fields=[
             'papers.title',
             'papers.abstract',
-            'papers.authors.name',
-            'papers.authors.authorId',
+            'papers.authors',
         ],
     )
-    papers = author_data.get('papers', [])
+    papers = author_data['papers']
     if isinstance(papers, list):
         return cast(List[Dict[str, Any]], papers[:paper_max_num])
     else:
