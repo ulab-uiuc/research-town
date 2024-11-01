@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Dict, List, Optional, Tuple, Union, Set
+from beartype.typing import Any, Dict, List, Optional, Set, Tuple, Union
 from semanticscholar import SemanticScholar
 
 from .error_handler import api_calling_error_exponential_backoff
@@ -26,23 +26,44 @@ def coauthor_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
 
 
 @api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
-def match_author_ids(author: str, known_paper_titles: List[str]) -> Set[str]:
-    matched_author_ids = set()
+def match_author_ids(author_name: str, known_paper_titles: List[str]) -> Set[str]:
     semantic_client = SemanticScholar()
-    search_results = semantic_client.search_author(author, fields=['papers.title'])
+    search_results = semantic_client.search_author(
+        author_name, fields=['authorId', 'papers.title']
+    )
+
+    # Preprocess known paper titles for case-insensitive matching
+    known_titles_lower = set(title.lower() for title in known_paper_titles)
+    matched_author_ids = set()
 
     for result in search_results:
-        for paper in result['papers']:
-            if paper['title'].lower() in [title.lower() for title in known_paper_titles]:
-                matched_author_ids.add(result['authorId'])
+        author_id = result.get('authorId')
+        papers = result.get('papers', [])
+        for paper in papers:
+            paper_title = paper.get('title', '').lower()
+            if paper_title in known_titles_lower:
+                matched_author_ids.add(author_id)
+
     return matched_author_ids
 
+
 @api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
-def get_paper_from_author_id(author_id: str, paper_max_num: int = 10) -> List[Dict[str, str]]:
+def get_papers_from_author_id(
+    author_id: str, paper_max_num: int = 10
+) -> List[Dict[str, Any]]:
     semantic_client = SemanticScholar()
-    author_data = semantic_client.get_author(author_id, fields=['papers.title'])
-    papers = author_data['papers'][:paper_max_num]
+    author_data = semantic_client.get_author(
+        author_id,
+        fields=[
+            'papers.title',
+            'papers.abstract',
+            'papers.authors.name',
+            'papers.authors.authorId',
+        ],
+    )
+    papers = author_data.get('papers', [])[:paper_max_num]
     return papers
+
 
 def collect_publications_and_coauthors(
     author: str,
@@ -50,7 +71,6 @@ def collect_publications_and_coauthors(
     paper_max_num: int = 10,
     exclude_paper_titles: bool = True,
 ) -> Tuple[List[str], List[str], List[str]]:
-
     matched_author_ids = match_author_ids(author, known_paper_titles)
 
     if len(matched_author_ids) > 1:
@@ -60,7 +80,7 @@ def collect_publications_and_coauthors(
     else:
         author_id = matched_author_ids.pop()
 
-    papers = get_paper_from_author_id(author_id, paper_max_num)
+    papers = get_papers_from_author_id(author_id, paper_max_num)
 
     paper_abstracts = []
     paper_titles = []
