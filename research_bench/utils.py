@@ -145,11 +145,12 @@ def get_author_data(
     arxiv_id: str, authors: List[str], title: str, config: Config
 ) -> Dict[str, Any]:
     profile_db = ProfileDB(config.database)
-    profile_db.pull_profiles(names=authors, config=config, known_paper_titles=[title])
+    profile_pks = profile_db.pull_profiles(
+        names=authors, config=config, known_paper_titles=[title]
+    )
     author_data = {}
-    profile_data = profile_db.get()
-    for data in profile_data:
-        author_data[data.pk] = data.model_dump()
+    for pk in profile_pks:
+        author_data[pk] = profile_db.get(pk=pk)[0].model_dump()
     return author_data
 
 

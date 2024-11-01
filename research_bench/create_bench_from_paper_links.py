@@ -93,6 +93,9 @@ def process_arxiv_ids(
         for result in results:
             benchmark.update(result)
 
+        import pdb
+
+        pdb.set_trace()
         # Save combined benchmark data
         save_benchmark(benchmark, output)
         return benchmark
