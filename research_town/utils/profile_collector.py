@@ -47,7 +47,7 @@ def match_author_ids(author_name: str, known_paper_titles: List[str]) -> Set[str
 
 @api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
 def get_papers_from_author_id(
-    author_id: str, paper_max_num: int = 10
+    author_id: str, paper_max_num: int = 20
 ) -> List[Dict[str, Any]]:
     semantic_client = SemanticScholar()
     author_data: Dict[str, Any] = semantic_client.get_author(
@@ -57,10 +57,12 @@ def get_papers_from_author_id(
             'papers.abstract',
             'papers.authors',
         ],
+        offset=0,
+        limit=paper_max_num,
     )
     papers = author_data['papers']
     if isinstance(papers, list):
-        return cast(List[Dict[str, Any]], papers[:paper_max_num])
+        return cast(List[Dict[str, Any]], papers)
     else:
         return []
 
@@ -68,7 +70,7 @@ def get_papers_from_author_id(
 def collect_publications_and_coauthors(
     author: str,
     known_paper_titles: List[str] = [],
-    paper_max_num: int = 10,
+    paper_max_num: int = 20,
     exclude_paper_titles: bool = True,
 ) -> Tuple[List[str], List[str], List[str]]:
     matched_author_ids = match_author_ids(author, known_paper_titles)
