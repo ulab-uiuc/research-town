@@ -37,7 +37,7 @@ class ProfileDB(BaseDB[Profile]):
         names: List[str],
         config: Config,
         known_paper_titles: Optional[List[str]] = None,
-    ) -> None:
+    ) -> List[str]:
         if known_paper_titles is None:
             known_paper_titles = []
         profiles: List[Profile] = []
@@ -81,6 +81,8 @@ class ProfileDB(BaseDB[Profile]):
         for profile, emb in zip(profiles, embeddings):
             profile.embed = emb
             self.add(profile)
+
+        return [profile.pk for profile in profiles]
 
     def match(self, query: str, role: Role, num: int = 1) -> List[Profile]:
         self._initialize_retriever()
