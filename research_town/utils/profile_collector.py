@@ -28,7 +28,10 @@ def coauthor_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
 def match_author_ids(author_name: str, known_paper_titles: List[str]) -> Set[str]:
     semantic_client = SemanticScholar()
     search_results = semantic_client.search_author(
-        author_name, fields=['authorId', 'papers.title'], offset=0, limit=100,
+        author_name,
+        fields=['authorId', 'papers.title'],
+        offset=0,
+        limit=100,
     )
 
     known_titles_lower = {title.lower() for title in known_paper_titles}
