@@ -59,11 +59,10 @@ def get_papers_from_author_id(
             'papers.abstract',
             'papers.authors',
         ],
-        limit=paper_max_num,
     )
     papers = author_data['papers']
     if isinstance(papers, list):
-        return cast(List[Dict[str, Any]], papers)
+        return cast(List[Dict[str, Any]], papers[:paper_max_num])
     else:
         return []
 
