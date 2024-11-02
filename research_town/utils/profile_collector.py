@@ -30,7 +30,6 @@ def match_author_ids(author_name: str, known_paper_titles: List[str]) -> Set[str
     search_results = semantic_client.search_author(
         author_name,
         fields=['authorId', 'papers.title'],
-        offset=0,
         limit=100,
     )
 
@@ -60,7 +59,6 @@ def get_papers_from_author_id(
             'papers.abstract',
             'papers.authors',
         ],
-        offset=0,
         limit=paper_max_num,
     )
     papers = author_data['papers']
