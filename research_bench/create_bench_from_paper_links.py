@@ -1,8 +1,9 @@
 import argparse
 import re
+import os
+import json
 from multiprocessing import Pool, cpu_count
-from typing import Any, Dict, List, Optional, Tuple
-
+from typing import Any, Dict, List
 from tqdm import tqdm
 from utils import (
     get_author_data,
@@ -10,117 +11,61 @@ from utils import (
     get_proposal_from_paper,
     save_benchmark,
 )
-
 from research_town.configs import Config
 
 
 def get_arxiv_ids(input_file: str) -> List[str]:
     with open(input_file, 'r', encoding='utf-8') as f:
-        urls = [line.strip() for line in f if line.strip()]
-
-    arxiv_ids = []
-    for url in urls:
-        match = re.search(r'arxiv\.org/abs/([^\s/]+)', url)
-        if match:
-            arxiv_id_str = match.group(1)
-            arxiv_id = arxiv_id_str.split('v')[0]
-            arxiv_ids.append(arxiv_id)
-    return arxiv_ids
+        return [
+            re.search(r'arxiv\.org/abs/([^\s/]+)', line.strip()).group(1).split('v')[0]
+            for line in f if line.strip() and re.search(r'arxiv\.org/abs/([^\s/]+)', line.strip())
+        ]
 
 
-def process_single_arxiv_id(
-    arxiv_id: str, config: Config
-) -> Tuple[str, Dict[str, Any]]:
+def process_single_arxiv_id(arxiv_id: str, config: Config) -> Dict[str, Any]:
     paper_data = get_paper_data(arxiv_id)
-    authors = paper_data['authors']
-    title = paper_data['title']
-    author_data = get_author_data(arxiv_id, authors, title, config)
-    reference_proposal = get_proposal_from_paper(
-        arxiv_id, paper_data['introduction'], config
-    )
-
-    return arxiv_id, {
+    return {
         'paper_data': paper_data,
-        'author_data': author_data,
-        'reference_proposal': reference_proposal,
+        'author_data': get_author_data(arxiv_id, paper_data['authors'], paper_data['title'], config),
+        'reference_proposal': get_proposal_from_paper(arxiv_id, paper_data['introduction'], config),
     }
 
 
-def process_arxiv_ids_chunk(
-    arxiv_ids_chunk: List[str], config: Config
-) -> Dict[str, Dict[str, Any]]:
-    """
-    Processes a chunk of arXiv IDs in parallel.
-    """
-    benchmark_chunk = {}
-    for arxiv_id in arxiv_ids_chunk:
-        arxiv_id, data = process_single_arxiv_id(arxiv_id, config)
-        benchmark_chunk[arxiv_id] = data
-    return benchmark_chunk
+def save_benchmark_data(data: Dict[str, Any], output: str) -> None:
+    existing_data = {}
+    if os.path.exists(output):
+        with open(output, 'r', encoding='utf-8') as f:
+            existing_data = json.load(f)
+    existing_data.update(data)
+    save_benchmark(existing_data, output)
 
 
-def process_arxiv_ids(
-    arxiv_ids: List[str],
-    output: str,
-    config: Config,
-    num_processes: Optional[int] = None,
-) -> Dict[str, Any]:
-    if num_processes is None:
-        num_processes = max(1, cpu_count() - 1)
+def process_chunk(arxiv_ids_chunk: List[str], config: Config, output: str) -> None:
+    benchmark_chunk = {arxiv_id: process_single_arxiv_id(arxiv_id, config) for arxiv_id in arxiv_ids_chunk}
+    save_benchmark_data(benchmark_chunk, output)
 
-    if num_processes == 1:
-        # Single-process mode
-        benchmark = {}
-        for arxiv_id in tqdm(arxiv_ids, desc='Processing arXiv IDs'):
-            _, data = process_single_arxiv_id(arxiv_id, config)
-            benchmark[arxiv_id] = data
-        save_benchmark(benchmark, output)
-        return benchmark
-    else:
-        # Multi-process mode
-        chunk_size = len(arxiv_ids) // num_processes
-        arxiv_ids_chunks = [
-            arxiv_ids[i : i + chunk_size] for i in range(0, len(arxiv_ids), chunk_size)
-        ]
 
-        with Pool(processes=num_processes) as pool:
-            results = pool.starmap(
-                process_arxiv_ids_chunk, [(chunk, config) for chunk in arxiv_ids_chunks]
-            )
+def process_arxiv_ids(arxiv_ids: List[str], output: str, config: Config, num_processes: int) -> None:
+    arxiv_ids_chunks = [arxiv_ids[i: i + num_processes] for i in range(0, len(arxiv_ids), num_processes)]
 
-        # Combine results from all processes
-        benchmark = {}
-        for result in results:
-            benchmark.update(result)
-
-        import pdb
-
-        pdb.set_trace()
-        # Save combined benchmark data
-        save_benchmark(benchmark, output)
-        return benchmark
+    with tqdm(total=len(arxiv_ids_chunks), desc='Processing arXiv IDs') as pbar:
+        if num_processes == 1:
+            for chunk in arxiv_ids_chunks:
+                process_chunk(chunk, config, output)
+                pbar.update()
+        else:
+            with Pool(processes=num_processes) as pool:
+                for chunk in arxiv_ids_chunks:
+                    pool.apply_async(process_chunk, args=(chunk, config, output), callback=lambda _: pbar.update())
+                pool.close()
+                pool.join()
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Process arXiv URLs.')
-    parser.add_argument(
-        '--input',
-        type=str,
-        required=True,
-        help='Path to the input file containing arXiv URLs.',
-    )
-    parser.add_argument(
-        '--output',
-        type=str,
-        default='./benchmark/crossbench.json',
-        help='Output file path.',
-    )
-    parser.add_argument(
-        '--num_processes',
-        type=int,
-        default=None,
-        help='Number of processes to use. Set to 1 for single-process mode. Default is based on available CPU cores.',
-    )
+    parser.add_argument('--input', required=True, help='Path to the input file containing arXiv URLs.')
+    parser.add_argument('--output', default='./benchmark/crossbench.json', help='Output file path.')
+    parser.add_argument('--num_processes', type=int, default=cpu_count() - 1, help='Number of processes to use.')
     return parser.parse_args()
 
 
