@@ -18,11 +18,14 @@ from research_town.configs import Config
 
 def get_arxiv_ids(input_file: str) -> List[str]:
     with open(input_file, 'r', encoding='utf-8') as f:
-        return [
-            re.search(r'arxiv\.org/abs/([^\s/]+)', line.strip()).group(1).split('v')[0]
-            for line in f
-            if line.strip() and re.search(r'arxiv\.org/abs/([^\s/]+)', line.strip())
-        ]
+        arxiv_ids = []
+        for line in f:
+            line = line.strip()
+            match = re.search(r'arxiv\.org/abs/([^\s/]+)', line)
+            if match:
+                arxiv_id = match.group(1).split('v')[0]
+                arxiv_ids.append(arxiv_id)
+        return arxiv_ids
 
 
 def process_single_arxiv_id(arxiv_id: str, config: Config) -> Dict[str, Any]:
