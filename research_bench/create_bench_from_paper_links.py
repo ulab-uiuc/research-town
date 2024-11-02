@@ -97,6 +97,12 @@ def parse_args() -> argparse.Namespace:
         default=cpu_count() - 1,
         help='Number of processes to use.',
     )
+    parser.add_argument(
+        '--num_processes',
+        type=int,
+        default=None,
+        help='Number of processes to use. Set to 1 for single-process mode. Default is based on available CPU cores.',
+    )
     return parser.parse_args()
 
 
