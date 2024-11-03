@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Tuple
 
 from tqdm import tqdm
 
-from research_bench.proposal_eval import compute_metrics
+from research_bench.eval import compute_metrics
 from research_bench.proposal_writing import write_proposal
 from research_bench.utils import load_benchmark
 from research_town.configs import Config
