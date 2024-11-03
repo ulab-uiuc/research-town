@@ -60,9 +60,9 @@ def compute_gpt_metric(reference: str, generation: str) -> float:
                 '1. **Objectives**: Do both sets of questions aim to address the same or complementary research goals?\n'
                 '2. **Methodologies**: Are the proposed methods similar, compatible, or capable of being effectively integrated?\n'
                 '3. **Expected Outcomes**: Are the anticipated research results and impacts consistent or mutually supportive?\n\n'
-                'Current Five Research Questions (Current 5Q):\n'
+                'Reference context:\n'
                 f'{reference}\n\n'
-                'Proposed Five Research Questions (Proposal 5Q):\n'
+                'Proposed context:\n'
                 f'{generation}\n\n'
                 'Based on the above alignment criteria, especially focusing on the methodologies, please provide a similarity score: **1** indicates alignment, and **0** indicates no alignment. **Only output the score without any additional information.**'
             ),
