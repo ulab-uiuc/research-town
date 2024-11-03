@@ -30,6 +30,9 @@ pandas = { version = "*", optional = true }
 
 bert_score = { version = "*", optional = true }
 rouge_score = { version = "*", optional = true }
+pypdf = "^5.1.0"
+pymupdf = "^1.24.13"
+pymupdf4llm = "^0.0.17"
 
 
 [tool.poetry.group.dev.dependencies]
