@@ -66,7 +66,7 @@ def main() -> None:
         '--mode',
         type=str,
         required=True,
-        choices=['author_only', 'citation_only', 'author_citation', 'textgnn'],
+        choices=['author_only', 'citation_only', 'author_citation', 'textgnn', 'sakana_ai_scientist'],
         help='Processing mode',
     )
     parser.add_argument(
