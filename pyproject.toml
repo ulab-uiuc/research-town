@@ -50,6 +50,7 @@ mypy = "^1.11.2"
 [tool.poetry.extras]
 humaneval = ["pandas"]
 backend = ["uvicorn", "fastapi"]
+researchbench = ["bert_score", "rouge_score"]
 
 [build-system]
 requires = ["poetry-core"]
