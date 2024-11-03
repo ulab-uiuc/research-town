@@ -50,12 +50,12 @@ def compute_bertscore(reference: str, hypothesis: str) -> float:
         return 0.0
 
 
-def compute_gpt_metric(reference: str, generation: str) -> float:
+def compute_proposal_gpt_metric(reference: str, generation: str) -> float:
     prompt = [
         {
             'role': 'user',
             'content': (
-                'Evaluate the alignment between the following two sets of five core research questions, with a particular emphasis on their objectives, methodologies, and expected outcomes.\n\n'
+                'Evaluate the alignment between the following two sets of paragraphs, with a particular emphasis on their objectives, methodologies, and expected outcomes.\n\n'
                 'Alignment Criteria Definitions:\n'
                 '1. **Objectives**: Do both sets of questions aim to address the same or complementary research goals?\n'
                 '2. **Methodologies**: Are the proposed methods similar, compatible, or capable of being effectively integrated?\n'
@@ -72,6 +72,10 @@ def compute_gpt_metric(reference: str, generation: str) -> float:
     score = float(response.strip())
     score = max(0.0, min(1.0, score))
     return score
+
+
+def compute_review_gpt_metric(reference: str, generation: str) -> float:
+    return 0
 
 
 def compute_embedding_similarity(reference: str, hypothesis: str) -> float:
@@ -95,11 +99,27 @@ def compute_embedding_similarity(reference: str, hypothesis: str) -> float:
         return 0.0
 
 
-def compute_metrics(reference: str, generation: str) -> Dict[str, float]:
+def compute_proposal_metrics(reference: str, generation: str) -> Dict[str, float]:
     bleu = compute_bleu(reference, generation)
     rouge_l = compute_rouge_l(reference, generation)
     bert_score = compute_bertscore(reference, generation)
-    gpt_metric = compute_gpt_metric(reference, generation)
+    gpt_metric = compute_proposal_gpt_metric(reference, generation)
+    embedding_similarity = compute_embedding_similarity(reference, generation)
+
+    return {
+        'bleu': bleu,
+        'rouge_l': rouge_l,
+        'gpt_metric_score': gpt_metric,
+        'bert_score': bert_score,
+        'embedding_similarity': embedding_similarity,
+    }
+
+
+def compute_review_metrics(reference: str, generation: str) -> Dict[str, float]:
+    bleu = compute_bleu(reference, generation)
+    rouge_l = compute_rouge_l(reference, generation)
+    bert_score = compute_bertscore(reference, generation)
+    gpt_metric = compute_review_gpt_metric(reference, generation)
     embedding_similarity = compute_embedding_similarity(reference, generation)
 
     return {
