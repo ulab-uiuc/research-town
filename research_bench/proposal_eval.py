@@ -1,3 +1,4 @@
+import re
 from typing import Dict
 
 import nltk
@@ -95,12 +96,77 @@ def compute_embedding_similarity(reference: str, hypothesis: str) -> float:
         return 0.0
 
 
+def extract_and_clean_question_content(text: str, question_prompts: list) -> list:
+    question_contents = []
+    for i, prompt in enumerate(question_prompts):
+        start = text.find(prompt)
+        end = (
+            text.find(question_prompts[i + 1])
+            if i + 1 < len(question_prompts)
+            else len(text)
+        )
+
+        if start != -1:
+            content = text[start + len(prompt) : end].strip()
+            content = re.sub(r'[\*\#]+', '', content).strip()
+            content = content.split('\n', 1)[0].strip()
+            question_contents.append(content)
+        else:
+            question_contents.append('')
+    return question_contents
+
+
+def compute_embedding_similarity_per_question(reference: str, hypothesis: str) -> list:
+    try:
+        questions = [
+            'What is the problem?',
+            'Why is it interesting and important?',
+            'Why is it hard?',
+            "Why hasn't it been solved before?",
+            'What are the key components of my approach and results?',
+        ]
+
+        ref_questions = extract_and_clean_question_content(reference, questions)
+        hyp_questions = extract_and_clean_question_content(hypothesis, questions)
+
+        similarities = []
+
+        for ref_text, hyp_text in zip(ref_questions, hyp_questions):
+            if not ref_text or not hyp_text:
+                print(f'Empty question: {ref_text} vs {hyp_text}')
+                similarities.append(0.0)
+                continue
+
+            response_ref = embedding(model='text-embedding-3-large', input=[ref_text])
+            response_hyp = embedding(model='text-embedding-3-large', input=[hyp_text])
+
+            embedding_ref = response_ref['data'][0]['embedding']
+            embedding_hyp = response_hyp['data'][0]['embedding']
+
+            vec_ref = np.array(embedding_ref)
+            vec_hyp = np.array(embedding_hyp)
+
+            cosine_sim = np.dot(vec_ref, vec_hyp) / (
+                np.linalg.norm(vec_ref) * np.linalg.norm(vec_hyp)
+            )
+            similarities.append(float(cosine_sim))
+
+        return similarities
+
+    except Exception as e:
+        print(f'Error computing embedding similarity per question: {e}')
+        return [0.0] * len(questions)
+
+
 def compute_metrics(reference_5q: str, generated_5q: str) -> Dict[str, float]:
     bleu = compute_bleu(reference_5q, generated_5q)
     rouge_l = compute_rouge_l(reference_5q, generated_5q)
     bert_score = compute_bertscore(reference_5q, generated_5q)
     gpt_metric = compute_gpt_metric(reference_5q, generated_5q)
     embedding_similarity = compute_embedding_similarity(reference_5q, generated_5q)
+    embedding_similarity_per_question = compute_embedding_similarity_per_question(
+        reference_5q, generated_5q
+    )
 
     return {
         'bleu': bleu,
@@ -108,4 +174,5 @@ def compute_metrics(reference_5q: str, generated_5q: str) -> Dict[str, float]:
         'gpt_metric_score': gpt_metric,
         'bert_score': bert_score,
         'embedding_similarity': embedding_similarity,
+        'embedding_similarity_per_question': embedding_similarity_per_question,
     }
