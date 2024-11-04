@@ -1,5 +1,5 @@
 import re
-from typing import Dict
+from typing import Dict, List
 
 import nltk
 import numpy as np
@@ -100,7 +100,9 @@ def compute_embedding_similarity(reference: str, hypothesis: str) -> float:
         return 0.0
 
 
-def extract_and_clean_question_content(text: str, question_prompts: list) -> list:
+def extract_and_clean_question_content(
+    text: str, question_prompts: List[str]
+) -> List[str]:
     question_contents = []
     for i, prompt in enumerate(question_prompts):
         start = text.find(prompt)
