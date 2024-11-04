@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Tuple
 
 from tqdm import tqdm
 
-from research_bench.proposal_eval import compute_metrics
+from research_bench.eval import compute_proposal_metrics
 from research_bench.proposal_writing import write_proposal
 from research_bench.utils import load_benchmark
 from research_town.configs import Config
@@ -26,7 +26,7 @@ def inference(
 
     gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
 
-    metrics = compute_metrics(ref_proposal, gen_proposal)
+    metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
     results = {
         'paper_id': paper_id,
         'ref_proposal': ref_proposal,
@@ -66,7 +66,7 @@ def main() -> None:
         '--mode',
         type=str,
         required=True,
-        choices=['author_only', 'citation_only', 'author_citation', 'textgnn'],
+        choices=['author_only', 'citation_only', 'author_citation', 'textgnn', 'sakana_ai_scientist'],
         help='Processing mode',
     )
     parser.add_argument(

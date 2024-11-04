@@ -2,7 +2,8 @@ import argparse
 import json
 import os
 import re
-from typing import Any, Dict, List, Set
+from multiprocessing import Pool
+from typing import Any, Dict, List, Tuple
 
 from tqdm import tqdm
 from utils import (
@@ -16,18 +17,50 @@ from utils import (
 from research_town.configs import Config
 
 
-def get_arxiv_ids(input: str) -> List[str]:
-    with open(input, 'r', encoding='utf-8') as f:
-        urls = [line.strip() for line in f if line.strip()]
+def get_arxiv_ids(input_file: str) -> List[str]:
+    with open(input_file, 'r', encoding='utf-8') as f:
+        arxiv_ids = []
+        for line in f:
+            line = line.strip()
+            match = re.search(r'arxiv\.org/abs/([^\s/]+)', line)
+            if match:
+                arxiv_id = match.group(1).split('v')[0]
+                arxiv_ids.append(arxiv_id)
+        return arxiv_ids
 
-    arxiv_ids = []
-    for url in urls:
-        match = re.search(r'arxiv\.org/abs/([^\s/]+)', url)
-        if match:
-            arxiv_id_str = match.group(1)
-            arxiv_id = arxiv_id_str.split('v')[0]
-            arxiv_ids.append(arxiv_id)
-    return arxiv_ids
+
+def process_single_arxiv_id(
+    arxiv_id: str, config: Config, reviews: Dict[str, Any]
+) -> Tuple[str, Any]:
+    """Processes a single arXiv ID, handling any errors gracefully."""
+    try:
+        paper_data = get_paper_data(arxiv_id)
+        if arxiv_id not in reviews:
+            # If reviews are not available, return None
+            return arxiv_id, None
+
+        return arxiv_id, {
+            'paper_data': paper_data,
+            'author_data': get_author_data(
+                arxiv_id, paper_data['authors'], paper_data['title'], config
+            ),
+            'reference_proposal': get_proposal_from_paper(
+                arxiv_id, paper_data['introduction'], config
+            ),
+            'reviews': reviews[arxiv_id]['reviews'],
+        }
+    except ValueError as e:
+        print(f'Error processing arXiv ID {arxiv_id}: {e}')
+        return arxiv_id, None  # Return None to indicate an error
+
+
+def save_benchmark_data(data: Dict[str, Any], output: str) -> None:
+    existing_data = {}
+    if os.path.exists(output):
+        with open(output, 'r', encoding='utf-8') as f:
+            existing_data = json.load(f)
+    existing_data.update(data)
+    save_benchmark(existing_data, output)
 
 
 def process_arxiv_ids(
@@ -36,42 +69,37 @@ def process_arxiv_ids(
     output: str,
     config: Config,
     include_reviews: bool,
+    num_processes: int,
 ) -> Dict[str, Any]:
-    benchmark = {}
-    existing_arxiv_ids: Set[str] = set()
+    chunk_size = max(1, len(arxiv_ids) // (num_processes * 4))
+    arxiv_ids_chunks = [
+        arxiv_ids[i : i + chunk_size] for i in range(0, len(arxiv_ids), chunk_size)
+    ]
 
-    for arxiv_id in tqdm(arxiv_ids, desc='Processing arXiv IDs'):
-        if arxiv_id in existing_arxiv_ids:
-            continue
+    with tqdm(total=len(arxiv_ids_chunks), desc='Processing arXiv IDs') as pbar:
+        for chunk in arxiv_ids_chunks:
+            if num_processes == 1:
+                # Single-process mode
+                results = [
+                    process_single_arxiv_id(arxiv_id, config, reviews)
+                    for arxiv_id in chunk
+                ]
+            else:
+                # Multiprocessing mode
+                with Pool(processes=num_processes) as pool:
+                    results = pool.starmap(
+                        process_single_arxiv_id,
+                        [(arxiv_id, config, reviews) for arxiv_id in chunk],
+                    )
 
-        paper_data = get_paper_data(arxiv_id)
-        authors = paper_data['authors']
-        title = paper_data['title']
-        author_data = get_author_data(arxiv_id, authors, title, config)
-        reference_proposal = get_proposal_from_paper(
-            arxiv_id, paper_data['introduction'], config
-        )
-
-        if include_reviews:
-            if arxiv_id not in reviews:
-                print(f'Review not found for arXiv ID {arxiv_id}, skipping...')
-                continue
-            review = reviews[arxiv_id]['reviews']
-            benchmark[paper_data['arxiv_id']] = {
-                'paper_data': paper_data,
-                'author_data': author_data,
-                'reference_proposal': reference_proposal,
-                'reviews': review,
+                    pool.close()
+                    pool.join()
+            # Filter out None results and save data
+            chunk_data = {
+                arxiv_id: data for arxiv_id, data in results if data is not None
             }
-        else:
-            benchmark[paper_data['arxiv_id']] = {
-                'paper_data': paper_data,
-                'author_data': author_data,
-                'reference_proposal': reference_proposal,
-            }
-        existing_arxiv_ids.add(arxiv_id)
-        save_benchmark(benchmark, output)
-    return benchmark
+            save_benchmark_data(chunk_data, output)
+            pbar.update()
 
 
 def parse_args() -> argparse.Namespace:
@@ -87,6 +115,12 @@ def parse_args() -> argparse.Namespace:
         type=str,
         default='./benchmark/crossbench.json',
         help='Output file path.',
+    )
+    parser.add_argument(
+        '--num_processes',
+        type=int,
+        default=1,
+        help='Number of processes to use. Set to 1 for single-process mode. Default is based on available CPU cores.',
     )
     return parser.parse_args()
 
@@ -110,7 +144,9 @@ def main() -> None:
         include_reviews = False
         reviews = {}
 
-    process_arxiv_ids(arxiv_ids, reviews, args.output, config, include_reviews)
+    process_arxiv_ids(
+        arxiv_ids, reviews, args.output, config, include_reviews, args.num_processes
+    )
 
 
 if __name__ == '__main__':
