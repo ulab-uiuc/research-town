@@ -70,7 +70,7 @@ def process_arxiv_ids(
     config: Config,
     include_reviews: bool,
     num_processes: int,
-) -> Dict[str, Any]:
+) -> None:
     chunk_size = max(1, len(arxiv_ids) // (num_processes * 4))
     arxiv_ids_chunks = [
         arxiv_ids[i : i + chunk_size] for i in range(0, len(arxiv_ids), chunk_size)

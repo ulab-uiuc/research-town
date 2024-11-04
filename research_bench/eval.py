@@ -122,7 +122,9 @@ def extract_and_clean_question_content(
     return question_contents
 
 
-def compute_embedding_similarity_per_question(reference: str, hypothesis: str) -> list:
+def compute_embedding_similarity_per_question(
+    reference: str, hypothesis: str
+) -> List[float]:
     try:
         questions = [
             'What is the problem?',
