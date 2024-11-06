@@ -72,28 +72,28 @@ def main() -> None:
         '--adversarial_path',
         type=str,
         required=False,
-        default='./attack_bench/adversarial.json',
+        default='./attackbench/adversarial.json',
         help='Input adversarial JSON file path'
     )
     parser.add_argument(
         '--profile_path',
         type=str,
         required=False,
-        default='./attack_bench/profiles.json',
+        default='./attackbench/profiles.json',
         help='Input profile JSON file path'
     )
     parser.add_argument(
         '--output_path',
         type=str,
         required=False,
-        default='./attack_bench/attack_results.jsonl',
+        default='./attackbench/attack_results.jsonl',
         help='Output JSONL file path'
     )
     parser.add_argument(
         '--mode',
         type=str,
         required=False,
-        default='textgnn',
+        default='textgnn_nodb',
         choices=['author_only', 'citation_only', 'author_citation', 'textgnn', 'sakana_ai_scientist'],
         help='Processing mode',
     )

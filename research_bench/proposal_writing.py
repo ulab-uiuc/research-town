@@ -53,6 +53,55 @@ def write_proposal_researchtown(
         return str(proposal.content)
     else:
         raise ValueError('Failed to generate proposal')
+    
+
+def write_proposal_researchtown_nodb(
+    profiles: List[Profile],
+    ref_contents: List[str],
+    config: Config,
+) -> str:
+    log_db = LogDB(config=config.database)
+    progress_db = ProgressDB(config=config.database)
+    profile_db = ProfileDB(config=config.database)
+    paper_db = PaperDB(config=config.database)
+    agent_manager = AgentManager(config=config.param, profile_db=profile_db)
+
+    env = ProposalWritingEnv(
+        name='proposal_writing',
+        log_db=log_db,
+        progress_db=progress_db,
+        paper_db=paper_db,
+        config=config,
+        agent_manager=agent_manager,
+    )
+
+    leader_profile = profiles[0]
+    print('leader_profile', leader_profile)
+    leader = agent_manager.create_agent(leader_profile, role='leader')
+    members = [agent_manager.create_agent(profile, role='member') for profile in profiles[1:]]
+    if not leader_profile:
+        raise ValueError('Failed to create leader agent')
+
+    env.on_enter(
+        leader=leader,
+        contexts=ref_contents,
+        members=members,
+    )
+
+    # Run the environment to generate the proposal
+    run_result = env.run()
+    if run_result is not None:
+        for progress, agent in run_result:
+            # Process progress and agent if needed
+            pass
+
+    # Exit the environment and retrieve the generated proposal
+    exit_status, exit_dict = env.on_exit()
+    proposal = exit_dict.get('proposal')
+    if proposal and proposal.content:
+        return str(proposal.content)
+    else:
+        raise ValueError('Failed to generate proposal')
 
 
 def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -> str:
@@ -305,6 +354,10 @@ def write_proposal(
         )
     elif mode == 'textgnn':
         return write_proposal_researchtown(
+            profiles=profiles, ref_contents=ref_contents, config=config
+        )
+    elif mode == 'textgnn_nodb':
+        return write_proposal_researchtown_nodb(
             profiles=profiles, ref_contents=ref_contents, config=config
         )
     elif mode == 'sakana_ai_scientist':
