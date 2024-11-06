@@ -38,8 +38,6 @@ class ProfileDB(BaseDB[Profile]):
         config: Config,
         known_paper_titles: Optional[List[str]] = None,
     ) -> List[str]:
-        if known_paper_titles is None:
-            known_paper_titles = []
         profiles: List[Profile] = []
         for name in names:
             try:
@@ -48,7 +46,9 @@ class ProfileDB(BaseDB[Profile]):
                         name, paper_max_num=20, known_paper_titles=known_paper_titles
                     )
                 )
-            except Exception:
+                logger.info(f'Collected publications for {name}: {pub_titles}')
+            except Exception as e:
+                logger.error(f'Error in collecting publications for {name}: {e}')
                 continue
             pub_info = '; '.join([f'{abstract}' for abstract in pub_abstracts])
 
