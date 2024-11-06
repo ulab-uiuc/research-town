@@ -22,7 +22,7 @@ def run_sync_experiment(
     if paper_db.count() == 0:
         paper_db.pull_papers(num=10, domain='graph neural networks')
 
-    #if profile_db.count() == 0:
+    # if profile_db.count() == 0:
     profile_db.pull_profiles(names=names, config=config)
 
     log_db = LogDB(config=config.database)
