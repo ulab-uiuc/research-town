@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Any, Dict, List, Optional, Set, Tuple, Union, cast
+from beartype.typing import Any, Dict, List, Optional, Set, Tuple, Union
 from semanticscholar import SemanticScholar
 
 from .error_handler import api_calling_error_exponential_backoff
@@ -25,7 +25,9 @@ def coauthor_filter(co_authors: Dict[str, int], limit: int = 5) -> List[str]:
 
 
 @api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
-def match_author_ids(author_name: str, known_paper_titles: List[str]) -> Set[str]:
+def match_author_ids(
+    author_name: str, known_paper_titles: Optional[List[str]] = None
+) -> Set[str]:
     semantic_client = SemanticScholar()
     search_results = semantic_client.search_author(
         author_name,
@@ -33,18 +35,27 @@ def match_author_ids(author_name: str, known_paper_titles: List[str]) -> Set[str
         limit=100,
     )
 
-    known_titles_lower = {title.lower() for title in known_paper_titles}
-    matched_author_ids = set()
+    author_ids = set()
+    if known_paper_titles is None:
+        for result in search_results:
+            author_id = result['authorId']
+            author_ids.add(author_id)
+    else:
+        known_titles_lower = {title.lower() for title in known_paper_titles}
+        for result in search_results:
+            author_id = result['authorId']
+            papers = result['papers']
+            for paper in papers:
+                if paper.get('title', '').lower() in known_titles_lower:
+                    author_ids.add(author_id)
+                    break
 
-    for result in search_results:
-        author_id = result['authorId']
-        papers = result['papers']
-        for paper in papers:
-            if paper.get('title', '').lower() in known_titles_lower:
-                matched_author_ids.add(author_id)
-                break
+    if not author_ids:
+        raise ValueError('No authors found with matching paper titles or name.')
+    elif len(author_ids) > 1 and known_paper_titles:
+        raise ValueError('Multiple authors found with matching paper titles.')
 
-    return matched_author_ids
+    return author_ids
 
 
 @api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
@@ -60,46 +71,36 @@ def get_papers_from_author_id(
             'papers.authors',
         ],
     )
-    papers = author_data['papers']
-    if isinstance(papers, list):
-        return cast(List[Dict[str, Any]], papers[:paper_max_num])
-    else:
-        return []
+    papers = author_data.get('papers', [])
+    return papers[:paper_max_num] if isinstance(papers, list) else []
 
 
 def collect_publications_and_coauthors(
     author: str,
-    known_paper_titles: List[str] = [],
+    known_paper_titles: Optional[List[str]] = None,
     paper_max_num: int = 20,
-    exclude_paper_titles: bool = True,
+    exclude_known: bool = True,
 ) -> Tuple[List[str], List[str], List[str]]:
     matched_author_ids = match_author_ids(author, known_paper_titles)
+    author_id = matched_author_ids.pop()  # Only one author ID is expected
 
-    if len(matched_author_ids) > 1:
-        raise ValueError('Multiple authors found with matching paper titles.')
-    elif not matched_author_ids:
-        raise ValueError('No authors found with matching paper titles.')
-
-    author_id = matched_author_ids.pop()
     papers = get_papers_from_author_id(author_id, paper_max_num)
-
     paper_abstracts = []
     paper_titles = []
     co_authors: Dict[str, int] = {}
 
-    known_titles_lower = {title.lower() for title in known_paper_titles}
+    if known_paper_titles is not None:
+        known_titles_lower = {title.lower() for title in known_paper_titles}
 
     for paper in papers:
         title = paper.get('title', '')
-        if exclude_paper_titles and title.lower() in known_titles_lower:
+        if exclude_known and known_paper_titles and title.lower() in known_titles_lower:
             continue
 
         abstract = paper.get('abstract')
-        if not abstract:
-            continue
-
-        paper_abstracts.append(abstract.replace('\n', ' '))
-        paper_titles.append(title)
+        if abstract:
+            paper_abstracts.append(abstract.replace('\n', ' '))
+            paper_titles.append(title)
 
         paper_authors = paper.get('authors', [])
         co_authors = coauthor_frequency(author_id, paper_authors, co_authors)

@@ -12,18 +12,18 @@ def run_sync_experiment(
         'Stefanie Jegelka',
         'Silvio Lattanzi',
         'Rex Ying',
-        # 'Tim Althoff',
-        # 'Christos Faloutsos',
-        # 'Julian McAuley',
     ]
     # if save path exists, then load
     config = Config(config_file_path)
 
     profile_db = ProfileDB(config=config.database)
     paper_db = PaperDB(config=config.database)
-    if paper_db.count() == 0 and profile_db.count() == 0:
-        profile_db.pull_profiles(names=names, config=config)
+
+    if paper_db.count() == 0:
         paper_db.pull_papers(num=10, domain='graph neural networks')
+
+    if profile_db.count() == 0:
+        profile_db.pull_profiles(names=names, config=config)
 
     log_db = LogDB(config=config.database)
     progress_db = ProgressDB(config=config.database)

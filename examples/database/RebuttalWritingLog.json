@@ -1,0 +1,16 @@
+{
+  "8495532d-1f64-44f7-a7ab-20ccb5704820": {
+    "pk": "8495532d-1f64-44f7-a7ab-20ccb5704820",
+    "project_name": "research_town_demo",
+    "timestep": 0,
+    "profile_pk": "68914bfa-5577-4b57-ac0b-91d5f6564f01",
+    "rebuttal_pk": "699b57b9-5752-4a8f-ba4b-9eac88069aa4"
+  },
+  "4bce12b8-4b86-4db6-ba62-65911f45b7e2": {
+    "pk": "4bce12b8-4b86-4db6-ba62-65911f45b7e2",
+    "project_name": "research_town_demo",
+    "timestep": 0,
+    "profile_pk": "68914bfa-5577-4b57-ac0b-91d5f6564f01",
+    "rebuttal_pk": "bf18acf1-6dc5-4297-ba9c-b937c492aadc"
+  }
+}
