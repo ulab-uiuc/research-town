@@ -46,6 +46,7 @@ class ProfileDB(BaseDB[Profile]):
                         name, paper_max_num=20, known_paper_titles=known_paper_titles
                     )
                 )
+                logger.info(f'Collected publications for {name}: {pub_titles}')
             except Exception as e:
                 logger.error(f'Error in collecting publications for {name}: {e}')
                 continue

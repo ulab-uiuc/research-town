@@ -71,7 +71,7 @@ def get_papers_from_author_id(
             'papers.authors',
         ],
     )
-    papers = author_data.get('papers', [])
+    papers = author_data['papers']
     return papers[:paper_max_num] if isinstance(papers, list) else []
 
 
