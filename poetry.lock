@@ -4874,4 +4874,4 @@ researchbench = ["bert_score", "nltk", "rouge_score"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10, <3.12"
-content-hash = "9d32e2e1f8cfc869cbfc6e0eadb754d9722d72131a1559f73fb7d807690e2fa3"
+content-hash = "a7882b9522d5cf6805a65f3295d871679bb494d77a966e880dcdb151cba3edeb"
