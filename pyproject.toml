@@ -12,7 +12,7 @@ pydantic = ">=2.5.0"
 pypdf2 = ">=3.0.1"
 litellm = "^1.49.7"
 beartype = "^0.19.0"
-numpy = "<3.0.0"
+numpy = "<2.0.0"
 transformers = "^4.45.1"
 termcolor = "^2.4.0"
 arxiv = "^2.1.0"
@@ -30,6 +30,7 @@ pandas = { version = "*", optional = true }
 
 bert_score = { version = "*", optional = true }
 rouge_score = { version = "*", optional = true }
+nltk = { version = "*", optional = true }
 
 
 [tool.poetry.group.dev.dependencies]
@@ -50,7 +51,7 @@ mypy = "^1.11.2"
 [tool.poetry.extras]
 humaneval = ["pandas"]
 backend = ["uvicorn", "fastapi"]
-researchbench = ["bert_score", "rouge_score"]
+researchbench = ["bert_score", "rouge_score", "nltk"]
 
 [build-system]
 requires = ["poetry-core"]
