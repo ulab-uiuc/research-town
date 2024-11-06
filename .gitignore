@@ -193,3 +193,4 @@ research_bench/profile_dbs_old
 **/reference_proposal_data/*
 
 !**/.gitkeep
+research_bench/attackbench/attack_results.jsonl

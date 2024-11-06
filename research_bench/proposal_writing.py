@@ -48,7 +48,7 @@ def write_proposal_researchtown(
 
     # Exit the environment and retrieve the generated proposal
     exit_status, exit_dict = env.on_exit()
-    proposal = exit_dict.get('proposal')
+    proposal = exit_dict.get('proposals')[0]
     if proposal and proposal.content:
         return str(proposal.content)
     else:
@@ -92,12 +92,15 @@ def write_proposal_researchtown_nodb(
     run_result = env.run()
     if run_result is not None:
         for progress, agent in run_result:
+            print(progress, agent)
             # Process progress and agent if needed
             pass
 
     # Exit the environment and retrieve the generated proposal
     exit_status, exit_dict = env.on_exit()
-    proposal = exit_dict.get('proposal')
+
+    print(exit_dict)
+    proposal = exit_dict.get('proposals')[0]
     if proposal and proposal.content:
         return str(proposal.content)
     else:
