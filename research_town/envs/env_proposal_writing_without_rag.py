@@ -41,7 +41,6 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
         if 'contexts' not in context:
             raise ValueError("'contexts' is required in the context.")
         self.contexts = context['contexts']
-    
 
     @beartype
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:

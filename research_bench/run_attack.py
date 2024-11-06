@@ -1,25 +1,19 @@
 import argparse
 import json
 import os
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict
 
 from tqdm import tqdm
 
-import sys
-
 from research_bench.proposal_writing import write_proposal
 from research_town.configs import Config
+from research_town.data import Profile
 from research_town.utils.logger import logger
 
 
-
-class Profile:
-    def __init__(self, name: str, bio: str):
-        self.name = name
-        self.bio = bio
-
-
-def load_adversarial_data(adversarial_path: str, output_path: str) -> Dict[str, Dict[str, Any]]:
+def load_adversarial_data(
+    adversarial_path: str, output_path: str
+) -> Dict[str, Dict[str, Any]]:
     """
     Load adversarial data from a JSON file and skip already processed entries based on the output_path.
     Assign a unique attack_id to each entry.
@@ -32,7 +26,7 @@ def load_adversarial_data(adversarial_path: str, output_path: str) -> Dict[str, 
         adversarial_list = json.load(f)
 
     # Assign unique attack_id, e.g., "attack_0", "attack_1", ...
-    dataset = {f"attack_{idx}": entry for idx, entry in enumerate(adversarial_list)}
+    dataset = {f'attack_{idx}': entry for idx, entry in enumerate(adversarial_list)}
 
     if os.path.exists(output_path):
         with open(output_path, 'r', encoding='utf-8') as f:
@@ -42,7 +36,7 @@ def load_adversarial_data(adversarial_path: str, output_path: str) -> Dict[str, 
     return dataset
 
 
-def load_profiles(profile_path: str) -> Dict[str, Dict[str, str]]:
+def load_profiles(profile_path: str) -> Dict[str, Any]:
     """
     Load profiles from profile.json.
 
@@ -50,7 +44,7 @@ def load_profiles(profile_path: str) -> Dict[str, Dict[str, str]]:
     :return: Dictionary mapping domain to scientists' profiles
     """
     with open(profile_path, 'r', encoding='utf-8') as f:
-        profiles = json.load(f)
+        profiles: Dict[str, Any] = json.load(f)
     return profiles
 
 
@@ -73,28 +67,34 @@ def main() -> None:
         type=str,
         required=False,
         default='./attackbench/adversarial.json',
-        help='Input adversarial JSON file path'
+        help='Input adversarial JSON file path',
     )
     parser.add_argument(
         '--profile_path',
         type=str,
         required=False,
         default='./attackbench/profiles.json',
-        help='Input profile JSON file path'
+        help='Input profile JSON file path',
     )
     parser.add_argument(
         '--output_path',
         type=str,
         required=False,
         default='./attackbench/attack_results.jsonl',
-        help='Output JSONL file path'
+        help='Output JSONL file path',
     )
     parser.add_argument(
         '--mode',
         type=str,
         required=False,
         default='textgnn_nodb',
-        choices=['author_only', 'citation_only', 'author_citation', 'textgnn', 'sakana_ai_scientist'],
+        choices=[
+            'author_only',
+            'citation_only',
+            'author_citation',
+            'textgnn',
+            'sakana_ai_scientist',
+        ],
         help='Processing mode',
     )
     parser.add_argument(
@@ -116,12 +116,14 @@ def main() -> None:
         text = data.get('text', '')
         domain = data.get('domain', '')
 
-
         text_list = [text]
 
         # Get profiles for the domain
         domain_profiles = profiles_dict.get(domain, {})
-        profiles = [Profile(name=scientist, bio=info.get('bio', '')) for scientist, info in domain_profiles.items()]
+        profiles = [
+            Profile(name=scientist, bio=info.get('bio', ''))
+            for scientist, info in domain_profiles.items()
+        ]
 
         # Generate proposal
         gen_proposal = write_proposal(args.mode, profiles, text_list, config)
@@ -132,13 +134,15 @@ def main() -> None:
             'template': template,
             'task': task,
             'domain': domain,
-            'gen_proposal': gen_proposal
+            'gen_proposal': gen_proposal,
         }
 
         # Save result
         save_result(result, args.output_path)
 
-    logger.info(f'All adversarial entries have been processed and saved to {args.output_path}')
+    logger.info(
+        f'All adversarial entries have been processed and saved to {args.output_path}'
+    )
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
-import json
 import csv
+import json
 
 # 读取 adversarial.json 文件
 with open('./adversarial_prompts.json', 'r', encoding='utf-8') as f:
@@ -24,4 +24,4 @@ for item in adversarial_data:
 with open('updated_adversarial.json', 'w', encoding='utf-8') as f:
     json.dump(adversarial_data, f, ensure_ascii=False, indent=4)
 
-print("新的 JSON 文件已生成：updated_adversarial.json")
+print('新的 JSON 文件已生成：updated_adversarial.json')

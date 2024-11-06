@@ -53,7 +53,7 @@ def write_proposal_researchtown(
         return str(proposal.content)
     else:
         raise ValueError('Failed to generate proposal')
-    
+
 
 def write_proposal_researchtown_nodb(
     profiles: List[Profile],
@@ -78,7 +78,9 @@ def write_proposal_researchtown_nodb(
     leader_profile = profiles[0]
     print('leader_profile', leader_profile)
     leader = agent_manager.create_agent(leader_profile, role='leader')
-    members = [agent_manager.create_agent(profile, role='member') for profile in profiles[1:]]
+    members = [
+        agent_manager.create_agent(profile, role='member') for profile in profiles[1:]
+    ]
     if not leader_profile:
         raise ValueError('Failed to create leader agent')
 
