@@ -33,7 +33,7 @@ def test_collect_publications_and_coauthors() -> None:
         author=author,
         known_paper_titles=known_paper_titles,
         paper_max_num=5,
-        exclude_paper_titles=True,
+        exclude_known=True,
     )
 
     assert isinstance(publications, list)
