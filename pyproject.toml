@@ -21,8 +21,9 @@ beautifulsoup4 = "*"
 lxml = "*"
 tqdm = "*"
 keybert = "*"
-torch = { version = "^2.2.1", source = "torchcpu" }
 semanticscholar = "*"
+torch = { version = ">=2.2.0, <2.3.0", optional = true }
+
 
 uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
@@ -128,3 +129,4 @@ sidebar_top_level_label = "Documentation"
 name = "torchcpu"
 url = "https://download.pytorch.org/whl/cpu"
 priority = "explicit"
+
