@@ -9,9 +9,9 @@ from pypdf import PdfReader
 from research_bench.utils import extract_json_between_markers
 from research_town.agents import AgentManager
 from research_town.configs import Config
-from research_town.data import Profile, Proposal
+from research_town.data import Profile
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from research_town.envs import ReviewWritingEnv
+from research_town.envs import ReviewWritingEnvPaperText
 from research_town.utils.model_prompting import model_prompting
 
 template_instructions = """
@@ -369,7 +369,7 @@ ONLY INCLUDE "I am done" IF YOU ARE MAKING NO MORE CHANGES."""
 
 
 def write_review_researchtown(
-    profiles: List[Profile], proposals: List[Proposal], config: Config
+    profiles: List[Profile], paper_text: str, config: Config
 ) -> str:
     log_db = LogDB(config=config.database)
     progress_db = ProgressDB(config=config.database)
@@ -377,7 +377,7 @@ def write_review_researchtown(
     profile_db = ProfileDB(config=config.database)
     agent_manager = AgentManager(config=config.param, profile_db=profile_db)
 
-    env = ReviewWritingEnv(
+    env = ReviewWritingEnvPaperText(
         name='review_writing',
         log_db=log_db,
         progress_db=progress_db,
@@ -393,7 +393,7 @@ def write_review_researchtown(
         raise ValueError('Failed to create leader agent')
 
     env.on_enter(
-        proposals=proposals,
+        paper_text=paper_text,
         leader=leader,
     )
 
@@ -414,7 +414,7 @@ def write_review_researchtown(
 
 def write_review(
     mode: str,
-    paper_text: Any,
+    paper_text: str,
     profiles: List[Profile],
     config: Config,
 ) -> str:
@@ -429,7 +429,7 @@ def write_review(
     elif mode == 'textgnn':
         return write_review_researchtown(
             profiles=profiles,
-            proposals=paper_text,
+            paper_text=paper_text,
             config=config,
         )
 
