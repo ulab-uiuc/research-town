@@ -2,10 +2,13 @@ import json
 import os
 import re
 from functools import wraps
+from io import BytesIO
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Set
 
 import openreview
+import requests
+from pypdf import PdfReader
 
 from research_town.configs import Config
 from research_town.dbs import ProfileDB
@@ -213,3 +216,27 @@ def extract_json_between_markers(llm_output: str) -> Any:
                 continue  # Try next match
 
     return None  # No valid JSON found
+
+
+def extract_paper_text(arxiv_url: str) -> str:
+    # Check if the paper ID exists
+
+    paper_id = arxiv_url.split('/')[-1]
+
+    # Construct the PDF URL
+    pdf_url = f'https://arxiv.org/pdf/{paper_id}.pdf'
+
+    # Define the path to save the PDF
+    response = requests.get(pdf_url)
+    if response.status_code != 200:
+        return f'Failed to download PDF from {pdf_url}. Status code: {response.status_code}'
+
+    pdf_file = BytesIO(response.content)
+    reader = PdfReader(pdf_file)
+
+    # Extract text from each page
+    text = ''
+    for page in reader.pages:
+        text += page.extract_text()
+
+    return text
