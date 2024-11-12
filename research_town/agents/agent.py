@@ -225,7 +225,7 @@ class Agent(object):
                 score=score,
                 score_prompt_messages=score_prompt_messages,
             )
-        else:
+        elif paper_text:
             text = paper_text.content
             (
                 summary,
@@ -327,7 +327,7 @@ class Agent(object):
                 decision=decision,
                 decision_prompt_messages=decision_prompt_messages,
             )
-        else:
+        elif paper_text:
             text = paper_text.content
             serialized_reviews = self.serializer.serialize(reviews)
             (
@@ -414,7 +414,7 @@ class Agent(object):
                 q4=q5_result.get('q4', ''),
                 q5=q5_result.get('q5', ''),
             )
-        else:
+        elif paper_text:
             text = paper_text.content
             serialized_review = self.serializer.serialize(review)
             rebuttal_content, q5_result, prompt_messages = (

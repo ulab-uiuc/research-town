@@ -229,12 +229,13 @@ Review {idx + 1}/{len(reviews)}:
 
 
 def write_review_sakana_ai_scientist(
-    paper_text: str,
+    paper_text: PaperText,
     config: Config,
     num_reflections: int = 5,
     num_fs_examples: int = 1,
     num_reviews_ensemble: int = 2,
 ) -> str:
+    text = paper_text.content
     # Define the reviewer system prompt
     reviewer_system_prompt_base = (
         'You are an AI researcher who is reviewing a paper that was submitted to a prestigious ML venue.'
@@ -256,7 +257,7 @@ def write_review_sakana_ai_scientist(
     initial_prompt += f"""
 Here is the paper you are asked to review:
 ```
-{paper_text}
+{text}
 ```"""
 
     # Start the conversation
