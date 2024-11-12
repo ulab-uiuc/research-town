@@ -407,7 +407,7 @@ def write_review_researchtown(
     exit_status, exit_dict = env.on_exit()
     metareviews = exit_dict.get('metareviews')
 
-    if metareviews and metareviews[0]:
+    if metareviews and isinstance(metareviews[0].summary, str):
         return metareviews[0].summary
     else:
         raise ValueError('No metareviews generated')

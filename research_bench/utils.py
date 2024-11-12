@@ -219,7 +219,7 @@ def extract_json_between_markers(llm_output: str) -> Any:
     return None  # No valid JSON found
 
 
-def extract_paper_text(arxiv_url: str) -> PaperText:
+def extract_paper_text(arxiv_url: str) -> Optional[PaperText]:
     # Check if the paper ID exists
 
     paper_id = arxiv_url.split('/')[-1]
