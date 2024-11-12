@@ -2,12 +2,16 @@ import json
 import os
 import re
 from functools import wraps
+from io import BytesIO
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Set
 
 import openreview
+import requests
+from pypdf import PdfReader
 
 from research_town.configs import Config
+from research_town.data import PaperText
 from research_town.dbs import ProfileDB
 from research_town.utils.model_prompting import model_prompting
 from research_town.utils.paper_collector import (
@@ -185,3 +189,57 @@ def get_all_reviews(venue_id: str) -> Dict[str, Any]:
         all_reviews[arxiv_id] = {'reviews': reviews}
     print(len(all_reviews), 'reviews fetched.')
     return all_reviews
+
+
+def extract_json_between_markers(llm_output: str) -> Any:
+    # Regular expression pattern to find JSON content between ```json and ```
+    json_pattern = r'```json(.*?)```'
+    matches = re.findall(json_pattern, llm_output, re.DOTALL)
+
+    if not matches:
+        # Fallback: Try to find any JSON-like content in the output
+        json_pattern = r'\{.*?\}'
+        matches = re.findall(json_pattern, llm_output, re.DOTALL)
+
+    for json_string in matches:
+        json_string = json_string.strip()
+        try:
+            parsed_json = json.loads(json_string)
+            return parsed_json
+        except json.JSONDecodeError:
+            # Attempt to fix common JSON issues
+            try:
+                # Remove invalid control characters
+                json_string_clean = re.sub(r'[\x00-\x1F\x7F]', '', json_string)
+                parsed_json = json.loads(json_string_clean)
+                return parsed_json
+            except json.JSONDecodeError:
+                continue  # Try next match
+
+    return None  # No valid JSON found
+
+
+def extract_paper_text(arxiv_url: str) -> str:
+    # Check if the paper ID exists
+
+    paper_id = arxiv_url.split('/')[-1]
+
+    # Construct the PDF URL
+    pdf_url = f'https://arxiv.org/pdf/{paper_id}.pdf'
+
+    # Define the path to save the PDF
+    response = requests.get(pdf_url)
+    if response.status_code != 200:
+        return f'Failed to download PDF from {pdf_url}. Status code: {response.status_code}'
+
+    pdf_file = BytesIO(response.content)
+    reader = PdfReader(pdf_file)
+
+    # Extract text from each page
+    text = ''
+    for page in reader.pages:
+        text += page.extract_text()
+
+    paper_text = PaperText(content=text)
+
+    return paper_text
