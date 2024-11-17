@@ -32,9 +32,18 @@ class ReviewWritingEnv(BaseEnv):
         self,
         **context: Any,
     ) -> None:
-        self.leader = context.get('leader', self.agent_manager.sample_leader())
-        self.chair = context.get('chair', self.agent_manager.sample_chair())
-        self.reviewers = context.get('reviewers', self.agent_manager.sample_reviewers())
+
+        if 'leader' not in context or context['leader'] is None:
+            context['leader'] = self.agent_manager.sample_leader()
+        if 'chair' not in context or context['chair'] is None:
+            context['chair'] = self.agent_manager.sample_chair()
+        if 'reviewers' not in context or context['reviewers'] is None:
+            context['reviewers'] = self.agent_manager.sample_reviewers()
+        
+        self.leader = context['leader']
+        self.chair = context['chair']
+        self.reviewers = context['reviewers'] 
+
         self.proposals = context['proposals']
 
     @beartype
