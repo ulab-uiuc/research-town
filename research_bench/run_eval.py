@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Tuple
 
 from tqdm import tqdm
 
+from multiprocessing import Pool, Lock, Manager
 from research_bench.eval import compute_proposal_metrics
 from research_bench.proposal_writing import write_proposal
 from research_bench.utils import load_benchmark
@@ -47,12 +48,15 @@ def load_papers(input_path: str, output_path: str) -> Any:
 
 
 def save_results(
-    results: Dict[str, Any], metrics: Dict[str, float], output_path: str
+    results: Dict[str, Any], metrics: Dict[str, float], output_path: str, lock: Lock
 ) -> None:
-    with open(output_path, 'a') as f:
-        json.dump({**results, **metrics}, f)
-        f.write('\n')
+    with lock:
+        with open(output_path, 'a') as f:
+            json.dump({**results, **metrics}, f)
+            f.write('\n')
 
+def process_task(task: Tuple[str, Dict[str, Any], Dict[str, Any], str, str, Config]) -> Tuple[Dict[str, Any], Dict[str, float]]:
+    return inference(*task)
 
 def main() -> None:
     parser = argparse.ArgumentParser(description='Research Proposal Generator')
@@ -81,35 +85,36 @@ def main() -> None:
         default='../configs',
         help='Path to the configuration directory',
     )
+    parser.add_argument(
+        '--num_processes',
+        type=int,
+        default=os.cpu_count(),
+        help='Number of parallel processes to use',
+    )
     args = parser.parse_args()
 
     config = Config(args.config_path)
     dataset = load_papers(args.input_path, args.output_path)
     logger.info(f'Processing {len(dataset)} papers')
 
-    metrics_summary: Dict[str, List[float]] = {
-        metric: [] for metric in ['bleu', 'rouge_l', 'gpt_metric_score', 'bert_score', 'embedding_similarity']
-    }
+    manager = Manager()
+    metrics_summary = manager.dict({metric: [] for metric in ['bleu', 'rouge_l', 'gpt_metric_score', 'bert_score', 'embedding_similarity']})
 
-    for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
-        paper_data = data['paper_data']
-        author_data = data['author_data']
-        reference_proposal = data['reference_proposal']
 
-        results, metrics = inference(
-            paper_id, paper_data, author_data, reference_proposal, args.mode, config
-        )
-        save_results(results, metrics, args.output_path)
-
-        for metric, scores in metrics_summary.items():
-            scores.append(metrics.get(metric, 0))
+    lock = Lock()
+    with Pool(processes=args.num_processes) as pool:
+        tasks = [(paper_id, data['paper_data'], data['author_data'], data['reference_proposal'], args.mode, config) for paper_id, data in dataset.items()]
+        for results, metrics in tqdm(pool.imap_unordered(process_task, tasks), total=len(tasks), desc='Processing papers'):
+            save_results(results, metrics, args.output_path, lock)
+            with lock:
+                for metric, scores in metrics_summary.items():
+                    scores.append(metrics.get(metric, 0))
 
     # Report average metrics
     for metric, scores in metrics_summary.items():
         if scores:
             average = sum(scores) / len(scores)
             logger.info(f"Average {metric.replace('_', ' ').upper()}: {average:.4f}")
-
 
 if __name__ == '__main__':
     main()
