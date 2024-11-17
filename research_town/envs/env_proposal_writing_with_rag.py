@@ -33,7 +33,7 @@ class ProposalWritingwithRAGEnv(BaseEnv):
             context['leader'] = self.agent_manager.sample_leader()
         if 'members' not in context or context['members'] is None:
             context['members'] = self.agent_manager.sample_members()
-        
+
         self.leader = context['leader']
         self.members = context['members']
 
