@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the input and output paths, along with the modes to test
-INPUT_PATH="./benchmark/mlbench.json"
+INPUT_PATH="./mlbench/mlbench.json"
 OUTPUT_DIR="./results"
 MODES=("sakana_ai_scientist") #("citation_only" "author_only" "author_citation")
 

@@ -274,17 +274,11 @@ Please provide the updated proposal in the same format as before.
         if 'I am done' in response:
             break
 
-    if 'I am done' in conversation[-1]['content']:
-        if 'NEW IDEA:' in conversation[-2]['content']:
-            return conversation[-2]['content'].split('NEW IDEA:')[1]
-        else:
-            return conversation[-2]['content']
+    if 'NEW IDEA:' in conversation[-1]['content']:
+        return conversation[-1]['content'].split('NEW IDEA:')[1]
     else:
-        if 'NEW IDEA:' in conversation[-1]['content']:
-            return conversation[-1]['content'].split('NEW IDEA:')[1]
-        else:
-            return conversation[-1]['content']
-    return response
+        return conversation[-1]['content']
+
 
 
 def write_proposal(
