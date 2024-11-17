@@ -12,6 +12,7 @@ from ..client import DatabaseClient
 T = TypeVar('T', bound=Data)
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 
