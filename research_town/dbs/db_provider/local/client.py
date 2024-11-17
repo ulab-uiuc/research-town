@@ -11,6 +11,9 @@ from ..client import DatabaseClient
 
 T = TypeVar('T', bound=Data)
 
+from dotenv import load_dotenv
+load_dotenv()
+
 
 class LocalDatabaseClient(DatabaseClient):
     def __init__(self) -> None:
