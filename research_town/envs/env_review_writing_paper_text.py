@@ -54,7 +54,7 @@ class ReviewWritingEnvPaperText(BaseEnv):
         # Review Writing
         self.reviews: List[Review] = []
         for reviewer in self.reviewers:
-            review = reviewer.write_review_paper_text(
+            review = reviewer.write_review_from_paper(
                 paper_text=self.paper_text,
                 config=self.config,
             )
@@ -64,7 +64,7 @@ class ReviewWritingEnvPaperText(BaseEnv):
         # Rebuttal Submitting
         self.rebuttals: List[Rebuttal] = []
         for review in self.reviews:
-            rebuttal = self.leader.write_rebuttal_paper_text(
+            rebuttal = self.leader.write_rebuttal_from_paper(
                 paper_text=self.paper_text,
                 review=review,
                 config=self.config,
@@ -73,7 +73,7 @@ class ReviewWritingEnvPaperText(BaseEnv):
             yield rebuttal, self.leader
 
         # Paper Meta Reviewing
-        metareview = self.chair.write_metareview_paper_text(
+        metareview = self.chair.write_metareview_from_paper(
             paper_text=self.paper_text,
             reviews=self.reviews,
             config=self.config,

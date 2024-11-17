@@ -7,12 +7,12 @@ from ..utils.agent_prompter import (
     brainstorm_idea_prompting,
     review_literature_prompting,
     summarize_idea_prompting,
-    write_metareview_paper_text_prompting,
+    write_metareview_from_paper_prompting,
     write_metareview_prompting,
     write_proposal_prompting,
-    write_rebuttal_paper_text_prompting,
+    write_rebuttal_from_paper_prompting,
     write_rebuttal_prompting,
-    write_review_paper_text_prompting,
+    write_review_from_paper_prompting,
     write_review_prompting,
 )
 from ..utils.role_verifier import (
@@ -209,7 +209,7 @@ class Agent(object):
         return review
 
     @beartype
-    def write_review_paper_text(
+    def write_review_from_paper(
         self,
         paper_text: str,
         config: Config,
@@ -225,7 +225,7 @@ class Agent(object):
             weakness_prompt_messages,
             ethical_prompt_messages,
             score_prompt_messages,
-        ) = write_review_paper_text_prompting(
+        ) = write_review_from_paper_prompting(
             paper_text=paper_text,
             model_name=self.model_name,
             summary_prompt_template=config.agent_prompt_template.write_review_summary_paper_text,
@@ -311,7 +311,7 @@ class Agent(object):
         return metareview
 
     @beartype
-    def write_metareview_paper_text(
+    def write_metareview_from_paper(
         self,
         paper_text: str,
         reviews: List[Review],
@@ -330,7 +330,7 @@ class Agent(object):
             weakness_prompt_messages,
             ethical_prompt_messages,
             decision_prompt_messages,
-        ) = write_metareview_paper_text_prompting(
+        ) = write_metareview_from_paper_prompting(
             paper_text=paper_text,
             reviews=serialized_reviews,
             model_name=self.model_name,
@@ -365,7 +365,7 @@ class Agent(object):
 
     @beartype
     @leader_required
-    def write_rebuttal(
+    def write_rebuttal_for_proposal(
         self,
         proposal: Proposal,
         review: Review,
@@ -400,7 +400,7 @@ class Agent(object):
         )
         return rebuttal
 
-    def write_rebuttal_paper_text(
+    def write_rebuttal_from_paper(
         self,
         paper_text: str,
         review: Review,
@@ -409,11 +409,11 @@ class Agent(object):
         serialized_review = self.serializer.serialize(review)
 
         rebuttal_content, q5_result, prompt_messages = (
-            write_rebuttal_paper_text_prompting(
+            write_rebuttal_from_paper_prompting(
                 paper_text=paper_text,
                 review=serialized_review,
                 model_name=self.model_name,
-                prompt_template=config.agent_prompt_template.write_rebuttal_paper_text,
+                prompt_template=config.agent_prompt_template.write_rebuttal_from_paper,
                 return_num=config.param.return_num,
                 max_token_num=config.param.max_token_num,
                 temperature=config.param.temperature,

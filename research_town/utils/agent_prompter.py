@@ -285,7 +285,7 @@ def write_review_prompting(
 
 
 @beartype
-def write_review_paper_text_prompting(
+def write_review_from_paper_prompting(
     paper_text: str,
     model_name: str,
     summary_prompt_template: Dict[str, Union[str, List[str]]],
@@ -543,7 +543,7 @@ def write_metareview_prompting(
 
 
 @beartype
-def write_metareview_paper_text_prompting(
+def write_metareview_from_paper_prompting(
     paper_text: str,
     reviews: List[Dict[str, Union[int, str]]],
     model_name: str,
@@ -715,7 +715,7 @@ def write_rebuttal_prompting(
 
 
 @beartype
-def write_rebuttal_paper_text_prompting(
+def write_rebuttal_from_paper_prompting(
     paper_text: str,
     review: Dict[str, Union[int, str]],
     model_name: str,
