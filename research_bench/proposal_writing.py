@@ -4,8 +4,8 @@ from research_town.agents import AgentManager
 from research_town.configs import Config
 from research_town.data import Profile
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from research_town.envs import ProposalWritingwithoutRAGEnv as ProposalWritingEnv
 from research_town.envs import ProposalWritingSWARM as ProposalWritingEnvSWARM
+from research_town.envs import ProposalWritingwithoutRAGEnv as ProposalWritingEnv
 from research_town.utils.model_prompting import model_prompting
 
 
@@ -54,7 +54,8 @@ def write_proposal_researchtown(
         return str(proposal.content)
     else:
         raise ValueError('Failed to generate proposal')
-        
+
+
 def write_proposal_swarm(
     profiles: List[Profile],
     ref_contents: List[str],
@@ -103,7 +104,7 @@ def write_proposal_swarm(
     # if proposal and proposal.content:
     #    return str(proposal.content)
     if proposal:
-        return " ".join(proposal)
+        return ' '.join(proposal)
     else:
         raise ValueError('Failed to generate proposal')
 

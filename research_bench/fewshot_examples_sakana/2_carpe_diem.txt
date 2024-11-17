@@ -1032,4 +1032,3 @@ Figure 9: Convergence curves of four batch selection strategies using ResNet wit
 
 
 -----
-

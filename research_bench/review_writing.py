@@ -9,7 +9,7 @@ from pypdf import PdfReader
 from research_bench.utils import extract_json_between_markers
 from research_town.agents import AgentManager
 from research_town.configs import Config
-from research_town.data import Profile
+from research_town.data import MetaReview, Profile
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.envs import ReviewWritingEnvPaperText
 from research_town.utils.model_prompting import model_prompting
@@ -407,6 +407,8 @@ def write_review_researchtown(
     metareviews = exit_dict.get('metareviews')
 
     if metareviews and metareviews[0]:
+        assert isinstance(metareviews[0], MetaReview)
+        assert metareviews[0].summary is not None
         return metareviews[0].summary
     else:
         raise ValueError('No metareviews generated')

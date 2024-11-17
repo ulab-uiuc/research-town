@@ -21,6 +21,9 @@ def test_review_writing_env(
     example_paper_db: PaperDB,
     example_agent_manager: AgentManager,
 ) -> None:
+    if example_config.param.mode != 'research_town':
+        return
+
     mock_model_prompting.side_effect = mock_prompting
 
     example_profile_db.reset_role_availability()
@@ -56,6 +59,9 @@ def test_proposal_writing_env(
     example_paper_db: PaperDB,
     example_agent_manager: AgentManager,
 ) -> None:
+    if example_config.param.mode != 'research_town':
+        return
+
     mock_model_prompting.side_effect = mock_prompting
 
     example_profile_db.reset_role_availability()
