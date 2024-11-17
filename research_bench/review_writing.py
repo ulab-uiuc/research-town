@@ -407,7 +407,8 @@ def write_review_researchtown(
     metareviews = exit_dict.get('metareviews')
 
     if metareviews and metareviews[0]:
-        return metareviews[0].summary
+        summary: str = metareviews[0].summary
+        return summary
     else:
         raise ValueError('No metareviews generated')
 
