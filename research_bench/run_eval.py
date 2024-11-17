@@ -88,7 +88,7 @@ def main() -> None:
     logger.info(f'Processing {len(dataset)} papers')
 
     metrics_summary: Dict[str, List[float]] = {
-        metric: [] for metric in ['bleu', 'rouge_l', 'gpt_metric_score', 'bert_score']
+        metric: [] for metric in ['bleu', 'rouge_l', 'gpt_metric_score', 'bert_score', 'embedding_similarity']
     }
 
     for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
