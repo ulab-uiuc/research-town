@@ -9,11 +9,10 @@ import numpy.typing as npt
 from ....data.data import Data
 from ..client import DatabaseClient
 
-T = TypeVar('T', bound=Data)
-
 from dotenv import load_dotenv
-
 load_dotenv()
+
+T = TypeVar('T', bound=Data)
 
 
 class LocalDatabaseClient(DatabaseClient):

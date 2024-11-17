@@ -51,7 +51,6 @@ Environment variables such as `OPENAI_API_KEY` and database related configs are 
 cp .env.template .env
 ```
 2. Fill the required environment variables in the `.env` file.
-3. Source the `.env` file.
 
 ### Running the examples
 To run examples provided in the `examples`:
