@@ -50,6 +50,7 @@ class ProposalWritingSWARM(BaseEnv):
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         accumulated_insights = []
         k = self.config.param.discussion_rounds
+        k = 1
 
         for round_num in range(k):
             round_insights = []
@@ -122,12 +123,21 @@ class ProposalWritingSWARM(BaseEnv):
         
         messages = [{
             'role': 'user',
-            'content': f"Please generate a research proposal based on accumulated insights.\n Accumulated: {combined_summary}\nFor your reference, here are the related works: {seralized_papers}\nThe proposal contains 5 research questions, please answer them one by one to form a valid research proposal.\n[Question 1] - What is the problem?\n\nFormulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n"
+            'content': (
+                f"Generate a research proposal based on accumulated insights.\n"
+                f"Accumulated: {combined_summary}\n"
+                f"Related works: {seralized_papers}\n"
+                'First question to answer:'
+                '[Question 1] - What is the problem?\n\n'
+                'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                'Response in 100 words. Use declarative sentences instead of interrogative ones.'
+            )
         }]
 
         response = self.client.run(agent=self.leader, messages=messages)
         
         q1 = response.messages[-1]["content"]
+        messages.extend(response.messages)
 
         messages.append({
             'role': 'user',
@@ -136,13 +146,14 @@ class ProposalWritingSWARM(BaseEnv):
                 'Explain the broader implications of solving this problem for the research community.\n'
                 'Discuss how such paper will affect the future research.\n'
                 'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                'Response in 100 words. Use declarative sentences instead of interrogative ones.'
             )
         })
             
         response = self.client.run(agent=self.leader, messages=messages)
         
         q2 = response.messages[-1]["content"]
-        messages = q2.messages
+        messages.extend(response.messages)
 
         messages.append({
             'role': 'user',
@@ -151,13 +162,14 @@ class ProposalWritingSWARM(BaseEnv):
                 'Discuss the challenges and complexities involved in solving this problem.\n'
                 'Explain why naive or straightforward approaches may fail.\n'
                 'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                'Response in 100 words. Use declarative sentences instead of interrogative ones.'
             )
         })
             
         response = self.client.run(agent=self.leader, messages=messages)
         
         q3 = response.messages[-1]["content"]
-        messages = q3.messages
+        messages.extend(response.messages)
 
         messages.append({
             'role': 'user',
@@ -166,13 +178,14 @@ class ProposalWritingSWARM(BaseEnv):
                 'Identify gaps or limitations in previous research or existing solutions.\n'
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                'Response in 100 words. Use declarative sentences instead of interrogative ones.'
             )
         })
             
         response = self.client.run(agent=self.leader, messages=messages)
         
         q4 = response.messages[-1]["content"]
-        messages = q4.messages
+        messages.extend(response.messages)
 
         messages.append({
             'role': 'user',
@@ -180,15 +193,18 @@ class ProposalWritingSWARM(BaseEnv):
                 '[Question 5] - What are the key components of my approach and results?\n\n'
                 'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                'Response in 100 words. Use declarative sentences instead of interrogative ones.'
             )
         })
             
         response = self.client.run(agent=self.leader, messages=messages)
         
         q5 = response.messages[-1]["content"]
-        messages = q5.messages
+        messages.extend(response.messages)
 
         proposal = Proposal(q1=q1, q2=q2, q3=q3, q4=q4, q5=q5)
+
+        print(proposal)
 
         yield proposal, self.leader
         self.proposals.append(proposal)
