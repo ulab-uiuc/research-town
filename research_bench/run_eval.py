@@ -25,6 +25,7 @@ def inference(
     ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
     gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
+    # gen_review = write_review(mode, gen_proposal, profiles, config)
 
     metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
     results = {

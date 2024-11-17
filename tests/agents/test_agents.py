@@ -142,7 +142,7 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         proposal=research_proposal_A,
         config=example_config,
     )
-    rebuttal = agent_leader.write_rebuttal(
+    rebuttal = agent_leader.write_rebuttal_for_proposal(
         proposal=research_proposal_A,
         review=review,
         config=example_config,
