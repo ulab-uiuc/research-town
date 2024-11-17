@@ -15,13 +15,14 @@ class ParamConfig(BaseModel):
     max_env_run_num: int
     proposal_num: int
     use_rag: bool
+    mode: str
     write_proposal_strategy: str
     return_num: Optional[int] = None
     max_token_num: Optional[int] = None
     temperature: Optional[float] = None
     top_p: Optional[float] = None
     stream: Optional[bool] = None
-
+    discussion_rounds: Optional[int] = None
 
 # EvalPromptTemplate for validation of eval-related prompts
 class EvalPromptTemplate(BaseModel):

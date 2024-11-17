@@ -28,11 +28,14 @@ uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
 pandas = { version = "*", optional = true }
 
-bert_score = { version = "*", optional = true }
-rouge_score = { version = "*", optional = true }
+rouge_score = "^0.1.2"
 pypdf = "^5.1.0"
 pymupdf = "^1.24.13"
 pymupdf4llm = "^0.0.17"
+bert-score = "^0.3.13"
+swarm = {git = "https://github.com/openai/swarm.git"}
+openreview-py = "^1.44.3"
+nltk = "^3.9.1"
 
 
 [tool.poetry.group.dev.dependencies]

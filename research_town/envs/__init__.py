@@ -5,12 +5,14 @@ from .env_proposal_writing_without_rag import ProposalWritingwithoutRAGEnv
 from .env_review_writing import ReviewWritingEnv
 from .env_review_writing_paper_text import ReviewWritingEnvPaperText
 from .env_start import StartEnv
+from .env_proposal_writing_swarm import ProposalWritingSWARM
 
 __all__ = [
     'ReviewWritingEnv',
     'ProposalWritingwithRAGEnv',
     'ProposalWritingwithoutRAGEnv',
     'ReviewWritingEnvPaperText',
+    'ProposalWritingSWARM',
     'BaseEnv',
     'StartEnv',
     'EndEnv',

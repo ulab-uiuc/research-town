@@ -4,6 +4,7 @@ from ..configs import ParamConfig
 from ..data import Profile, Proposal
 from ..dbs import ProfileDB
 from .agent import Agent
+from swarm import Agent as SwarmAgent
 
 Role = Literal['reviewer', 'leader', 'member', 'chair']
 
@@ -12,13 +13,22 @@ class AgentManager:
     def __init__(self, config: ParamConfig, profile_db: ProfileDB) -> None:
         self.config = config
         self.profile_db = profile_db
+        assert config.mode in ["research_town", "swarm"]
+        self.mode = config.mode
 
     def create_agent(self, profile: Profile, role: Role) -> Agent:
-        return Agent(
-            profile=profile,
-            role=role,
-            model_name=self.config.base_llm,
-        )
+        if self.mode == "research_town":
+            return Agent(
+                profile=profile,
+                role=role,
+                model_name=self.config.base_llm,
+            )
+        else:
+            return SwarmAgent(
+                name=profile.name,
+                instructions=profile.bio,
+                model=self.config.base_llm,
+            )
 
     def find_agents(self, role: Role, query: str, num: int = 1) -> List[Agent]:
         profiles = self.profile_db.match(query=query, role=role, num=num)

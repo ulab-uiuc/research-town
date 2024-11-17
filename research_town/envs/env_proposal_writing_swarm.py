@@ -36,6 +36,7 @@ class ProposalWritingSWARM(BaseEnv):
         if 'contexts' not in context:
             raise ValueError("'contexts' is required in the context.")
         self.contexts = context['contexts']
+        self.contexts = [context if context else "" for context in self.contexts] # remove None
 
     @beartype
     def on_exit(self) -> Tuple[str, Dict[str, Any]]:
@@ -65,29 +66,42 @@ class ProposalWritingSWARM(BaseEnv):
                     num=self.config.param.related_paper_num,
                 )
 
-                summary, keywords, insight = researcher.review_literature(
-                    papers=related_papers,
-                    contexts=self.contexts,
-                    config=self.config,
-                )
+                seralized_papers = ""
+                for paper in related_papers:
+                    seralized_papers += f"Title: {paper.title}"
+                    authors = ", ".join(paper.authors)
+                    seralized_papers += f"Authors: {authors}"
+                    seralized_papers += f"Abstract: {paper.abstract}"
+                    seralized_papers += "\n"
 
-                # Generate insight based on RAG-enhanced context and prior discussions
-                discussion_message = {
+                messages = [{"role": "user", "content": f"Please summarize these papers in 200 words. \nPapers: {seralized_papers}"}]
+
+                response = self.client.run(agent=researcher, messages=messages)
+
+                summary = response.messages[-1]["content"]
+
+                messages = [{"role": "user", "content": f"Please summarize 10 keywords from summary. \nSummary: {summary}"}]
+                
+                response = self.client.run(agent=researcher, messages=messages)
+
+                keywords = response.messages[-1]["content"]
+
+                messages = [{
                     'role': 'user',
-                    'content': f"Round {round_num + 1} discussion based on literature review summary: {summary} "
-                    f"and keywords: {', '.join(keywords)}. Please provide your insights.",
-                }
+                    'content': f"Round {round_num + 1} discussion based on literature review summary: {summary} and keywords: {', '.join(keywords)}. Please provide your new research insights based on your expertise."
+                }]
+                
+                response = self.client.run(agent=researcher, messages=messages)
 
-                response = self.client.run(
-                    agent=researcher, messages=[discussion_message]
-                )
-                discussion_content = response.messages[-1]['content']
+                insight = response.messages[-1]["content"]
+
+                print(insight)
 
                 # Log each researcher's insight
-                discussion_insight = Insight(content=discussion_content)
+                insight_obj = Insight(content=insight)
 
-                yield discussion_insight, researcher
-                round_insights.append(discussion_insight)
+                yield insight_obj, researcher
+                round_insights.append(insight_obj)
 
             accumulated_insights.extend(round_insights)
 
@@ -97,11 +111,84 @@ class ProposalWritingSWARM(BaseEnv):
             query=combined_summary,
             num=self.config.param.related_paper_num,
         )
-        proposal = self.leader.write_proposal(
-            idea=combined_summary,
-            papers=final_related_papers,
-            config=self.config,
-        )
+
+        seralized_papers = ""
+        for paper in final_related_papers:
+            seralized_papers += f"Title: {paper.title}"
+            authors = ", ".join(paper.authors)
+            seralized_papers += f"Authors: {authors}"
+            seralized_papers += f"Abstract: {paper.abstract}"
+            seralized_papers += "\n"
+        
+        messages = [{
+            'role': 'user',
+            'content': f"Please generate a research proposal based on accumulated insights.\n Accumulated: {combined_summary}\nFor your reference, here are the related works: {seralized_papers}\nThe proposal contains 5 research questions, please answer them one by one to form a valid research proposal.\n[Question 1] - What is the problem?\n\nFormulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n"
+        }]
+
+        response = self.client.run(agent=self.leader, messages=messages)
+        
+        q1 = response.messages[-1]["content"]
+
+        messages.append({
+            'role': 'user',
+            'content': (
+                '[Question 2] - Why is it interesting and important?\n\n'
+                'Explain the broader implications of solving this problem for the research community.\n'
+                'Discuss how such paper will affect the future research.\n'
+                'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+            )
+        })
+            
+        response = self.client.run(agent=self.leader, messages=messages)
+        
+        q2 = response.messages[-1]["content"]
+        messages = q2.messages
+
+        messages.append({
+            'role': 'user',
+            'content': (
+                '[Question 3] - Why is it hard?\n\n'
+                'Discuss the challenges and complexities involved in solving this problem.\n'
+                'Explain why naive or straightforward approaches may fail.\n'
+                'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+            )
+        })
+            
+        response = self.client.run(agent=self.leader, messages=messages)
+        
+        q3 = response.messages[-1]["content"]
+        messages = q3.messages
+
+        messages.append({
+            'role': 'user',
+            'content': (
+                '[Question 4] - Why hasn\'t it been solved before?\n\n'
+                'Identify gaps or limitations in previous research or existing solutions.\n'
+                'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+            )
+        })
+            
+        response = self.client.run(agent=self.leader, messages=messages)
+        
+        q4 = response.messages[-1]["content"]
+        messages = q4.messages
+
+        messages.append({
+            'role': 'user',
+            'content': (
+                '[Question 5] - What are the key components of my approach and results?\n\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+            )
+        })
+            
+        response = self.client.run(agent=self.leader, messages=messages)
+        
+        q5 = response.messages[-1]["content"]
+        messages = q5.messages
+
+        proposal = Proposal(q1=q1, q2=q2, q3=q3, q4=q4, q5=q5)
 
         yield proposal, self.leader
         self.proposals.append(proposal)

@@ -5,6 +5,7 @@ from research_town.configs import Config
 from research_town.data import Profile
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.envs import ProposalWritingwithoutRAGEnv as ProposalWritingEnv
+from research_town.envs import ProposalWritingSWARM as ProposalWritingEnvSWARM
 from research_town.utils.model_prompting import model_prompting
 
 
@@ -51,6 +52,58 @@ def write_proposal_researchtown(
     proposal = exit_dict.get('proposal')
     if proposal and proposal.content:
         return str(proposal.content)
+    else:
+        raise ValueError('Failed to generate proposal')
+        
+def write_proposal_swarm(
+    profiles: List[Profile],
+    ref_contents: List[str],
+    config: Config,
+) -> str:
+    log_db = LogDB(config=config.database)
+    progress_db = ProgressDB(config=config.database)
+    paper_db = PaperDB(config=config.database)
+    profile_db = ProfileDB(config=config.database)
+    for profile in profiles:
+        profile_db.add(profile)
+    agent_manager = AgentManager(config=config.param, profile_db=profile_db)
+
+    env = ProposalWritingEnvSWARM(
+        name='proposal_writing',
+        log_db=log_db,
+        progress_db=progress_db,
+        paper_db=paper_db,
+        config=config,
+        agent_manager=agent_manager,
+    )
+
+    # leader_profile = profile_db.get(name=profiles[0].name)[0]
+    leader_profile = profiles[0]
+    print('leader_profile', leader_profile)
+    leader = agent_manager.create_agent(leader_profile, role='leader')
+    if not leader_profile:
+        raise ValueError('Failed to create leader agent')
+
+    env.on_enter(
+        leader=leader,
+        contexts=ref_contents,
+    )
+
+    # Run the environment to generate the proposal
+    run_result = env.run()
+    if run_result is not None:
+        for progress, agent in run_result:
+            # Process progress and agent if needed
+            pass
+
+    # Exit the environment and retrieve the generated proposal
+    exit_status, exit_dict = env.on_exit()
+    proposal = exit_dict.get('proposals')
+    # TODO
+    # if proposal and proposal.content:
+    #    return str(proposal.content)
+    if proposal:
+        return " ".join(proposal)
     else:
         raise ValueError('Failed to generate proposal')
 

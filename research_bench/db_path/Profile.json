@@ -1,0 +1,252 @@
+{
+  "d55bcdd5-515f-4fe5-a865-ebb9094cf6bb": {
+    "pk": "d55bcdd5-515f-4fe5-a865-ebb9094cf6bb",
+    "name": "Shengnan An",
+    "bio": "I am a researcher dedicated to enhancing the capabilities of large language models (LLMs) in code generation and reasoning tasks. My recent work focuses on addressing the challenges of library-oriented code generation through innovative approaches like CAPIR (Compositional API Recommendation), which effectively breaks down coarse-grained requirements into detailed subtasks for improved API recommendations. I also developed Skill-KNN, a skill-based few-shot selection method that optimizes in-context learning without the need for model retraining, showcasing my commitment to practical and efficient solutions.\n\nMy exploration of abstraction capabilities in deep learning models has led to significant insights into how models like T5 and GPT-2 can induce abstract concepts, revealing a \"memorize-then-abstract\" process during training. Additionally, I have investigated compositional generalization, a critical reasoning capability, through frameworks like CoFe and LeAR, which model semantic parsing as algebraic recombination.\n\nI am particularly interested in the potential of LLMs to learn from their mistakes, as demonstrated in my LEMA framework, which incorporates error-driven learning to enhance reasoning capabilities. My research also extends to improving prompt-tuning for natural language generation tasks through input-tuning, demonstrating my focus on practical applications and advancements in the field.\n\nOverall, my work aims to bridge the gap between theoretical advancements and real-world applications, contributing to the evolving landscape of AI and machine learning.",
+    "collaborators": [
+      "Zeqi Lin",
+      "Nanning Zheng",
+      "Jian-Guang Lou",
+      "Qiang Fu",
+      "B. Chen",
+      "Weizhu Chen",
+      "Qian Liu",
+      "Zexiong Ma",
+      "Dongmei Zhang",
+      "Bing Xie",
+      "Bo Zhou",
+      "D. Zhang",
+      "Yifei Li",
+      "Chenyao Liu",
+      "L. Wen",
+      "Yan Gao",
+      "Bin Zhou"
+    ],
+    "pub_titles": [
+      "Compositional API Recommendation for Library-Oriented Code Generation",
+      "Skill-Based Few-Shot Selection for In-Context Learning",
+      "Does Deep Learning Learn to Abstract? A Systematic Probing Framework",
+      "How Do In-Context Examples Affect Compositional Generalization?",
+      "Learning From Mistakes Makes LLM Better Reasoner",
+      "Input-Tuning: Adapting Unfamiliar Inputs to Frozen Pretrained Models",
+      "Learning Algebraic Recombination for Compositional Generalization",
+      "Compositional Generalization by Learning Analytical Expressions"
+    ],
+    "pub_abstracts": [
+      "Large language models (LLMs) have achieved exceptional performance in code generation. However, the performance remains unsatisfactory in generating library-oriented code, especially for the libraries not present in the training data of LLMs. Previous work utilizes API recommendation technology to help LLMs use libraries: it retrieves APIs related to the user requirements, then leverages them as context to prompt LLMs. However, developmental requirements can be coarse-grained, requiring a combination of multiple fine-grained APIs. This granularity inconsistency makes API recommendation a challenging task. To address this, we propose CAPIR (Compositional API Recommendation), which adopts a \u201cdivide-and-conquer\u201d strategy to recommend APIs for coarse-grained requirements. Specifically, CAPIR employs an LLM-based Decomposer to break down a coarse-grained task description into several detailed subtasks. Then, CAPIR applies an embedding-based Retriever to identify relevant APIs corresponding to each subtask. Moreover, CAPIR leverages an LLM-based Reranker to filter out redundant APIs and provides the final recommendation. To facilitate the evaluation of API recommendation methods on coarse-grained requirements, we present two challenging benchmarks, RAPID (Recommend APIs based on Documentation) and LOCG (Library-Oriented Code Generation). Experimental results on these benchmarks, demonstrate the effectiveness of CAPIR in comparison to existing baselines. Specifically, on RAPID\u2019s TorchdataAR dataset, compared to the state-of-the-art API recommendation approach, CAPIR improves recall@5 from 18.7% to 43.2% and precision@5 from 15.5% to 37.1%. On LOCG\u2019s Torchdata-Code dataset, compared to code generation without API recommendation, CAPIR improves pass@100 from 16.0% to 28.0%.Ccs Concepts \u2022 Software and its engineering $\\rightarrow$ Search-based software engineering; Software development techniques.",
+      "In-context learning is the paradigm that adapts large language models to downstream tasks by providing a few examples. Few-shot selection -- selecting appropriate examples for each test instance separately -- is important for in-context learning. In this paper, we propose Skill-KNN, a skill-based few-shot selection method for in-context learning. The key advantages of Skill-KNN include: (1) it addresses the problem that existing methods based on pre-trained embeddings can be easily biased by surface natural language features that are not important for the target task; (2) it does not require training or fine-tuning of any models, making it suitable for frequently expanding or changing example banks. The key insight is to optimize the inputs fed into the embedding model, rather than tuning the model itself. Technically, Skill-KNN generates the skill-based descriptions for each test case and candidate example by utilizing a pre-processing few-shot prompting, thus eliminating unimportant surface features. Experimental results across five cross-domain semantic parsing datasets and six backbone models show that Skill-KNN significantly outperforms existing methods.",
+      "Abstraction is a desirable capability for deep learning models, which means to induce abstract concepts from concrete instances and flexibly apply them beyond the learning context. At the same time, there is a lack of clear understanding about both the presence and further characteristics of this capability in deep learning models. In this paper, we introduce a systematic probing framework to explore the abstraction capability of deep learning models from a transferability perspective. A set of controlled experiments are conducted based on this framework, providing strong evidence that two probed pre-trained language models (PLMs), T5 and GPT2, have the abstraction capability. We also conduct in-depth analysis, thus shedding further light: (1) the whole training phase exhibits a\"memorize-then-abstract\"two-stage process; (2) the learned abstract concepts are gathered in a few middle-layer attention heads, rather than being evenly distributed throughout the model; (3) the probed abstraction capabilities exhibit robustness against concept mutations, and are more robust to low-level/source-side mutations than high-level/target-side ones; (4) generic pre-training is critical to the emergence of abstraction capability, and PLMs exhibit better abstraction with larger model sizes and data scales.",
+      "Compositional generalization\u2013understanding unseen combinations of seen primitives\u2013is an essential reasoning capability in human intelligence.The AI community mainly studies this capability by fine-tuning neural networks on lots of training samples, while it is still unclear whether and how in-context learning\u2013the prevailing few-shot paradigm based on large language models\u2013exhibits compositional generalization.In this paper, we present CoFe, a test suite to investigate in-context compositional generalization.We find that the compositional generalization performance can be easily affected by the selection of in-context examples, thus raising the research question what the key factors are to make good in-context examples for compositional generalization.We study three potential factors: similarity, diversity and complexity. Our systematic experiments indicate that in-context examples should be structurally similar to the test case, diverse from each other, and individually simple.Furthermore, two strong limitations are observed: in-context compositional generalization on fictional words is much weaker than that on commonly used ones; it is still critical that the in-context examples should cover required linguistic structures, even though the backbone model has been pre-trained on large corpus.We hope our analysis would facilitate the understanding and utilization of in-context learning paradigm.",
+      "Large language models (LLMs) recently exhibited remarkable reasoning capabilities on solving math problems. To further improve their reasoning capabilities, this work explores whether LLMs can LEarn from MistAkes (LEMA), akin to the human learning process. Consider a human student who failed to solve a math problem, he will learn from what mistake he has made and how to correct it. Mimicking this error-driven learning process, LEMA incorporates mistake-correction data pairs during fine-tuning LLMs. Specifically, we first collect inaccurate reasoning paths from various LLMs, and then employ GPT-4 as a ''corrector'' to identify the mistake step, explain the reason for the mistake, correct the mistake and generate the final answer. In addition, we apply a correction-centric evolution strategy that effectively expands the question set for generating correction data. Experiments across various LLMs and reasoning tasks show that LEMA effectively improves CoT-alone fine-tuning. Our further ablations shed light on the non-homogeneous effectiveness between CoT data and correction data. These results suggest a significant potential for LLMs to improve through learning from their mistakes. Our code, models and prompts are publicly available at https://github.com/microsoft/LEMA.",
+      "Recently the prompt-tuning paradigm has attracted significant attention. By only tuning continuous prompts with a frozen pre-trained language model (PLM), prompt-tuning takes a step towards deploying a shared frozen PLM to serve numerous downstream tasks. Although prompt-tuning shows good performance on certain natural language understanding (NLU) tasks, its effectiveness on natural language generation (NLG) tasks is still under-explored. In this paper, we argue that one of the factors hindering the development of prompt-tuning on NLG tasks is the unfamiliar inputs (i.e., inputs are linguistically different from the pretraining corpus). For example, our preliminary exploration reveals a large performance gap between prompt-tuning and fine-tuning when unfamiliar inputs occur frequently in NLG tasks. This motivates us to propose input-tuning, which fine-tunes both the continuous prompts and the input representations, leading to a more effective way to adapt unfamiliar inputs to frozen PLMs. Our proposed input-tuning is conceptually simple and empirically powerful. Experimental results on seven NLG tasks demonstrate that input-tuning is significantly and consistently better than prompt-tuning. Furthermore, on three of these tasks, input-tuning can achieve a comparable or even better performance than fine-tuning.",
+      "Neural sequence models exhibit limited compositional generalization ability in semantic parsing tasks. Compositional generalization requires algebraic recombination, i.e., dynamically recombining structured expressions in a recursive manner. However, most previous studies mainly concentrate on recombining lexical units, which is an important but not sufficient part of algebraic recombination. In this paper, we propose LeAR, an end-to-end neural model to learn algebraic recombination for compositional generalization. The key insight is to model the semantic parsing task as a homomorphism between a latent syntactic algebra and a semantic algebra, thus encouraging algebraic recombination. Specifically, we learn two modules jointly: a Composer for producing latent syntax, and an Interpreter for assigning semantic operations. Experiments on two realistic and comprehensive compositional generalization benchmarks demonstrate the effectiveness of our model. The source code is publicly available at https://github.com/microsoft/ContextualSP.",
+      "Compositional generalization is a basic but essential intellective capability of human beings, which allows us to recombine known parts readily. However, existing neural network based models have been proven to be extremely deficient in such a capability. Inspired by work in cognition which argues compositionality can be captured by variable slots with symbolic functions, we present a refreshing view that connects a memory-augmented neural model with analytical expressions, to achieve compositional generalization. Our model consists of two cooperative neural modules Composer and Solver, fitting well with the cognitive argument while still being trained in an end-to-end manner via a hierarchical reinforcement learning algorithm. Experiments on a well-known benchmark SCAN demonstrate that our model seizes a great ability of compositional generalization, solving all challenges addressed by previous works with 100% accuracies."
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Code Generation",
+      "Machine Learning",
+      "Compositional Generalization"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "8a942d4b-bfee-4c7e-812d-194a7ed1cd49": {
+    "pk": "8a942d4b-bfee-4c7e-812d-194a7ed1cd49",
+    "name": "Zexiong Ma",
+    "bio": "I am a researcher dedicated to enhancing the capabilities of large language models (LLMs) in the realm of code generation and reasoning. My recent work focuses on addressing the challenges associated with generating library-oriented code, particularly when the required libraries are not included in the training data. To tackle this, I developed CAPIR (Compositional API Recommendation), which employs a \"divide-and-conquer\" strategy to effectively recommend APIs for coarse-grained requirements. By breaking down complex tasks into detailed subtasks and leveraging advanced retrieval and ranking techniques, CAPIR significantly improves API recommendation performance, as demonstrated by our benchmarks.\n\nAdditionally, I have explored the potential of LLMs to learn from their mistakes through a framework I call LEMA (LEarn from MistAkes). This approach mimics human learning by incorporating mistake-correction data pairs during the fine-tuning process, allowing LLMs to enhance their reasoning capabilities. My experiments have shown that LEMA effectively boosts performance across various reasoning tasks, highlighting the importance of error-driven learning in AI.\n\nI am passionate about pushing the boundaries of what LLMs can achieve, and I strive to make my research accessible by sharing code, models, and prompts with the community. My goal is to contribute to the development of more robust and intelligent systems that can better understand and generate code, ultimately improving software development practices.",
+    "collaborators": [
+      "Shengnan An",
+      "Zeqi Lin",
+      "Bing Xie",
+      "Nanning Zheng",
+      "Jian-Guang Lou",
+      "Weizhu Chen"
+    ],
+    "pub_titles": [
+      "Compositional API Recommendation for Library-Oriented Code Generation",
+      "Learning From Mistakes Makes LLM Better Reasoner"
+    ],
+    "pub_abstracts": [
+      "Large language models (LLMs) have achieved exceptional performance in code generation. However, the performance remains unsatisfactory in generating library-oriented code, especially for the libraries not present in the training data of LLMs. Previous work utilizes API recommendation technology to help LLMs use libraries: it retrieves APIs related to the user requirements, then leverages them as context to prompt LLMs. However, developmental requirements can be coarse-grained, requiring a combination of multiple fine-grained APIs. This granularity inconsistency makes API recommendation a challenging task. To address this, we propose CAPIR (Compositional API Recommendation), which adopts a \u201cdivide-and-conquer\u201d strategy to recommend APIs for coarse-grained requirements. Specifically, CAPIR employs an LLM-based Decomposer to break down a coarse-grained task description into several detailed subtasks. Then, CAPIR applies an embedding-based Retriever to identify relevant APIs corresponding to each subtask. Moreover, CAPIR leverages an LLM-based Reranker to filter out redundant APIs and provides the final recommendation. To facilitate the evaluation of API recommendation methods on coarse-grained requirements, we present two challenging benchmarks, RAPID (Recommend APIs based on Documentation) and LOCG (Library-Oriented Code Generation). Experimental results on these benchmarks, demonstrate the effectiveness of CAPIR in comparison to existing baselines. Specifically, on RAPID\u2019s TorchdataAR dataset, compared to the state-of-the-art API recommendation approach, CAPIR improves recall@5 from 18.7% to 43.2% and precision@5 from 15.5% to 37.1%. On LOCG\u2019s Torchdata-Code dataset, compared to code generation without API recommendation, CAPIR improves pass@100 from 16.0% to 28.0%.Ccs Concepts \u2022 Software and its engineering $\\rightarrow$ Search-based software engineering; Software development techniques.",
+      "Large language models (LLMs) recently exhibited remarkable reasoning capabilities on solving math problems. To further improve their reasoning capabilities, this work explores whether LLMs can LEarn from MistAkes (LEMA), akin to the human learning process. Consider a human student who failed to solve a math problem, he will learn from what mistake he has made and how to correct it. Mimicking this error-driven learning process, LEMA incorporates mistake-correction data pairs during fine-tuning LLMs. Specifically, we first collect inaccurate reasoning paths from various LLMs, and then employ GPT-4 as a ''corrector'' to identify the mistake step, explain the reason for the mistake, correct the mistake and generate the final answer. In addition, we apply a correction-centric evolution strategy that effectively expands the question set for generating correction data. Experiments across various LLMs and reasoning tasks show that LEMA effectively improves CoT-alone fine-tuning. Our further ablations shed light on the non-homogeneous effectiveness between CoT data and correction data. These results suggest a significant potential for LLMs to improve through learning from their mistakes. Our code, models and prompts are publicly available at https://github.com/microsoft/LEMA."
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Code Generation",
+      "Large Language Models",
+      "API Recommendation"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "fecd0021-b356-49fc-94c6-38cd12dde210": {
+    "pk": "fecd0021-b356-49fc-94c6-38cd12dde210",
+    "name": "Zeqi Lin",
+    "bio": "I am a researcher dedicated to enhancing the capabilities of large language models (LLMs) in the realm of code generation, particularly focusing on library-oriented code. My recent work introduces CAPIR (Compositional API Recommendation), a novel approach that addresses the challenges of API recommendation for coarse-grained development requirements. By employing a \"divide-and-conquer\" strategy, CAPIR effectively decomposes complex tasks into manageable subtasks, allowing for more precise API recommendations.\n\nThrough the integration of an LLM-based Decomposer, an embedding-based Retriever, and an LLM-based Reranker, I have developed a system that significantly improves the accuracy and relevance of API suggestions. My research has led to the creation of two challenging benchmarks, RAPID and LOCG, which facilitate the evaluation of API recommendation methods. The experimental results demonstrate CAPIR's superiority over existing baselines, achieving notable improvements in recall and precision metrics.\n\nI am passionate about bridging the gap between user requirements and effective code generation, and I strive to contribute to the ongoing evolution of software development techniques through innovative research in this field.",
+    "collaborators": [
+      "Zexiong Ma",
+      "Shengnan An",
+      "Bing Xie"
+    ],
+    "pub_titles": [
+      "Compositional API Recommendation for Library-Oriented Code Generation"
+    ],
+    "pub_abstracts": [
+      "Large language models (LLMs) have achieved exceptional performance in code generation. However, the performance remains unsatisfactory in generating library-oriented code, especially for the libraries not present in the training data of LLMs. Previous work utilizes API recommendation technology to help LLMs use libraries: it retrieves APIs related to the user requirements, then leverages them as context to prompt LLMs. However, developmental requirements can be coarse-grained, requiring a combination of multiple fine-grained APIs. This granularity inconsistency makes API recommendation a challenging task. To address this, we propose CAPIR (Compositional API Recommendation), which adopts a \u201cdivide-and-conquer\u201d strategy to recommend APIs for coarse-grained requirements. Specifically, CAPIR employs an LLM-based Decomposer to break down a coarse-grained task description into several detailed subtasks. Then, CAPIR applies an embedding-based Retriever to identify relevant APIs corresponding to each subtask. Moreover, CAPIR leverages an LLM-based Reranker to filter out redundant APIs and provides the final recommendation. To facilitate the evaluation of API recommendation methods on coarse-grained requirements, we present two challenging benchmarks, RAPID (Recommend APIs based on Documentation) and LOCG (Library-Oriented Code Generation). Experimental results on these benchmarks, demonstrate the effectiveness of CAPIR in comparison to existing baselines. Specifically, on RAPID\u2019s TorchdataAR dataset, compared to the state-of-the-art API recommendation approach, CAPIR improves recall@5 from 18.7% to 43.2% and precision@5 from 15.5% to 37.1%. On LOCG\u2019s Torchdata-Code dataset, compared to code generation without API recommendation, CAPIR improves pass@100 from 16.0% to 28.0%.Ccs Concepts \u2022 Software and its engineering $\\rightarrow$ Search-based software engineering; Software development techniques."
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Code Generation",
+      "API Recommendation"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "e9aeca48-4a96-4aca-bc00-0c41715d9d6e": {
+    "pk": "e9aeca48-4a96-4aca-bc00-0c41715d9d6e",
+    "name": "Nanning Zheng",
+    "bio": "I am a researcher dedicated to enhancing the reasoning capabilities of large language models (LLMs), particularly in the context of solving mathematical problems. My recent work introduces the concept of Learning from Mistakes (LEMA), which draws inspiration from human learning processes. Just as a student learns from errors, I explore how LLMs can benefit from mistake-correction data pairs during their fine-tuning phase.\n\nIn my research, I collect inaccurate reasoning paths from various LLMs and utilize GPT-4 as a \"corrector\" to identify mistakes, explain them, and generate accurate answers. This innovative approach not only improves the performance of LLMs but also highlights the importance of correction-centric strategies in expanding the question set for generating correction data. My experiments demonstrate that LEMA significantly enhances the effectiveness of chain-of-thought (CoT) fine-tuning, revealing the potential for LLMs to learn and grow from their errors.\n\nI am passionate about making my findings accessible to the broader research community, which is why I have made the code, models, and prompts from my work publicly available. I believe that by fostering collaboration and sharing knowledge, we can unlock new possibilities in the field of artificial intelligence.",
+    "collaborators": [
+      "Shengnan An",
+      "Zexiong Ma",
+      "Zeqi Lin",
+      "Jian-Guang Lou",
+      "Weizhu Chen"
+    ],
+    "pub_titles": [
+      "Learning From Mistakes Makes LLM Better Reasoner"
+    ],
+    "pub_abstracts": [
+      "Large language models (LLMs) recently exhibited remarkable reasoning capabilities on solving math problems. To further improve their reasoning capabilities, this work explores whether LLMs can LEarn from MistAkes (LEMA), akin to the human learning process. Consider a human student who failed to solve a math problem, he will learn from what mistake he has made and how to correct it. Mimicking this error-driven learning process, LEMA incorporates mistake-correction data pairs during fine-tuning LLMs. Specifically, we first collect inaccurate reasoning paths from various LLMs, and then employ GPT-4 as a ''corrector'' to identify the mistake step, explain the reason for the mistake, correct the mistake and generate the final answer. In addition, we apply a correction-centric evolution strategy that effectively expands the question set for generating correction data. Experiments across various LLMs and reasoning tasks show that LEMA effectively improves CoT-alone fine-tuning. Our further ablations shed light on the non-homogeneous effectiveness between CoT data and correction data. These results suggest a significant potential for LLMs to improve through learning from their mistakes. Our code, models and prompts are publicly available at https://github.com/microsoft/LEMA."
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Large Language Models",
+      "Machine Learning"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  },
+  "9f2bab97-1eeb-4d1e-a319-4bd64fa9824d": {
+    "pk": "9f2bab97-1eeb-4d1e-a319-4bd64fa9824d",
+    "name": "Jian-Guang Lou",
+    "bio": "I am a researcher dedicated to advancing the capabilities of large language models (LLMs) and their applications in natural language processing. My recent work has focused on enhancing in-context learning, particularly through the development of Skill-KNN, a skill-based few-shot selection method that optimizes input representations to improve performance across various tasks. I have also explored the abstraction capabilities of deep learning models, revealing insights into how these models learn and apply abstract concepts.\n\nMy research extends to compositional generalization, where I introduced CoFe, a test suite that investigates how in-context examples influence reasoning capabilities. Additionally, I have contributed to hybrid question-answering systems with the TACR model, which effectively aligns questions with table data for improved evidence retrieval.\n\nI am particularly concerned with the social biases present in LLMs, especially in sensitive applications like Text-to-SQL. My work aims to uncover and mitigate these biases, ensuring fairer outcomes in automated decision-making processes. Furthermore, I have developed innovative frameworks like LEMA, which allows LLMs to learn from their mistakes, and AutoSD, which aligns automated debugging with human reasoning.\n\nThrough my research, I strive to bridge the gap between theoretical advancements and practical applications, ensuring that LLMs are not only powerful but also responsible and effective in real-world scenarios. My goal is to continue exploring the intersection of language understanding, reasoning, and ethical AI, contributing to a more nuanced understanding of how these technologies can be harnessed for good.",
+    "collaborators": [
+      "Zeqi Lin",
+      "B. Chen",
+      "Shengnan An",
+      "Qiang Fu",
+      "Nanning Zheng",
+      "Weizhu Chen",
+      "Yan Gao",
+      "Qian Liu",
+      "D. Zhang",
+      "Y. Liu",
+      "Zhe Su",
+      "Xiaokang Chen",
+      "Fengji Zhang",
+      "Daoguang Zan",
+      "Bo Zhou",
+      "Jian Wu",
+      "B\u00f6rje F. Karlsson",
+      "M. Okumura",
+      "Elliott Ash",
+      "Zexiong Ma",
+      "Xinyu Zhu",
+      "Cheng Yang",
+      "Siheng Li",
+      "Yujiu Yang",
+      "Yue Zhang",
+      "Jin Liu",
+      "Yi Mao",
+      "Longxu Dou",
+      "Xuqi Liu",
+      "Mingyang Pan",
+      "Dingzirui Wang",
+      "Wanxiang Che",
+      "Min-Yen Kan",
+      "Dechen Zhan",
+      "Pin-Yu Chen",
+      "Tsung-Yi Ho",
+      "Sungmin Kang",
+      "S. Yoo",
+      "Junyi Zhang",
+      "Jiaqi Guo",
+      "Shizhao Sun",
+      "Xinyu Pi",
+      "Morteza Ziyadi",
+      "Gustavo Aguilar",
+      "T. Solorio",
+      "Xiaodong Gu",
+      "Kang Min",
+      "Yoo Jung-Woo",
+      "Jiwei Li",
+      "Will Monroe",
+      "Alan Ritter",
+      "Dan Jurafsky",
+      "Yanran Li",
+      "Hui Su",
+      "Xiaoyu Shen",
+      "Ziqiang Wenjie Li",
+      "Yihong Chen",
+      "Bei Chen",
+      "Mingbo Ma",
+      "Liang Huang",
+      "Bowen Zhou",
+      "Yifei Li"
+    ],
+    "pub_titles": [
+      "Skill-Based Few-Shot Selection for In-Context Learning",
+      "Does Deep Learning Learn to Abstract? A Systematic Probing Framework",
+      "How Do In-Context Examples Affect Compositional Generalization?",
+      "TACR: A Table-alignment-based Cell-selection and Reasoning Model for Hybrid Question-Answering",
+      "Uncovering and Categorizing Social Biases in Text-to-SQL",
+      "Learning From Mistakes Makes LLM Better Reasoner",
+      "Question Answering as Programming for Solving Time-Sensitive Questions",
+      "RepoCoder: Repository-Level Code Completion Through Iterative Retrieval and Generation",
+      "Towards Knowledge-Intensive Text-to-SQL Semantic Parsing with Formulaic Knowledge",
+      "Uncovering and Quantifying Social Biases in Code Generation",
+      "Explainable Automated Debugging via Large Language Model-driven Scientific Debugging",
+      "LayoutDiffusion: Improving Graphic Layout Generation by Discrete Diffusion Probabilistic Models",
+      "Reasoning Like Program Executors",
+      "Incorporate Directed Dependency Relation Graph into Transformer Block for Multi-turn Dialogue Generation",
+      "Input-Tuning: Adapting Unfamiliar Inputs to Frozen Pretrained Models"
+    ],
+    "pub_abstracts": [
+      "In-context learning is the paradigm that adapts large language models to downstream tasks by providing a few examples. Few-shot selection -- selecting appropriate examples for each test instance separately -- is important for in-context learning. In this paper, we propose Skill-KNN, a skill-based few-shot selection method for in-context learning. The key advantages of Skill-KNN include: (1) it addresses the problem that existing methods based on pre-trained embeddings can be easily biased by surface natural language features that are not important for the target task; (2) it does not require training or fine-tuning of any models, making it suitable for frequently expanding or changing example banks. The key insight is to optimize the inputs fed into the embedding model, rather than tuning the model itself. Technically, Skill-KNN generates the skill-based descriptions for each test case and candidate example by utilizing a pre-processing few-shot prompting, thus eliminating unimportant surface features. Experimental results across five cross-domain semantic parsing datasets and six backbone models show that Skill-KNN significantly outperforms existing methods.",
+      "Abstraction is a desirable capability for deep learning models, which means to induce abstract concepts from concrete instances and flexibly apply them beyond the learning context. At the same time, there is a lack of clear understanding about both the presence and further characteristics of this capability in deep learning models. In this paper, we introduce a systematic probing framework to explore the abstraction capability of deep learning models from a transferability perspective. A set of controlled experiments are conducted based on this framework, providing strong evidence that two probed pre-trained language models (PLMs), T5 and GPT2, have the abstraction capability. We also conduct in-depth analysis, thus shedding further light: (1) the whole training phase exhibits a\"memorize-then-abstract\"two-stage process; (2) the learned abstract concepts are gathered in a few middle-layer attention heads, rather than being evenly distributed throughout the model; (3) the probed abstraction capabilities exhibit robustness against concept mutations, and are more robust to low-level/source-side mutations than high-level/target-side ones; (4) generic pre-training is critical to the emergence of abstraction capability, and PLMs exhibit better abstraction with larger model sizes and data scales.",
+      "Compositional generalization\u2013understanding unseen combinations of seen primitives\u2013is an essential reasoning capability in human intelligence.The AI community mainly studies this capability by fine-tuning neural networks on lots of training samples, while it is still unclear whether and how in-context learning\u2013the prevailing few-shot paradigm based on large language models\u2013exhibits compositional generalization.In this paper, we present CoFe, a test suite to investigate in-context compositional generalization.We find that the compositional generalization performance can be easily affected by the selection of in-context examples, thus raising the research question what the key factors are to make good in-context examples for compositional generalization.We study three potential factors: similarity, diversity and complexity. Our systematic experiments indicate that in-context examples should be structurally similar to the test case, diverse from each other, and individually simple.Furthermore, two strong limitations are observed: in-context compositional generalization on fictional words is much weaker than that on commonly used ones; it is still critical that the in-context examples should cover required linguistic structures, even though the backbone model has been pre-trained on large corpus.We hope our analysis would facilitate the understanding and utilization of in-context learning paradigm.",
+      "Hybrid Question-Answering (HQA), which targets reasoning over tables and passages linked from table cells, has witnessed significant research in recent years. A common challenge in HQA and other passage-table QA datasets is that it is generally unrealistic to iterate over all table rows, columns, and linked passages to retrieve evidence. Such a challenge made it difficult for previous studies to show their reasoning ability in retrieving answers. To bridge this gap, we propose a novel Table-alignment-based Cell-selection and Reasoning model (TACR) for hybrid text and table QA, evaluated on the HybridQA and WikiTableQuestions datasets. In evidence retrieval, we design a table-question-alignment enhanced cell-selection method to retrieve fine-grained evidence. In answer reasoning, we incorporate a QA module that treats the row containing selected cells as context. Experimental results over the HybridQA and WikiTableQuestions (WTQ) datasets show that TACR achieves state-of-the-art results on cell selection and outperforms fine-grained evidence retrieval baselines on HybridQA, while achieving competitive performance on WTQ. We also conducted a detailed analysis to demonstrate that being able to align questions to tables in the cell-selection stage can result in important gains from experiments of over 90\\% table row and column selection accuracy, meanwhile also improving output explainability.",
+      "Large pre-trained language models are acknowledged to carry social bias towards different demographics, which can further amplify existing stereotypes in our society and cause even more harm. Text-to-SQL is an important task, models of which are mainly adopted by administrative industries, where unfair decisions may lead to catastrophic consequences. However, existing Text-to-SQL models are trained on clean, neutral datasets, such as Spider and WikiSQL. This, to some extent, cover up social bias in models under ideal conditions, which nevertheless may emerge in real application scenarios. In this work, we aim to uncover and mitigate social bias in Text-to-SQL models. We summarize the categories of social bias that may occur in structural data for Text-to-SQL models. We build test benchmarks and reveal that models with similar task accuracy can contain social bias at very different rates. We show how to take advantage of our methodology to assess and mitigate social bias in the downstream Text-to-SQL task.",
+      "Large language models (LLMs) recently exhibited remarkable reasoning capabilities on solving math problems. To further improve their reasoning capabilities, this work explores whether LLMs can LEarn from MistAkes (LEMA), akin to the human learning process. Consider a human student who failed to solve a math problem, he will learn from what mistake he has made and how to correct it. Mimicking this error-driven learning process, LEMA incorporates mistake-correction data pairs during fine-tuning LLMs. Specifically, we first collect inaccurate reasoning paths from various LLMs, and then employ GPT-4 as a ''corrector'' to identify the mistake step, explain the reason for the mistake, correct the mistake and generate the final answer. In addition, we apply a correction-centric evolution strategy that effectively expands the question set for generating correction data. Experiments across various LLMs and reasoning tasks show that LEMA effectively improves CoT-alone fine-tuning. Our further ablations shed light on the non-homogeneous effectiveness between CoT data and correction data. These results suggest a significant potential for LLMs to improve through learning from their mistakes. Our code, models and prompts are publicly available at https://github.com/microsoft/LEMA.",
+      "Question answering plays a pivotal role in human daily life because it involves our acquisition of knowledge about the world. However, due to the dynamic and ever-changing nature of real-world facts, the answer can be completely different when the time constraint in the question changes. Recently, Large Language Models (LLMs) have shown remarkable intelligence in question answering, while our experiments reveal that the aforementioned problems still pose a significant challenge to existing LLMs. This can be attributed to the LLMs' inability to perform rigorous reasoning based on surface-level text semantics. To overcome this limitation, rather than requiring LLMs to directly answer the question, we propose a novel approach where we reframe the $\\textbf{Q}$uestion $\\textbf{A}$nswering task $\\textbf{a}$s $\\textbf{P}$rogramming ($\\textbf{QAaP}$). Concretely, by leveraging modern LLMs' superior capability in understanding both natural language and programming language, we endeavor to harness LLMs to represent diversely expressed text as well-structured code and select the best matching answer from multiple candidates through programming. We evaluate our QAaP framework on several time-sensitive question answering datasets and achieve decent improvement, up to $14.5$% over strong baselines. Our codes and data are available at https://github.com/TianHongZXY/qaap",
+      "The task of repository-level code completion is to continue writing the unfinished code based on a broader context of the repository. While for automated code completion tools, it is difficult to utilize the useful information scattered in different files. We propose RepoCoder, a simple, generic, and effective framework to address the challenge. It streamlines the repository-level code completion process by incorporating a similarity-based retriever and a pre-trained code language model in an iterative retrieval-generation pipeline. RepoCoder makes effective utilization of repository-level information for code completion and has the ability to generate code at various levels of granularity. Moreover, we propose a new benchmark RepoEval, which consists of the latest and high-quality real-world repositories covering line, API invocation, and function body completion scenarios. Experimental results indicate that RepoCoder significantly improves the In-File completion baseline by over 10% in all settings and consistently outperforms the vanilla retrieval-augmented code completion approach. Furthermore, we validate the effectiveness of RepoCoder through comprehensive analysis, providing valuable insights for future research. Our source code and benchmark are publicly available: https://github.com/microsoft/CodeT/tree/main/RepoCoder",
+      "In this paper, we study the problem of knowledge-intensive text-to-SQL, in which domain knowledge is necessary to parse expert questions into SQL queries over domain-specific tables. We formalize this scenario by building a new benchmark KnowSQL consisting of domain-specific questions covering various domains. We then address this problem by representing formulaic knowledge rather than by annotating additional data examples. More concretely, we construct a formulaic knowledge bank as a domain knowledge base and propose a framework (ReGrouP) to leverage this formulaic knowledge during parsing. Experiments using ReGrouP demonstrate a significant 28.2% improvement overall on KnowSQL.",
+      "With the popularity of automatic code generation tools, such as Copilot, the study of the potential hazards of these tools is gaining importance. In this work, we explore the social bias problem in pre-trained code generation models. We propose a new paradigm to construct code prompts and successfully uncover social biases in code generation models. To quantify the severity of social biases in generated code, we develop a dataset along with three metrics to evaluate the overall social bias and fine-grained unfairness across different demographics. Experimental results on three pre-trained code generation models (Codex, InCoder, and CodeGen) with varying sizes, reveal severe social biases. Moreover, we conduct analysis to provide useful insights for further choice of code generation models with low social bias. (This work contains examples that potentially implicate stereotypes, associations, and other harms that could be offensive to individuals in certain social groups.)",
+      "Automated debugging techniques have the potential to reduce developer effort in debugging, and have matured enough to be adopted by industry. However, one critical issue with existing techniques is that, while developers want rationales for the provided automatic debugging results, existing techniques are ill-suited to provide them, as their deduction process differs significantly from that of human developers. Inspired by the way developers interact with code when debugging, we propose Automated Scientific Debugging (AutoSD), a technique that given buggy code and a bug-revealing test, prompts large language models to automatically generate hypotheses, uses debuggers to actively interact with buggy code, and thus automatically reach conclusions prior to patch generation. By aligning the reasoning of automated debugging more closely with that of human developers, we aim to produce intelligible explanations of how a specific patch has been generated, with the hope that the explanation will lead to more efficient and accurate developer decisions. Our empirical analysis on three program repair benchmarks shows that AutoSD performs competitively with other program repair baselines, and that it can indicate when it is confident in its results. Furthermore, we perform a human study with 20 participants, including six professional developers, to evaluate the utility of explanations from AutoSD. Participants with access to explanations could judge patch correctness in roughly the same time as those without, but their accuracy improved for five out of six real-world bugs studied: 70% of participants answered that they wanted explanations when using repair tools, while 55% answered that they were satisfied with the Scientific Debugging presentation.",
+      "Creating graphic layouts is a fundamental step in graphic designs. In this work, we present a novel generative model named LayoutDiffusion for automatic layout generation. As layout is typically represented as a sequence of discrete tokens, LayoutDiffusion models layout generation as a discrete denoising diffusion process. It learns to reverse a mild forward process, in which layouts become increasingly chaotic with the growth of forward steps and layouts in the neighboring steps do not differ too much. Designing such a mild forward process is however very challenging as layout has both categorical attributes and ordinal attributes. To tackle the challenge, we summarize three critical factors for achieving a mild forward process for the layout, i.e., legality, coordinate proximity and type disruption. Based on the factors, we propose a block-wise transition matrix coupled with a piece-wise linear noise schedule. Experiments on RICO and PubLayNet datasets show that LayoutDiffusion outperforms state-of-the-art approaches significantly. Moreover, it enables two conditional layout generation tasks in a plug-and-play manner without re-training and achieves better performance than existing methods. Project page: https://layoutdiffusion.github.io.",
+      "Reasoning over natural language is a long-standing goal for the research community. However, studies have shown that existing language models are inadequate in reasoning. To address the issue, we present POET, a novel reasoning pre-training paradigm. Through pre-training language models with programs and their execution results, POET empowers language models to harvest the reasoning knowledge possessed by program executors via a data-driven approach. POET is conceptually simple and can be instantiated by different kinds of program executors. In this paper, we showcase two simple instances POET-Math and POET-Logic, in addition to a complex instance, POET-SQL. Experimental results on six benchmarks demonstrate that POET can significantly boost model performance in natural language reasoning, such as numerical reasoning, logical reasoning, and multi-hop reasoning. POET opens a new gate on reasoning-enhancement pre-training, and we hope our analysis would shed light on the future research of reasoning like program executors.",
+      "Because of the compositionality of natural lan-001 guage, syntactic structure is a key factor for 002 semantic understanding in dialogue generation 003 tasks. However, the widely adopted Trans-004 former is hard to learn the compositionaity ef-005 fectively, because the position embeddings con-006 tain less semantic relation information. To ex-007 plicit model the compositionaity of language, 008 we limit the information flow between words 009 by constructing directed dependency relation 010 graph and propose Dependency Relation At-011 tention (DRA) to replace position embeddings. 012 Experimental results demonstrate that DRA can 013 further improve the performance of state-of-the-014 art models for multi-turn dialogue generation. 015",
+      "Recently the prompt-tuning paradigm has attracted significant attention. By only tuning continuous prompts with a frozen pre-trained language model (PLM), prompt-tuning takes a step towards deploying a shared frozen PLM to serve numerous downstream tasks. Although prompt-tuning shows good performance on certain natural language understanding (NLU) tasks, its effectiveness on natural language generation (NLG) tasks is still under-explored. In this paper, we argue that one of the factors hindering the development of prompt-tuning on NLG tasks is the unfamiliar inputs (i.e., inputs are linguistically different from the pretraining corpus). For example, our preliminary exploration reveals a large performance gap between prompt-tuning and fine-tuning when unfamiliar inputs occur frequently in NLG tasks. This motivates us to propose input-tuning, which fine-tunes both the continuous prompts and the input representations, leading to a more effective way to adapt unfamiliar inputs to frozen PLMs. Our proposed input-tuning is conceptually simple and empirically powerful. Experimental results on seven NLG tasks demonstrate that input-tuning is significantly and consistently better than prompt-tuning. Furthermore, on three of these tasks, input-tuning can achieve a comparable or even better performance than fine-tuning."
+    ],
+    "domain": [
+      "Natural Language Processing",
+      "Few-Shot Learning",
+      "Reasoning",
+      "Code Generation"
+    ],
+    "is_leader_candidate": true,
+    "is_member_candidate": true,
+    "is_reviewer_candidate": true,
+    "is_chair_candidate": true
+  }
+}
