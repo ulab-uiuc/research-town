@@ -5,11 +5,11 @@ from typing import Any, Dict, List, Set, TypeVar, Union
 
 import numpy as np
 import numpy.typing as npt
+from dotenv import load_dotenv
 
 from ....data.data import Data
 from ..client import DatabaseClient
 
-from dotenv import load_dotenv
 load_dotenv()
 
 T = TypeVar('T', bound=Data)

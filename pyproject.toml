@@ -129,4 +129,3 @@ sidebar_top_level_label = "Documentation"
 name = "torchcpu"
 url = "https://download.pytorch.org/whl/cpu"
 priority = "explicit"
-
