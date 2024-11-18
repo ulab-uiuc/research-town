@@ -80,7 +80,7 @@ def write_proposal_swarm(
 
     # leader_profile = profile_db.get(name=profiles[0].name)[0]
     leader_profile = profiles[0]
-    print('leader_profile', leader_profile)
+
     leader = agent_manager.create_agent(leader_profile, role='leader')
     if not leader_profile:
         raise ValueError('Failed to create leader agent')
@@ -101,10 +101,24 @@ def write_proposal_swarm(
     exit_status, exit_dict = env.on_exit()
     proposal = exit_dict.get('proposals')
     # TODO
-    # if proposal and proposal.content:
-    #    return str(proposal.content)
+
     if proposal:
-        return ' '.join(proposal)
+        str_proposal = ''
+        for p in proposal:
+            q1, q2, q3, q4, q5 = p.q1, p.q2, p.q3, p.q4, p.q5
+            str_proposal += f'[Question 1] - What is the problem?\n\n{q1}\n\n'
+            str_proposal += (
+                f'[Question 2] - Why is it interesting and important?\n\n{q2}\n\n'
+            )
+            str_proposal += f'[Question 3] - Why is it hard?\n\n{q3}\n\n'
+            str_proposal += (
+                f"[Question 4] - Why hasn't it been solved before?\n\n{q4}\n\n"
+            )
+            str_proposal += f'[Question 5] - What are the key components of my approach and results?\n\n{q5}\n\n'
+            str_proposal += '\n\n'
+
+        return str_proposal
+
     else:
         raise ValueError('Failed to generate proposal')
 

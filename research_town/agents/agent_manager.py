@@ -1,9 +1,9 @@
-from typing import List, Literal, Union
+from typing import Any, Dict, List, Literal, Union
 
 from swarm import Agent as SwarmAgent
 
 from ..configs import ParamConfig
-from ..data import Profile, Proposal
+from ..data import Paper, Profile, Proposal
 from ..dbs import ProfileDB
 from .agent import Agent
 
@@ -27,9 +27,34 @@ class AgentManager:
                 model_name=self.config.base_llm,
             )
         else:
+
+            def instructions(context_variables: Dict[str, Any]) -> str:
+                instructions_str = profile.bio
+                papers = context_variables.get('papers', None)
+
+                if papers:
+                    seralized_papers = ''
+                    for idx, paper in enumerate(papers):
+                        assert isinstance(paper, Paper)
+                        seralized_papers += f'[{idx + 1}] Title: {paper.title}'
+                        authors = ', '.join(paper.authors)
+                        seralized_papers += f'Authors: {authors}'
+                        seralized_papers += f'Abstract: {paper.abstract}'
+                        seralized_papers += f'URL: {paper.url}'
+                        seralized_papers += '\n'
+
+                    instructions_str += (
+                        f'\n\nYou will refer to the following papers when responding.\n'
+                        f'You will use the markdown format [[index]](URL) to refer to the papers.\n'
+                        f"Example: 'As mentioned in [[1]](https://arxiv.org/abs/...), the authors ...'\n"
+                        f'Here are the papers:\n{seralized_papers}'
+                    )
+
+                return instructions_str
+
             return SwarmAgent(
                 name=profile.name,
-                instructions=profile.bio,
+                instructions=instructions,
                 model=self.config.base_llm,
             )
 

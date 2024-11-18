@@ -68,44 +68,55 @@ class ProposalWritingSWARM(BaseEnv):
                     num=self.config.param.related_paper_num,
                 )
 
-                seralized_papers = ''
-                for paper in related_papers:
-                    seralized_papers += f'Title: {paper.title}'
-                    authors = ', '.join(paper.authors)
-                    seralized_papers += f'Authors: {authors}'
-                    seralized_papers += f'Abstract: {paper.abstract}'
-                    seralized_papers += '\n'
-
                 messages = [
                     {
                         'role': 'user',
-                        'content': f'Please summarize these papers in 200 words. \nPapers: {seralized_papers}',
+                        'content': 'Please summarize your provided related papers in 200 words. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.',
                     }
                 ]
 
-                response = self.client.run(agent=researcher, messages=messages)
+                response = self.client.run(
+                    agent=researcher,
+                    messages=messages,
+                    context_variables={'papers': related_papers},
+                )
 
-                summary = response.messages[-1]['content']
+                # summary = response.messages[-1]['content']
+                messages.extend(response.messages)
 
-                messages = [
+                messages.append(
                     {
                         'role': 'user',
-                        'content': f'Please summarize 10 keywords from summary. \nSummary: {summary}',
+                        'content': 'Please summarize 10 keywords from your summary.\nGround on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.',
                     }
-                ]
+                )
 
-                response = self.client.run(agent=researcher, messages=messages)
+                response = self.client.run(
+                    agent=researcher,
+                    messages=messages,
+                    context_variables={'papers': related_papers},
+                )
+                messages.extend(response.messages)
 
-                keywords = response.messages[-1]['content']
+                # keywords = response.messages[-1]['content']
 
-                messages = [
+                messages.append(
                     {
                         'role': 'user',
-                        'content': f"Round {round_num + 1} discussion based on literature review summary: {summary} and keywords: {', '.join(keywords)}. Please provide your new research insights based on your expertise.",
+                        'content': (
+                            f'Round {round_num + 1} discussion based on literature review summary and keywords.\n'
+                            f'Please provide your new research insights based on your expertise.\n'
+                            f'Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
+                        ),
                     }
-                ]
+                )
 
-                response = self.client.run(agent=researcher, messages=messages)
+                response = self.client.run(
+                    agent=researcher,
+                    messages=messages,
+                    context_variables={'papers': related_papers},
+                )
+                messages.extend(response.messages)
 
                 insight = response.messages[-1]['content']
 
@@ -126,30 +137,25 @@ class ProposalWritingSWARM(BaseEnv):
             num=self.config.param.related_paper_num,
         )
 
-        seralized_papers = ''
-        for paper in final_related_papers:
-            seralized_papers += f'Title: {paper.title}'
-            authors = ', '.join(paper.authors)
-            seralized_papers += f'Authors: {authors}'
-            seralized_papers += f'Abstract: {paper.abstract}'
-            seralized_papers += '\n'
-
         messages = [
             {
                 'role': 'user',
                 'content': (
-                    f'Generate a research proposal based on accumulated insights.\n'
+                    f'Generate a research proposal based on accumulated insights and your provided related papers.\n'
                     f'Accumulated: {combined_summary}\n'
-                    f'Related works: {seralized_papers}\n'
                     'First question to answer:'
                     '[Question 1] - What is the problem?\n\n'
                     'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
-                    'Response in 100 words. Use declarative sentences instead of interrogative ones.'
+                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
                 ),
             }
         ]
 
-        response = self.client.run(agent=self.leader, messages=messages)
+        response = self.client.run(
+            agent=self.leader,
+            messages=messages,
+            context_variables={'papers': final_related_papers},
+        )
 
         q1 = response.messages[-1]['content']
         messages.extend(response.messages)
@@ -162,12 +168,16 @@ class ProposalWritingSWARM(BaseEnv):
                     'Explain the broader implications of solving this problem for the research community.\n'
                     'Discuss how such paper will affect the future research.\n'
                     'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
-                    'Response in 100 words. Use declarative sentences instead of interrogative ones.'
+                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
                 ),
             }
         )
 
-        response = self.client.run(agent=self.leader, messages=messages)
+        response = self.client.run(
+            agent=self.leader,
+            messages=messages,
+            context_variables={'papers': final_related_papers},
+        )
 
         q2 = response.messages[-1]['content']
         messages.extend(response.messages)
@@ -180,12 +190,16 @@ class ProposalWritingSWARM(BaseEnv):
                     'Discuss the challenges and complexities involved in solving this problem.\n'
                     'Explain why naive or straightforward approaches may fail.\n'
                     'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
-                    'Response in 100 words. Use declarative sentences instead of interrogative ones.'
+                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
                 ),
             }
         )
 
-        response = self.client.run(agent=self.leader, messages=messages)
+        response = self.client.run(
+            agent=self.leader,
+            messages=messages,
+            context_variables={'papers': final_related_papers},
+        )
 
         q3 = response.messages[-1]['content']
         messages.extend(response.messages)
@@ -198,12 +212,16 @@ class ProposalWritingSWARM(BaseEnv):
                     'Identify gaps or limitations in previous research or existing solutions.\n'
                     'Discuss any barriers that have prevented this problem from being solved until now.\n'
                     'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
-                    'Response in 100 words. Use declarative sentences instead of interrogative ones.'
+                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
                 ),
             }
         )
 
-        response = self.client.run(agent=self.leader, messages=messages)
+        response = self.client.run(
+            agent=self.leader,
+            messages=messages,
+            context_variables={'papers': final_related_papers},
+        )
 
         q4 = response.messages[-1]['content']
         messages.extend(response.messages)
@@ -215,19 +233,21 @@ class ProposalWritingSWARM(BaseEnv):
                     '[Question 5] - What are the key components of my approach and results?\n\n'
                     'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                     'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                    'Response in 100 words. Use declarative sentences instead of interrogative ones.'
+                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
                 ),
             }
         )
 
-        response = self.client.run(agent=self.leader, messages=messages)
+        response = self.client.run(
+            agent=self.leader,
+            messages=messages,
+            context_variables={'papers': final_related_papers},
+        )
 
         q5 = response.messages[-1]['content']
         messages.extend(response.messages)
 
         proposal = Proposal(q1=q1, q2=q2, q3=q3, q4=q4, q5=q5)
-
-        print(proposal)
 
         yield proposal, self.leader
         self.proposals.append(proposal)
