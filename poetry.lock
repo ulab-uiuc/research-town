@@ -4525,13 +4525,13 @@ test = ["argcomplete (>=3.0.3)", "mypy (>=1.7.0)", "pre-commit", "pytest (>=7.0,
 
 [[package]]
 name = "transformers"
-version = "4.46.2"
+version = "4.46.3"
 description = "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "transformers-4.46.2-py3-none-any.whl", hash = "sha256:c921f4406b78e6518c97b618c5acd1cf8a4f2315b6b727f4bf9e01496eef849c"},
-    {file = "transformers-4.46.2.tar.gz", hash = "sha256:3d85410881e1c074be767877bf33c83231ec11529f274a6044ecb20c157ba14e"},
+    {file = "transformers-4.46.3-py3-none-any.whl", hash = "sha256:a12ef6f52841fd190a3e5602145b542d03507222f2c64ebb7ee92e8788093aef"},
+    {file = "transformers-4.46.3.tar.gz", hash = "sha256:8ee4b3ae943fe33e82afff8e837f4b052058b07ca9be3cb5b729ed31295f72cc"},
 ]
 
 [package.dependencies]
