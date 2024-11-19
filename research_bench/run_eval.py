@@ -101,19 +101,19 @@ def main() -> None:
     dataset = load_papers(args.input_path, args.output_path)
     logger.info(f'Processing {len(dataset)} papers')
 
-    manager = Manager()
-    metrics_summary:Any = manager.dict(
-        {
-            metric: []
-            for metric in [
-                'bleu',
-                'rouge_l',
-                'gpt_metric_score',
-                'bert_score',
-                'embedding_similarity',
-            ]
-        }
-    )
+    metrics_summary: Dict[str, List[float]] = {
+        metric: [] for metric in ['bleu', 'rouge_l', 'gpt_metric_score', 'bert_score', 'embedding_similarity']
+    }
+
+    for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
+        paper_data = data['paper_data']
+        author_data = data['author_data']
+        reference_proposal = data['reference_proposal']
+
+        results, metrics = inference(
+            paper_id, paper_data, author_data, reference_proposal, args.mode, config
+        )
+        save_results(results, metrics, args.output_path)
 
     lock = Lock()
     with Pool(processes=args.num_processes) as pool:

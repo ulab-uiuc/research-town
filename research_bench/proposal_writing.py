@@ -280,6 +280,7 @@ Please provide the updated proposal in the same format as before.
         return conversation[-1]['content']
 
 
+
 def write_proposal(
     mode: str,
     profiles: List[Profile],

@@ -51,12 +51,6 @@ Environment variables such as `OPENAI_API_KEY` and database related configs are 
 cp .env.template .env
 ```
 2. Fill the required environment variables in the `.env` file.
-3. Source the `.env` file.
-```bash
-set -a
-source .env
-set +a
-```
 
 ### Running the examples
 To run examples provided in the `examples`:
@@ -72,7 +66,7 @@ python research_town_demo.py
 #### Develop Demo
 
 To develop the demo (both frontend and backend):
-
+Set `DATABASE_FOLDER_PATH=./sample_data` in .env file
 ```bash
 cd frontend
 npm install
@@ -81,8 +75,7 @@ npm start
 
 ```bash
 poetry install -E backend
-cd backend
-DATABASE_FOLDER_PATH=`pwd`/sample_data uvicorn app.main:app --reload
+uvicorn backend.app.main:app --reload
 ```
 
 #### Install dev options
