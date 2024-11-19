@@ -69,7 +69,7 @@ def compute_proposal_gpt_metric(reference: str, generation: str) -> float:
             ),
         }
     ]
-    response = model_prompting('gpt-4o-mini', prompt)[0]
+    response = model_prompting('gpt-4o-mini', prompt, temperature=0.0)[0]
     score = float(response.strip())
     score = max(0.0, min(1.0, score))
     return score
