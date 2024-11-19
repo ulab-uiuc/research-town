@@ -12,7 +12,7 @@ pydantic = ">=2.5.0"
 pypdf2 = ">=3.0.1"
 litellm = "^1.49.7"
 beartype = "^0.19.0"
-numpy = "<3.0.0"
+numpy = "<2.0.0"
 transformers = "^4.45.1"
 termcolor = "^2.4.0"
 arxiv = "^2.1.0"
@@ -21,21 +21,17 @@ beautifulsoup4 = "*"
 lxml = "*"
 tqdm = "*"
 keybert = "*"
-torch = { version = "^2.2.1", source = "torchcpu" }
 semanticscholar = "*"
+torch = { version = ">=2.2.0, <2.3.0", optional = true }
+
 
 uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
 pandas = { version = "*", optional = true }
 
-rouge_score = "^0.1.2"
-pypdf = "^5.1.0"
-pymupdf = "^1.24.13"
-pymupdf4llm = "^0.0.17"
-bert-score = "^0.3.13"
-swarm = {git = "https://github.com/openai/swarm.git"}
-openreview-py = "^1.44.3"
-nltk = "^3.9.1"
+bert_score = { version = "*", optional = true }
+rouge_score = { version = "*", optional = true }
+nltk = { version = "*", optional = true }
 
 
 [tool.poetry.group.dev.dependencies]
@@ -56,7 +52,7 @@ mypy = "^1.11.2"
 [tool.poetry.extras]
 humaneval = ["pandas"]
 backend = ["uvicorn", "fastapi"]
-researchbench = ["bert_score", "rouge_score"]
+researchbench = ["bert_score", "rouge_score", "nltk"]
 
 [build-system]
 requires = ["poetry-core"]
