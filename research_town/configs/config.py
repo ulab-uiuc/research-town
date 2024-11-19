@@ -91,17 +91,6 @@ class AgentPromptTemplate(BaseModel):
     write_metareview_ethical: Dict[str, Union[str, List[str]]]
     write_metareview_decision: Dict[str, Union[str, List[str]]]
     write_rebuttal: Dict[str, Union[str, List[str]]]
-    write_review_summary_paper_text: Dict[str, Union[str, List[str]]]
-    write_review_strength_paper_text: Dict[str, Union[str, List[str]]]
-    write_review_weakness_paper_text: Dict[str, Union[str, List[str]]]
-    write_review_ethical_paper_text: Dict[str, Union[str, List[str]]]
-    write_review_score_paper_text: Dict[str, Union[str, List[str]]]
-    write_metareview_summary_paper_text: Dict[str, Union[str, List[str]]]
-    write_metareview_strength_paper_text: Dict[str, Union[str, List[str]]]
-    write_metareview_weakness_paper_text: Dict[str, Union[str, List[str]]]
-    write_metareview_ethical_paper_text: Dict[str, Union[str, List[str]]]
-    write_metareview_decision_paper_text: Dict[str, Union[str, List[str]]]
-    write_rebuttal_paper_text: Dict[str, Union[str, List[str]]]
 
     @root_validator(pre=True)
     def validate_placeholders(cls: Any, values: Dict[str, Any]) -> Dict[str, Any]:
