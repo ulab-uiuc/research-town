@@ -20,8 +20,6 @@ def test_env_combo(
     example_paper_db: PaperDB,
     example_progress_db: ProgressDB,
 ) -> None:
-    if example_config.param.mode != 'research_town':
-        return
     mock_model_prompting.side_effect = mock_prompting
 
     mock_client_instance = MagicMock()

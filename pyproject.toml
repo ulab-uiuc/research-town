@@ -29,9 +29,9 @@ uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
 pandas = { version = "*", optional = true }
 
-bert_score = { version = "*", optional = true }
-rouge_score = { version = "*", optional = true }
-nltk = { version = "*", optional = true }
+nltk = "^3.9.1"
+bert-score = "^0.3.13"
+rouge-score = "^0.1.2"
 
 
 [tool.poetry.group.dev.dependencies]

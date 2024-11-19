@@ -1,0 +1,22 @@
+{
+  "namespaces": [
+    "Proposal",
+    "RebuttalWritingLog",
+    "MetaReview",
+    "MetaReviewWritingLog",
+    "Insight",
+    "Review",
+    "Profile",
+    "Rebuttal",
+    "LiteratureReviewLog",
+    "Idea",
+    "Paper",
+    "ReviewWritingLog",
+    "ProposalWritingLog",
+    "IdeaBrainstormLog"
+  ],
+  "embedding_namespaces": [
+    "Paper",
+    "Profile"
+  ]
+}

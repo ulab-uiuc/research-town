@@ -1,10 +1,11 @@
 from beartype import beartype
 from beartype.typing import Any, Dict, Generator, List, Tuple
+from swarm import Agent as SwarmAgent
 from swarm import Swarm
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..data import Insight, Progress, Proposal
+from ..data import Insight, Paper, Progress, Proposal
 from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
@@ -26,12 +27,16 @@ class ProposalWritingSWARM(BaseEnv):
         self.agent_manager = agent_manager
         self.proposals: List[Proposal] = []
         self.client = Swarm()
+        self.config = config
 
     @beartype
     def on_enter(self, **context: Any) -> None:
         # Assign leader and members from context or sample them
         self.leader = context.get('leader', self.agent_manager.sample_leader())
+        self.leader = self.to_swarm_agent(self.leader)
         self.members = context.get('members', self.agent_manager.sample_members())
+        for i, member in enumerate(self.members):
+            self.members[i] = self.to_swarm_agent(member)
 
         if 'contexts' not in context:
             raise ValueError("'contexts' is required in the context.")
@@ -48,14 +53,44 @@ class ProposalWritingSWARM(BaseEnv):
             return 'error', {}  # Return error if max run limit exceeded
         return 'start_review', {'proposals': self.proposals, 'leader': self.leader}
 
+    def to_swarm_agent(self, researcher: Agent) -> SwarmAgent:
+        def instructions(context_variables: Dict[str, Any]) -> str:
+            instructions_str = researcher.profile.bio
+            papers = context_variables.get('papers', None)
+
+            if papers:
+                seralized_papers = ''
+                for idx, paper in enumerate(papers):
+                    assert isinstance(paper, Paper)
+                    seralized_papers += f'[{idx + 1}] Title: {paper.title}'
+                    authors = ', '.join(paper.authors)
+                    seralized_papers += f'Authors: {authors}'
+                    seralized_papers += f'Abstract: {paper.abstract}'
+                    seralized_papers += f'URL: {paper.url}'
+                    seralized_papers += '\n'
+
+                instructions_str += (
+                    f'\n\nYou will refer to the following papers when responding.\n'
+                    f'You will use the markdown format [[index]](URL) to refer to the papers.\n'
+                    f"Example: 'As mentioned in [[1]](https://arxiv.org/abs/...), the authors ...'\n"
+                    f'Here are the papers:\n{seralized_papers}'
+                )
+
+            return instructions_str
+
+        name = researcher.profile.name
+        model = self.config.param.base_llm
+        return SwarmAgent(name=name, model=model, instructions=instructions)
+
     @beartype
     def run(self) -> Generator[Tuple[Progress, Agent], None, None]:
         accumulated_insights: List[Insight] = []
         k: int = self.config.param.discussion_rounds
 
+        researchers = self.members + [self.leader]
+
         for round_num in range(k):
             round_insights = []
-            researchers = self.members + [self.leader]
 
             for researcher in researchers:
                 search_query = (
