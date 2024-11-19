@@ -20,7 +20,6 @@ def run_sync_experiment(
     paper_db = PaperDB(config=config.database)
     if paper_db.count() == 0:
         paper_db.pull_papers(num=10, domain='graph neural networks')
-    
 
     log_db = LogDB(config=config.database)
     progress_db = ProgressDB(config=config.database)
