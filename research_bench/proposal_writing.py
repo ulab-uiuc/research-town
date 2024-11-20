@@ -100,7 +100,6 @@ def write_proposal_swarm(
     # Exit the environment and retrieve the generated proposal
     exit_status, exit_dict = env.on_exit()
     proposal = exit_dict.get('proposals')
-    # TODO
 
     if proposal:
         str_proposal = ''
