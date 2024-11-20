@@ -28,7 +28,6 @@ def inference(
         gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
     else:
         gen_proposal = write_proposal_swarm(profiles, ref_abstracts, config)
-    # gen_review = write_review(mode, gen_proposal, profiles, config)
 
     metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
     results = {
