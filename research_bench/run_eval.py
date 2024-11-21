@@ -120,7 +120,8 @@ def main() -> None:
         results, metrics = inference(
             paper_id, paper_data, author_data, reference_proposal, args.mode, config
         )
-        save_results(results, metrics, args.output_path)
+        lock = Lock()
+        save_results(results, metrics, args.output_path, lock)
 
     lock = Lock()
     with Pool(processes=args.num_processes) as pool:
