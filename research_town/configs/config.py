@@ -15,7 +15,6 @@ class ParamConfig(BaseModel):
     max_env_run_num: int
     proposal_num: int
     use_rag: bool
-    mode: str
     discussion_rounds: int
     write_proposal_strategy: str
     return_num: Optional[int] = None

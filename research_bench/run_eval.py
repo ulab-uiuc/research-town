@@ -24,10 +24,10 @@ def inference(
     profiles = [Profile(**data) for data in author_data.values()]
     ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
-    if config.param.mode == 'research_town':
-        gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
-    else:
+    if mode == 'swarm':
         gen_proposal = write_proposal_swarm(profiles, ref_abstracts, config)
+    else:
+        gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
 
     metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
     results = {

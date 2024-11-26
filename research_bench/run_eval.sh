@@ -3,7 +3,7 @@
 # Define the input and output paths, along with the modes to test
 INPUT_PATH="./mlbench/mlbench.json"
 OUTPUT_DIR="./results"
-MODES=("sakana_ai_scientist") #("citation_only" "author_only" "author_citation")
+MODES=("swarm") #("citation_only" "author_only" "author_citation" "sakana_ai_scientist")
 
 # Loop through each mode and run the evaluation
 for MODE in "${MODES[@]}"
