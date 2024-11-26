@@ -86,7 +86,7 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt)[0]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
     return response
 
 
@@ -121,7 +121,7 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt)[0]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
     return response
 
 
@@ -160,7 +160,7 @@ def write_proposal_with_profiles_and_citations(
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt)[0]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
     return response
 
 
@@ -224,6 +224,7 @@ Describe the expected outcomes.
 
 In <THOUGHT>, first briefly discuss your intuitions and motivations for the idea. Detail your high-level plan, necessary design choices and ideal outcomes of the experiments. Justify how the idea is different from the existing ones.
 
+Please DO NOT repeat the instructions. Instead, fill in the 5 questions to form your proposal.
 
 You will have {num_reflections} rounds to iterate on the idea, but do not need to use them all.
 """
@@ -242,11 +243,7 @@ Do not make things overly complicated.
 In the next attempt, try and refine and improve your proposal.
 
 Stick to the spirit of the original idea unless there are glaring issues.
-Respond in the same format as before:
-THOUGHT:
-<THOUGHT>
-
-NEW IDEA: The five core questions
+Respond in the same format(THOUGHT, NEW IDEA composing of 5 questions) as before.
 
 If there is nothing to improve, simply repeat the previous proposal exactly and include "I am done" at the end.
 
@@ -259,7 +256,7 @@ Please provide the updated proposal in the same format as before.
 
     conversation.append({'role': 'user', 'content': idea_first_prompt})
 
-    response = model_prompting(config.param.base_llm, conversation)[0]
+    response = model_prompting(config.param.base_llm, conversation, max_token_num=config.param.max_token_num)[0]
     conversation.append({'role': 'assistant', 'content': response})
 
     for current_round in range(1, num_reflections + 1):
@@ -268,16 +265,24 @@ Please provide the updated proposal in the same format as before.
         )
         conversation.append({'role': 'user', 'content': formatted_reflection_prompt})
 
-        response = model_prompting(config.param.base_llm, conversation)[0]
+        response = model_prompting(config.param.base_llm, conversation, max_token_num=config.param.max_token_num)[0]
+        
         conversation.append({'role': 'assistant', 'content': response})
 
         if 'I am done' in response:
             break
 
-    if 'NEW IDEA:' in conversation[-1]['content']:
-        return conversation[-1]['content'].split('NEW IDEA:')[1]
+    if 'I am done' in conversation[-1]['content'] and "[Question 1]" not in conversation[-1]['content']:
+        if 'NEW IDEA:' in conversation[-2]['content']:
+            return conversation[-2]['content'].split('NEW IDEA:')[1]
+        else:
+            return conversation[-2]['content']
     else:
-        return conversation[-1]['content']
+        if 'NEW IDEA:' in conversation[-1]['content']:
+            return conversation[-1]['content'].split('NEW IDEA:')[1].split('I am done')[0]
+        else:
+            return conversation[-1]['content'].split('I am done')[0]
+    return response
 
 
 def write_proposal(
