@@ -314,7 +314,6 @@ Please provide the updated proposal in the same format as before.
             return conversation[-1]['content'].split('NEW IDEA:')[1].split('I am done')[0]
         else:
             return conversation[-1]['content'].split('I am done')[0]
-    return response
 
 
 def write_proposal(
