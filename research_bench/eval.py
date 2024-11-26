@@ -3,6 +3,7 @@ from typing import Dict, List
 
 import nltk
 import numpy as np
+import voyageai
 from bert_score import score
 from litellm import embedding
 from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
@@ -79,13 +80,39 @@ def compute_review_gpt_metric(reference: str, generation: str) -> float:
     return 0
 
 
-def compute_embedding_similarity(reference: str, hypothesis: str) -> float:
+def compute_openai_embedding_similarity(reference: str, hypothesis: str) -> float:
     try:
         response_ref = embedding(model='text-embedding-3-large', input=[reference])
         response_hyp = embedding(model='text-embedding-3-large', input=[hypothesis])
 
         embedding_ref = response_ref['data'][0]['embedding']
         embedding_hyp = response_hyp['data'][0]['embedding']
+
+        vec_ref = np.array(embedding_ref)
+        vec_hyp = np.array(embedding_hyp)
+
+        cosine_sim = np.dot(vec_ref, vec_hyp) / (
+            np.linalg.norm(vec_ref) * np.linalg.norm(vec_hyp)
+        )
+
+        return float(cosine_sim)
+    except Exception as e:
+        print(f'Error computing embedding similarity: {e}')
+        return 0.0
+
+
+def compute_voyageai_embedding_similarity(reference: str, hypothesis: str) -> float:
+    vo = voyageai.Client()
+    try:
+        response_ref = vo.embed(
+            model='voyage-3', texts=[reference], input_type='document'
+        )
+        response_hyp = vo.embed(
+            model='voyage-3', texts=[hypothesis], input_type='document'
+        )
+
+        embedding_ref = response_ref.embeddings[0]
+        embedding_hyp = response_hyp.embeddings[0]
 
         vec_ref = np.array(embedding_ref)
         vec_hyp = np.array(embedding_hyp)
@@ -122,7 +149,7 @@ def extract_and_clean_question_content(
     return question_contents
 
 
-def compute_embedding_similarity_per_question(
+def compute_openai_embedding_similarity_per_question(
     reference: str, hypothesis: str
 ) -> List[float]:
     try:
@@ -145,18 +172,40 @@ def compute_embedding_similarity_per_question(
                 similarities.append(0.0)
                 continue
 
-            response_ref = embedding(model='text-embedding-3-large', input=[ref_text])
-            response_hyp = embedding(model='text-embedding-3-large', input=[hyp_text])
+            cosine_sim = compute_openai_embedding_similarity(ref_text, hyp_text)
+            similarities.append(float(cosine_sim))
 
-            embedding_ref = response_ref['data'][0]['embedding']
-            embedding_hyp = response_hyp['data'][0]['embedding']
+        return similarities
 
-            vec_ref = np.array(embedding_ref)
-            vec_hyp = np.array(embedding_hyp)
+    except Exception as e:
+        print(f'Error computing embedding similarity per question: {e}')
+        return [0.0] * len(questions)
 
-            cosine_sim = np.dot(vec_ref, vec_hyp) / (
-                np.linalg.norm(vec_ref) * np.linalg.norm(vec_hyp)
-            )
+
+def compute_voyageai_embedding_similarity_per_question(
+    reference: str, hypothesis: str
+) -> List[float]:
+    try:
+        questions = [
+            'What is the problem?',
+            'Why is it interesting and important?',
+            'Why is it hard?',
+            "Why hasn't it been solved before?",
+            'What are the key components of my approach and results?',
+        ]
+
+        ref_questions = extract_and_clean_question_content(reference, questions)
+        hyp_questions = extract_and_clean_question_content(hypothesis, questions)
+
+        similarities = []
+
+        for ref_text, hyp_text in zip(ref_questions, hyp_questions):
+            if not ref_text or not hyp_text:
+                print(f'Empty question: {ref_text} vs {hyp_text}')
+                similarities.append(0.0)
+                continue
+
+            cosine_sim = compute_voyageai_embedding_similarity(ref_text, hyp_text)
             similarities.append(float(cosine_sim))
 
         return similarities
@@ -171,8 +220,12 @@ def compute_proposal_metrics(reference: str, generation: str) -> Dict[str, float
     rouge_l = compute_rouge_l(reference, generation)
     bert_score = compute_bertscore(reference, generation)
     gpt_metric = compute_proposal_gpt_metric(reference, generation)
-    embedding_similarity = compute_embedding_similarity(reference, generation)
-    embedding_similarity_per_question = compute_embedding_similarity_per_question(
+    openai_sim = compute_openai_embedding_similarity(reference, generation)
+    voyageai_sim = compute_voyageai_embedding_similarity(reference, generation)
+    openai_sim_per_question = compute_openai_embedding_similarity_per_question(
+        reference, generation
+    )
+    voyageai_sim_per_question = compute_voyageai_embedding_similarity_per_question(
         reference, generation
     )
 
@@ -181,12 +234,18 @@ def compute_proposal_metrics(reference: str, generation: str) -> Dict[str, float
         'rouge_l': rouge_l,
         'gpt_metric_score': gpt_metric,
         'bert_score': bert_score,
-        'embedding_similarity': embedding_similarity,
-        'embedding_similarity_q1': embedding_similarity_per_question[0],
-        'embedding_similarity_q2': embedding_similarity_per_question[1],
-        'embedding_similarity_q3': embedding_similarity_per_question[2],
-        'embedding_similarity_q4': embedding_similarity_per_question[3],
-        'embedding_similarity_q5': embedding_similarity_per_question[4],
+        'openai_sim': openai_sim,
+        'voyageai_sim': voyageai_sim,
+        'openai_sim_q1': openai_sim_per_question[0],
+        'openai_sim_q2': openai_sim_per_question[1],
+        'openai_sim_q3': openai_sim_per_question[2],
+        'openai_sim_q4': openai_sim_per_question[3],
+        'openai_sim_q5': openai_sim_per_question[4],
+        'voyageai_sim_q1': voyageai_sim_per_question[0],
+        'voyageai_sim_q2': voyageai_sim_per_question[1],
+        'voyageai_sim_q3': voyageai_sim_per_question[2],
+        'voyageai_sim_q4': voyageai_sim_per_question[3],
+        'voyageai_sim_q5': voyageai_sim_per_question[4],
     }
 
 
@@ -195,12 +254,14 @@ def compute_review_metrics(reference: str, generation: str) -> Dict[str, float]:
     rouge_l = compute_rouge_l(reference, generation)
     bert_score = compute_bertscore(reference, generation)
     gpt_metric = compute_review_gpt_metric(reference, generation)
-    embedding_similarity = compute_embedding_similarity(reference, generation)
+    openai_sim = compute_openai_embedding_similarity(reference, generation)
+    voyageai_sim = compute_voyageai_embedding_similarity(reference, generation)
 
     return {
         'bleu': bleu,
         'rouge_l': rouge_l,
         'gpt_metric_score': gpt_metric,
         'bert_score': bert_score,
-        'embedding_similarity': embedding_similarity,
+        'openai_sim': openai_sim,
+        'voyageai_sim': voyageai_sim,
     }
