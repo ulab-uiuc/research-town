@@ -86,6 +86,7 @@ def write_proposal_zero_shot(config: Config) -> str:
     response = model_prompting(config.param.base_llm, prompt)[0]
     return response
 
+
 def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -> str:
     bio_strs = '\n'.join([profile.bio for profile in profiles])
 
@@ -112,7 +113,7 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
                 '[Question 5] - What are the key components of my approach and results?\n\n'
                 'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-
+                f'Author biographies and personas:\n{bio_strs}\n\n'
                 'You are the profiles of this paper. Please provide the five core questions contents for a brand new future research based on the above biographies.'
             ),
         }
