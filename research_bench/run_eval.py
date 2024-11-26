@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Tuple
 from tqdm import tqdm
 
 from research_bench.eval import compute_proposal_metrics
-from research_bench.proposal_writing import write_proposal
+from research_bench.proposal_writing import write_proposal, write_proposal_swarm
 from research_bench.utils import load_benchmark
 from research_town.configs import Config
 from research_town.data import Profile
@@ -25,7 +25,10 @@ def inference(
     profiles = [Profile(**data) for data in author_data.values()]
     ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
-    gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
+    if config.param.mode == 'research_town':
+        gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
+    else:
+        gen_proposal = write_proposal_swarm(profiles, ref_abstracts, config)
 
     metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
     results = {

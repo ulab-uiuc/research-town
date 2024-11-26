@@ -4,6 +4,7 @@ from research_town.agents import AgentManager
 from research_town.configs import Config
 from research_town.data import Profile
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
+from research_town.envs import ProposalWritingSWARM as ProposalWritingEnvSWARM
 from research_town.envs import ProposalWritingwithoutRAGEnv as ProposalWritingEnv
 from research_town.utils.model_prompting import model_prompting
 
@@ -51,6 +52,72 @@ def write_proposal_researchtown(
     proposal = exit_dict.get('proposal')
     if proposal and proposal.content:
         return str(proposal.content)
+    else:
+        raise ValueError('Failed to generate proposal')
+
+
+def write_proposal_swarm(
+    profiles: List[Profile],
+    ref_contents: List[str],
+    config: Config,
+) -> str:
+    log_db = LogDB(config=config.database)
+    progress_db = ProgressDB(config=config.database)
+    paper_db = PaperDB(config=config.database)
+    profile_db = ProfileDB(config=config.database)
+    for profile in profiles:
+        profile_db.add(profile)
+    agent_manager = AgentManager(config=config.param, profile_db=profile_db)
+
+    env = ProposalWritingEnvSWARM(
+        name='proposal_writing',
+        log_db=log_db,
+        progress_db=progress_db,
+        paper_db=paper_db,
+        config=config,
+        agent_manager=agent_manager,
+    )
+
+    # leader_profile = profile_db.get(name=profiles[0].name)[0]
+    leader_profile = profiles[0]
+
+    leader = agent_manager.create_agent(leader_profile, role='leader')
+    if not leader_profile:
+        raise ValueError('Failed to create leader agent')
+
+    env.on_enter(
+        leader=leader,
+        contexts=ref_contents,
+    )
+
+    # Run the environment to generate the proposal
+    run_result = env.run()
+    if run_result is not None:
+        for progress, agent in run_result:
+            # Process progress and agent if needed
+            pass
+
+    # Exit the environment and retrieve the generated proposal
+    exit_status, exit_dict = env.on_exit()
+    proposal = exit_dict.get('proposals')
+
+    if proposal:
+        str_proposal = ''
+        for p in proposal:
+            q1, q2, q3, q4, q5 = p.q1, p.q2, p.q3, p.q4, p.q5
+            str_proposal += f'[Question 1] - What is the problem?\n\n{q1}\n\n'
+            str_proposal += (
+                f'[Question 2] - Why is it interesting and important?\n\n{q2}\n\n'
+            )
+            str_proposal += f'[Question 3] - Why is it hard?\n\n{q3}\n\n'
+            str_proposal += (
+                f"[Question 4] - Why hasn't it been solved before?\n\n{q4}\n\n"
+            )
+            str_proposal += f'[Question 5] - What are the key components of my approach and results?\n\n{q5}\n\n'
+            str_proposal += '\n\n'
+
+        return str_proposal
+
     else:
         raise ValueError('Failed to generate proposal')
 
