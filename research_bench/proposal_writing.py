@@ -60,7 +60,7 @@ def write_proposal_zero_shot(config: Config) -> str:
         {
             'role': 'user',
             'content': (
-                'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                'You are a AI researcher. Here is a high-level summarized insight of a research field Machine Learning.\n\n'
                 'Here are the five core questions:\n\n'
                 '[Question 1] - What is the problem?\n\n'
                 'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
@@ -79,7 +79,7 @@ def write_proposal_zero_shot(config: Config) -> str:
                 '[Question 5] - What are the key components of my approach and results?\n\n'
                 'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                'Please provide the five core questions contents for a brand new future research.'
+                'Please provide the five core questions contents for a brand new future research that you think are the most promising one.'
             ),
         }
     ]
