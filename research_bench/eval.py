@@ -1,9 +1,9 @@
 import re
 from typing import Dict, List
 
-import voyageai
 import nltk
 import numpy as np
+import voyageai
 from bert_score import score
 from litellm import embedding
 from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
@@ -99,13 +99,18 @@ def compute_openai_embedding_similarity(reference: str, hypothesis: str) -> floa
     except Exception as e:
         print(f'Error computing embedding similarity: {e}')
         return 0.0
-    
+
+
 def compute_voyageai_embedding_similarity(reference: str, hypothesis: str) -> float:
     vo = voyageai.Client()
     try:
-        response_ref = vo.embed(model='voyage-3', texts=[reference], input_type='document')
-        response_hyp = vo.embed(model='voyage-3', texts=[hypothesis], input_type='document')
-        
+        response_ref = vo.embed(
+            model='voyage-3', texts=[reference], input_type='document'
+        )
+        response_hyp = vo.embed(
+            model='voyage-3', texts=[hypothesis], input_type='document'
+        )
+
         embedding_ref = response_ref.embeddings[0]
         embedding_hyp = response_hyp.embeddings[0]
 
@@ -175,6 +180,7 @@ def compute_openai_embedding_similarity_per_question(
     except Exception as e:
         print(f'Error computing embedding similarity per question: {e}')
         return [0.0] * len(questions)
+
 
 def compute_voyageai_embedding_similarity_per_question(
     reference: str, hypothesis: str
@@ -248,12 +254,14 @@ def compute_review_metrics(reference: str, generation: str) -> Dict[str, float]:
     rouge_l = compute_rouge_l(reference, generation)
     bert_score = compute_bertscore(reference, generation)
     gpt_metric = compute_review_gpt_metric(reference, generation)
-    embedding_similarity = compute_embedding_similarity(reference, generation)
+    openai_sim = compute_openai_embedding_similarity(reference, generation)
+    voyageai_sim = compute_voyageai_embedding_similarity(reference, generation)
 
     return {
         'bleu': bleu,
         'rouge_l': rouge_l,
         'gpt_metric_score': gpt_metric,
         'bert_score': bert_score,
-        'embedding_similarity': embedding_similarity,
+        'openai_sim': openai_sim,
+        'voyageai_sim': voyageai_sim,
     }
