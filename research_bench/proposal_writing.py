@@ -55,6 +55,37 @@ def write_proposal_researchtown(
         raise ValueError('Failed to generate proposal')
 
 
+def write_proposal_zero_shot(config: Config) -> str:
+    prompt = [
+        {
+            'role': 'user',
+            'content': (
+                'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                'Here are the five core questions:\n\n'
+                '[Question 1] - What is the problem?\n\n'
+                'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                '[Question 2] - Why is it interesting and important?\n\n'
+                'Explain the broader implications of solving this problem for the research community.\n'
+                'Discuss how such paper will affect the future research.\n'
+                'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                '[Question 3] - Why is it hard?\n\n'
+                'Discuss the challenges and complexities involved in solving this problem.\n'
+                'Explain why naive or straightforward approaches may fail.\n'
+                'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                "[Question 4] - Why hasn't it been solved before?\n\n"
+                'Identify gaps or limitations in previous research or existing solutions.\n'
+                'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                '[Question 5] - What are the key components of my approach and results?\n\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                'Please provide the five core questions contents for a brand new future research.'
+            ),
+        }
+    ]
+    response = model_prompting(config.param.base_llm, prompt)[0]
+    return response
+
 def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -> str:
     bio_strs = '\n'.join([profile.bio for profile in profiles])
 
@@ -81,7 +112,7 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
                 '[Question 5] - What are the key components of my approach and results?\n\n'
                 'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                f'Author biographies and personas:\n{bio_strs}\n\n'
+
                 'You are the profiles of this paper. Please provide the five core questions contents for a brand new future research based on the above biographies.'
             ),
         }
@@ -286,7 +317,9 @@ def write_proposal(
     ref_contents: List[str],
     config: Config,
 ) -> str:
-    if mode == 'author_only':
+    if mode == 'zero_shot':
+        return write_proposal_zero_shot(config=config)
+    elif mode == 'author_only':
         return write_proposal_with_only_profiles(profiles=profiles, config=config)
     elif mode == 'citation_only':
         return write_proposal_with_only_citations(

@@ -75,6 +75,7 @@ def main() -> None:
         type=str,
         required=True,
         choices=[
+            'zero_shot',
             'author_only',
             'citation_only',
             'author_citation',
