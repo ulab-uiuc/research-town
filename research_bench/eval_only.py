@@ -4,7 +4,7 @@ from tqdm import tqdm
 import json
 
 dataset = []
-with open('./results/mlbench_result_4o_mini_fake_research_town.jsonl', 'r') as f:
+with open('./results/mlbench_result_4o_mini_fake_research_town_first_author_only.jsonl', 'r') as f:
     for line_num, line in enumerate(f, 1):
         try:
             obj = json.loads(line)
@@ -39,5 +39,13 @@ for data in tqdm(dataset):
     for key in overall_metrics.keys():
         overall_metrics[key].append(data[key])
 
+final_metrics = {}
 for key, values in overall_metrics.items():
     print(f'{key}: {sum(values) / len(values)}')
+    final_metrics[key] = sum(values) / len(values)
+
+
+openai_metric = 0.1 * final_metrics['openai_sim_q1'] + 0.1 * final_metrics['openai_sim_q2'] + 0.1 * final_metrics['openai_sim_q3'] + 0.1 * final_metrics['openai_sim_q4'] + 0.6 * final_metrics['openai_sim_q5']
+voyageai_metric = 0.1 * final_metrics['voyageai_sim_q1'] + 0.1 * final_metrics['voyageai_sim_q2'] + 0.1 * final_metrics['voyageai_sim_q3'] + 0.1 * final_metrics['voyageai_sim_q4'] + 0.6 * final_metrics['voyageai_sim_q5']
+print(f'openai_metric: {openai_metric}')
+print(f'voyageai_metric: {voyageai_metric}')

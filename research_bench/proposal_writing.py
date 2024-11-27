@@ -83,7 +83,7 @@ def write_proposal_zero_shot(config: Config) -> str:
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 'Please provide the five core questions contents for a brand new future research that you think are the most promising one.'
             ),
@@ -491,7 +491,7 @@ def write_proposal_fake_researchtown(
 
     question_5_candidates = []
 
-    profiles = profiles[:1]
+    #profiles = profiles[:1]
     # Generate [Question 5] for each bio
     for profile in profiles:
         # Rerank references for the current profile
