@@ -82,7 +82,8 @@ def main() -> None:
             'author_citation',
             'research_town',
             'sakana_ai_scientist',
-            'debug'
+            'debug',
+            'fake_research_town',
         ],
         help='Processing mode',
     )

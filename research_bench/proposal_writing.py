@@ -117,7 +117,7 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Author biographies and personas:\n{bio_strs}\n\n'
                 'You are the profiles of this paper. Please provide the five core questions contents for a brand new future research based on the above biographies.'
@@ -158,7 +158,7 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Contents collect from cited papers:\n{ref_strs}\n\n'
                 'Please brainstorm a following proposal with the given format.'
@@ -335,7 +335,7 @@ def write_proposal_debug(profiles: List[Profile], ref_contents: List[str], confi
         if ref is None:
             continue
         ref_strs += f'paper {idx + 1}. {ref}\n'
-    profile = profiles[0]
+    profile_str = '\n'.join([profile.bio for profile in profiles])
 
     prompt = [
         {
@@ -358,7 +358,7 @@ def write_proposal_debug(profiles: List[Profile], ref_contents: List[str], confi
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Contents collect from cited papers:\n{ref_strs}\n\n'
                 'Please brainstorm a following proposal with the given format.'
@@ -390,13 +390,12 @@ def write_proposal_debug(profiles: List[Profile], ref_contents: List[str], confi
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                f'Contents collect from cited papers:\n{ref_strs}\n\n'
                 'This is the generated [Question 1] to [Question 4] based on the citation papers.\n'
                 f'{generated_4q}\n\n'
-                'You are a researcher who the bio is as follows:\n'
-                f'{profile.bio}\n\n'
+                'You have a group of researchers who the bio is as follows:\n'
+                f'{profile_str}\n\n'
                 'When you are generating [Question 5], you can think how to do the thing based on your bio information.\n'
                 'Please brainstorm a following proposal with the given format. You should still start with [Question 1] to [Question 5]. But the content from [Question 1] to [Question 4] is already given and you just copy them as part of the output.'
             ),
@@ -404,6 +403,152 @@ def write_proposal_debug(profiles: List[Profile], ref_contents: List[str], confi
     ]
     response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
     return response
+
+import random
+from typing import List
+from voyageai import Client
+
+def fuse_questions(context: str, question_5_candidates: List[str], config: Config) -> str:
+    """
+    Fuse multiple [Question 5] candidates into a single, coherent [Question 5].
+
+    Args:
+        context (str): The context containing [Question 1] to [Question 4].
+        question_5_candidates (List[str]): List of candidate [Question 5] responses.
+        config (Config): Configuration object with LLM parameters.
+
+    Returns:
+        str: A fused and coherent [Question 5].
+    """
+    prompt = [
+        {
+            'role': 'user',
+            'content': (
+                f"Here are the first four questions from a research proposal:\n\n"
+                f"{context}\n\n"
+                f"Below are multiple versions of [Question 5] generated by different researchers:\n\n"
+                + "\n\n".join([f"Version {i+1}:\n{q}" for i, q in enumerate(question_5_candidates)]) +
+                "\n\n"
+                f"Your task is to fuse these [Question 5] versions into a single, clear, and coherent [Question 5].\n"
+                f"Consider the following when fusing:\n"
+                f"1. Relevance: Align the fused [Question 5] with [Question 1] to [Question 4].\n"
+                f"2. Clarity: Ensure the fused [Question 5] is well-written and easy to understand.\n"
+                f"3. Completeness: Ensure the fused [Question 5] covers all key elements of the proposed methodology and outcomes.\n\n"
+                f"Output only the fused [Question 5]."
+            )
+        }
+    ]
+    
+    # Use the LLM to generate the fused [Question 5]
+    fused_response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)
+    return fused_response[0].strip()
+
+
+def write_proposal_fake_researchtown(
+    profiles: List[Profile],
+    ref_contents: List[str],
+    config: Config,
+) -> str:
+    random.seed(0)
+    random.shuffle(ref_contents)
+    # Initialize Voyage AI client
+    voyage_client = Client(api_key="pa-I6kOGpyDmf02kIxC0fBMc8WXIraV_oRyR4uDvpNH7n0")
+
+    # Rerank references
+    def rerank_references(query: str, refs: List[str], top_k: int = 5):
+        results = voyage_client.rerank(query, refs, model="rerank-2", top_k=top_k)
+        return [result.document for result in results.results]
+
+    # Generate the first set of questions [Question 1] to [Question 4]
+    ref_strs = '\n'.join([f'paper {idx + 1}. {ref}' for idx, ref in enumerate(ref_contents) if ref])
+    prompt = [
+        {
+            'role': 'user',
+            'content': (
+                f"Here is a high-level summarized insight of a research field Machine Learning.\n\n"
+                f"Here are the five core questions:\n\n"
+                f"[Question 1] - What is the problem?\n\n"
+                f"Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n"
+                f"[Question 2] - Why is it interesting and important?\n\n"
+                f"Explain the broader implications of solving this problem for the research community.\n"
+                f"Discuss how such paper will affect the future research.\n"
+                f"Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n"
+                f"[Question 3] - Why is it hard?\n\n"
+                f"Discuss the challenges and complexities involved in solving this problem.\n"
+                f"Explain why naive or straightforward approaches may fail.\n"
+                f"Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n"
+                f"[Question 4] - Why hasn't it been solved before?\n\n"
+                f"Identify gaps or limitations in previous research or existing solutions.\n"
+                f"Discuss any barriers that have prevented this problem from being solved until now.\n"
+                f"Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n"
+                f"Contents collect from cited papers:\n{ref_strs}\n\n"
+                f"Please brainstorm a following proposal with the given format."
+            ),
+        }
+    ]
+    generated_5q = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    generated_4q = generated_5q.split('[Question 5]')[0]
+
+    question_5_candidates = []
+
+    profiles = profiles[:1] + profiles[-1:]
+    # Generate [Question 5] for each bio
+    for profile in profiles:
+        # Rerank references for the current profile
+        ref_contents = [ref for ref in ref_contents if ref is not None]
+        print(len(ref_contents))
+        if ref_contents == []:
+            top_refs = []
+            ref_strs = ''
+        else:
+            top_refs = rerank_references(profile.bio, ref_contents, top_k=5)
+            ref_strs = '\n'.join([f'paper {idx + 1}. {ref}' for idx, ref in enumerate(top_refs)])
+        
+        # Generate prompt for [Question 5]
+        prompt = [
+            {
+                'role': 'user',
+                'content': (
+                    f"Here is a high-level summarized insight of a research field Machine Learning.\n\n"
+                    f"Here are the five core questions:\n\n"
+                    f"[Question 1] - What is the problem?\n\n"
+                    f"Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n"
+                    f"[Question 2] - Why is it interesting and important?\n\n"
+                    f"Explain the broader implications of solving this problem for the research community.\n"
+                    f"Discuss how such paper will affect the future research.\n"
+                    f"Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n"
+                    f"[Question 3] - Why is it hard?\n\n"
+                    f"Discuss the challenges and complexities involved in solving this problem.\n"
+                    f"Explain why naive or straightforward approaches may fail.\n"
+                    f"Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n"
+                    f"[Question 4] - Why hasn't it been solved before?\n\n"
+                    f"Identify gaps or limitations in previous research or existing solutions.\n"
+                    f"Discuss any barriers that have prevented this problem from being solved until now.\n"
+                    f"Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n"
+                    f"[Question 5] - What are the key components of my approach and results?\n\n"
+                    f"Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n"
+                    f"Describe the expected outcomes. MAKE IT CLEAR.\n\n"
+                    f"This is the generated [Question 1] to [Question 4] based on the citation papers.\n"
+                    f"{generated_4q}\n\n"
+                    f"You have a group of researchers who the bio is as follows:\n"
+                    f"{profile.bio}\n\n"
+                    f"Contents collected from top reranked papers:\n{ref_strs}\n\n"
+                    f"Please brainstorm a following proposal with the given format."
+                ),
+            }
+        ]
+        question_5_response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+        question_5 = question_5_response.split('[Question 5]')[1]
+        question_5_candidates.append(question_5)
+
+    # Fuse all [Question 5] candidates into a single response
+    fused_question_5 = fuse_questions(generated_4q, question_5_candidates, config)
+
+    # Combine with [Question 1]-[Question 4]
+    final_5q = f"{generated_4q}{fused_question_5}"
+
+    return final_5q
+
 
 
 def write_proposal(
@@ -436,6 +581,10 @@ def write_proposal(
     elif mode == 'debug':
         return write_proposal_debug(
             profiles=profiles, ref_contents=ref_contents, config=config,
+        )
+    elif mode == 'fake_research_town':
+        return write_proposal_fake_researchtown(
+            profiles=profiles, ref_contents=ref_contents, config=config
         )
     else:
         raise ValueError(f'Invalid proposal writing mode: {mode}')
