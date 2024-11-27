@@ -79,7 +79,7 @@ def main() -> None:
             'author_only',
             'citation_only',
             'author_citation',
-            'textgnn',
+            'research_town',
             'sakana_ai_scientist',
         ],
         help='Processing mode',

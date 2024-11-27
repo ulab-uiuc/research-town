@@ -28,14 +28,20 @@ def write_proposal_researchtown(
         agent_manager=agent_manager,
     )
 
-    leader_profile = profile_db.get(name=profiles[0].name)[0]
-    print('leader_profile', leader_profile)
+    leader_profile = profiles[0]
     leader = agent_manager.create_agent(leader_profile, role='leader')
+    members = []
+    for member_profile in profiles[1:]:
+        member = agent_manager.create_agent(member_profile, role='member')
+        members.append(member)
     if not leader_profile:
         raise ValueError('Failed to create leader agent')
 
+    ref_contents = [ref for ref in ref_contents if ref is not None]
+    assert None not in ref_contents
     env.on_enter(
         leader=leader,
+        members=members,
         contexts=ref_contents,
     )
 
@@ -48,7 +54,8 @@ def write_proposal_researchtown(
 
     # Exit the environment and retrieve the generated proposal
     exit_status, exit_dict = env.on_exit()
-    proposal = exit_dict.get('proposal')
+    import pdb; pdb.set_trace()
+    proposal = exit_dict.get('proposals')[0]
     if proposal and proposal.content:
         return str(proposal.content)
     else:
@@ -154,6 +161,7 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
         }
     ]
     response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    import pdb; pdb.set_trace()
     return response
 
 
@@ -334,7 +342,7 @@ def write_proposal(
         return write_proposal_with_profiles_and_citations(
             profiles=profiles, ref_contents=ref_contents, config=config
         )
-    elif mode == 'textgnn':
+    elif mode == 'research_town':
         return write_proposal_researchtown(
             profiles=profiles, ref_contents=ref_contents, config=config
         )
