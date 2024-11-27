@@ -129,6 +129,7 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
 
 
 def write_proposal_with_only_citations(ref_contents: List[str], config: Config) -> str:
+    random.seed(0)
     random.shuffle(ref_contents)
     ref_strs = ''
     for idx, ref in enumerate(ref_contents):
@@ -327,6 +328,7 @@ Please provide the updated proposal in the same format as before.
             return conversation[-1]['content'].split('I am done')[0]
 
 def write_proposal_debug(profiles: List[Profile], ref_contents: List[str], config: Config) -> str:
+    random.seed(0)
     random.shuffle(ref_contents)
     ref_strs = ''
     for idx, ref in enumerate(ref_contents):
