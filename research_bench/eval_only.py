@@ -28,7 +28,7 @@ overall_metrics = {
     'voyageai_sim_q5': [],
 }
 
-dataset = dataset[:100]
+dataset = dataset[:70]
 for data in tqdm(dataset):
     ref_proposal = data['ref_proposal']
     gen_proposal = data['gen_proposal']

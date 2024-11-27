@@ -496,7 +496,6 @@ def write_proposal_fake_researchtown(
     for profile in profiles:
         # Rerank references for the current profile
         ref_contents = [ref for ref in ref_contents if ref is not None]
-        print(len(ref_contents))
         if ref_contents == []:
             top_refs = []
             ref_strs = ''
@@ -530,7 +529,7 @@ def write_proposal_fake_researchtown(
                     f"Describe the expected outcomes. MAKE IT CLEAR.\n\n"
                     f"This is the generated [Question 1] to [Question 4] based on the citation papers.\n"
                     f"{generated_4q}\n\n"
-                    f"You have a group of researchers who the bio is as follows:\n"
+                    f"You have a researcher who the bio is as follows:\n"
                     f"{profile.bio}\n\n"
                     f"Contents collected from top reranked papers:\n{ref_strs}\n\n"
                     f"Please brainstorm a following proposal with the given format."
@@ -545,7 +544,7 @@ def write_proposal_fake_researchtown(
     fused_question_5 = fuse_questions(generated_4q, question_5_candidates, config)
 
     # Combine with [Question 1]-[Question 4]
-    final_5q = f"{generated_4q}{fused_question_5}"
+    final_5q = f"{generated_4q}\n\n{fused_question_5}"
 
     return final_5q
 
