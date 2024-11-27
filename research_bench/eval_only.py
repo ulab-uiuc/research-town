@@ -4,7 +4,7 @@ from tqdm import tqdm
 import json
 
 dataset = []
-with open('./results/mlbench_result_4o_mini_citation_only.jsonl', 'r') as f:
+with open('./results/mlbench_result_4o_mini_fake_research_town.jsonl', 'r') as f:
     for line_num, line in enumerate(f, 1):
         try:
             obj = json.loads(line)
@@ -28,7 +28,7 @@ overall_metrics = {
     'voyageai_sim_q5': [],
 }
 
-dataset = dataset[:70]
+dataset = dataset[:100]
 for data in tqdm(dataset):
     ref_proposal = data['ref_proposal']
     gen_proposal = data['gen_proposal']

@@ -491,7 +491,7 @@ def write_proposal_fake_researchtown(
 
     question_5_candidates = []
 
-    profiles = profiles[:1] + profiles[-1:]
+    profiles = profiles[:1]
     # Generate [Question 5] for each bio
     for profile in profiles:
         # Rerank references for the current profile
