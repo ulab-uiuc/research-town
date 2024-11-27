@@ -7,10 +7,9 @@ from ..data import Idea
 def sample_ideas(lst: List[Idea], n: int) -> List[List[Idea]]:
     total_subsets = 2 ** len(lst) - (len(lst) + 1)
     if len(lst) == 1:
-        return lst
+        return [lst]
     if n > total_subsets:
-        print(f'n cannot be greater than {total_subsets}')
-        n = total_subsets
+        raise ValueError(f'n cannot be greater than {total_subsets}')
 
     sampled_subsets: set[Tuple[int, ...]] = set()
     lst_len = len(lst)
