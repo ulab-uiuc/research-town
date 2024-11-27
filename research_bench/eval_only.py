@@ -4,7 +4,7 @@ from tqdm import tqdm
 import json
 
 dataset = []
-with open('./results/mlbench_result_4o_mini_citation_only.jsonl', 'r') as f:
+with open('./results/mlbench_result_4o_mini_citation_only_consider_lower_than_debug.jsonl', 'r') as f:
     for line_num, line in enumerate(f, 1):
         try:
             obj = json.loads(line)
