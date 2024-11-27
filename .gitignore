@@ -195,3 +195,4 @@ research_bench/profile_dbs_old
 !**/.gitkeep
 research_bench/attackbench/attack_results.jsonl
 research_bench/attackbench/get_profile copy.py
+/research_bench/database_path
