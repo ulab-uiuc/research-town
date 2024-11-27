@@ -8,7 +8,6 @@ from research_town.envs import ProposalWritingSWARM as ProposalWritingEnvSWARM
 from research_town.envs import ProposalWritingwithoutRAGEnv as ProposalWritingEnv
 from research_town.utils.model_prompting import model_prompting
 
-
 def write_proposal_researchtown(
     profiles: List[Profile],
     ref_contents: List[str],
@@ -351,8 +350,6 @@ Please provide the updated proposal in the same format as before.
             return conversation[-1]['content'].split('NEW IDEA:')[1]
         else:
             return conversation[-1]['content']
-    return response
-
 
 def write_proposal(
     mode: str,
@@ -378,5 +375,7 @@ def write_proposal(
         return write_proposal_sakana_ai_scientist(
             ref_contents=ref_contents, config=config, num_reflections=5
         )
+    elif mode == 'swarm':
+        return write_proposal_swarm(profiles, ref_contents, config)
     else:
         raise ValueError(f'Invalid proposal writing mode: {mode}')
