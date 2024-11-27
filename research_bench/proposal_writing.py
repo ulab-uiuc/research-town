@@ -89,7 +89,7 @@ def write_proposal_zero_shot(config: Config) -> List[str]:
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num)
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num, temperature=config.param.temperature)
     return response
 
 
@@ -124,7 +124,7 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num)
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num, temperature=config.param.temperature)
     return response
 
 
@@ -159,7 +159,7 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num)
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num, temperature=config.param.temperature)
     return response
 
 
@@ -198,7 +198,7 @@ def write_proposal_with_profiles_and_citations(
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num)
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num, temperature=config.param.temperature)
     return response
 
 
