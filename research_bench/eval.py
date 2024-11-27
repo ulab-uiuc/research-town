@@ -54,21 +54,29 @@ def compute_bertscore(reference: str, hypothesis: str) -> float:
 
 def compute_proposal_gpt_metric(reference: str, generation: str) -> float:
     prompt = [
-        {
-            'role': 'user',
-            'content': (
-                'Evaluate the alignment between the following two sets of paragraphs, with a particular emphasis on their objectives, methodologies, and expected outcomes.\n\n'
-                'Alignment Criteria Definitions:\n'
-                '1. **Objectives**: Do both sets of questions aim to address the same or complementary research goals?\n'
-                '2. **Methodologies**: Are the proposed methods similar, compatible, or capable of being effectively integrated?\n'
-                '3. **Expected Outcomes**: Are the anticipated research results and impacts consistent or mutually supportive?\n\n'
-                'Reference context:\n'
-                f'{reference}\n\n'
-                'Proposed context:\n'
-                f'{generation}\n\n'
-                'Based on the above alignment criteria, especially focusing on the methodologies, please provide a similarity score: **1** indicates alignment, and **0** indicates no alignment. **Only output the score without any additional information.**'
-            ),
-        }
+    {
+        'role': 'user',
+        'content': (
+            'Evaluate the alignment between the following two sets of paragraphs, with a particular emphasis on their objectives, methodologies, challenges, expected results, and scope.\n\n'
+            'Alignment Criteria Definitions:\n'
+            '1. Objectives: Do both sets of questions aim to address the same or complementary research goals?\n'
+            '2. Methodologies: Are the proposed methods similar, compatible, or capable of being effectively integrated?\n'
+            '3. Challenges: Do both sets recognize and address similar challenges or difficulties in achieving their objectives?\n'
+            '4. Expected Results: Are the anticipated outcomes or results described in both sets aligned or complementary?\n'
+            '5. Scope and Context: Do both sets define a similar scope of work or context within which the research is being conducted?\n\n'
+            'Scoring Guidelines:\n'
+            '1: Very low alignment - The sets have completely different objectives, methodologies, challenges, expected results, and scope.\n'
+            '2: Low alignment - There are some minor overlaps, but most of the criteria are misaligned.\n'
+            '3: Moderate alignment - The sets share some commonalities, but there are also significant differences.\n'
+            '4: High alignment - Most of the criteria are aligned, with only minor differences.\n'
+            '5: Very high alignment - The sets are fully aligned across all criteria.\n\n'
+            'Reference context:\n'
+            f"{reference}\n\n"
+            'Proposed context:\n'
+            f"{generation}\n\n"
+            'Based on the above alignment criteria, please provide a similarity score between 1 and 5: Only output the score without any additional information.'
+        ),
+    }
     ]
     response = model_prompting('gpt-4o-mini', prompt, temperature=0.0)[0]
     score = float(response.strip())
