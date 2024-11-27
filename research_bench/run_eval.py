@@ -25,15 +25,22 @@ def inference(
     profiles = [Profile(**data) for data in author_data.values()]
     ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
-    gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
+    gen_proposals = write_proposal(mode, profiles, ref_abstracts, config)
 
-    metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
+    metrics = []
+
+    for gen_proposal in gen_proposals:
+        metric = compute_proposal_metrics(ref_proposal, gen_proposal)
+        metrics.append(metric)
+
     results = {
         'paper_id': paper_id,
         'ref_proposal': ref_proposal,
-        'gen_proposal': gen_proposal,
+        'gen_proposals': [
+            {'proposal': gen_proposal, 'metrics': metric} for gen_proposal, metric in zip(gen_proposals, metrics)
+        ]
     }
-    return results, metrics
+    return results
 
 
 def load_papers(input_path: str, output_path: str) -> Any:
@@ -48,11 +55,11 @@ def load_papers(input_path: str, output_path: str) -> Any:
 
 
 def save_results(
-    results: Dict[str, Any], metrics: Dict[str, float], output_path: str, lock: Any
+    results: Dict[str, Any], output_path: str, lock: Any
 ) -> None:
     with lock:
         with open(output_path, 'a') as f:
-            json.dump({**results, **metrics}, f)
+            json.dump({**results}, f)
             f.write('\n')
 
 
@@ -118,11 +125,11 @@ def main() -> None:
         author_data = data['author_data']
         reference_proposal = data['reference_proposal']
 
-        results, metrics = inference(
+        results = inference(
             paper_id, paper_data, author_data, reference_proposal, args.mode, config
         )
         lock = Lock()
-        save_results(results, metrics, args.output_path, lock)
+        save_results(results, args.output_path, lock)
 
     lock = Lock()
     with Pool(processes=args.num_processes) as pool:

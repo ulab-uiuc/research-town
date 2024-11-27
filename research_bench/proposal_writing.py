@@ -12,7 +12,7 @@ def write_proposal_researchtown(
     profiles: List[Profile],
     ref_contents: List[str],
     config: Config,
-) -> str:
+) -> List[str]:
     log_db = LogDB(config=config.database)
     progress_db = ProgressDB(config=config.database)
     paper_db = PaperDB(config=config.database)
@@ -54,14 +54,14 @@ def write_proposal_researchtown(
 
     # Exit the environment and retrieve the generated proposal
     exit_status, exit_dict = env.on_exit()
-    proposal = exit_dict.get('proposals')[0]
-    if proposal and proposal.content:
-        return str(proposal.content)
+    proposals = exit_dict.get('proposals')
+    if proposals:
+        return [proposal.content for proposal in proposals]
     else:
         raise ValueError('Failed to generate proposal')
 
 
-def write_proposal_zero_shot(config: Config) -> str:
+def write_proposal_zero_shot(config: Config) -> List[str]:
     prompt = [
         {
             'role': 'user',
@@ -89,11 +89,11 @@ def write_proposal_zero_shot(config: Config) -> str:
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt)[0]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num)
     return response
 
 
-def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -> str:
+def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -> List[str]:
     bio_strs = '\n'.join([profile.bio for profile in profiles])
 
     prompt = [
@@ -124,11 +124,11 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num)
     return response
 
 
-def write_proposal_with_only_citations(ref_contents: List[str], config: Config) -> str:
+def write_proposal_with_only_citations(ref_contents: List[str], config: Config) -> List[str]:
     ref_strs = '\n'.join([ref for ref in ref_contents if ref is not None])
 
     prompt = [
@@ -159,14 +159,13 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
-    import pdb; pdb.set_trace()
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num)
     return response
 
 
 def write_proposal_with_profiles_and_citations(
     profiles: List[Profile], ref_contents: List[str], config: Config
-) -> str:
+) -> List[str]:
     bio_strs = '\n'.join([profile.bio for profile in profiles])
     ref_strs = '\n'.join([ref for ref in ref_contents if ref is not None])
 
@@ -199,13 +198,15 @@ def write_proposal_with_profiles_and_citations(
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=config.param.return_num)
     return response
 
 
 def write_proposal_sakana_ai_scientist(
     ref_contents: List[str], config: Config, num_reflections: int = 5
-) -> str:
+) -> List[str]:
+    if config.param.return_num > 1:
+        print ('Warning: return_num > 1 not supported for sakana_ai_scientist mode. Using return_num=1.')
     ref_strs = '\n'.join([ref for ref in ref_contents if ref is not None])
 
     # Prompt for the initial idea generation
@@ -313,14 +314,14 @@ Please provide the updated proposal in the same format as before.
 
     if 'I am done' in conversation[-1]['content'] and "[Question 1]" not in conversation[-1]['content']:
         if 'NEW IDEA:' in conversation[-2]['content']:
-            return conversation[-2]['content'].split('NEW IDEA:')[1]
+            return [conversation[-2]['content'].split('NEW IDEA:')[1]]
         else:
-            return conversation[-2]['content']
+            return [conversation[-2]['content']]
     else:
         if 'NEW IDEA:' in conversation[-1]['content']:
-            return conversation[-1]['content'].split('NEW IDEA:')[1].split('I am done')[0]
+            return [conversation[-1]['content'].split('NEW IDEA:')[1].split('I am done')[0]]
         else:
-            return conversation[-1]['content'].split('I am done')[0]
+            return [conversation[-1]['content'].split('I am done')[0]]
 
 
 def write_proposal(
@@ -328,7 +329,7 @@ def write_proposal(
     profiles: List[Profile],
     ref_contents: List[str],
     config: Config,
-) -> str:
+) -> List[str]:
     if mode == 'zero_shot':
         return write_proposal_zero_shot(config=config)
     elif mode == 'author_only':
