@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 from typing import Any, Dict
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 from tqdm import tqdm
 
@@ -60,6 +61,36 @@ def save_result(result: Dict[str, Any], output_path: str) -> None:
         f.write('\n')
 
 
+def process_attack(attack_id: str, data: Dict[str, Any], profiles_dict: Dict[str, Any], config: Config, mode: str) -> Dict[str, Any]:
+    template = data.get('template', '')
+    task = data.get('task', '')
+    text = data.get('text', '')
+    domain = data.get('domain', '')
+
+    text_list = [text]
+
+    # Get profiles for the domain
+    domain_profiles = profiles_dict.get(domain, {})
+    profiles = [
+        Profile(name=scientist, bio=info.get('bio', ''))
+        for scientist, info in domain_profiles.items()
+    ]
+
+    # Generate proposal
+    gen_proposal = write_proposal(mode, profiles, text_list, config)
+
+    # Prepare result
+    result = {
+        'attack_id': attack_id,
+        'template': template,
+        'task': task,
+        'domain': domain,
+        'gen_proposal': gen_proposal,
+    }
+
+    return result
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description='Research Proposal Attack Script')
     parser.add_argument(
@@ -103,6 +134,12 @@ def main() -> None:
         default='../configs',
         help='Path to the configuration directory',
     )
+    parser.add_argument(
+        '--num_workers',
+        type=int,
+        default=4,
+        help='Number of parallel workers to use',
+    )
     args = parser.parse_args()
 
     config = Config(args.config_path)
@@ -110,35 +147,15 @@ def main() -> None:
     profiles_dict = load_profiles(args.profile_path)
     logger.info(f'Processing {len(dataset)} adversarial entries')
 
-    for attack_id, data in tqdm(dataset.items(), desc='Processing attacks'):
-        template = data.get('template', '')
-        task = data.get('task', '')
-        text = data.get('text', '')
-        domain = data.get('domain', '')
-
-        text_list = [text]
-
-        # Get profiles for the domain
-        domain_profiles = profiles_dict.get(domain, {})
-        profiles = [
-            Profile(name=scientist, bio=info.get('bio', ''))
-            for scientist, info in domain_profiles.items()
+    with ProcessPoolExecutor(max_workers=args.num_workers) as executor:
+        futures = [
+            executor.submit(process_attack, attack_id, data, profiles_dict, config, args.mode)
+            for attack_id, data in dataset.items()
         ]
 
-        # Generate proposal
-        gen_proposal = write_proposal(args.mode, profiles, text_list, config)
-
-        # Prepare result
-        result = {
-            'attack_id': attack_id,
-            'template': template,
-            'task': task,
-            'domain': domain,
-            'gen_proposal': gen_proposal,
-        }
-
-        # Save result
-        save_result(result, args.output_path)
+        for future in tqdm(as_completed(futures), total=len(futures), desc='Processing attacks'):
+            result = future.result()
+            save_result(result, args.output_path)
 
     logger.info(
         f'All adversarial entries have been processed and saved to {args.output_path}'
