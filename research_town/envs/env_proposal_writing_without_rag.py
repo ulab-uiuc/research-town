@@ -29,14 +29,13 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
     @beartype
     def on_enter(self, **context: Any) -> None:
         # Assign leader and members from context or sample them
-        if context.get('leader') is None:
-            self.leader = self.agent_manager.sample_leader()
-        else:
-            self.leader = context['leader']
-        if context.get('members') is None:
-            self.members = self.agent_manager.sample_members()
-        else:
-            self.members = context['members']
+        if 'leader' not in context or context['leader'] is None:
+            context['leader'] = self.agent_manager.sample_leader()
+        if 'members' not in context or context['members'] is None:
+            context['members'] = self.agent_manager.sample_members()
+
+        self.leader = context['leader']
+        self.members = context['members']
 
         if 'contexts' not in context:
             raise ValueError("'contexts' is required in the context.")

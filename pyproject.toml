@@ -21,8 +21,9 @@ beautifulsoup4 = "*"
 lxml = "*"
 tqdm = "*"
 keybert = "*"
-torch = "^2.2.1"
 semanticscholar = "*"
+torch = { version = ">=2.2.0, <2.3.0", optional = true }
+
 
 uvicorn = { version = "*", optional = true }
 fastapi = { version = "*", optional = true }
@@ -31,6 +32,7 @@ pandas = { version = "*", optional = true }
 bert_score = { version = "*", optional = true }
 rouge_score = { version = "*", optional = true }
 nltk = { version = "*", optional = true }
+voyageai = { version = "*", optional = true }
 
 
 [tool.poetry.group.dev.dependencies]
@@ -51,7 +53,7 @@ mypy = "^1.11.2"
 [tool.poetry.extras]
 humaneval = ["pandas"]
 backend = ["uvicorn", "fastapi"]
-researchbench = ["bert_score", "rouge_score", "nltk"]
+researchbench = ["bert_score", "rouge_score", "nltk", "voyageai"]
 
 [build-system]
 requires = ["poetry-core"]

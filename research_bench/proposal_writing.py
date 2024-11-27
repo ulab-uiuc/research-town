@@ -109,6 +109,38 @@ def write_proposal_researchtown_nodb(
         raise ValueError('Failed to generate proposal')
 
 
+def write_proposal_zero_shot(config: Config) -> str:
+    prompt = [
+        {
+            'role': 'user',
+            'content': (
+                'You are a AI researcher. Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                'Here are the five core questions:\n\n'
+                '[Question 1] - What is the problem?\n\n'
+                'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                '[Question 2] - Why is it interesting and important?\n\n'
+                'Explain the broader implications of solving this problem for the research community.\n'
+                'Discuss how such paper will affect the future research.\n'
+                'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                '[Question 3] - Why is it hard?\n\n'
+                'Discuss the challenges and complexities involved in solving this problem.\n'
+                'Explain why naive or straightforward approaches may fail.\n'
+                'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                "[Question 4] - Why hasn't it been solved before?\n\n"
+                'Identify gaps or limitations in previous research or existing solutions.\n'
+                'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                '[Question 5] - What are the key components of my approach and results?\n\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                'Please provide the five core questions contents for a brand new future research that you think are the most promising one.'
+            ),
+        }
+    ]
+    response = model_prompting(config.param.base_llm, prompt)[0]
+    return response
+
+
 def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -> str:
     bio_strs = '\n'.join([profile.bio for profile in profiles])
 
@@ -140,7 +172,7 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt)[0]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
     return response
 
 
@@ -175,7 +207,7 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt)[0]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
     return response
 
 
@@ -214,7 +246,7 @@ def write_proposal_with_profiles_and_citations(
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt)[0]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
     return response
 
 
@@ -278,6 +310,7 @@ Describe the expected outcomes.
 
 In <THOUGHT>, first briefly discuss your intuitions and motivations for the idea. Detail your high-level plan, necessary design choices and ideal outcomes of the experiments. Justify how the idea is different from the existing ones.
 
+Please DO NOT repeat the instructions. Instead, fill in the 5 questions to form your proposal.
 
 You will have {num_reflections} rounds to iterate on the idea, but do not need to use them all.
 """
@@ -296,11 +329,7 @@ Do not make things overly complicated.
 In the next attempt, try and refine and improve your proposal.
 
 Stick to the spirit of the original idea unless there are glaring issues.
-Respond in the same format as before:
-THOUGHT:
-<THOUGHT>
-
-NEW IDEA: The five core questions
+Respond in the same format(THOUGHT, NEW IDEA composing of 5 questions) as before.
 
 If there is nothing to improve, simply repeat the previous proposal exactly and include "I am done" at the end.
 
@@ -313,7 +342,7 @@ Please provide the updated proposal in the same format as before.
 
     conversation.append({'role': 'user', 'content': idea_first_prompt})
 
-    response = model_prompting(config.param.base_llm, conversation)[0]
+    response = model_prompting(config.param.base_llm, conversation, max_token_num=config.param.max_token_num)[0]
     conversation.append({'role': 'assistant', 'content': response})
 
     for current_round in range(1, num_reflections + 1):
@@ -322,23 +351,23 @@ Please provide the updated proposal in the same format as before.
         )
         conversation.append({'role': 'user', 'content': formatted_reflection_prompt})
 
-        response = model_prompting(config.param.base_llm, conversation)[0]
+        response = model_prompting(config.param.base_llm, conversation, max_token_num=config.param.max_token_num)[0]
+        
         conversation.append({'role': 'assistant', 'content': response})
 
         if 'I am done' in response:
             break
 
-    if 'I am done' in conversation[-1]['content']:
+    if 'I am done' in conversation[-1]['content'] and "[Question 1]" not in conversation[-1]['content']:
         if 'NEW IDEA:' in conversation[-2]['content']:
             return conversation[-2]['content'].split('NEW IDEA:')[1]
         else:
             return conversation[-2]['content']
     else:
         if 'NEW IDEA:' in conversation[-1]['content']:
-            return conversation[-1]['content'].split('NEW IDEA:')[1]
+            return conversation[-1]['content'].split('NEW IDEA:')[1].split('I am done')[0]
         else:
-            return conversation[-1]['content']
-    return response
+            return conversation[-1]['content'].split('I am done')[0]
 
 
 def write_proposal(
@@ -347,7 +376,9 @@ def write_proposal(
     ref_contents: List[str],
     config: Config,
 ) -> str:
-    if mode == 'author_only':
+    if mode == 'zero_shot':
+        return write_proposal_zero_shot(config=config)
+    elif mode == 'author_only':
         return write_proposal_with_only_profiles(profiles=profiles, config=config)
     elif mode == 'citation_only':
         return write_proposal_with_only_citations(
