@@ -54,7 +54,6 @@ def write_proposal_researchtown(
 
     # Exit the environment and retrieve the generated proposal
     exit_status, exit_dict = env.on_exit()
-    import pdb; pdb.set_trace()
     proposal = exit_dict.get('proposals')[0]
     if proposal and proposal.content:
         return str(proposal.content)
