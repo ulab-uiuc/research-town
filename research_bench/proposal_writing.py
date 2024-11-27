@@ -1,5 +1,5 @@
 from typing import List
-
+import random
 from research_town.agents import AgentManager
 from research_town.configs import Config
 from research_town.data import Profile
@@ -129,7 +129,12 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
 
 
 def write_proposal_with_only_citations(ref_contents: List[str], config: Config) -> str:
-    ref_strs = '\n'.join([ref for ref in ref_contents if ref is not None])
+    random.shuffle(ref_contents)
+    ref_strs = ''
+    for idx, ref in enumerate(ref_contents):
+        if ref is None:
+            continue
+        ref_strs += f'paper {idx + 1}. {ref}\n\n'
 
     prompt = [
         {
@@ -155,12 +160,11 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
                 'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Contents collect from cited papers:\n{ref_strs}\n\n'
-                'Please provide the five core questions contents based on the above cited contents.'
+                'Please brainstorm a following proposal with the given format.'
             ),
         }
     ]
     response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
-    import pdb; pdb.set_trace()
     return response
 
 
@@ -322,12 +326,90 @@ Please provide the updated proposal in the same format as before.
         else:
             return conversation[-1]['content'].split('I am done')[0]
 
+def write_proposal_debug(profiles: List[Profile], ref_contents: List[str], config: Config) -> str:
+    random.shuffle(ref_contents)
+    ref_strs = ''
+    for idx, ref in enumerate(ref_contents):
+        if ref is None:
+            continue
+        ref_strs += f'paper {idx + 1}. {ref}\n'
+    profile = profiles[0]
+
+    prompt = [
+        {
+            'role': 'user',
+            'content': (
+                'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                'Here are the five core questions:\n\n'
+                '[Question 1] - What is the problem?\n\n'
+                'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                '[Question 2] - Why is it interesting and important?\n\n'
+                'Explain the broader implications of solving this problem for the research community.\n'
+                'Discuss how such paper will affect the future research.\n'
+                'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                '[Question 3] - Why is it hard?\n\n'
+                'Discuss the challenges and complexities involved in solving this problem.\n'
+                'Explain why naive or straightforward approaches may fail.\n'
+                'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                "[Question 4] - Why hasn't it been solved before?\n\n"
+                'Identify gaps or limitations in previous research or existing solutions.\n'
+                'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                '[Question 5] - What are the key components of my approach and results?\n\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                f'Contents collect from cited papers:\n{ref_strs}\n\n'
+                'Please brainstorm a following proposal with the given format.'
+            ),
+        }
+    ]
+    generated_5q = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    # delete all things after [Question 5]
+    generated_4q = generated_5q.split('[Question 5]')[0]
+
+    prompt = [
+        {
+            'role': 'user',
+            'content': (
+                'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                'Here are the five core questions:\n\n'
+                '[Question 1] - What is the problem?\n\n'
+                'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                '[Question 2] - Why is it interesting and important?\n\n'
+                'Explain the broader implications of solving this problem for the research community.\n'
+                'Discuss how such paper will affect the future research.\n'
+                'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                '[Question 3] - Why is it hard?\n\n'
+                'Discuss the challenges and complexities involved in solving this problem.\n'
+                'Explain why naive or straightforward approaches may fail.\n'
+                'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                "[Question 4] - Why hasn't it been solved before?\n\n"
+                'Identify gaps or limitations in previous research or existing solutions.\n'
+                'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                '[Question 5] - What are the key components of my approach and results?\n\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                f'Contents collect from cited papers:\n{ref_strs}\n\n'
+                'This is the generated [Question 1] to [Question 4] based on the citation papers.\n'
+                f'{generated_4q}\n\n'
+                'You are a researcher who the bio is as follows:\n'
+                f'{profile.bio}\n\n'
+                'When you are generating [Question 5], you can think how to do the thing based on your bio information.\n'
+                'Please brainstorm a following proposal with the given format. You should still start with [Question 1] to [Question 5]. But the content from [Question 1] to [Question 4] is already given and you just copy them as part of the output.'
+            ),
+        }
+    ]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    return response
+
 
 def write_proposal(
     mode: str,
     profiles: List[Profile],
     ref_contents: List[str],
     config: Config,
+    target_paper_title: str,
 ) -> str:
     if mode == 'zero_shot':
         return write_proposal_zero_shot(config=config)
@@ -335,7 +417,7 @@ def write_proposal(
         return write_proposal_with_only_profiles(profiles=profiles, config=config)
     elif mode == 'citation_only':
         return write_proposal_with_only_citations(
-            ref_contents=ref_contents, config=config
+            ref_contents=ref_contents, config=config,
         )
     elif mode == 'author_citation':
         return write_proposal_with_profiles_and_citations(
@@ -348,6 +430,10 @@ def write_proposal(
     elif mode == 'sakana_ai_scientist':
         return write_proposal_sakana_ai_scientist(
             ref_contents=ref_contents, config=config, num_reflections=5
+        )
+    elif mode == 'debug':
+        return write_proposal_debug(
+            profiles=profiles, ref_contents=ref_contents, config=config,
         )
     else:
         raise ValueError(f'Invalid proposal writing mode: {mode}')

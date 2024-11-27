@@ -25,7 +25,8 @@ def inference(
     profiles = [Profile(**data) for data in author_data.values()]
     ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
-    gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
+    paper_title = paper_data['title']
+    gen_proposal = write_proposal(mode, profiles, ref_abstracts, config, paper_title)
 
     metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
     results = {
@@ -81,6 +82,7 @@ def main() -> None:
             'author_citation',
             'research_town',
             'sakana_ai_scientist',
+            'debug'
         ],
         help='Processing mode',
     )
