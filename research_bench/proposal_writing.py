@@ -493,7 +493,7 @@ def write_proposal(
         return write_proposal_sakana_ai_scientist(
             ref_contents=ref_contents, config=config, num_reflections=5
         )
-    elif mode == 'fake_researchtown':
+    elif mode == 'fake_research_town':
         return write_proposal_fake_researchtown(
             profiles=profiles, ref_contents=ref_contents, config=config
         )
