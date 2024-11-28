@@ -6,7 +6,27 @@ from research_town.data import Profile
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
 from research_town.envs import ProposalWritingwithoutRAGEnv as ProposalWritingEnv
 from research_town.utils.model_prompting import model_prompting
+from openai import OpenAI
 
+client = OpenAI(
+    base_url = "https://integrate.api.nvidia.com/v1",
+    api_key = "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"
+)
+
+def model_prompting_(client, model, prompt, max_token_num=None):
+    response_stream = client.chat.completions.create(
+        model=model,
+        messages=prompt,
+        temperature=0.2,
+        top_p=0.7,
+        max_tokens=1024,
+        stream=True
+    )
+    response = ''
+    for chunk in response_stream:
+        if chunk.choices[0].delta.content is not None:
+            response += chunk.choices[0].delta.content
+    return [response]
 
 def write_proposal_researchtown(
     profiles: List[Profile],
@@ -83,7 +103,7 @@ def write_proposal_zero_shot(config: Config) -> str:
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph of 200 words and not use subtitles.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 'Please provide the five core questions contents for a brand new future research that you think are the most promising one.'
             ),
@@ -117,7 +137,7 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph of 200 words and not use subtitles.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Author biographies and personas:\n{bio_strs}\n\n'
                 'You are the profiles of this paper. Please provide the five core questions contents for a brand new future research based on the above biographies.'
@@ -158,14 +178,14 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph of 200 words and not use subtitles.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Contents collect from cited papers:\n{ref_strs}\n\n'
                 'Please brainstorm a following proposal with the given format.'
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting_(client, config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
     return response
 
 
@@ -358,7 +378,7 @@ def write_proposal_debug(profiles: List[Profile], ref_contents: List[str], confi
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph of 200 words and not use subtitles.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Contents collect from cited papers:\n{ref_strs}\n\n'
                 'Please brainstorm a following proposal with the given format.'
@@ -390,7 +410,7 @@ def write_proposal_debug(profiles: List[Profile], ref_contents: List[str], confi
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph of 200 words and not use subtitles.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 'This is the generated [Question 1] to [Question 4] based on the citation papers.\n'
                 f'{generated_4q}\n\n'
@@ -434,13 +454,13 @@ def fuse_questions(context: str, question_5_candidates: List[str], config: Confi
                 f"1. Relevance: Align the fused [Question 5] with [Question 1] to [Question 4].\n"
                 f"2. Clarity: Ensure the fused [Question 5] is well-written and easy to understand.\n"
                 f"3. Completeness: Ensure the fused [Question 5] covers all key elements of the proposed methodology and outcomes.\n\n"
-                f"Output only the fused [Question 5]."
+                f"Output only the fused [Question 5]. You should start with the tag [Question 5] as the starting point."
             )
         }
     ]
     
     # Use the LLM to generate the fused [Question 5]
-    fused_response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)
+    fused_response = model_prompting_(client, config.param.base_llm, prompt, max_token_num=config.param.max_token_num)
     return fused_response[0].strip()
 
 
@@ -453,7 +473,6 @@ def write_proposal_fake_researchtown(
     random.shuffle(ref_contents)
     # Initialize Voyage AI client
     voyage_client = Client(api_key="pa-I6kOGpyDmf02kIxC0fBMc8WXIraV_oRyR4uDvpNH7n0")
-
     # Rerank references
     def rerank_references(query: str, refs: List[str], top_k: int = 5):
         results = voyage_client.rerank(query, refs, model="rerank-2", top_k=top_k)
@@ -486,12 +505,15 @@ def write_proposal_fake_researchtown(
             ),
         }
     ]
-    generated_5q = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    
+    # generated_5q = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    generated_5q = model_prompting_(client, config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    # stringify
     generated_4q = generated_5q.split('[Question 5]')[0]
 
     question_5_candidates = []
 
-    #profiles = profiles[:1]
+    profiles = profiles[:1]
     # Generate [Question 5] for each bio
     for profile in profiles:
         # Rerank references for the current profile
@@ -525,19 +547,25 @@ def write_proposal_fake_researchtown(
                     f"Discuss any barriers that have prevented this problem from being solved until now.\n"
                     f"Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n"
                     f"[Question 5] - What are the key components of my approach and results?\n\n"
-                    f"Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n"
+                    f"Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. \n"
                     f"Describe the expected outcomes. MAKE IT CLEAR.\n\n"
                     f"This is the generated [Question 1] to [Question 4] based on the citation papers.\n"
                     f"{generated_4q}\n\n"
                     f"You have a researcher who the bio is as follows:\n"
                     f"{profile.bio}\n\n"
                     f"Contents collected from top reranked papers:\n{ref_strs}\n\n"
-                    f"Please brainstorm a following proposal with the given format."
+                    f"Please brainstorm a following proposal with the given format - you already have [Question 1] to [Question 4]. Please start with [Question 5] using the tag [Question 5] as the starting point.\n"
+                    f"But you must include these in one paragraph of 200 words and not use subtitles.\n"
                 ),
             }
         ]
-        question_5_response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
-        question_5 = question_5_response.split('[Question 5]')[1]
+        # question_5_response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+        question_5_response = model_prompting_(client, config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+        if '[Question 5]' in question_5_response:
+            question_5 = question_5_response.split('[Question 5]')[1]
+        else:
+            question_5 = question_5_response
+            print('[WARNING] [Question 5] tag not found in response. Using full response as [Question 5].')
         question_5_candidates.append(question_5)
 
     # Fuse all [Question 5] candidates into a single response

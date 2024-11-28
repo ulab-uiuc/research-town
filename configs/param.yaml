@@ -1,5 +1,5 @@
-base_llm: gpt-4o-mini
-max_token_num: 1024
+base_llm: meta/llama-3.1-70b-instruct
+max_token_num: 2048
 member_num: 3
 related_paper_num: 5
 return_num: 1
