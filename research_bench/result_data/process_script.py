@@ -3,6 +3,9 @@ import re
 from typing import List
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
+from research_town.utils.model_prompting import model_prompting
+from threading import Lock
+import os
 
 def extract_and_clean_question_content(text: str, question_prompts: List[str]) -> List[str]:
     question_contents = []
@@ -41,11 +44,11 @@ def compute_proposal_gpt_metric(reference: str, generation: str, question_num: i
             ),
         }
     ]
-    response = model_prompting('gpt-4o-mini', prompt, temperature=0.0)[0]
+    response = model_prompting('gpt-4o', prompt, temperature=0.0)[0]
     score = float(response.strip())
     return max(0.0, min(5, score))
 
-def process_item(item: dict, questions: List[str]) -> dict:
+def process_item(item: dict, questions: List[str], outfile, lock: Lock) -> None:
     ref_questions = extract_and_clean_question_content(item['ref_proposal'], questions)
     hyp_questions = extract_and_clean_question_content(item['gen_proposal'], questions)
 
@@ -60,9 +63,11 @@ def process_item(item: dict, questions: List[str]) -> dict:
     gpt_score_average = sum(scores) / len(scores)
     item['gpt_score_average'] = gpt_score_average
 
-    return item
+    # Write updated item to output file with lock to prevent race conditions
+    with lock:
+        outfile.write(json.dumps(item) + '\n')
 
-def parse_jsonl_file(input_file_path: str, output_file_path: str):
+def parse_jsonl_files(input_folder: str, output_folder: str):
     questions = [
         'What is the problem?',
         'Why is it interesting and important?',
@@ -71,39 +76,47 @@ def parse_jsonl_file(input_file_path: str, output_file_path: str):
         'What are the key components of my approach and results?',
     ]
 
-    with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
-        items = [json.loads(line) for line in infile]
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
 
-        q1_total, q2_total, q3_total, q4_total, q5_total = 0, 0, 0, 0, 0
-        item_count = len(items)
+    input_files = [f for f in os.listdir(input_folder) if f.endswith('.jsonl')]
 
-        with ThreadPoolExecutor(max_workers=4) as executor:
-            results = list(tqdm(executor.map(lambda item: process_item(item, questions), items), total=item_count))
+    for input_file in input_files:
+        input_file_path = os.path.join(input_folder, input_file)
+        output_file_path = os.path.join(output_folder, input_file)
 
-        for item in results:
-            # Update totals for overall averages
-            q1_total += item['q1_gpt_score']
-            q2_total += item['q2_gpt_score']
-            q3_total += item['q3_gpt_score']
-            q4_total += item['q4_gpt_score']
-            q5_total += item['q5_gpt_score']
+        with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
+            items = [json.loads(line) for line in infile]
 
-            # Write updated item to output file
-            outfile.write(json.dumps(item) + '\n')
+            q1_total, q2_total, q3_total, q4_total, q5_total = 0, 0, 0, 0, 0
+            item_count = len(items)
+            lock = Lock()
 
-        # Printing average of each question and the total average
-        print(f'Q1 Average Score: {q1_total / item_count}')
-        print(f'Q2 Average Score: {q2_total / item_count}')
-        print(f'Q3 Average Score: {q3_total / item_count}')
-        print(f'Q4 Average Score: {q4_total / item_count}')
-        print(f'Q5 Average Score: {q5_total / item_count}')
-        overall_average = (q1_total + q2_total + q3_total + q4_total + q5_total) / (5 * item_count)
-        print(f'Overall Average Score: {overall_average}')
+            with ThreadPoolExecutor(max_workers=4) as executor:
+                list(tqdm(executor.map(lambda item: process_item(item, questions, outfile, lock), items), total=item_count))
+
+            # Printing average of each question and the total average
+            for item in items:
+                q1_total += item['q1_gpt_score']
+                q2_total += item['q2_gpt_score']
+                q3_total += item['q3_gpt_score']
+                q4_total += item['q4_gpt_score']
+                q5_total += item['q5_gpt_score']
+
+            print(f'Processed file: {input_file}')
+            print(f'Q1 Average Score: {q1_total / item_count}')
+            print(f'Q2 Average Score: {q2_total / item_count}')
+            print(f'Q3 Average Score: {q3_total / item_count}')
+            print(f'Q4 Average Score: {q4_total / item_count}')
+            print(f'Q5 Average Score: {q5_total / item_count}')
+            overall_average = (0.1 * q1_total + 0.1 * q2_total + 0.1 * q3_total + 0.1 * q4_total + 0.6 * q5_total) /  item_count
+            print(f'Overall Average Score: {overall_average}')
 
 def main():
-    input_file_path = 'proposals.jsonl'
-    output_file_path = 'proposals_enriched.jsonl'
-    parse_jsonl_file(input_file_path, output_file_path)
+    input_folder = '/Users/zhukunlun/Documents/GitHub/research-town/research_bench/result_data/sakana'
+    output_folder = '/Users/zhukunlun/Documents/GitHub/research-town/research_bench/result_data_gptscore/'
+    os.makedirs(output_folder, exist_ok=True)
+    parse_jsonl_files(input_folder, output_folder)
 
 # Example usage:
 if __name__ == "__main__":
