@@ -201,7 +201,6 @@ def write_review_prompting(
         top_p,
         stream,
     )[0]
-
     strength_template_input = {'proposal': proposal_str, 'summary': summary}
     strength_messages = openai_format_prompt_construct(
         strength_prompt_template, strength_template_input
@@ -245,6 +244,129 @@ def write_review_prompting(
 
     score_template_input = {
         'proposal': proposal_str,
+        'summary': summary,
+        'strength': strength,
+        'weakness': weakness,
+        'ethical_concern': ethical_concern,
+    }
+    score_messages = openai_format_prompt_construct(
+        score_prompt_template, score_template_input
+    )
+
+    score_str = (
+        model_prompting(
+            model_name,
+            score_messages,
+            return_num,
+            max_token_num,
+            temperature,
+            top_p,
+            stream,
+        )[0]
+        .split(
+            'Based on the given information, I would give this submission a score of '
+        )[1]
+        .split(' out of 10')[0]
+    )
+    score = int(score_str[0]) if score_str[0].isdigit() else 0
+
+    return (
+        summary,
+        strength,
+        weakness,
+        ethical_concern,
+        score,
+        summary_messages,
+        strength_messages,
+        weakness_messages,
+        ethical_messages,
+        score_messages,
+    )
+
+
+@beartype
+def write_review_paper_text_prompting(
+    paper_text: str,
+    model_name: str,
+    summary_prompt_template: Dict[str, Union[str, List[str]]],
+    strength_prompt_template: Dict[str, Union[str, List[str]]],
+    weakness_prompt_template: Dict[str, Union[str, List[str]]],
+    ethical_prompt_template: Dict[str, Union[str, List[str]]],
+    score_prompt_template: Dict[str, Union[str, List[str]]],
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = 0.0,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
+) -> Tuple[
+    str,
+    str,
+    str,
+    str,
+    int,
+    List[Dict[str, str]],
+    List[Dict[str, str]],
+    List[Dict[str, str]],
+    List[Dict[str, str]],
+    List[Dict[str, str]],
+]:
+    summary_template_input = {'paper_text': paper_text}
+    summary_messages = openai_format_prompt_construct(
+        summary_prompt_template, summary_template_input
+    )
+    summary = model_prompting(
+        model_name,
+        summary_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
+
+    strength_template_input = {'paper_text': paper_text, 'summary': summary}
+    strength_messages = openai_format_prompt_construct(
+        strength_prompt_template, strength_template_input
+    )
+    weakness_template_input = {'paper_text': paper_text, 'summary': summary}
+    weakness_messages = openai_format_prompt_construct(
+        weakness_prompt_template, weakness_template_input
+    )
+    ethical_template_input = {'paper_text': paper_text, 'summary': summary}
+    ethical_messages = openai_format_prompt_construct(
+        ethical_prompt_template, ethical_template_input
+    )
+
+    strength = model_prompting(
+        model_name,
+        strength_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
+    weakness = model_prompting(
+        model_name,
+        weakness_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
+    ethical_concern = model_prompting(
+        model_name,
+        ethical_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
+
+    score_template_input = {
+        'paper_text': paper_text,
         'summary': summary,
         'strength': strength,
         'weakness': weakness,
@@ -421,6 +543,140 @@ def write_metareview_prompting(
 
 
 @beartype
+def write_metareview_paper_text_prompting(
+    paper_text: str,
+    reviews: List[Dict[str, Union[int, str]]],
+    model_name: str,
+    summary_prompt_template: Dict[str, Union[str, List[str]]],
+    strength_prompt_template: Dict[str, Union[str, List[str]]],
+    weakness_prompt_template: Dict[str, Union[str, List[str]]],
+    ethical_prompt_template: Dict[str, Union[str, List[str]]],
+    decision_prompt_template: Dict[str, Union[str, List[str]]],
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = 0.0,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
+) -> Tuple[
+    str,
+    str,
+    str,
+    str,
+    bool,
+    List[Dict[str, str]],
+    List[Dict[str, str]],
+    List[Dict[str, str]],
+    List[Dict[str, str]],
+    List[Dict[str, str]],
+]:
+    reviews_str = map_review_list_to_str(reviews)
+    summary_template_input = {
+        'paper_text': paper_text,
+        'reviews': reviews_str,
+    }
+    summary_messages = openai_format_prompt_construct(
+        summary_prompt_template, summary_template_input
+    )
+    summary = model_prompting(
+        model_name,
+        summary_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
+
+    strength_template_input = {
+        'paper_text': paper_text,
+        'reviews': reviews_str,
+        'summary': summary,
+    }
+    weakness_template_input = {
+        'paper_text': paper_text,
+        'reviews': reviews_str,
+        'summary': summary,
+    }
+    ethical_template_input = {
+        'paper_text': paper_text,
+        'reviews': reviews_str,
+        'summary': summary,
+    }
+    strength_messages = openai_format_prompt_construct(
+        strength_prompt_template, strength_template_input
+    )
+    weakness_messages = openai_format_prompt_construct(
+        weakness_prompt_template, weakness_template_input
+    )
+    ethical_messages = openai_format_prompt_construct(
+        ethical_prompt_template, ethical_template_input
+    )
+
+    strength = model_prompting(
+        model_name,
+        strength_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
+    weakness = model_prompting(
+        model_name,
+        weakness_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
+    ethical_concern = model_prompting(
+        model_name,
+        ethical_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
+
+    decision_template_input = {
+        'paper_text': paper_text,
+        'reviews': reviews_str,
+        'summary': summary,
+        'strength': strength,
+        'weakness': weakness,
+        'ethical_concern': ethical_concern,
+    }
+    decision_messages = openai_format_prompt_construct(
+        decision_prompt_template, decision_template_input
+    )
+    decision_str = model_prompting(
+        model_name,
+        decision_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )
+    decision = 'accept' in decision_str[0].lower()
+
+    return (
+        summary,
+        strength,
+        weakness,
+        ethical_concern,
+        decision,
+        summary_messages,
+        strength_messages,
+        weakness_messages,
+        ethical_messages,
+        decision_messages,
+    )
+
+
+@beartype
 def write_rebuttal_prompting(
     proposal: Dict[str, str],
     review: Dict[str, Union[int, str]],
@@ -435,6 +691,43 @@ def write_rebuttal_prompting(
     proposal_str = map_proposal_to_str(proposal)
     review_str = map_review_to_str(review)
     template_input = {'proposal': proposal_str, 'review': review_str}
+    messages = openai_format_prompt_construct(prompt_template, template_input)
+    rebuttal = model_prompting(
+        model_name,
+        messages,
+        return_num=return_num,
+        max_token_num=max_token_num,
+        temperature=temperature,
+        top_p=top_p,
+        stream=stream,
+    )[0]
+
+    pattern = r'\[Question (\d+)\](.*?)(?=\[Question \d+\]|\Z)'
+    matches = re.findall(pattern, rebuttal, re.DOTALL)
+    q5_result = {}
+
+    for match in matches:
+        question_number = f'q{match[0]}'
+        answer = match[1].strip()
+        q5_result[question_number] = answer
+
+    return rebuttal, q5_result, messages
+
+
+@beartype
+def write_rebuttal_paper_text_prompting(
+    paper_text: str,
+    review: Dict[str, Union[int, str]],
+    model_name: str,
+    prompt_template: Dict[str, Union[str, List[str]]],
+    return_num: Optional[int] = 1,
+    max_token_num: Optional[int] = 512,
+    temperature: Optional[float] = 0.0,
+    top_p: Optional[float] = None,
+    stream: Optional[bool] = None,
+) -> Tuple[str, Dict[str, str], List[Dict[str, str]]]:
+    review_str = map_review_to_str(review)
+    template_input = {'paper_text': paper_text, 'review': review_str}
     messages = openai_format_prompt_construct(prompt_template, template_input)
     rebuttal = model_prompting(
         model_name,

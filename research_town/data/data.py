@@ -48,6 +48,10 @@ class Paper(Data):
     embed: Optional[Any] = Field(default=None)
 
 
+class PaperText(Data):
+    content: str
+
+
 class Log(Data):
     timestep: int = Field(default=0)
     profile_pk: str
