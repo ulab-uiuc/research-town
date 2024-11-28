@@ -2,7 +2,7 @@ base_llm: gpt-4o-mini
 max_token_num: 1024
 member_num: 3
 related_paper_num: 5
-return_num: 5
+return_num: 10
 reviewer_num: 1
 stream: null
 temperature: 0.6
