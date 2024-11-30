@@ -2,40 +2,47 @@ import argparse
 import json
 import os
 from multiprocessing import Lock, Pool
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Sequence
 
 from tqdm import tqdm
 
 from research_bench.eval import compute_review_metrics
-from research_bench.proposal_writing import write_proposal
 from research_bench.review_writing import write_review
 from research_bench.utils import load_benchmark
 from research_town.configs import Config
 from research_town.data import Profile
 from research_town.utils.logger import logger
 
+
 def inference(
     paper_id: str,
     paper_data: Dict[str, Any],
     author_data: Dict[str, Any],
-    ref_review: str,
+    strengths: List[str],
+    weaknesses: List[str],
     mode: str,
     config: Config,
-) -> Tuple[Dict[str, str], Dict[str, float]]:
+) -> Tuple[Dict[str, Sequence[str]], Dict[str, List[float]]]:
     intro = paper_data.get('introduction', '')
     profiles = [Profile(**data) for data in author_data.values()]
     ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
-    gen_review = write_review(mode, intro, profiles, ref_abstracts, config)
+    generated_strength, generated_weakness = write_review(
+        mode, intro, profiles, ref_abstracts, config
+    )
 
-    metrics = compute_review_metrics(ref_review, gen_review)
+    metrics = compute_review_metrics(
+        strengths, weaknesses, generated_strength, generated_weakness
+    )
     results = {
         'paper_id': paper_id,
-        'ref_review': ref_review,
-        'gen_review': gen_review,
+        'strengths': strengths,
+        'weaknesses': weaknesses,
+        'generated_strength': generated_strength,
+        'generated_weakness': generated_weakness,
     }
     return results, metrics
-    
+
 
 def load_papers(input_path: str, output_path: str) -> Any:
     dataset = load_benchmark(input_path)
@@ -49,7 +56,7 @@ def load_papers(input_path: str, output_path: str) -> Any:
 
 
 def save_results(
-    results: Dict[str, Any], metrics: Dict[str, float], output_path: str, lock: Any
+    results: Dict[str, Any], metrics: Dict[str, Any], output_path: str, lock: Any
 ) -> None:
     with lock:
         with open(output_path, 'a') as f:
@@ -58,8 +65,8 @@ def save_results(
 
 
 def process_task(
-    task: Tuple[str, Dict[str, Any], Dict[str, Any], str, str, Config],
-) -> Tuple[Dict[str, Any], Dict[str, float]]:
+    task: Tuple[str, Dict[str, Any], Dict[str, Any], List[str], List[str], str, Config]
+) -> Tuple[Dict[str, Sequence[str]], Dict[str, List[float]]]:
     return inference(*task)
 
 
@@ -117,10 +124,12 @@ def main() -> None:
     for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
         paper_data = data['paper_data']
         author_data = data['author_data']
-        reference_review = data['reference_review']
+        reference_review = data['reviews']
+        strengths = [review.get('strengths', '') for review in reference_review]
+        weaknesses = [review.get('weaknesses', '') for review in reference_review]
 
         results, metrics = inference(
-            paper_id, paper_data, author_data, reference_review, args.mode, config
+            paper_id, paper_data, author_data, strengths, weaknesses, args.mode, config
         )
         lock = Lock()
         save_results(results, metrics, args.output_path, lock)
@@ -132,7 +141,8 @@ def main() -> None:
                 paper_id,
                 data['paper_data'],
                 data['author_data'],
-                data['reference_review'],
+                [review.get('strengths', '') for review in data['reviews']],
+                [review.get('weaknesses', '') for review in data['reviews']],
                 args.mode,
                 config,
             )
@@ -146,7 +156,7 @@ def main() -> None:
             save_results(results, metrics, args.output_path, lock)
             with lock:
                 for metric, scores in metrics_summary.items():
-                    scores.append(metrics.get(metric, 0))
+                    scores.append(metrics.get(metric, 0.0))
 
     # Report average metrics
     for metric, scores in metrics_summary.items():

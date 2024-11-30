@@ -3,11 +3,11 @@ from typing import Dict, List
 
 import nltk
 import numpy as np
-from voyageai.client import Client
 from bert_score import score
 from litellm import embedding
 from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
 from rouge_score import rouge_scorer
+from voyageai.client import Client
 
 from research_town.utils.model_prompting import model_prompting
 
@@ -309,29 +309,60 @@ def compute_proposal_metrics(reference: str, generation: str) -> Dict[str, float
     }
 
 
-def compute_review_metrics(reference: str, generation: str) -> Dict[str, float]:
-    bleu = compute_bleu(reference, generation)
-    rouge_l = compute_rouge_l(reference, generation)
-    bert_score = compute_bertscore(reference, generation)
-    gpt_metric = compute_review_gpt_metric(reference, generation)
-    openai_sim = compute_openai_embedding_similarity(reference, generation)
-    voyageai_sim = compute_voyageai_embedding_similarity(reference, generation)
-    openai_sim_per_section = compute_openai_embedding_similarity_per_section(
-        reference, generation
-    )
-    voyageai_sim_per_section = compute_voyageai_embedding_similarity_per_section(
-        reference, generation
-    )
-
-    return {
-        'bleu': bleu,
-        'rouge_l': rouge_l,
-        'gpt_metric_score': gpt_metric,
-        'bert_score': bert_score,
-        'openai_sim': openai_sim,
-        'voyageai_sim': voyageai_sim,
-        'openai_sim_s1': openai_sim_per_section[0],  # Strength
-        'openai_sim_s2': openai_sim_per_section[1],  # Weakness
-        'voyageai_sim_s1': voyageai_sim_per_section[0],  # Strength
-        'voyageai_sim_s2': voyageai_sim_per_section[1],  # Weakness
+def compute_review_metrics(
+    strengths: List[str],
+    weaknesses: List[str],
+    generated_strength: str,
+    generated_weakness: str,
+) -> Dict[str, List[float]]:
+    metrics_raw: Dict[str, List[float]] = {
+        'bleu': [],
+        'rouge_l': [],
+        'bert_score': [],
+        'openai_sim': [],
+        'voyageai_sim': [],
+        'openai_sim_strength': [],
+        'openai_sim_weakness': [],
+        'voyageai_sim_strength': [],
+        'voyageai_sim_weakness': [],
     }
+    for strength, weakness in zip(strengths, weaknesses):
+        generated_review = strength + '\n' + weakness
+        bleu = compute_bleu(
+            generated_review, generated_strength + '\n' + generated_weakness
+        )
+        rouge_l = compute_rouge_l(
+            generated_review, generated_strength + '\n' + generated_weakness
+        )
+        bert_score = compute_bertscore(
+            generated_review, generated_strength + '\n' + generated_weakness
+        )
+        openai_sim = compute_openai_embedding_similarity(
+            generated_review, generated_strength + '\n' + generated_weakness
+        )
+        voyageai_sim = compute_voyageai_embedding_similarity(
+            generated_review, generated_strength + '\n' + generated_weakness
+        )
+        openai_sim_strength = compute_openai_embedding_similarity(
+            strength, generated_strength
+        )
+        openai_sim_weakness = compute_openai_embedding_similarity(
+            weakness, generated_weakness
+        )
+        voyageai_sim_strength = compute_voyageai_embedding_similarity(
+            strength, generated_strength
+        )
+        voyageai_sim_weakness = compute_voyageai_embedding_similarity(
+            weakness, generated_weakness
+        )
+
+        metrics_raw['bleu'].append(bleu)
+        metrics_raw['rouge_l'].append(rouge_l)
+        metrics_raw['bert_score'].append(bert_score)
+        metrics_raw['openai_sim'].append(openai_sim)
+        metrics_raw['voyageai_sim'].append(voyageai_sim)
+        metrics_raw['openai_sim_strength'].append(openai_sim_strength)
+        metrics_raw['openai_sim_weakness'].append(openai_sim_weakness)
+        metrics_raw['voyageai_sim_strength'].append(voyageai_sim_strength)
+        metrics_raw['voyageai_sim_weakness'].append(voyageai_sim_weakness)
+    return metrics_raw
