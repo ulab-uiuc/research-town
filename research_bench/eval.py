@@ -3,7 +3,7 @@ from typing import Dict, List
 
 import nltk
 import numpy as np
-import voyageai
+from voyageai.client import Client
 from bert_score import score
 from litellm import embedding
 from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
@@ -102,7 +102,7 @@ def compute_openai_embedding_similarity(reference: str, hypothesis: str) -> floa
 
 
 def compute_voyageai_embedding_similarity(reference: str, hypothesis: str) -> float:
-    vo = voyageai.Client()
+    vo = Client()
     try:
         response_ref = vo.embed(
             model='voyage-3', texts=[reference], input_type='document'
@@ -182,6 +182,36 @@ def compute_openai_embedding_similarity_per_question(
         return [0.0] * len(questions)
 
 
+def compute_openai_embedding_similarity_per_section(
+    reference: str, hypothesis: str
+) -> List[float]:
+    try:
+        sections = [
+            'Strength -',
+            'Weakness -',
+        ]
+
+        ref_sections = extract_and_clean_question_content(reference, sections)
+        hyp_sections = extract_and_clean_question_content(hypothesis, sections)
+
+        similarities = []
+
+        for ref_text, hyp_text in zip(ref_sections, hyp_sections):
+            if not ref_text or not hyp_text:
+                print(f'Empty section: {ref_text} vs {hyp_text}')
+                similarities.append(0.0)
+                continue
+
+            cosine_sim = compute_openai_embedding_similarity(ref_text, hyp_text)
+            similarities.append(float(cosine_sim))
+
+        return similarities
+
+    except Exception as e:
+        print(f'Error computing embedding similarity per section: {e}')
+        return [0.0] * len(sections)
+
+
 def compute_voyageai_embedding_similarity_per_question(
     reference: str, hypothesis: str
 ) -> List[float]:
@@ -213,6 +243,36 @@ def compute_voyageai_embedding_similarity_per_question(
     except Exception as e:
         print(f'Error computing embedding similarity per question: {e}')
         return [0.0] * len(questions)
+
+
+def compute_voyageai_embedding_similarity_per_section(
+    reference: str, hypothesis: str
+) -> List[float]:
+    try:
+        sections = [
+            'Strength -',
+            'Weakness -',
+        ]
+
+        ref_sections = extract_and_clean_question_content(reference, sections)
+        hyp_sections = extract_and_clean_question_content(hypothesis, sections)
+
+        similarities = []
+
+        for ref_text, hyp_text in zip(ref_sections, hyp_sections):
+            if not ref_text or not hyp_text:
+                print(f'Empty section: {ref_text} vs {hyp_text}')
+                similarities.append(0.0)
+                continue
+
+            cosine_sim = compute_voyageai_embedding_similarity(ref_text, hyp_text)
+            similarities.append(float(cosine_sim))
+
+        return similarities
+
+    except Exception as e:
+        print(f'Error computing embedding similarity per section: {e}')
+        return [0.0] * len(sections)
 
 
 def compute_proposal_metrics(reference: str, generation: str) -> Dict[str, float]:
@@ -256,6 +316,12 @@ def compute_review_metrics(reference: str, generation: str) -> Dict[str, float]:
     gpt_metric = compute_review_gpt_metric(reference, generation)
     openai_sim = compute_openai_embedding_similarity(reference, generation)
     voyageai_sim = compute_voyageai_embedding_similarity(reference, generation)
+    openai_sim_per_section = compute_openai_embedding_similarity_per_section(
+        reference, generation
+    )
+    voyageai_sim_per_section = compute_voyageai_embedding_similarity_per_section(
+        reference, generation
+    )
 
     return {
         'bleu': bleu,
@@ -264,4 +330,8 @@ def compute_review_metrics(reference: str, generation: str) -> Dict[str, float]:
         'bert_score': bert_score,
         'openai_sim': openai_sim,
         'voyageai_sim': voyageai_sim,
+        'openai_sim_s1': openai_sim_per_section[0],  # Strength
+        'openai_sim_s2': openai_sim_per_section[1],  # Weakness
+        'voyageai_sim_s1': voyageai_sim_per_section[0],  # Strength
+        'voyageai_sim_s2': voyageai_sim_per_section[1],  # Weakness
     }

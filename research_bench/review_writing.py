@@ -8,16 +8,16 @@ Output:  Reviewers' Similarity Scores
 
 from typing import List
 
-from research_town.agents import AgentManager
 from research_town.configs import Config
 from research_town.data import Profile
-from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from research_town.envs import ReviewWritingEnv
 from research_town.utils.model_prompting import model_prompting
 
 # Baselines
 
-def write_review_with_only_profiles(intro: str, profiles: List[Profile], config: Config) -> str:
+
+def write_review_with_only_profiles(
+    intro: str, profiles: List[Profile], config: Config
+) -> str:
     bio_strs = '\n'.join([profile.bio for profile in profiles])
 
     prompt = [
@@ -28,14 +28,19 @@ def write_review_with_only_profiles(intro: str, profiles: List[Profile], config:
                 f'{bio_strs}\n'
                 'Here is the introduction of a paper:\n'
                 f'{intro}\n'
-                'Please write a proposal of the paper based on the introduction and authors\' profiles. You should write a paragraph of approximately 200 words.\n'
+                "Please write a proposal of the paper based on the introduction and authors' profiles. You should write a paragraph of approximately 200 words.\n"
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting(
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+    )[0]
     return response
 
-def write_review_with_only_citations(intro: str, ref_contents: List[str], config: Config) -> str:
+
+def write_review_with_only_citations(
+    intro: str, ref_contents: List[str], config: Config
+) -> str:
     ref_strs = '\n'.join([ref for ref in ref_contents if ref is not None])
 
     prompt = [
@@ -52,8 +57,11 @@ def write_review_with_only_citations(intro: str, ref_contents: List[str], config
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting(
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+    )[0]
     return response
+
 
 def write_review_with_profiles_and_citations(
     intro: str, profiles: List[Profile], ref_contents: List[str], config: Config
@@ -71,14 +79,17 @@ def write_review_with_profiles_and_citations(
                 f'{intro}\n'
                 'Here are the references of the paper:\n'
                 f'{ref_strs}\n'
-                'Please write a review of the paper based on the introduction, references, and authors\' profiles. You should write two paragraphs, each of approximately 200 words.\n'
+                "Please write a review of the paper based on the introduction, references, and authors' profiles. You should write two paragraphs, each of approximately 200 words.\n"
                 'First paragraph should start with Strength -\n'
                 'Second paragraph should start with Weakness -\n'
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting(
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+    )[0]
     return response
+
 
 def write_review(
     mode: str,
@@ -92,6 +103,8 @@ def write_review(
     elif mode == 'only_citations':
         return write_review_with_only_citations(intro, ref_contents, config)
     elif mode == 'profiles_and_citations':
-        return write_review_with_profiles_and_citations(intro, profiles, ref_contents, config)
+        return write_review_with_profiles_and_citations(
+            intro, profiles, ref_contents, config
+        )
     else:
         raise ValueError(f'Invalid review writing mode: {mode}')
