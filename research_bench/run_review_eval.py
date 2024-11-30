@@ -2,7 +2,7 @@ import argparse
 import json
 import os
 from multiprocessing import Lock, Pool
-from typing import Any, Dict, List, Tuple, Sequence
+from typing import Any, Dict, List, Sequence, Tuple
 
 from tqdm import tqdm
 
@@ -65,7 +65,7 @@ def save_results(
 
 
 def process_task(
-    task: Tuple[str, Dict[str, Any], Dict[str, Any], List[str], List[str], str, Config]
+    task: Tuple[str, Dict[str, Any], Dict[str, Any], List[str], List[str], str, Config],
 ) -> Tuple[Dict[str, Sequence[str]], Dict[str, List[float]]]:
     return inference(*task)
 
@@ -154,15 +154,15 @@ def main() -> None:
             desc='Processing papers',
         ):
             save_results(results, metrics, args.output_path, lock)
-            with lock:
-                for metric, scores in metrics_summary.items():
-                    scores.append(metrics.get(metric, 0.0))
+            # with lock:
+            #     for metric, scores in metrics_summary.items():
+            #         scores.append(metrics.get(metric, 0.0))
 
     # Report average metrics
-    for metric, scores in metrics_summary.items():
-        if scores:
-            average = sum(scores) / len(scores)
-            logger.info(f"Average {metric.replace('_', ' ').upper()}: {average:.4f}")
+    # for metric, scores in metrics_summary.items():
+    #     if scores:
+    #         average = sum(scores) / len(scores)
+    #         logger.info(f"Average {metric.replace('_', ' ').upper()}: {average:.4f}")
 
 
 if __name__ == '__main__':
