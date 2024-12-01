@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import pearsonr
 from collections import defaultdict
+import random
+random.seed(42)
 
 def load_paper_bench(filepath):
     with open(filepath, 'r') as f:
@@ -101,6 +103,7 @@ def main():
     filtered_dataset_sorted = sort_dataset_by_similarity(filtered_dataset)
     bottom_500 = filtered_dataset_sorted[:500]
     top_500 = filtered_dataset_sorted[-500:]
+    mid_500 = random.sample(filtered_dataset_sorted[500:-500], 500)
     
     category_data = analyze_categories(filtered_dataset, paper_bench_full)
     category_avg, category_num = calculate_category_stats(category_data)
@@ -125,8 +128,9 @@ def main():
     for key, data in paper_bench_full.items():
         if 'paper_data' not in data.keys():
             import pdb; pdb.set_trace()
-    save_dataset(bottom_500, paper_bench_full, './paper_bench/paper_bench_hard_500.json')
-    save_dataset(top_500, paper_bench_full, './paper_bench/paper_bench_easy_500.json')
+    #save_dataset(bottom_500, paper_bench_full, './paper_bench/paper_bench_hard_500.json')
+    #save_dataset(top_500, paper_bench_full, './paper_bench/paper_bench_easy_500.json')
+    #save_dataset(mid_500, paper_bench_full, './paper_bench/paper_bench_mid_500.json')
 
 if __name__ == "__main__":
     main()
