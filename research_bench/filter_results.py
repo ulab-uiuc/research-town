@@ -3,24 +3,39 @@ import json
 with open('./mlbench/mlbench_full.json', 'r') as f:
     mlbench_full = json.load(f)
 
+with open('./iclrbench/iclrbench.json', 'r') as f:
+    iclrbench_full = json.load(f)
 
 filtered_data = {}
 for key, value in mlbench_full.items():
     count = 0
     references = value['paper_data']['references']
     for ref in references:
-        ref_sections = ref['reference_section']
-        if not ref_sections:
+        abstract = ref['abstract']
+        if not abstract:
             continue
-        for section in ref_sections:
-            if 'related work' in section.lower():
-                count += 1
-                break
-    if count >= 5:
+        count += 1
+    if count >= 20:
         filtered_data[key] = value
+
+for key, value in iclrbench_full.items():
+    count = 0
+    references = value['paper_data']['references']
+    for ref in references:
+        abstract = ref['abstract']
+        if not abstract:
+            continue
+        count += 1
+    if count >= 20:
+        filtered_data[key] = value
+
+
 print(len(mlbench_full))
+print(len(iclrbench_full))
 print(len(filtered_data))
 
+import pdb; pdb.set_trace()
 
-with open('./mlbench/mlbench_full_filtered.json', 'w') as f:
+
+with open('./paper_bench/paper_bench_full.json', 'w') as f:
     json.dump(filtered_data, f)

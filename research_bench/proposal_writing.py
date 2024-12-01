@@ -461,6 +461,7 @@ def write_proposal_fake_researchtown(
             {
                 'role': 'user',
                 'content': (
+                    "You need to write a research proposal for a paper in the field of Machine Learning.\n\n"
                     "Here is a high-level summarized insight of a research field Machine Learning.\n\n"
                     "Here are the five core questions:\n\n"
                     "[Question 1] - What is the problem?\n\n"
@@ -486,7 +487,7 @@ def write_proposal_fake_researchtown(
                     'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
                     'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                     "You should rely on both the related papers and your profile to generate the question. Typically, some metrics, datasets or detailed experimental design can be transfered to this new proposal.\n\n"
-                    f'Contents collect from related papers:\n{ref_strs}\n\n'
+                    f'Contents collect from cited papers:\n{ref_strs}\n\n'
                     'Please brainstorm a following proposal with the given format.'
                 ),
             }

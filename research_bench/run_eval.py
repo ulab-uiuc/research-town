@@ -24,24 +24,12 @@ def inference(
     config: Config,
 ) -> Tuple[Dict[str, str], Dict[str, float]]:
     profiles = [Profile(**data) for data in author_data.values()]
-    ref_abstracts = []
-    for ref in paper_data.get('references', []):
-        reference_section = ref.get('reference_section', [])
-        if not reference_section:
-            continue
-        #for section in reference_section:
-            #if 'related work' in section.lower():
-            #    ref_abstracts.append(ref['abstract'])
-            #    break
-        ref_abstracts.append(ref['abstract'])
-    
     ref_abstracts_full = []
     for ref in paper_data.get('references', []):
         if ref['abstract']:
             ref_abstracts_full.append(ref['abstract'])
     
     print(len(ref_abstracts_full))
-    print(len(ref_abstracts))
 
     paper_title = paper_data['title']
     gen_proposal = write_proposal(mode, profiles, ref_abstracts_full, config, paper_title)

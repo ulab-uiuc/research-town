@@ -24,7 +24,7 @@ def load_metrics(file_path, limit=None):
         'voyageai_sim_q5': [],
     }
 
-    with open('./mlbench/mlbench_full_filtered.json', 'r') as f:
+    with open('./paper_bench/paper_bench_full.json', 'r') as f:
         mlbench_full_filtered = json.load(f)
         ids = list(mlbench_full_filtered.keys())
 
@@ -116,11 +116,11 @@ if __name__ == "__main__":
     #file1_path = './results/mlbench_result_4o_mini_fake_research_town_full_author.jsonl'
     #file2_path = './results/mlbench_result_4o_mini_citation_only.jsonl'
 
-    #file1_path = './results/mlbench_use_all_citations_result_4o_mini_fake_research_town.jsonl'
-    #file2_path = './results/mlbench_use_all_citations_result_4o_mini_citation_only.jsonl'
+    file1_path = './results/mlbench_use_all_citations_result_4o_mini_fake_research_town.jsonl'
+    file2_path = './results/mlbench_use_all_citations_result_4o_mini_citation_only.jsonl'
 
-    file1_path = './results/mlbench_use_only_related_work_result_4o_mini_fake_research_town.jsonl'
-    file2_path = './results/mlbench_use_only_related_work_result_4o_mini_citation_only.jsonl'
+    #file1_path = './results/mlbench_use_only_related_work_result_4o_mini_fake_research_town.jsonl'
+    #file2_path = './results/mlbench_use_only_related_work_result_4o_mini_citation_only.jsonl'
 
     #file1_path = './results/crossbench_result_4o_mini_fake_research_town_first_and_last_author.jsonl'
     #file2_path = './results/crossbench_result_4o_mini_citation_only.jsonl'
