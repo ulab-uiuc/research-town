@@ -29,8 +29,6 @@ def inference(
         if ref['abstract']:
             ref_abstracts_full.append(ref['abstract'])
     
-    print(len(ref_abstracts_full))
-
     paper_title = paper_data['title']
     gen_proposal = write_proposal(mode, profiles, ref_abstracts_full, config, paper_title)
 
@@ -122,6 +120,7 @@ def main() -> None:
         ]
     }
 
+    '''
     for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
         paper_data = data['paper_data']
         author_data = data['author_data']
@@ -132,6 +131,7 @@ def main() -> None:
         )
         lock = Lock()
         save_results(results, metrics, args.output_path, lock)
+    '''
 
     lock = Lock()
     with Pool(processes=args.num_processes) as pool:

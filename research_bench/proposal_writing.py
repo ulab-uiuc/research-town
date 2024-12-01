@@ -406,10 +406,9 @@ def write_proposal_debug(profiles: List[Profile], ref_contents: List[str], confi
 
 import random
 from typing import List
-from voyageai import Client
 
 def fuse_questions(fiveq_candidates: List[str], ref_strs: str, config: Config) -> str:
-    fiveq_candidate_strs = '\n'.join([f'Proposal {idx + 1}. {candidate}' for idx, candidate in enumerate(fiveq_candidates)])
+    fiveq_candidate_strs = '\n'.join([f'Proposal {idx + 1}.\n\n {candidate}\n\n' for idx, candidate in enumerate(fiveq_candidates)])
     prompt = [
         {
             'role': 'user',
@@ -422,7 +421,6 @@ def fuse_questions(fiveq_candidates: List[str], ref_strs: str, config: Config) -
                 f"[Question 4] - Why hasn't it been solved before?\n"
                 f"[Question 5] - What are the key components of my approach and results?\n\n"
                 f"Multiple proposals have been generated for the above questions:\n{fiveq_candidate_strs}\n\n"
-                f"Additionally, here are related references collected from papers:\n{ref_strs}\n\n"
                 f"Your task is to summarize and select the key insights that are suitable from these proposals.\n"
                 f"1. Identify shared themes and common points among the proposals.\n"
                 f"2. Highlight and select any valuable perspectives or contrasting elements and combine them into one proposal.\n"
@@ -461,33 +459,30 @@ def write_proposal_fake_researchtown(
             {
                 'role': 'user',
                 'content': (
-                    "You need to write a research proposal for a paper in the field of Machine Learning.\n\n"
+                    f'Here is the content collected from related papers:\n{ref_strs}\n\n'
+                    "You need to write a research proposal for a paper in the field of Machine Learning based on these related papers.\n"
+                    "The research proposal should more rely on the cited paper not based on your research experience.\n"
+                    "Your research experience should be utilized to select the most useful and valuable papers included in the related papers for proposal writing.\n"
                     "Here is a high-level summarized insight of a research field Machine Learning.\n\n"
                     "Here are the five core questions:\n\n"
                     "[Question 1] - What is the problem?\n\n"
                     "Formulate the specific research question you aim to address.\n"
                     "Only output one question and do not include any more information.\n"
-                    "Rely on the related papers to generate the question, do not rely on your previous experience.\n\n"
                     "[Question 2] - Why is it interesting and important?\n\n"
                     "Explain the broader implications of solving this problem for the research community.\n"
                     "Discuss how such paper will affect the future research.\n"
                     "Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n"
-                    "Rely on the related papers to generate the question, do not rely on your previous experience.\n\n"
                     "[Question 3] - Why is it hard?\n\n"
                     "Discuss the challenges and complexities involved in solving this problem.\n"
                     "Explain why naive or straightforward approaches may fail.\n"
                     "Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n"
-                    "Rely on the related papers to generate the question, do not rely on your previous experience.\n\n"
                     "[Question 4] - Why hasn't it been solved before?\n\n"
                     "Identify gaps or limitations in previous research or existing solutions.\n"
                     "Discuss any barriers that have prevented this problem from being solved until now.\n"
                     "Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n"
-                    "Rely on the related papers to generate the question, do not rely on your previous experience.\n\n"
                     '[Question 5] - What are the key components of my approach and results?\n\n'
                     'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
                     'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                    "You should rely on both the related papers and your profile to generate the question. Typically, some metrics, datasets or detailed experimental design can be transfered to this new proposal.\n\n"
-                    f'Contents collect from cited papers:\n{ref_strs}\n\n'
                     'Please brainstorm a following proposal with the given format.'
                 ),
             }
