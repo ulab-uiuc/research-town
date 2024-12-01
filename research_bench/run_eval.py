@@ -12,6 +12,7 @@ from research_bench.utils import load_benchmark
 from research_town.configs import Config
 from research_town.data import Profile
 from research_town.utils.logger import logger
+import random
 
 
 def inference(
@@ -23,10 +24,27 @@ def inference(
     config: Config,
 ) -> Tuple[Dict[str, str], Dict[str, float]]:
     profiles = [Profile(**data) for data in author_data.values()]
-    ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
+    ref_abstracts = []
+    for ref in paper_data.get('references', []):
+        reference_section = ref.get('reference_section', [])
+        if not reference_section:
+            continue
+        #for section in reference_section:
+            #if 'related work' in section.lower():
+            #    ref_abstracts.append(ref['abstract'])
+            #    break
+        ref_abstracts.append(ref['abstract'])
+    
+    ref_abstracts_full = []
+    for ref in paper_data.get('references', []):
+        if ref['abstract']:
+            ref_abstracts_full.append(ref['abstract'])
+    
+    print(len(ref_abstracts_full))
+    print(len(ref_abstracts))
 
     paper_title = paper_data['title']
-    gen_proposal = write_proposal(mode, profiles, ref_abstracts, config, paper_title)
+    gen_proposal = write_proposal(mode, profiles, ref_abstracts_full, config, paper_title)
 
     metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
     results = {
