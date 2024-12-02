@@ -8,7 +8,7 @@ from bert_score import score
 from litellm import embedding
 from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
 from rouge_score import rouge_scorer
-
+import torch
 from research_town.utils.model_prompting import model_prompting
 
 # Initialize NLTK resources
@@ -42,9 +42,10 @@ def compute_rouge_l(reference: str, hypothesis: str) -> float:
 
 def compute_bertscore(reference: str, hypothesis: str) -> float:
     try:
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
         # Compute BERTScore
         P, R, F1 = score(
-            [hypothesis], [reference], lang='en', rescale_with_baseline=True
+            [hypothesis], [reference], lang='en', rescale_with_baseline=True, device=device
         )
         return float(F1.mean().item())
     except Exception as e:
