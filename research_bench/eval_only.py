@@ -109,6 +109,13 @@ if __name__ == "__main__":
         print(f"Paired t-test for q{i}: t-statistic = {t_stat}, p-value = {p_value}")
 
 
-    print(f"Paired t-test: t-statistic = {t_stat}, p-value = {p_value}")
+    openai_avg_metric = np.dot([0.2] * 5, [np.mean(metrics_file1[f'openai_sim_q{i}']) for i in range(1, 6)])
+    voyageai_avg_metric = np.dot([0.2] * 5, [np.mean(metrics_file1[f'voyageai_sim_q{i}']) for i in range(1, 6)])
+    print(f"File 1 - OpenAI metric: {openai_avg_metric}, VoyageAI metric: {voyageai_avg_metric}")
+
+    openai_avg_metric = np.dot([0.2] * 5, [np.mean(metrics_file2[f'openai_sim_q{i}']) for i in range(1, 6)])
+    voyageai_avg_metric = np.dot([0.2] * 5, [np.mean(metrics_file2[f'voyageai_sim_q{i}']) for i in range(1, 6)])
+    print(f"File 2 - OpenAI metric: {openai_avg_metric}, VoyageAI metric: {voyageai_avg_metric}")
+
 
     plot_sorted_metrics(metrics_file1['openai_sim_q5'], metrics_file2['openai_sim_q5'])

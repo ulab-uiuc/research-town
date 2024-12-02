@@ -101,6 +101,7 @@ def main():
             paper_ids.remove(data['paper_id'])
     
     filtered_dataset_sorted = sort_dataset_by_similarity(filtered_dataset)
+
     bottom_500 = filtered_dataset_sorted[:500]
     top_500 = filtered_dataset_sorted[-500:]
     mid_500 = random.sample(filtered_dataset_sorted[500:-500], 500)
