@@ -29,7 +29,10 @@ def compute_weighted_metric(metrics):
     weights = [0.2] * 5
     openai_metric = np.dot(weights, [np.mean(metrics[f'openai_sim_q{i}']) for i in range(1, 6)])
     voyageai_metric = np.dot(weights, [np.mean(metrics[f'voyageai_sim_q{i}']) for i in range(1, 6)])
-    return openai_metric, voyageai_metric
+    bleu = np.dot(weights, [np.mean(metrics[f'bleu']) for i in range(1, 6)])
+    rouge_l = np.dot(weights, [np.mean(metrics[f'rouge_l']) for i in range(1, 6)])
+    bert_score = np.dot(weights, [np.mean(metrics[f'bert_score']) for i in range(1, 6)])
+    return openai_metric, voyageai_metric, bleu, rouge_l, bert_score
 
 def plot_sorted_metrics(metric1, metric2):
     sorted_indices = np.argsort(metric2)
@@ -44,14 +47,14 @@ if __name__ == "__main__":
     # file1_path = './results/mlbench_result_4o_mini_fake_research_town_full_author.jsonl'
     # file2_path = './results/mlbench_result_4o_mini_citation_only.jsonl'
 
-    #file1_path = './results/paper_bench_hard_500_result_4o_mini_fake_research_town.jsonl'
-    #file2_path = './results/paper_bench_hard_500_result_4o_mini_citation_only.jsonl'
+    file1_path = './results/paper_bench_hard_500_result_4o_mini_fake_research_town.jsonl'
+    file2_path = './results/paper_bench_hard_500_result_4o_mini_citation_only.jsonl'
 
     #file1_path = './results/paper_bench_mid_500_result_4o_mini_fake_research_town.jsonl'
     #file2_path = './results/paper_bench_mid_500_result_4o_mini_citation_only.jsonl'
 
-    file1_path = './results/paper_bench_easy_500_result_4o_mini_fake_research_town.jsonl'
-    file2_path = './results/paper_bench_easy_500_result_4o_mini_citation_only.jsonl'
+    #file1_path = './results/paper_bench_easy_500_result_4o_mini_fake_research_town.jsonl'
+    #file2_path = './results/paper_bench_easy_500_result_4o_mini_citation_only.jsonl'
 
     # file1_path = './results/mlbench_use_all_citations_result_4o_mini_fake_research_town.jsonl'
     # file2_path = './results/mlbench_use_all_citations_result_4o_mini_citation_only.jsonl'
@@ -84,13 +87,18 @@ if __name__ == "__main__":
 
     metrics_file1 = convert_aligned_to_metrics(aligned_metrics_file1)
     metrics_file2 = convert_aligned_to_metrics(aligned_metrics_file2)
+    import pdb; pdb.set_trace()
 
     print("Computing weighted metrics...")
-    metric1_openai, metric1_voyageai = compute_weighted_metric(metrics_file1)
-    metric2_openai, metric2_voyageai = compute_weighted_metric(metrics_file2)
+    metric1_openai, metric1_voyageai, metric1_bleu, metric1_rougel, metric1_bertscore = compute_weighted_metric(metrics_file1)
+    metric2_openai, metric2_voyageai, metric2_bleu, metric2_rougel, metric2_bertscore = compute_weighted_metric(metrics_file2)
 
     print(f"File 1 - OpenAI metric: {metric1_openai}, VoyageAI metric: {metric1_voyageai}")
     print(f"File 2 - OpenAI metric: {metric2_openai}, VoyageAI metric: {metric2_voyageai}")
+    print(f"File 1 - BLEU metric: {metric1_bleu}, ROUGE-L metric: {metric1_rougel}")
+    print(f"File 2 - BLEU metric: {metric2_bleu}, ROUGE-L metric: {metric2_rougel}")
+    print(f"File 1 - BERTScore metric: {metric1_bertscore}")
+    print(f"File 2 - BERTScore metric: {metric2_bertscore}")
 
     print("Performing paired t-tests...")
     t_stat, p_value = ttest_rel(

@@ -214,14 +214,40 @@ def compute_voyageai_embedding_similarity_per_question(
         print(f'Error computing embedding similarity per question: {e}')
         return [0.0] * len(questions)
 
+def compute_bertscore_per_question(reference: str, hypothesis: str) -> List[float]:
+    try:
+        questions = [
+            'What is the problem?',
+            'Why is it interesting and important?',
+            'Why is it hard?',
+            "Why hasn't it been solved before?",
+            'What are the key components of my approach and results?',
+        ]
+
+        ref_questions = extract_and_clean_question_content(reference, questions)
+        hyp_questions = extract_and_clean_question_content(hypothesis, questions)
+
+        similarities = []
+
+        for ref_text, hyp_text in zip(ref_questions, hyp_questions):
+            if not ref_text or not hyp_text:
+                print(f'Empty question: {ref_text} vs {hyp_text}')
+                similarities.append(0.0)
+                continue
+
+            cosine_sim = compute_bertscore(ref_text, hyp_text)
+            similarities.append(float(cosine_sim))
+
+        return similarities
+
+    except Exception as e:
+        print(f'Error computing BERTScore per question: {e}')
+        return [0.0] * len(questions)
 
 def compute_proposal_metrics(reference: str, generation: str) -> Dict[str, float]:
     bleu = compute_bleu(reference, generation)
     rouge_l = compute_rouge_l(reference, generation)
-    bert_score = compute_bertscore(reference, generation)
-    gpt_metric = compute_proposal_gpt_metric(reference, generation)
-    openai_sim = compute_openai_embedding_similarity(reference, generation)
-    voyageai_sim = compute_voyageai_embedding_similarity(reference, generation)
+    bert_score_per_question = compute_bertscore_per_question(reference, generation)
     openai_sim_per_question = compute_openai_embedding_similarity_per_question(
         reference, generation
     )
@@ -232,10 +258,11 @@ def compute_proposal_metrics(reference: str, generation: str) -> Dict[str, float
     return {
         'bleu': bleu,
         'rouge_l': rouge_l,
-        'gpt_metric_score': gpt_metric,
-        'bert_score': bert_score,
-        'openai_sim': openai_sim,
-        'voyageai_sim': voyageai_sim,
+        'bert_score_q1': bert_score_per_question[0],
+        'bert_score_q2': bert_score_per_question[1],
+        'bert_score_q3': bert_score_per_question[2],
+        'bert_score_q4': bert_score_per_question[3],
+        'bert_score_q5': bert_score_per_question[4],
         'openai_sim_q1': openai_sim_per_question[0],
         'openai_sim_q2': openai_sim_per_question[1],
         'openai_sim_q3': openai_sim_per_question[2],
