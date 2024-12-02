@@ -72,6 +72,7 @@ def main() -> None:
             'author_citation',
             'textgnn',
             'sakana_ai_scientist',
+            'swarm',
         ],
         help='Processing mode',
     )

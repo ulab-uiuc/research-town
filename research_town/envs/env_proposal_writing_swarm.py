@@ -60,19 +60,38 @@ class ProposalWritingSWARM(BaseEnv):
 
             if papers:
                 seralized_papers = ''
-                for idx, paper in enumerate(papers):
-                    assert isinstance(paper, Paper)
-                    seralized_papers += f'[{idx + 1}] Title: {paper.title}'
-                    authors = ', '.join(paper.authors)
-                    seralized_papers += f'Authors: {authors}'
-                    seralized_papers += f'Abstract: {paper.abstract}'
-                    seralized_papers += f'URL: {paper.url}'
-                    seralized_papers += '\n'
+                is_all_paper_obj = all(isinstance(paper, Paper) for paper in papers)
+                is_all_paper_str = all(isinstance(paper, str) for paper in papers)
+                if not is_all_paper_obj and not is_all_paper_str:
+                    raise ValueError('All papers must be of the same type: Paper or str')
+                if is_all_paper_obj and is_all_paper_str:
+                    raise ValueError('Error in paper type. This should not happen.')
+                if is_all_paper_obj:
+                    for idx, paper in enumerate(papers):
+                        seralized_papers += f'[{idx + 1}] Title: {paper.title}'
+                        authors = ', '.join(paper.authors)
+                        seralized_papers += f'Authors: {authors}'
+                        seralized_papers += f'Abstract: {paper.abstract}'
+                        seralized_papers += f'URL: {paper.url}'
+                        seralized_papers += '\n'
+                elif is_all_paper_str:
+                    idx = 0
+                    for paper in papers:
+                        if paper:
+                            idx += 1
+                        else:
+                            continue
+                        seralized_papers += f'[{idx}] {paper}\n'
 
                 instructions_str += (
                     f'\n\nYou will refer to the following papers when responding.\n'
                     f'You will use the markdown format [[index]](URL) to refer to the papers.\n'
                     f"Example: 'As mentioned in [[1]](https://arxiv.org/abs/...), the authors ...'\n"
+                    f'Here are the papers:\n{seralized_papers}'
+                ) if is_all_paper_obj else (
+                    f'\n\nYou will refer to the following papers when responding.\n'
+                    # f'You will use the format [index] to refer to the papers.\n'
+                    # f"Example: 'As mentioned in [1], the authors ...'\n"
                     f'Here are the papers:\n{seralized_papers}'
                 )
 
@@ -93,20 +112,21 @@ class ProposalWritingSWARM(BaseEnv):
             round_insights = []
 
             for researcher in researchers:
-                search_query = (
-                    ' '.join(insight.content for insight in accumulated_insights)
-                    if accumulated_insights
-                    else ';'.join(self.contexts)
-                )
-                related_papers = self.paper_db.search_papers(
-                    query=search_query,
-                    num=self.config.param.related_paper_num,
-                )
+                # search_query = (
+                #     ' '.join(insight.content for insight in accumulated_insights)
+                #     if accumulated_insights
+                #     else ';'.join(self.contexts)
+                # )
+                # related_papers = self.paper_db.search_papers(
+                #     query=search_query,
+                #     num=self.config.param.related_paper_num,
+                # )
+                related_papers = self.contexts
 
                 messages = [
                     {
                         'role': 'user',
-                        'content': 'Please summarize your provided related papers in 200 words. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.',
+                        'content': 'Please summarize your provided related papers in 200 words. Ground on related papers.',
                     }
                 ]
 
@@ -122,7 +142,7 @@ class ProposalWritingSWARM(BaseEnv):
                 messages.append(
                     {
                         'role': 'user',
-                        'content': 'Please summarize 10 keywords from your summary.\nGround on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.',
+                        'content': 'Please summarize 10 keywords from your summary.\nGround on related papers.',
                     }
                 )
 
@@ -141,7 +161,7 @@ class ProposalWritingSWARM(BaseEnv):
                         'content': (
                             f'Round {round_num + 1} discussion based on literature review summary and keywords.\n'
                             f'Please provide your new research insights based on your expertise.\n'
-                            f'Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
+                            f'Ground on related papers.'
                         ),
                     }
                 )
@@ -155,7 +175,7 @@ class ProposalWritingSWARM(BaseEnv):
 
                 insight = response.messages[-1]['content']
 
-                print(insight)
+                # print(insight)
 
                 # Log each researcher's insight
                 insight_obj = Insight(content=insight)
@@ -167,10 +187,11 @@ class ProposalWritingSWARM(BaseEnv):
 
         # Final step: Leader generates the proposal based on all accumulated insights
         combined_summary = ' '.join(insight.content for insight in accumulated_insights)
-        final_related_papers = self.paper_db.search_papers(
-            query=combined_summary,
-            num=self.config.param.related_paper_num,
-        )
+        # final_related_papers = self.paper_db.search_papers(
+        #     query=combined_summary,
+        #     num=self.config.param.related_paper_num,
+        # )
+        final_related_papers = self.contexts
 
         messages = [
             {
@@ -181,7 +202,7 @@ class ProposalWritingSWARM(BaseEnv):
                     'First question to answer:'
                     '[Question 1] - What is the problem?\n\n'
                     'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
-                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
+                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers.'
                 ),
             }
         ]
@@ -203,7 +224,7 @@ class ProposalWritingSWARM(BaseEnv):
                     'Explain the broader implications of solving this problem for the research community.\n'
                     'Discuss how such paper will affect the future research.\n'
                     'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
-                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
+                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers.'
                 ),
             }
         )
@@ -225,7 +246,7 @@ class ProposalWritingSWARM(BaseEnv):
                     'Discuss the challenges and complexities involved in solving this problem.\n'
                     'Explain why naive or straightforward approaches may fail.\n'
                     'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
-                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
+                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers.'
                 ),
             }
         )
@@ -247,7 +268,7 @@ class ProposalWritingSWARM(BaseEnv):
                     'Identify gaps or limitations in previous research or existing solutions.\n'
                     'Discuss any barriers that have prevented this problem from being solved until now.\n'
                     'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
-                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
+                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers.'
                 ),
             }
         )
@@ -268,7 +289,7 @@ class ProposalWritingSWARM(BaseEnv):
                     '[Question 5] - What are the key components of my approach and results?\n\n'
                     'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                     'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers and use [1], [2], ... to refer to them. Please ensure that no identical citations point to different URLs, and no different citations point to the same URL.'
+                    'Response in 100 words. Use declarative sentences instead of interrogative ones. Ground on related papers.'
                 ),
             }
         )
