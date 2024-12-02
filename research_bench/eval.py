@@ -247,7 +247,6 @@ def compute_bertscore_per_question(reference: str, hypothesis: str) -> List[floa
 def compute_proposal_metrics(reference: str, generation: str) -> Dict[str, float]:
     bleu = compute_bleu(reference, generation)
     rouge_l = compute_rouge_l(reference, generation)
-    bert_score_per_question = compute_bertscore_per_question(reference, generation)
     openai_sim_per_question = compute_openai_embedding_similarity_per_question(
         reference, generation
     )
@@ -258,11 +257,6 @@ def compute_proposal_metrics(reference: str, generation: str) -> Dict[str, float
     return {
         'bleu': bleu,
         'rouge_l': rouge_l,
-        'bert_score_q1': bert_score_per_question[0],
-        'bert_score_q2': bert_score_per_question[1],
-        'bert_score_q3': bert_score_per_question[2],
-        'bert_score_q4': bert_score_per_question[3],
-        'bert_score_q5': bert_score_per_question[4],
         'openai_sim_q1': openai_sim_per_question[0],
         'openai_sim_q2': openai_sim_per_question[1],
         'openai_sim_q3': openai_sim_per_question[2],

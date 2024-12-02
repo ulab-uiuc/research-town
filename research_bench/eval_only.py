@@ -29,10 +29,10 @@ def compute_weighted_metric(metrics):
     weights = [0.2] * 5
     openai_metric = np.dot(weights, [np.mean(metrics[f'openai_sim_q{i}']) for i in range(1, 6)])
     voyageai_metric = np.dot(weights, [np.mean(metrics[f'voyageai_sim_q{i}']) for i in range(1, 6)])
+    bertscore_metric = np.dot(weights, [np.mean(metrics[f'bertscore_q{i}']) for i in range(1, 6)])
     bleu = np.dot(weights, [np.mean(metrics[f'bleu']) for i in range(1, 6)])
     rouge_l = np.dot(weights, [np.mean(metrics[f'rouge_l']) for i in range(1, 6)])
-    bert_score = np.dot(weights, [np.mean(metrics[f'bert_score']) for i in range(1, 6)])
-    return openai_metric, voyageai_metric, bleu, rouge_l, bert_score
+    return openai_metric, voyageai_metric, bertscore_metric, bleu, rouge_l
 
 def plot_sorted_metrics(metric1, metric2):
     sorted_indices = np.argsort(metric2)
@@ -87,11 +87,10 @@ if __name__ == "__main__":
 
     metrics_file1 = convert_aligned_to_metrics(aligned_metrics_file1)
     metrics_file2 = convert_aligned_to_metrics(aligned_metrics_file2)
-    import pdb; pdb.set_trace()
 
     print("Computing weighted metrics...")
-    metric1_openai, metric1_voyageai, metric1_bleu, metric1_rougel, metric1_bertscore = compute_weighted_metric(metrics_file1)
-    metric2_openai, metric2_voyageai, metric2_bleu, metric2_rougel, metric2_bertscore = compute_weighted_metric(metrics_file2)
+    metric1_openai, metric1_voyageai, metric1_bertscore, metric1_bleu, metric1_rougel = compute_weighted_metric(metrics_file1)
+    metric2_openai, metric2_voyageai, metric2_bertscore, metric2_bleu, metric2_rougel = compute_weighted_metric(metrics_file2)
 
     print(f"File 1 - OpenAI metric: {metric1_openai}, VoyageAI metric: {metric1_voyageai}")
     print(f"File 2 - OpenAI metric: {metric2_openai}, VoyageAI metric: {metric2_voyageai}")
@@ -115,15 +114,5 @@ if __name__ == "__main__":
         print(f"average score for q{i} in file1: {np.mean([metrics_file1[f'openai_sim_q{i}'][j] for j in range(len(shared_ids))])}")
         print(f"average score for q{i} in file2: {np.mean([metrics_file2[f'openai_sim_q{i}'][j] for j in range(len(shared_ids))])}")
         print(f"Paired t-test for q{i}: t-statistic = {t_stat}, p-value = {p_value}")
-
-
-    openai_avg_metric = np.dot([0.2] * 5, [np.mean(metrics_file1[f'openai_sim_q{i}']) for i in range(1, 6)])
-    voyageai_avg_metric = np.dot([0.2] * 5, [np.mean(metrics_file1[f'voyageai_sim_q{i}']) for i in range(1, 6)])
-    print(f"File 1 - OpenAI metric: {openai_avg_metric}, VoyageAI metric: {voyageai_avg_metric}")
-
-    openai_avg_metric = np.dot([0.2] * 5, [np.mean(metrics_file2[f'openai_sim_q{i}']) for i in range(1, 6)])
-    voyageai_avg_metric = np.dot([0.2] * 5, [np.mean(metrics_file2[f'voyageai_sim_q{i}']) for i in range(1, 6)])
-    print(f"File 2 - OpenAI metric: {openai_avg_metric}, VoyageAI metric: {voyageai_avg_metric}")
-
 
     plot_sorted_metrics(metrics_file1['openai_sim_q5'], metrics_file2['openai_sim_q5'])
