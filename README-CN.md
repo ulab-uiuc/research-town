@@ -2,7 +2,7 @@
   <img src="assets/research_town.png" style="width: 100%;"></img>
 </div>
 
-<h1 align="center">Research Town (研究员小镇): Simulator of Research Community 模拟科研人的论坛 </h1>
+<h1 align="center">Research Town: Simulator of Research Community </h1>
 
 <div align="center">
 
