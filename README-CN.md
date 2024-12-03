@@ -2,7 +2,7 @@
   <img src="assets/research_town.png" style="width: 100%;"></img>
 </div>
 
-<h1 align="center">Research Town: Simulator of Research Community</h1>
+<h1 align="center">Research Town (研究员小镇): Simulator of Research Community 模拟科研人的论坛 </h1>
 
 <div align="center">
 
@@ -13,6 +13,8 @@
 [![WeChat](https://img.shields.io/badge/WeChat-Join%20Us-09B83E?logo=wechat&logoColor=white)](assets/wechat.png)
 [![codecov](https://codecov.io/github/ulab-uiuc/research-town/graph/badge.svg?token=00LRQFX0QR)](https://codecov.io/github/ulab-uiuc/research-town)
 
+
+[English](README.md) | [中文](README-CN.md)
 </div>
 
 ## 简介
