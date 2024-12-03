@@ -33,7 +33,7 @@ def match_author_ids(
     search_results = semantic_client.search_author(
         author_name,
         fields=['authorId', 'papers.title'],
-        limit=100,
+        limit=250,
     )
 
     author_ids = set()
@@ -82,55 +82,24 @@ def get_papers_from_author_id(
         return papers[:paper_max_num]
     else:
         # Filter papers based on the year
-        filtered_papers = [
-            paper for paper in papers if paper.get('year', datetime.now().year) < before_year
-        ]
+        filtered_papers = []
+        for paper in papers:
+            if paper['year'] is None:
+                paper['year'] = 2024
+            if paper['year'] < before_year:
+                filtered_papers.append(paper)
         return filtered_papers[:paper_max_num]
 
-
-@api_calling_error_exponential_backoff(retries=6, base_wait_time=1)
-def get_paper_publish_year(paper_title: str, author_id: str) -> int:
-    url = "https://api.semanticscholar.org/graph/v1/paper/search"
-    params = {
-        "query": paper_title,
-        "fields": "title,year,authors",
-        "author_ids": author_id  # Include the author ID as a parameter
-    }
-    response = requests.get(url, params=params)
-    
-    if response.status_code == 200:
-        data = response.json()
-        if data.get("data"):
-            # Find the first matching paper by the given author
-            for paper in data["data"]:
-                if any(author.get("authorId") == author_id for author in paper.get("authors", [])):
-                    return paper.get("year", None)
-            print("No matching papers found for the given author.")
-            return None
-        else:
-            print("No matching papers found.")
-            return None
-    else:
-        print(f"Error: {response.status_code}, {response.text}")
-        return None
 
 def collect_publications_and_coauthors(
     author: str,
     known_paper_titles: Optional[List[str]] = None,
     paper_max_num: int = 20,
     exclude_known: bool = True,
+    before_year: Optional[int] = None,
 ) -> Tuple[List[str], List[str], List[str]]:
     matched_author_ids = match_author_ids(author, known_paper_titles)
     author_id = matched_author_ids.pop()  # Only one author ID is expected
-
-    before_year = None
-    if known_paper_titles is not None and len(known_paper_titles) > 0:
-        years = [get_paper_publish_year(paper_title=title, author_id=author_id) for title in known_paper_titles]
-        years = [year for year in years if year is not None]
-        if len(years) > 0:
-            before_year = min(year for year in years if year is not None)
-        else:
-            before_year = None
 
     papers = get_papers_from_author_id(author_id, paper_max_num, before_year=before_year)
     paper_abstracts = []

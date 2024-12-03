@@ -90,11 +90,15 @@ if __name__ == "__main__":
     # file1_path = './results/paper_bench_result_4o_mini_fake_research_town.jsonl'
     # file2_path = './results/paper_bench_result_4o_mini_citation_only_part1.jsonl'
 
-    file1_path = './results/cross_bench_1202_result_4o_mini_fake_research_town.jsonl'
-    file2_path = './results/cross_bench_1202_result_4o_mini_fake_research_town_twice.jsonl'
+    #file1_path = './results/cross_bench_1202_result_4o_mini_fake_research_town.jsonl'
+    #file2_path = './results/cross_bench_1202_result_4o_mini_fake_research_town_twice.jsonl'
 
     #file1_path = './results/paper_bench_mid_500_result_4o_mini_fake_research_town.jsonl'
     #file2_path = './results/paper_bench_mid_500_result_4o_mini_fake_research_town_twice.jsonl'
+
+    file1_path = './results/paper_bench_hard_500_result_4o_mini_fake_research_town.jsonl'
+    file2_path = './results/paper_bench_hard_500_result_4o_mini_swarm.jsonl'
+
 
     print("Finding shared paper_ids...")
     shared_ids = get_shared_ids(file1_path, file2_path)
