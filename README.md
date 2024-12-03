@@ -13,6 +13,8 @@
 [![WeChat](https://img.shields.io/badge/WeChat-Join%20Us-09B83E?logo=wechat&logoColor=white)](assets/wechat.png)
 [![codecov](https://codecov.io/github/ulab-uiuc/research-town/graph/badge.svg?token=00LRQFX0QR)](https://codecov.io/github/ulab-uiuc/research-town)
 
+
+[English](README.md) | [中文](README-CN.md)
 </div>
 
 ## Introduction
