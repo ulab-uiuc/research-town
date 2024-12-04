@@ -2,6 +2,7 @@ import re
 
 from beartype import beartype
 from beartype.typing import Dict, List, Optional, Tuple, Union
+from litellm import token_counter
 
 from .model_prompting import model_prompting
 from .prompt_constructor import openai_format_prompt_construct
@@ -165,6 +166,7 @@ def write_proposal_prompting(
 def write_review_prompting(
     proposal: Dict[str, str],
     model_name: str,
+    profile: Dict[str, str],
     summary_prompt_template: Dict[str, Union[str, List[str]]],
     strength_prompt_template: Dict[str, Union[str, List[str]]],
     weakness_prompt_template: Dict[str, Union[str, List[str]]],
@@ -187,8 +189,10 @@ def write_review_prompting(
     List[Dict[str, str]],
     List[Dict[str, str]],
 ]:
+    token_input_count = 0
+    token_output_count = 0
     proposal_str = map_proposal_to_str(proposal)
-    summary_template_input = {'proposal': proposal_str}
+    summary_template_input = {'proposal': proposal_str, 'bio': profile['bio']}
     summary_messages = openai_format_prompt_construct(
         summary_prompt_template, summary_template_input
     )
@@ -202,15 +206,15 @@ def write_review_prompting(
         stream,
     )[0]
 
-    strength_template_input = {'proposal': proposal_str, 'summary': summary}
+    strength_template_input = {'proposal': proposal_str, 'summary': summary, 'bio': profile['bio']}
     strength_messages = openai_format_prompt_construct(
         strength_prompt_template, strength_template_input
     )
-    weakness_template_input = {'proposal': proposal_str, 'summary': summary}
+    weakness_template_input = {'proposal': proposal_str, 'summary': summary, 'bio': profile['bio']}
     weakness_messages = openai_format_prompt_construct(
         weakness_prompt_template, weakness_template_input
     )
-    ethical_template_input = {'proposal': proposal_str, 'summary': summary}
+    ethical_template_input = {'proposal': proposal_str, 'summary': summary, 'bio': profile['bio']}
     ethical_messages = openai_format_prompt_construct(
         ethical_prompt_template, ethical_template_input
     )
@@ -243,33 +247,45 @@ def write_review_prompting(
         stream,
     )[0]
 
+    token_input_count += token_counter(model=model_name, messages=strength_messages)
+    token_input_count += token_counter(model=model_name, messages=weakness_messages)
+    token_input_count += token_counter(model=model_name, messages=ethical_messages)
+    token_output_count += token_counter(model=model_name, text=strength)
+    token_output_count += token_counter(model=model_name, text=weakness)
+    token_output_count += token_counter(model=model_name, text=ethical_concern)
+
     score_template_input = {
         'proposal': proposal_str,
         'summary': summary,
         'strength': strength,
         'weakness': weakness,
         'ethical_concern': ethical_concern,
+        'bio': profile['bio'],
     }
     score_messages = openai_format_prompt_construct(
         score_prompt_template, score_template_input
     )
 
-    score_str = (
-        model_prompting(
-            model_name,
-            score_messages,
-            return_num,
-            max_token_num,
-            temperature,
-            top_p,
-            stream,
-        )[0]
-        .split(
-            'Based on the given information, I would give this submission a score of '
-        )[1]
-        .split(' out of 10')[0]
-    )
-    score = int(score_str[0]) if score_str[0].isdigit() else 0
+    score_response_str = model_prompting(
+        model_name,
+        score_messages,
+        return_num,
+        max_token_num,
+        temperature,
+        top_p,
+        stream,
+    )[0]
+
+    token_input_count += token_counter(model=model_name, messages=score_messages)
+    token_output_count += token_counter(model=model_name, text=score_response_str)
+    
+    # find the first number in 10, 1, 2, 3, 4, 5, 6, 7, 8, 9
+    score_str = re.findall(r'\d+', score_response_str)
+    score_str_1st = score_str[0] if score_str else 0
+    score = int(score_str_1st)
+
+    print(f'Token input count: {token_input_count}')
+    print(f'Token output count: {token_output_count}')
 
     return (
         summary,
@@ -312,6 +328,9 @@ def write_metareview_prompting(
     List[Dict[str, str]],
     List[Dict[str, str]],
 ]:
+    token_input_count = 0
+    token_output_count = 0
+
     proposal_str = map_proposal_to_str(proposal)
     reviews_str = map_review_list_to_str(reviews)
     summary_template_input = {
@@ -384,6 +403,13 @@ def write_metareview_prompting(
         stream,
     )[0]
 
+    token_input_count += token_counter(model=model_name, messages=strength_messages)
+    token_input_count += token_counter(model=model_name, messages=weakness_messages)
+    token_input_count += token_counter(model=model_name, messages=ethical_messages)
+    token_output_count += token_counter(model=model_name, text=strength)
+    token_output_count += token_counter(model=model_name, text=weakness)
+    token_output_count += token_counter(model=model_name, text=ethical_concern)
+
     decision_template_input = {
         'proposal': proposal_str,
         'reviews': reviews_str,
@@ -405,6 +431,9 @@ def write_metareview_prompting(
         stream,
     )
     decision = 'accept' in decision_str[0].lower()
+
+    token_input_count += token_counter(model=model_name, messages=decision_messages)
+    token_output_count += token_counter(model=model_name, text=decision_str[0])
 
     return (
         summary,

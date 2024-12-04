@@ -161,8 +161,9 @@ class Agent(object):
 
     @beartype
     @reviewer_required
-    def write_review(self, proposal: Proposal, config: Config) -> Review:
+    def write_review(self, profile: Profile, proposal: Proposal, config: Config) -> Review:
         serialized_proposal = self.serializer.serialize(proposal)
+        serialized_profile = self.serializer.serialize(profile)
 
         (
             summary,
@@ -178,6 +179,7 @@ class Agent(object):
         ) = write_review_prompting(
             proposal=serialized_proposal,
             model_name=self.model_name,
+            profile=serialized_profile,
             summary_prompt_template=config.agent_prompt_template.write_review_summary,
             strength_prompt_template=config.agent_prompt_template.write_review_strength,
             weakness_prompt_template=config.agent_prompt_template.write_review_weakness,

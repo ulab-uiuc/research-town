@@ -18,6 +18,8 @@ def inference(
     paper_id: str,
     paper_data: Dict[str, Any],
     author_data: Dict[str, Any],
+    reviewer_data: Dict[str, Any],
+    full_content: Dict[str, Any],
     strengths: List[str],
     weaknesses: List[str],
     mode: str,
@@ -25,10 +27,11 @@ def inference(
 ) -> Tuple[Dict[str, Sequence[str]], Dict[str, List[float]]]:
     intro = paper_data.get('introduction', '')
     profiles = [Profile(**data) for data in author_data.values()]
+    profiles_reviewers = [Profile(**data) for data in reviewer_data.values()]
     ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
-    generated_strength, generated_weakness = write_review(
-        mode, intro, profiles, ref_abstracts, config
+    generated_strength, generated_weakness, score = write_review(
+        mode, intro, profiles, profiles_reviewers, full_content, ref_abstracts, config
     )
 
     metrics = compute_review_metrics(
@@ -40,6 +43,7 @@ def inference(
         'weaknesses': weaknesses,
         'generated_strength': generated_strength,
         'generated_weakness': generated_weakness,
+        'generated_scores': score,
     }
     return results, metrics
 
@@ -65,7 +69,7 @@ def save_results(
 
 
 def process_task(
-    task: Tuple[str, Dict[str, Any], Dict[str, Any], List[str], List[str], str, Config],
+    task: Tuple[str, Dict[str, Any], Dict[str, Any], Dict[str, Any], Dict[str, Any], List[str], List[str], str, Config],
 ) -> Tuple[Dict[str, Sequence[str]], Dict[str, List[float]]]:
     return inference(*task)
 
@@ -89,6 +93,7 @@ def main() -> None:
             'author_citation',
             'textgnn',
             'sakana_ai_scientist',
+            'research_town',
         ],
         help='Processing mode',
     )
@@ -122,14 +127,16 @@ def main() -> None:
     }
 
     for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
+        full_content = data['full_content']
         paper_data = data['paper_data']
         author_data = data['author_data']
+        reviewer_data = data['reviewer_data']
         reference_review = data['reviews']
         strengths = [review.get('strengths', '') for review in reference_review]
         weaknesses = [review.get('weaknesses', '') for review in reference_review]
 
         results, metrics = inference(
-            paper_id, paper_data, author_data, strengths, weaknesses, args.mode, config
+            paper_id, paper_data, author_data, reviewer_data, full_content, strengths, weaknesses, args.mode, config
         )
         lock = Lock()
         save_results(results, metrics, args.output_path, lock)
@@ -141,6 +148,8 @@ def main() -> None:
                 paper_id,
                 data['paper_data'],
                 data['author_data'],
+                data['reviewer_data'],
+                data['full_content'],
                 [review.get('strengths', '') for review in data['reviews']],
                 [review.get('weaknesses', '') for review in data['reviews']],
                 args.mode,

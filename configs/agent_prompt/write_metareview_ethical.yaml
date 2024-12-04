@@ -1,27 +1,4 @@
-fewshot_examples:
-- "Here is the proposal: We present a novel deep learning model for predicting criminal recidivism rates. Our model, CrimePredictAI, uses a combination of demographic data, criminal history, and social media activity to achieve state-of-the-art accuracy in predicting repeat offenses.
-
-  Here are the reviews:
-  Reviewer 1: The paper presents an interesting approach, but raises serious ethical concerns about privacy and potential bias in the model.
-  Reviewer 2: While technically sound, the paper doesn't adequately address the ethical implications of using social media data without explicit consent.
-
-  Here is the summary of the reviews: Both reviewers highlight ethical concerns regarding privacy, consent, and potential bias in the proposed model.
-
-  Please begin writing the ethical meta-review."
-
-- "Ethical Meta-Review: This paper raises significant ethical concerns that need to be addressed before publication. The primary issues are the potential for bias and discrimination, the use of personal data without explicit consent, and the broader societal implications of predictive policing technologies. While the authors have attempted to address some concerns in their rebuttal, the fundamental ethical issues with the approach remain unresolved. A more comprehensive ethical framework and safeguards against misuse need to be developed before this research can be considered for publication."
-
-- "Here is the proposal: Our paper introduces a new technique for generating synthetic human faces using advanced GANs. Our method, FaceGenPro, produces highly realistic faces that are indistinguishable from real photographs, with applications in entertainment, marketing, and privacy-preserving data generation.
-
-  Here are the reviews:
-  Reviewer 1: The technical contribution is impressive, but the paper lacks a thorough discussion of the ethical implications, particularly regarding deepfakes and potential misuse.
-  Reviewer 2: While the method is novel, there are concerns about the dataset used for training and the potential for this technology to be used maliciously.
-
-  Here is the summary of the reviews: Both reviewers acknowledge the technical merit but express concerns about ethical implications and potential misuse of the technology.
-
-  Please begin writing the ethical meta-review."
-
-- "Ethical Meta-Review: The paper addresses minor ethical concerns raised by reviewers and includes a commendable discussion on potential misuse, along with proposed guidelines for responsible use. To further strengthen the ethical stance, the authors should expand these guidelines, potentially including technical measures to detect synthetic images, discuss the legal and policy implications of their technology, and add a section on the ethical limitations of their approach."
+fewshot_examples: []
 
 sys_prompt: >
     Please write an ethical meta-review for the following submission to an academic conference. Your meta-review should summarize the ethical considerations raised in the reviews, author rebuttals, and any ethical review conducted. Consider the following aspects:
@@ -46,4 +23,4 @@ template: |
 
     Here is the summary of the reviews: {summary}
 
-    Please begin writing the ethical meta-review.
+    Please begin writing the ethical meta-review. It should be 200 words long.

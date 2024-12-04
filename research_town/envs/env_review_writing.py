@@ -64,6 +64,7 @@ class ReviewWritingEnv(BaseEnv):
             self.reviews: List[Review] = []
             for reviewer in self.reviewers:
                 review = reviewer.write_review(
+                    profile=reviewer.profile,
                     proposal=proposal,
                     config=self.config,
                 )
@@ -71,15 +72,15 @@ class ReviewWritingEnv(BaseEnv):
                 yield review, reviewer
 
             # Rebuttal Submitting
-            self.rebuttals: List[Rebuttal] = []
-            for review in self.reviews:
-                rebuttal = self.leader.write_rebuttal(
-                    proposal=proposal,
-                    review=review,
-                    config=self.config,
-                )
-                self.rebuttals.append(rebuttal)
-                yield rebuttal, self.leader
+            # self.rebuttals: List[Rebuttal] = []
+            # for review in self.reviews:
+            #     rebuttal = self.leader.write_rebuttal(
+            #         proposal=proposal,
+            #         review=review,
+            #         config=self.config,
+            #     )
+            #     self.rebuttals.append(rebuttal)
+            #     yield rebuttal, self.leader
 
             # Paper Meta Reviewing
             metareview = self.chair.write_metareview(
