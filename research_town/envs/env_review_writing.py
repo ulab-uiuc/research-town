@@ -83,10 +83,12 @@ class ReviewWritingEnv(BaseEnv):
             #     yield rebuttal, self.leader
 
             # Paper Meta Reviewing
+            scores = [review.score for review in self.reviews]
             metareview = self.chair.write_metareview(
                 proposal=proposal,
                 reviews=self.reviews,
                 config=self.config,
+                scores=scores,
             )
             self.metareviews.append(metareview)
             yield metareview, self.chair

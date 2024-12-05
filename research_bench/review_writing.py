@@ -6,7 +6,7 @@ Process: Match Reviewers to Papers with Similar Interests
 Output:  Reviewers' Similarity Scores
 """
 
-from typing import List, Tuple, Dict, Any
+from typing import List, Tuple, Dict, Any, Union
 
 from litellm import token_counter
 from research_town.agents import AgentManager
@@ -19,7 +19,7 @@ from voyageai.client import Client
 
 def write_review_research_town(
     paper_content: str, profiles_reviewers: List[Profile], ref_contents: List[str], config: Config
-) -> Tuple[str, str, List[float]]:
+) -> Tuple[str, str, List[float], Dict[str, Dict[str, Any]]]:
     log_db = LogDB(config=config.database)
     progress_db = ProgressDB(config=config.database)
     paper_db = PaperDB(config=config.database)
@@ -60,17 +60,28 @@ def write_review_research_town(
     weakness: str = ''
     scores: List[float] = []
 
+    review_per_reviewer = {}
+
     if run_result is not None:
         for progress, agent in run_result:
             if isinstance(progress, Review):
                 scores.append(progress.score)
+                agent_name = agent.profile.name
+                strength = progress.strength
+                weakness = progress.weakness
+                review_per_reviewer[agent_name] = {
+                    'strength': strength,
+                    'weakness': weakness,
+                    'score': progress.score
+                }
+                
             if isinstance(progress, MetaReview):
                 strength = progress.strength
                 weakness = progress.weakness
 
     exit_status, exit_dict = env.on_exit()
     s_meta_review = f"{exit_dict.get('metareviews', '')}"
-    return strength, weakness, scores
+    return strength, weakness, scores, review_per_reviewer
 
 # Baselines
 def write_review_zero_shot(
@@ -348,7 +359,7 @@ def write_review(
     full_content: Dict[str, Any],
     ref_contents: List[str],
     config: Config,
-) -> Tuple[str, str, List[float]]:
+) -> Union[Tuple[str, str, List[float]], Tuple[str, str, List[float], Dict[str, Dict[str, Any]]]]:
     paper_content = ''
     for idx, section in enumerate(full_content):
         paper_content += f'{idx + 1}:\n\n'

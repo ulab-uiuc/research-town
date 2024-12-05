@@ -166,24 +166,18 @@ class Agent(object):
         serialized_profile = self.serializer.serialize(profile)
 
         (
-            summary,
             strength,
             weakness,
-            ethical_concern,
             score,
-            summary_prompt_messages,
             strength_prompt_messages,
             weakness_prompt_messages,
-            ethical_prompt_messages,
             score_prompt_messages,
         ) = write_review_prompting(
             proposal=serialized_proposal,
             model_name=self.model_name,
             profile=serialized_profile,
-            summary_prompt_template=config.agent_prompt_template.write_review_summary,
             strength_prompt_template=config.agent_prompt_template.write_review_strength,
             weakness_prompt_template=config.agent_prompt_template.write_review_weakness,
-            ethical_prompt_template=config.agent_prompt_template.write_review_ethical,
             score_prompt_template=config.agent_prompt_template.write_review_score,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
@@ -194,14 +188,14 @@ class Agent(object):
         review = Review(
             proposal_pk=proposal.pk,
             reviewer_pk=self.profile.pk,
-            summary=summary,
-            summary_prompt_messages=summary_prompt_messages,
+            summary=None,
+            summary_prompt_messages=None,
             strength=strength,
             strength_prompt_messages=strength_prompt_messages,
             weakness=weakness,
             weakness_prompt_messages=weakness_prompt_messages,
-            ethical_concern=ethical_concern,
-            ethical_concern_prompt_messages=ethical_prompt_messages,
+            ethical_concern=None,
+            ethical_concern_prompt_messages=None,
             score=score,
             score_prompt_messages=score_prompt_messages,
         )
@@ -213,31 +207,23 @@ class Agent(object):
         self,
         proposal: Proposal,
         reviews: List[Review],
+        scores: List[float],
         config: Config,
     ) -> MetaReview:
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_reviews = self.serializer.serialize(reviews)
 
         (
-            summary,
             strength,
             weakness,
-            ethical_concern,
-            decision,
-            summary_prompt_messages,
             strength_prompt_messages,
             weakness_prompt_messages,
-            ethical_prompt_messages,
-            decision_prompt_messages,
         ) = write_metareview_prompting(
             proposal=serialized_proposal,
             reviews=serialized_reviews,
             model_name=self.model_name,
-            summary_prompt_template=config.agent_prompt_template.write_metareview_summary,
             strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
             weakness_prompt_template=config.agent_prompt_template.write_metareview_weakness,
-            ethical_prompt_template=config.agent_prompt_template.write_metareview_ethical,
-            decision_prompt_template=config.agent_prompt_template.write_metareview_decision,
             return_num=config.param.return_num,
             max_token_num=config.param.max_token_num,
             temperature=config.param.temperature,
@@ -245,21 +231,24 @@ class Agent(object):
             stream=config.param.stream,
         )
 
+        metareview_threshold = 6
+        decision = all(score >= metareview_threshold for score in scores)
+
         metareview = MetaReview(
             proposal_pk=proposal.pk,
             chair_pk=self.profile.pk,
             reviewer_pks=[review.reviewer_pk for review in reviews],
             author_pk=self.profile.pk,
-            summary=summary,
-            summary_prompt_messages=summary_prompt_messages,
+            summary=None,
+            summary_prompt_messages=None,
             strength=strength,
             strength_prompt_messages=strength_prompt_messages,
             weakness=weakness,
             weakness_prompt_messages=weakness_prompt_messages,
-            ethical_concern=ethical_concern,
-            ethical_concern_prompt_messages=ethical_prompt_messages,
+            ethical_concern=None,
+            ethical_concern_prompt_messages=None,
             decision=decision,
-            decision_prompt_messages=decision_prompt_messages,
+            decision_prompt_messages=None,
         )
         return metareview
 

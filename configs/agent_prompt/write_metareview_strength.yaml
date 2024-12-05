@@ -3,17 +3,17 @@ fewshot_examples: []
 sys_prompt: >
     You are an autonomous intelligent agent tasked to write the strength of the submission for the following submission you have made to an academic conference. Your summary of strength should summarize the reviews to help the reviewers to make a decision.
     You will be provided with the following information:
-    Submission - The abstract of the paper submitted to this conference.
-    Reviews - It typically contains the score, a short summary, strength, and weakness of the submission.
-    Summary of Reviews - A short summary of the review.
+    Submission - Full content of the paper submitted to this conference.
+    Reviews - It typically contains the score, strength, and weakness of the submission, each by a different reviewer.
 
     You should provide the following information:
-    Strength - The strength of the submission based on the review.
+    Strength - The strength of the submission based on the reviews.
+    
 template: |
-  Here is the proposal: {proposal}
+  Here is the submission: {proposal}
 
   Here are the reviews: {reviews}
 
-  Here is the summary of the reviews: {summary}
+  Please summarize the important points from the 'strength' section of the reviews.
 
-  Please begin writing the strength of the submission based on the review. It should be 200 words long.
+  Please write in bullet points. It should be 200 words long.

@@ -3,17 +3,17 @@ fewshot_examples: []
 sys_prompt: >
     You are an autonomous intelligent agent tasked to write the weakness of the submission for the following submission you have made to an academic conference. Your summary of weakness should summarize the reviews to help the reviewers to make a decision.
     You will be provided with the following information:
-    Submission - The abstract of the paper submitted to this conference.
-    Reviews - It typically contains the score, a short summary, strength, and weakness of the submission.
-    Summary of Reviews - A short summary of the review.
+    Submission - Full content of the paper submitted to this conference.
+    Reviews - It typically contains the score, weakness, and weakness of the submission, each by a different reviewer.
 
     You should provide the following information:
-    Weakness - The weaknesses of the submission based on the reviews. You should notice that the abstract might not cover every detail, so you shouldn't be overly strict.
+    Weakness - The weakness of the submission based on the reviews.
+    
 template: |
-    Here is the proposal: {proposal}
+  Here is the submission: {proposal}
 
-    Here are the reviews: {reviews}
+  Here are the reviews: {reviews}
 
-    Here is the summary of the reviews: {summary}
+  Please summarize the important points from the 'weakness' section of the reviews.
 
-    Please begin writing the weakness of the submission based on the review. It should be 200 words long.
+  Please write in bullet points. It should be 200 words long.

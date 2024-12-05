@@ -30,7 +30,7 @@ def inference(
     profiles_reviewers = [Profile(**data) for data in reviewer_data.values()]
     ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
-    generated_strength, generated_weakness, score = write_review(
+    generated_strength, generated_weakness, score, review_per_reviewer = write_review(
         mode, intro, profiles, profiles_reviewers, full_content, ref_abstracts, config
     )
 
@@ -44,6 +44,7 @@ def inference(
         'generated_strength': generated_strength,
         'generated_weakness': generated_weakness,
         'generated_scores': score,
+        'review_per_reviewer': review_per_reviewer,
     }
     return results, metrics
 
