@@ -12,6 +12,7 @@ from research_bench.utils import load_benchmark
 from research_town.configs import Config
 from research_town.data import Profile
 from research_town.utils.logger import logger
+import random
 
 
 def inference(
@@ -23,9 +24,13 @@ def inference(
     config: Config,
 ) -> Tuple[Dict[str, str], Dict[str, float]]:
     profiles = [Profile(**data) for data in author_data.values()]
-    ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
-
-    gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
+    ref_abstracts_full = []
+    for ref in paper_data.get('references', []):
+        if ref['abstract']:
+            ref_abstracts_full.append(ref['abstract'])
+    
+    paper_title = paper_data['title']
+    gen_proposal = write_proposal(mode, profiles, ref_abstracts_full, config, paper_title)
 
     metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
     results = {
@@ -79,8 +84,11 @@ def main() -> None:
             'author_only',
             'citation_only',
             'author_citation',
-            'textgnn',
+            'research_town',
             'sakana_ai_scientist',
+            'debug',
+            'fake_research_town',
+            'fake_research_town_twice',
         ],
         help='Processing mode',
     )
@@ -112,17 +120,6 @@ def main() -> None:
             'embedding_similarity',
         ]
     }
-
-    for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
-        paper_data = data['paper_data']
-        author_data = data['author_data']
-        reference_proposal = data['reference_proposal']
-
-        results, metrics = inference(
-            paper_id, paper_data, author_data, reference_proposal, args.mode, config
-        )
-        lock = Lock()
-        save_results(results, metrics, args.output_path, lock)
 
     lock = Lock()
     with Pool(processes=args.num_processes) as pool:
