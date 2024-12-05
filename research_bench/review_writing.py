@@ -99,7 +99,7 @@ def write_review_zero_shot(
         }
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
     )[0]
     strength = response
 
@@ -115,7 +115,7 @@ def write_review_zero_shot(
         }
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
     )[0]
     weakness = response
 
@@ -134,7 +134,7 @@ def write_review_zero_shot(
         }
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
     )[0]
     score_options = ['10', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     score = 0
@@ -172,7 +172,7 @@ def write_review_with_only_profiles(
             }
         ]
         response = model_prompting(
-            config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+            config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
         )[0]
         # write prompt[0]['content'], bio_str, paper_content to json indent 4
         # import time
@@ -197,7 +197,7 @@ def write_review_with_only_profiles(
             }
         ]
         response = model_prompting(
-            config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+            config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
         )[0]
         token_input_count += token_counter(model=config.param.base_llm, text=prompt[0]['content'])
         token_output_count += token_counter(model=config.param.base_llm, text=response)
@@ -221,7 +221,7 @@ def write_review_with_only_profiles(
             }
         ]
         response = model_prompting(
-            config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+            config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
         )[0]
         token_input_count += token_counter(model=config.param.base_llm, text=prompt[0]['content'])
         token_output_count += token_counter(model=config.param.base_llm, text=response)
@@ -256,7 +256,7 @@ def write_review_with_only_profiles(
         }
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
     )[0]
     token_input_count += token_counter(model=config.param.base_llm, text=prompt[0]['content'])
     token_output_count += token_counter(model=config.param.base_llm, text=response)
@@ -273,7 +273,7 @@ def write_review_with_only_profiles(
         }
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
     )[0]
     token_input_count += token_counter(model=config.param.base_llm, text=prompt[0]['content'])
     token_output_count += token_counter(model=config.param.base_llm, text=response)
@@ -304,7 +304,7 @@ def write_review_with_only_citations(
         }
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
     )[0]
     strength = response
 
@@ -322,7 +322,7 @@ def write_review_with_only_citations(
         }
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
     )[0]
     weakness = response
 
@@ -341,7 +341,7 @@ def write_review_with_only_citations(
         }
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
     )[0]
     score_options = ['10', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     score = 0
