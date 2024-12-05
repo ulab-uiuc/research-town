@@ -118,7 +118,9 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting(
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+    )[0]
     return response
 
 
@@ -153,7 +155,9 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting(
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+    )[0]
     return response
 
 
@@ -192,7 +196,9 @@ def write_proposal_with_profiles_and_citations(
             ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting(
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+    )[0]
     return response
 
 
@@ -288,7 +294,9 @@ Please provide the updated proposal in the same format as before.
 
     conversation.append({'role': 'user', 'content': idea_first_prompt})
 
-    response = model_prompting(config.param.base_llm, conversation, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting(
+        config.param.base_llm, conversation, max_token_num=config.param.max_token_num
+    )[0]
     conversation.append({'role': 'assistant', 'content': response})
 
     for current_round in range(1, num_reflections + 1):
@@ -297,21 +305,30 @@ Please provide the updated proposal in the same format as before.
         )
         conversation.append({'role': 'user', 'content': formatted_reflection_prompt})
 
-        response = model_prompting(config.param.base_llm, conversation, max_token_num=config.param.max_token_num)[0]
-        
+        response = model_prompting(
+            config.param.base_llm,
+            conversation,
+            max_token_num=config.param.max_token_num,
+        )[0]
+
         conversation.append({'role': 'assistant', 'content': response})
 
         if 'I am done' in response:
             break
 
-    if 'I am done' in conversation[-1]['content'] and "[Question 1]" not in conversation[-1]['content']:
+    if (
+        'I am done' in conversation[-1]['content']
+        and '[Question 1]' not in conversation[-1]['content']
+    ):
         if 'NEW IDEA:' in conversation[-2]['content']:
             return conversation[-2]['content'].split('NEW IDEA:')[1]
         else:
             return conversation[-2]['content']
     else:
         if 'NEW IDEA:' in conversation[-1]['content']:
-            return conversation[-1]['content'].split('NEW IDEA:')[1].split('I am done')[0]
+            return (
+                conversation[-1]['content'].split('NEW IDEA:')[1].split('I am done')[0]
+            )
         else:
             return conversation[-1]['content'].split('I am done')[0]
 

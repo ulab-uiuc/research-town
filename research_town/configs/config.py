@@ -78,16 +78,11 @@ class AgentPromptTemplate(BaseModel):
     write_proposal_cot: Dict[str, Union[str, List[str]]]
     write_proposal_react: Dict[str, Union[str, List[str]]]
     write_proposal_reflexion: Dict[str, Union[str, List[str]]]
-    write_review_summary: Dict[str, Union[str, List[str]]]
     write_review_strength: Dict[str, Union[str, List[str]]]
     write_review_weakness: Dict[str, Union[str, List[str]]]
-    write_review_ethical: Dict[str, Union[str, List[str]]]
     write_review_score: Dict[str, Union[str, List[str]]]
-    write_metareview_summary: Dict[str, Union[str, List[str]]]
     write_metareview_strength: Dict[str, Union[str, List[str]]]
     write_metareview_weakness: Dict[str, Union[str, List[str]]]
-    write_metareview_ethical: Dict[str, Union[str, List[str]]]
-    write_metareview_decision: Dict[str, Union[str, List[str]]]
     write_rebuttal: Dict[str, Union[str, List[str]]]
 
     @root_validator(pre=True)
@@ -101,38 +96,18 @@ class AgentPromptTemplate(BaseModel):
             'write_proposal_cot': ['{idea}', '{papers}'],
             'write_proposal_react': ['{idea}', '{papers}'],
             'write_proposal_reflexion': ['{idea}', '{papers}'],
-            'write_review_summary': ['{proposal}'],
-            'write_review_strength': ['{proposal}', '{summary}'],
-            'write_review_weakness': ['{proposal}', '{summary}'],
-            'write_review_ethical': ['{proposal}', '{summary}'],
+            'write_review_strength': ['{bio}', '{proposal}', '{citations}'],
+            'write_review_weakness': ['{bio}', '{proposal}', '{citations}'],
             'write_review_score': [
-                '{proposal}',
-                '{summary}',
+                '{bio}',
                 '{strength}',
                 '{weakness}',
             ],
-            'write_metareview_summary': ['{proposal}', '{reviews}'],
             'write_metareview_strength': [
-                '{proposal}',
                 '{reviews}',
-                '{summary}',
             ],
             'write_metareview_weakness': [
-                '{proposal}',
                 '{reviews}',
-                '{summary}',
-            ],
-            'write_metareview_ethical': [
-                '{proposal}',
-                '{reviews}',
-                '{summary}',
-            ],
-            'write_metareview_decision': [
-                '{proposal}',
-                '{reviews}',
-                '{summary}',
-                '{strength}',
-                '{weakness}',
             ],
             'write_rebuttal': ['{proposal}', '{review}'],
         }

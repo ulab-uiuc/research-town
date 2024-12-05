@@ -5,7 +5,7 @@ related_paper_num: 5
 return_num: 1
 reviewer_num: 1
 stream: null
-temperature: 0.6
+temperature: 0.0
 top_p: null
 write_proposal_strategy: default
 max_env_run_num: 1
