@@ -10,8 +10,6 @@ sys_prompt: >
     Strength - The strength of the submission based on the reviews.
     
 template: |
-  Here is the submission: {proposal}
-
   Here are the reviews: {reviews}
 
   Please summarize the important points from the 'strength' section of the reviews.

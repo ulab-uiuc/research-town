@@ -13,6 +13,8 @@ template: |
 
   Here is the submission: {proposal}
 
+  Here are the abstracts of the cited papers: {citations}
+
   Please evaluate the submission based on the following criteria:
 
   Clarity: Is the writing clear, structured, and terms defined?

@@ -14,6 +14,7 @@ from .string_mapper import (
     map_proposal_to_str,
     map_review_list_to_str,
     map_review_to_str,
+    map_cited_abstracts_to_str,
 )
 
 
@@ -186,12 +187,14 @@ def write_review_prompting(
     token_input_count = 0
     token_output_count = 0
     proposal_str = map_proposal_to_str(proposal)
+    citations = proposal.get('citations', [])
+    citations_str = map_cited_abstracts_to_str(citations)
 
-    strength_template_input = {'proposal': proposal_str, 'bio': profile['bio']}
+    strength_template_input = {'proposal': proposal_str, 'bio': profile['bio'], 'citations': citations_str}
     strength_messages = openai_format_prompt_construct(
         strength_prompt_template, strength_template_input
     )
-    weakness_template_input = {'proposal': proposal_str, 'bio': profile['bio']}
+    weakness_template_input = {'proposal': proposal_str, 'bio': profile['bio'], 'citations': citations_str}
     weakness_messages = openai_format_prompt_construct(
         weakness_prompt_template, weakness_template_input
     )
@@ -221,7 +224,6 @@ def write_review_prompting(
     token_output_count += token_counter(model=model_name, text=weakness)
 
     score_template_input = {
-        'proposal': proposal_str,
         'strength': strength,
         'weakness': weakness,
         'bio': profile['bio'],
@@ -251,6 +253,23 @@ def write_review_prompting(
     print(f'Token input count: {token_input_count}')
     print(f'Token output count: {token_output_count}')
 
+    # save all inputs and outputs
+    save = {
+        'strength_prompt': strength_messages,
+        'strength_response': strength,
+        'weakness_prompt': weakness_messages,
+        'weakness_response': weakness,
+        'score_prompt': score_messages,
+        'score_response': score_response_str,
+    }
+
+    # time-now-HHMMSS
+    import json
+    import time
+    time_now = time.strftime('%H%M%S')
+    with open(f'./save_{time_now}.json', 'w') as f:
+        json.dump(save, f, indent=4)
+
     return (
         strength,
         weakness,
@@ -263,7 +282,6 @@ def write_review_prompting(
 
 @beartype
 def write_metareview_prompting(
-    proposal: Dict[str, str],
     reviews: List[Dict[str, Union[int, str]]],
     model_name: str,
     strength_prompt_template: Dict[str, Union[str, List[str]]],
@@ -282,14 +300,11 @@ def write_metareview_prompting(
     token_input_count = 0
     token_output_count = 0
 
-    proposal_str = map_proposal_to_str(proposal)
     reviews_str = map_review_list_to_str(reviews)
     strength_template_input = {
-        'proposal': proposal_str,
         'reviews': reviews_str,
     }
     weakness_template_input = {
-        'proposal': proposal_str,
         'reviews': reviews_str,
     }
     strength_messages = openai_format_prompt_construct(
@@ -320,7 +335,21 @@ def write_metareview_prompting(
     token_input_count += token_counter(model=model_name, messages=weakness_messages)
     token_output_count += token_counter(model=model_name, text=strength)
     token_output_count += token_counter(model=model_name, text=weakness)
-    
+
+    # save all inputs and outputs
+    save = {
+        'strength_prompt': strength_messages,
+        'strength_response': strength,
+        'weakness_prompt': weakness_messages,
+        'weakness_response': weakness,
+    }
+
+    # time-now-HHMMSS
+    import json
+    import time
+    time_now = time.strftime('%H%M%S')
+    with open(f'./save_{time_now}.json', 'w') as f:
+        json.dump(save, f, indent=4)    
     
     return (
         strength,

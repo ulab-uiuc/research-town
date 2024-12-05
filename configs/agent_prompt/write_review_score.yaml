@@ -20,8 +20,6 @@ sys_prompt: >
 template: |
   Here is your profile: {bio}
   
-  Here is the submission: {proposal}
-  
   Here is the strength of the paper: {strength}
 
   Here is the weakness of the paper: {weakness}

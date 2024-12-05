@@ -96,19 +96,17 @@ class AgentPromptTemplate(BaseModel):
             'write_proposal_cot': ['{idea}', '{papers}'],
             'write_proposal_react': ['{idea}', '{papers}'],
             'write_proposal_reflexion': ['{idea}', '{papers}'],
-            'write_review_strength': ['{proposal}'],
-            'write_review_weakness': ['{proposal}'],
+            'write_review_strength': ['{bio}', '{proposal}', '{citations}'],
+            'write_review_weakness': ['{bio}', '{proposal}', '{citations}'],
             'write_review_score': [
-                '{proposal}',
+                '{bio}',
                 '{strength}',
                 '{weakness}',
             ],
             'write_metareview_strength': [
-                '{proposal}',
                 '{reviews}',
             ],
             'write_metareview_weakness': [
-                '{proposal}',
                 '{reviews}',
             ],
             'write_rebuttal': ['{proposal}', '{review}'],

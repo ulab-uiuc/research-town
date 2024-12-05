@@ -10,8 +10,6 @@ sys_prompt: >
     Weakness - The weakness of the submission based on the reviews.
     
 template: |
-  Here is the submission: {proposal}
-
   Here are the reviews: {reviews}
 
   Please summarize the important points from the 'weakness' section of the reviews.

@@ -47,11 +47,13 @@ def write_review_research_town(
     
     reviewers = [agent_manager.create_agent(profile, role='reviewer') for profile in profiles_reviewers[0:top_k]]
 
+    ref_contents = [ref if ref else '' for ref in ref_contents]
+
     env.on_enter(
         leader=leader,
         chair=None,
         reviewers=reviewers,
-        proposals=[Proposal(content=paper_content)],
+        proposals=[Proposal(content=paper_content, citations=ref_contents)],
     )
 
     run_result = env.run()

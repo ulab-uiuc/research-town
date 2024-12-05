@@ -210,7 +210,6 @@ class Agent(object):
         scores: List[float],
         config: Config,
     ) -> MetaReview:
-        serialized_proposal = self.serializer.serialize(proposal)
         serialized_reviews = self.serializer.serialize(reviews)
 
         (
@@ -219,7 +218,6 @@ class Agent(object):
             strength_prompt_messages,
             weakness_prompt_messages,
         ) = write_metareview_prompting(
-            proposal=serialized_proposal,
             reviews=serialized_reviews,
             model_name=self.model_name,
             strength_prompt_template=config.agent_prompt_template.write_metareview_strength,
