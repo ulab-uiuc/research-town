@@ -1,0 +1,42 @@
+{
+    "defense_agent_result_original_task.jsonl": {
+        "task": 0.271,
+        "text": 0.599,
+        "gen_proposal": 0.011
+    },
+    "attack_results_attack_prompt.jsonl": {
+        "task": 0.29,
+        "text": 0,
+        "gen_proposal": 0.008
+    },
+    "attack_results_attacker_agent.jsonl": {
+        "task": 0.278,
+        "text": 0.587,
+        "gen_proposal": 0.005
+    },
+    "ethical_result_original_task.jsonl": {
+        "task": 0.275,
+        "text": 0.599,
+        "gen_proposal": 0.082
+    },
+    "ethical_result_attacker_agent.jsonl": {
+        "task": 0.287,
+        "text": 0.578,
+        "gen_proposal": 0.083
+    },
+    "defense_agent_result_attacker_agent.jsonl": {
+        "task": 0.285,
+        "text": 0.588,
+        "gen_proposal": 0.006
+    },
+    "attack_results_origin.jsonl": {
+        "task": 0.284,
+        "text": 0.595,
+        "gen_proposal": 0.011
+    },
+    "attack_results_attacker_agent_attack_prompt.jsonl": {
+        "task": 0.289,
+        "text": 0.575,
+        "gen_proposal": 0.004
+    }
+}
