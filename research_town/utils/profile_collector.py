@@ -86,7 +86,7 @@ def get_papers_from_author_id(
         for paper in papers:
             if paper['year'] is None:
                 paper['year'] = 2024
-            if paper['year'] < before_year:
+            if paper['year'] <= before_year:
                 filtered_papers.append(paper)
         return filtered_papers[:paper_max_num]
 
