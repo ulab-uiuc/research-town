@@ -58,38 +58,7 @@ def inference(
         #if exclude_signal is False:
         #    ref_abstracts_full.append(ref['abstract'])
         '''
-    print(len(ref_abstracts_full))
-    paper_title = paper_data['title']
-    if mode == 'fake_research_town':
-        gen_proposal, gen_proposals_each_agent = write_proposal(mode, profiles, ref_abstracts_full, config, paper_title)
-    else:
-        gen_proposal = write_proposal(mode, profiles, ref_abstracts_full, config, paper_title)
-
-    if mode == 'fake_research_town':
-        overall_metrics = defaultdict(list)
-        # assert each agent gen proposal is the same
-        for idx, gen_proposal in enumerate(gen_proposals_each_agent):
-            metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
-            for metric, score in metrics.items():
-                overall_metrics[metric + '_per_agent'].append(score)
-        metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
-        for metric, score in metrics.items():
-            overall_metrics[metric] = score
-        results = {
-            'paper_id': paper_id,
-            'ref_proposal': ref_proposal,
-            'gen_proposal': gen_proposal,
-        }
-        return results, overall_metrics
-    else:
-        metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
-        results = {
-            'paper_id': paper_id,
-            'ref_proposal': ref_proposal,
-            'gen_proposal': gen_proposal,
-        }
-        return results, metrics
-
+    return len(ref_abstracts_full)
 
 def load_papers(input_path: str, output_path: str) -> Any:
     dataset = load_benchmark(input_path)

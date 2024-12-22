@@ -191,5 +191,12 @@ research_bench/profile_dbs_old
 **/author_data/*
 **/paper_data/*
 **/reference_proposal_data/*
+**/paper_bench/
+**/paper_data_/
+**/reference_proposal_data_/
+**/oodbench/
+**/iclrbench/
+**/author_data_/
+**/manifest.json
 
 !**/.gitkeep
