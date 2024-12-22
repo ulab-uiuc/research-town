@@ -4649,13 +4649,13 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 
 [[package]]
 name = "voyageai"
-version = "0.3.1"
+version = "0.3.2"
 description = ""
 optional = true
 python-versions = "<3.13,>=3.9"
 files = [
-    {file = "voyageai-0.3.1-py3-none-any.whl", hash = "sha256:2d0751ef8b944711efc9ee809760d13807b431cd28917cb19c5455963f3fd998"},
-    {file = "voyageai-0.3.1.tar.gz", hash = "sha256:93c6bd519e26ecb41ba5ebd020788fbc0d78df2f923138faa03543fe711b0ee5"},
+    {file = "voyageai-0.3.2-py3-none-any.whl", hash = "sha256:1398d6c6bfb1dd3b484f400713e538f00ce8a335250442b0902c21116d9705a8"},
+    {file = "voyageai-0.3.2.tar.gz", hash = "sha256:bd1b52d26179d91853cbd2a0e52dc95cb0d526760c6c830959e01eb5ff9eaa12"},
 ]
 
 [package.dependencies]
