@@ -161,7 +161,9 @@ class Agent(object):
 
     @beartype
     @reviewer_required
-    def write_review(self, profile: Profile, proposal: Proposal, config: Config) -> Review:
+    def write_review(
+        self, profile: Profile, proposal: Proposal, config: Config
+    ) -> Review:
         serialized_proposal = self.serializer.serialize(proposal)
         serialized_profile = self.serializer.serialize(profile)
 

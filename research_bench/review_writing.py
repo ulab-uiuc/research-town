@@ -6,19 +6,23 @@ Process: Match Reviewers to Papers with Similar Interests
 Output:  Reviewers' Similarity Scores
 """
 
-from typing import List, Tuple, Dict, Any, Union
+from typing import Any, Dict, List, Tuple
 
 from litellm.utils import token_counter
+
 from research_town.agents import AgentManager
 from research_town.configs import Config
-from research_town.data import Profile, Proposal, Review, MetaReview
+from research_town.data import Profile, Proposal, Review
 from research_town.dbs import LogDB, PaperDB, ProfileDB, ProgressDB
-from research_town.utils.model_prompting import model_prompting
 from research_town.envs import ReviewWritingEnv
-from voyageai.client import Client
+from research_town.utils.model_prompting import model_prompting
+
 
 def write_review_research_town(
-    paper_content: str, profiles_reviewers: List[Profile], ref_contents: List[str], config: Config
+    paper_content: str,
+    profiles_reviewers: List[Profile],
+    ref_contents: List[str],
+    config: Config,
 ) -> Tuple[str, str, List[int], Dict[str, Dict[str, Any]]]:
     log_db = LogDB(config=config.database)
     progress_db = ProgressDB(config=config.database)
@@ -42,10 +46,13 @@ def write_review_research_town(
     leader = agent_manager.create_agent(leader_profile, role='leader')
     if not leader_profile:
         raise ValueError('Failed to create leader agent')
-    
+
     top_k = 3
-    
-    reviewers = [agent_manager.create_agent(profile, role='reviewer') for profile in profiles_reviewers[0:top_k]]
+
+    reviewers = [
+        agent_manager.create_agent(profile, role='reviewer')
+        for profile in profiles_reviewers[0:top_k]
+    ]
 
     ref_contents = [ref if ref else '' for ref in ref_contents]
 
@@ -77,18 +84,13 @@ def write_review_research_town(
                 review_per_reviewer[agent_name] = {
                     'strength': strength,
                     'weakness': weakness,
-                    'score': progress.score
+                    'score': progress.score,
                 }
-                
-            if isinstance(progress, MetaReview):
-                assert progress.strength is not None
-                assert progress.weakness is not None
-                strength = progress.strength
-                weakness = progress.weakness
 
     exit_status, exit_dict = env.on_exit()
-    s_meta_review = f"{exit_dict.get('metareviews', '')}"
+    # s_meta_review = f"{exit_dict.get('metareviews', '')}"
     return strength, weakness, scores, review_per_reviewer
+
 
 # Baselines
 def write_review_zero_shot(
@@ -103,31 +105,34 @@ def write_review_zero_shot(
                 'Submission - Full content of the submitted paper.\n\n'
                 'You should provide the following information:\n'
                 'Strength - Advantages and strengths of the submission that can improve its chances to be accepted.\n\n'
-            )
+            ),
         },
         {
             'role': 'user',
             'content': (
-                f"Here is the submission: {paper_content}\n\n"
-                "Please evaluate the submission based on the following criteria:\n\n"
-                "Clarity: Is the writing clear, structured, and terms defined?\n"
-                "Baselines: Are baseline comparisons relevant, sufficient, and not excessive?\n"
-                "Novelty: Is the approach innovative or distinct from prior work?\n"
-                "Results: Are improvements significant, well-supported, and statistically robust?\n"
-                "Limitations: Are weaknesses acknowledged and future work discussed?\n"
-                "Related Work: Are key references cited and connections made?\n"
-                "Technical: Are methods detailed enough for replication?\n\n"
-                "Please combine both the ideas and the experiments in the submission when evaluating it.\n"
-                "When commenting on the experiments, refer to the exact numbers from the experiments.\n\n"
-                "Write the strength in 200 words.\n\n"
-                "Please begin writing the strength of the submission. It should be 200 words long.\n\n"
-                "Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.\n\n"
-                "You should also use your previous experience in your profile when analyzing the submission."
+                f'Here is the submission: {paper_content}\n\n'
+                'Please evaluate the submission based on the following criteria:\n\n'
+                'Clarity: Is the writing clear, structured, and terms defined?\n'
+                'Baselines: Are baseline comparisons relevant, sufficient, and not excessive?\n'
+                'Novelty: Is the approach innovative or distinct from prior work?\n'
+                'Results: Are improvements significant, well-supported, and statistically robust?\n'
+                'Limitations: Are weaknesses acknowledged and future work discussed?\n'
+                'Related Work: Are key references cited and connections made?\n'
+                'Technical: Are methods detailed enough for replication?\n\n'
+                'Please combine both the ideas and the experiments in the submission when evaluating it.\n'
+                'When commenting on the experiments, refer to the exact numbers from the experiments.\n\n'
+                'Write the strength in 200 words.\n\n'
+                'Please begin writing the strength of the submission. It should be 200 words long.\n\n'
+                'Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.\n\n'
+                'You should also use your previous experience in your profile when analyzing the submission.'
             ),
-        }
+        },
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+        config.param.base_llm,
+        prompt,
+        max_token_num=config.param.max_token_num,
+        temperature=config.param.temperature,
     )[0]
     strength = response
 
@@ -139,8 +144,8 @@ def write_review_zero_shot(
                 'You will be provided with the following information:\n'
                 'Submission - Full content of the submitted paper.\n\n'
                 'You should provide the following information:\n'
-                'Weakness - Disadvantages and drawbacks of the submission that must be improved before it can be accepted. You should notice that the abstract might not cover every detail, so you shouldn\'t be overly strict.\n\n'
-            )
+                "Weakness - Disadvantages and drawbacks of the submission that must be improved before it can be accepted. You should notice that the abstract might not cover every detail, so you shouldn't be overly strict.\n\n"
+            ),
         },
         {
             'role': 'user',
@@ -161,10 +166,13 @@ def write_review_zero_shot(
                 'Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.\n\n'
                 'You should also use your previous experience in your profile when analyzing the submission.'
             ),
-        }
+        },
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+        config.param.base_llm,
+        prompt,
+        max_token_num=config.param.max_token_num,
+        temperature=config.param.temperature,
     )[0]
     weakness = response
 
@@ -186,7 +194,7 @@ def write_review_zero_shot(
                 'You should use this format:\n'
                 'Based on the given information, I would give this submission a score of [score] out of 10.\n'
                 'Here [score] should be replaced with your score.'
-            )
+            ),
         },
         {
             'role': 'user',
@@ -214,11 +222,14 @@ def write_review_zero_shot(
                 'If the paper is really good and has important strengths, we encourage you to give a high score like 9.\n\n'
                 'Your score is: '
             ),
-        }
+        },
     ]
-    
+
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+        config.param.base_llm,
+        prompt,
+        max_token_num=config.param.max_token_num,
+        temperature=config.param.temperature,
     )[0]
     score_options = ['10', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     score = 0
@@ -228,16 +239,17 @@ def write_review_zero_shot(
 
     return strength, weakness, [score], {}
 
+
 def write_review_with_only_profiles(
     paper_content: str, profiles_reviewers: List[Profile], config: Config
 ) -> Tuple[str, str, List[int], Dict[str, Dict[str, Any]]]:
-    bio_strs = '\n'.join([profile.bio for profile in profiles_reviewers])
+    # bio_strs = '\n'.join([profile.bio for profile in profiles_reviewers])
     strengths: List[str] = []
     weaknesses: List[str] = []
     scores: List[int] = []
 
     profiles_reviewers = profiles_reviewers[:1]
-    
+
     for profile in profiles_reviewers:
         bio_str = profile.bio
         token_input_count = 0
@@ -251,32 +263,35 @@ def write_review_with_only_profiles(
                     'Submission - Full content of the submitted paper.\n\n'
                     'You should provide the following information:\n'
                     'Strength - Advantages and strengths of the submission that can improve its chances to be accepted.\n\n'
-                )
+                ),
             },
             {
                 'role': 'user',
                 'content': (
-                    f"Here is your profile: {bio_str}\n\n"
-                    f"Here is the submission: {paper_content}\n\n"
-                    "Please evaluate the submission based on the following criteria:\n\n"
-                    "Clarity: Is the writing clear, structured, and terms defined?\n"
-                    "Baselines: Are baseline comparisons relevant, sufficient, and not excessive?\n"
-                    "Novelty: Is the approach innovative or distinct from prior work?\n"
-                    "Results: Are improvements significant, well-supported, and statistically robust?\n"
-                    "Limitations: Are weaknesses acknowledged and future work discussed?\n"
-                    "Related Work: Are key references cited and connections made?\n"
-                    "Technical: Are methods detailed enough for replication?\n\n"
-                    "Please combine both the ideas and the experiments in the submission when evaluating it.\n"
-                    "When commenting on the experiments, refer to the exact numbers from the experiments.\n\n"
-                    "Write the strength in 200 words.\n\n"
-                    "Please begin writing the strength of the submission. It should be 200 words long.\n\n"
-                    "Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.\n\n"
-                    "You should also use your previous experience in your profile when analyzing the submission."
+                    f'Here is your profile: {bio_str}\n\n'
+                    f'Here is the submission: {paper_content}\n\n'
+                    'Please evaluate the submission based on the following criteria:\n\n'
+                    'Clarity: Is the writing clear, structured, and terms defined?\n'
+                    'Baselines: Are baseline comparisons relevant, sufficient, and not excessive?\n'
+                    'Novelty: Is the approach innovative or distinct from prior work?\n'
+                    'Results: Are improvements significant, well-supported, and statistically robust?\n'
+                    'Limitations: Are weaknesses acknowledged and future work discussed?\n'
+                    'Related Work: Are key references cited and connections made?\n'
+                    'Technical: Are methods detailed enough for replication?\n\n'
+                    'Please combine both the ideas and the experiments in the submission when evaluating it.\n'
+                    'When commenting on the experiments, refer to the exact numbers from the experiments.\n\n'
+                    'Write the strength in 200 words.\n\n'
+                    'Please begin writing the strength of the submission. It should be 200 words long.\n\n'
+                    'Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.\n\n'
+                    'You should also use your previous experience in your profile when analyzing the submission.'
                 ),
-            }
+            },
         ]
         response = model_prompting(
-            config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+            config.param.base_llm,
+            prompt,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
         )[0]
         # write prompt[0]['content'], bio_str, paper_content to json indent 4
         # import time
@@ -295,33 +310,36 @@ def write_review_with_only_profiles(
                     'You will be provided with the following information:\n'
                     'Submission - Full content of the submitted paper.\n\n'
                     'You should provide the following information:\n'
-                    'Weakness - Disadvantages and drawbacks of the submission that must be improved before it can be accepted. You should notice that the abstract might not cover every detail, so you shouldn\'t be overly strict.\n\n'
-                )
+                    "Weakness - Disadvantages and drawbacks of the submission that must be improved before it can be accepted. You should notice that the abstract might not cover every detail, so you shouldn't be overly strict.\n\n"
+                ),
             },
             {
                 'role': 'user',
                 'content': (
-                    f"Here is your profile: {bio_str}\n\n"
-                    f"Here is the submission: {paper_content}\n\n"
-                    "Please evaluate the submission based on the following criteria:\n\n"
-                    "Clarity: Is the writing clear, structured, and terms defined?\n"
-                    "Baselines: Are baseline comparisons relevant, sufficient, and not excessive?\n"
-                    "Novelty: Is the approach innovative or distinct from prior work?\n"
-                    "Results: Are improvements significant, well-supported, and statistically robust?\n"
-                    "Limitations: Are weaknesses acknowledged and future work discussed?\n"
-                    "Related Work: Are key references cited and connections made?\n"
-                    "Technical: Are methods detailed enough for replication?\n\n"
-                    "Please combine both the ideas and the experiments in the submission when evaluating it.\n"
-                    "When commenting on the experiments, refer to the exact numbers from the experiments.\n\n"
-                    "Write the weakness in 200 words.\n\n"
-                    "Please begin writing the weakness of the submission. It should be 200 words long.\n\n"
-                    "Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.\n\n"
-                    "You should also use your previous experience in your profile when analyzing the submission."
+                    f'Here is your profile: {bio_str}\n\n'
+                    f'Here is the submission: {paper_content}\n\n'
+                    'Please evaluate the submission based on the following criteria:\n\n'
+                    'Clarity: Is the writing clear, structured, and terms defined?\n'
+                    'Baselines: Are baseline comparisons relevant, sufficient, and not excessive?\n'
+                    'Novelty: Is the approach innovative or distinct from prior work?\n'
+                    'Results: Are improvements significant, well-supported, and statistically robust?\n'
+                    'Limitations: Are weaknesses acknowledged and future work discussed?\n'
+                    'Related Work: Are key references cited and connections made?\n'
+                    'Technical: Are methods detailed enough for replication?\n\n'
+                    'Please combine both the ideas and the experiments in the submission when evaluating it.\n'
+                    'When commenting on the experiments, refer to the exact numbers from the experiments.\n\n'
+                    'Write the weakness in 200 words.\n\n'
+                    'Please begin writing the weakness of the submission. It should be 200 words long.\n\n'
+                    'Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.\n\n'
+                    'You should also use your previous experience in your profile when analyzing the submission.'
                 ),
-            }
+            },
         ]
         response = model_prompting(
-            config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+            config.param.base_llm,
+            prompt,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
         )[0]
         token_input_count += token_counter(model=config.param.base_llm, messages=prompt)
         token_output_count += token_counter(model=config.param.base_llm, text=response)
@@ -348,7 +366,7 @@ def write_review_with_only_profiles(
                     'You should use this format:\n'
                     'Based on the given information, I would give this submission a score of [score] out of 10.\n'
                     'Here [score] should be replaced with your score.'
-                )
+                ),
             },
             {
                 'role': 'user',
@@ -377,15 +395,18 @@ def write_review_with_only_profiles(
                     'If the paper is really good and has important strengths, we encourage you to give a high score like 9.\n\n'
                     'Your score is: '
                 ),
-            }
+            },
         ]
         response = model_prompting(
-            config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+            config.param.base_llm,
+            prompt,
+            max_token_num=config.param.max_token_num,
+            temperature=config.param.temperature,
         )[0]
         token_input_count += token_counter(model=config.param.base_llm, messages=prompt)
         token_output_count += token_counter(model=config.param.base_llm, text=response)
-        score_raw = response       
-    
+        score_raw = response
+
         score_options = ['10', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
         score = 0
@@ -399,14 +420,14 @@ def write_review_with_only_profiles(
 
         print('token_input_count', token_input_count)
         print('token_output_count', token_output_count)
-    
+
     token_input_count = 0
     token_output_count = 0
     # seralize reviews
     reviews_str = ''
     for score, strength, weakness in zip(scores, strengths, weaknesses):
         reviews_str += f'Score: {score}\nStrength: {strength}\nWeakness: {weakness}\n\n'
-    
+
     # combine strengths, weaknesses, and scores
     prompt = [
         {
@@ -419,7 +440,7 @@ def write_review_with_only_profiles(
                 'Reviews - It typically contains the score, strength, and weakness of the submission, each by a different reviewer.\n\n'
                 'You should provide the following information:\n'
                 'Strength - The strength of the submission based on the reviews.\n'
-            )
+            ),
         },
         {
             'role': 'user',
@@ -429,10 +450,13 @@ def write_review_with_only_profiles(
                 'Please summarize the important points from the "strength" section of the reviews.\n'
                 'Please write in bullet points. It should be 200 words long.\n'
             ),
-        }
+        },
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+        config.param.base_llm,
+        prompt,
+        max_token_num=config.param.max_token_num,
+        temperature=config.param.temperature,
     )[0]
     token_input_count += token_counter(model=config.param.base_llm, messages=prompt)
     token_output_count += token_counter(model=config.param.base_llm, text=response)
@@ -449,7 +473,7 @@ def write_review_with_only_profiles(
                 'Reviews - It typically contains the score, strength, and weakness of the submission, each by a different reviewer.\n\n'
                 'You should provide the following information:\n'
                 'Weakness - The weakness of the submission based on the reviews.\n'
-            )
+            ),
         },
         {
             'role': 'user',
@@ -459,16 +483,22 @@ def write_review_with_only_profiles(
                 'Please summarize the important points from the "weakness" section of the reviews.\n'
                 'Please write in bullet points. It should be 200 words long.\n'
             ),
-        }
+        },
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+        config.param.base_llm,
+        prompt,
+        max_token_num=config.param.max_token_num,
+        temperature=config.param.temperature,
     )[0]
     token_input_count += token_counter(model=config.param.base_llm, messages=prompt)
     token_output_count += token_counter(model=config.param.base_llm, text=response)
     weakness = response
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+        config.param.base_llm,
+        prompt,
+        max_token_num=config.param.max_token_num,
+        temperature=config.param.temperature,
     )[0]
     token_input_count += token_counter(model=config.param.base_llm, messages=prompt)
     token_output_count += token_counter(model=config.param.base_llm, text=response)
@@ -505,7 +535,7 @@ def write_review_with_only_citations(
                 'References - Abstracts of the cited papers.\n\n'
                 'You should provide the following information:\n'
                 'Strength - Advantages and strengths of the submission that can improve its chances to be accepted.\n\n'
-            )
+            ),
         },
         {
             'role': 'user',
@@ -527,10 +557,13 @@ def write_review_with_only_citations(
                 'Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.\n\n'
                 'You should also use your previous experience in your profile when analyzing the submission.'
             ),
-        }
+        },
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+        config.param.base_llm,
+        prompt,
+        max_token_num=config.param.max_token_num,
+        temperature=config.param.temperature,
     )[0]
     strength = response
 
@@ -543,8 +576,8 @@ def write_review_with_only_citations(
                 'Submission - Full content of the submitted paper.\n'
                 'References - Abstracts of the cited papers.\n\n'
                 'You should provide the following information:\n'
-                'Weakness - Disadvantages and drawbacks of the submission that must be improved before it can be accepted. You should notice that the abstract might not cover every detail, so you shouldn\'t be overly strict.\n\n'
-            )
+                "Weakness - Disadvantages and drawbacks of the submission that must be improved before it can be accepted. You should notice that the abstract might not cover every detail, so you shouldn't be overly strict.\n\n"
+            ),
         },
         {
             'role': 'user',
@@ -566,10 +599,13 @@ def write_review_with_only_citations(
                 'Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.\n\n'
                 'You should also use your previous experience in your profile when analyzing the submission.'
             ),
-        }
+        },
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+        config.param.base_llm,
+        prompt,
+        max_token_num=config.param.max_token_num,
+        temperature=config.param.temperature,
     )[0]
     weakness = response
 
@@ -591,7 +627,7 @@ def write_review_with_only_citations(
                 'You should use this format:\n'
                 'Based on the given information, I would give this submission a score of [score] out of 10.\n'
                 'Here [score] should be replaced with your score.'
-            )
+            ),
         },
         {
             'role': 'user',
@@ -619,10 +655,13 @@ def write_review_with_only_citations(
                 'If the paper is really good and has important strengths, we encourage you to give a high score like 9.\n\n'
                 'Your score is: '
             ),
-        }
+        },
     ]
     response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num, temperature=config.param.temperature
+        config.param.base_llm,
+        prompt,
+        max_token_num=config.param.max_token_num,
+        temperature=config.param.temperature,
     )[0]
     score_options = ['10', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     score = 0
@@ -631,6 +670,7 @@ def write_review_with_only_citations(
             score = int(score_option)
 
     return strength, weakness, [score], {}
+
 
 def write_review(
     mode: str,
@@ -648,12 +688,16 @@ def write_review(
         paper_content += section_text + '\n\n'
 
     if mode == 'reviewer_only':
-        return write_review_with_only_profiles(paper_content, profiles_reviewers, config)
+        return write_review_with_only_profiles(
+            paper_content, profiles_reviewers, config
+        )
     elif mode == 'citation_only':
         return write_review_with_only_citations(paper_content, ref_contents, config)
     elif mode == 'zero_shot':
         return write_review_zero_shot(paper_content, config)
     elif mode == 'research_town':
-        return write_review_research_town(paper_content, profiles_reviewers, ref_contents, config)
+        return write_review_research_town(
+            paper_content, profiles_reviewers, ref_contents, config
+        )
     else:
         raise ValueError(f'Invalid review writing mode: {mode}')

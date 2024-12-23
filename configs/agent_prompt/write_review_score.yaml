@@ -19,7 +19,7 @@ sys_prompt: >
 
 template: |
   Here is your profile: {bio}
-  
+
   Here is the strength of the paper: {strength}
 
   Here is the weakness of the paper: {weakness}
@@ -43,10 +43,10 @@ template: |
   There exist major weaknesses in technical, or methodological aspects.
   The proposed method is somewhat original, and it is generalizable to various fields.
   I am more on the side of rejection, but I can be convinced otherwise.
-  3/10: The submission makes only marginal contributions to the field. 
+  3/10: The submission makes only marginal contributions to the field.
 
   1/10: The submission is not sufficiently thorough for publication. Or it is not relevant to the conference.
 
   You should not always consider the paper generally as an acceptable one. If the paper is really bad and have critical weakness, you should give a low score like 3. If the paper is really good and have important strengths, we encourage you to give a high score like 9.
 
-  Your score is: 
+  Your score is:

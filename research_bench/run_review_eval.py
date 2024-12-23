@@ -1,7 +1,7 @@
 import argparse
 import json
 import os
-from multiprocessing import Lock, Pool
+from multiprocessing import Lock
 from typing import Any, Dict, List, Sequence, Tuple
 
 from tqdm import tqdm
@@ -36,7 +36,10 @@ def inference(
     )
 
     metrics = compute_review_metrics(
-        strengths_bp_flatte, weaknesses_bp_flatte, generated_strength, generated_weakness
+        strengths_bp_flatte,
+        weaknesses_bp_flatte,
+        generated_strength,
+        generated_weakness,
     )
     avg_score = sum(human_scores) / len(human_scores)
     avg_generated_score = sum(score) / len(score)
@@ -78,7 +81,18 @@ def save_results(
 
 
 def process_task(
-    task: Tuple[str, Dict[str, Any], Dict[str, Any], Dict[str, Any], Dict[str, Any], List[str], List[str], List[int], str, Config],
+    task: Tuple[
+        str,
+        Dict[str, Any],
+        Dict[str, Any],
+        Dict[str, Any],
+        Dict[str, Any],
+        List[str],
+        List[str],
+        List[int],
+        str,
+        Config,
+    ],
 ) -> Tuple[Dict[str, Sequence[str]], Dict[str, List[float]]]:
     return inference(
         paper_id=task[0],
@@ -152,18 +166,33 @@ def main() -> None:
         author_data = data['author_data']
         reviewer_data = data['reviewer_data']
         reference_review = data['reviews']
-        human_scores = [int(review.get('rating').split(':')[0]) for review in reference_review]
-        strengths = [review.get('strengths', '') for review in reference_review]
-        weaknesses = [review.get('weaknesses', '') for review in reference_review]
-        strengths_bp = [review.get('strengths_bullet', '') for review in reference_review]
+        human_scores = [
+            int(review.get('rating').split(':')[0]) for review in reference_review
+        ]
+        # strengths = [review.get('strengths', '') for review in reference_review]
+        # weaknesses = [review.get('weaknesses', '') for review in reference_review]
+        strengths_bp = [
+            review.get('strengths_bullet', '') for review in reference_review
+        ]
         # flatten
         strengths_bp_flatten = [item for sublist in strengths_bp for item in sublist]
-        weaknesses_bp = [review.get('weaknesses_bullet', '') for review in reference_review]
+        weaknesses_bp = [
+            review.get('weaknesses_bullet', '') for review in reference_review
+        ]
         # flatten
         weaknesses_bp_flatten = [item for sublist in weaknesses_bp for item in sublist]
 
         results, metrics = inference(
-            paper_id, paper_data, author_data, reviewer_data, full_content, strengths_bp_flatten, weaknesses_bp_flatten, human_scores, args.mode, config
+            paper_id,
+            paper_data,
+            author_data,
+            reviewer_data,
+            full_content,
+            strengths_bp_flatten,
+            weaknesses_bp_flatten,
+            human_scores,
+            args.mode,
+            config,
         )
         lock = Lock()
         save_results(results, metrics, args.output_path, lock)

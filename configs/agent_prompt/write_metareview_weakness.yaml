@@ -8,7 +8,7 @@ sys_prompt: >
 
     You should provide the following information:
     Weakness - The weakness of the submission based on the reviews.
-    
+
 template: |
   Here are the reviews: {reviews}
 

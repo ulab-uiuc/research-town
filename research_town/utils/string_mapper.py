@@ -17,11 +17,13 @@ def map_proposal_to_str(paper: Dict[str, str]) -> str:
     assert 'content' in paper
     return f"{paper['content']}"
 
+
 def map_cited_abstracts_to_str(abstracts: List[str]) -> str:
     result = ''
     for i, abstract in enumerate(abstracts):
         result += f'{i+1}th cited abstract: ' + abstract + '\n'
     return result
+
 
 def map_paper_list_to_str(papers: List[Dict[str, str]]) -> str:
     result = ''

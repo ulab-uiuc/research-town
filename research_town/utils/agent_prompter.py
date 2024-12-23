@@ -7,6 +7,7 @@ from litellm.utils import token_counter
 from .model_prompting import model_prompting
 from .prompt_constructor import openai_format_prompt_construct
 from .string_mapper import (
+    map_cited_abstracts_to_str,
     map_idea_list_to_str,
     map_idea_to_str,
     map_insight_list_to_str,
@@ -14,7 +15,6 @@ from .string_mapper import (
     map_proposal_to_str,
     map_review_list_to_str,
     map_review_to_str,
-    map_cited_abstracts_to_str,
 )
 
 
@@ -187,16 +187,24 @@ def write_review_prompting(
     token_input_count = 0
     token_output_count = 0
     proposal_str = map_proposal_to_str(proposal)
-    
+
     citations: Union[str, List[str]] = proposal.get('citations', [])
     assert isinstance(citations, list)
     citations_str = map_cited_abstracts_to_str(citations)
 
-    strength_template_input = {'proposal': proposal_str, 'bio': profile['bio'], 'citations': citations_str}
+    strength_template_input = {
+        'proposal': proposal_str,
+        'bio': profile['bio'],
+        'citations': citations_str,
+    }
     strength_messages = openai_format_prompt_construct(
         strength_prompt_template, strength_template_input
     )
-    weakness_template_input = {'proposal': proposal_str, 'bio': profile['bio'], 'citations': citations_str}
+    weakness_template_input = {
+        'proposal': proposal_str,
+        'bio': profile['bio'],
+        'citations': citations_str,
+    }
     weakness_messages = openai_format_prompt_construct(
         weakness_prompt_template, weakness_template_input
     )
@@ -246,7 +254,7 @@ def write_review_prompting(
 
     token_input_count += token_counter(model=model_name, messages=score_messages)
     token_output_count += token_counter(model=model_name, text=score_response_str)
-    
+
     # find the first number in 10, 1, 2, 3, 4, 5, 6, 7, 8, 9
     score_str = re.findall(r'\d+', score_response_str)
     score_str_1st = score_str[0] if score_str else 0
@@ -351,8 +359,8 @@ def write_metareview_prompting(
     # import time
     # time_now = time.strftime('%H%M%S')
     # with open(f'./save_{time_now}.json', 'w') as f:
-    #     json.dump(save, f, indent=4)    
-    
+    #     json.dump(save, f, indent=4)
+
     return (
         strength,
         weakness,

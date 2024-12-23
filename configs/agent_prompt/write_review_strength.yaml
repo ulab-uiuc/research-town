@@ -8,7 +8,7 @@ sys_prompt: >
     You should provide the following information:
     Strength - Advantages and strengths of the submission that can improve its chances to be accepted.
 
-    
+
 template: |
   Here is your profile: {bio}
 
@@ -30,9 +30,9 @@ template: |
   When commenting on the experiments, refer to the exact numbers from the experiments.
 
   Write the strength in 200 words.
-  
+
   Please begin writing the strength of the submission. It should be 200 words long.
 
-  Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical. 
-  
+  Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.
+
   You should also use your previous experience in your profile when analyzing the submission.

@@ -1,5 +1,5 @@
 import re
-from typing import Dict, List, Union, Any
+from typing import Any, Dict, List
 
 import nltk
 import numpy as np
@@ -360,7 +360,7 @@ def compute_review_metrics(
 
     # as a precaution, remove all ''s and Nones from strengths and weaknesses
     strengths = [strength for strength in strengths if strength]
-    weaknesses = [weakness for weakness in weaknesses if weakness]    
+    weaknesses = [weakness for weakness in weaknesses if weakness]
 
     for strength in strengths:
         response = embedding(model='text-embedding-3-large', input=[strength])
@@ -370,7 +370,7 @@ def compute_review_metrics(
         response = vo.embed(model='voyage-3', texts=[strength], input_type='document')
         embedding_strength = response.embeddings[0]
         all_strength_voyageai_embeddings.append(embedding_strength)
-    
+
     for weakness in weaknesses:
         response = embedding(model='text-embedding-3-large', input=[weakness])
         embedding_weakness = response['data'][0]['embedding']
@@ -379,10 +379,12 @@ def compute_review_metrics(
         response = vo.embed(model='voyage-3', texts=[weakness], input_type='document')
         embedding_weakness = response.embeddings[0]
         all_weakness_voyageai_embeddings.append(embedding_weakness)
-    
+
     for generated_strength in generated_strength.split('\n'):
         if generated_strength:
-            response = embedding(model='text-embedding-3-large', input=[generated_strength])
+            response = embedding(
+                model='text-embedding-3-large', input=[generated_strength]
+            )
             embedding_strength = response['data'][0]['embedding']
             max_sim = -1.0
             max_idx = -1
@@ -394,13 +396,17 @@ def compute_review_metrics(
                     max_sim = cosine_sim
                     max_idx = i
             openai_sim_strengths.append(max_sim)
-            generated_strength_matchings_openai.append({
-                'generated': generated_strength,
-                'matched': strengths[max_idx],
-                'similarity': max_sim
-            })
+            generated_strength_matchings_openai.append(
+                {
+                    'generated': generated_strength,
+                    'matched': strengths[max_idx],
+                    'similarity': max_sim,
+                }
+            )
 
-            response = vo.embed(model='voyage-3', texts=[generated_strength], input_type='document')
+            response = vo.embed(
+                model='voyage-3', texts=[generated_strength], input_type='document'
+            )
             embedding_strength = response.embeddings[0]
             max_sim = -1.0
             max_idx = -1
@@ -412,15 +418,19 @@ def compute_review_metrics(
                     max_sim = cosine_sim
                     max_idx = i
             voyageai_sim_strengths.append(max_sim)
-            generated_strength_matchings_voyageai.append({
-                'generated': generated_strength,
-                'matched': strengths[max_idx],
-                'similarity': max_sim
-            })
+            generated_strength_matchings_voyageai.append(
+                {
+                    'generated': generated_strength,
+                    'matched': strengths[max_idx],
+                    'similarity': max_sim,
+                }
+            )
 
     for generated_weakness in generated_weakness.split('\n'):
         if generated_weakness:
-            response = embedding(model='text-embedding-3-large', input=[generated_weakness])
+            response = embedding(
+                model='text-embedding-3-large', input=[generated_weakness]
+            )
             embedding_weakness = response['data'][0]['embedding']
             max_sim = -1.0
             max_idx = -1
@@ -432,13 +442,17 @@ def compute_review_metrics(
                     max_sim = cosine_sim
                     max_idx = i
             openai_sim_weaknesses.append(max_sim)
-            generated_weakness_matchings_openai.append({
-                'generated': generated_weakness,
-                'matched': weaknesses[max_idx],
-                'similarity': max_sim
-            })
+            generated_weakness_matchings_openai.append(
+                {
+                    'generated': generated_weakness,
+                    'matched': weaknesses[max_idx],
+                    'similarity': max_sim,
+                }
+            )
 
-            response = vo.embed(model='voyage-3', texts=[generated_weakness], input_type='document')
+            response = vo.embed(
+                model='voyage-3', texts=[generated_weakness], input_type='document'
+            )
             embedding_weakness = response.embeddings[0]
             max_sim = -1.0
             max_idx = -1
@@ -450,12 +464,14 @@ def compute_review_metrics(
                     max_sim = cosine_sim
                     max_idx = i
             voyageai_sim_weaknesses.append(max_sim)
-            generated_weakness_matchings_voyageai.append({
-                'generated': generated_weakness,
-                'matched': weaknesses[max_idx],
-                'similarity': max_sim
-            })
-            
+            generated_weakness_matchings_voyageai.append(
+                {
+                    'generated': generated_weakness,
+                    'matched': weaknesses[max_idx],
+                    'similarity': max_sim,
+                }
+            )
+
     metrics_raw['openai_sim_strengths'] = openai_sim_strengths
     metrics_raw['openai_sim_weaknesses'] = openai_sim_weaknesses
     metrics_raw['voyageai_sim_strengths'] = voyageai_sim_strengths
@@ -464,8 +480,16 @@ def compute_review_metrics(
     metrics_raw['openai_weakness'] = np.mean(openai_sim_weaknesses).item()
     metrics_raw['voyageai_strength'] = np.mean(voyageai_sim_strengths).item()
     metrics_raw['voyageai_weakness'] = np.mean(voyageai_sim_weaknesses).item()
-    metrics_raw['generated_strength_matchings_openai'] = generated_strength_matchings_openai
-    metrics_raw['generated_weakness_matchings_openai'] = generated_weakness_matchings_openai
-    metrics_raw['generated_strength_matchings_voyageai'] = generated_strength_matchings_voyageai
-    metrics_raw['generated_weakness_matchings_voyageai'] = generated_weakness_matchings_voyageai
+    metrics_raw['generated_strength_matchings_openai'] = (
+        generated_strength_matchings_openai
+    )
+    metrics_raw['generated_weakness_matchings_openai'] = (
+        generated_weakness_matchings_openai
+    )
+    metrics_raw['generated_strength_matchings_voyageai'] = (
+        generated_strength_matchings_voyageai
+    )
+    metrics_raw['generated_weakness_matchings_voyageai'] = (
+        generated_weakness_matchings_voyageai
+    )
     return metrics_raw
