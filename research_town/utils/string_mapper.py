@@ -44,14 +44,14 @@ def map_review_list_to_str(reviews: List[Dict[str, Union[int, str]]]) -> str:
 
 def map_review_to_str(review: Dict[str, Union[int, str]]) -> str:
     assert 'score' in review
-    assert 'summary' in review
+    # assert 'summary' in review
     assert 'strength' in review
     assert 'weakness' in review
     score = review['score']
-    summary = review['summary']
+    # summary = review['summary']
     strength = review['strength']
     weakness = review['weakness']
-    return f'Score: {score}\nSummary: {summary}\nStrength: {strength}\nWeakness: {weakness}'
+    return f'Score: {score}\nStrength: {strength}\nWeakness: {weakness}\n\n'
 
 
 def map_rebuttal_list_to_str(rebuttals: List[Dict[str, str]]) -> str:

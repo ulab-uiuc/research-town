@@ -85,6 +85,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
         role='reviewer',
     )
     review = agent.write_review(
+        profile=profile_A,
         proposal=research_proposal_A,
         config=example_config,
     )
@@ -109,10 +110,13 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
         role='chair',
     )
     review = agent_reviewer.write_review(
+        profile=profile_A,
         proposal=research_proposal_A,
         config=example_config,
     )
+    assert review.score is not None
     metareview = agent_chair.write_metareview(
+        scores=[review.score],
         proposal=research_proposal_A,
         reviews=[review],
         config=example_config,
@@ -139,6 +143,7 @@ def test_write_rebuttal(mock_model_prompting: MagicMock) -> None:
         role='leader',
     )
     review = agent_reviewer.write_review(
+        profile=profile_A,
         proposal=research_proposal_A,
         config=example_config,
     )

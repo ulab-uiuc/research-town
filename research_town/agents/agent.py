@@ -207,7 +207,7 @@ class Agent(object):
         self,
         proposal: Proposal,
         reviews: List[Review],
-        scores: List[float],
+        scores: List[int],
         config: Config,
     ) -> MetaReview:
         serialized_reviews = self.serializer.serialize(reviews)

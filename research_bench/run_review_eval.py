@@ -20,11 +20,12 @@ def inference(
     author_data: Dict[str, Any],
     reviewer_data: Dict[str, Any],
     full_content: Dict[str, Any],
-    strengths: List[str],
-    weaknesses: List[str],
+    strengths_bp_flatte: List[str],
+    weaknesses_bp_flatte: List[str],
+    human_scores: List[int],
     mode: str,
     config: Config,
-) -> Tuple[Dict[str, Sequence[str]], Dict[str, List[float]]]:
+) -> Tuple[Dict[str, Any], Dict[str, List[float]]]:
     intro = paper_data.get('introduction', '')
     profiles = [Profile(**data) for data in author_data.values()]
     profiles_reviewers = [Profile(**data) for data in reviewer_data.values()]
@@ -35,16 +36,23 @@ def inference(
     )
 
     metrics = compute_review_metrics(
-        strengths, weaknesses, generated_strength, generated_weakness
+        strengths_bp_flatte, weaknesses_bp_flatte, generated_strength, generated_weakness
     )
+    avg_score = sum(human_scores) / len(human_scores)
+    avg_generated_score = sum(score) / len(score)
+    dist = abs(avg_score - avg_generated_score)
     results = {
         'paper_id': paper_id,
-        'strengths': strengths,
-        'weaknesses': weaknesses,
+        'strengths_bp': strengths_bp_flatte,
+        'weaknesses_bp': weaknesses_bp_flatte,
         'generated_strength': generated_strength,
         'generated_weakness': generated_weakness,
+        'score': human_scores,
         'generated_scores': score,
-        'review_per_reviewer': review_per_reviewer,
+        'avg_score': avg_score,
+        'avg_generated_score': avg_generated_score,
+        'score_diff': dist,
+        # 'review_per_reviewer': review_per_reviewer,
     }
     return results, metrics
 
@@ -70,9 +78,20 @@ def save_results(
 
 
 def process_task(
-    task: Tuple[str, Dict[str, Any], Dict[str, Any], Dict[str, Any], Dict[str, Any], List[str], List[str], str, Config],
+    task: Tuple[str, Dict[str, Any], Dict[str, Any], Dict[str, Any], Dict[str, Any], List[str], List[str], List[int], str, Config],
 ) -> Tuple[Dict[str, Sequence[str]], Dict[str, List[float]]]:
-    return inference(*task)
+    return inference(
+        paper_id=task[0],
+        paper_data=task[1],
+        author_data=task[2],
+        reviewer_data=task[3],
+        full_content=task[4],
+        strengths_bp_flatte=task[5],
+        weaknesses_bp_flatte=task[6],
+        human_scores=task[7],
+        mode=task[8],
+        config=task[9],
+    )
 
 
 def main() -> None:
@@ -89,7 +108,7 @@ def main() -> None:
         required=True,
         choices=[
             'zero_shot',
-            'author_only',
+            'reviewer_only',
             'citation_only',
             'author_citation',
             'textgnn',
@@ -116,16 +135,16 @@ def main() -> None:
     dataset = load_papers(args.input_path, args.output_path)
     logger.info(f'Processing {len(dataset)} papers')
 
-    metrics_summary: Dict[str, List[float]] = {
-        metric: []
-        for metric in [
-            'bleu',
-            'rouge_l',
-            'gpt_metric_score',
-            'bert_score',
-            'embedding_similarity',
-        ]
-    }
+    # metrics_summary: Dict[str, List[float]] = {
+    #     metric: []
+    #     for metric in [
+    #         'bleu',
+    #         'rouge_l',
+    #         'gpt_metric_score',
+    #         'bert_score',
+    #         'embedding_similarity',
+    #     ]
+    # }
 
     for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
         full_content = data['full_content']
@@ -133,40 +152,47 @@ def main() -> None:
         author_data = data['author_data']
         reviewer_data = data['reviewer_data']
         reference_review = data['reviews']
+        human_scores = [int(review.get('rating').split(':')[0]) for review in reference_review]
         strengths = [review.get('strengths', '') for review in reference_review]
         weaknesses = [review.get('weaknesses', '') for review in reference_review]
+        strengths_bp = [review.get('strengths_bullet', '') for review in reference_review]
+        # flatten
+        strengths_bp_flatten = [item for sublist in strengths_bp for item in sublist]
+        weaknesses_bp = [review.get('weaknesses_bullet', '') for review in reference_review]
+        # flatten
+        weaknesses_bp_flatten = [item for sublist in weaknesses_bp for item in sublist]
 
         results, metrics = inference(
-            paper_id, paper_data, author_data, reviewer_data, full_content, strengths, weaknesses, args.mode, config
+            paper_id, paper_data, author_data, reviewer_data, full_content, strengths_bp_flatten, weaknesses_bp_flatten, human_scores, args.mode, config
         )
         lock = Lock()
         save_results(results, metrics, args.output_path, lock)
 
-    lock = Lock()
-    with Pool(processes=args.num_processes) as pool:
-        tasks = [
-            (
-                paper_id,
-                data['paper_data'],
-                data['author_data'],
-                data['reviewer_data'],
-                data['full_content'],
-                [review.get('strengths', '') for review in data['reviews']],
-                [review.get('weaknesses', '') for review in data['reviews']],
-                args.mode,
-                config,
-            )
-            for paper_id, data in dataset.items()
-        ]
-        for results, metrics in tqdm(
-            pool.imap_unordered(process_task, tasks),
-            total=len(tasks),
-            desc='Processing papers',
-        ):
-            save_results(results, metrics, args.output_path, lock)
-            # with lock:
-            #     for metric, scores in metrics_summary.items():
-            #         scores.append(metrics.get(metric, 0.0))
+    # lock = Lock()
+    # with Pool(processes=args.num_processes) as pool:
+    #     tasks = [
+    #         (
+    #             paper_id,
+    #             data['paper_data'],
+    #             data['author_data'],
+    #             data['reviewer_data'],
+    #             data['full_content'],
+    #             [review.get('strengths', '') for review in data['reviews']],
+    #             [review.get('weaknesses', '') for review in data['reviews']],
+    #             args.mode,
+    #             config,
+    #         )
+    #         for paper_id, data in dataset.items()
+    #     ]
+    #     for results, metrics in tqdm(
+    #         pool.imap_unordered(process_task, tasks),
+    #         total=len(tasks),
+    #         desc='Processing papers',
+    #     ):
+    #         save_results(results, metrics, args.output_path, lock)
+    #         # with lock:
+    #         #     for metric, scores in metrics_summary.items():
+    #         #         scores.append(metrics.get(metric, 0.0))
 
     # Report average metrics
     # for metric, scores in metrics_summary.items():

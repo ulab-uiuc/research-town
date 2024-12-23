@@ -2,7 +2,7 @@ import re
 
 from beartype import beartype
 from beartype.typing import Dict, List, Optional, Tuple, Union
-from litellm import token_counter
+from litellm.utils import token_counter
 
 from .model_prompting import model_prompting
 from .prompt_constructor import openai_format_prompt_construct
@@ -187,7 +187,9 @@ def write_review_prompting(
     token_input_count = 0
     token_output_count = 0
     proposal_str = map_proposal_to_str(proposal)
-    citations = proposal.get('citations', [])
+    
+    citations: Union[str, List[str]] = proposal.get('citations', [])
+    assert isinstance(citations, list)
     citations_str = map_cited_abstracts_to_str(citations)
 
     strength_template_input = {'proposal': proposal_str, 'bio': profile['bio'], 'citations': citations_str}
@@ -253,22 +255,22 @@ def write_review_prompting(
     print(f'Token input count: {token_input_count}')
     print(f'Token output count: {token_output_count}')
 
-    # save all inputs and outputs
-    save = {
-        'strength_prompt': strength_messages,
-        'strength_response': strength,
-        'weakness_prompt': weakness_messages,
-        'weakness_response': weakness,
-        'score_prompt': score_messages,
-        'score_response': score_response_str,
-    }
+    # # save all inputs and outputs
+    # save = {
+    #     'strength_prompt': strength_messages,
+    #     'strength_response': strength,
+    #     'weakness_prompt': weakness_messages,
+    #     'weakness_response': weakness,
+    #     'score_prompt': score_messages,
+    #     'score_response': score_response_str,
+    # }
 
-    # time-now-HHMMSS
-    import json
-    import time
-    time_now = time.strftime('%H%M%S')
-    with open(f'./save_{time_now}.json', 'w') as f:
-        json.dump(save, f, indent=4)
+    # # time-now-HHMMSS
+    # import json
+    # import time
+    # time_now = time.strftime('%H%M%S')
+    # with open(f'./save_{time_now}.json', 'w') as f:
+    #     json.dump(save, f, indent=4)
 
     return (
         strength,
@@ -336,20 +338,20 @@ def write_metareview_prompting(
     token_output_count += token_counter(model=model_name, text=strength)
     token_output_count += token_counter(model=model_name, text=weakness)
 
-    # save all inputs and outputs
-    save = {
-        'strength_prompt': strength_messages,
-        'strength_response': strength,
-        'weakness_prompt': weakness_messages,
-        'weakness_response': weakness,
-    }
+    # # save all inputs and outputs
+    # save = {
+    #     'strength_prompt': strength_messages,
+    #     'strength_response': strength,
+    #     'weakness_prompt': weakness_messages,
+    #     'weakness_response': weakness,
+    # }
 
-    # time-now-HHMMSS
-    import json
-    import time
-    time_now = time.strftime('%H%M%S')
-    with open(f'./save_{time_now}.json', 'w') as f:
-        json.dump(save, f, indent=4)    
+    # # time-now-HHMMSS
+    # import json
+    # import time
+    # time_now = time.strftime('%H%M%S')
+    # with open(f'./save_{time_now}.json', 'w') as f:
+    #     json.dump(save, f, indent=4)    
     
     return (
         strength,
