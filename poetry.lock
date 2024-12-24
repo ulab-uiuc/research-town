@@ -2280,20 +2280,20 @@ test = ["pep440", "pre-commit", "pytest", "testpath"]
 
 [[package]]
 name = "nbmake"
-version = "1.5.4"
+version = "1.5.5"
 description = "Pytest plugin for testing notebooks"
 optional = false
-python-versions = "<4.0.0,>=3.8.0"
+python-versions = ">=3.8.0"
 files = [
-    {file = "nbmake-1.5.4-py3-none-any.whl", hash = "sha256:8e440a61a7d4ab303064aa86b8d2c088177c89960e2b4a0f91a768dc9f68382b"},
-    {file = "nbmake-1.5.4.tar.gz", hash = "sha256:56417fe80d50069671122955532df6e26369a23f68b9c6e2191ae9cfef19abb2"},
+    {file = "nbmake-1.5.5-py3-none-any.whl", hash = "sha256:c6fbe6e48b60cacac14af40b38bf338a3b88f47f085c54ac5b8639ff0babaf4b"},
+    {file = "nbmake-1.5.5.tar.gz", hash = "sha256:239dc868ea13a7c049746e2aba2c229bd0f6cdbc6bfa1d22f4c88638aa4c5f5c"},
 ]
 
 [package.dependencies]
 ipykernel = ">=5.4.0"
-nbclient = ">=0.6.6,<0.7.0"
-nbformat = ">=5.0.8,<6.0.0"
-Pygments = ">=2.7.3,<3.0.0"
+nbclient = ">=0.6.6"
+nbformat = ">=5.0.4"
+pygments = ">=2.7.3"
 pytest = ">=6.1.0"
 
 [[package]]
