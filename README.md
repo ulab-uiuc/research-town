@@ -2,7 +2,7 @@
   <img src="assets/research_town.png" style="width: 100%;"></img>
 </div>
 
-<h1 align="center">Research Town: Simulator of Human Research Community</h1>
+<h1 align="center">ResearchTown: Simulator of Human Research Community</h1>
 
 <div align="center">
 
