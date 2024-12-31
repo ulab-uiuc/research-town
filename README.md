@@ -47,6 +47,7 @@ Use a virtual environment, e.g. with anaconda3:
 conda create -n research-town python=3.10
 conda activate research-town
 curl -sSL https://install.python-poetry.org | python3
+export PATH="$HOME/.local/bin:$PATH"
 ```
 
 ### Configure environment variables
@@ -65,6 +66,8 @@ poetry install
 cd examples
 python research_town_demo.py
 ```
+
+All generated research progress like ideas, proposals will be automatically saved in the database folder you set in the .env file.
 
 ## Developing
 
