@@ -9,7 +9,7 @@
 [![Python 3.10](https://img.shields.io/badge/python-%E2%89%A53.10-blue)](https://www.python.org/downloads/release/python-3109/)
 [![Dataset](https://img.shields.io/badge/%F0%9F%A4%97-ResearchBench-yellow)](https://huggingface.co/datasets/ulab-ai/research-bench)
 [![Arxiv](https://img.shields.io/badge/arXiv-ResearchTown-b31b1b)](https://arxiv.org/pdf/2412.17767)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289da?logo=discord&logoColor=white)](https://discord.gg/TwXxGhMB)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289da?logo=discord&logoColor=white)](https://discord.gg/9t9jtDDk)
 [![WeChat](https://img.shields.io/badge/WeChat-Join%20Us-09B83E?logo=wechat&logoColor=white)](assets/wechat.png)
 [![codecov](https://codecov.io/github/ulab-uiuc/research-town/graph/badge.svg?token=00LRQFX0QR)](https://codecov.io/github/ulab-uiuc/research-town)
 
