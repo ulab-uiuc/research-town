@@ -67,6 +67,8 @@ cd examples
 python research_town_demo.py
 ```
 
+All generated research progress like ideas, proposals will be automatically saved in the database folder you set in the .env file.
+
 ## Developing
 
 #### Develop Demo

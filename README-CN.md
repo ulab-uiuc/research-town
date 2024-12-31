@@ -32,7 +32,7 @@
 通过 `pypi` 安装 `research-town` ：
 
 ```bash
-pip install research-town 
+pip install research-town
 ```
 
 ### 虚拟环境安装
@@ -50,7 +50,7 @@ curl -sSL https://install.python-poetry.org | python3
 1. 将 `.env.template` 文件复制到项目根目录，并命名为 `.env`。
 ```bash
 cp .env.template .env
-``` 
+```
 2. 在 `.env` 文件中填写所需的环境变量。
 
 ### 运行示例
@@ -114,4 +114,3 @@ pre-commit install
   </picture>
 </a>
 </p>
-
