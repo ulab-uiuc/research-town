@@ -1,0 +1,10 @@
+{
+  "namespaces": [
+    "Profile",
+    "Paper"
+  ],
+  "embedding_namespaces": [
+    "Profile",
+    "Paper"
+  ]
+}
