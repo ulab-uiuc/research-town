@@ -114,3 +114,13 @@ pre-commit install
   </picture>
 </a>
 </p>
+
+## ResearchBench
+
+要执行ResearchBench实验，请运行 'research_bench/run_review_eval.sh' 脚本。你可以在脚本中调整参数，如使用实际的 `INPUT_PATH`。
+
+如果遇到 `openreview` 未找到的错误，请通过运行 `pip install openreview` 安装该包。如果遇到与 `requests` 相关的问题，请将其版本更改为 `2.26`。
+
+```bash
+pip install requests==2.26
+```

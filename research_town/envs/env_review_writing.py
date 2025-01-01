@@ -3,7 +3,7 @@ from beartype.typing import Any, Dict, Generator, List, Tuple
 
 from ..agents import Agent, AgentManager
 from ..configs import Config
-from ..data import MetaReview, Progress, Rebuttal, Review
+from ..data import MetaReview, Progress, Review
 from ..dbs import LogDB, PaperDB, ProgressDB
 from .env_base import BaseEnv
 
@@ -33,7 +33,8 @@ class ReviewWritingEnv(BaseEnv):
         **context: Any,
     ) -> None:
         if 'leader' not in context or context['leader'] is None:
-            context['leader'] = self.agent_manager.sample_leader()
+            # context['leader'] = self.agent_manager.sample_leader()
+            context['leader'] = []
         if 'chair' not in context or context['chair'] is None:
             context['chair'] = self.agent_manager.sample_chair()
         if 'reviewers' not in context or context['reviewers'] is None:
@@ -64,28 +65,20 @@ class ReviewWritingEnv(BaseEnv):
             self.reviews: List[Review] = []
             for reviewer in self.reviewers:
                 review = reviewer.write_review(
+                    profile=reviewer.profile,
                     proposal=proposal,
                     config=self.config,
                 )
                 self.reviews.append(review)
                 yield review, reviewer
 
-            # Rebuttal Submitting
-            self.rebuttals: List[Rebuttal] = []
-            for review in self.reviews:
-                rebuttal = self.leader.write_rebuttal(
-                    proposal=proposal,
-                    review=review,
-                    config=self.config,
-                )
-                self.rebuttals.append(rebuttal)
-                yield rebuttal, self.leader
-
             # Paper Meta Reviewing
+            scores = [review.score for review in self.reviews]
             metareview = self.chair.write_metareview(
                 proposal=proposal,
                 reviews=self.reviews,
                 config=self.config,
+                scores=scores,
             )
             self.metareviews.append(metareview)
             yield metareview, self.chair

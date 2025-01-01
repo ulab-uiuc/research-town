@@ -11,7 +11,7 @@ for MODE in "${MODES[@]}"
 do
     OUTPUT_PATH="${OUTPUT_DIR}/mlbench_result_4o_mini_${MODE}.jsonl"
     echo "Running evaluation for mode: $MODE"
-    poetry run python run_eval.py --input "$INPUT_PATH" --output "$OUTPUT_PATH" --mode "$MODE" --num_processes "$NUM_PROCESSES"
+    poetry run python run_proposal_eval.py --input "$INPUT_PATH" --output "$OUTPUT_PATH" --mode "$MODE" --num_processes "$NUM_PROCESSES"
     echo "Finished evaluation for mode: $MODE"
 done
 
