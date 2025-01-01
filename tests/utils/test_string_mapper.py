@@ -94,7 +94,7 @@ def test_map_metareview_to_str() -> None:
         'weakness': 'Weakness',
         'decision': 'accept',
     }
-    expected_result = 'Summary: This is a meta review\nStrength: Strength\nWeakness: Weakness\nDecision: accept'
+    expected_result = 'Summary: This is a meta review\nStrength: Strength\nWeakness: Weakness\nDecision: accept\n'
     assert map_metareview_to_str(metareview) == expected_result
 
 
