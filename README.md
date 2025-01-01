@@ -2,18 +2,23 @@
   <img src="assets/research_town.png" style="width: 100%;"></img>
 </div>
 
-<h1 align="center">Research Town: Simulator of Research Community</h1>
+<h1 align="center">ResearchTown: Simulator of Human Research Community</h1>
 
 <div align="center">
 
 [![Python 3.10](https://img.shields.io/badge/python-%E2%89%A53.10-blue)](https://www.python.org/downloads/release/python-3109/)
-[![GitHub pull request](https://img.shields.io/badge/PRs-welcome-orange)](https://github.com/hiyouga/LLaMA-Factory/pulls)
-[![Arxiv](https://img.shields.io/badge/arXiv-Coming%20soon-b31b1b)](https://github.com/ulab-uiuc/research-town)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289da?logo=discord&logoColor=white)](https://discord.gg/TwXxGhMB)
+[![Dataset](https://img.shields.io/badge/%F0%9F%A4%97-ResearchBench-yellow)](https://huggingface.co/datasets/ulab-ai/research-bench)
+[![Arxiv](https://img.shields.io/badge/arXiv-ResearchTown-b31b1b)](https://arxiv.org/pdf/2412.17767)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289da?logo=discord&logoColor=white)](https://discord.gg/9t9jtDDk)
 [![WeChat](https://img.shields.io/badge/WeChat-Join%20Us-09B83E?logo=wechat&logoColor=white)](assets/wechat.png)
 [![codecov](https://codecov.io/github/ulab-uiuc/research-town/graph/badge.svg?token=00LRQFX0QR)](https://codecov.io/github/ulab-uiuc/research-town)
 
+
+[English](README.md) | [中文](README-CN.md)
 </div>
+
+## News
+* [12/24] We release our ResearchTown paper on [arXiv](https://arxiv.org/pdf/2412.17767) and ResearchBench data on [HuggingFace](https://huggingface.co/datasets/ulab-ai/research-bench).
 
 ## Introduction
 
@@ -42,6 +47,7 @@ Use a virtual environment, e.g. with anaconda3:
 conda create -n research-town python=3.10
 conda activate research-town
 curl -sSL https://install.python-poetry.org | python3
+export PATH="$HOME/.local/bin:$PATH"
 ```
 
 ### Configure environment variables
@@ -60,6 +66,8 @@ poetry install
 cd examples
 python research_town_demo.py
 ```
+
+All generated research progress like ideas, proposals will be automatically saved in the database folder you set in the .env file.
 
 ## Developing
 
