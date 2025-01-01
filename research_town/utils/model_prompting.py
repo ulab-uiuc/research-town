@@ -30,6 +30,5 @@ def model_prompting(
         temperature=temperature,
         stream=stream,
     )
-    content = completion.choices[0].message.content
-    content_l = [content]
+    content_l = [completion.choices[i].message.content for i in range(return_num)]
     return content_l

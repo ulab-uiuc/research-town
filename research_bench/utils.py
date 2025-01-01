@@ -142,11 +142,15 @@ def get_proposal_from_paper(arxiv_id: str, intro: str, config: Config) -> str:
 
 @with_cache(cache_dir='author_data')
 def get_author_data(
-    arxiv_id: str, authors: List[str], title: str, config: Config
+    arxiv_id: str, authors: List[str], title: str, config: Config, with_year_limit: bool = False
 ) -> Dict[str, Any]:
+    if with_year_limit:
+        before_year = int('20' + arxiv_id.split('.')[0][:2])
+    else:
+        before_year = None
     profile_db = ProfileDB(config.database)
     profile_pks = profile_db.pull_profiles(
-        names=authors, config=config, known_paper_titles=[title]
+        names=authors, config=config, known_paper_titles=[title], before_year=before_year
     )
     author_data = {}
     for pk in profile_pks:
