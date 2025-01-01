@@ -149,17 +149,6 @@ def main() -> None:
     dataset = load_papers(args.input_path, args.output_path)
     logger.info(f'Processing {len(dataset)} papers')
 
-    # metrics_summary: Dict[str, List[float]] = {
-    #     metric: []
-    #     for metric in [
-    #         'bleu',
-    #         'rouge_l',
-    #         'gpt_metric_score',
-    #         'bert_score',
-    #         'embedding_similarity',
-    #     ]
-    # }
-
     for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
         full_content = data['full_content']
         paper_data = data['paper_data']
@@ -169,8 +158,6 @@ def main() -> None:
         human_scores = [
             int(review.get('rating').split(':')[0]) for review in reference_review
         ]
-        # strengths = [review.get('strengths', '') for review in reference_review]
-        # weaknesses = [review.get('weaknesses', '') for review in reference_review]
         strengths_bp = [
             review.get('strengths_bullet', '') for review in reference_review
         ]
@@ -196,38 +183,6 @@ def main() -> None:
         )
         lock = Lock()
         save_results(results, metrics, args.output_path, lock)
-
-    # lock = Lock()
-    # with Pool(processes=args.num_processes) as pool:
-    #     tasks = [
-    #         (
-    #             paper_id,
-    #             data['paper_data'],
-    #             data['author_data'],
-    #             data['reviewer_data'],
-    #             data['full_content'],
-    #             [review.get('strengths', '') for review in data['reviews']],
-    #             [review.get('weaknesses', '') for review in data['reviews']],
-    #             args.mode,
-    #             config,
-    #         )
-    #         for paper_id, data in dataset.items()
-    #     ]
-    #     for results, metrics in tqdm(
-    #         pool.imap_unordered(process_task, tasks),
-    #         total=len(tasks),
-    #         desc='Processing papers',
-    #     ):
-    #         save_results(results, metrics, args.output_path, lock)
-    #         # with lock:
-    #         #     for metric, scores in metrics_summary.items():
-    #         #         scores.append(metrics.get(metric, 0.0))
-
-    # Report average metrics
-    # for metric, scores in metrics_summary.items():
-    #     if scores:
-    #         average = sum(scores) / len(scores)
-    #         logger.info(f"Average {metric.replace('_', ' ').upper()}: {average:.4f}")
 
 
 if __name__ == '__main__':
