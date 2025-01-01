@@ -25,6 +25,7 @@ def inference(
     human_scores: List[int],
     mode: str,
     config: Config,
+    top_k_reviewers: int,
 ) -> Tuple[Dict[str, Any], Dict[str, List[float]]]:
     intro = paper_data.get('introduction', '')
     profiles = [Profile(**data) for data in author_data.values()]
@@ -32,7 +33,14 @@ def inference(
     ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
     generated_strength, generated_weakness, score, review_per_reviewer = write_review(
-        mode, intro, profiles, profiles_reviewers, full_content, ref_abstracts, config
+        mode,
+        intro,
+        profiles,
+        profiles_reviewers,
+        full_content,
+        ref_abstracts,
+        config,
+        top_k_reviewers,
     )
 
     metrics = compute_review_metrics(
@@ -92,6 +100,7 @@ def process_task(
         List[int],
         str,
         Config,
+        int,
     ],
 ) -> Tuple[Dict[str, Sequence[str]], Dict[str, List[float]]]:
     return inference(
@@ -105,6 +114,7 @@ def process_task(
         human_scores=task[7],
         mode=task[8],
         config=task[9],
+        top_k_reviewers=task[10],
     )
 
 
@@ -143,9 +153,16 @@ def main() -> None:
         default=os.cpu_count(),
         help='Number of parallel processes to use',
     )
+    parser.add_argument(
+        '--top_k_reviewers',
+        type=int,
+        default=5,
+        help='Number of top reviewers to consider',
+    )
     args = parser.parse_args()
 
     config = Config(args.config_path)
+    top_k_reviewers = args.top_k_reviewers
     dataset = load_papers(args.input_path, args.output_path)
     logger.info(f'Processing {len(dataset)} papers')
 
@@ -180,6 +197,7 @@ def main() -> None:
             human_scores,
             args.mode,
             config,
+            top_k_reviewers,
         )
         lock = Lock()
         save_results(results, metrics, args.output_path, lock)

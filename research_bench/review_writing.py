@@ -23,6 +23,7 @@ def write_review_research_town(
     profiles_reviewers: List[Profile],
     ref_contents: List[str],
     config: Config,
+    top_k_reviewers: int = 5,
 ) -> Tuple[str, str, List[int], Dict[str, Dict[str, Any]]]:
     log_db = LogDB(config=config.database)
     progress_db = ProgressDB(config=config.database)
@@ -47,11 +48,9 @@ def write_review_research_town(
     if not leader_profile:
         raise ValueError('Failed to create leader agent')
 
-    top_k = 3
-
     reviewers = [
         agent_manager.create_agent(profile, role='reviewer')
-        for profile in profiles_reviewers[0:top_k]
+        for profile in profiles_reviewers[0:top_k_reviewers]
     ]
 
     ref_contents = [ref if ref else '' for ref in ref_contents]
@@ -241,14 +240,17 @@ def write_review_zero_shot(
 
 
 def write_review_with_only_profiles(
-    paper_content: str, profiles_reviewers: List[Profile], config: Config
+    paper_content: str,
+    profiles_reviewers: List[Profile],
+    config: Config,
+    top_k_reviewers: int = 5,
 ) -> Tuple[str, str, List[int], Dict[str, Dict[str, Any]]]:
     # bio_strs = '\n'.join([profile.bio for profile in profiles_reviewers])
     strengths: List[str] = []
     weaknesses: List[str] = []
     scores: List[int] = []
 
-    profiles_reviewers = profiles_reviewers[:1]
+    profiles_reviewers = profiles_reviewers[:top_k_reviewers]
 
     for profile in profiles_reviewers:
         bio_str = profile.bio
@@ -680,6 +682,7 @@ def write_review(
     full_content: Dict[str, Any],
     ref_contents: List[str],
     config: Config,
+    top_k_reviewers: int = 5,
 ) -> Tuple[str, str, List[int], Dict[str, Dict[str, Any]]]:
     paper_content = ''
     for idx, section in enumerate(full_content):
@@ -689,15 +692,21 @@ def write_review(
 
     if mode == 'reviewer_only':
         return write_review_with_only_profiles(
-            paper_content, profiles_reviewers, config
+            paper_content, profiles_reviewers, config, top_k_reviewers
         )
     elif mode == 'citation_only':
+        print(
+            f'You are in citation only mode. Top K reviewers parameter valued {top_k_reviewers} will be ignored.'
+        )
         return write_review_with_only_citations(paper_content, ref_contents, config)
     elif mode == 'zero_shot':
+        print(
+            f'You are in zero shot mode. Top K reviewers parameter valued {top_k_reviewers} will be ignored.'
+        )
         return write_review_zero_shot(paper_content, config)
     elif mode == 'research_town':
         return write_review_research_town(
-            paper_content, profiles_reviewers, ref_contents, config
+            paper_content, profiles_reviewers, ref_contents, config, top_k_reviewers
         )
     else:
         raise ValueError(f'Invalid review writing mode: {mode}')
