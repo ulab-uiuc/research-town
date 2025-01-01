@@ -10,7 +10,7 @@ TOP_K_REVIEWERS=5
 # Loop through each mode and run the evaluation
 for MODE in "${MODES[@]}"
 do
-    OUTPUT_PATH="${OUTPUT_DIR}/reviewbench_result_4o_mini_${MODE}.jsonl"
+    OUTPUT_PATH="${OUTPUT_DIR}/reviewbench_result_4o_mini_${MODE}_top${TOP_K_REVIEWERS}.json"
     echo "Running evaluation for mode: $MODE"
     poetry run python run_review_eval.py --input "$INPUT_PATH" --output "$OUTPUT_PATH" --mode "$MODE" --num_processes "$NUM_PROCESSES" --top_k_reviewers "$TOP_K_REVIEWERS"
     echo "Finished evaluation for mode: $MODE"

@@ -33,7 +33,8 @@ class ReviewWritingEnv(BaseEnv):
         **context: Any,
     ) -> None:
         if 'leader' not in context or context['leader'] is None:
-            context['leader'] = self.agent_manager.sample_leader()
+            # context['leader'] = self.agent_manager.sample_leader()
+            context['leader'] = []
         if 'chair' not in context or context['chair'] is None:
             context['chair'] = self.agent_manager.sample_chair()
         if 'reviewers' not in context or context['reviewers'] is None:

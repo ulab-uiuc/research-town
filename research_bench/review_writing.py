@@ -40,13 +40,13 @@ def write_review_research_town(
         agent_manager=agent_manager,
     )
 
-    # leader_profile = profile_db.get(name=profiles[0].name)[0]
-    leader_profile = profiles_reviewers[0]
+    # chair_profile = profile_db.get(name=profiles[0].name)[0]
+    chair_profile = profiles_reviewers[0]
 
-    # print('leader_profile', leader_profile)
-    leader = agent_manager.create_agent(leader_profile, role='leader')
-    if not leader_profile:
-        raise ValueError('Failed to create leader agent')
+    # print('chair_profile', chair_profile)
+    chair = agent_manager.create_agent(chair_profile, role='chair')
+    if not chair_profile:
+        raise ValueError('Failed to create chair agent')
 
     reviewers = [
         agent_manager.create_agent(profile, role='reviewer')
@@ -56,8 +56,8 @@ def write_review_research_town(
     ref_contents = [ref if ref else '' for ref in ref_contents]
 
     env.on_enter(
-        leader=leader,
-        chair=None,
+        leader=None,
+        chair=chair,
         reviewers=reviewers,
         proposals=[Proposal(content=paper_content, citations=ref_contents)],
     )
@@ -249,6 +249,10 @@ def write_review_with_only_profiles(
     strengths: List[str] = []
     weaknesses: List[str] = []
     scores: List[int] = []
+
+    import pdb
+
+    pdb.set_trace()
 
     profiles_reviewers = profiles_reviewers[:top_k_reviewers]
 
