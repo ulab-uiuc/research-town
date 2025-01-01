@@ -121,3 +121,13 @@ Check the github action result to make sure all tests pass. If not, fix the erro
   </picture>
 </a>
 </p>
+
+## ResearchBench
+
+To execute ResearchBench experiments, please execute 'research_bench/run_review_eval.sh' script. You can adjust the parameters in the script, using the actual `INPUT_PATH`.
+
+If you encounter `openreview` not found error, please install the package by running `pip install openreview`. If any issues come up regarding `requests`, please change its version to `2.26`.
+
+```bash
+pip install requests==2.26
+```
