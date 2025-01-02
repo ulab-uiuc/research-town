@@ -105,16 +105,6 @@ pre-commit install
 
 检查 GitHub Actions 的结果，确保所有测试通过。若未通过，请修复错误并重新提交。
 
-<p align="center">
-<a href="https://star-history.com/#Significant-Gravitas/AutoGPT">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ulab-uiuc/research-town&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ulab-uiuc/research-town&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Significant-Gravitas/AutoGPT&type=Date" />
-  </picture>
-</a>
-</p>
-
 ## ResearchBench
 
 要执行ResearchBench实验，请运行 'research_bench/run_review_eval.sh' 脚本。你可以在脚本中调整参数，如使用实际的 `INPUT_PATH`。
