@@ -104,6 +104,7 @@ Follow the installation instruction above and then, instead of running `python -
 python -m pip install -e ".[dev]"
 mypy --install-types --non-interactive research_town
 python -m pip install pre-commit
+pre-commit clean
 pre-commit install
 ```
 
