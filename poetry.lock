@@ -4000,13 +4000,13 @@ test = ["Cython", "array-api-strict (>=2.0)", "asv", "gmpy2", "hypothesis (>=6.3
 
 [[package]]
 name = "semanticscholar"
-version = "0.9.0"
+version = "0.10.0"
 description = "Unofficial Python client library for Semantic Scholar APIs."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "semanticscholar-0.9.0-py3-none-any.whl", hash = "sha256:f895099684de3de01747bb8467887370d3c3bc014ba12c0e0118afee25059b6b"},
-    {file = "semanticscholar-0.9.0.tar.gz", hash = "sha256:d4791f70cefeef1121265f07fd3eea2593e7e93a582878c2f17b7787069b77ce"},
+    {file = "semanticscholar-0.10.0-py3-none-any.whl", hash = "sha256:28a572eb8504d493ab5671bc3ce76f84ae70534a5828ec0cd38a26f27e66bd02"},
+    {file = "semanticscholar-0.10.0.tar.gz", hash = "sha256:82f907265aebcb1d9432b1cdd880d706230444515a4b94017358b938d007dbec"},
 ]
 
 [package.dependencies]
