@@ -5,8 +5,7 @@ from semanticscholar import SemanticScholar
 from .error_handler import api_calling_error_exponential_backoff
 from .model_prompting import model_prompting
 from .prompt_constructor import openai_format_prompt_construct
-from datetime import datetime
-import requests
+
 
 def coauthor_frequency(
     author_id: str, author_list: List[Dict[str, str]], co_authors: Dict[str, int]
@@ -73,7 +72,7 @@ def get_papers_from_author_id(
             'papers.year',
         ],
     )
-    
+
     papers = author_data['papers']
     if not isinstance(papers, list):
         return []
@@ -101,7 +100,9 @@ def collect_publications_and_coauthors(
     matched_author_ids = match_author_ids(author, known_paper_titles)
     author_id = matched_author_ids.pop()  # Only one author ID is expected
 
-    papers = get_papers_from_author_id(author_id, paper_max_num, before_year=before_year)
+    papers = get_papers_from_author_id(
+        author_id, paper_max_num, before_year=before_year
+    )
     paper_abstracts = []
     paper_titles = []
     co_authors: Dict[str, int] = {}

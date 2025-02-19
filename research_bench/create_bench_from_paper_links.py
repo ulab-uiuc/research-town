@@ -28,14 +28,20 @@ def get_arxiv_ids(input_file: str) -> List[str]:
         return arxiv_ids
 
 
-def process_single_arxiv_id(arxiv_id: str, config: Config, with_year_limit: bool) -> Tuple[str, Any]:
+def process_single_arxiv_id(
+    arxiv_id: str, config: Config, with_year_limit: bool
+) -> Tuple[str, Any]:
     """Processes a single arXiv ID, handling any errors gracefully."""
     try:
         paper_data = get_paper_data(arxiv_id)
         return arxiv_id, {
             'paper_data': paper_data,
             'author_data': get_author_data(
-                arxiv_id, paper_data['authors'], paper_data['title'], config, with_year_limit=with_year_limit,
+                arxiv_id,
+                paper_data['authors'],
+                paper_data['title'],
+                config,
+                with_year_limit=with_year_limit,
             ),
             'reference_proposal': get_proposal_from_paper(
                 arxiv_id, paper_data['introduction'], config
@@ -56,7 +62,11 @@ def save_benchmark_data(data: Dict[str, Any], output: str) -> None:
 
 
 def process_arxiv_ids(
-    arxiv_ids: List[str], output: str, config: Config, num_processes: int, with_year_limit: bool
+    arxiv_ids: List[str],
+    output: str,
+    config: Config,
+    num_processes: int,
+    with_year_limit: bool,
 ) -> None:
     """Processes arXiv IDs using multiprocessing, saving results after each batch."""
     arxiv_ids_chunks = [
@@ -69,7 +79,8 @@ def process_arxiv_ids(
             if num_processes == 1:
                 # Single-process mode
                 results = [
-                    process_single_arxiv_id(arxiv_id, config, with_year_limit) for arxiv_id in chunk
+                    process_single_arxiv_id(arxiv_id, config, with_year_limit)
+                    for arxiv_id in chunk
                 ]
             else:
                 # Multiprocessing mode
@@ -113,7 +124,9 @@ def main() -> None:
     args = parse_args()
     arxiv_ids = get_arxiv_ids(args.input)
     config = Config('../configs')
-    process_arxiv_ids(arxiv_ids, args.output, config, args.num_processes, args.with_year_limit)
+    process_arxiv_ids(
+        arxiv_ids, args.output, config, args.num_processes, args.with_year_limit
+    )
 
 
 if __name__ == '__main__':

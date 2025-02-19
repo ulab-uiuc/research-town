@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+from collections import defaultdict
 from multiprocessing import Lock, Pool
 from typing import Any, Dict, List, Tuple
 
@@ -12,8 +13,6 @@ from research_bench.utils import load_benchmark
 from research_town.configs import Config
 from research_town.data import Profile
 from research_town.utils.logger import logger
-import random
-from collections import defaultdict
 
 
 def inference(
@@ -31,7 +30,7 @@ def inference(
             continue
         else:
             ref_abstracts_full.append(ref['abstract'])
-        '''
+        """
         if ref['reference_section'] is None or ref['abstract'] is None:
             continue
         reference_sections = [section.lower() for section in ref['reference_section']]
@@ -57,13 +56,17 @@ def inference(
 
         #if exclude_signal is False:
         #    ref_abstracts_full.append(ref['abstract'])
-        '''
+        """
     print(len(ref_abstracts_full))
     paper_title = paper_data['title']
     if mode == 'fake_research_town':
-        gen_proposal, gen_proposals_each_agent = write_proposal(mode, profiles, ref_abstracts_full, config, paper_title)
+        gen_proposal, gen_proposals_each_agent = write_proposal(
+            mode, profiles, ref_abstracts_full, config, paper_title
+        )
     else:
-        gen_proposal = write_proposal(mode, profiles, ref_abstracts_full, config, paper_title)
+        gen_proposal = write_proposal(
+            mode, profiles, ref_abstracts_full, config, paper_title
+        )
 
     if mode == 'fake_research_town':
         overall_metrics = defaultdict(list)

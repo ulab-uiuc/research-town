@@ -44,7 +44,10 @@ class ProfileDB(BaseDB[Profile]):
             try:
                 pub_abstracts, pub_titles, collaborators = (
                     collect_publications_and_coauthors(
-                        name, paper_max_num=20, known_paper_titles=known_paper_titles, before_year=before_year
+                        name,
+                        paper_max_num=20,
+                        known_paper_titles=known_paper_titles,
+                        before_year=before_year,
                     )
                 )
                 logger.info(f'Collected publications for {name}: {pub_titles}')

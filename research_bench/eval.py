@@ -3,11 +3,11 @@ from typing import Any, Dict, List
 
 import nltk
 import numpy as np
+import torch
 from bert_score import score
 from litellm import embedding
 from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
 from rouge_score import rouge_scorer
-import torch
 from voyageai.client import Client
 
 from research_town.utils.model_prompting import model_prompting
@@ -46,7 +46,11 @@ def compute_bertscore(reference: str, hypothesis: str) -> float:
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
         # Compute BERTScore
         P, R, F1 = score(
-            [hypothesis], [reference], lang='en', rescale_with_baseline=True, device=device
+            [hypothesis],
+            [reference],
+            lang='en',
+            rescale_with_baseline=True,
+            device=device,
         )
         return float(F1.mean().item())
     except Exception as e:
@@ -246,6 +250,7 @@ def compute_voyageai_embedding_similarity_per_question(
         print(f'Error computing embedding similarity per question: {e}')
         return [0.0] * len(questions)
 
+
 def compute_bertscore_per_question(reference: str, hypothesis: str) -> List[float]:
     try:
         questions = [
@@ -275,6 +280,7 @@ def compute_bertscore_per_question(reference: str, hypothesis: str) -> List[floa
     except Exception as e:
         print(f'Error computing BERTScore per question: {e}')
         return [0.0] * len(questions)
+
 
 def compute_voyageai_embedding_similarity_per_section(
     reference: str, hypothesis: str
