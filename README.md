@@ -28,6 +28,16 @@
 2. 🎩 *Environments*: Multi-agent environments, similar to virtual study rooms, where research agents collaborate on tasks like idea discussion, rebuttal writing, or paper writing.
 3. ⚙️ *Engines*: Finite-state machines that manage agent involvement in environments and determine the next steps after task completion. For instance, engines guide agents coming out of idea discussion environment to paper writing environment and help select suitable agents to work together.
 
+Please consider cite our paper if you find it useful:
+
+```bibtex
+@article{yu2024researchtown,
+  title={ResearchTown: Simulator of Human Research Community},
+  author={Yu, Haofei and Hong, Zhaochen and Cheng, Zirui and Zhu, Kunlun and Xuan, Keyang and Yao, Jinwei and Feng, Tao and You, Jiaxuan},
+  journal={arXiv preprint arXiv:2412.17767},
+  year={2024}
+}
+```
 
 ## Get started
 
@@ -94,6 +104,7 @@ Follow the installation instruction above and then, instead of running `python -
 python -m pip install -e ".[dev]"
 mypy --install-types --non-interactive research_town
 python -m pip install pre-commit
+pre-commit clean
 pre-commit install
 ```
 
@@ -112,12 +123,12 @@ Run `poetry run pytest` to make sure all tests pass (this will ensure dynamic ty
 Check the github action result to make sure all tests pass. If not, fix the errors and push again.
 
 
-<p align="center">
-<a href="https://star-history.com/#Significant-Gravitas/AutoGPT">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ulab-uiuc/research-town&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ulab-uiuc/research-town&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Significant-Gravitas/AutoGPT&type=Date" />
-  </picture>
-</a>
-</p>
+## ResearchBench
+
+To execute ResearchBench experiments, please execute 'research_bench/run_review_eval.sh' script. You can adjust the parameters in the script, using the actual `INPUT_PATH`.
+
+If you encounter `openreview` not found error, please install the package by running `pip install openreview`. If any issues come up regarding `requests`, please change its version to `2.26`.
+
+```bash
+pip install requests==2.26
+```

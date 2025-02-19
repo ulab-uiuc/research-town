@@ -25,6 +25,17 @@
 2. 🎩 *环境*：多智能体环境模拟虚拟的学习室，协作完成任务，讨论想法、撰写反驳并完成论文。
 3. ⚙️ *驱动引擎*：我们定义了有限状态机(Finite-state Machines)，管理智能体在不同环境中的参与情况，决定任务完成后的下一步操作。引导智能体从想法讨论环境一步一步论文撰写环境，并帮助选择合适的智能体协作完成任务。
 
+如果认为论文或者代码有价值，请考虑引用我们的工作：
+```bibtex
+@article{yu2024researchtown,
+  title={ResearchTown: Simulator of Human Research Community},
+  author={Yu, Haofei and Hong, Zhaochen and Cheng, Zirui and Zhu, Kunlun and Xuan, Keyang and Yao, Jinwei and Feng, Tao and You, Jiaxuan},
+  journal={arXiv preprint arXiv:2412.17767},
+  year={2024}
+}
+```
+
+
 ## 快速开始
 
 ### 使用 pip 安装
@@ -105,12 +116,12 @@ pre-commit install
 
 检查 GitHub Actions 的结果，确保所有测试通过。若未通过，请修复错误并重新提交。
 
-<p align="center">
-<a href="https://star-history.com/#Significant-Gravitas/AutoGPT">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ulab-uiuc/research-town&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ulab-uiuc/research-town&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Significant-Gravitas/AutoGPT&type=Date" />
-  </picture>
-</a>
-</p>
+## ResearchBench
+
+要执行ResearchBench实验，请运行 'research_bench/run_review_eval.sh' 脚本。你可以在脚本中调整参数，如使用实际的 `INPUT_PATH`。
+
+如果遇到 `openreview` 未找到的错误，请通过运行 `pip install openreview` 安装该包。如果遇到与 `requests` 相关的问题，请将其版本更改为 `2.26`。
+
+```bash
+pip install requests==2.26
+```
