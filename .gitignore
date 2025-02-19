@@ -195,6 +195,8 @@ research_bench/profile_dbs_old
 **/paper_data_/
 **/reference_proposal_data_/
 **/oodbench/
+**/crossbench/
+**/mlbench/
 **/iclrbench/
 **/author_data_/
 **/manifest.json
