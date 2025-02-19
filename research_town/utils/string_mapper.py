@@ -18,6 +18,13 @@ def map_proposal_to_str(paper: Dict[str, str]) -> str:
     return f"{paper['content']}"
 
 
+def map_cited_abstracts_to_str(abstracts: List[str]) -> str:
+    result = ''
+    for i, abstract in enumerate(abstracts):
+        result += f'{i+1}th cited abstract: ' + abstract + '\n'
+    return result
+
+
 def map_paper_list_to_str(papers: List[Dict[str, str]]) -> str:
     result = ''
     for i, paper in enumerate(papers):
@@ -39,14 +46,14 @@ def map_review_list_to_str(reviews: List[Dict[str, Union[int, str]]]) -> str:
 
 def map_review_to_str(review: Dict[str, Union[int, str]]) -> str:
     assert 'score' in review
-    assert 'summary' in review
+    # assert 'summary' in review
     assert 'strength' in review
     assert 'weakness' in review
     score = review['score']
-    summary = review['summary']
+    # summary = review['summary']
     strength = review['strength']
     weakness = review['weakness']
-    return f'Score: {score}\nSummary: {summary}\nStrength: {strength}\nWeakness: {weakness}'
+    return f'Score: {score}\nStrength: {strength}\nWeakness: {weakness}\n\n'
 
 
 def map_rebuttal_list_to_str(rebuttals: List[Dict[str, str]]) -> str:
@@ -77,7 +84,7 @@ def map_metareview_to_str(metareview: Dict[str, str]) -> str:
     summary = metareview['summary']
     strength = metareview['strength']
     weakness = metareview['weakness']
-    return f'Summary: {summary}\nStrength: {strength}\nWeakness: {weakness}\nDecision: {decision}'
+    return f'Summary: {summary}\nStrength: {strength}\nWeakness: {weakness}\nDecision: {decision}\n'
 
 
 def map_insight_list_to_str(insights: List[Dict[str, str]]) -> str:

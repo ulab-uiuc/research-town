@@ -37,13 +37,17 @@ class ProfileDB(BaseDB[Profile]):
         names: List[str],
         config: Config,
         known_paper_titles: Optional[List[str]] = None,
+        before_year: Optional[int] = None,
     ) -> List[str]:
         profiles: List[Profile] = []
         for name in names:
             try:
                 pub_abstracts, pub_titles, collaborators = (
                     collect_publications_and_coauthors(
-                        name, paper_max_num=20, known_paper_titles=known_paper_titles
+                        name,
+                        paper_max_num=20,
+                        known_paper_titles=known_paper_titles,
+                        before_year=before_year,
                     )
                 )
                 logger.info(f'Collected publications for {name}: {pub_titles}')

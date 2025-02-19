@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+from collections import defaultdict
 from multiprocessing import Lock, Pool
 from typing import Any, Dict, List, Tuple
 
@@ -23,17 +24,74 @@ def inference(
     config: Config,
 ) -> Tuple[Dict[str, str], Dict[str, float]]:
     profiles = [Profile(**data) for data in author_data.values()]
-    ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
+    ref_abstracts_full = []
+    for ref in paper_data.get('references', []):
+        if ref['abstract'] is None:
+            continue
+        else:
+            ref_abstracts_full.append(ref['abstract'])
+        """
+        if ref['reference_section'] is None or ref['abstract'] is None:
+            continue
+        reference_sections = [section.lower() for section in ref['reference_section']]
 
-    gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
+        exclude_signal = False
+        for section in reference_sections:
+            #if 'related work' in section:
+            #    ref_abstracts_full.append(ref['abstract'])
+            #    break
+            #if 'introduction' in section:
+            #    ref_abstracts_full.append(ref['abstract'])
+            #    break
+            #if 'introduction' in section or 'related work' in section:
+            #    ref_abstracts_full.append(ref['abstract'])
+            #    break
 
-    metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
-    results = {
-        'paper_id': paper_id,
-        'ref_proposal': ref_proposal,
-        'gen_proposal': gen_proposal,
-    }
-    return results, metrics
+            #if 'related work' in section:
+            #    exclude_signal = True
+            #    break
+            #elif 'introduction' in section:
+            #    exclude_signal = True
+            #    break
+
+        #if exclude_signal is False:
+        #    ref_abstracts_full.append(ref['abstract'])
+        """
+    print(len(ref_abstracts_full))
+    paper_title = paper_data['title']
+    if mode == 'fake_research_town':
+        gen_proposal, gen_proposals_each_agent = write_proposal(
+            mode, profiles, ref_abstracts_full, config, paper_title
+        )
+    else:
+        gen_proposal = write_proposal(
+            mode, profiles, ref_abstracts_full, config, paper_title
+        )
+
+    if mode == 'fake_research_town':
+        overall_metrics = defaultdict(list)
+        # assert each agent gen proposal is the same
+        for idx, gen_proposal in enumerate(gen_proposals_each_agent):
+            metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
+            for metric, score in metrics.items():
+                overall_metrics[metric + '_per_agent'].append(score)
+        metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
+        for metric, score in metrics.items():
+            overall_metrics[metric] = score
+        results = {
+            'paper_id': paper_id,
+            'ref_proposal': ref_proposal,
+            'gen_proposal': gen_proposal,
+        }
+        return results, overall_metrics
+    else:
+        metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
+        results = {
+            'paper_id': paper_id,
+            'ref_proposal': ref_proposal,
+            'gen_proposal': gen_proposal,
+        }
+        return results, metrics
 
 
 def load_papers(input_path: str, output_path: str) -> Any:
@@ -79,8 +137,11 @@ def main() -> None:
             'author_only',
             'citation_only',
             'author_citation',
-            'textgnn',
+            'research_town',
             'sakana_ai_scientist',
+            'debug',
+            'fake_research_town',
+            'fake_research_town_twice',
         ],
         help='Processing mode',
     )
@@ -112,17 +173,6 @@ def main() -> None:
             'embedding_similarity',
         ]
     }
-
-    for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
-        paper_data = data['paper_data']
-        author_data = data['author_data']
-        reference_proposal = data['reference_proposal']
-
-        results, metrics = inference(
-            paper_id, paper_data, author_data, reference_proposal, args.mode, config
-        )
-        lock = Lock()
-        save_results(results, metrics, args.output_path, lock)
 
     lock = Lock()
     with Pool(processes=args.num_processes) as pool:
