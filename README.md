@@ -18,7 +18,8 @@
 </div>
 
 ## News
-* [12/24] We release our ResearchTown paper on [arXiv](https://arxiv.org/pdf/2412.17767) and ResearchBench data on [HuggingFace](https://huggingface.co/datasets/ulab-ai/research-bench).
+* [05/02/2025] ResearchTown is accepted as ICML poster.
+* [12/24/2024] We release our ResearchTown paper on [arXiv](https://arxiv.org/pdf/2412.17767) and ResearchBench data on [HuggingFace](https://huggingface.co/datasets/ulab-ai/research-bench).
 
 ## Introduction
 
