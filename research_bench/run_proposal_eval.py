@@ -113,6 +113,12 @@ def main() -> None:
         ]
     }
 
+    keys = dataset.keys()
+    keys = list(keys)  # Convert to list for consistent iteration
+
+    keys = keys[:100]
+    dataset = {key: dataset[key] for key in keys}  # Limit to first 100 papers for testing
+
     for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
         paper_data = data['paper_data']
         author_data = data['author_data']
@@ -124,28 +130,28 @@ def main() -> None:
         lock = Lock()
         save_results(results, metrics, args.output_path, lock)
 
-    lock = Lock()
-    with Pool(processes=args.num_processes) as pool:
-        tasks = [
-            (
-                paper_id,
-                data['paper_data'],
-                data['author_data'],
-                data['reference_proposal'],
-                args.mode,
-                config,
-            )
-            for paper_id, data in dataset.items()
-        ]
-        for results, metrics in tqdm(
-            pool.imap_unordered(process_task, tasks),
-            total=len(tasks),
-            desc='Processing papers',
-        ):
-            save_results(results, metrics, args.output_path, lock)
-            with lock:
-                for metric, scores in metrics_summary.items():
-                    scores.append(metrics.get(metric, 0))
+    # lock = Lock()
+    # with Pool(processes=args.num_processes) as pool:
+    #     tasks = [
+    #         (
+    #             paper_id,
+    #             data['paper_data'],
+    #             data['author_data'],
+    #             data['reference_proposal'],
+    #             args.mode,
+    #             config,
+    #         )
+    #         for paper_id, data in dataset.items()
+    #     ]
+    #     for results, metrics in tqdm(
+    #         pool.imap_unordered(process_task, tasks),
+    #         total=len(tasks),
+    #         desc='Processing papers',
+    #     ):
+    #         save_results(results, metrics, args.output_path, lock)
+    #         with lock:
+    #             for metric, scores in metrics_summary.items():
+    #                 scores.append(metrics.get(metric, 0))
 
     # Report average metrics
     for metric, scores in metrics_summary.items():

@@ -84,7 +84,7 @@ def map_metareview_to_str(metareview: Dict[str, str]) -> str:
     summary = metareview['summary']
     strength = metareview['strength']
     weakness = metareview['weakness']
-    return f'Summary: {summary}\nStrength: {strength}\nWeakness: {weakness}\nDecision: {decision}'
+    return f'Summary: {summary}\nStrength: {strength}\nWeakness: {weakness}\nDecision: {decision}\n'
 
 
 def map_insight_list_to_str(insights: List[Dict[str, str]]) -> str:

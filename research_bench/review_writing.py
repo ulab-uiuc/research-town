@@ -47,7 +47,7 @@ def write_review_research_town(
     if not leader_profile:
         raise ValueError('Failed to create leader agent')
 
-    top_k = 3
+    top_k = 5
 
     reviewers = [
         agent_manager.create_agent(profile, role='reviewer')
