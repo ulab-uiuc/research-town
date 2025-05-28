@@ -41,6 +41,7 @@ def compute_rouge_l(reference: str, hypothesis: str) -> float:
 
 
 def compute_bertscore(reference: str, hypothesis: str) -> float:
+    return -1.0
     try:
         # Compute BERTScore
         P, R, F1 = score(
@@ -53,6 +54,7 @@ def compute_bertscore(reference: str, hypothesis: str) -> float:
 
 
 def compute_proposal_gpt_metric(reference: str, generation: str) -> float:
+    return -1.0
     prompt = [
         {
             'role': 'user',

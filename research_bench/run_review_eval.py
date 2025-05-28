@@ -1,7 +1,7 @@
 import argparse
 import json
 import os
-from multiprocessing import Lock
+from multiprocessing import Lock, Pool, Manager
 from typing import Any, Dict, List, Sequence, Tuple
 
 from tqdm import tqdm
@@ -25,7 +25,7 @@ def inference(
     human_scores: List[int],
     mode: str,
     config: Config,
-) -> Tuple[Dict[str, Any], Dict[str, List[float]]]:
+):
     intro = paper_data.get('introduction', '')
     profiles = [Profile(**data) for data in author_data.values()]
     profiles_reviewers = [Profile(**data) for data in reviewer_data.values()]
@@ -72,7 +72,10 @@ def load_papers(input_path: str, output_path: str) -> Any:
 
 
 def save_results(
-    results: Dict[str, Any], metrics: Dict[str, Any], output_path: str, lock: Any
+    results: Dict[str, Any], 
+    metrics: Dict[str, Any], 
+    output_path: str, 
+    lock: Any
 ) -> None:
     with lock:
         with open(output_path, 'a') as f:
@@ -81,31 +84,40 @@ def save_results(
 
 
 def process_task(
-    task: Tuple[
-        str,
-        Dict[str, Any],
-        Dict[str, Any],
-        Dict[str, Any],
-        Dict[str, Any],
-        List[str],
-        List[str],
-        List[int],
-        str,
-        Config,
-    ],
-) -> Tuple[Dict[str, Sequence[str]], Dict[str, List[float]]]:
-    return inference(
-        paper_id=task[0],
-        paper_data=task[1],
-        author_data=task[2],
-        reviewer_data=task[3],
-        full_content=task[4],
-        strengths_bp_flatte=task[5],
-        weaknesses_bp_flatte=task[6],
-        human_scores=task[7],
-        mode=task[8],
-        config=task[9],
+    args_tuple: Tuple[
+        str,  # paper_id
+        Dict[str, Any],  # paper_data
+        Dict[str, Any],  # author_data
+        Dict[str, Any],  # reviewer_data
+        Dict[str, Any],  # full_content
+        List[str],  # strengths_bp_flatten
+        List[str],  # weaknesses_bp_flatten
+        List[int],  # human_scores
+        str,  # mode
+        Config,  # config
+        str,  # output_path
+        Any,  # lock
+    ]
+) -> None:
+    (
+        paper_id, paper_data, author_data, reviewer_data, full_content,
+        strengths_bp_flatten, weaknesses_bp_flatten, human_scores,
+        mode, config, output_path, lock
+    ) = args_tuple
+    
+    results, metrics = inference(
+        paper_id,
+        paper_data,
+        author_data,
+        reviewer_data,
+        full_content,
+        strengths_bp_flatten,
+        weaknesses_bp_flatten,
+        human_scores,
+        mode,
+        config,
     )
+    save_results(results, metrics, output_path, lock)
 
 
 def main() -> None:
@@ -140,7 +152,7 @@ def main() -> None:
     parser.add_argument(
         '--num_processes',
         type=int,
-        default=os.cpu_count(),
+        default=8,  # Set default to 8 processes as requested
         help='Number of parallel processes to use',
     )
     args = parser.parse_args()
@@ -149,18 +161,13 @@ def main() -> None:
     dataset = load_papers(args.input_path, args.output_path)
     logger.info(f'Processing {len(dataset)} papers')
 
-    # metrics_summary: Dict[str, List[float]] = {
-    #     metric: []
-    #     for metric in [
-    #         'bleu',
-    #         'rouge_l',
-    #         'gpt_metric_score',
-    #         'bert_score',
-    #         'embedding_similarity',
-    #     ]
-    # }
+    # Create a manager for shared objects
+    manager = Manager()
+    lock = manager.Lock()
 
-    for paper_id, data in tqdm(dataset.items(), desc='Processing papers'):
+    # Prepare tasks
+    tasks = []
+    for paper_id, data in dataset.items():
         full_content = data['full_content']
         paper_data = data['paper_data']
         author_data = data['author_data']
@@ -169,20 +176,16 @@ def main() -> None:
         human_scores = [
             int(review.get('rating').split(':')[0]) for review in reference_review
         ]
-        # strengths = [review.get('strengths', '') for review in reference_review]
-        # weaknesses = [review.get('weaknesses', '') for review in reference_review]
         strengths_bp = [
             review.get('strengths_bullet', '') for review in reference_review
         ]
-        # flatten
         strengths_bp_flatten = [item for sublist in strengths_bp for item in sublist]
         weaknesses_bp = [
             review.get('weaknesses_bullet', '') for review in reference_review
         ]
-        # flatten
         weaknesses_bp_flatten = [item for sublist in weaknesses_bp for item in sublist]
 
-        results, metrics = inference(
+        tasks.append((
             paper_id,
             paper_data,
             author_data,
@@ -193,41 +196,18 @@ def main() -> None:
             human_scores,
             args.mode,
             config,
-        )
-        lock = Lock()
-        save_results(results, metrics, args.output_path, lock)
+            args.output_path,
+            lock
+        ))
 
-    # lock = Lock()
-    # with Pool(processes=args.num_processes) as pool:
-    #     tasks = [
-    #         (
-    #             paper_id,
-    #             data['paper_data'],
-    #             data['author_data'],
-    #             data['reviewer_data'],
-    #             data['full_content'],
-    #             [review.get('strengths', '') for review in data['reviews']],
-    #             [review.get('weaknesses', '') for review in data['reviews']],
-    #             args.mode,
-    #             config,
-    #         )
-    #         for paper_id, data in dataset.items()
-    #     ]
-    #     for results, metrics in tqdm(
-    #         pool.imap_unordered(process_task, tasks),
-    #         total=len(tasks),
-    #         desc='Processing papers',
-    #     ):
-    #         save_results(results, metrics, args.output_path, lock)
-    #         # with lock:
-    #         #     for metric, scores in metrics_summary.items():
-    #         #         scores.append(metrics.get(metric, 0.0))
-
-    # Report average metrics
-    # for metric, scores in metrics_summary.items():
-    #     if scores:
-    #         average = sum(scores) / len(scores)
-    #         logger.info(f"Average {metric.replace('_', ' ').upper()}: {average:.4f}")
+    # Process tasks in parallel
+    with Pool(processes=args.num_processes) as pool:
+        # Using tqdm for progress bar
+        list(tqdm(
+            pool.imap_unordered(process_task, tasks),
+            total=len(tasks),
+            desc='Processing papers'
+        ))
 
 
 if __name__ == '__main__':
