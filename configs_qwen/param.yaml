@@ -1,5 +1,5 @@
 base_llm: Qwen/Qwen2.5-7B-Instruct-Turbo
-max_token_num: 1024
+max_token_num: 4096
 member_num: 3
 related_paper_num: 5
 return_num: 1
