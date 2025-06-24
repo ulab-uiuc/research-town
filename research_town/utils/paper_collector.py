@@ -400,7 +400,7 @@ def get_paper_introduction(url: str) -> Optional[str]:
         return introduction_text
 
 
-def get_references(arxiv_id: str, max_retries: int = 5) -> List[Dict[str, Any]]:
+def get_references(arxiv_id: str, max_retries: int = 8) -> List[Dict[str, Any]]:
     SEMANTIC_SCHOLAR_API_URL = 'https://api.semanticscholar.org/graph/v1/paper/'
     url = f'{SEMANTIC_SCHOLAR_API_URL}ARXIV:{arxiv_id}/references'
     params = {'limit': 100, 'offset': 0, 'fields': 'title,abstract'}
