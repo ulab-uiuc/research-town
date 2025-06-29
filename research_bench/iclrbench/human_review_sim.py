@@ -1,11 +1,13 @@
-import numpy as np
 import json
+
+import numpy as np
+
+# OPENAI
+from litellm import embedding
 from voyageai.client import Client
 
 input_file = 'iclrbench_reviewers_filtered_bullets_100.json'
 
-# OPENAI
-from litellm import embedding
 
 # VOYAGEAI
 vo = Client()
@@ -28,6 +30,7 @@ vo = Client()
 #     embedding_weakness = response.embeddings[0]
 #     all_weakness_voyageai_embeddings.append(embedding_weakness)
 
+
 def openai_sim(str_a, str_b):
     """
     Calculate cosine similarity between two strings using OpenAI embeddings.
@@ -43,8 +46,9 @@ def openai_sim(str_a, str_b):
     cosine_sim = np.dot(embedding_a, embedding_b) / (
         np.linalg.norm(embedding_a) * np.linalg.norm(embedding_b)
     )
-    
+
     return cosine_sim
+
 
 def voyageai_sim(str_a, str_b):
     """
@@ -61,19 +65,20 @@ def voyageai_sim(str_a, str_b):
     cosine_sim = np.dot(embedding_a, embedding_b) / (
         np.linalg.norm(embedding_a) * np.linalg.norm(embedding_b)
     )
-    
+
     return cosine_sim
 
-a = "Large Language Models (LLMs) have shown remarkable capabilities in reasoning, exemplified by the success of OpenAI-o1 and DeepSeek-R1. However, integrating reasoning with external search processes remains challenging, especially for complex multi-hop questions requiring multiple retrieval steps. We propose ReSearch, a novel framework that trains LLMs to Reason with Search via reinforcement learning without using any supervised data on reasoning steps. Our approach treats search operations as integral components of the reasoning chain, where when and how to perform searches is guided by text-based thinking, and search results subsequently influence further reasoning. We train ReSearch on Qwen2.5-7B(-Instruct) and Qwen2.5-32B(-Instruct) models and conduct extensive experiments. Despite being trained on only one dataset, our models demonstrate strong generalizability across various benchmarks. Analysis reveals that ReSearch naturally elicits advanced reasoning capabilities such as reflection and self-correction during the reinforcement learning process."
-b = "Efficiently acquiring external knowledge and up-to-date information is essential for effective reasoning and text generation in large language models (LLMs). Prompting advanced LLMs with reasoning capabilities during inference to use search engines is not optimal, since the LLM does not learn how to optimally interact with the search engine. This paper introduces Search-R1, an extension of the DeepSeek-R1 model where the LLM learns -- solely through reinforcement learning (RL) -- to autonomously generate (multiple) search queries during step-by-step reasoning with real-time retrieval. Search-R1 optimizes LLM rollouts with multi-turn search interactions, leveraging retrieved token masking for stable RL training and a simple outcome-based reward function. Experiments on seven question-answering datasets show that Search-R1 improves performance by 26% (Qwen2.5-7B), 21% (Qwen2.5-3B), and 10% (LLaMA3.2-3B) over strong baselines. This paper further provides empirical insights into RL optimization methods, LLM choices, and response length dynamics in retrieval-augmented reasoning. The code and model checkpoints are available at this https URL."
+
+a = 'Large Language Models (LLMs) have shown remarkable capabilities in reasoning, exemplified by the success of OpenAI-o1 and DeepSeek-R1. However, integrating reasoning with external search processes remains challenging, especially for complex multi-hop questions requiring multiple retrieval steps. We propose ReSearch, a novel framework that trains LLMs to Reason with Search via reinforcement learning without using any supervised data on reasoning steps. Our approach treats search operations as integral components of the reasoning chain, where when and how to perform searches is guided by text-based thinking, and search results subsequently influence further reasoning. We train ReSearch on Qwen2.5-7B(-Instruct) and Qwen2.5-32B(-Instruct) models and conduct extensive experiments. Despite being trained on only one dataset, our models demonstrate strong generalizability across various benchmarks. Analysis reveals that ReSearch naturally elicits advanced reasoning capabilities such as reflection and self-correction during the reinforcement learning process.'
+b = 'Efficiently acquiring external knowledge and up-to-date information is essential for effective reasoning and text generation in large language models (LLMs). Prompting advanced LLMs with reasoning capabilities during inference to use search engines is not optimal, since the LLM does not learn how to optimally interact with the search engine. This paper introduces Search-R1, an extension of the DeepSeek-R1 model where the LLM learns -- solely through reinforcement learning (RL) -- to autonomously generate (multiple) search queries during step-by-step reasoning with real-time retrieval. Search-R1 optimizes LLM rollouts with multi-turn search interactions, leveraging retrieved token masking for stable RL training and a simple outcome-based reward function. Experiments on seven question-answering datasets show that Search-R1 improves performance by 26% (Qwen2.5-7B), 21% (Qwen2.5-3B), and 10% (LLaMA3.2-3B) over strong baselines. This paper further provides empirical insights into RL optimization methods, LLM choices, and response length dynamics in retrieval-augmented reasoning. The code and model checkpoints are available at this https URL.'
 
 # calculate similarities
 
 openai_sim_val = openai_sim(a, b)
 voyageai_sim_val = voyageai_sim(a, b)
 
-print(f"OpenAI Similarity: {openai_sim_val:.4f}")
-print(f"VoyageAI Similarity: {voyageai_sim_val:.4f}")
+print(f'OpenAI Similarity: {openai_sim_val:.4f}')
+print(f'VoyageAI Similarity: {voyageai_sim_val:.4f}')
 
 exit(0)
 
@@ -92,12 +97,12 @@ with open(input_file, 'r', encoding='utf-8') as f:
     avg_strength_sim_openai_paper = []
     avg_strength_sim_voyageai_paper = []
     avg_weakness_sim_openai_paper = []
-    avg_weakness_sim_voyageai_paper = []    
+    avg_weakness_sim_voyageai_paper = []
 
     # for key in data:
     from tqdm import tqdm
 
-    for key in tqdm(data.keys(), desc="Processing papers"):
+    for key in tqdm(data.keys(), desc='Processing papers'):
         item = data[key]
         paper_id = key
         item_reviews = item['reviews']
@@ -107,7 +112,9 @@ with open(input_file, 'r', encoding='utf-8') as f:
             strengths.append(review['strengths'])
             weaknesses.append(review['weaknesses'])
 
-        assert len(strengths) == len(weaknesses), f"Mismatch in number of strengths and weaknesses for paper {paper_id}. Strengths: {len(strengths)}, Weaknesses: {len(weaknesses)}"
+        assert (
+            len(strengths) == len(weaknesses)
+        ), f'Mismatch in number of strengths and weaknesses for paper {paper_id}. Strengths: {len(strengths)}, Weaknesses: {len(weaknesses)}'
 
         strength_sims_openai = []
         strength_sims_voyageai = []
@@ -122,7 +129,7 @@ with open(input_file, 'r', encoding='utf-8') as f:
                 # Calculate similarity using VoyageAI
                 sim_voyageai = voyageai_sim(strengths[i], strengths[j])
                 strength_sims_voyageai.append(sim_voyageai)
-        
+
         for i in range(len(weaknesses)):
             for j in range(i + 1, len(weaknesses)):
                 # Calculate similarity using OpenAI
@@ -132,17 +139,33 @@ with open(input_file, 'r', encoding='utf-8') as f:
                 # Calculate similarity using VoyageAI
                 sim_voyageai = voyageai_sim(weaknesses[i], weaknesses[j])
                 weakness_sims_voyageai.append(sim_voyageai)
-        
-        assert len(strength_sims_openai) == len(strengths) * (len(strengths) - 1) / 2, f"Mismatch in strength similarity count for paper {paper_id}"
-        assert len(strength_sims_voyageai) == len(strengths) * (len(strengths) - 1) / 2, f"Mismatch in strength similarity count for paper {paper_id}"
 
-        assert len(weakness_sims_openai) == len(weaknesses) * (len(weaknesses) - 1) / 2, f"Mismatch in weakness similarity count for paper {paper_id}"
-        assert len(weakness_sims_voyageai) == len(weaknesses) * (len(weaknesses) - 1) / 2, f"Mismatch in weakness similarity count for paper {paper_id}"
-        
-        avg_strength_sim_openai = np.mean(strength_sims_openai) if strength_sims_openai else 0
-        avg_strength_sim_voyageai = np.mean(strength_sims_voyageai) if strength_sims_voyageai else 0
-        avg_weakness_sim_openai = np.mean(weakness_sims_openai) if weakness_sims_openai else 0
-        avg_weakness_sim_voyageai = np.mean(weakness_sims_voyageai) if weakness_sims_voyageai else 0
+        assert (
+            len(strength_sims_openai) == len(strengths) * (len(strengths) - 1) / 2
+        ), f'Mismatch in strength similarity count for paper {paper_id}'
+        assert (
+            len(strength_sims_voyageai) == len(strengths) * (len(strengths) - 1) / 2
+        ), f'Mismatch in strength similarity count for paper {paper_id}'
+
+        assert (
+            len(weakness_sims_openai) == len(weaknesses) * (len(weaknesses) - 1) / 2
+        ), f'Mismatch in weakness similarity count for paper {paper_id}'
+        assert (
+            len(weakness_sims_voyageai) == len(weaknesses) * (len(weaknesses) - 1) / 2
+        ), f'Mismatch in weakness similarity count for paper {paper_id}'
+
+        avg_strength_sim_openai = (
+            np.mean(strength_sims_openai) if strength_sims_openai else 0
+        )
+        avg_strength_sim_voyageai = (
+            np.mean(strength_sims_voyageai) if strength_sims_voyageai else 0
+        )
+        avg_weakness_sim_openai = (
+            np.mean(weakness_sims_openai) if weakness_sims_openai else 0
+        )
+        avg_weakness_sim_voyageai = (
+            np.mean(weakness_sims_voyageai) if weakness_sims_voyageai else 0
+        )
 
         avg_strength_sim_openai_paper.append(avg_strength_sim_openai)
         avg_strength_sim_voyageai_paper.append(avg_strength_sim_voyageai)
@@ -157,20 +180,36 @@ with open(input_file, 'r', encoding='utf-8') as f:
             'strength_sims_openai': strength_sims_openai,
             'strength_sims_voyageai': strength_sims_voyageai,
             'weakness_sims_openai': weakness_sims_openai,
-            'weakness_sims_voyageai': weakness_sims_voyageai
+            'weakness_sims_voyageai': weakness_sims_voyageai,
         }
 
     # Calculate overall averages
-    overall_avg_strength_sim_openai = np.mean(avg_strength_sim_openai_paper) if avg_strength_sim_openai_paper else 0
-    overall_avg_strength_sim_voyageai = np.mean(avg_strength_sim_voyageai_paper) if avg_strength_sim_voyageai_paper else 0
-    overall_avg_weakness_sim_openai = np.mean(avg_weakness_sim_openai_paper) if avg_weakness_sim_openai_paper else 0
-    overall_avg_weakness_sim_voyageai = np.mean(avg_weakness_sim_voyageai_paper) if avg_weakness_sim_voyageai_paper else 0
+    overall_avg_strength_sim_openai = (
+        np.mean(avg_strength_sim_openai_paper) if avg_strength_sim_openai_paper else 0
+    )
+    overall_avg_strength_sim_voyageai = (
+        np.mean(avg_strength_sim_voyageai_paper)
+        if avg_strength_sim_voyageai_paper
+        else 0
+    )
+    overall_avg_weakness_sim_openai = (
+        np.mean(avg_weakness_sim_openai_paper) if avg_weakness_sim_openai_paper else 0
+    )
+    overall_avg_weakness_sim_voyageai = (
+        np.mean(avg_weakness_sim_voyageai_paper)
+        if avg_weakness_sim_voyageai_paper
+        else 0
+    )
 
     # print the results
-    print(f"AVG AVG STRENGTH SIMILARITY OPENAI: {overall_avg_strength_sim_openai:.4f}")
-    print(f"AVG AVG STRENGTH SIMILARITY VOYAGEAI: {overall_avg_strength_sim_voyageai:.4f}")
-    print(f"AVG AVG WEAKNESS SIMILARITY OPENAI: {overall_avg_weakness_sim_openai:.4f}")
-    print(f"AVG AVG WEAKNESS SIMILARITY VOYAGEAI: {overall_avg_weakness_sim_voyageai:.4f}")
+    print(f'AVG AVG STRENGTH SIMILARITY OPENAI: {overall_avg_strength_sim_openai:.4f}')
+    print(
+        f'AVG AVG STRENGTH SIMILARITY VOYAGEAI: {overall_avg_strength_sim_voyageai:.4f}'
+    )
+    print(f'AVG AVG WEAKNESS SIMILARITY OPENAI: {overall_avg_weakness_sim_openai:.4f}')
+    print(
+        f'AVG AVG WEAKNESS SIMILARITY VOYAGEAI: {overall_avg_weakness_sim_voyageai:.4f}'
+    )
 
     # Save the results to a JSON file
     output_file = 'iclrbench_human_review_similarities_50.json'

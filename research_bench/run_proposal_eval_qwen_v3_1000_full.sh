@@ -3,7 +3,7 @@
 # Define the input and output paths, along with the modes to test
 INPUT_PATH="./paperbench/camera-ready/paper_bench_full_1000_filtered_1205.json"  # Updated input path for deeoseek v3
 OUTPUT_DIR="./results"
-MODES=("zero_shot" "author_only" "citation_only") #"author_citation") # 
+MODES=("zero_shot" "author_only" "citation_only") #"author_citation") #
 
 NUM_PROCESSES=4
 
