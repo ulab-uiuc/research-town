@@ -6,8 +6,10 @@ from transformers import BertModel, BertTokenizer
 
 def get_embed(
     instructions: List[str],
-    retriever_tokenizer: BertTokenizer,
-    retriever_model: BertModel,
+    retriever_tokenizer: BertTokenizer = BertTokenizer.from_pretrained(
+        'facebook/contriever'
+    ),
+    retriever_model: BertModel = BertModel.from_pretrained('facebook/contriever'),
 ) -> List[torch.Tensor]:
     encoded_input_all = [
         retriever_tokenizer(text, return_tensors='pt', truncation=True, max_length=512)

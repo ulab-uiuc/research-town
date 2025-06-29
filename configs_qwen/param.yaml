@@ -1,0 +1,13 @@
+base_llm: Qwen/Qwen2.5-7B-Instruct-Turbo
+max_token_num: 4096
+member_num: 3
+related_paper_num: 5
+return_num: 1
+reviewer_num: 1
+stream: null
+temperature: 0.0
+top_p: null
+write_proposal_strategy: default
+max_env_run_num: 1
+proposal_num: 2
+use_rag: True

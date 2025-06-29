@@ -33,8 +33,7 @@ class ReviewWritingEnv(BaseEnv):
         **context: Any,
     ) -> None:
         if 'leader' not in context or context['leader'] is None:
-            # context['leader'] = self.agent_manager.sample_leader()
-            context['leader'] = []
+            context['leader'] = self.agent_manager.sample_leader()
         if 'chair' not in context or context['chair'] is None:
             context['chair'] = self.agent_manager.sample_chair()
         if 'reviewers' not in context or context['reviewers'] is None:
@@ -71,6 +70,17 @@ class ReviewWritingEnv(BaseEnv):
                 )
                 self.reviews.append(review)
                 yield review, reviewer
+
+            # Rebuttal Submitting
+            # self.rebuttals: List[Rebuttal] = []
+            # for review in self.reviews:
+            #     rebuttal = self.leader.write_rebuttal(
+            #         proposal=proposal,
+            #         review=review,
+            #         config=self.config,
+            #     )
+            #     self.rebuttals.append(rebuttal)
+            #     yield rebuttal, self.leader
 
             # Paper Meta Reviewing
             scores = [review.score for review in self.reviews]

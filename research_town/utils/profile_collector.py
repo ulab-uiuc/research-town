@@ -32,7 +32,7 @@ def match_author_ids(
     search_results = semantic_client.search_author(
         author_name,
         fields=['authorId', 'papers.title'],
-        limit=250,
+        limit=100,
     )
 
     author_ids = set()
@@ -60,7 +60,7 @@ def match_author_ids(
 
 @api_calling_error_exponential_backoff(retries=5, base_wait_time=1)
 def get_papers_from_author_id(
-    author_id: str, paper_max_num: int = 20, before_year: Optional[int] = None
+    author_id: str, paper_max_num: int = 20
 ) -> List[Dict[str, Any]]:
     semantic_client = SemanticScholar()
     author_data: Dict[str, Any] = semantic_client.get_author(
@@ -69,25 +69,10 @@ def get_papers_from_author_id(
             'papers.title',
             'papers.abstract',
             'papers.authors',
-            'papers.year',
         ],
     )
-
     papers = author_data['papers']
-    if not isinstance(papers, list):
-        return []
-
-    if before_year is None:
-        return papers[:paper_max_num]
-    else:
-        # Filter papers based on the year
-        filtered_papers = []
-        for paper in papers:
-            if paper['year'] is None:
-                paper['year'] = 2024
-            if paper['year'] <= before_year:
-                filtered_papers.append(paper)
-        return filtered_papers[:paper_max_num]
+    return papers[:paper_max_num] if isinstance(papers, list) else []
 
 
 def collect_publications_and_coauthors(
@@ -95,14 +80,11 @@ def collect_publications_and_coauthors(
     known_paper_titles: Optional[List[str]] = None,
     paper_max_num: int = 20,
     exclude_known: bool = True,
-    before_year: Optional[int] = None,
 ) -> Tuple[List[str], List[str], List[str]]:
     matched_author_ids = match_author_ids(author, known_paper_titles)
     author_id = matched_author_ids.pop()  # Only one author ID is expected
 
-    papers = get_papers_from_author_id(
-        author_id, paper_max_num, before_year=before_year
-    )
+    papers = get_papers_from_author_id(author_id, paper_max_num)
     paper_abstracts = []
     paper_titles = []
     co_authors: Dict[str, int] = {}

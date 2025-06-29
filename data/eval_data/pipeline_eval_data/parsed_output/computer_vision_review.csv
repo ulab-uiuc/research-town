@@ -1,0 +1,16 @@
+domain,agent_model_name,evaluator_model_name,review_avg_overall_score,review_variance_overall_score,review_sum_variance_dimension_scores
+computer_vision,llama3_70b,together_ai/meta-llama/Llama-3-70b-chat-hf,90.8,21.56,4.13
+computer_vision,llama3_70b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,83.0,16.0,2.62
+computer_vision,llama3_70b,gpt-4o,76.9,47.08999999999999,5.72
+computer_vision,mixtral_8_7b,together_ai/meta-llama/Llama-3-70b-chat-hf,88.0,21.4,3.19
+computer_vision,mixtral_8_7b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,80.0,25.0,3.69
+computer_vision,mixtral_8_7b,gpt-4o,69.2,177.36,11.64
+computer_vision,qwen_32,together_ai/meta-llama/Llama-3-70b-chat-hf,91.4,15.039999999999997,3.65
+computer_vision,qwen_32,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,82.5,46.25,3.6
+computer_vision,qwen_32,gpt-4o,79.4,59.64000000000001,7.010000000000001
+computer_vision,llama3_8b,together_ai/meta-llama/Llama-3-70b-chat-hf,92.1,8.490000000000004,2.37
+computer_vision,llama3_8b,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,84.5,12.25,2.1799999999999997
+computer_vision,llama3_8b,gpt-4o,80.8,84.55999999999999,7.010000000000002
+computer_vision,gpt_4o,together_ai/meta-llama/Llama-3-70b-chat-hf,94.2,0.7599999999999998,2.03
+computer_vision,gpt_4o,together_ai/mistralai/Mixtral-8x22B-Instruct-v0.1,86.8,5.159999999999998,2.6900000000000004
+computer_vision,gpt_4o,gpt-4o,86.0,2.0,4.16

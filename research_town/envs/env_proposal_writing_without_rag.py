@@ -62,13 +62,17 @@ class ProposalWritingwithoutRAGEnv(BaseEnv):
                 contexts=self.contexts,
                 config=self.config,
             )
+
             yield insight, researcher
-            idea = researcher.brainstorm_idea(insights=[insight], config=self.config)
-            yield idea, researcher
             insights.append(insight)
+
+        # Step 3: Researchers brainstorm ideas based on their insights
+        for researcher in researchers:
+            idea = researcher.brainstorm_idea(insights=insights, config=self.config)
+            yield idea, researcher
             ideas.append(idea)
 
-        # Step 2: Leader summarizes ideas and writes proposals
+        # Step 4: Leader summarizes ideas and writes proposals
         idea_combos = sample_ideas(ideas, self.config.param.proposal_num)
         for idea_combo in idea_combos:
             summarized_idea = self.leader.summarize_idea(

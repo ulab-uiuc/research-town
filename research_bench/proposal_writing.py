@@ -1,4 +1,3 @@
-import random
 from typing import List
 
 from research_town.agents import AgentManager
@@ -29,20 +28,14 @@ def write_proposal_researchtown(
         agent_manager=agent_manager,
     )
 
-    leader_profile = profiles[0]
+    leader_profile = profile_db.get(name=profiles[0].name)[0]
+    print('leader_profile', leader_profile)
     leader = agent_manager.create_agent(leader_profile, role='leader')
-    members = []
-    for member_profile in profiles[1:]:
-        member = agent_manager.create_agent(member_profile, role='member')
-        members.append(member)
     if not leader_profile:
         raise ValueError('Failed to create leader agent')
 
-    ref_contents = [ref for ref in ref_contents if ref is not None]
-    assert None not in ref_contents
     env.on_enter(
         leader=leader,
-        members=members,
         contexts=ref_contents,
     )
 
@@ -55,7 +48,7 @@ def write_proposal_researchtown(
 
     # Exit the environment and retrieve the generated proposal
     exit_status, exit_dict = env.on_exit()
-    proposal = exit_dict.get('proposals')[0]
+    proposal = exit_dict.get('proposal')
     if proposal and proposal.content:
         return str(proposal.content)
     else:
@@ -84,7 +77,7 @@ def write_proposal_zero_shot(config: Config) -> str:
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 'Please provide the five core questions contents for a brand new future research that you think are the most promising one.'
             ),
@@ -95,64 +88,7 @@ def write_proposal_zero_shot(config: Config) -> str:
 
 
 def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -> str:
-    fiveq_candidates = []
-    profiles = profiles[:2]
-    print(len(profiles))
-    for profile in profiles:
-        prompt = [
-            {
-                'role': 'user',
-                'content': 'Who are you?',
-            },
-            {
-                'role': 'assistant',
-                'content': profile.bio,
-            },
-            {
-                'role': 'user',
-                'content': (
-                    'You need to write a research proposal for a paper in the field of Machine Learning based on your previous experience.\n'
-                    'The research proposal should be based on your previous research experience. The proposal should be practical, reliable and potentially impactful.\n'
-                    'Please focus on the direction that you think is the most promising one.\n'
-                    'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
-                    'Here are the five core questions:\n\n'
-                    '[Question 1] - What is the problem?\n\n'
-                    'Formulate the specific research question you aim to address.\n'
-                    'Only output one question and do not include any more information.\n'
-                    '[Question 2] - Why is it interesting and important?\n\n'
-                    'Explain the broader implications of solving this problem for the research community.\n'
-                    'Discuss how such paper will affect the future research.\n'
-                    'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
-                    '[Question 3] - Why is it hard?\n\n'
-                    'Discuss the challenges and complexities involved in solving this problem.\n'
-                    'Explain why naive or straightforward approaches may fail.\n'
-                    'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
-                    "[Question 4] - Why hasn't it been solved before?\n\n"
-                    'Identify gaps or limitations in previous research or existing solutions.\n'
-                    'Discuss any barriers that have prevented this problem from being solved until now.\n'
-                    'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
-                    '[Question 5] - What are the key components of my approach and results?\n\n'
-                    'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
-                    'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                    'Please brainstorm a following proposal with the given format.'
-                ),
-            },
-        ]
-        fiveq_response = model_prompting(
-            config.param.base_llm, prompt, max_token_num=config.param.max_token_num
-        )[0]
-        fiveq_candidates.append(fiveq_response)
-
-    fused_fiveq = fuse_questions(fiveq_candidates, None, config)
-    return fused_fiveq
-
-
-def write_proposal_with_only_citations(ref_contents: List[str], config: Config) -> str:
-    ref_strs = ''
-    for idx, ref in enumerate(ref_contents):
-        if ref is None:
-            continue
-        ref_strs += f'paper {idx + 1}. {ref}\n\n'
+    bio_strs = '\n'.join([profile.bio for profile in profiles])
 
     prompt = [
         {
@@ -175,10 +111,47 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
                 'Discuss any barriers that have prevented this problem from being solved until now.\n'
                 'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
                 '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
+                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
+                f'Author biographies and personas:\n{bio_strs}\n\n'
+                'You are the profiles of this paper. Please provide the five core questions contents for a brand new future research based on the above biographies.'
+            ),
+        }
+    ]
+    response = model_prompting(
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+    )[0]
+    return response
+
+
+def write_proposal_with_only_citations(ref_contents: List[str], config: Config) -> str:
+    ref_strs = '\n'.join([ref for ref in ref_contents if ref is not None])
+
+    prompt = [
+        {
+            'role': 'user',
+            'content': (
+                'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
+                'Here are the five core questions:\n\n'
+                '[Question 1] - What is the problem?\n\n'
+                'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
+                '[Question 2] - Why is it interesting and important?\n\n'
+                'Explain the broader implications of solving this problem for the research community.\n'
+                'Discuss how such paper will affect the future research.\n'
+                'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
+                '[Question 3] - Why is it hard?\n\n'
+                'Discuss the challenges and complexities involved in solving this problem.\n'
+                'Explain why naive or straightforward approaches may fail.\n'
+                'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
+                "[Question 4] - Why hasn't it been solved before?\n\n"
+                'Identify gaps or limitations in previous research or existing solutions.\n'
+                'Discuss any barriers that have prevented this problem from being solved until now.\n'
+                'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
+                '[Question 5] - What are the key components of my approach and results?\n\n'
+                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Contents collect from cited papers:\n{ref_strs}\n\n'
-                'Please brainstorm a following proposal with the given format.'
+                'Please provide the five core questions contents based on the above cited contents.'
             ),
         }
     ]
@@ -360,353 +333,11 @@ Please provide the updated proposal in the same format as before.
             return conversation[-1]['content'].split('I am done')[0]
 
 
-def write_proposal_debug(
-    profiles: List[Profile], ref_contents: List[str], config: Config
-) -> str:
-    random.seed(0)
-    random.shuffle(ref_contents)
-    ref_strs = ''
-    for idx, ref in enumerate(ref_contents):
-        if ref is None:
-            continue
-        ref_strs += f'paper {idx + 1}. {ref}\n'
-    profile_str = '\n'.join([profile.bio for profile in profiles])
-
-    prompt = [
-        {
-            'role': 'user',
-            'content': (
-                'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
-                'Here are the five core questions:\n\n'
-                '[Question 1] - What is the problem?\n\n'
-                'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
-                '[Question 2] - Why is it interesting and important?\n\n'
-                'Explain the broader implications of solving this problem for the research community.\n'
-                'Discuss how such paper will affect the future research.\n'
-                'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
-                '[Question 3] - Why is it hard?\n\n'
-                'Discuss the challenges and complexities involved in solving this problem.\n'
-                'Explain why naive or straightforward approaches may fail.\n'
-                'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
-                "[Question 4] - Why hasn't it been solved before?\n\n"
-                'Identify gaps or limitations in previous research or existing solutions.\n'
-                'Discuss any barriers that have prevented this problem from being solved until now.\n'
-                'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
-                '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
-                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                f'Contents collect from cited papers:\n{ref_strs}\n\n'
-                'Please brainstorm a following proposal with the given format.'
-            ),
-        }
-    ]
-    generated_5q = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
-    )[0]
-    # delete all things after [Question 5]
-    generated_4q = generated_5q.split('[Question 5]')[0]
-
-    prompt = [
-        {
-            'role': 'user',
-            'content': (
-                'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
-                'Here are the five core questions:\n\n'
-                '[Question 1] - What is the problem?\n\n'
-                'Formulate the specific research question you aim to address. Only output one question and do not include any more information.\n\n'
-                '[Question 2] - Why is it interesting and important?\n\n'
-                'Explain the broader implications of solving this problem for the research community.\n'
-                'Discuss how such paper will affect the future research.\n'
-                'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
-                '[Question 3] - Why is it hard?\n\n'
-                'Discuss the challenges and complexities involved in solving this problem.\n'
-                'Explain why naive or straightforward approaches may fail.\n'
-                'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
-                "[Question 4] - Why hasn't it been solved before?\n\n"
-                'Identify gaps or limitations in previous research or existing solutions.\n'
-                'Discuss any barriers that have prevented this problem from being solved until now.\n'
-                'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
-                '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
-                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                'This is the generated [Question 1] to [Question 4] based on the citation papers.\n'
-                f'{generated_4q}\n\n'
-                'You have a group of researchers who the bio is as follows:\n'
-                f'{profile_str}\n\n'
-                'When you are generating [Question 5], you can think how to do the thing based on your bio information.\n'
-                'Please brainstorm a following proposal with the given format. You should still start with [Question 1] to [Question 5]. But the content from [Question 1] to [Question 4] is already given and you just copy them as part of the output.'
-            ),
-        }
-    ]
-    response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
-    )[0]
-    return response
-
-
-from typing import List
-
-
-def fuse_questions(fiveq_candidates: List[str], ref_strs: str, config: Config) -> str:
-    fiveq_candidate_strs = '\n'.join(
-        [
-            f'Proposal {idx + 1}.\n\n {candidate}\n\n'
-            for idx, candidate in enumerate(fiveq_candidates)
-        ]
-    )
-    prompt = [
-        {
-            'role': 'user',
-            'content': (
-                f'Here is a high-level summarized insight of a research field: Machine Learning.\n\n'
-                f'Here are the five core questions to consider:\n\n'
-                f'[Question 1] - What is the problem?\n'
-                f'[Question 2] - Why is it interesting and important?\n'
-                f'[Question 3] - Why is it hard?\n'
-                f"[Question 4] - Why hasn't it been solved before?\n"
-                f'[Question 5] - What are the key components of my approach and results?\n\n'
-                f'Multiple proposals have been generated for the above questions:\n{fiveq_candidate_strs}\n\n'
-                f'Your task is to summarize and select the key insights that are suitable from these proposals.\n'
-                f'1. Identify shared themes and common points among the proposals.\n'
-                f'2. Highlight and select any valuable perspectives or contrasting elements and combine them into one proposal.\n'
-                f'3. Provide a concise proposal for each question based on the proposal candidates.\n\n'
-                f'Output the result in the provided five question format.\n\n'
-                f'Ensure the generated proposal is clear, concise, and avoids repeating full proposals verbatim.'
-            ),
-        }
-    ]
-    summarized_response = model_prompting(
-        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
-    )
-    return summarized_response[0].strip()
-
-
-def write_proposal_fake_researchtown(
-    profiles: List[Profile],
-    ref_contents: List[str],
-    config: Config,
-) -> str:
-    fiveq_candidates = []
-    profiles = profiles[:1]
-
-    ref_contents = [ref for ref in ref_contents if ref is not None]
-    ref_strs = '\n'.join(
-        [f'paper {idx + 1}. {ref}' for idx, ref in enumerate(ref_contents) if ref]
-    )
-
-    for idx, profile in enumerate(profiles):
-        print(f'profile {idx + 1}!')
-
-        prompt = [
-            {
-                'role': 'user',
-                'content': 'Who are you?',
-            },
-            {
-                'role': 'assistant',
-                'content': profile.bio,
-            },
-            {
-                'role': 'user',
-                'content': (
-                    f'Here is the content collected from related papers:\n{ref_strs}\n\n'
-                    'You need to write a research proposal for a paper in the field of Machine Learning based on these related papers.\n'
-                    'The research proposal should more rely on the cited paper not based on your research experience.\n'
-                    'Your research experience should be utilized to select the most useful and valuable papers included in the related papers for proposal writing.\n'
-                    'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
-                    'Here are the five core questions:\n\n'
-                    '[Question 1] - What is the problem?\n\n'
-                    'Formulate the specific research question you aim to address.\n'
-                    'Only output one question and do not include any more information.\n'
-                    '[Question 2] - Why is it interesting and important?\n\n'
-                    'Explain the broader implications of solving this problem for the research community.\n'
-                    'Discuss how such paper will affect the future research.\n'
-                    'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
-                    '[Question 3] - Why is it hard?\n\n'
-                    'Discuss the challenges and complexities involved in solving this problem.\n'
-                    'Explain why naive or straightforward approaches may fail.\n'
-                    'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
-                    "[Question 4] - Why hasn't it been solved before?\n\n"
-                    'Identify gaps or limitations in previous research or existing solutions.\n'
-                    'Discuss any barriers that have prevented this problem from being solved until now.\n'
-                    'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
-                    '[Question 5] - What are the key components of my approach and results?\n\n'
-                    'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
-                    'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                    'Please brainstorm a following proposal with the given format'
-                ),
-            },
-        ]
-        fiveq_response = model_prompting(
-            config.param.base_llm, prompt, max_token_num=config.param.max_token_num
-        )[0]
-        fiveq_candidates.append(fiveq_response)
-    """
-
-    ref_strs = '\n'.join([f'paper {idx + 1}. {ref}' for idx, ref in enumerate(ref_contents) if ref])
-    prompt = [
-        {
-            'role': 'user',
-            'content': (
-                f'Here is the content collected from related papers:\n{ref_strs}\n\n'
-                "You need to write a research proposal for a paper in the field of Machine Learning based on these related papers.\n"
-                "The research proposal should more rely on the cited paper not based on your research experience.\n"
-                "Your research experience should be utilized to select the most useful and valuable papers included in the related papers for proposal writing.\n"
-                "Here is a high-level summarized insight of a research field Machine Learning.\n\n"
-                "Here are the five core questions:\n\n"
-                "[Question 1] - What is the problem?\n\n"
-                "Formulate the specific research question you aim to address.\n"
-                "Only output one question and do not include any more information.\n"
-                "[Question 2] - Why is it interesting and important?\n\n"
-                "Explain the broader implications of solving this problem for the research community.\n"
-                "Discuss how such paper will affect the future research.\n"
-                "Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n"
-                "[Question 3] - Why is it hard?\n\n"
-                "Discuss the challenges and complexities involved in solving this problem.\n"
-                "Explain why naive or straightforward approaches may fail.\n"
-                "Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n"
-                "[Question 4] - Why hasn't it been solved before?\n\n"
-                "Identify gaps or limitations in previous research or existing solutions.\n"
-                "Discuss any barriers that have prevented this problem from being solved until now.\n"
-                "Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n"
-                '[Question 5] - What are the key components of my approach and results?\n\n'
-                'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
-                'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                'Please brainstorm a following proposal with the given format'
-            ),
-        }
-    ]
-    fiveq_candidates = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num, return_num=len(profiles), temperature=1., top_p=0.8)
-    print('len(fiveq_candidates)', len(fiveq_candidates))
-    """
-
-    fused_fiveq = fuse_questions(fiveq_candidates, ref_strs, config)
-    return fused_fiveq, fiveq_candidates
-
-
-def write_proposal_fake_researchtown_twice(
-    profiles: List[Profile],
-    ref_contents: List[str],
-    config: Config,
-) -> str:
-    fiveq_candidates = []
-    for profile in profiles:
-        ref_contents = [ref for ref in ref_contents if ref is not None]
-        ref_strs = '\n'.join(
-            [f'paper {idx + 1}. {ref}' for idx, ref in enumerate(ref_contents) if ref]
-        )
-
-        prompt = [
-            {
-                'role': 'user',
-                'content': 'Who are you?',
-            },
-            {
-                'role': 'assistant',
-                'content': profile.bio,
-            },
-            {
-                'role': 'user',
-                'content': (
-                    f'Here is the content collected from related papers:\n{ref_strs}\n\n'
-                    'You need to write a research proposal for a paper in the field of Machine Learning based on these related papers.\n'
-                    'The research proposal should more rely on the cited paper not based on your research experience.\n'
-                    'Your research experience should be utilized to select the most useful and valuable papers included in the related papers for proposal writing.\n'
-                    'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
-                    'Here are the five core questions:\n\n'
-                    '[Question 1] - What is the problem?\n\n'
-                    'Formulate the specific research question you aim to address.\n'
-                    'Only output one question and do not include any more information.\n'
-                    '[Question 2] - Why is it interesting and important?\n\n'
-                    'Explain the broader implications of solving this problem for the research community.\n'
-                    'Discuss how such paper will affect the future research.\n'
-                    'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
-                    '[Question 3] - Why is it hard?\n\n'
-                    'Discuss the challenges and complexities involved in solving this problem.\n'
-                    'Explain why naive or straightforward approaches may fail.\n'
-                    'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
-                    "[Question 4] - Why hasn't it been solved before?\n\n"
-                    'Identify gaps or limitations in previous research or existing solutions.\n'
-                    'Discuss any barriers that have prevented this problem from being solved until now.\n'
-                    'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
-                    '[Question 5] - What are the key components of my approach and results?\n\n'
-                    'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
-                    'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                    'Please brainstorm a following proposal with the given format.'
-                ),
-            },
-        ]
-        fiveq_response = model_prompting(
-            config.param.base_llm, prompt, max_token_num=config.param.max_token_num
-        )[0]
-        fiveq_candidates.append(fiveq_response)
-
-    fused_fiveq = fuse_questions(fiveq_candidates, ref_strs, config)
-
-    fiveq_candidates = []
-    for profile in profiles:
-        ref_contents = [ref for ref in ref_contents if ref is not None]
-        ref_strs = '\n'.join(
-            [f'paper {idx + 1}. {ref}' for idx, ref in enumerate(ref_contents) if ref]
-        )
-
-        prompt = [
-            {
-                'role': 'user',
-                'content': 'Who are you?',
-            },
-            {
-                'role': 'assistant',
-                'content': profile.bio,
-            },
-            {
-                'role': 'user',
-                'content': (
-                    f'Here is the content collected from related papers:\n{ref_strs}\n\n'
-                    f'Here is the research proposal generated from the previous round:\n{fused_fiveq}\n\n'
-                    'You need to refine a research proposal for a paper in the field of Machine Learning based on these related papers.\n'
-                    'The research proposal should more rely on the cited paper and the previous research proposal not based on your research experience.\n'
-                    'Your research experience should be utilized to select the most useful and valuable papers included in the related papers for proposal writing.\n'
-                    'Here is a high-level summarized insight of a research field Machine Learning.\n\n'
-                    'Here are the five core questions:\n\n'
-                    '[Question 1] - What is the problem?\n\n'
-                    'Formulate the specific research question you aim to address.\n'
-                    'Only output one question and do not include any more information.\n'
-                    '[Question 2] - Why is it interesting and important?\n\n'
-                    'Explain the broader implications of solving this problem for the research community.\n'
-                    'Discuss how such paper will affect the future research.\n'
-                    'Discuss how addressing this question could advance knowledge or lead to practical applications.\n\n'
-                    '[Question 3] - Why is it hard?\n\n'
-                    'Discuss the challenges and complexities involved in solving this problem.\n'
-                    'Explain why naive or straightforward approaches may fail.\n'
-                    'Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.\n\n'
-                    "[Question 4] - Why hasn't it been solved before?\n\n"
-                    'Identify gaps or limitations in previous research or existing solutions.\n'
-                    'Discuss any barriers that have prevented this problem from being solved until now.\n'
-                    'Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.\n\n'
-                    '[Question 5] - What are the key components of my approach and results?\n\n'
-                    'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use. But you must include these in one paragraph and not use subtitles.\n'
-                    'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
-                    'Please brainstorm a following proposal with the given format.'
-                ),
-            },
-        ]
-        fiveq_response = model_prompting(
-            config.param.base_llm, prompt, max_token_num=config.param.max_token_num
-        )[0]
-        fiveq_candidates.append(fiveq_response)
-
-    fused_fiveq = fuse_questions(fiveq_candidates, ref_strs, config)
-
-    return fused_fiveq
-
-
 def write_proposal(
     mode: str,
     profiles: List[Profile],
     ref_contents: List[str],
     config: Config,
-    target_paper_title: str,
 ) -> str:
     if mode == 'zero_shot':
         return write_proposal_zero_shot(config=config)
@@ -714,34 +345,19 @@ def write_proposal(
         return write_proposal_with_only_profiles(profiles=profiles, config=config)
     elif mode == 'citation_only':
         return write_proposal_with_only_citations(
-            ref_contents=ref_contents,
-            config=config,
+            ref_contents=ref_contents, config=config
         )
     elif mode == 'author_citation':
         return write_proposal_with_profiles_and_citations(
             profiles=profiles, ref_contents=ref_contents, config=config
         )
-    elif mode == 'research_town':
+    elif mode == 'textgnn':
         return write_proposal_researchtown(
             profiles=profiles, ref_contents=ref_contents, config=config
         )
     elif mode == 'sakana_ai_scientist':
         return write_proposal_sakana_ai_scientist(
             ref_contents=ref_contents, config=config, num_reflections=5
-        )
-    elif mode == 'debug':
-        return write_proposal_debug(
-            profiles=profiles,
-            ref_contents=ref_contents,
-            config=config,
-        )
-    elif mode == 'fake_research_town':
-        return write_proposal_fake_researchtown(
-            profiles=profiles, ref_contents=ref_contents, config=config
-        )
-    elif mode == 'fake_research_town_twice':
-        return write_proposal_fake_researchtown_twice(
-            profiles=profiles, ref_contents=ref_contents, config=config
         )
     else:
         raise ValueError(f'Invalid proposal writing mode: {mode}')
