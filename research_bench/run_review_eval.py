@@ -25,7 +25,7 @@ def inference(
     human_scores: List[int],
     mode: str,
     config: Config,
-):
+) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     intro = paper_data.get('introduction', '')
     profiles = [Profile(**data) for data in author_data.values()]
     profiles_reviewers = [Profile(**data) for data in reviewer_data.values()]

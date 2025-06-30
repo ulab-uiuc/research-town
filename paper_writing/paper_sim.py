@@ -49,7 +49,7 @@ print(f'Number of main keys: {len(main_keys)}')
 print(f'Number of common keys: {len(keys_common)}')
 
 
-def openai_sim(str_a, str_b):
+def openai_sim(str_a: str, str_b: str) -> np.float64:
     """
     Calculate cosine similarity between two strings using OpenAI embeddings.
     """
@@ -61,14 +61,14 @@ def openai_sim(str_a, str_b):
     embedding_a = response_a['data'][0]['embedding']
     embedding_b = response_b['data'][0]['embedding']
 
-    cosine_sim = np.dot(embedding_a, embedding_b) / (
+    cosine_sim:np.float64 = np.dot(embedding_a, embedding_b) / (
         np.linalg.norm(embedding_a) * np.linalg.norm(embedding_b)
     )
 
     return cosine_sim
 
 
-def voyageai_sim(str_a, str_b):
+def voyageai_sim(str_a: str, str_b: str) -> np.float64:
     """
     Calculate cosine similarity between two strings using VoyageAI embeddings.
     """
@@ -80,15 +80,15 @@ def voyageai_sim(str_a, str_b):
     embedding_a = response_a.embeddings[0]
     embedding_b = response_b.embeddings[0]
 
-    cosine_sim = np.dot(embedding_a, embedding_b) / (
+    cosine_sim:np.float64 = np.dot(embedding_a, embedding_b) / (
         np.linalg.norm(embedding_a) * np.linalg.norm(embedding_b)
     )
 
     return cosine_sim
 
 
-openai_sims_c = []
-voyageai_sims_c = []
+# openai_sims_c = []
+# voyageai_sims_c = []
 
 # for main_p, c_p in zip(main_proposals, c_proposals):
 # from tqdm import tqdm
