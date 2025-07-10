@@ -24,6 +24,7 @@ def model_prompting(
     """
     # if Qwen, trim messages using litellm's message trimming function
     from litellm.utils import trim_messages
+
     if llm_model.startswith('Qwen'):
         messages = trim_messages(
             messages=messages,
@@ -43,7 +44,7 @@ def model_prompting(
         #             message['content'] = trimmed_content
     if llm_model.startswith('deepseek-ai') or llm_model.startswith('Qwen'):
         completion = litellm.completion(
-            model='openai/'+llm_model,
+            model='openai/' + llm_model,
             messages=messages,
             max_tokens=max_token_num,
             # for some models, 'n'(The number of chat completion choices ) is not supported.

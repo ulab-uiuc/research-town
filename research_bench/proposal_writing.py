@@ -86,10 +86,12 @@ def write_proposal_zero_shot(config: Config) -> str:
                 '[Question 3] - Why is it hard?\n\n (your answer here)\n\n'
                 "[Question 4] - Why hasn't it been solved before?\n\n (your answer here)\n\n"
                 '[Question 5] - What are the key components of my approach and results?\n\n (your answer here)\n\n'
-                ),
+            ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
+    response = model_prompting(
+        config.param.base_llm, prompt, max_token_num=config.param.max_token_num
+    )[0]
     return response
 
 

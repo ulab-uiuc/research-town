@@ -312,6 +312,7 @@ def compute_proposal_metrics(reference: str, generation: str) -> Dict[str, float
         'voyageai_sim_q5': voyageai_sim_per_question[4],
     }
 
+
 def compute_review_metrics(
     strengths: List[str],
     weaknesses: List[str],
@@ -346,7 +347,7 @@ def compute_review_metrics(
     # Embed all ground-truth and generated items once
     # -- ground-truth strengths
     gt_str_openai_embs = []
-    gt_str_voy_embs   = []
+    gt_str_voy_embs = []
     for s in strengths:
         resp = embedding(model='text-embedding-3-large', input=[s])
         gt_str_openai_embs.append(resp['data'][0]['embedding'])
@@ -355,7 +356,7 @@ def compute_review_metrics(
 
     # -- generated strengths
     gen_str_openai_embs = []
-    gen_str_voy_embs   = []
+    gen_str_voy_embs = []
     for s in gen_strengths:
         resp = embedding(model='text-embedding-3-large', input=[s])
         gen_str_openai_embs.append(resp['data'][0]['embedding'])
@@ -364,7 +365,7 @@ def compute_review_metrics(
 
     # -- ground-truth weaknesses
     gt_wk_openai_embs = []
-    gt_wk_voy_embs   = []
+    gt_wk_voy_embs = []
     for w in weaknesses:
         resp = embedding(model='text-embedding-3-large', input=[w])
         gt_wk_openai_embs.append(resp['data'][0]['embedding'])
@@ -373,7 +374,7 @@ def compute_review_metrics(
 
     # -- generated weaknesses
     gen_wk_openai_embs = []
-    gen_wk_voy_embs   = []
+    gen_wk_voy_embs = []
     for w in gen_weaknesses:
         resp = embedding(model='text-embedding-3-large', input=[w])
         gen_wk_openai_embs.append(resp['data'][0]['embedding'])
@@ -389,11 +390,13 @@ def compute_review_metrics(
         best_idx = int(np.argmax(sims))
         best_sim = float(sims[best_idx])
         metrics_raw['openai_sim_strengths'].append(best_sim)
-        metrics_raw['gt_strength_matchings_openai'].append({
-            'gt': strengths[i],
-            'matched_generated': gen_strengths[best_idx],
-            'similarity': best_sim
-        })
+        metrics_raw['gt_strength_matchings_openai'].append(
+            {
+                'gt': strengths[i],
+                'matched_generated': gen_strengths[best_idx],
+                'similarity': best_sim,
+            }
+        )
 
     for i, gt_emb in enumerate(gt_str_voy_embs):
         sims = [
@@ -403,11 +406,13 @@ def compute_review_metrics(
         best_idx = int(np.argmax(sims))
         best_sim = float(sims[best_idx])
         metrics_raw['voyageai_sim_strengths'].append(best_sim)
-        metrics_raw['gt_strength_matchings_voyageai'].append({
-            'gt': strengths[i],
-            'matched_generated': gen_strengths[best_idx],
-            'similarity': best_sim
-        })
+        metrics_raw['gt_strength_matchings_voyageai'].append(
+            {
+                'gt': strengths[i],
+                'matched_generated': gen_strengths[best_idx],
+                'similarity': best_sim,
+            }
+        )
 
     # And the same for weaknesses
     for i, gt_emb in enumerate(gt_wk_openai_embs):
@@ -418,11 +423,13 @@ def compute_review_metrics(
         best_idx = int(np.argmax(sims))
         best_sim = float(sims[best_idx])
         metrics_raw['openai_sim_weaknesses'].append(best_sim)
-        metrics_raw['gt_weakness_matchings_openai'].append({
-            'gt': weaknesses[i],
-            'matched_generated': gen_weaknesses[best_idx],
-            'similarity': best_sim
-        })
+        metrics_raw['gt_weakness_matchings_openai'].append(
+            {
+                'gt': weaknesses[i],
+                'matched_generated': gen_weaknesses[best_idx],
+                'similarity': best_sim,
+            }
+        )
 
     for i, gt_emb in enumerate(gt_wk_voy_embs):
         sims = [
@@ -432,11 +439,13 @@ def compute_review_metrics(
         best_idx = int(np.argmax(sims))
         best_sim = float(sims[best_idx])
         metrics_raw['voyageai_sim_weaknesses'].append(best_sim)
-        metrics_raw['gt_weakness_matchings_voyageai'].append({
-            'gt': weaknesses[i],
-            'matched_generated': gen_weaknesses[best_idx],
-            'similarity': best_sim
-        })
+        metrics_raw['gt_weakness_matchings_voyageai'].append(
+            {
+                'gt': weaknesses[i],
+                'matched_generated': gen_weaknesses[best_idx],
+                'similarity': best_sim,
+            }
+        )
 
     # Finally, compute the averages over **ground-truth** items
     metrics_raw['openai_strength'] = np.mean(metrics_raw['openai_sim_strengths'])
