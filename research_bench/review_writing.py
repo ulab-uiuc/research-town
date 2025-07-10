@@ -248,7 +248,9 @@ def write_review_with_only_profiles(
     weaknesses: List[str] = []
     scores: List[int] = []
 
-    profiles_reviewers = profiles_reviewers[:1]
+    top_k = 5
+
+    profiles_reviewers = profiles_reviewers[:top_k]
 
     for profile in profiles_reviewers:
         bio_str = profile.bio

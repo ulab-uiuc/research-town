@@ -1,8 +1,8 @@
 import argparse
 import json
 import os
-from multiprocessing import Manager, Pool
-from typing import Any, Dict, List, Tuple
+from multiprocessing import Lock, Pool, Manager
+from typing import Any, Dict, List, Sequence, Tuple
 
 from tqdm import tqdm
 
@@ -25,7 +25,7 @@ def inference(
     human_scores: List[int],
     mode: str,
     config: Config,
-) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+):
     intro = paper_data.get('introduction', '')
     profiles = [Profile(**data) for data in author_data.values()]
     profiles_reviewers = [Profile(**data) for data in reviewer_data.values()]
@@ -72,7 +72,10 @@ def load_papers(input_path: str, output_path: str) -> Any:
 
 
 def save_results(
-    results: Dict[str, Any], metrics: Dict[str, Any], output_path: str, lock: Any
+    results: Dict[str, Any], 
+    metrics: Dict[str, Any], 
+    output_path: str, 
+    lock: Any
 ) -> None:
     with lock:
         with open(output_path, 'a') as f:
@@ -94,23 +97,14 @@ def process_task(
         Config,  # config
         str,  # output_path
         Any,  # lock
-    ],
+    ]
 ) -> None:
     (
-        paper_id,
-        paper_data,
-        author_data,
-        reviewer_data,
-        full_content,
-        strengths_bp_flatten,
-        weaknesses_bp_flatten,
-        human_scores,
-        mode,
-        config,
-        output_path,
-        lock,
+        paper_id, paper_data, author_data, reviewer_data, full_content,
+        strengths_bp_flatten, weaknesses_bp_flatten, human_scores,
+        mode, config, output_path, lock
     ) = args_tuple
-
+    
     results, metrics = inference(
         paper_id,
         paper_data,
@@ -191,33 +185,29 @@ def main() -> None:
         ]
         weaknesses_bp_flatten = [item for sublist in weaknesses_bp for item in sublist]
 
-        tasks.append(
-            (
-                paper_id,
-                paper_data,
-                author_data,
-                reviewer_data,
-                full_content,
-                strengths_bp_flatten,
-                weaknesses_bp_flatten,
-                human_scores,
-                args.mode,
-                config,
-                args.output_path,
-                lock,
-            )
-        )
+        tasks.append((
+            paper_id,
+            paper_data,
+            author_data,
+            reviewer_data,
+            full_content,
+            strengths_bp_flatten,
+            weaknesses_bp_flatten,
+            human_scores,
+            args.mode,
+            config,
+            args.output_path,
+            lock
+        ))
 
     # Process tasks in parallel
     with Pool(processes=args.num_processes) as pool:
         # Using tqdm for progress bar
-        list(
-            tqdm(
-                pool.imap_unordered(process_task, tasks),
-                total=len(tasks),
-                desc='Processing papers',
-            )
-        )
+        list(tqdm(
+            pool.imap_unordered(process_task, tasks),
+            total=len(tasks),
+            desc='Processing papers'
+        ))
 
 
 if __name__ == '__main__':

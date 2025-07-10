@@ -1,0 +1,2396 @@
+{
+  "Leveraging Large Language Models for Multiple Choice Question Answering": {
+    "paper_pk": null,
+    "title": "Leveraging Large Language Models for Multiple Choice Question Answering",
+    "abstract": "While large language models (LLMs) like GPT-3 have achieved impressive results on multiple choice question answering (MCQA) tasks in the zero, one, and few-shot settings, they generally lag behind the MCQA state of the art (SOTA). MCQA tasks have traditionally been presented to LLMs like cloze tasks. An LLM is conditioned on a question (without the associated answer options) and its chosen option is the one assigned the highest probability after normalization (for length, etc.). A more natural prompting approach is to present the question and answer options to the LLM jointly and have it output the symbol (e.g., \u201cA\u201d) associated with its chosen answer option. This approach allows the model to explicitly compare answer options, reduces computational costs, and mitigates the effects of tokenization scheme and answer option representations on answer selection. For the natural approach to be effective, the LLM it is used with must be able to associate answer options with the symbols that represent them. The LLM needs what we term multiple choice symbol binding (MCSB) ability. This ability varies greatly by model. We show that a model with high MCSB ability performs much better with the natural approach than with the traditional approach across 20 diverse datasets and largely closes the gap with the SOTA, suggesting that the MCQA ability of LLMs has been previously underestimated.",
+    "authors": [
+      "Joshua Robinson",
+      "David Wingate"
+    ],
+    "keywords": [
+      "NLP",
+      "language models",
+      "multiple choice question answering",
+      "symbol binding",
+      "GPT-3",
+      "Codex"
+    ],
+    "real_all_scores": [
+      6,
+      8,
+      6
+    ],
+    "real_confidences": [
+      3,
+      2,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Contextualized Generative Retrieval": {
+    "paper_pk": null,
+    "title": "Contextualized Generative Retrieval",
+    "abstract": "The text retrieval task is mainly performed in two ways: the bi-encoder approach and the generative approach. The bi-encoder approach maps the document and query embeddings to common vector space and performs a nearest neighbor search. It stably shows high performance and efficiency across different domains but has an embedding space bottleneck as it interacts in L2 or inner product space. The generative retrieval model retrieves by generating a target sequence and overcomes the embedding space bottleneck by interacting in the parametric space. However, it fails to retrieve the information it has not seen during the training process as it depends solely on the information encoded in its own model parameters. To leverage the advantages of both approaches, we propose Contextualized Generative Retrieval model, which uses contextualized embeddings (output embeddings of a language model encoder) as vocab embeddings at the decoding step of generative retrieval. The model uses information encoded in both the non-parametric space of contextualized token embeddings and the parametric space of the generative retrieval model. Our approach of generative retrieval with contextualized vocab embeddings shows higher performance than generative retrieval with only vanilla vocab embeddings in the document retrieval task, an average of 6% higher performance in KILT (NQ, TQA) and 2X higher in NQ-320k, suggesting the benefits of using contextualized embedding in generative retrieval models.",
+    "authors": [
+      "Hyunji Lee",
+      "JaeYoung Kim",
+      "Hoyeon Chang",
+      "Hanseok Oh",
+      "Sohee Yang",
+      "vladimir karpukhin",
+      "Yi Lu",
+      "Minjoon Seo"
+    ],
+    "keywords": [
+      "NLP",
+      "Information Retrieval"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      8,
+      6
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Prefer to Classify: Improving Text Classifier via Pair-wise Preference Learning": {
+    "paper_pk": null,
+    "title": "Prefer to Classify: Improving Text Classifier via Pair-wise Preference Learning",
+    "abstract": "The development of largely human-annotated benchmarks has driven the success of deep neural networks in various NLP tasks. These benchmarks are collected by aggregating decisions made by different annotators on the target task. Aggregating the annotated decisions via majority is still used as a common practice, despite its inevitable limitation from simple aggregation. In this paper, we establish a novel classification framework, based on task-specific human preference between a pair of samples, which provides an informative training signal to capture fine-grained and complementary task information through pair-wise comparison. Hence, it improves the existing instance-wise annotation system by enabling better task modeling from learning the relation between samples. Specifically, we propose a new multi-task learning framework, called prefer-to-classify (P2C), to effectively learn human preferences in addition to the given classification task.\nWe collect human preference signals in two ways: (1) extracting relative preferences implicitly from annotation records (for free) or (2) collecting subjective preferences explicitly from (paid) crowd workers. In various text classification tasks, we demonstrate that both extractive and subjective preferences are effective in improving the classifier with our preference learning framework. Interestingly, we found that subjective preference shows more significant improvements than extractive preference, revealing the effectiveness of explicit modeling of human preferences. Our code and preference dataset will be publicly available upon acceptance.",
+    "authors": [
+      "Jaehyung Kim",
+      "Jinwoo Shin",
+      "Dongyeop Kang"
+    ],
+    "keywords": [
+      "NLP",
+      "text classification",
+      "annotation",
+      "disagreement",
+      "preference"
+    ],
+    "real_all_scores": [
+      5,
+      8,
+      5,
+      6
+    ],
+    "real_confidences": [
+      3,
+      3,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "WikiWhy: Answering and Explaining Cause-and-Effect Questions": {
+    "paper_pk": null,
+    "title": "WikiWhy: Answering and Explaining Cause-and-Effect Questions",
+    "abstract": "As large language models (LLMs) grow larger and more sophisticated, assessing their \"reasoning\" capabilities in natural language grows more challenging. Recent question answering (QA) benchmarks that attempt to assess reasoning are often limited by a narrow scope of covered situations and subject matters. We introduce WikiWhy, a QA dataset built around a novel auxiliary task: explaining why an answer is true in natural language. WikiWhy contains over 9,000 \"why\" question-answer-rationale triples, grounded on Wikipedia facts across a diverse set of topics. Each rationale is a set of supporting statements connecting the question to the answer. WikiWhy serves as a benchmark for the reasoning capabilities of LLMs because it demands rigorous explicit rationales for each answer to demonstrate the acquisition of implicit commonsense knowledge, which is unlikely to be easily memorized. GPT-3 baselines achieve only 38.7% human-evaluated correctness in the end-to-end answer & explain condition, leaving significant room for future improvements.",
+    "authors": [
+      "Matthew Ho",
+      "Aditya Sharma",
+      "Justin Chang",
+      "Michael Saxon",
+      "Sharon Levy",
+      "Yujie Lu",
+      "William Yang Wang"
+    ],
+    "keywords": [
+      "NLP",
+      "Question Answering",
+      "LLM",
+      "Dataset",
+      "Explanation"
+    ],
+    "real_all_scores": [
+      3,
+      8,
+      5
+    ],
+    "real_confidences": [
+      4,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Elicitation Inference Optimization for Multi-Principal-Agent Alignment": {
+    "paper_pk": null,
+    "title": "Elicitation Inference Optimization for Multi-Principal-Agent Alignment",
+    "abstract": "In multi-principal-agent alignment scenarios spanning governance, markets, diplomacy, and AI, it is infeasible to elicit every principal's view on all perspectives relevant to agent decisions. Elicitation inference optimization (EIO) aims to minimize the $n$ elicitations needed to approximate $N$ principal's views across $K$ perspectives. In this work, we demonstrate an EIO approach where data efficiency ($NK/n$) increases with scale. We introduce STUMP: an elicitation inference model which integrates an LLM with a latent factor model to enable learning transfer across samples, contexts, and languages.  Then, we characterize STUMP's performance on a set of elicitation primitives from which scalable elicitation (sampling) protocols can be constructed. Building from these results, we design and demonstrate two scalable elicitation protocols for STUMP where data efficiency grows boundlessly, scaling like $O(n)$ in the number of elicitations $n$. This makes it possible to obtain complex, high-dimensional preference signals spanning principal populations at any scale.",
+    "authors": [
+      "Andrew Konya",
+      "Yeping Lina Qiu",
+      "Michael P Varga",
+      "Aviv Ovadya"
+    ],
+    "keywords": [
+      "alignment",
+      "large language models",
+      "LLMs",
+      "NLP",
+      "transfer learning",
+      "human-centered AI",
+      "LLMs",
+      "preference modeling"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      6,
+      8,
+      6
+    ],
+    "real_confidences": [
+      4,
+      3,
+      3,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Data Feedback Loops: Model-driven Amplification of Dataset Biases": {
+    "paper_pk": null,
+    "title": "Data Feedback Loops: Model-driven Amplification of Dataset Biases",
+    "abstract": "Datasets scraped from the internet have been critical to large-scale machine learning. Yet, its success puts the utility of future internet-derived datasets at potential risk, as model outputs begin to replace human annotations as a source of supervision. In this work, we formalize a system where interactions with one model are recorded as history and scraped as training data in the future. We then analyze its stability over time by tracking changes to a test-time bias statistic (e.g. gender bias of model predictions). We find that the degree of bias amplification is closely linked to whether the model\u2019s outputs behave like samples from the training distribution, a behavior which we characterize and define as consistent calibration. Experiments in three conditional prediction scenarios \u2013 image classification, visual role-labeling, and language generation \u2013 demonstrate that models that exhibit a sampling-like behavior are more calibrated and thus more stable. Based on this insight, we propose an intervention to help calibrate and stabilize unstable feedback systems.",
+    "authors": [
+      "Rohan Taori",
+      "Tatsunori Hashimoto"
+    ],
+    "keywords": [
+      "feedback loops",
+      "bias amplification",
+      "deep learning",
+      "self-supervised learning",
+      "CV",
+      "NLP"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      3,
+      3
+    ],
+    "real_confidences": [
+      3,
+      4,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Applying Second Order Optimization to Deep Transformers with Parameter-Efficient Tuning": {
+    "paper_pk": null,
+    "title": "Applying Second Order Optimization to Deep Transformers with Parameter-Efficient Tuning",
+    "abstract": "Despite the theoretical superiority in convergence issues, second-order optimizers are generally not among the top choices for training large-scale neural networks due to their high computational and memory cost. Nevertheless, introduced in recent progress of parameter-efficient tuning is a new paradigm that large-scale pre-trained models (PTMs) can be adapted to specific tasks by optimizing a tiny proportion of parameters, which might hopefully change the game. We associate this new paradigm with the computational tractability of second-order optimizers and succeed in applying them to large PTMs that are from hundreds of millions to billions in scale. Beyond verifying their tractability, we further investigate the stability-influencing factors in the optimization process and propose accordingly a Newton-step-clipping approach in which we clip the update tensors rather than the gradients. This approach stabilizes the convergence by gating the magnitude of Newton steps along the optimization trajectories through the rugged landscapes of deep transformers. \nWe conduct extensive experiments across different downstream tasks, demonstrating that, when equipped with our Newton-step-clipping strategy, second-order optimizers, especially Kronecker-factored curvature approximation (K-FAC), can attain comparable and even superior results and faster convergence to those state-of-the-art bars implemented with AdamW.  Furthermore, we scale the model up to 3 billion parameters and validate the tractability and effectiveness of our method. This work is not only the first successful application of second-order optimization on such large-scale models but also sheds light on the possibility of further optimization-wise analysis on large-scale models in the future.",
+    "authors": [
+      "Ning Ding",
+      "Qiaosen Wang",
+      "Yulin Chen",
+      "Pengjun Xie",
+      "Zhiyuan Liu",
+      "Hai-Tao Zheng",
+      "Maosong Sun"
+    ],
+    "keywords": [
+      "Pre-trained Models",
+      "NLP",
+      "Model Adaptation"
+    ],
+    "real_all_scores": [
+      3,
+      6,
+      5,
+      8
+    ],
+    "real_confidences": [
+      4,
+      3,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Mask-tuning: Towards  Improving  Pre-trained Language Models' Generalization": {
+    "paper_pk": null,
+    "title": "Mask-tuning: Towards  Improving  Pre-trained Language Models' Generalization",
+    "abstract": "Pre-trained language models have the known generalization problem. This issue emerges from the pre-trained language models' learning process that heavily relies on spurious correlations, which work for the majority of training examples but do not hold in general. As a consequence, the models' performance drops substantially on out-of-distribution datasets. Previous studies proposed various solutions, including data augmentation and learning process improvement. In this paper, we present Mask-tuning, an approach that alleviates the impact of spurious correlations on the fine-tuning learning process. To achieve this goal, Mask-tuning integrates masked language training into the fine-tuning learning process. In this case, Mask-tuning perturbs the linguistic relation of downstream tasks' training examples and computes masked language training loss. Then, the perturbed examples are fed into fine-tuning process to be classified based on their ground-truth label and compute the fine-tuning training loss. Afterward, Mask-tuning loss-- a weighted aggregation of masked language model training loss and fine-tuning loss-- updates the masked language model and fine-tuning through training iterations. Extensive experiments show that Mask-tuning consistently improves the pre-trained language models' generalization on out-of-distribution datasets and enhances their performance on in-distribution datasets. The source code and pre-trained models will be available on the author's GitHub page.",
+    "authors": [
+      "Somayeh Ghanbarzadeh",
+      "Hamid Palangi",
+      "Yan Huang",
+      "Radames Cruz Moreno",
+      "Hamed Khanpour"
+    ],
+    "keywords": [
+      "NLP",
+      "Pre-trained langugae model",
+      "out-of-distribution learning",
+      "robust generalization",
+      "fine-tuning"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      6,
+      5
+    ],
+    "real_confidences": [
+      4,
+      2,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Differentially Private Conditional Text Generation For Synthetic Data Production": {
+    "paper_pk": null,
+    "title": "Differentially Private Conditional Text Generation For Synthetic Data Production",
+    "abstract": "Companies have faced increasing pressure in recent years to anonymize user collected data when sharing internally or to third parties. Text data in particular contains copious amounts of personally identifiable information that has proven to be difficult to de-identify while remain useful for the party of interest. Previous works have suggested that synthetic text generation could provide a promising avenue to curate high performant and private datasets. In this paper, we introduce an approach to synthesize high utility text classification datasets by performing conditional generation through a large language model, distilGPT2, while providing measurable guarantees via differential privacy. We show that naive approaches suffer heavily from utility loss by entangling task-relevant factors in the transformer embedding space, making controlled generation more difficult. We analyze how incorporating a secondary learning objective can improve the performance of the generative model, improving utility of the generated data.",
+    "authors": [
+      "Pranav Putta",
+      "Ander Steele",
+      "Joseph W Ferrara"
+    ],
+    "keywords": [
+      "differential privacy",
+      "conditional text generation",
+      "NLP"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      8,
+      6
+    ],
+    "real_confidences": [
+      4,
+      5,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "Preserving Semantics in Textual Adversarial Attacks": {
+    "paper_pk": null,
+    "title": "Preserving Semantics in Textual Adversarial Attacks",
+    "abstract": "Adversarial attacks in NLP challenge the way we look at language models. The goal of this kind of adversarial attack is to modify the input text to fool a classifier while maintaining the original meaning of the text. Although most existing adversarial attacks claim to fulfill the constraint of semantics preservation, careful scrutiny shows otherwise. We show that the problem lies in the text encoders used to determine the similarity of adversarial examples, specifically in the way they are trained. Unsupervised training methods make these encoders more susceptible to problems with antonym recognition. To overcome this, we introduce a simple, fully supervised sentence embedding technique called Semantics-Preserving-Encoder (SPE). The results show that our solution minimizes the variation in the meaning of the adversarial examples generated. It also significantly improves the overall quality of adversarial examples, as confirmed by human evaluators. Furthermore, it can be used as a component in any existing attack to speed up its execution while maintaining similar attack success.",
+    "authors": [
+      "David Herel",
+      "Hugo Cisneros",
+      "Tomas Mikolov"
+    ],
+    "keywords": [
+      "NLP",
+      "Adversarial Attacks",
+      "Sentence Encoders",
+      "Semantics Similarity"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      8
+    ],
+    "real_confidences": [
+      2,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Approximating How Single Head Attention Learns": {
+    "paper_pk": null,
+    "title": "Approximating How Single Head Attention Learns",
+    "abstract": "Why do models often attend to salient words, and how does this evolve throughout training? We approximate model training as a two stage process: early on in training when the attention weights are uniform, the model learns to translate individual input word `i` to `o` if they co-occur frequently. Later, the model learns to attend to `i` while the correct output is o because it knows `i` translates to `o`. To formalize, we define a model property, Knowledge to Translate Individual Words (KTIW) (e.g. knowing that `i` translates to `o`), and claim that it drives the learning of the attention. This claim is supported by the fact that before the attention mechanism is learned, KTIW can be learned from word co-occurrence statistics, but not the other way around. Particularly, we can construct a training distribution that makes KTIW hard to learn, the learning of the attention fails, and the model cannot even learn the simple task of copying the input words to the output. Our approximation explains why models sometimes attend to salient words, and inspires a toy example where a multi-head attention model can overcome the above hard training distribution by improving learning dynamics rather than expressiveness. We end by discussing the limitation of our approximation framework and suggest future directions.",
+    "authors": [
+      "Charlie Victor Snell",
+      "Ruiqi Zhong",
+      "Dan Klein",
+      "Jacob Steinhardt"
+    ],
+    "keywords": [
+      "NLP",
+      "training dynamics",
+      "attention"
+    ],
+    "real_all_scores": [
+      5,
+      6,
+      5,
+      5
+    ],
+    "real_confidences": [
+      4,
+      3,
+      2,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "RainProof: An Umbrella to Shield Text Generator from Out-Of-Distribution Data": {
+    "paper_pk": null,
+    "title": "RainProof: An Umbrella to Shield Text Generator from Out-Of-Distribution Data",
+    "abstract": "As more and more conversational and translation systems are deployed in production, it is essential to implement and develop effective control mechanisms to ensure their proper functioning and security. An essential component to ensure the safe behavior of the system is out-of-distribution (OOD) detection, which aims to detect whether an input sample is statistically far from the training distribution. While OOD detection is a widely covered topic in classification tasks, it has received much less attention in text generation. This paper addresses the problem of OOD detection for machine translation and dialog generation from an operational perspective. Our contribution includes (i) RAINPROOF a Relative informAItioN Projection Out OF distribution detection framework and (ii) a more operational evaluation setting for OOD detection. Surprisingly, we find that OOD detection is not necessarily aligned with task-specific measures. The OOD detector may filter out samples that are well processed by the model and keep samples that are not, leading to weaker performance. Our results show that RAINPROOF breaks this curse and achieve good results in OOD detection while increasing system performance.",
+    "authors": [
+      "Maxime DARRIN",
+      "Pablo Piantanida",
+      "Pierre Colombo"
+    ],
+    "keywords": [
+      "NLP",
+      "OOD detection",
+      "natural language generation"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      6
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Efficient Sequence Packing without Cross-contamination: Accelerating Large Language Models without Impacting Performance": {
+    "paper_pk": null,
+    "title": "Efficient Sequence Packing without Cross-contamination: Accelerating Large Language Models without Impacting Performance",
+    "abstract": "Effective training of today's large language models (LLMs) depends on large batches and long sequences for throughput and accuracy. To handle variable-length sequences on hardware accelerators, it is common practice to introduce padding tokens, so that all sequences in a batch have the same length. We show in this paper that the variation in sequence lengths in common NLP datasets is such that up to 50% of all tokens can be padding. In less common, but not extreme, cases (e.g. GLUE-COLA with sequence length 128), the ratio is up to 89%. Existing methods to address the resulting inefficiency are complicated by the need to avoid \"cross-contamination\" in self-attention, by a reduction in accuracy when sequence ordering information is lost, or by customized kernel implementations only valid for specific accelerators.\n\nThis paper introduces a new formalization of sequence packing in the context of the well-studied bin packing problem, and presents new algorithms based on this formulation which, for example, confer a 2x speedup for phase 2 pretraining in BERT while preserving downstream performance. We show how existing models can be adapted to ensure mathematical equivalence between the original and packed models, meaning that packed models can be trained with existing pre-training and fine-tuning practices.",
+    "authors": [
+      "Mario Michael Krell",
+      "Matej Kosec",
+      "Sergio P. Perez",
+      "Andrew William Fitzgibbon"
+    ],
+    "keywords": [
+      "deep learning",
+      "BERT",
+      "IPU",
+      "GPU",
+      "hardware-acceleration",
+      "padding",
+      "Wikipedia",
+      "NLP",
+      "bin-packing"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      5,
+      8
+    ],
+    "real_confidences": [
+      5,
+      4,
+      2,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Text Summarization with Oracle Expectation": {
+    "paper_pk": null,
+    "title": "Text Summarization with Oracle Expectation",
+    "abstract": "Extractive summarization produces summaries by identifying and concatenating the most important sentences in a document. Since most summarization datasets do not come with gold labels indicating whether document sentences are summary-worthy, different labeling algorithms have been proposed to extrapolate oracle extracts for model training. In this work, we identify two flaws with the widely used greedy labeling approach: it delivers suboptimal and deterministic oracles. To alleviate both issues, we propose a simple yet effective labeling algorithm that creates soft, expectation-based sentence labels. We define a new learning objective for extractive summarization which incorporates learning signals from multiple oracle summaries and prove it is equivalent to estimating the oracle expectation for each document sentence. Without any architectural modifications, the proposed labeling scheme achieves superior performance on a variety of summarization benchmarks across domains and languages, in both supervised and zero-shot settings.",
+    "authors": [
+      "Yumo Xu",
+      "Mirella Lapata"
+    ],
+    "keywords": [
+      "Text Summarization",
+      "NLP"
+    ],
+    "real_all_scores": [
+      8,
+      3,
+      3
+    ],
+    "real_confidences": [
+      4,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  " Learning from Others: Similarity-based Regularization for Mitigating Artifacts": {
+    "paper_pk": null,
+    "title": " Learning from Others: Similarity-based Regularization for Mitigating Artifacts",
+    "abstract": "Common methods for mitigating spurious correlations in natural language understanding (NLU) usually operate in the output space, encouraging a main model to behave differently from a bias model by down-weighing examples where the bias model is confident.\nWhile improving out of distribution (OOD) performance, it was recently observed that the internal representations of the presumably debiased models are actually more, rather than less biased. \nWe propose SimgReg, a new method for debiasing internal model components via similarity-based regularization, in representation space: We encourage the model to learn representations that are either similar to an unbiased model or different from a biased model. We experiment with three  NLU tasks and different kinds of biases.\nWe find that SimReg improves OOD performance, with little in-distribution degradation. Moreover, the representations learned by SimReg are less biased than in other methods.\n",
+    "authors": [
+      "Reda Igbaria",
+      "Yonatan Belinkov"
+    ],
+    "keywords": [
+      "NLP",
+      "robustness",
+      "spurious correlations",
+      "Dataset bias",
+      "natural language understanding",
+      "shortcut learning"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Contrastive Novelty Learning: Anticipating Outliers with Large Language Models": {
+    "paper_pk": null,
+    "title": "Contrastive Novelty Learning: Anticipating Outliers with Large Language Models",
+    "abstract": "In many task settings, text classification models are likely to encounter examples from novel classes on which they cannot predict correctly. Selective prediction, in which models abstain on low-confidence examples, provides a possible solution, but existing models are often overly confident on OOD examples. To remedy this overconfidence, we introduce Contrastive Novelty Learning (CNL), a two-step method that generates OOD examples representative of novel classes, then trains to decrease confidence on them. First, we generate OOD examples by prompting a large language model twice: we prompt it to enumerate novel classes relevant to the label set, then generate examples from each novel class matching the task format. Second, we train our classifier with a novel contrastive objective that encourages lower confidence on generated OOD examples than training examples. When trained with CNL, classifiers improve in their ability to detect and abstain on OOD examples over prior methods by an average of 2.3% AUAC and 5.5% AUROC across 4 NLP datasets, with no cost to in-distribution accuracy.",
+    "authors": [
+      "Albert Xu",
+      "Xiang Ren",
+      "Robin Jia"
+    ],
+    "keywords": [
+      "selective prediction",
+      "open-set classification",
+      "large language models",
+      "NLP"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      5,
+      3
+    ],
+    "real_confidences": [
+      2,
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Learning by Distilling Context": {
+    "paper_pk": null,
+    "title": "Learning by Distilling Context",
+    "abstract": "Language models significantly benefit from context tokens, such as prompts or scratchpads. They perform better when prompted with concrete training examples and abstract statements about the target task (instructions), and they acquire new capabilities to perform complex tasks by generating step-by-step reasoning (scratch-pad) before predicting the final answers. However, they do not internalize these performance gains, which disappear when the context tokens are gone. Consequently, we always need to pay extra computation for this gain, and it is unclear how to transfer the capabilities acquired by context tokens to other tasks, or how to leverage the context tokens when their length exceeds the context window size. Our work proposes to apply context distillation so that a language model can internalize these gains. Concretely, given an input for the target task, we let the model use all relevant context tokens to generate the output, using ``[instructions] + [task-input]'' to predict ``[scratch-pad] + [final answer]''; then we fine-tune the same model to predict the above ``[final answer]'' conditioned on the ``[task-input]'', without seeing the ``[instructions]'' or using the ``[scratch-pad]''. This incentivizes the model to behave as if the context were present, hence updating the parameters to internalize the context information. We show that context distillation can be used as a general method for learning. In particular, we demonstrate that context distillation can effectively internalize 3 types of contexts: 1) abstract task instructions and natural language explanations of why an output is correct or incorrect on Natural-Instructions-V2; 2) step-by-step reasoning on 8-digit addition questions, where we show the model can apply this newly acquired capability to downstream question answering tasks; and 3) concrete training examples on the SPIDER Text-to-SQL dataset, where context distillation outperforms directly learning with gradient descent by 7%.",
+    "authors": [
+      "Charlie Victor Snell",
+      "Dan Klein",
+      "Ruiqi Zhong"
+    ],
+    "keywords": [
+      "language models",
+      "NLP",
+      "prompting",
+      "distillation"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      1,
+      5
+    ],
+    "real_confidences": [
+      4,
+      4,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Linear Connectivity Reveals Generalization Strategies": {
+    "paper_pk": null,
+    "title": "Linear Connectivity Reveals Generalization Strategies",
+    "abstract": "In the mode connectivity literature, it is widely accepted that there are common circumstances in which two neural networks, trained similarly on the same data, will maintain loss when interpolated in the weight space. In particular, transfer learning is presumed to ensure the necessary conditions for linear mode connectivity across training runs. In contrast to existing results from image classification, we find that among text classifiers (trained on MNLI, QQP, and CoLA), some pairs of finetuned models have large barriers of increasing loss on the linear paths between them. On each task, we find distinct clusters of models which are linearly connected on the test loss surface, but are disconnected from models outside the cluster---models that occupy separate basins on the surface. By measuring performance on specially-crafted diagnostic datasets, we find that these clusters correspond to different generalization strategies. For example, on MNLI, one cluster behaves like a bag of words model under domain shift, while another cluster uses syntactic heuristics. Our work demonstrates how the geometry of the loss surface can guide models towards different heuristic functions in standard finetuning settings.",
+    "authors": [
+      "Jeevesh Juneja",
+      "Rachit Bansal",
+      "Kyunghyun Cho",
+      "Jo\u00e3o Sedoc",
+      "Naomi Saphra"
+    ],
+    "keywords": [
+      "loss landscapes",
+      "OOD generalization",
+      "NLI",
+      "text classification",
+      "loss surfaces",
+      "transfer learning",
+      "challenge sets",
+      "NLP"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      8
+    ],
+    "real_confidences": [
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "ThinkSum: Probabilistic reasoning over sets using large language models": {
+    "paper_pk": null,
+    "title": "ThinkSum: Probabilistic reasoning over sets using large language models",
+    "abstract": "Large language models (LLMs) have a substantial capacity for high-level analogical reasoning: reproducing patterns in linear text that occur in their training data (zero-shot evaluation) or in the provided context (few-shot in-context learning). However, recent studies show that even the largest LLMs fail in scenarios that require reasoning over multiple objects or facts or making sequences of logical deductions. We propose a two-stage probabilistic inference paradigm, ThinkSum, that reasons over sets of objects or facts in a structured manner. In the first stage (Think -- 'fast' retrieval of associations), a LLM is queried in parallel over a set of phrases extracted from the prompt or an auxiliary model call. In the second stage (Sum -- 'slow' probabilistic inference or reasoning), the results of these queries are aggregated to make the final prediction. We demonstrate the advantages of ThinkSum on the BIG-bench suite of evaluation tasks, achieving improvements over the state of the art using GPT-family models on ten difficult tasks, often with far smaller model variants. We compare and contrast ThinkSum with other proposed modifications to direct prompting of LLMs, such as variants of chain-of-thought prompting. We argue that because the probabilistic inference in ThinkSum is performed outside of calls to the LLM, ThinkSum is less sensitive to prompt design, yields more interpretable predictions, and can be flexibly combined with latent variable models to extract structured knowledge from LLMs.",
+    "authors": [
+      "Batu Ozturkler",
+      "Nikolay Malkin",
+      "Zhen Wang",
+      "Nebojsa Jojic"
+    ],
+    "keywords": [
+      "NLP",
+      "language models",
+      "prompting",
+      "zero-shot learning"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      5,
+      6,
+      5
+    ],
+    "real_confidences": [
+      4,
+      5,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "TransFool: An Adversarial Attack against Neural Machine Translation Models": {
+    "paper_pk": null,
+    "title": "TransFool: An Adversarial Attack against Neural Machine Translation Models",
+    "abstract": "Deep neural networks have been shown to be vulnerable to small perturbations of their inputs known as adversarial attacks. In this paper, we consider the particular task of Neural Machine Translation (NMT), where security is often critical. We investigate the vulnerability of NMT models to adversarial attacks and propose a new attack algorithm called TransFool. It builds on a multi-term optimization problem and a gradient projection step to compute adversarial examples that fool NMT models. By integrating the embedding representation of a language model in the proposed attack, we generate fluent adversarial examples in the source language that maintain a high level of semantic similarity with the clean samples and render the attack largely undetectable. Experimental results demonstrate that, for multiple translation tasks and different NMT architectures, our white-box attack can severely degrade the translation quality for more than 60% of the sentences while the semantic similarity between the original sentence and the adversarial example stays very high. Moreover, we show that the proposed attack is transferable to unknown target models and can fool those quite easily. Finally, our method leads to improvement in terms of success rate, semantic similarity, and fluency compared to the existing attack strategies both in white-box and black-box settings. Hence, TransFool permits to better characterize the vulnerability of NMT systems and outlines the necessity to design strong defense mechanisms and more robust NMT systems for real-life applications.",
+    "authors": [
+      "Sahar Sadrizadeh",
+      "Pascal Frossard",
+      "Ljiljana Dolamic"
+    ],
+    "keywords": [
+      "Adversarial attack",
+      "deep neural network",
+      "language model",
+      "natural language processing",
+      "neural machine translation",
+      "robstness."
+    ],
+    "real_all_scores": [
+      3,
+      1,
+      3,
+      6
+    ],
+    "real_confidences": [
+      4,
+      4,
+      5,
+      5
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Computational Language Acquisition with Theory of Mind": {
+    "paper_pk": null,
+    "title": "Computational Language Acquisition with Theory of Mind",
+    "abstract": "Unlike current state-of-the-art language models, young children actively acquire language through interactions with their surrounding environment and caretakers. One mechanism that has been argued to be critical to language learning is the ability to infer the mental states of other agents in social environments, coined Theory of Mind (ToM) by Premack & Woodruff (1978). Drawing inspiration from the modern operationalized versions of ToM implemented in Rabinowitz et al. (2018) and Zhu et al. (2021), we build language-learning agents equipped with ToM, and measure its effects on the learning process. We model ToM by giving the speaker agent an internal listener model that is trained alongside the speaker and used to rerank potential utterances. We experiment with varying task difficulty, hypothesizing that models will acquire more complex language to adapt to stronger environmental pressures. We find that training speakers with a highly weighted ToM listener component leads to performance gains in our image referential game setting. We also find some evidence that increasing task difficulty in the training process results in more fluent and precise utterances in evaluation. This suggests the potential utility of further incorporating ToM, as well as other insights from child language acquisition, into computational models of language acquisition.",
+    "authors": [
+      "Andy Liu",
+      "Hao Zhu",
+      "Emmy Liu",
+      "Yonatan Bisk",
+      "Graham Neubig"
+    ],
+    "keywords": [
+      "language acquisition",
+      "theory of mind",
+      "referential games",
+      "natural language processing"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      3
+    ],
+    "real_confidences": [
+      3,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Do Not Blindly Imitate the Teacher: Loss Perturbation for Knowledge Distillation": {
+    "paper_pk": null,
+    "title": "Do Not Blindly Imitate the Teacher: Loss Perturbation for Knowledge Distillation",
+    "abstract": "Knowledge distillation (KD) is a popular model compression technique to transfer knowledge from large teacher models to a small student model. Typically, the student learns to imitate the teacher by minimizing the KL divergence of its output distribution with the teacher's output distribution. We argue that such a learning objective is sub-optimal because there exists a discrepancy between the teacher's output distribution and the ground truth label distribution, and forcing the student to blindly imitate the unreliable teacher output distribution leads to inferior performance. To this end, we propose a novel knowledge distillation objective PTLoss by first representing the vanilla KL-based distillation loss function via a Maclaurin series and then perturbing the leading-order terms in this series. This perturbed loss improves the student generalizability by effectively distilling knowledge from a shifted distribution closer to the ground truth data. We also propose a method to compute this shifted teacher distribution, named Proxy Teacher, which enables us to select the perturbation coefficients in PTLoss. We theoretically show the perturbed loss reduces the deviation from the true population risk compared to the vanilla KL-based distillation loss functions. Experiments on three tasks with teachers of different scales show that our method significantly outperforms vanilla distillation loss functions and other perturbation methods.",
+    "authors": [
+      "Rongzhi Zhang",
+      "Jiaming Shen",
+      "Tianqi Liu",
+      "Jialu Liu",
+      "Michael Bendersky",
+      "Marc Najork",
+      "Chao Zhang"
+    ],
+    "keywords": [
+      "distillation",
+      "loss function",
+      "natural language processing"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      8,
+      6,
+      8
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "GROOT: Corrective Reward Optimization for Generative Sequential Labeling": {
+    "paper_pk": null,
+    "title": "GROOT: Corrective Reward Optimization for Generative Sequential Labeling",
+    "abstract": "Sequential labeling is a fundamental NLP task, forming the backbone of many applications.\nSupervised learning of Seq2Seq models (like T5) has shown great success on these problems.\nHowever there remains a significant disconnect between the training objectives of these models vs the metrics and desiderata we care about in practical applications.\nFor example, a practical sequence tagging application may want to optimize for a certain precision-recall trade-off (of the top-k predictions) which is quite different from the standard objective of maximizing the likelihood of the gold labeled sequence.\nThus to bridge this gap, we propose GROOT -- a simple yet effective framework for Generative Reward Optimization Of Text sequences.\nGROOT works by training a generative sequential labeling model to match the decoder output distribution with that of the (black-box) reward function.\nUsing an iterative training regime, we first generate prediction candidates, then correct errors in them, and finally contrast those candidates (based on their reward values).\nAs demonstrated via extensive experiments on four public benchmarks, GROOT significantly improves all reward metrics.\nFurthermore, GROOT also leads to improvements of the overall decoder distribution as evidenced by the quality gains of the top-k candidates.",
+    "authors": [
+      "Kazuma Hashimoto",
+      "Karthik Raman"
+    ],
+    "keywords": [
+      "sequential labeling",
+      "reward optimization",
+      "natural language processing"
+    ],
+    "real_all_scores": [
+      3,
+      6,
+      5,
+      8
+    ],
+    "real_confidences": [
+      4,
+      5,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Multiple sequence alignment as a sequence-to-sequence learning problem": {
+    "paper_pk": null,
+    "title": "Multiple sequence alignment as a sequence-to-sequence learning problem",
+    "abstract": "The sequence alignment problem is one of the most fundamental problems in bioinformatics and a plethora of methods were devised to tackle it. Here we introduce BetaAlign, a methodology for aligning sequences using an NLP approach. BetaAlign accounts for the possible variability of the evolutionary process among different datasets by using an ensemble of transformers, each trained on millions of samples generated from a different evolutionary model. Our approach leads to alignment accuracy that is similar and often better than commonly used methods, such as MAFFT, DIALIGN, ClustalW, T-Coffee, PRANK, and MUSCLE.",
+    "authors": [
+      "Edo Dotan",
+      "Yonatan Belinkov",
+      "Oren Avram",
+      "Elya Wygoda",
+      "Noa Ecker",
+      "Michael Alburquerque",
+      "Omri Keren",
+      "Gil Loewenthal",
+      "Tal Pupko"
+    ],
+    "keywords": [
+      "sequence alignment",
+      "molecular evolution",
+      "natural language processing",
+      "bioinformatics"
+    ],
+    "real_all_scores": [
+      3,
+      6,
+      6,
+      3
+    ],
+    "real_confidences": [
+      5,
+      4,
+      3,
+      5
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Membership Leakage in Pre-trained Language Models": {
+    "paper_pk": null,
+    "title": "Membership Leakage in Pre-trained Language Models",
+    "abstract": "Pre-trained language models are becoming a dominating component in NLP domain and have achieved state-of-the-art in various downstream tasks. Recent research has shown that language models are vulnerable to privacy leakage of their training data, such as text extraction and membership leakage. However, existing works against NLP applications mainly focus on the privacy leakage of text generation and downstream classification, and the privacy leakage of pre-trained language models is largely unexplored. In this paper, we take the first step toward systematically auditing the privacy risks of pre-trained language models through the lens of membership leakage. In particular, we focus on membership leakage of pre-training data in the exposure of downstream models adapted from pre-trained language models. We conduct extensive experiments on a variety of pre-trained model architectures and different types of downstream tasks. Our empirical evaluations demonstrate that membership leakage of pre-trained language models exists even when only the downstream model output is exposed, thereby posing a more severe risk than previously thought. We further conduct sophisticated ablation studies to analyze the relationship between membership leakage of pre-trained models and the characteristic of downstream tasks, which can guide developers or researchers to be vigilant about the vulnerability of pre-trained language models. Lastly, we explore possible defenses against membership leakage of PLMs and propose two promising defenses based on empirical evaluations.",
+    "authors": [
+      "Yuan Xin",
+      "Zheng Li",
+      "Ning Yu",
+      "Michael Backes",
+      "Yang Zhang"
+    ],
+    "keywords": [
+      "membership leakage",
+      "pre-trained language models",
+      "natural language processing"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      6,
+      5
+    ],
+    "real_confidences": [
+      4,
+      3,
+      3,
+      1
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Learning the Visualness of Text Using Large Vision-Language Models": {
+    "paper_pk": null,
+    "title": "Learning the Visualness of Text Using Large Vision-Language Models",
+    "abstract": "Visual text evokes an image in a person's mind, while non-visual text fails to do so. A method to automatically detect visual text will unlock the ability to augment text with relevant images, as neural text-to-image generation and retrieval models operate on the implicit assumption that the input text is visual in nature. We curate a dataset of 3,620 English sentences and their visualness scores provided by multiple human annotators. Additionally, we use documents that contain text and visual assets to create a distantly supervised corpus of document text and associated images. We also propose a fine-tuning strategy that adapts large vision-language models like CLIP that assume a one-to-one correspondence between text and image to the task of scoring text visualness from text input alone. Our strategy involves modifying the model's contrastive learning objective to map text identified as non-visual to a common NULL image while matching visual text to their corresponding images in the document. We evaluate the proposed approach on its ability to (i) classify visual and non-visual text accurately, and (ii) attend over words that are identified as visual in psycholinguistic studies. Empirical evaluation indicates that our approach performs better than several heuristics and baseline models for the proposed task. Furthermore, to highlight the importance of modeling the visualness of text, we conduct qualitative analyses of text-to-image generation systems like DALL-E. We release the curated dataset and code.",
+    "authors": [
+      "Gaurav Verma",
+      "Ryan A. Rossi",
+      "Christopher Tensmeyer",
+      "Jiuxiang Gu",
+      "Ani Nenkova"
+    ],
+    "keywords": [
+      "text visualness",
+      "vision-language models",
+      "multimodal learning",
+      "natural language processing",
+      "deep learning"
+    ],
+    "real_all_scores": [
+      1,
+      3,
+      5,
+      3
+    ],
+    "real_confidences": [
+      5,
+      5,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Large language models are not zero-shot communicators": {
+    "paper_pk": null,
+    "title": "Large language models are not zero-shot communicators",
+    "abstract": "The recent success of large language models (LLMs) has drawn heavy attention and investment in their use as conversational and embodied systems. Despite widespread use of LLMs as conversational agents, evaluations of performance fail to capture a crucial aspect of communication: interpreting language in context. Humans interpret language using beliefs, prior knowledge about the world, and more. For example, we intuitively understand the response \"I wore gloves\" to the question \"Did you leave fingerprints?\" as meaning \"No\". To investigate whether LLMs have the ability to make this type of inference, known as an implicature, we design a simple task and evaluate a set of models. We find that despite only evaluating on utterances that require a binary inference (yes or no), most perform close to random. Models adapted to be \"aligned with human intent\" via reinforcement learning perform much better, but still leave a significant gap with human performance. This gap is even more pronounced for context-heavy utterances. We present our findings as the starting gun for further research into evaluating how LLMs interpret language in context, in order to drive the development of more pragmatic and useful models of human discourse.",
+    "authors": [
+      "Laura Eline Ruis",
+      "Akbir Khan",
+      "Stella Biderman",
+      "Sara Hooker",
+      "Tim Rockt\u00e4schel",
+      "Edward Grefenstette"
+    ],
+    "keywords": [
+      "large language models",
+      "pragmatics",
+      "natural language processing",
+      "communication",
+      "conversation",
+      "implicature"
+    ],
+    "real_all_scores": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "real_confidences": [
+      4,
+      5,
+      4,
+      5
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Multi-Vector Retrieval as Sparse Alignment": {
+    "paper_pk": null,
+    "title": "Multi-Vector Retrieval as Sparse Alignment",
+    "abstract": "Multi-vector retrieval models improve over single-vector dual encoders on many information retrieval tasks. In this paper, we cast the multi-vector retrieval problem as sparse alignment between query and document tokens. We propose ALIGNER, a novel multi-vector retrieval model that learns sparsified pairwise alignments between query and document tokens (e.g. `dog' vs. `puppy') and per-token unary saliences reflecting their relative importance for retrieval. We show that controlling the sparsity of pairwise token alignments often brings significant performance gains. While most factoid questions focusing on a specific part of a document require a smaller number of alignments, others requiring a broader understanding of a document favor a larger number of alignments. Unary saliences, on the other hand, decide whether a token ever needs to be aligned with others for retrieval (e.g. `kind' from `what kind of currency is used in new zealand'). With sparsified unary saliences, we are able to prune a large number of query and document token vectors and improve the efficiency of multi-vector retrieval. We learn the sparse unary saliences with entropy-regularized linear programming, which outperforms other methods to achieve sparsity. In a zero-shot setting, ALIGNER scores 51.1 nDCG@10, achieving a new retriever-only state-of-the-art on 13 tasks in the BEIR benchmark. In addition, adapting pairwise alignments with a few examples (<= 8) further improves the performance up to 15.7 points nDCG@10 for argument retrieval tasks. The unary saliences of ALIGNER helps us to keep only 20% of the document token representations with minimal performance loss. We further show that our model often produces interpretable alignments and significantly improves its performance when initialized from larger language models.",
+    "authors": [
+      "Yujie Qian",
+      "Jinhyuk Lee",
+      "Karthik Duddu",
+      "Zhuyun Dai",
+      "Tao Lei",
+      "Siddhartha Brahma",
+      "Iftekhar Naim",
+      "Vincent Y Zhao"
+    ],
+    "keywords": [
+      "natural language processing",
+      "document retrieval",
+      "information retrieval"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      5,
+      3
+    ],
+    "real_confidences": [
+      4,
+      3,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Knowledge Unlearning for Mitigating Privacy Risks in Language Models": {
+    "paper_pk": null,
+    "title": "Knowledge Unlearning for Mitigating Privacy Risks in Language Models",
+    "abstract": "Pretrained Language Models (LMs) memorize a vast amount of knowledge during initial pretraining, including information that may violate the privacy of personal lives and identities. Previous work addressing privacy issues for language models has mostly focused on data preprocessing and differential privacy methods, both requiring re-training the underlying LM. We propose knowledge unlearning as an alternative method to reduce privacy risks for LMs post hoc. We show that simply applying the unlikelihood training objective to target token sequences is effective at forgetting them with little to no degradation of general language modeling performances; it sometimes even substantially improves the underlying LM with just a few iterations. We also find that sequential unlearning is better than trying to unlearn all the data at once and that unlearning is highly dependent on which kind of data (domain) is forgotten. By showing comparisons with a previous data preprocessing method known to mitigate privacy risks for LMs, we show that unlearning can give a stronger empirical privacy guarantee in scenarios where the data vulnerable to extraction attacks are known a priori while being orders of magnitude more computationally efficient. We release the code and dataset needed to replicate our results at http://www.omitted.link/.",
+    "authors": [
+      "Joel Jang",
+      "Dongkeun Yoon",
+      "Sohee Yang",
+      "Sungmin Cha",
+      "Moontae Lee",
+      "Lajanugen Logeswaran",
+      "Minjoon Seo"
+    ],
+    "keywords": [
+      "privacy",
+      "large language models",
+      "knowledge unlearning",
+      "natural language processing"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      3,
+      3,
+      5
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Large Language Models Can Self-improve": {
+    "paper_pk": null,
+    "title": "Large Language Models Can Self-improve",
+    "abstract": "Large Language Models (LLMs) have achieved excellent performances in various tasks. However, fine-tuning an LLM requires extensive supervision. Human, on the other hand, may improve their reasoning abilities by self-thinking without external inputs. In this work, we demonstrate that an LLM is also capable of self-improving with only unlabeled datasets. We use a pre-trained LLM to generate \u201chigh-confidence\u201d rationale-augmented answers for unlabeled questions using Chain-of-Thought prompting and self-consistency, and fine-tune the LLM using those self-generated solutions as target outputs. We show that our approach improves the general reasoning ability of a 540B-parameter LLM (74.4%\u219282.1% on GSM8K, 78.2%\u219283.0% on DROP, 90.0%\u219294.4% on OpenBookQA, and 63.4%\u219267.9% on ANLI-A3) and achieves state-of-the-art-level performance, without any ground truth label. We conduct ablation studies and show that finetuning on reasoning is critical for self-improvement.",
+    "authors": [
+      "Jiaxin Huang",
+      "Shixiang Shane Gu",
+      "Le Hou",
+      "Yuexin Wu",
+      "Xuezhi Wang",
+      "Hongkun Yu",
+      "Jiawei Han"
+    ],
+    "keywords": [
+      "natural language processing",
+      "unsupervised learning",
+      "chain of thought"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "real_confidences": [
+      5,
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Offline RL for Natural Language Generation with Implicit Language Q Learning": {
+    "paper_pk": null,
+    "title": "Offline RL for Natural Language Generation with Implicit Language Q Learning",
+    "abstract": "Large language models distill broad knowledge from text corpora. However, they can be inconsistent when it comes to completing user specified tasks. This issue can be addressed by finetuning such models via supervised learning on curated datasets, or via reinforcement learning. In this work, we propose a novel offline RL method, implicit language Q-learning (ILQL), designed for use on language models, that combines both the flexible utility maximization framework of RL algorithms with the ability of supervised learning to leverage previously collected data, as well as its simplicity and stability. Our method employs a combination of value conservatism alongside an implicit dataset support constraint in learning value functions, which are then used to guide language model generations towards maximizing user-specified utility functions. In addition to empirically validating ILQL, we present a detailed empirical analysis of situations where offline RL can be useful in natural language generation settings, demonstrating how it can be a more effective utility optimizer than prior approaches for end-to-end dialogue, and how it can effectively optimize high variance reward functions based on subjective judgement, such as whether to label a comment as toxic or not.",
+    "authors": [
+      "Charlie Victor Snell",
+      "Ilya Kostrikov",
+      "Yi Su",
+      "Sherry Yang",
+      "Sergey Levine"
+    ],
+    "keywords": [
+      "offline reinforcement learning",
+      "natural language processing",
+      "dialogue",
+      "controlled generation"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      6,
+      5,
+      6
+    ],
+    "real_confidences": [
+      3,
+      5,
+      3,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Language Models Can Teach Themselves to Program Better": {
+    "paper_pk": null,
+    "title": "Language Models Can Teach Themselves to Program Better",
+    "abstract": "Recent Language Models (LMs) achieve breakthrough performance in code generation when trained on human-authored problems, even solving some competitive-programming problems. Self-play has proven useful in games such as Go, and thus it is natural to ask whether LMs can generate their own instructive programming problems to improve their performance. We show that it is possible for an LM to synthesize programming problems and solutions, which are filtered for correctness by a Python interpreter. The LM\u2019s performance is then seen to improve when it is fine-tuned on its own synthetic problems and verified solutions; thus the model \u201cimproves itself\u201d using the Python interpreter. Problems are specified formally as programming puzzles [Schuster et al. , 2021], a code-based problem format where solutions can easily be verified for correctness by execution. In experiments on publicly-available LMs, test accuracy more than doubles. This work demonstrates the potential for code LMs, with an interpreter, to generate instructive problems and improve their own performance.",
+    "authors": [
+      "Patrick Haluptzok",
+      "Matthew Bowers",
+      "Adam Tauman Kalai"
+    ],
+    "keywords": [
+      "deep learning",
+      "natural language processing",
+      "program synthesis",
+      "large language models"
+    ],
+    "real_all_scores": [
+      6,
+      8,
+      8
+    ],
+    "real_confidences": [
+      4,
+      2,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Interpretable Debiasing of Vectorized Language Representations with Iterative Orthogonalization": {
+    "paper_pk": null,
+    "title": "Interpretable Debiasing of Vectorized Language Representations with Iterative Orthogonalization",
+    "abstract": "We propose a new mechanism to augment a word vector embedding representation that offers improved bias removal while retaining the key information\u2014resulting in improved interpretability of the representation. Rather than removing the information associated with a concept that may induce bias, our proposed method identifies two concept subspaces and makes them orthogonal. The resulting representation has these two concepts uncorrelated. Moreover, because they are orthogonal, one can simply apply a rotation on the basis of the representation so that the resulting subspace corresponds with coordinates. This explicit encoding of concepts to coordinates works because they have been made fully orthogonal, which previous approaches do not achieve. Furthermore, we show that this can be extended to multiple subspaces. As a result, one can choose a subset of concepts to be represented transparently and explicitly, while the others are retained in the mixed but extremely expressive format of the representation.",
+    "authors": [
+      "Prince Osei Aboagye",
+      "Yan Zheng",
+      "Jack Shunn",
+      "Chin-Chia Michael Yeh",
+      "Junpeng Wang",
+      "Zhongfang Zhuang",
+      "Huiyuan Chen",
+      "Liang Wang",
+      "Wei Zhang",
+      "Jeff Phillips"
+    ],
+    "keywords": [
+      "bias",
+      "fairness",
+      "ethics",
+      "debiasing",
+      "static embeddings",
+      "pre-trained contextualized embeddings",
+      "natural language processing"
+    ],
+    "real_all_scores": [
+      6,
+      8,
+      5
+    ],
+    "real_confidences": [
+      4,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Performance Disparities Between Accents in Automatic Speech Recognition": {
+    "paper_pk": null,
+    "title": "Performance Disparities Between Accents in Automatic Speech Recognition",
+    "abstract": "Automatic speech recognition (ASR) services are ubiquitous, transforming speech into text for systems like Amazon\u2019s Alexa, Google\u2019s Assistant, and Microsoft\u2019s Cortana. Past research has identified discriminatory ASR performance as a function of racial group and nationality. In this paper, we expand the discussion about nationality and English language ASR by performing an audit of some of the most popular English ASR services using a large and global data set of speech from The Speech Accent Archive. We show that performance disparities exist as a function of whether or not a speaker\u2019s first language is English and, even when controlling for multiple linguistic covariates, that these disparities have a statistically significant relationship to the political alignment of the speaker\u2019s birth country with respect to the United States\u2019 geopolitical power. We discuss this bias in the context of the historical use of language to maintain global and political power.",
+    "authors": [
+      "Alex DiChristofano",
+      "Henry Shuster",
+      "Shefali Chandra",
+      "Neal Patwari"
+    ],
+    "keywords": [
+      "bias",
+      "automatic speech recognition",
+      "natural language processing",
+      "artificial intelligence",
+      "machine learning",
+      "accent",
+      "dialect",
+      "english",
+      "language",
+      "speech",
+      "fairness",
+      "audit"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      8,
+      8
+    ],
+    "real_confidences": [
+      3,
+      3,
+      5,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-5%"
+  },
+  "Compositional Semantic Parsing with Large Language Models": {
+    "paper_pk": null,
+    "title": "Compositional Semantic Parsing with Large Language Models",
+    "abstract": "Humans can reason compositionally when presented with new tasks.  Previous research shows that appropriate prompting techniques enable large language models (LLMs) to solve artificial compositional generalization tasks such as SCAN. In this work, we identify additional challenges in more realistic semantic parsing tasks with larger vocabulary and refine these prompting techniques to address them. Our best method is based on least-to-most prompting: it decomposes the problem using prompting-based syntactic parsing, then uses this decomposition to select appropriate exemplars and to sequentially generate the semantic parse. This method allows us to set a new state of the art for CFQ while requiring only 1% of the training data used by traditional approaches. Due to the general nature of our approach, we expect similar efforts will lead to new results in other tasks and domains, especially for knowledge-intensive applications.",
+    "authors": [
+      "Andrew Drozdov",
+      "Nathanael Sch\u00e4rli",
+      "Ekin Aky\u00fcrek",
+      "Nathan Scales",
+      "Xinying Song",
+      "Xinyun Chen",
+      "Olivier Bousquet",
+      "Denny Zhou"
+    ],
+    "keywords": [
+      "large language models",
+      "prompting",
+      "compositional generalization",
+      "natural language processing"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      4,
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Self-Consistency Improves Chain of Thought Reasoning in Language Models": {
+    "paper_pk": null,
+    "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+    "abstract": "Chain-of-thought prompting combined with pretrained large language models has achieved encouraging results on complex reasoning tasks. In this paper, we propose a new decoding strategy, self-consistency, to replace the naive greedy decoding used in chain-of-thought prompting. It first samples a diverse set of reasoning paths instead of only taking the greedy one, and then selects the most consistent answer by marginalizing out all possible reasoning paths. Self-consistency leverages the intuition that a complex reasoning problem typically admits multiple different ways of thinking leading to its unique correct answer.  Our extensive empirical evaluation shows that self-consistency boosts the performance of chain-of-thought prompting with a striking margin on a range of popular arithmetic and commonsense reasoning benchmarks, including GSM8K (+17.9%), SVAMP (+11.0%), AQuA (+12.2%), StrategyQA (+6.4%) and ARC-challenge (+3.9%).",
+    "authors": [
+      "Xuezhi Wang",
+      "Jason Wei",
+      "Dale Schuurmans",
+      "Quoc V Le",
+      "Ed H. Chi",
+      "Sharan Narang",
+      "Aakanksha Chowdhery",
+      "Denny Zhou"
+    ],
+    "keywords": [
+      "Language models",
+      "natural language processing",
+      "reasoning"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      5,
+      6
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Model ensemble instead of prompt fusion: a sample-specific knowledge transfer method for few-shot prompt tuning": {
+    "paper_pk": null,
+    "title": "Model ensemble instead of prompt fusion: a sample-specific knowledge transfer method for few-shot prompt tuning",
+    "abstract": "Prompt tuning approaches, which learn task-specific soft prompts for a downstream task conditioning on frozen pre-trained models, have attracted growing interest due to its parameter efficiency. With large language models and sufficient training data, prompt tuning performs comparably to full-model tuning. However, with limited training samples in few-shot settings, prompt tuning fails to match the performance of full-model fine-tuning. In this work, we focus on improving the few-shot performance of prompt tuning by transferring knowledge from soft prompts of source tasks with abundant training samples. Recognizing the good generalization capabilities of ensemble methods in low-data regime, we first experiment and show that a simple ensemble of model predictions based on different source prompts, outperforms existing multi-prompt knowledge transfer approaches such as source prompt fusion in the few-shot setting. Motivated by this observation, we further investigate model ensembles and  propose Sample-specific Ensemble of Source Models (SESoM). SESoM learns to adjust the contribution of each source model for each target sample separately when ensembling source model outputs. Through this way, SESoM inherits the superior generalization of ensemble methods and simultaneously captures the sample-specific competence of each source prompt.  We conduct experiments across a diverse set of eight NLP tasks using models of different scales (T5-\\{base, large, XL\\}) and find that SESoM consistently outperforms the existing models of the same as well as larger parametric scale by a large margin.",
+    "authors": [
+      "XIANGYU PENG",
+      "Chen Xing",
+      "Prafulla Kumar Choubey",
+      "Chien-Sheng Wu",
+      "Caiming Xiong"
+    ],
+    "keywords": [
+      "prompt tuning",
+      "natural language processing",
+      "few-shot learning"
+    ],
+    "real_all_scores": [
+      10,
+      8,
+      8
+    ],
+    "real_confidences": [
+      3,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "AANG : Automating Auxiliary Learning": {
+    "paper_pk": null,
+    "title": "AANG : Automating Auxiliary Learning",
+    "abstract": "Auxiliary objectives, supplementary learning signals that are introduced to help aid learning on data-starved or highly complex end-tasks, are commonplace in machine learning. Whilst much work has been done to formulate useful auxiliary objectives, their construction is still an art which proceeds by slow and tedious hand-design. Intuition for how and when these objectives improve end-task performance has also had limited theoretical backing. In this work, we present an approach for automatically generating a suite of auxiliary objectives. We achieve this by deconstructing existing objectives within a novel unified taxonomy, identifying connections between them, and generating new ones based on the uncovered structure. Next, we theoretically formalize widely-held intuitions about how auxiliary learning improves generalization on the end-task. This leads us to a principled and efficient algorithm for searching the space of generated objectives to find those most useful to a specified end-task.\nWith natural language processing (NLP) as our domain of study, we demonstrate that our automated auxiliary learning pipeline leads to strong improvements over competitive baselines across continued training experiments on a pre-trained model on 5 NLP end-tasks.",
+    "authors": [
+      "Lucio M. Dery",
+      "Paul Michel",
+      "Mikhail Khodak",
+      "Graham Neubig",
+      "Ameet Talwalkar"
+    ],
+    "keywords": [
+      "auxiliary learning",
+      "automl",
+      "natural language processing",
+      "meta-learning",
+      "algorithmic stability",
+      "multitask learning"
+    ],
+    "real_all_scores": [
+      1,
+      8,
+      6,
+      5
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Least-to-Most Prompting Enables Complex Reasoning in Large Language Models": {
+    "paper_pk": null,
+    "title": "Least-to-Most Prompting Enables Complex Reasoning in Large Language Models",
+    "abstract": "Chain-of-thought prompting has demonstrated remarkable performance on various natural language reasoning tasks. However, it tends to perform poorly on tasks which requires solving problems harder than the exemplars shown in the prompts. To overcome this challenge of easy-to-hard generalization, we propose a novel prompting strategy, least-to-most prompting. The key idea in this strategy is to break down a complex problem into a series of simpler subproblems and then solve them in sequence. Solving each subproblem is facilitated by the answers to previously solved subproblems. Our experimental results on tasks related to symbolic manipulation, compositional generalization, and math reasoning reveal that least-to-most prompting is capable of generalizing to more difficult problems than those seen in the prompts. A notable finding is that when the GPT-3 code-davinci-002 model is used with least-to-most prompting, it can solve the compositional generalization benchmark SCAN in any split (including length split)  with an accuracy of at least 99\\% using just 14 exemplars, compared to only 16\\% accuracy with chain-of-thought prompting.  This is particularly noteworthy because neural-symbolic models in the literature that specialize in solving SCAN are trained on the entire training set containing over 15,000 examples. We have included prompts for all the tasks in the Appendix.",
+    "authors": [
+      "Denny Zhou",
+      "Nathanael Sch\u00e4rli",
+      "Le Hou",
+      "Jason Wei",
+      "Nathan Scales",
+      "Xuezhi Wang",
+      "Dale Schuurmans",
+      "Claire Cui",
+      "Olivier Bousquet",
+      "Quoc V Le",
+      "Ed H. Chi"
+    ],
+    "keywords": [
+      "large language models",
+      "natural language processing",
+      "prompting",
+      "reasoning",
+      "compositional generalization"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      3,
+      3
+    ],
+    "real_confidences": [
+      5,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Formal Specifications from Natural Language": {
+    "paper_pk": null,
+    "title": "Formal Specifications from Natural Language",
+    "abstract": "We study the generalization abilities of language models when translating natural language into formal specifications with complex semantics. In particular, we fine-tune language models on three datasets consisting of English sentences and their corresponding formal representation: 1) regular expressions (regex), frequently used in programming and search; 2) First-order logic (FOL), commonly used in software verification and theorem proving; and 3) linear-time temporal logic (LTL), which forms the basis for industrial hardware specification languages. Our experiments show that, in these diverse domains, the language models maintain their generalization capabilities from pre-trained knowledge of natural language to generalize, e.g., to new variable names or operator descriptions. Additionally, they achieve competitive performance, and even outperform the state-of-the-art for translating into regular expressions, with the benefits of being easy to access, efficient to fine-tune, and without a particular need for domain-specific reasoning.",
+    "authors": [
+      "Christopher Hahn",
+      "Frederik Schmitt",
+      "Julia Janice Tillman",
+      "Niklas Metzger",
+      "Julian Siber",
+      "Bernd Finkbeiner"
+    ],
+    "keywords": [
+      "language models",
+      "natural language",
+      "formal specifications",
+      "first-order logic",
+      "temporal logic",
+      "regular expressions"
+    ],
+    "real_all_scores": [
+      1,
+      5,
+      6,
+      3
+    ],
+    "real_confidences": [
+      5,
+      2,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "UL2: Unifying Language Learning Paradigms": {
+    "paper_pk": null,
+    "title": "UL2: Unifying Language Learning Paradigms",
+    "abstract": "Existing pre-trained models are generally geared towards a particular class of problems. To date, there seems to be still no consensus on what the right architecture and pre-training setup should be. This paper presents a unified framework for pre-training models that are universally effective across datasets and setups. We begin by disentangling architectural archetypes with pre-training objectives -- two concepts that are commonly conflated. Next, we present a generalized and unified perspective for self-supervision in NLP and show how different pre-training objectives can be cast as one another and how interpolating between different objectives can be effective. We then propose Mixture-of-Denoisers (MoD), a pre-training objective that combines diverse pre-training paradigms together. We furthermore introduce a notion of mode switching, wherein downstream fine-tuning is associated with specific pre-training schemes. We conduct extensive ablative experiments to compare multiple pre-training objectives and find that our method pushes the Pareto-frontier by outperforming T5 and/or GPT-like models across multiple diverse setups. Finally, by scaling our model up to 20B parameters, we achieve SOTA performance on 50 well-established supervised NLP tasks ranging from language generation (with automated and human evaluation), language understanding, text classification, question answering, commonsense reasoning, long text reasoning, structured knowledge grounding and information retrieval. Our model also achieve strong results at in-context learning, outperforming 175B GPT-3 on zero-shot SuperGLUE and tripling the performance of T5-XXL on one-shot summarization. Finally, we show that UL2 20B works well with chain-of-thought prompting and reasoning, making it an appealing choice for research into reasoning at a small to medium scale of 20B parameters. We release Flax-based T5X model checkpoints for the 20B model publicly.\n",
+    "authors": [
+      "Yi Tay",
+      "Mostafa Dehghani",
+      "Vinh Q. Tran",
+      "Xavier Garcia",
+      "Jason Wei",
+      "Xuezhi Wang",
+      "Hyung Won Chung",
+      "Dara Bahri",
+      "Tal Schuster",
+      "Steven Zheng",
+      "Denny Zhou",
+      "Neil Houlsby",
+      "Donald Metzler"
+    ],
+    "keywords": [
+      "language models",
+      "pretraining",
+      "transformers"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      6,
+      10
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: notable-top-25%"
+  },
+  "UniMax: Fairer and More Effective Language Sampling for Large-Scale Multilingual Pretraining": {
+    "paper_pk": null,
+    "title": "UniMax: Fairer and More Effective Language Sampling for Large-Scale Multilingual Pretraining",
+    "abstract": "Pretrained multilingual large language models have typically used heuristic temperature-based sampling to balance between different languages. However previous work has not systematically evaluated the efficacy of different pretraining language distributions across model scales. In this paper, we propose a new sampling method, UniMax, that delivers more uniform coverage of head languages while mitigating overfitting on tail languages by explicitly capping the number of repeats over each language's corpus. We perform an extensive series of ablations testing a range of sampling strategies on a suite of multilingual benchmarks, while varying model scale. We find that UniMax outperforms standard temperature-based sampling, and the benefits persist as scale increases. As part of our contribution, we release: (i) an improved and refreshed mC4 multilingual corpus consisting of 29 trillion characters across 107 languages, and (ii) a suite of pretrained umT5 model checkpoints trained with UniMax sampling.",
+    "authors": [
+      "Hyung Won Chung",
+      "Xavier Garcia",
+      "Adam Roberts",
+      "Yi Tay",
+      "Orhan Firat",
+      "Sharan Narang",
+      "Noah Constant"
+    ],
+    "keywords": [
+      "Keywords: multilingual",
+      "pretraining",
+      "language models",
+      "language sampling",
+      "language distribution",
+      "low-resource languages",
+      "overfitting"
+    ],
+    "real_all_scores": [
+      5,
+      6,
+      5,
+      5
+    ],
+    "real_confidences": [
+      3,
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Plansformer: Generating Multi-Domain Symbolic Plans using Transformers": {
+    "paper_pk": null,
+    "title": "Plansformer: Generating Multi-Domain Symbolic Plans using Transformers",
+    "abstract": "Large Language Models (LLMs) have been the subject of active research, significantly advancing the field of Natural Language Processing (NLP). From BERT to BLOOM, LLMs have surpassed state-of-the-art results in various natural language tasks such as question answering, summarization, and text generation. Many ongoing efforts are focused on understanding LLMs' capabilities, including their knowledge of the world, syntax, and semantics. However, extending the textual prowess of LLMs to symbolic reasoning has been slow and predominantly focused on tackling problems related to the mathematical field. In this paper, we explore the use of LLMs for automated planning - a branch of AI concerned with the realization of action sequences (plans) to achieve a goal, typically for execution by intelligent agents, autonomous robots, and unmanned vehicles. We introduce Plansformer; an LLM fine-tuned on planning problems and capable of generating plans with favorable behavior in terms of correctness and length with minimal knowledge-engineering efforts. We also demonstrate the adaptability of Plansformer in solving different planning domains with varying complexities, owing to the transfer learning abilities of LLMs. For one configuration of Plansformer, we achieve ~97\\% valid plans, out of which ~95\\% are optimal for Towers of Hanoi - a puzzle-solving domain.",
+    "authors": [
+      "Vishal Pallagani",
+      "Bharath Chandra Muppasani",
+      "Keerthiram Murugesan",
+      "Francesca Rossi",
+      "Lior Horesh",
+      "Biplav Srivastava",
+      "Francesco Fabiano",
+      "Andrea Loreggia"
+    ],
+    "keywords": [
+      "automated planning",
+      "language models",
+      "transfer learning"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      3
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "A Kernel-Based View of Language Model Fine-Tuning": {
+    "paper_pk": null,
+    "title": "A Kernel-Based View of Language Model Fine-Tuning",
+    "abstract": "It has become standard to solve NLP tasks by  fine-tuning pre-trained language models (LMs), especially in low-data settings. There is minimal theoretical understanding of empirical success, e.g., why fine-tuning a model with $10^8$ or more parameters on a couple dozen training points does not result in overfitting. We investigate whether the Neural Tangent Kernel (NTK)--which originated as a model to study the gradient descent dynamics of infinitely wide networks with suitable random initialization--describes fine-tuning of pre-trained LMs.  This study was inspired by the decent performance of NTK  for computer vision tasks (Wei et al., 2022). We also extend the NTK formalism to  fine-tuning with Adam.  We present extensive experiments  that suggest that once the task is formulated as a masked language modeling problem through prompting, the NTK lens can often reasonably describe the model updates during fine-tuning with both SGD and Adam.\nThis kernel view also suggests an explanation for success of parameter-efficient subspace-based fine-tuning methods. Finally, we suggest a path toward a formal explanation for our findings via Tensor Programs (Yang, 2020).",
+    "authors": [
+      "Sadhika Malladi",
+      "Alexander Wettig",
+      "Dingli Yu",
+      "Danqi Chen",
+      "Sanjeev Arora"
+    ],
+    "keywords": [
+      "language models",
+      "fine-tuning",
+      "neural tangent kernels",
+      "tensor programs"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      5,
+      8
+    ],
+    "real_confidences": [
+      3,
+      4,
+      3,
+      2
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Learning to reason with relational abstractions": {
+    "paper_pk": null,
+    "title": "Learning to reason with relational abstractions",
+    "abstract": "Large language models have recently shown promising progress in mathematical reasoning when fine-tuned with human-generated sequences walking through a sequence of solution steps. However, the solution sequences are not formally structured and the resulting model-generated sequences may not reflect the kind of systematic reasoning we might expect an expert human to produce.\nIn this paper, we study how to build stronger reasoning capability in language models using the idea of relational abstractions. We introduce new types of sequences that more explicitly provide an abstract characterization of the transitions through intermediate solution steps to the goal state. We found that models that are supplied with such sequences as prompts can solve tasks with a significantly higher accuracy, and models that are trained to produce such sequences solve problems better than those that are trained with previously used human-generated sequences and other baselines. Our work thus takes several steps toward elucidating and improving how language models perform on tasks requiring multi-step mathematical reasoning.",
+    "authors": [
+      "Andrew Joo Hun Nam",
+      "Mengye Ren",
+      "Chelsea Finn",
+      "James Lloyd McClelland"
+    ],
+    "keywords": [
+      "mathematical reasoning",
+      "language models",
+      "relational abstraction"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      5
+    ],
+    "real_confidences": [
+      4,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Zero-Shot Retrieval with Search Agents and Hybrid Environments": {
+    "paper_pk": null,
+    "title": "Zero-Shot Retrieval with Search Agents and Hybrid Environments",
+    "abstract": "Learning to search is the task of building artificial agents that learn to autonomously use a search box to find information. So far, it has been shown that current language models can learn symbolic query reformulation policies, in combination with traditional term-based retrieval, but fall short of outperforming neural retrievers. We extend the previous learning to search setup to a hybrid environment, which accepts discrete query refinement operations, after a first-pass retrieval step performed by a dual encoder. Experiments on the BEIR task show that search agents, trained via behavioral cloning, outperform the underlying search system based on a combined dual encoder retriever and cross encoder reranker. Furthermore, we find that simple heuristic Hybrid Retrieval Environments (HRE) can improve baseline performance by several nDCG points. The search agent based on the HRE environment (HaRE) produces state-of-the-art performance on both zero-shot and in-domain evaluations. We carry out an extensive qualitative analysis to shed light on the agents policies.",
+    "authors": [
+      "Michelle Chen Huebscher",
+      "Christian Buck",
+      "Massimiliano Ciaramita",
+      "Sascha Rothe"
+    ],
+    "keywords": [
+      "learning to search",
+      "information retrieval",
+      "document ranking",
+      "relevance feedback",
+      "zero shot",
+      "language models",
+      "behavioral cloning"
+    ],
+    "real_all_scores": [
+      6,
+      8,
+      8
+    ],
+    "real_confidences": [
+      4,
+      5,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Internet-augmented language models through few-shot prompting for open-domain question answering": {
+    "paper_pk": null,
+    "title": "Internet-augmented language models through few-shot prompting for open-domain question answering",
+    "abstract": "In this work, we aim to capitalize on the unique few-shot capabilities of large-scale language models (LSLMs) to overcome some of their challenges with respect to grounding to factual and up-to-date information. Motivated by semi-parametric lan4 guage models (LMs), which ground their decisions in external retrieved evidence, we use few-shot prompting to learn to condition LMs on information returned from the web using Google Search, a broad and constantly updated knowledge source. Our approach does not involve fine-tuning or learning additional parameters, thus making it applicable to any LM, offering therefore a strong baseline. Indeed, we find that LMs conditioned on the web surpass performance of closed-book models of similar, or even larger, model sizes in open-domain question answering. Finally, we find that increasing the inference-time compute of models, achieved via using multiple retrieved evidences to generate multiple answers followed by a reranking stage that uses scores generated by the same LMs, leads to better performance and alleviates lower performance of smaller few-shot LMs. All in all, our findings suggest that it might be beneficial to slow down the race towards the biggest model and instead shift attention towards finding more effective ways to use models, including but not limited to, better prompting or increasing inference-time compute.",
+    "authors": [
+      "Angeliki Lazaridou",
+      "Elena Gribovskaya",
+      "Wojciech Jan Stokowiec",
+      "Nikolai Grigorev"
+    ],
+    "keywords": [
+      "language models",
+      "few-shot prompting",
+      "retrieval-augmented",
+      "question answering"
+    ],
+    "real_all_scores": [
+      3,
+      5,
+      6
+    ],
+    "real_confidences": [
+      4,
+      3,
+      2
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Solving Math Word Problems with Process-based and Outcome-based Feedback": {
+    "paper_pk": null,
+    "title": "Solving Math Word Problems with Process-based and Outcome-based Feedback",
+    "abstract": "Recent work has shown that prompting language models to generate reasoning steps improves performance on many reasoning tasks. When moving beyond prompting, this raises the question of how we should supervise the finetuning of such models: outcome-based approaches which supervise the final result, or process-based approaches which supervise the reasoning process itself? Differences between these approaches might naturally be expected not just in final-answer errors but also in reasoning errors, which can be difficult to detect and are problematic in many real-world domains such as education.  We run the first comprehensive comparison between process- and outcome-based approaches trained on a natural language task, GSM8K. We find that pure outcome-based supervision produces similar final-answer error rates with less label supervision. However, for correct reasoning steps we find it necessary to use process-based supervision or supervision from learned reward models that emulate process-based feedback. In total, we improve the previous best results from 16.8% $\\rightarrow$ 12.7% final-answer error and 14.0% $\\rightarrow$ 3.4% reasoning error among final-answer-correct solutions.",
+    "authors": [
+      "Jonathan Uesato",
+      "Nate Kushman",
+      "Ramana Kumar",
+      "H. Francis Song",
+      "Noah Yamamoto Siegel",
+      "Lisa Wang",
+      "Antonia Creswell",
+      "Geoffrey Irving",
+      "Irina Higgins"
+    ],
+    "keywords": [
+      "language models",
+      "reasoning",
+      "reward models"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      5
+    ],
+    "real_confidences": [
+      2,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Can Wikipedia Help Offline Reinforcement Learning?": {
+    "paper_pk": null,
+    "title": "Can Wikipedia Help Offline Reinforcement Learning?",
+    "abstract": "Fine-tuning reinforcement learning (RL) models has been challenging because of a lack of large scale off-the-shelf datasets as well as high variance in transferability among different environments. Recent work has looked at tackling offline RL from the perspective of sequence modeling with improved results as result of the introduction of the Transformer architecture. However, when the model is trained from scratch, it suffers from slow convergence speeds. In this paper, we look to take advantage of this formulation of reinforcement learning as sequence modeling and investigate the transferability of pre-trained sequence models on other domains (vision, language) when finetuned on offline RL tasks (control, games). To this end, we also propose techniques to improve transfer between these domains. Results show consistent performance gains in terms of both convergence speed and reward on a variety of environments, accelerating training by 3-6x and achieving state-of-the-art performance in a variety of tasks using Wikipedia-pretrained and GPT2 language models. We hope that this work not only brings light to the potentials of leveraging generic sequence modeling techniques and pre-trained models for RL, but also inspires future work on sharing knowledge between generative modeling tasks of completely different domains.",
+    "authors": [
+      "Machel Reid",
+      "Yutaro Yamada",
+      "Shixiang Shane Gu"
+    ],
+    "keywords": [
+      "offline rl",
+      "language models",
+      "transfer learning"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      5,
+      3
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Task Ambiguity in Humans and Language Models": {
+    "paper_pk": null,
+    "title": "Task Ambiguity in Humans and Language Models",
+    "abstract": "Language models have recently achieved strong performance across a wide range of NLP benchmarks. However, real world tasks are often poorly specified, and agents must deduce the intended behavior from a combination of context, instructions, and examples. We investigate how both humans and models behave in the face of such task ambiguity by proposing AmbiBench, a new benchmark of six ambiguously-specified classification tasks. We evaluate humans and models on AmbiBench by seeing how well they identify the intended task using 1) instructions with varying degrees of ambiguity, and 2) different numbers of labeled examples. We find that the combination of model scaling (to 175B parameters) and reinforcement learning from human feedback (RLHF) enables models to approach or exceed the accuracy of human participants across tasks, but that either one of these alone is not sufficient. In addition, we show how to dramatically improve the accuracy of language models trained without RLHF by finetuning on a small number of ambiguous in-context examples, providing a promising direction for teaching models to generalize well in the face of ambiguity.",
+    "authors": [
+      "Alex Tamkin",
+      "Kunal Handa",
+      "Avash Shrestha",
+      "Noah Goodman"
+    ],
+    "keywords": [
+      "task ambiguity",
+      "safety",
+      "language models",
+      "few-shot learning",
+      "in-context learning"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      3,
+      3,
+      3
+    ],
+    "real_confidences": [
+      4,
+      2,
+      4,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "MoCa: Cognitive Scaffolding for Language Models in Causal and Moral Judgment Tasks": {
+    "paper_pk": null,
+    "title": "MoCa: Cognitive Scaffolding for Language Models in Causal and Moral Judgment Tasks",
+    "abstract": "Human commonsense understanding of the physical and social world is organized around intuitive theories. These theories support making causal and moral judgments. When something bad happened, we naturally ask: who did what, and why? A rich literature in cognitive science has studied people's causal and moral intuitions. These works have revealed a number of factors that systematically influence people's judgments, such as the presence of norms, and whether or not the protagonist in a scenario was aware of their action's potential consequences. Here, we investigate whether large language models (LLMs) make causal and moral judgments about text-based scenarios that align with those of human participants. We find that without any annotations, LLMs and human participants are not well aligned (17\\%-39\\% agreement). However, LLMs can accurately annotate what relevant factors are present in a scenario with simple expert-written instructions. We demonstrate how these annotations can be used to bring LLMs in closer alignment with people (36.3\\%-47.2\\% agreement). These results show how insights from cognitive science can help scaffold language models to more closely match human intuitions in challenging commonsense evaluation tasks.",
+    "authors": [
+      "Allen Nie",
+      "Yuhui Zhang",
+      "Atharva Amdekar",
+      "Christopher J Piech",
+      "Tatsunori Hashimoto",
+      "Tobias Gerstenberg"
+    ],
+    "keywords": [
+      "cognitive science",
+      "causal reasoning",
+      "moral reasoning",
+      "dataset",
+      "chain-of-thought",
+      "step-by-step",
+      "language models"
+    ],
+    "real_all_scores": [
+      6,
+      3,
+      3
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "ContraSim -- A Similarity Measure Based on Contrastive Learning": {
+    "paper_pk": null,
+    "title": "ContraSim -- A Similarity Measure Based on Contrastive Learning",
+    "abstract": "Recent work has compared neural network representations via similarity-based analyses, shedding light on how different aspects (architecture, training data, etc.) affect models' internal representations. The quality of a similarity measure is typically evaluated by its success in assigning a high score to representations that are expected to be matched.  However, existing similarity measures  perform mediocrely on standard benchmarks. In this work, we develop a new similarity measure, dubbed ContraSim, based on contrastive learning. In contrast to common closed-form similarity measures, ContraSim learns a parameterized measure by using both similar and dissimilar examples. We perform an extensive experimental evaluation of our method, with both language and vision models, on the standard layer prediction benchmark and two new benchmarks that we develop: the multilingual benchmark and the image--caption benchmark. In all cases, ContraSim achieves much higher accuracy than previous similarity measures, even when presented with challenging examples. ",
+    "authors": [
+      "Adir Rahamim",
+      "Yonatan Belinkov"
+    ],
+    "keywords": [
+      "Interpretability",
+      "similarity measure",
+      "analysis",
+      "language models",
+      "multilingual",
+      "image captioning"
+    ],
+    "real_all_scores": [
+      8,
+      5,
+      3
+    ],
+    "real_confidences": [
+      3,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Mass-Editing Memory in a Transformer": {
+    "paper_pk": null,
+    "title": "Mass-Editing Memory in a Transformer",
+    "abstract": "Recent work has shown exciting promise in updating large language models with new memories, so as to replace obsolete information or add specialized knowledge. However, this line of work is predominantly limited to updating single associations. We develop MEMIT, a method for directly updating a language model with many memories, demonstrating experimentally that it can scale up to thousands of associations for GPT-J (6B) and GPT-NeoX (20B), exceeding prior work by an order of magnitude. Our code and data will be open-sourced upon publication.",
+    "authors": [
+      "Kevin Meng",
+      "Arnab Sen Sharma",
+      "Alex J Andonian",
+      "Yonatan Belinkov",
+      "David Bau"
+    ],
+    "keywords": [
+      "language models",
+      "GPT",
+      "transformers",
+      "model editing",
+      "factual associations",
+      "memory"
+    ],
+    "real_all_scores": [
+      6,
+      3,
+      3,
+      5
+    ],
+    "real_confidences": [
+      3,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Recursion of Thought: Divide and Conquer Reasoning with Language Models": {
+    "paper_pk": null,
+    "title": "Recursion of Thought: Divide and Conquer Reasoning with Language Models",
+    "abstract": "With the recent advances in language models, attempts are being made to apply them to solving multi-step reasoning problems. A major breakthrough in this line of research is to let language models generate intermediate steps, often called Chain of Thought (CoT), before producing a final answer. However, language models have an upper bound on the context size, i.e., the number of input tokens, such as 2048 for the recent GPT-3 and PaLM. Although several thousand tokens are enough to handle various tasks, solving more complex reasoning tasks can require orders of magnitude more tokens. Therefore, the context limit imposes a fundamental limit on the model's reasoning capability. Inspired by human's incredible reasoning ability based on abstraction and recursion, we propose Recursion of Thought (RoT) as a model-agnostic framework with the novel paradigm of teaching a language model to divide and conquer complex problems by recursively creating multiple contexts. Since RoT casts the context-related operations as tokens, a language model can trigger the recursion operations by simply producing the corresponding tokens. On multiple arithmetic and algorithmic reasoning tasks, we demonstrate that RoT dramatically improves the recent large-scale language model GPT-3 to solve extremely complex problems. Moreover, RoT can make tiny, randomly initialized Transformers or LSTMs to solve problems that even humans find daunting.",
+    "authors": [
+      "Soochan Lee",
+      "Gunhee Kim"
+    ],
+    "keywords": [
+      "reasoning",
+      "language models",
+      "chain of thought"
+    ],
+    "real_all_scores": [
+      8,
+      8,
+      6
+    ],
+    "real_confidences": [
+      3,
+      2,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Selective Annotation Makes Language Models Better Few-Shot Learners": {
+    "paper_pk": null,
+    "title": "Selective Annotation Makes Language Models Better Few-Shot Learners",
+    "abstract": "Many recent approaches to natural language tasks are built on the remarkable abilities of large language models. Large language models can perform in-context learning, where they learn a new task from a few task demonstrations, without any parameter updates. This work examines the implications of in-context learning for the creation of datasets for new natural language tasks. Departing from recent in-context learning methods, we formulate an annotation-efficient, two-step framework: selective annotation that chooses a pool of examples to annotate from unlabeled data in advance, followed by prompt retrieval that retrieves task examples from the annotated pool at test time. Based on this framework, we propose an unsupervised, graph-based selective annotation method, voke-k, to select diverse, representative examples to annotate. Extensive experiments on 10 datasets (covering classification, commonsense reasoning, dialogue, and text/code generation) demonstrate that our selective annotation method improves the task performance by a large margin. On average, vote-k achieves a 12.9%/11.4% relative gain under an annotation budget of 18/100, as compared to randomly selecting examples to annotate. Compared to state-of-the-art supervised finetuning approaches, it yields similar performance with 10-100x less annotation cost across 10 tasks. We further analyze the effectiveness of our framework in various scenarios: language models with varying sizes, alternative selective annotation methods, and cases where there is a test data domain shift. We hope that our studies will serve as a basis for data annotations as large language models are increasingly applied to new tasks.",
+    "authors": [
+      "Hongjin SU",
+      "Jungo Kasai",
+      "Chen Henry Wu",
+      "Weijia Shi",
+      "Tianlu Wang",
+      "Jiayi Xin",
+      "Rui Zhang",
+      "Mari Ostendorf",
+      "Luke Zettlemoyer",
+      "Noah A. Smith",
+      "Tao Yu"
+    ],
+    "keywords": [
+      "few-shot learning",
+      "language models",
+      "in-context learning",
+      "active learning"
+    ],
+    "real_all_scores": [
+      1,
+      1,
+      5
+    ],
+    "real_confidences": [
+      4,
+      5,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Multi-lingual Evaluation of Code Generation Models": {
+    "paper_pk": null,
+    "title": "Multi-lingual Evaluation of Code Generation Models",
+    "abstract": "We present two new benchmarks, MBXP and Multilingual HumanEval, designed to evaluate code completion models in over 10 programming languages. These datasets are generated using a conversion framework that transpiles prompts and test cases from the original MBPP and HumanEval datasets into the corresponding data in the target language. By using these benchmarks, we are able to assess the performance of code generation models in a multi-lingual fashion, and discovered generalization ability of language models on out-of-domain languages, advantages of multi-lingual models over mono-lingual, the ability of  few-shot prompting to teach the model new languages, and zero-shot translation abilities. In addition, we use our code generation model to perform large-scale bootstrapping to obtain synthetic canonical solutions in several languages, which can be used for other code-related evaluations such as code insertion, robustness, or summarization tasks.",
+    "authors": [
+      "Ben Athiwaratkun",
+      "Sanjay Krishna Gouda",
+      "Zijian Wang",
+      "Xiaopeng Li",
+      "Yuchen Tian",
+      "Ming Tan",
+      "Wasi Uddin Ahmad",
+      "Shiqi Wang",
+      "Qing Sun",
+      "Mingyue Shang",
+      "Sujan Kumar Gonugondla",
+      "Hantian Ding",
+      "Varun Kumar",
+      "Nathan Fulton",
+      "Arash Farahani",
+      "Siddhartha Jain",
+      "Robert Giaquinto",
+      "Haifeng Qian",
+      "Murali Krishna Ramanathan",
+      "Ramesh Nallapati",
+      "Baishakhi Ray",
+      "Parminder Bhatia",
+      "Sudipta Sengupta",
+      "Dan Roth",
+      "Bing Xiang"
+    ],
+    "keywords": [
+      "code generation",
+      "execution-based evaluation",
+      "test-based evaluation",
+      "language models",
+      "multi-lingual code generation benchmark",
+      "code insertion",
+      "code summarization",
+      "robustness for code",
+      "code translation",
+      "zero-shot code translation",
+      "multi-lingual",
+      "mono-lingual",
+      "language models."
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      8
+    ],
+    "real_confidences": [
+      2,
+      2,
+      2
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Self-conditioned Embedding Diffusion for Text Generation": {
+    "paper_pk": null,
+    "title": "Self-conditioned Embedding Diffusion for Text Generation",
+    "abstract": "Can continuous diffusion models bring the same performance breakthrough on natural language they did for image generation? To circumvent the discrete nature of text data, we can simply project tokens in a continuous space of embeddings, as is standard in language modeling. We propose Self-conditioned Embedding Diffusion (SED), a continuous diffusion mechanism that operates on token embeddings and allows to learn flexible and scalable diffusion models for both conditional and unconditional text generation. Through qualitative and quantitative evaluation, we show that our text diffusion models generate samples comparable with those produced by standard autoregressive language models \u2014 while being in theory more efficient on accelerator hardware at inference time.  Our work paves the way for scaling up diffusion models for text, similarly to autoregressive models, and for improving performance with recent refinements to continuous diffusion.",
+    "authors": [
+      "Robin Strudel",
+      "Corentin Tallec",
+      "Florent Altch\u00e9",
+      "Yilun Du",
+      "Yaroslav Ganin",
+      "Arthur Mensch",
+      "Will Sussman Grathwohl",
+      "Nikolay Savinov",
+      "Sander Dieleman",
+      "Laurent Sifre",
+      "R\u00e9mi Leblond"
+    ],
+    "keywords": [
+      "language models",
+      "diffusion models",
+      "generative models"
+    ],
+    "real_all_scores": [
+      3,
+      1,
+      8
+    ],
+    "real_confidences": [
+      4,
+      5,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Ask Me Anything: A simple strategy for prompting language models": {
+    "paper_pk": null,
+    "title": "Ask Me Anything: A simple strategy for prompting language models",
+    "abstract": "Large language models (LLMs) transfer well to new tasks out-of-the-box simply given a natural language prompt that demonstrates how to perform the task and no additional training. Prompting is a brittle process wherein small modifications to the prompt can cause large variations in the model predictions, and therefore significant effort is dedicated towards designing a painstakingly crafted \"perfect prompt\" for a task. To mitigate the high degree of effort, we instead ask whether collecting multiple decent, yet imperfect, prompts and aggregating them can lead to a high quality prompting strategy. Our observations motivate our proposed method, Ask Me Anything (AMA). We first develop an understanding of the effective prompt formats, finding question-answering (QA) prompts, which encourage open-ended generation (\"Who went to the park?\") tend to outperform those that restrict the model outputs (\"John went to the park. True or False?\"). AMA recursively uses the LLM to transform task inputs to the effective QA format. AM generates multiple questions per input and applies these prompts to collect several noisy \"votes\" for the input's true label. We find the prompts have varying accuracies and dependencies and thus propose to use weak supervision, a procedure for combining the noisy predictions, to produce the final predictions. We evaluate AMA across open-source model families (EleutherAI, BLOOM, OPT, and T0) and sizes (125M-175B parameters), demonstrating an average performance lift of 10.2\\% over the few-shot baseline. This simple strategy enables the open-source GPT-J-6B model to match and exceed the performance of few-shot GPT3-175B  on 15 of 20 popular benchmarks. Averaged across these tasks, the GPT-J-6B model outperforms few-shot GPT3-175B. We release our code here: https://github.com/HazyResearch/ama_prompting.",
+    "authors": [
+      "Simran Arora",
+      "Avanika Narayan",
+      "Mayee F Chen",
+      "Laurel Orr",
+      "Neel Guha",
+      "Kush Bhatia",
+      "Ines Chami",
+      "Christopher Re"
+    ],
+    "keywords": [
+      "large language models",
+      "prompt-engineering",
+      "in-context learning"
+    ],
+    "real_all_scores": [
+      6,
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      5,
+      2,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "UNDERSTANDING HTML WITH LARGE LANGUAGE MODELS": {
+    "paper_pk": null,
+    "title": "UNDERSTANDING HTML WITH LARGE LANGUAGE MODELS",
+    "abstract": "Large language models (LLM) have shown exceptional performance on a variety of natural language tasks. Yet, their capabilities for HTML understanding \u2013 i.e., parsing the raw HTML of a webpage, with applications to automation of web-based tasks, crawling, and browser-assisted retrieval \u2013 have not been fully explored. We contribute HTML understanding models (fine-tuned LLMs) and an in-depth analysis of their capabilities under three tasks: (i) Semantic Classification of HTML elements, (ii) Description Generation for HTML inputs, and (iii) Autonomous Web Navigation of HTML pages. While previous work has developed dedicated architectures and training procedures for HTML understanding, we show that LLMs pretrained on standard natural language corpora transfer remarkably well to HTML understanding tasks. For instance, fine-tuned LLMs are 12% more accurate at semantic classification compared to models trained exclusively on the task dataset. Moreover, when fine-tuned on data from the MiniWoB benchmark, LLMs successfully complete 50% more tasks using 192x less data compared to the previous best supervised model. To promote further research on LLMs for HTML understanding, we create and open-source a large-scale HTML dataset distilled and auto-labeled from CommonCrawl. We show evidence that T5-based models due to the bidirectional encoder-decoder architecture are the best choice and that for practitioners larger models are not necessarily better.",
+    "authors": [
+      "Izzeddin Gur",
+      "Ofir Nachum",
+      "Yingjie Miao",
+      "Mustafa Safdari",
+      "Austin V Huang",
+      "Sharan Narang",
+      "Aakanksha Chowdhery",
+      "Noah Fiedel",
+      "Aleksandra Faust"
+    ],
+    "keywords": [
+      "html understanding",
+      "web navigation",
+      "large language models",
+      "semantic classification",
+      "description generation"
+    ],
+    "real_all_scores": [
+      5,
+      6,
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      3,
+      3,
+      2,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Large Language Models are Human-Level Prompt Engineers": {
+    "paper_pk": null,
+    "title": "Large Language Models are Human-Level Prompt Engineers",
+    "abstract": "By conditioning on natural language instructions, large language models (LLMs) have displayed impressive capabilities as general-purpose computers. However, task performance depends significantly on the quality of the prompt used to steer the model, and most effective prompts have been handcrafted by humans. Inspired by classical program synthesis and the human approach to prompt engineering, we propose Automatic Prompt Engineer (APE) for automatic instruction generation and selection. In our method, we treat the instruction as the \"program,\" optimized by searching over a pool of instruction candidates proposed by an LLM in order to maximize a chosen score function. To evaluate the quality of the selected instruction, we evaluate the zero-shot performance of another LLM following the selected instruction. Experiments on 24 NLP tasks show that our automatically generated instructions outperform the prior LLM baseline by a large margin and achieve better or comparable performance to the instructions generated by human annotators on 21/24 tasks. We conduct extensive qualitative and quantitative analyses to explore the performance of APE. We show that APE-engineered prompts can be applied to steer models toward truthfulness and/or informativeness, as well as to improve few-shot learning performance by simply prepending them to standard in-context learning prompts.",
+    "authors": [
+      "Yongchao Zhou",
+      "Andrei Ioan Muresanu",
+      "Ziwen Han",
+      "Keiran Paster",
+      "Silviu Pitis",
+      "Harris Chan",
+      "Jimmy Ba"
+    ],
+    "keywords": [
+      "few-shot learning",
+      "automated reasoning",
+      "large language models"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      3,
+      6
+    ],
+    "real_confidences": [
+      2,
+      2,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Selection Collider Bias in Large Language Models": {
+    "paper_pk": null,
+    "title": "Selection Collider Bias in Large Language Models",
+    "abstract": "In this paper we motivate the causal mechanisms behind sample selection induced collider bias (selection collider bias) that can cause Large Language Mod- els (LLMs) to learn unconditional dependence between entities that are unconditionally independent in the real world. We show that selection collider bias can become amplified in underspecified learning tasks, and although difficult to overcome, we describe a method to exploit the resulting spurious correlations for determination of when a model may be uncertain about its prediction. We demonstrate an uncertainty metric that matches human uncertainty in tasks with gender pronoun underspecification on an extended version of the Winogender Schemas evaluation set, and we provide online demos where users can evaluate spurious correlations and apply our uncertainty metric to their own texts and models. Finally, we generalize our approach to address a wider range of prediction tasks.",
+    "authors": [
+      "Emily McMilin"
+    ],
+    "keywords": [
+      "large language models",
+      "causal inference",
+      "selection bias"
+    ],
+    "real_all_scores": [
+      8,
+      3,
+      5,
+      3,
+      6
+    ],
+    "real_confidences": [
+      4,
+      4,
+      2,
+      4,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Automatically Auditing Large Language Models via Discrete Optimization": {
+    "paper_pk": null,
+    "title": "Automatically Auditing Large Language Models via Discrete Optimization",
+    "abstract": "Auditing large language models for unexpected behaviors is critical to preempt catastrophic deployments, yet remains challenging. In this work, we cast auditing as a discrete optimization problem, where we automatically search for input-output pairs that match a desired target behavior. For example, we might aim to find non-toxic input that starts with ``Barack Obama'' and maps to a toxic output. Our optimization problem is difficult to solve as the set of feasible points is sparse, the space is discrete, and the language models we audit are non-linear and high-dimensional. To combat these challenges, we introduce a discrete optimization algorithm, ARCA, that is tailored to autoregressive language models. We demonstrate how our approach can: uncover derogatory completions about celebrities (e.g. ``Barack Obama is a legalized unborn'' $\\rightarrow$ ``child murderer'), produce French inputs that complete to English outputs, and find inputs that generate a specific name. Our work offers a promising new tool to uncover models' failure-modes before deployment. $\\textbf{Trigger Warning: This paper contains model behavior that can be offensive in nature.}$",
+    "authors": [
+      "Erik Jones",
+      "Anca Dragan",
+      "Aditi Raghunathan",
+      "Jacob Steinhardt"
+    ],
+    "keywords": [
+      "large language models",
+      "safety",
+      "auditing",
+      "robustness"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      5,
+      6
+    ],
+    "real_confidences": [
+      3,
+      3,
+      4,
+      2
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Bidirectional Language Models Are Also Few-shot Learners": {
+    "paper_pk": null,
+    "title": "Bidirectional Language Models Are Also Few-shot Learners",
+    "abstract": "Large language models such as GPT-3 (Brown et al., 2020) can perform arbitrary tasks without undergoing fine-tuning after being prompted with only a few labeled examples. An arbitrary task can be reformulated as a natural language prompt, and a language model can be asked to generate the completion, indirectly performing the task in a paradigm known as prompt-based learning. To date, emergent prompt-based learning capabilities have mainly been demonstrated for unidirectional language models. However, bidirectional language models pre-trained on denoising objectives such as masked language modeling produce stronger learned representations for transfer learning. This motivates the possibility of prompting bidirectional models, but their pre-training objectives have made them largely incompatible with the existing prompting paradigm. We present SAP (Sequential Autoregressive Prompting), a technique that enables the prompting of bidirectional models. Utilizing the machine translation task as a case study, we prompt the bidirectional mT5 model (Xue et al., 2021) with SAP and demonstrate its few-shot and zero-shot translations outperform the few-shot translations of unidirectional models like GPT-3 and XGLM (Lin et al., 2021), despite mT5's approximately 50% fewer parameters. We further show SAP is effective on question answering and summarization. For the first time, our results demonstrate prompt-based learning is an emergent property of a broader class of language models, rather than only unidirectional models.",
+    "authors": [
+      "Ajay Patel",
+      "Bryan Li",
+      "Mohammad Sadegh Rasooli",
+      "Noah Constant",
+      "Colin Raffel",
+      "Chris Callison-Burch"
+    ],
+    "keywords": [
+      "prompting",
+      "prompt-based learning",
+      "mt5",
+      "t5",
+      "machine translation",
+      "llm",
+      "large language models"
+    ],
+    "real_all_scores": [
+      3,
+      1,
+      1,
+      3
+    ],
+    "real_confidences": [
+      4,
+      5,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Distributed Inference and Fine-tuning of Large Language Models Over The Internet": {
+    "paper_pk": null,
+    "title": "Distributed Inference and Fine-tuning of Large Language Models Over The Internet",
+    "abstract": "Large language models (LLMs) are useful in many NLP tasks and become more capable with size, scaling to over 100 billion parameters. With the release of BLOOM-176B and OPT-175B, everyone can download pretrained models of this scale. Still, using a pre-trained 100B+ model requires high-end hardware, making it inaccessible to most researchers. Recent studies in memory-efficient training (e.g. offloading) could alleviate these costs, but they do not cover important use cases of LLMs, such as autoregressive inference. In this work, we investigate methods for cost-efficient inference of large language models, comparing local and distributed strategies. We observe that a large enough model (100B+) could run efficiently on geodistributed devices in a consumer-grade network, for example by connecting existing compute resources of multiple research groups or pooling under-utilized compute from multiple cloud regions. To run LLMs in this unconventional setting, we develop a fault-tolerant algorithm for inferencing language models. We propose Petals - a decentralized system for running LLMs - and show that it can run BLOOM-176B over the Internet over $10\\times$ faster than offloading for sequential generation. We evaluate the performance of our system in both simulated conditions and an actual distributed system spanning two continents. The design of Petals allows participants to inference, and fine-tune, or inference fine-tuned models simultaneously without affecting each other's results.",
+    "authors": [
+      "Alexander Borzunov",
+      "Dmitry Baranchuk",
+      "Tim Dettmers",
+      "Max Ryabinin",
+      "Younes Belkada",
+      "Artem Chumachenko",
+      "Pavel Samygin",
+      "Colin Raffel"
+    ],
+    "keywords": [
+      "volunteer computing",
+      "distributed deep learning",
+      "distributed inference",
+      "efficient inference",
+      "large language models",
+      "gpt-3"
+    ],
+    "real_all_scores": [
+      5,
+      8,
+      5,
+      3
+    ],
+    "real_confidences": [
+      2,
+      3,
+      2,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Language Models are Realistic Tabular Data Generators": {
+    "paper_pk": null,
+    "title": "Language Models are Realistic Tabular Data Generators",
+    "abstract": "Tabular data is among the oldest and most ubiquitous forms of data. However, the generation of synthetic samples with the original data\u2019s characteristics remains a significant challenge for tabular data. While many generative models from the computer vision domain, such as variational autoencoders or generative adversarial networks, have been adapted for tabular data generation, less research has been directed towards recent transformer-based large language models (LLMs), which are also generative in nature. To this end, we propose GReaT (Generation of Realistic Tabular data), which exploits an auto-regressive generative LLM to sample synthetic and yet highly realistic tabular data. Furthermore, GReaT can model tabular data distributions by conditioning on any subset of features; the remaining features are sampled without additional overhead. We demonstrate the effectiveness of the proposed approach in a series of experiments that quantify the validity and quality of the produced data samples from multiple angles. We find that GReaT maintains state-of-the-art performance across numerous real-world and synthetic data sets with heterogeneous feature types coming in various sizes.",
+    "authors": [
+      "Vadim Borisov",
+      "Kathrin Sessler",
+      "Tobias Leemann",
+      "Martin Pawelczyk",
+      "Gjergji Kasneci"
+    ],
+    "keywords": [
+      "tabular data",
+      "tabular data generation",
+      "large language models",
+      "transformers",
+      "probabilistic modeling",
+      "deep neural networks"
+    ],
+    "real_all_scores": [
+      5,
+      6,
+      6,
+      6
+    ],
+    "real_confidences": [
+      4,
+      3,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "CodeGen: An Open Large Language Model for Code with Multi-Turn Program Synthesis": {
+    "paper_pk": null,
+    "title": "CodeGen: An Open Large Language Model for Code with Multi-Turn Program Synthesis",
+    "abstract": "Program synthesis strives to generate a computer program as a solution to a given problem specification, expressed with input-output examples or natural language descriptions. The prevalence of large language models advances the state-of-the-art for program synthesis, though limited training resources and data impede open access to such models. To democratize this, we train and release a family of large language models up to 16.1B parameters, called CODEGEN, on natural language and programming language data, and open source the training library JAXFORMER. We show the utility of the trained model by demonstrating that it is competitive with the previous state-of-the-art on zero-shot Python code generation on HumanEval. We further investigate the multi-step paradigm for program synthesis, where a single program is factorized into multiple prompts specifying subproblems. To this end, we construct an open benchmark, Multi-Turn Programming Benchmark (MTPB), consisting of 115 diverse problem sets that are factorized into multi-turn prompts. Our analysis on MTPB shows that the same intent provided to CODEGEN in multi-turn fashion significantly improves program synthesis over that provided as a single turn. We make the training library JAXFORMER and model checkpoints available as open source contribution: https://github.com/salesforce/CodeGen.",
+    "authors": [
+      "Erik Nijkamp",
+      "Bo Pang",
+      "Hiroaki Hayashi",
+      "Lifu Tu",
+      "Huan Wang",
+      "Yingbo Zhou",
+      "Silvio Savarese",
+      "Caiming Xiong"
+    ],
+    "keywords": [
+      "Program synthesis",
+      "multi-turn generation",
+      "code generation",
+      "large language models",
+      "generative models"
+    ],
+    "real_all_scores": [
+      6,
+      5,
+      5,
+      6
+    ],
+    "real_confidences": [
+      3,
+      4,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Quantifying Memorization Across Neural Language Models": {
+    "paper_pk": null,
+    "title": "Quantifying Memorization Across Neural Language Models",
+    "abstract": "Large language models (LMs) have been shown to memorize parts of their training data, and when prompted appropriately, they will emit the memorized training data verbatim. This is undesirable because memorization violates privacy (exposing user data), degrades utility (repeated easy-to-memorize text is often low quality), and hurts fairness (some texts are memorized over others).\nWe describe three log-linear relationships that quantify the degree to which LMs emit memorized training data. Memorization significantly grows as we increase (1) the capacity of a model, (2) the number of times an example has been duplicated, and (3) the number of tokens of context used to prompt the model. Surprisingly, we find the situation becomes complicated when generalizing these results across model families. On the whole, we find that memorization in LMs is more prevalent than previously believed and will likely get worse as models continues to scale, at least without active mitigations.",
+    "authors": [
+      "Nicholas Carlini",
+      "Daphne Ippolito",
+      "Matthew Jagielski",
+      "Katherine Lee",
+      "Florian Tramer",
+      "Chiyuan Zhang"
+    ],
+    "keywords": [
+      "memorization",
+      "large language models",
+      "duplication"
+    ],
+    "real_all_scores": [
+      5,
+      5,
+      5,
+      3
+    ],
+    "real_confidences": [
+      4,
+      3,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Discovering Latent Knowledge in Language Models Without Supervision": {
+    "paper_pk": null,
+    "title": "Discovering Latent Knowledge in Language Models Without Supervision",
+    "abstract": "Existing techniques for training language models can be misaligned with the truth: if we train models with imitation learning, they may reproduce errors that humans make; if we train them to generate text that humans rate highly, they may output errors that human evaluators can't detect. We propose circumventing this issue by directly finding latent knowledge inside the internal activations of a language model in a purely unsupervised way. Specifically, we introduce a method for accurately answering yes-no questions given only unlabeled model activations. It works by finding a direction in activation space that satisfies logical consistency properties, such as that a statement and its negation have opposite truth values. We show that despite using no supervision and no model outputs, our method can recover diverse knowledge represented in large language models: across 6 models and 10 question-answering datasets, it outperforms zero-shot accuracy by 4\\% on average. We also find that it cuts prompt sensitivity in half and continues to maintain high accuracy even when models are prompted to generate incorrect answers. Our results provide an initial step toward discovering what language models know, distinct from what they say, even when we don't have access to explicit ground truth labels.",
+    "authors": [
+      "Collin Burns",
+      "Haotian Ye",
+      "Dan Klein",
+      "Jacob Steinhardt"
+    ],
+    "keywords": [
+      "AI safety",
+      "AI alignment",
+      "truthfulness",
+      "large language models",
+      "honesty",
+      "interpretability"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      5
+    ],
+    "real_confidences": [
+      4,
+      4,
+      2
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Prompting GPT-3 To Be Reliable": {
+    "paper_pk": null,
+    "title": "Prompting GPT-3 To Be Reliable",
+    "abstract": "Large language models (LLMs) show impressive abilities via few-shot prompting. Commercialized APIs such as OpenAI GPT-3 further increase their use in real-world language applications. However, the crucial problem of how to improve the reliability of GPT-3 is still under-explored. While reliability is a broad and vaguely defined term, we decompose reliability into four main facets that correspond to the existing framework of ML safety and are well-recognized to be important: generalizability, social biases, calibration, and factuality. Our core contribution is to establish simple and effective prompts that improve GPT-3\u2019s reliability as it: 1) generalizes out-of-distribution, 2) balances demographic distribution and uses natural language instructions to reduce social biases, 3) calibrates output probabilities, and 4) updates the LLM\u2019s factual knowledge and reasoning chains. With appropriate prompts, GPT-3 is more reliable than smaller-scale supervised models on all these facets. We release all processed datasets, evaluation scripts, and model predictions. Our systematic empirical study not only sheds new insights on the reliability of prompting LLMs, but more importantly, our prompting strategies can help practitioners more reliably use LLMs like GPT-3.",
+    "authors": [
+      "Chenglei Si",
+      "Zhe Gan",
+      "Zhengyuan Yang",
+      "Shuohang Wang",
+      "Jianfeng Wang",
+      "Jordan Lee Boyd-Graber",
+      "Lijuan Wang"
+    ],
+    "keywords": [
+      "prompting",
+      "GPT-3",
+      "large language models",
+      "reliability",
+      "robustness",
+      "biases",
+      "calibration",
+      "knowledge updating"
+    ],
+    "real_all_scores": [
+      3,
+      3,
+      5
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": "Reject"
+  },
+  "Visual Classification via Description from Large Language Models": {
+    "paper_pk": null,
+    "title": "Visual Classification via Description from Large Language Models",
+    "abstract": "Vision-language models such as CLIP have shown promising performance on a variety of recognition tasks using the standard zero-shot classification procedure -- computing similarity between the query image and the embedded words for each category. By only using the category name, they neglect to make use of the rich context of additional information that language affords. The procedure gives no intermediate understanding of why a category is chosen, and furthermore provides no mechanism for adjusting the criteria used towards this decision. We present an alternative framework for classification with VLMs, which we call classification by description. We ask VLMs to check for descriptive features rather than broad categories: to find a tiger, look for its stripes; its claws; and more. By basing decisions on these descriptors, we can provide additional cues that encourage using the features we want to be used. In the process, we can get a clear idea of what the model ``thinks\" it is seeing to make its decision; it gains some level of inherent explainability. We query large language models (e.g., GPT-3) for these descriptors to obtain them in a scalable way. Extensive experiments show our framework has numerous advantages past interpretability. We show improvements in accuracy on ImageNet across distribution shifts; demonstrate the ability to adapt VLMs to recognize concepts unseen during training; and illustrate how descriptors can be edited to effectively mitigate bias compared to the baseline. ",
+    "authors": [
+      "Sachit Menon",
+      "Carl Vondrick"
+    ],
+    "keywords": [
+      "vision-language models",
+      "CLIP",
+      "prompting",
+      "GPT-3",
+      "large language models",
+      "zero-shot recognition",
+      "multimodal"
+    ],
+    "real_all_scores": [
+      5,
+      3,
+      5,
+      6
+    ],
+    "real_confidences": [
+      4,
+      5,
+      3,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  },
+  "Learning Math Reasoning from Self-Sampled Correct and Partially-Correct Solutions": {
+    "paper_pk": null,
+    "title": "Learning Math Reasoning from Self-Sampled Correct and Partially-Correct Solutions",
+    "abstract": "Pretrained language models have shown superior performance on many natural language processing tasks, yet they still struggle at multi-step formal reasoning tasks like grade school math problems. One key challenge of finetuning them to solve such math reasoning problems is that many existing datasets only contain one reference solution for each problem, despite the fact that there are often alternative solutions resembling different reasoning paths to the final answer. This way, the finetuned models are biased towards the limited reference solutions, which limits their generalization to unseen examples. To mitigate this issue, we propose to let the model perform sampling during training and learn from both self-sampled fully-correct solutions, which yield the correct answer upon execution, and partially-correct solutions, whose intermediate state matches an intermediate state of a known correct solution. We show that our use of self-sampled correct and partially-correct solutions can benefit learning and help guide the sampling process, leading to more efficient exploration of the solution space. Additionally, we explore various training objectives to support learning from multiple solutions per example and find they greatly affect the performance. Experiments on two math reasoning datasets show the effectiveness of our method compared to learning from a single reference solution with MLE, where we improve PASS@100 from 35.5% to 44.5% for GSM8K, and 27.6% to 36.2% PASS@80 for MathQA. Such improvements are also consistent across different model sizes.",
+    "authors": [
+      "Ansong Ni",
+      "Jeevana Priya Inala",
+      "Chenglong Wang",
+      "Alex Polozov",
+      "Christopher Meek",
+      "Dragomir Radev",
+      "Jianfeng Gao"
+    ],
+    "keywords": [
+      "mathematical reasoning",
+      "multi-target learning",
+      "self-sampling",
+      "large language models"
+    ],
+    "real_all_scores": [
+      8,
+      6,
+      5,
+      8
+    ],
+    "real_confidences": [
+      3,
+      2,
+      3,
+      3
+    ],
+    "real_contents": [],
+    "real_decision": "Accept: poster"
+  },
+  "Socratic Models: Composing Zero-Shot Multimodal Reasoning with Language": {
+    "paper_pk": null,
+    "title": "Socratic Models: Composing Zero-Shot Multimodal Reasoning with Language",
+    "abstract": "We investigate how multimodal prompt engineering can use language as the intermediate representation to combine complementary knowledge from different pretrained (potentially multimodal) language models for a variety of tasks. This approach is both distinct from and complementary to the dominant paradigm of joint multimodal training. It also recalls a traditional systems-building view as in classical NLP pipelines, but with prompting large pretrained multimodal models. We refer to these as Socratic Models (SMs): a modular class of systems in which multiple pretrained models may be composed zero-shot via multimodal-informed prompting to capture new multimodal capabilities, without additional finetuning. We show that these systems provide competitive state-of-the-art performance for zero-shot image captioning and video-to-text retrieval, and also enable new applications such as (i) answering free-form questions about egocentric video, (ii) engaging in multimodal assistive dialogue with people (e.g., for cooking recipes), and (iii) robot perception and planning. We hope this work provides (a) results for stronger zero-shot baseline performance with analysis also highlighting their limitations, (b) new perspectives for building multimodal systems powered by large pretrained models, and (c) practical application advantages in certain regimes limited by data scarcity, training compute, or model access.",
+    "authors": [
+      "Andy Zeng",
+      "Maria Attarian",
+      "brian ichter",
+      "Krzysztof Marcin Choromanski",
+      "Adrian Wong",
+      "Stefan Welker",
+      "Federico Tombari",
+      "Aveek Purohit",
+      "Michael S Ryoo",
+      "Vikas Sindhwani",
+      "Johnny Lee",
+      "Vincent Vanhoucke",
+      "Pete Florence"
+    ],
+    "keywords": [
+      "prompt engineering",
+      "multimodal applications",
+      "visual language models",
+      "large language models",
+      "commonsense reasoning"
+    ],
+    "real_all_scores": [
+      6,
+      3,
+      5,
+      6,
+      5
+    ],
+    "real_confidences": [
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "real_contents": [],
+    "real_decision": ""
+  }
+}

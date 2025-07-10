@@ -1,7 +1,7 @@
 import argparse
 import json
 import os
-from multiprocessing import Manager, Pool
+from multiprocessing import Lock, Pool, Manager
 from typing import Any, Dict, List, Tuple
 
 from tqdm import tqdm
@@ -48,17 +48,17 @@ def load_papers(input_path: str, output_path: str) -> Any:
 
 
 def save_results(
-    results: Dict[str, Any],
-    metrics: Dict[str, float],
-    output_path: str,
+    results: Dict[str, Any], 
+    metrics: Dict[str, float], 
+    output_path: str, 
     lock: Any,
-    metrics_summary: Dict[str, List[float]],
+    metrics_summary: Dict[str, List[float]]
 ) -> None:
     with lock:
         with open(output_path, 'a') as f:
             json.dump({**results, **metrics}, f)
             f.write('\n')
-
+        
         # Update metrics summary
         for metric, score in metrics.items():
             if metric in metrics_summary:
@@ -66,32 +66,10 @@ def save_results(
 
 
 def process_task(
-    task: Tuple[
-        str,
-        Dict[str, Any],
-        Dict[str, Any],
-        str,
-        str,
-        Config,
-        str,
-        Any,
-        Dict[str, List[float]],
-    ],
+    task: Tuple[str, Dict[str, Any], Dict[str, Any], str, str, Config, str, Any, Dict[str, List[float]]]
 ) -> None:
-    (
-        paper_id,
-        paper_data,
-        author_data,
-        ref_proposal,
-        mode,
-        config,
-        output_path,
-        lock,
-        metrics_summary,
-    ) = task
-    results, metrics = inference(
-        paper_id, paper_data, author_data, ref_proposal, mode, config
-    )
+    paper_id, paper_data, author_data, ref_proposal, mode, config, output_path, lock, metrics_summary = task
+    results, metrics = inference(paper_id, paper_data, author_data, ref_proposal, mode, config)
     save_results(results, metrics, output_path, lock, metrics_summary)
 
 
@@ -138,18 +116,16 @@ def main() -> None:
     # Create a manager for shared objects
     manager = Manager()
     lock = manager.Lock()
-    metrics_summary = manager.dict(
-        {
-            metric: manager.list()
-            for metric in [
-                'bleu',
-                'rouge_l',
-                'gpt_metric_score',
-                'bert_score',
-                'embedding_similarity',
-            ]
-        }
-    )
+    metrics_summary = manager.dict({
+        metric: manager.list()
+        for metric in [
+            'bleu',
+            'rouge_l',
+            'gpt_metric_score',
+            'bert_score',
+            'embedding_similarity',
+        ]
+    })
 
     # Prepare tasks
     tasks = [
@@ -162,7 +138,7 @@ def main() -> None:
             config,
             args.output_path,
             lock,
-            metrics_summary,
+            metrics_summary
         )
         for paper_id, data in dataset.items()
     ]
@@ -170,17 +146,16 @@ def main() -> None:
     # Process tasks in parallel
     with Pool(processes=args.num_processes) as pool:
         # Using tqdm for progress bar
-        list(
-            tqdm(
-                pool.imap_unordered(process_task, tasks),
-                total=len(tasks),
-                desc='Processing papers',
-            )
-        )
+        list(tqdm(
+            pool.imap_unordered(process_task, tasks),
+            total=len(tasks),
+            desc='Processing papers'
+        ))
 
     # Convert managed lists to regular lists for reporting
     local_metrics_summary = {
-        metric: list(scores) for metric, scores in metrics_summary.items()
+        metric: list(scores) 
+        for metric, scores in metrics_summary.items()
     }
 
     # Report average metrics

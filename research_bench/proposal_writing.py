@@ -80,10 +80,16 @@ def write_proposal_zero_shot(config: Config) -> str:
                 'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 'Please provide the five core questions contents for a brand new future research that you think are the most promising one.'
-            ),
+                'You should always follow the above format including [Question xxx] - <Question description>.\n'
+                'e.g. [Question 1] - What is the problem?\n\n (your answer here)\n\n'
+                '[Question 2] - Why is it interesting and important?\n\n (your answer here)\n\n'
+                '[Question 3] - Why is it hard?\n\n (your answer here)\n\n'
+                "[Question 4] - Why hasn't it been solved before?\n\n (your answer here)\n\n"
+                '[Question 5] - What are the key components of my approach and results?\n\n (your answer here)\n\n'
+                ),
         }
     ]
-    response = model_prompting(config.param.base_llm, prompt)[0]
+    response = model_prompting(config.param.base_llm, prompt, max_token_num=config.param.max_token_num)[0]
     return response
 
 
@@ -114,7 +120,13 @@ def write_proposal_with_only_profiles(profiles: List[Profile], config: Config) -
                 'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Author biographies and personas:\n{bio_strs}\n\n'
-                'You are the profiles of this paper. Please provide the five core questions contents for a brand new future research based on the above biographies.'
+                'You are the profiles of this paper. Please provide the five core questions contents for a brand new future research based on the above biographies.\n'
+                'You should always follow the above format including [Question xxx] - <Question description>.\n'
+                'e.g. [Question 1] - What is the problem?\n\n (your answer here)\n\n'
+                '[Question 2] - Why is it interesting and important?\n\n (your answer here)\n\n'
+                '[Question 3] - Why is it hard?\n\n (your answer here)\n\n'
+                "[Question 4] - Why hasn't it been solved before?\n\n (your answer here)\n\n"
+                '[Question 5] - What are the key components of my approach and results?\n\n (your answer here)\n\n'
             ),
         }
     ]
@@ -151,7 +163,13 @@ def write_proposal_with_only_citations(ref_contents: List[str], config: Config) 
                 'Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.\n'
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Contents collect from cited papers:\n{ref_strs}\n\n'
-                'Please provide the five core questions contents based on the above cited contents.'
+                'Please provide the five core questions contents based on the above cited contents.\n'
+                'You should always follow the above format including [Question xxx] - <Question description>.\n'
+                'e.g. [Question 1] - What is the problem?\n\n (your answer here)\n\n'
+                '[Question 2] - Why is it interesting and important?\n\n (your answer here)\n\n'
+                '[Question 3] - Why is it hard?\n\n (your answer here)\n\n'
+                "[Question 4] - Why hasn't it been solved before?\n\n (your answer here)\n\n"
+                '[Question 5] - What are the key components of my approach and results?\n\n (your answer here)\n\n'
             ),
         }
     ]
@@ -192,7 +210,13 @@ def write_proposal_with_profiles_and_citations(
                 'Describe the expected outcomes. MAKE IT CLEAR.\n\n'
                 f'Contents collect from cited papers:\n{ref_strs}\n\n'
                 f'Author biographies and personas:\n{bio_strs}\n\n'
-                'Based on the above biographies and cited paper contents, please provide the five core questions contents for a brand new future research.'
+                'Based on the above biographies and cited paper contents, please provide the five core questions contents for a brand new future research.\n'
+                'You should always follow the above format including [Question xxx] - <Question description>.\n'
+                'e.g. [Question 1] - What is the problem?\n\n (your answer here)\n\n'
+                '[Question 2] - Why is it interesting and important?\n\n (your answer here)\n\n'
+                '[Question 3] - Why is it hard?\n\n (your answer here)\n\n'
+                "[Question 4] - Why hasn't it been solved before?\n\n (your answer here)\n\n"
+                '[Question 5] - What are the key components of my approach and results?\n\n (your answer here)\n\n'
             ),
         }
     ]

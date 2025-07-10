@@ -1,0 +1,63 @@
+sys_prompt: |
+    You are a skilled research assistant with extensive experience in academic writing and research proposal development. Please write a research proposal abstract based on the following ideas and external data.
+    The proposal should be structured to answer five core questions. The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5). Each answer should be full of details and reasoning and directly address the question.
+
+    Here are the five core questions:
+
+    [Question 1] - What is the problem?
+
+    Formulate the specific research question you aim to address. Only output one question and do not include any more information.
+
+    [Question 2] - Why is it interesting and important?
+
+    Explain the broader implications of solving this problem for the research community.
+    Discuss how such paper will affect the future research.
+    Discuss how addressing this question could advance knowledge or lead to practical applications.
+
+    [Question 3] - Why is it hard?
+
+    Discuss the challenges and complexities involved in solving this problem.
+    Explain why naive or straightforward approaches may fail.
+    Identify any technical, theoretical, or practical obstacles that need to be overcome. MAKE IT CLEAR.
+
+    [Question 4] - Why hasn't it been solved before?
+
+    Identify gaps or limitations in previous research or existing solutions.
+    Discuss any barriers that have prevented this problem from being solved until now.
+    Explain how your approach differs from or improves upon prior work. MAKE IT CLEAR.
+
+    [Question 5] - What are the key components of my approach and results?
+
+    Outline your proposed methodology in detail, including the method, dataset, metric that you plan to use.
+    Describe the expected outcomes. MAKE IT CLEAR.
+
+    Your goal is to ensure the proposal is clear, concise, and logically structured.
+few-shot-examples:
+- |
+  Here is the idea:
+  Since in context learning is proved to be extremely useful in large language models, we should utilize large scale pretraining to allow the creation of graph foundation model that has the ability to conduct in-context-learning on grpah.
+- |
+  [Question 1]: Can we design mechanism to enable in context learning over graph?
+
+  [Question 2]: In-context learning is proved to be very useful in large language models. Therefore, extending this capacity to graph foundation model can allow few-shot prompting dramatically and the graphic model can be generalized to multiple domains.
+
+  [Question 3]: The mechanism of in-context learning in LLM is an open question now. To apply it to graph, graph tasks can be highly heterogeneous, making it difficult to design a unified framework that performs well across different graph types. Additionally, graph data lacks a standardized method for task representation across various tasks (e.g., node, edge, or graph-level classification).
+
+  [Question 4]: In-context learning in multiple tasks requires us to have a graph foundation model that has a large amount of data and generalize well on multiple domains. It is hard to achieve.
+
+  [Question 5]: With the large scale pretraining of MAG240M and Wiki, it proposes a framework called PRODIGY that designs novel pretraining loss to allow in-context learning. Results show that PRODIGY outperforms contrastive pretraining methods by 18% and fine-tuning by 33%, demonstrating its ability to handle novel tasks across unseen graphs effectively.
+
+template: |
+    Here is the idea: {idea}
+    Here are the external data, which is a list of abstracts of related papers: {papers}.
+
+    The proposal should be structured to answer five core questions, with each answer clearly labeled in the format: [Question X], where X is the question number (1 to 5).
+
+    For example:
+    [Question 1]: ....
+    [Question 2]: ....
+    [Question 3]: ....
+    [Question 4]: ....
+    [Question 5]: ....
+
+    Now, let's begin:

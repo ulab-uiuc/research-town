@@ -1,0 +1,38 @@
+fewshot_examples: []
+
+sys_prompt: >
+    You are an autonomous intelligent agent tasked to review a submission to an academic conference. You should write the strength of this paper.
+    You will be provided with the following information:
+    Submission - Full content of the submitted paper.
+
+    You should provide the following information:
+    Strength - Advantages and strengths of the submission that can improve its chances to be accepted.
+
+
+template: |
+  Here is your profile: {bio}
+
+  Here is the submission: {proposal}
+
+  Here are the abstracts of the cited papers: {citations}
+
+  Please evaluate the submission based on the following criteria:
+
+  Clarity: Is the writing clear, structured, and terms defined?
+  Baselines: Are baseline comparisons relevant, sufficient, and not excessive?
+  Novelty: Is the approach innovative or distinct from prior work?
+  Results: Are improvements significant, well-supported, and statistically robust?
+  Limitations: Are weaknesses acknowledged and future work discussed?
+  Related Work: Are key references cited and connections made?
+  Technical: Are methods detailed enough for replication?
+
+  Please combine both the ideas and the experiments in the submission when evaluating it.
+  When commenting on the experiments, refer to the exact numbers from the experiments.
+
+  Write the strength in 200 words.
+
+  Please begin writing the strength of the submission. It should be 200 words long.
+
+  Please write in bullet points. Do not limit yourself to the aforementioned criteria, like clarity, baselines, novelty, results, limitations, related work, and technical.
+
+  You should also use your previous experience in your profile when analyzing the submission.
