@@ -6,3 +6,7 @@ research_bench/iclrbench/iclrbench_reviewers_filtered_bullets.json filter=lfs di
 research_bench/iclrbench/iclrbench_reviewers_filtered_bullets_100.json filter=lfs diff=lfs merge=lfs -text
 research_bench/iclrbench/camera-ready/review_bench.json filter=lfs diff=lfs merge=lfs -text
 research_bench/paperbench/camera-ready/paper_bench_full_1000_filtered_1205.json filter=lfs diff=lfs merge=lfs -text
+research_bench/paperbench/camera-ready/paper_bench_hard_500_filtered_1205.json filter=lfs diff=lfs merge=lfs -text
+research_bench/paperbench/camera-ready/paper_bench_mid_500_filtered_1205.json filter=lfs diff=lfs merge=lfs -text
+research_bench/iclrbench/camera-ready/review_bench_haofei.json filter=lfs diff=lfs merge=lfs -text
+research_bench/paperbench/camera-ready/paper_bench_easy_500_filtered_1205.json filter=lfs diff=lfs merge=lfs -text
