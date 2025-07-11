@@ -2,24 +2,18 @@
   <img src="assets/research_town.png" style="width: 100%;"></img>
 </div>
 
-<h1 align="center">ResearchTown: Simulator of Human Research Community</h1>
+<h1 align="center">Research Town: Simulator of Research Community</h1>
 
 <div align="center">
 
 [![Python 3.10](https://img.shields.io/badge/python-%E2%89%A53.10-blue)](https://www.python.org/downloads/release/python-3109/)
-[![Dataset](https://img.shields.io/badge/%F0%9F%A4%97-ResearchBench-yellow)](https://huggingface.co/datasets/ulab-ai/research-bench)
-[![Arxiv](https://img.shields.io/badge/arXiv-ResearchTown-b31b1b)](https://arxiv.org/pdf/2412.17767)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289da?logo=discord&logoColor=white)](https://discord.gg/9t9jtDDk)
+[![GitHub pull request](https://img.shields.io/badge/PRs-welcome-orange)](https://github.com/hiyouga/LLaMA-Factory/pulls)
+[![Arxiv](https://img.shields.io/badge/arXiv-Coming%20soon-b31b1b)](https://github.com/ulab-uiuc/research-town)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289da?logo=discord&logoColor=white)](https://discord.gg/TwXxGhMB)
 [![WeChat](https://img.shields.io/badge/WeChat-Join%20Us-09B83E?logo=wechat&logoColor=white)](assets/wechat.png)
 [![codecov](https://codecov.io/github/ulab-uiuc/research-town/graph/badge.svg?token=00LRQFX0QR)](https://codecov.io/github/ulab-uiuc/research-town)
 
-
-[English](README.md) | [中文](README-CN.md)
 </div>
-
-## News
-* [05/02/2025] ResearchTown is accepted as ICML poster.
-* [12/24/2024] We release our ResearchTown paper on [arXiv](https://arxiv.org/pdf/2412.17767) and ResearchBench data on [HuggingFace](https://huggingface.co/datasets/ulab-ai/research-bench).
 
 ## Introduction
 
@@ -29,16 +23,6 @@
 2. 🎩 *Environments*: Multi-agent environments, similar to virtual study rooms, where research agents collaborate on tasks like idea discussion, rebuttal writing, or paper writing.
 3. ⚙️ *Engines*: Finite-state machines that manage agent involvement in environments and determine the next steps after task completion. For instance, engines guide agents coming out of idea discussion environment to paper writing environment and help select suitable agents to work together.
 
-Please consider cite our paper if you find it useful:
-
-```bibtex
-@article{yu2024researchtown,
-  title={ResearchTown: Simulator of Human Research Community},
-  author={Yu, Haofei and Hong, Zhaochen and Cheng, Zirui and Zhu, Kunlun and Xuan, Keyang and Yao, Jinwei and Feng, Tao and You, Jiaxuan},
-  journal={arXiv preprint arXiv:2412.17767},
-  year={2024}
-}
-```
 
 ## Get started
 
@@ -58,7 +42,6 @@ Use a virtual environment, e.g. with anaconda3:
 conda create -n research-town python=3.10
 conda activate research-town
 curl -sSL https://install.python-poetry.org | python3
-export PATH="$HOME/.local/bin:$PATH"
 ```
 
 ### Configure environment variables
@@ -77,8 +60,6 @@ poetry install
 cd examples
 python research_town_demo.py
 ```
-
-All generated research progress like ideas, proposals will be automatically saved in the database folder you set in the .env file.
 
 ## Developing
 
@@ -105,7 +86,6 @@ Follow the installation instruction above and then, instead of running `python -
 python -m pip install -e ".[dev]"
 mypy --install-types --non-interactive research_town
 python -m pip install pre-commit
-pre-commit clean
 pre-commit install
 ```
 
@@ -124,12 +104,12 @@ Run `poetry run pytest` to make sure all tests pass (this will ensure dynamic ty
 Check the github action result to make sure all tests pass. If not, fix the errors and push again.
 
 
-## ResearchBench
-
-To execute ResearchBench experiments, please execute 'research_bench/run_review_eval.sh' script. You can adjust the parameters in the script, using the actual `INPUT_PATH`.
-
-If you encounter `openreview` not found error, please install the package by running `pip install openreview`. If any issues come up regarding `requests`, please change its version to `2.26`.
-
-```bash
-pip install requests==2.26
-```
+<p align="center">
+<a href="https://star-history.com/#Significant-Gravitas/AutoGPT">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ulab-uiuc/research-town&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ulab-uiuc/research-town&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Significant-Gravitas/AutoGPT&type=Date" />
+  </picture>
+</a>
+</p>

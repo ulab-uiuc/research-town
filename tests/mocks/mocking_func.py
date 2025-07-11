@@ -36,6 +36,14 @@ def mock_prompting(
         return ['Summarized idea1', 'Summarized idea2', 'Summarized idea3']
     elif prompt[0]['content'] == agent_prompt_template.write_proposal['sys_prompt']:
         return ['Paper abstract1', 'Paper abstract2', 'Paper abstract3']
+    # elif (
+    #     prompt[0]['content'] == agent_prompt_template.write_review_summary['sys_prompt']
+    # ):
+    #     return [
+    #         'Summary of the paper1',
+    #         'Summary of the paper2',
+    #         'Summary of the paper3',
+    #     ]
     elif (
         prompt[0]['content']
         == agent_prompt_template.write_review_strength['sys_prompt']
@@ -60,6 +68,11 @@ def mock_prompting(
             'Based on the given information, I would give this submission a score of 6 out of 10.',
             'Based on the given information, I would give this submission a score of 5 out of 10.',
         ]
+    # elif (
+    #     prompt[0]['content']
+    #     == agent_prompt_template.write_metareview_summary['sys_prompt']
+    # ):
+    #     return ['Meta review summary1', 'Meta review summary2', 'Meta review summary3']
     elif (
         prompt[0]['content']
         == agent_prompt_template.write_metareview_strength['sys_prompt']
@@ -78,6 +91,11 @@ def mock_prompting(
             'Meta review weakness2',
             'Meta review weakness3',
         ]
+    # elif (
+    #     prompt[0]['content']
+    #     == agent_prompt_template.write_metareview_decision['sys_prompt']
+    # ):
+    #     return ['accept', 'accept', 'reject']
     elif prompt[0]['content'] == agent_prompt_template.write_rebuttal['sys_prompt']:
         return ['Rebuttal text1', 'Rebuttal text2', 'Rebuttal text3']
     elif prompt[0]['content'] == eval_prompt_template.insight_quality['sys_prompt']:

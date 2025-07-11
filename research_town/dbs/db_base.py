@@ -37,7 +37,9 @@ class BaseDB(Generic[T]):
         self.database_client.add(
             self.data_class.__name__, [data.model_dump(exclude_none=True)], embeddings
         )
-        logger.info(f"Creating instance of '{data.__class__.__name__}'")
+        logger.info(
+            f"Creating instance of '{data.__class__.__name__}'"  # : '{data.model_dump()}'"
+        )
 
     def update(self, pk: str, updates: Dict[str, Any]) -> bool:
         return self.database_client.update(self.data_class.__name__, pk, updates)

@@ -1,3 +1,5 @@
+import os
+
 import litellm
 from beartype import beartype
 from beartype.typing import Dict, List, Optional
@@ -24,11 +26,11 @@ def model_prompting(
         model=llm_model,
         messages=messages,
         max_tokens=max_token_num,
-        # for some models, 'n'(The number of chat completion choices ) is not supported.
         n=return_num,
         top_p=top_p,
         temperature=temperature,
         stream=stream,
     )
-    content_l = [completion.choices[i].message.content for i in range(return_num)]
+    content = completion.choices[0].message.content
+    content_l = [content]
     return content_l

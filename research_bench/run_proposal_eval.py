@@ -1,8 +1,7 @@
 import argparse
 import json
 import os
-from collections import defaultdict
-from multiprocessing import Lock, Pool
+from multiprocessing import Manager, Pool
 from typing import Any, Dict, List, Tuple
 
 from tqdm import tqdm
@@ -24,74 +23,17 @@ def inference(
     config: Config,
 ) -> Tuple[Dict[str, str], Dict[str, float]]:
     profiles = [Profile(**data) for data in author_data.values()]
-    ref_abstracts_full = []
-    for ref in paper_data.get('references', []):
-        if ref['abstract'] is None:
-            continue
-        else:
-            ref_abstracts_full.append(ref['abstract'])
-        """
-        if ref['reference_section'] is None or ref['abstract'] is None:
-            continue
-        reference_sections = [section.lower() for section in ref['reference_section']]
+    ref_abstracts = [ref['abstract'] for ref in paper_data.get('references', [])]
 
-        exclude_signal = False
-        for section in reference_sections:
-            #if 'related work' in section:
-            #    ref_abstracts_full.append(ref['abstract'])
-            #    break
-            #if 'introduction' in section:
-            #    ref_abstracts_full.append(ref['abstract'])
-            #    break
-            #if 'introduction' in section or 'related work' in section:
-            #    ref_abstracts_full.append(ref['abstract'])
-            #    break
+    gen_proposal = write_proposal(mode, profiles, ref_abstracts, config)
 
-            #if 'related work' in section:
-            #    exclude_signal = True
-            #    break
-            #elif 'introduction' in section:
-            #    exclude_signal = True
-            #    break
-
-        #if exclude_signal is False:
-        #    ref_abstracts_full.append(ref['abstract'])
-        """
-    print(len(ref_abstracts_full))
-    paper_title = paper_data['title']
-    if mode == 'fake_research_town':
-        gen_proposal, gen_proposals_each_agent = write_proposal(
-            mode, profiles, ref_abstracts_full, config, paper_title
-        )
-    else:
-        gen_proposal = write_proposal(
-            mode, profiles, ref_abstracts_full, config, paper_title
-        )
-
-    if mode == 'fake_research_town':
-        overall_metrics = defaultdict(list)
-        # assert each agent gen proposal is the same
-        for idx, gen_proposal in enumerate(gen_proposals_each_agent):
-            metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
-            for metric, score in metrics.items():
-                overall_metrics[metric + '_per_agent'].append(score)
-        metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
-        for metric, score in metrics.items():
-            overall_metrics[metric] = score
-        results = {
-            'paper_id': paper_id,
-            'ref_proposal': ref_proposal,
-            'gen_proposal': gen_proposal,
-        }
-        return results, overall_metrics
-    else:
-        metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
-        results = {
-            'paper_id': paper_id,
-            'ref_proposal': ref_proposal,
-            'gen_proposal': gen_proposal,
-        }
-        return results, metrics
+    metrics = compute_proposal_metrics(ref_proposal, gen_proposal)
+    results = {
+        'paper_id': paper_id,
+        'ref_proposal': ref_proposal,
+        'gen_proposal': gen_proposal,
+    }
+    return results, metrics
 
 
 def load_papers(input_path: str, output_path: str) -> Any:
@@ -106,18 +48,51 @@ def load_papers(input_path: str, output_path: str) -> Any:
 
 
 def save_results(
-    results: Dict[str, Any], metrics: Dict[str, float], output_path: str, lock: Any
+    results: Dict[str, Any],
+    metrics: Dict[str, float],
+    output_path: str,
+    lock: Any,
+    metrics_summary: Dict[str, List[float]],
 ) -> None:
     with lock:
         with open(output_path, 'a') as f:
             json.dump({**results, **metrics}, f)
             f.write('\n')
 
+        # Update metrics summary
+        for metric, score in metrics.items():
+            if metric in metrics_summary:
+                metrics_summary[metric].append(score)
+
 
 def process_task(
-    task: Tuple[str, Dict[str, Any], Dict[str, Any], str, str, Config],
-) -> Tuple[Dict[str, Any], Dict[str, float]]:
-    return inference(*task)
+    task: Tuple[
+        str,
+        Dict[str, Any],
+        Dict[str, Any],
+        str,
+        str,
+        Config,
+        str,
+        Any,
+        Dict[str, List[float]],
+    ],
+) -> None:
+    (
+        paper_id,
+        paper_data,
+        author_data,
+        ref_proposal,
+        mode,
+        config,
+        output_path,
+        lock,
+        metrics_summary,
+    ) = task
+    results, metrics = inference(
+        paper_id, paper_data, author_data, ref_proposal, mode, config
+    )
+    save_results(results, metrics, output_path, lock, metrics_summary)
 
 
 def main() -> None:
@@ -137,11 +112,8 @@ def main() -> None:
             'author_only',
             'citation_only',
             'author_citation',
-            'research_town',
+            'textgnn',
             'sakana_ai_scientist',
-            'debug',
-            'fake_research_town',
-            'fake_research_town_twice',
         ],
         help='Processing mode',
     )
@@ -154,7 +126,7 @@ def main() -> None:
     parser.add_argument(
         '--num_processes',
         type=int,
-        default=os.cpu_count(),
+        default=8,
         help='Number of parallel processes to use',
     )
     args = parser.parse_args()
@@ -163,42 +135,56 @@ def main() -> None:
     dataset = load_papers(args.input_path, args.output_path)
     logger.info(f'Processing {len(dataset)} papers')
 
-    metrics_summary: Dict[str, List[float]] = {
-        metric: []
-        for metric in [
-            'bleu',
-            'rouge_l',
-            'gpt_metric_score',
-            'bert_score',
-            'embedding_similarity',
-        ]
+    # Create a manager for shared objects
+    manager = Manager()
+    lock = manager.Lock()
+    metrics_summary = manager.dict(
+        {
+            metric: manager.list()
+            for metric in [
+                'bleu',
+                'rouge_l',
+                'gpt_metric_score',
+                'bert_score',
+                'embedding_similarity',
+            ]
+        }
+    )
+
+    # Prepare tasks
+    tasks = [
+        (
+            paper_id,
+            data['paper_data'],
+            data['author_data'],
+            data['reference_proposal'],
+            args.mode,
+            config,
+            args.output_path,
+            lock,
+            metrics_summary,
+        )
+        for paper_id, data in dataset.items()
+    ]
+
+    # Process tasks in parallel
+    with Pool(processes=args.num_processes) as pool:
+        # Using tqdm for progress bar
+        list(
+            tqdm(
+                pool.imap_unordered(process_task, tasks),
+                total=len(tasks),
+                desc='Processing papers',
+            )
+        )
+
+    # Convert managed lists to regular lists for reporting
+    local_metrics_summary = {
+        metric: list(scores) for metric, scores in metrics_summary.items()
     }
 
-    lock = Lock()
-    with Pool(processes=args.num_processes) as pool:
-        tasks = [
-            (
-                paper_id,
-                data['paper_data'],
-                data['author_data'],
-                data['reference_proposal'],
-                args.mode,
-                config,
-            )
-            for paper_id, data in dataset.items()
-        ]
-        for results, metrics in tqdm(
-            pool.imap_unordered(process_task, tasks),
-            total=len(tasks),
-            desc='Processing papers',
-        ):
-            save_results(results, metrics, args.output_path, lock)
-            with lock:
-                for metric, scores in metrics_summary.items():
-                    scores.append(metrics.get(metric, 0))
-
     # Report average metrics
-    for metric, scores in metrics_summary.items():
+    for metric, scores in local_metrics_summary.items():
         if scores:
             average = sum(scores) / len(scores)
             logger.info(f"Average {metric.replace('_', ' ').upper()}: {average:.4f}")

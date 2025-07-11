@@ -90,6 +90,7 @@ def test_write_review(mock_model_prompting: MagicMock) -> None:
         config=example_config,
     )
     assert isinstance(review, Review)
+    assert review.summary == 'Summary of the paper1'
     assert review.strength == 'Strength of the paper1'
     assert review.weakness == 'Weakness of the paper1'
     assert review.score == 8
@@ -121,6 +122,7 @@ def test_write_metareview(mock_model_prompting: MagicMock) -> None:
         config=example_config,
     )
     assert isinstance(metareview, MetaReview)
+    assert metareview.summary == 'Meta review summary1'
     assert metareview.strength == 'Meta review strength1'
     assert metareview.weakness == 'Meta review weakness1'
     assert metareview.decision is True

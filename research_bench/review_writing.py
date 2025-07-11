@@ -23,7 +23,6 @@ def write_review_research_town(
     profiles_reviewers: List[Profile],
     ref_contents: List[str],
     config: Config,
-    top_k_reviewers: int = 5,
 ) -> Tuple[str, str, List[int], Dict[str, Dict[str, Any]]]:
     log_db = LogDB(config=config.database)
     progress_db = ProgressDB(config=config.database)
@@ -40,24 +39,26 @@ def write_review_research_town(
         agent_manager=agent_manager,
     )
 
-    # chair_profile = profile_db.get(name=profiles[0].name)[0]
-    chair_profile = profiles_reviewers[0]
+    # leader_profile = profile_db.get(name=profiles[0].name)[0]
+    leader_profile = profiles_reviewers[0]
 
-    # print('chair_profile', chair_profile)
-    chair = agent_manager.create_agent(chair_profile, role='chair')
-    if not chair_profile:
-        raise ValueError('Failed to create chair agent')
+    # print('leader_profile', leader_profile)
+    leader = agent_manager.create_agent(leader_profile, role='leader')
+    if not leader_profile:
+        raise ValueError('Failed to create leader agent')
+
+    top_k = 5
 
     reviewers = [
         agent_manager.create_agent(profile, role='reviewer')
-        for profile in profiles_reviewers[0:top_k_reviewers]
+        for profile in profiles_reviewers[0:top_k]
     ]
 
     ref_contents = [ref if ref else '' for ref in ref_contents]
 
     env.on_enter(
-        leader=None,
-        chair=chair,
+        leader=leader,
+        chair=None,
         reviewers=reviewers,
         proposals=[Proposal(content=paper_content, citations=ref_contents)],
     )
@@ -240,21 +241,16 @@ def write_review_zero_shot(
 
 
 def write_review_with_only_profiles(
-    paper_content: str,
-    profiles_reviewers: List[Profile],
-    config: Config,
-    top_k_reviewers: int = 5,
+    paper_content: str, profiles_reviewers: List[Profile], config: Config
 ) -> Tuple[str, str, List[int], Dict[str, Dict[str, Any]]]:
     # bio_strs = '\n'.join([profile.bio for profile in profiles_reviewers])
     strengths: List[str] = []
     weaknesses: List[str] = []
     scores: List[int] = []
 
-    import pdb
+    top_k = 5
 
-    pdb.set_trace()
-
-    profiles_reviewers = profiles_reviewers[:top_k_reviewers]
+    profiles_reviewers = profiles_reviewers[:top_k]
 
     for profile in profiles_reviewers:
         bio_str = profile.bio
@@ -686,7 +682,6 @@ def write_review(
     full_content: Dict[str, Any],
     ref_contents: List[str],
     config: Config,
-    top_k_reviewers: int = 5,
 ) -> Tuple[str, str, List[int], Dict[str, Dict[str, Any]]]:
     paper_content = ''
     for idx, section in enumerate(full_content):
@@ -696,21 +691,15 @@ def write_review(
 
     if mode == 'reviewer_only':
         return write_review_with_only_profiles(
-            paper_content, profiles_reviewers, config, top_k_reviewers
+            paper_content, profiles_reviewers, config
         )
     elif mode == 'citation_only':
-        print(
-            f'You are in citation only mode. Top K reviewers parameter valued {top_k_reviewers} will be ignored.'
-        )
         return write_review_with_only_citations(paper_content, ref_contents, config)
     elif mode == 'zero_shot':
-        print(
-            f'You are in zero shot mode. Top K reviewers parameter valued {top_k_reviewers} will be ignored.'
-        )
         return write_review_zero_shot(paper_content, config)
     elif mode == 'research_town':
         return write_review_research_town(
-            paper_content, profiles_reviewers, ref_contents, config, top_k_reviewers
+            paper_content, profiles_reviewers, ref_contents, config
         )
     else:
         raise ValueError(f'Invalid review writing mode: {mode}')

@@ -60,7 +60,7 @@ def test_map_review_list_to_str() -> None:
             'weakness': 'Weakness 3',
         },
     ]
-    expected_result = 'Score: 5\nStrength: Strength 1\nWeakness: Weakness 1\n\nScore: 3\nStrength: Strength 2\nWeakness: Weakness 2\n\nScore: 4\nStrength: Strength 3\nWeakness: Weakness 3\n\n'
+    expected_result = 'Score: 5\nSummary: Review 1\nStrength: Strength 1\nWeakness: Weakness 1Score: 3\nSummary: Review 2\nStrength: Strength 2\nWeakness: Weakness 2Score: 4\nSummary: Review 3\nStrength: Strength 3\nWeakness: Weakness 3'
     assert map_review_list_to_str(reviews) == expected_result
 
 
@@ -83,7 +83,9 @@ def test_map_review_to_str() -> None:
         'strength': 'Strength',
         'weakness': 'Weakness',
     }
-    expected_result = 'Score: 4\nStrength: Strength\nWeakness: Weakness\n\n'
+    expected_result = (
+        'Score: 4\nSummary: This is a review\nStrength: Strength\nWeakness: Weakness'
+    )
     assert map_review_to_str(review) == expected_result
 
 
@@ -94,7 +96,7 @@ def test_map_metareview_to_str() -> None:
         'weakness': 'Weakness',
         'decision': 'accept',
     }
-    expected_result = 'Summary: This is a meta review\nStrength: Strength\nWeakness: Weakness\nDecision: accept\n'
+    expected_result = 'Summary: This is a meta review\nStrength: Strength\nWeakness: Weakness\nDecision: accept'
     assert map_metareview_to_str(metareview) == expected_result
 
 
@@ -119,7 +121,7 @@ def test_map_metareview_list_to_str() -> None:
             'decision': 'accept',
         },
     ]
-    expected_result = 'Summary: Meta review 1\nStrength: Strength 1\nWeakness: Weakness 1\nDecision: accept\nSummary: Meta review 2\nStrength: Strength 2\nWeakness: Weakness 2\nDecision: reject\nSummary: Meta review 3\nStrength: Strength 3\nWeakness: Weakness 3\nDecision: accept\n'
+    expected_result = 'Summary: Meta review 1\nStrength: Strength 1\nWeakness: Weakness 1\nDecision: acceptSummary: Meta review 2\nStrength: Strength 2\nWeakness: Weakness 2\nDecision: rejectSummary: Meta review 3\nStrength: Strength 3\nWeakness: Weakness 3\nDecision: accept'
     assert map_metareview_list_to_str(metareviews) == expected_result
 
 
