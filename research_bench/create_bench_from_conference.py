@@ -130,15 +130,15 @@ def main() -> None:
     arxiv_ids = get_arxiv_ids(args.input)
     config = Config('../configs')
 
-    if 'iclrbench' in args.input:
+    if 'review_bench' in args.input:
         include_reviews = True
-        if os.path.exists('./iclrbench/iclr_reviews.json'):
-            with open('./iclrbench/iclr_reviews.json', 'r') as f:
+        if os.path.exists('./review_bench/iclr_reviews.json'):
+            with open('./review_bench/iclr_reviews.json', 'r') as f:
                 reviews = json.load(f)
             print(f'Loaded {len(reviews)} reviews from ICRL 2024.')
         else:
             reviews = get_all_reviews('ICLR.cc/2024/Conference')
-            with open('./iclrbench/iclr_reviews.json', 'w') as f:
+            with open('./review_bench/iclr_reviews.json', 'w') as f:
                 json.dump(reviews, f)
     else:
         include_reviews = False
