@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the input and output paths, along with the modes to test
-INPUT_PATH="./iclrbench/iclrbench_reviewers_filtered_bullets.json"
+INPUT_PATH="./review_bench/review_bench_reviewers_filtered_bullets.json"
 OUTPUT_DIR="./results"
 MODES=("zero_shot" "citation_only" "reviewer_only" "research_town")
 NUM_PROCESSES=4

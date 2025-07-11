@@ -185,7 +185,7 @@ research_bench/data/arxiv_ai_papers/output_with_references.json
 research_bench/data/arxiv_ai_papers/paper_info.json
 research_bench/crossbench/*.json
 research_bench/mlbench/*.json
-research_bench/iclrbench/*.json
+research_bench/review_bench/*.json
 research_bench/profile_dbs/*
 research_bench/results/*
 research_bench/profile_dbs_old
