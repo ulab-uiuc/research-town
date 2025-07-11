@@ -1,5 +1,3 @@
-import os
-
 import litellm
 from beartype import beartype
 from beartype.typing import Dict, List, Optional
