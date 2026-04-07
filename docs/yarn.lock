@@ -1558,6 +1558,22 @@
     fs-extra "^11.1.1"
     tslib "^2.6.0"
 
+"@docusaurus/types@3.10.0":
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/@docusaurus/types/-/types-3.10.0.tgz#a69232bba74b738fcf4671fd5f0f079366dd3d13"
+  integrity sha512-F0dOt3FOoO20rRaFK7whGFQZ3ggyrWEdQc/c8/UiRuzhtg4y1w9FspXH5zpCT07uMnJKBPGh+qNazbNlCQqvSw==
+  dependencies:
+    "@mdx-js/mdx" "^3.0.0"
+    "@types/history" "^4.7.11"
+    "@types/mdast" "^4.0.2"
+    "@types/react" "*"
+    commander "^5.1.0"
+    joi "^17.9.2"
+    react-helmet-async "npm:@slorber/react-helmet-async@1.3.0"
+    utility-types "^3.10.0"
+    webpack "^5.95.0"
+    webpack-merge "^5.9.0"
+
 "@docusaurus/types@3.6.1":
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/@docusaurus/types/-/types-3.6.1.tgz#0e55a0a51a3e55658b0845af83d5fe17c495978e"
@@ -6905,6 +6921,17 @@ react-helmet-async@*, react-helmet-async@^1.3.0:
   version "1.3.0"
   resolved "https://registry.npmjs.org/react-helmet-async/-/react-helmet-async-1.3.0.tgz"
   integrity sha512-9jZ57/dAn9t3q6hneQS0wukqC2ENOBgMNVEhb/ZG9ZSxUetzVIw4iAmEU38IaVg3QGYauQPhSeUTuIUtFglWpg==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    invariant "^2.2.4"
+    prop-types "^15.7.2"
+    react-fast-compare "^3.2.0"
+    shallowequal "^1.1.0"
+
+"react-helmet-async@npm:@slorber/react-helmet-async@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@slorber/react-helmet-async/-/react-helmet-async-1.3.0.tgz#11fbc6094605cf60aa04a28c17e0aab894b4ecff"
+  integrity sha512-e9/OK8VhwUSc67diWI8Rb3I0YgI9/SBQtnhe9aEuK6MhZm7ntZZimXgwXnd8W96YTmSOb9M4d8LwhRZyhWr/1A==
   dependencies:
     "@babel/runtime" "^7.12.5"
     invariant "^2.2.4"
