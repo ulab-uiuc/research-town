@@ -48,7 +48,7 @@ ruff = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-asyncio = "*"
-mypy = "^1.11.2"
+mypy = ">=1.11.2,<3.0.0"
 
 [tool.poetry.extras]
 humaneval = ["pandas"]
